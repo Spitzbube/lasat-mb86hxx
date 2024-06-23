@@ -6,7 +6,15 @@
 ;*******************************************************************************
 
     IMPORT intr_set_vectaddrx
+    IMPORT OSTaskSwHook
     IMPORT OS_CPU_ExceptHndlr
+    IMPORT OSTCBCur
+    IMPORT OSRunning
+    IMPORT  OSTCBHighRdy
+    IMPORT  OSPrioCur
+    IMPORT  OSPrioHighRdy
+    EXPORT	OSStartHighRdy
+    EXPORT  OSCtxSw
     EXPORT OS_CPU_SR_INT_En
     EXPORT OS_CPU_SR_INT_Dis
 
@@ -167,7 +175,81 @@ arm1176_intr_irq_vector      dcd OS_CPU_ARM_ExceptIrqHndlr
 arm1176_intr_fiq_vector      dcd OS_CPU_ARM_ExceptFiqHndlr
 
 arm1176_intr_vector_table    dcd ARM1176_INTR_VectorTable
- 
+
+
+;********************************************************************************************************
+;                                           START MULTITASKING
+;                                       void OSStartHighRdy(void)
+;
+; Note(s) : 1) OSStartHighRdy() MUST:
+;              a) Call OSTaskSwHook() then,
+;              b) Set OSRunning to TRUE,
+;              c) Switch to the highest priority task.
+;********************************************************************************************************
+
+OSStartHighRdy
+    MSR      CPSR_c,#ARM1176_MODE_SVC_INT_OFF
+    LDR      R0,=OSTaskSwHook
+    MOV      LR, PC
+    BX       R0
+    ldr      r0, =OSRunning
+    mov      r1, #0x1
+    strb     r1, [r0]
+    ldr      r0, =OSTCBHighRdy
+    ldr      r0, [r0]
+    ldr      sp, [r0]
+    pop      {r0}
+    msr      spsr_fsxc, r0
+    ldm      sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, lr, pc}^
+
+;********************************************************************************************************
+;                         PERFORM A CONTEXT SWITCH (From task level) - OSCtxSw()
+;
+; Note(s) : 1) OSCtxSw() is called in SVC mode with BOTH FIQ and IRQ interrupts DISABLED.
+;
+;           2) The pseudo-code for OSCtxSw() is:
+;              a) Save the current task's context onto the current task's stack,
+;              b) OSTCBCur->OSTCBStkPtr = SP;
+;              c) OSTaskSwHook();
+;              d) OSPrioCur             = OSPrioHighRdy;
+;              e) OSTCBCur              = OSTCBHighRdy;
+;              f) SP                    = OSTCBHighRdy->OSTCBStkPtr;
+;              g) Restore the new task's context from the new task's stack,
+;              h) Return to new task's code.
+;
+;           3) Upon entry:
+;              OSTCBCur      points to the OS_TCB of the task to suspend,
+;              OSTCBHighRdy  points to the OS_TCB of the task to resume.
+;********************************************************************************************************
+
+OSCtxSw
+    stmdb    sp!, {lr}
+    stmdb    sp!, {lr}
+    push     {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip}
+    mrs      r0, apsr
+    tst      lr, #0x1
+    orrne    r0, r0, #0x20
+    stmdb    sp!, {r0}
+    ldr      r0,=OSTCBCur
+    ldr      r1, [r0]
+    str      sp, [r1]
+    ldr      r0, =OSTaskSwHook
+    mov      lr, pc
+    bx       r0
+    ldr      r0, =OSPrioCur
+    ldr      r1, =OSPrioHighRdy
+    ldrb     r2, [r1]
+    strb     r2, [r0]
+    ldr      r0, =OSTCBCur
+    ldr      r1, =OSTCBHighRdy
+    ldr      r2, [r1]
+    str      r2, [r0]
+    ldr      sp, [r2]
+    ldm      sp!, {r0}
+    msr      spsr_fsxc, r0
+    ldm      sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, lr, pc}^
+
+
 ;********************************************************************************************************
 ;********************************************************************************************************
 ;                                        EXCEPTION HANDLERS

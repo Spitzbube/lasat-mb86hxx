@@ -31,48 +31,27 @@ OS_CPU_ExceptStk
 
 
 ARM1176_TcmInitialise
-    mov r0, #0  ;/* TCM 0 */
-    mcr p15, 0, r0, c9, c2, 0  ;/*Write TCM Selection */
+    mov        r0, #0xf000000
+    mov        r1, #0x15
+    orr        r1, r1, r0
+    mcr        p15, #0x0, r1, c9, c1, #0x0
+    mov        r1, #0xd5000000
+    ldr        r0, [r1]
+    cmp        r0, #0x0
+    beq        loc_234879f0
 
-    mov r0, #0x0f000000
-    orr r0, r0, #1
-    mcr p15, 0, r0, c9, c1, 0  ;/* Write Data TCM Region */
-
-    ldr r0, =0x0f004000
-    orr r0, r0, #1
-    mcr p15, 0, r0, c9, c1, 1  ;/* Write Instruction TCM Region */
-
-    mov r0, #1  ;/* TCM 1 */
-    mcr p15, 0, r0, c9, c2, 0  ;/* Write TCM Selection */
-
-    mov r0, #0x0f000000
-    add r0, r0, #0x2000
-    orr r0, r0, #1
-    mcr p15, 0, r0, c9, c1, 0  ;/* Write Data TCM Region */
-
-    ldr r0, =0x0f004000
-    add r0, r0, #0x2000
-    orr r0, r0, #1
-    mcr p15, 0, r0, c9, c1, 1  ;/* Write Instruction TCM Region */
-
-    mov r1, #0  ;/* TCM 0 */
-    mcr p15, 0, r1, c9, c2, 0  ;/* Write TCM Selection */
-
-    mov r0, #0x0f000000
-    mov r1, #0x02000000
-    str r0, [r1, #132]
-
-    mov r0, #0x4000
-    mov r1, #0x02000000
-    str r0, [r1, #136]
-
-    ldr r0, =0x0f004000
-    mov r1, #0x02000000
-    str r0, [r1, #120]
-
-    mov r0, #0x4000
-    mov r1, #0x02000000
-    str r0, [r1, #124]
+    mov        r0, #0xf000000
+    mov        r1, #0x15
+    orr        r1, r1, r0
+    mcr        p15, #0x0, r1, c9, c1, #0x0
+    mov        r1, #0x2000000
+    str        r0, [r1, #132]
+    mov        r0, #0xe000000
+    mov        r1, #0x15
+    orr        r1, r1, r0
+    mcr        p15, #0x0, r1, c9, c1, #0x1
+    mov        r1, #0x2000000
+    str        r0, [r1, #120]
 
     ;/* Setup the stack for each mode */
 
@@ -100,48 +79,48 @@ ARM1176_TcmInitialise
     msr CPSR_c, #0xdf   ;/* User Mode */
     mov sp, r0
 
-    mov r1, #0x02000000
-    ldr r0, usr_stack
-    str r0, [r1, #180]
+    bx  lr
 
-    mov r0, #0x800
-    str r0, [r1, #184]
+loc_234879f0
+    mov        r0, #0xf000000
+    mov        r1, #0x15
+    orr        r1, r1, r0
+    mcr        p15, #0x0, r1, c9, c1, #0x0
+    mov        r1, #0x2000000
+    str        r0, [r1, #120]
+    mov        r0, #0xe000000
+    mov        r1, #0x15
+    orr        r1, r1, r0
+    mcr        p15, #0x0, r1, c9, c1, #0x1
+    mov        r1, #0x2000000
+    str        r0, [r1, #112]
 
-    ldr r0, sys_stack
-    str r0, [r1, #188]
-
-    mov r0, #0x800
-    str r0, [r1, #192]
-
-    ldr r0, svc_stack
-    str r0, [r1, #196]
-
-    mov r0, #0x1000
-    str r0, [r1, #200]
+    ;/* Setup the stack for each mode */
 
     ldr r0, undefined_stack
-    str r0, [r1, #204]
-
-    mov r0, #0x400
-    str r0, [r1, #208]
+    msr CPSR_c, #0xdb   ;/* Undefined Instruction Mode  */
+    mov sp, r0
 
     ldr r0, abort_stack
-    str r0, [r1, #212]
-
-    mov r0, #0x400
-    str r0, [r1, #216]
+    msr CPSR_c, #0xd7   ;/* Abort Mode */
+    mov sp, r0
 
     ldr r0, irq_stack
-    str r0, [r1, #220]
-
-    mov r0, #0x1000
-    str r0, [r1, #224]
+    msr CPSR_c, #0xd2   ;/* IRQ Mode */
+    mov sp, r0
 
     ldr r0, fiq_stack
-    str r0, [r1, #228]
+    msr CPSR_c, #0xd1   ;/* FIQ Mode */
+    mov sp, r0
 
-    mov r0, #0x1000
-    str r0, [r1, #232]
+    ldr r0, svc_stack
+    msr CPSR_c, #0xd3   ;/* Supervisor Mode */
+    mov sp, r0
+
+    ldr r0, usr_stack
+    msr CPSR_c, #0xdf   ;/* User Mode */
+    mov sp, r0
+
     bx  lr
 
     END

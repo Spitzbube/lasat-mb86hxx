@@ -12,3 +12,8 @@ set (
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 enable_language(ASM)
+
+add_definitions(
+   --debug 
+   -D__DEBUG__=1 -O0
+)

@@ -16,7 +16,12 @@ set(CMAKE_ASM_CREATE_STATIC_LIBRARY "<CMAKE_AR> --create -r -c -s -v <TARGET> <O
 #    "armlink <CMAKE_CXX_LINK_FLAGS>")
 
 add_definitions(
-    --cpu=ARM1176JZF-S
+    --arm
+    --cpu ARM1176JZF-S
+    --fpu VFPv2
+#    --cpu=ARM1176JZF-S
+#    --enum_is_int
+    --no_unaligned_access
 #    --gnu
     -I${TOOLCHAIN_PATH_DATA}/include/unix
 )

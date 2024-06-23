@@ -11,10 +11,12 @@ add_executable(${PROJECT_NAME} ${SRCS})
 
 add_subdirectory(boot/startup)
 add_subdirectory(drv)
+add_subdirectory(rtos/uCOS-II)
 
 target_link_libraries(${PROJECT_NAME}
     startup
     drv
+    ucos_ii
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

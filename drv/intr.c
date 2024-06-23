@@ -112,7 +112,7 @@ void OS_CPU_ExceptHndlr(uint32_t irqNr)
 {
 	uint32_t r5 = intr_get_vic_address();
 
-#if 1
+#if 0
 	((volatile uint32_t*)0xc2000000)[0] = 'i';
 
 	switch (irqNr & 0x0f)
@@ -146,7 +146,7 @@ void OS_CPU_ExceptHndlr(uint32_t irqNr)
 
 	if (((irqNr & 0x0f) == 6) && (((irqNr >> 8) & 0xff) != 0))
 	{
-#if 1
+#if 0
 		switch ((irqNr >> 8) & 0xff)
 		{
 		case 1:

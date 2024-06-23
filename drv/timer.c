@@ -70,11 +70,7 @@ int timer_isr(void)
 		//loc_2341b6a4
 	}
 
-#if 0
 	OSTimeTick();
-#else
-    console_send_string("Tick\n");
-#endif
 
 	return 0;
 }
