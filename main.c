@@ -9,6 +9,7 @@ int main()
 	Uart_Init_Params uartParams;
 
 	ARM1176_INTR_Initialise();
+	intr_init();
 
 	gpio_init();
 	uart_setup();
