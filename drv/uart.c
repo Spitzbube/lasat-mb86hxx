@@ -1,5 +1,8 @@
 
-#include "data.h"
+#include <stdint.h>
+#include "sys_services.h"
+#include "gpio.h"
+#include "uart.h"
 
 Uart_Module* Data_20408480; //20408480 +0
 unsigned int uartClockFrequency; //20408484 + 4

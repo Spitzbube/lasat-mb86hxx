@@ -3,19 +3,22 @@ cmake_minimum_required(VERSION 3.13)
 project (mb86h60_hello_world)
 
 set(SRCS
-   sys_services.c
    main.c
-   gpio.c
-   uart.c
    console.c
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
 
 add_subdirectory(boot/startup)
+add_subdirectory(drv)
 
 target_link_libraries(${PROJECT_NAME}
     startup
+    drv
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    drv
 )
 
 set(ENTRY_FUNC ARM1176_Start)

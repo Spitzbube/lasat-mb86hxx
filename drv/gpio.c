@@ -1,7 +1,8 @@
 
 #include <string.h>
 #include <stdint.h>
-#include "data.h"
+#include "sys_services.h"
+#include "gpio.h"
 
 
 #define FAPI_GPIO_PIN_COUNT           96
