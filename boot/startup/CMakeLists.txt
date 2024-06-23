@@ -7,6 +7,7 @@ set (
    src/arm1176_tcm.s
    src/arm1176_vfp_fast.s
    src/arm1176_mmu.s
+   src/arm1176_intr_handler.s
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
