@@ -10,6 +10,8 @@ int main()
 
 	ARM1176_INTR_Initialise();
 	intr_init();
+	timer_init();
+	timer_open(0);
 
 	gpio_init();
 	uart_setup();

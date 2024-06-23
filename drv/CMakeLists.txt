@@ -6,6 +6,7 @@ set (
    gpio.c
    uart.c
    intr.c
+   timer.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

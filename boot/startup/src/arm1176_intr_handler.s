@@ -2,6 +2,16 @@
     PRESERVE8 
 
 ;*******************************************************************************
+;** Far external symbols, required for linking
+;*******************************************************************************
+
+    IMPORT intr_set_vectaddrx
+    IMPORT OS_CPU_ExceptHndlr
+    EXPORT OS_CPU_SR_INT_En
+    EXPORT OS_CPU_SR_INT_Dis
+
+
+;*******************************************************************************
 ;** local CPU mode defines
 ;*******************************************************************************
 
@@ -19,6 +29,20 @@ ARM1176_MODE_SYS_INT_OFF EQU (ARM1176_MODE_SYS+OS_CPU_ARM_CONTROL_INT_DIS)
 ARM1176_MODE_SVC_INT_OFF EQU (ARM1176_MODE_SVC+OS_CPU_ARM_CONTROL_INT_DIS)
 
 ;*******************************************************************************
+;** ARM1176_INTR_VicSetIrqHandler
+;** This macro writes one interrupt handler function into the VIC interrupt
+;** table
+;*******************************************************************************
+
+    MACRO
+    ARM1176_INTR_VicSetIrqHandler $index
+    mov r0,#$index
+    ldr r1,=ARM1176_INTR_IrqHandler_$index
+    bl intr_set_vectaddrx
+    MEND
+
+
+;*******************************************************************************
 ;** ARM1176_INTR_Initialise
 ;** This functions tells the ARM core to use the interrupt vector table from
 ;** address "ARM1176_INTR_VectorTable" instead of 0x00000000.
@@ -29,8 +53,94 @@ ARM1176_INTR_Initialise PROC ; 23486780
     stmfd sp!,{r0-r1,lr}
     ldr r0,arm1176_intr_vector_table
     mcr p15,0,r0,c12,c0,0 
+    ARM1176_INTR_VicSetIrqHandler 5
+    ARM1176_INTR_VicSetIrqHandler 6
+    ARM1176_INTR_VicSetIrqHandler 7
+    ARM1176_INTR_VicSetIrqHandler 8
+    ARM1176_INTR_VicSetIrqHandler 9
+    ARM1176_INTR_VicSetIrqHandler 10
+    ARM1176_INTR_VicSetIrqHandler 11
+    ARM1176_INTR_VicSetIrqHandler 12
+    ARM1176_INTR_VicSetIrqHandler 13
+    ARM1176_INTR_VicSetIrqHandler 14
+    ARM1176_INTR_VicSetIrqHandler 15
+    ARM1176_INTR_VicSetIrqHandler 16
+    ARM1176_INTR_VicSetIrqHandler 17
+    ARM1176_INTR_VicSetIrqHandler 18
+    ARM1176_INTR_VicSetIrqHandler 19
+    ARM1176_INTR_VicSetIrqHandler 20
+    ARM1176_INTR_VicSetIrqHandler 21
+    ARM1176_INTR_VicSetIrqHandler 22
+    ARM1176_INTR_VicSetIrqHandler 23
+    ARM1176_INTR_VicSetIrqHandler 24
+    ARM1176_INTR_VicSetIrqHandler 25
+    ARM1176_INTR_VicSetIrqHandler 26
+    ARM1176_INTR_VicSetIrqHandler 27
+    ARM1176_INTR_VicSetIrqHandler 28
+    ARM1176_INTR_VicSetIrqHandler 29
+    ARM1176_INTR_VicSetIrqHandler 30
+    ARM1176_INTR_VicSetIrqHandler 31
     ldmfd sp!,{r0-r1,pc}
     ENDP 
+
+;*******************************************************************************
+;** The normal-IRQ handlers for IRQ#5 .. IRQ#31 handled by the VIC implemented
+;** as macros. IRQs#0..4 are not used because they are internally used by the
+;** ARC700 cpu.
+;** This version can be used for a non-rtos environment, the interrupt handler
+;** calls the ISR function (from FAPI_IsrFunctionTable) as well as the
+;** BSR function (from FAPI_BsrFunctionTable) if set.
+;** The ISR and the BSR will be called within cpu mode IRQ, the cpu mode will
+;** not changed in this implementation.
+;** The final mode change to the previous cpu mode will be switched
+;** automatically by the "ldmfd sp!,{r0-r4,pc}^" call at the end.
+;*******************************************************************************
+
+    MACRO
+    ARM1176_INTR_IrqHandler $index
+    EXPORT ARM1176_INTR_IrqHandler_$index
+ARM1176_INTR_IrqHandler_$index PROC
+    sub lr,lr,#4
+    stmfd sp!,{r0-r3}
+    mov r2, lr
+    mov r0, #0x6
+    mov r1, #$index<<8
+    add r0, r0, r1
+    b OS_CPU_ARM_ExceptHndlr
+    ENDP
+    MEND
+
+;*******************************************************************************
+;** Instanciate the above macro for  IRQ#5 .. IRQ#31
+;*******************************************************************************
+
+    ARM1176_INTR_IrqHandler 5 ; 234868d4
+    ARM1176_INTR_IrqHandler 6
+    ARM1176_INTR_IrqHandler 7
+    ARM1176_INTR_IrqHandler 8
+    ARM1176_INTR_IrqHandler 9
+    ARM1176_INTR_IrqHandler 10
+    ARM1176_INTR_IrqHandler 11
+    ARM1176_INTR_IrqHandler 12
+    ARM1176_INTR_IrqHandler 13
+    ARM1176_INTR_IrqHandler 14
+    ARM1176_INTR_IrqHandler 15
+    ARM1176_INTR_IrqHandler 16
+    ARM1176_INTR_IrqHandler 17
+    ARM1176_INTR_IrqHandler 18
+    ARM1176_INTR_IrqHandler 19
+    ARM1176_INTR_IrqHandler 20
+    ARM1176_INTR_IrqHandler 21
+    ARM1176_INTR_IrqHandler 22
+    ARM1176_INTR_IrqHandler 23
+    ARM1176_INTR_IrqHandler 24
+    ARM1176_INTR_IrqHandler 25
+    ARM1176_INTR_IrqHandler 26
+    ARM1176_INTR_IrqHandler 27
+    ARM1176_INTR_IrqHandler 28
+    ARM1176_INTR_IrqHandler 29
+    ARM1176_INTR_IrqHandler 30
+    ARM1176_INTR_IrqHandler 31 ; 23486bac
 
 ;*******************************************************************************
 ;** The interrupt vector table
@@ -229,10 +339,42 @@ OS_CPU_ARM_ExceptHndlr
     stmfd sp!,{r5-r8}                   ; store previous r3..r1 from IRQ stack on current task stack
     stmfd sp!,{r1}                      ; store spsr (passed in r1) current task stack (16 regs are stored)
 
+    ldr        r3, =OS_CPU_ExceptHndlr
+    mov        lr, pc
+    bx         r3
     msr        cpsr_c, #ARM1176_MODE_SVC_INT_OFF
     ldm        sp!, {r0}
     msr        spsr_fsxc, r0
     ldmfd sp!, {r0-r3,r4-r12,lr,pc}^
+
+
+;********************************************************************************************************
+;********************************************************************************************************
+;                                 ENABLE & DISABLE INTERRUPTS, IRQs, FIQs
+;********************************************************************************************************
+;********************************************************************************************************
+
+;********************************************************************************************************
+;                                       ENABLE & DISABLE INTERRUPTS
+;
+; Note(s) : 1) OS_CPU_SR_INT_En() can be called by OS_CPU_ExceptHndlr() AFTER the external
+;              interrupt source has been cleared.  This function will enable IRQs and FIQs so that
+;              nesting can occur.
+;
+;           2) OS_CPU_ARM_INT_Dis() can be called to disable IRQs and FIQs so that nesting will not occur.
+;********************************************************************************************************
+
+OS_CPU_SR_INT_En
+    mrs        r0, apsr
+    bic        r0, r0, #OS_CPU_ARM_CONTROL_INT_DIS
+    msr        cpsr_c, r0
+    bx         lr
+
+OS_CPU_SR_INT_Dis
+    mrs        r0, apsr
+    orr        r0, r0, #OS_CPU_ARM_CONTROL_INT_DIS
+    msr        cpsr_c, r0
+    bx         lr
 
 ;*******************************************************************************
 ;** End of file
