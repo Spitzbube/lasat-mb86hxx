@@ -1,7 +1,7 @@
 
     AREA ARM1176START, CODE, READONLY
 
-    EXTERN  __main
+    EXTERN  main
     EXTERN  ARM1176_TcmInitialise
     EXTERN  ARM1176_VfpInitialise
     EXTERN  ARM1176_VfpSetFastmode
@@ -14,7 +14,7 @@ ARM1176_Start
     BL       ARM1176_TcmInitialise
     BL       ARM1176_VfpInitialise
     BL       ARM1176_VfpSetFastmode
-    LDR      R12,=__main
+    LDR      R12,=main
     BL       ARM1176_MmuInitialise
     BX       R12
 
