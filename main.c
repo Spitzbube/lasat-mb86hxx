@@ -28,6 +28,8 @@ int main()
 
 	console_send_string("Hello World!\n");
 
+	while (1) {}
+
     return 0;
 }
 
