@@ -58,11 +58,11 @@ typedef uint32_t INT32U;
 #define  OS_FALSE                     0u
 #endif
 
-#if 0
-
 #ifndef  OS_TRUE
 #define  OS_TRUE                         1u
 #endif
+
+#if 0
 
 #define  OS_ASCII_NUL          (INT8U)0
 
@@ -96,7 +96,6 @@ typedef uint32_t INT32U;
 
 #define  OS_EVENT_EN       (((OS_Q_EN > 0) && (OS_MAX_QS > 0)) || (OS_MBOX_EN > 0) || (OS_SEM_EN > 0) || (OS_MUTEX_EN > 0))
 
-#if 0
 /*$PAGE*/
 /*
 *********************************************************************************************************
@@ -104,10 +103,13 @@ typedef uint32_t INT32U;
 *********************************************************************************************************
 */
 #define  OS_STAT_RDY               0x00u    /* Ready to run                                            */
+#if 0
 #define  OS_STAT_SEM               0x01u    /* Pending on semaphore                                    */
 #define  OS_STAT_MBOX              0x02u    /* Pending on mailbox                                      */
 #define  OS_STAT_Q                 0x04u    /* Pending on queue                                        */
+#endif
 #define  OS_STAT_SUSPEND           0x08u    /* Task is suspended                                       */
+#if 0
 #define  OS_STAT_MUTEX             0x10u    /* Pending on mutual exclusion semaphore                   */
 #define  OS_STAT_FLAG              0x20u    /* Pending on event flag group                             */
 

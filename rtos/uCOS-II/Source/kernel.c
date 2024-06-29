@@ -2,12 +2,12 @@
 #include "ucos_ii.h"
 #include "kernel.h"
 
+#if 0
 const uint8_t Data_23489cc0[] = //23489cc0
 {
 	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 };
 
-#if 0
 const uint8_t OSUnMapTbl[] = //23489cc8
 {
 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00,
@@ -28,6 +28,7 @@ const uint8_t OSUnMapTbl[] = //23489cc8
 0x04, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00
 };
 #else
+extern const uint8_t Data_23489cc0[]; //23489cc0
 extern const uint8_t OSUnMapTbl[]; //23489cc8
 #endif
 
@@ -191,7 +192,6 @@ void OSInit()
 	OSInitHookEnd();
 }
 
-#endif
 
 /* 234388f8 - todo */
 void OSIntExit()
@@ -256,7 +256,7 @@ void OS_Sched()
 	OS_EXIT_CRITICAL();
 }
 
-#if 0
+
 /* 23438a88 - todo -> OSStart */
 void rtos_start()
 {
@@ -332,6 +332,7 @@ void OS_Dummy()
 }
 #endif
 
+#if 0
 
 /* 23438b8c - todo */
 int OS_EventTaskRdy(OS_EVENT *pevent, void *pmsg, int msk)
@@ -369,6 +370,7 @@ int OS_EventTaskRdy(OS_EVENT *pevent, void *pmsg, int msk)
 	return prio;
 }
 
+#endif
 
 /* 23438c24 - todo */
 void OS_EventTaskWait(OS_EVENT* pevent)

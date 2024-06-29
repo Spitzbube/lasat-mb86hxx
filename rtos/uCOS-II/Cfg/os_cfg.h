@@ -17,6 +17,8 @@
 #ifndef OS_CFG_H
 #define OS_CFG_H
 
+#include "os_trace.h"
+
 #if 0
 
                                        /* ----------------------- uC/OS-View -------------------------   */

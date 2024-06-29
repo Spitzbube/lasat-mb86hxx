@@ -35,6 +35,13 @@
 #include <ucos_ii.h>
 #endif
 
+
+const uint8_t Data_23489cc0[] = //23489cc0
+{
+	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+};
+
+
 /*
 *********************************************************************************************************
 *                                      PRIORITY RESOLUTION TABLE
@@ -678,6 +685,7 @@ void  OSIntEnter (void)
     }
 }
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -698,6 +706,7 @@ void  OSIntEnter (void)
 *********************************************************************************************************
 */
 
+/* 234388f8 - todo */
 void  OSIntExit (void)
 {
 #if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status register */
@@ -711,14 +720,31 @@ void  OSIntExit (void)
         if (OSIntNesting > 0u) {                           /* Prevent OSIntNesting from wrapping       */
             OSIntNesting--;
         }
+#if 0
         if (OSIntNesting == 0u) {                          /* Reschedule only if all ISRs complete ... */
             if (OSLockNesting == 0u) {                     /* ... and not locked.                      */
+#else
+        if ((OSIntNesting == 0u) && (OSLockNesting == 0u)) {
+#endif
+#if 0
                 OS_SchedNew();
+#else
+    			bData_23492c01 = OSUnMapTbl[OSRdyGrp];
+	    	    OSPrioHighRdy = OSUnMapTbl[OSRdyTbl[bData_23492c01]] + (bData_23492c01 * 8);
+#endif
+
+#if 0 //Original
                 OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
+#endif
                 if (OSPrioHighRdy != OSPrioCur) {          /* No Ctx Sw if current task is highest rdy */
 #if OS_TASK_PROFILE_EN > 0u
                     OSTCBHighRdy->OSTCBCtxSwCtr++;         /* Inc. # of context switches to this task  */
 #endif
+
+#if 1 //Adapt
+                    OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
+#endif
+
                     OSCtxSwCtr++;                          /* Keep track of the number of ctx switches */
 
 #if OS_TASK_CREATE_EXT_EN > 0u
@@ -732,9 +758,11 @@ void  OSIntExit (void)
                 } else {
                     OS_TRACE_ISR_EXIT();
                 }
+#if 0                
             } else {
                 OS_TRACE_ISR_EXIT();
             }
+#endif
         } else {
             OS_TRACE_ISR_EXIT();
         }
@@ -743,6 +771,7 @@ void  OSIntExit (void)
     }
 }
 
+#if 0
 
 /*
 *********************************************************************************************************
@@ -1057,6 +1086,7 @@ void  OS_Dummy (void)
 }
 #endif
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -1086,14 +1116,17 @@ void  OS_Dummy (void)
 *********************************************************************************************************
 */
 #if (OS_EVENT_EN)
+/* 23438b8c - todo */
 INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
                         void      *pmsg,
                         INT8U      msk,
                         INT8U      pend_stat)
 {
-    OS_TCB   *ptcb;
+    RTOS_tTCB/*OS_TCB*/   *ptcb;
     INT8U     y;
     INT8U     x;
+	int lr;
+	int r4;
     INT8U     prio;
 #if OS_LOWEST_PRIO > 63u
     OS_PRIO  *ptbl;
@@ -1102,7 +1135,9 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
 
 #if OS_LOWEST_PRIO <= 63u
     y    = OSUnMapTbl[pevent->OSEventGrp];              /* Find HPT waiting for message                */
+	lr = Data_23489cc0[y];
     x    = OSUnMapTbl[pevent->OSEventTbl[y]];
+	r4 = Data_23489cc0[x];
     prio = (INT8U)((y << 3u) + x);                      /* Find priority of task getting the msg       */
 #else
     if ((pevent->OSEventGrp & 0xFFu) != 0u) {           /* Find HPT waiting for message                */
@@ -1119,6 +1154,11 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
     prio = (INT8U)((y << 4u) + x);                      /* Find priority of task getting the msg       */
 #endif
 
+	if ((pevent->OSEventTbl[y] &= ~r4) == 0)
+	{
+		pevent->OSEventGrp &= ~lr;
+	}
+
     ptcb                  =  OSTCBPrioTbl[prio];        /* Point to this task's OS_TCB                 */
     ptcb->OSTCBDly        =  0u;                        /* Prevent OSTimeTick() from readying task     */
 #if ((OS_Q_EN > 0u) && (OS_MAX_QS > 0u)) || (OS_MBOX_EN > 0u)
@@ -1126,8 +1166,17 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
 #else
     pmsg                  =  pmsg;                      /* Prevent compiler warning if not used        */
 #endif
+
+#if 1
+	ptcb->OSTCBEventPtr = 0;
+#endif
+
     ptcb->OSTCBStat      &= (INT8U)~msk;                /* Clear bit associated with event type        */
+#if 0
     ptcb->OSTCBStatPend   =  pend_stat;                 /* Set pend status of post or abort            */
+#endif
+
+#if 0
                                                         /* See if task is ready (could be susp'd)      */
     if ((ptcb->OSTCBStat &   OS_STAT_SUSPEND) == OS_STAT_RDY) {
         OSRdyGrp         |=  ptcb->OSTCBBitY;           /* Put task in the ready to run list           */
@@ -1136,6 +1185,14 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
     }
 
     OS_EventTaskRemove(ptcb, pevent);                   /* Remove this task from event   wait list     */
+#else
+	if ((ptcb->OSTCBStat & 0xff) == OS_STAT_RDY)
+	{
+		OSRdyGrp |= lr;
+		OSRdyTbl[y] |= r4;
+	}
+#endif
+
 #if (OS_EVENT_MULTI_EN > 0u)
     if (ptcb->OSTCBEventMultiPtr != (OS_EVENT **)0) {   /* Remove this task from events' wait lists    */
         OS_EventTaskRemoveMulti(ptcb, ptcb->OSTCBEventMultiPtr);
@@ -1148,6 +1205,7 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
 }
 #endif
 
+#if 0
 
 /*
 *********************************************************************************************************
@@ -1739,6 +1797,7 @@ void  OS_MemCopy (INT8U  *pdest,
     }
 }
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -1757,6 +1816,7 @@ void  OS_MemCopy (INT8U  *pdest,
 *********************************************************************************************************
 */
 
+/* 234389c0 (1c8d10) - todo */
 void  OS_Sched (void)
 {
 #if OS_CRITICAL_METHOD == 3u                           /* Allocate storage for CPU status register     */
@@ -1766,14 +1826,32 @@ void  OS_Sched (void)
 
 
     OS_ENTER_CRITICAL();
+#if 0    
     if (OSIntNesting == 0u) {                          /* Schedule only if all ISRs done and ...       */
         if (OSLockNesting == 0u) {                     /* ... scheduler is not locked                  */
+#else
+    if ((OSIntNesting == 0u) && (OSLockNesting == 0u)) {
+#endif
+
+#if 0
             OS_SchedNew();
+#else
+            int r0 = OSUnMapTbl[OSRdyGrp];
+            OSPrioHighRdy = (r0 * 8) + OSUnMapTbl[OSRdyTbl[r0]];
+#endif
+
+#if 0 //Original
             OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
+#endif
             if (OSPrioHighRdy != OSPrioCur) {          /* No Ctx Sw if current task is highest rdy     */
 #if OS_TASK_PROFILE_EN > 0u
                 OSTCBHighRdy->OSTCBCtxSwCtr++;         /* Inc. # of context switches to this task      */
 #endif
+
+#if 1 //Adapt
+                OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
+#endif
+
                 OSCtxSwCtr++;                          /* Increment context switch counter             */
 
 #if OS_TASK_CREATE_EXT_EN > 0u
@@ -1784,12 +1862,13 @@ void  OS_Sched (void)
 
                 OS_TASK_SW();                          /* Perform a context switch                     */
             }
+#if 0            
         }
+#endif
     }
     OS_EXIT_CRITICAL();
 }
 
-#endif
 
 /*
 *********************************************************************************************************
@@ -1896,6 +1975,7 @@ INT8U  OS_StrLen (INT8U *psrc)
 *********************************************************************************************************
 */
 
+/* 2343877C - complete */
 void  OS_TaskIdle (void *p_arg)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
