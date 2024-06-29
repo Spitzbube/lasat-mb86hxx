@@ -13,7 +13,7 @@ void OSInitHookBegin()
 	uint32_t* pstk;
 
 	pstk = OS_CPU_ExceptStk;
-	size = 240; //0x1ff;
+	size = 0x1ff;
 	while (size--)
 	{
 		*pstk++ = 0;
@@ -54,7 +54,7 @@ void OSTaskIdleHook()
 #if 0
 		usb_RunBackground();
 #else
-		console_send_string("usb_RunBackground: TODO\r\n");
+//		console_send_string("usb_RunBackground: TODO\r\n");
 #endif
 
 		Data_234942a8 = 100;
