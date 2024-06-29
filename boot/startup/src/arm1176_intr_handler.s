@@ -6,10 +6,14 @@
 ;*******************************************************************************
 
     IMPORT intr_set_vectaddrx
+    IMPORT OSIntExit
     IMPORT OSTaskSwHook
     IMPORT OS_CPU_ExceptHndlr
-    IMPORT OSTCBCur
+    IMPORT OSIntNesting
     IMPORT OSRunning
+    IMPORT OSTCBCur
+    IMPORT OS_CPU_ExceptStkBase
+    IMPORT Data_234942b0
     IMPORT  OSTCBHighRdy
     IMPORT  OSPrioCur
     IMPORT  OSPrioHighRdy
@@ -17,6 +21,9 @@
     EXPORT  OSCtxSw
     EXPORT OS_CPU_SR_INT_En
     EXPORT OS_CPU_SR_INT_Dis
+    EXPORT OSIntCtxSw
+    EXPORT OS_CPU_SR_Save
+    EXPORT OS_CPU_SR_Restore
 
 
 ;*******************************************************************************
@@ -150,6 +157,50 @@ ARM1176_INTR_IrqHandler_$index PROC
     ARM1176_INTR_IrqHandler 30
     ARM1176_INTR_IrqHandler 31 ; 23486bac
 
+;********************************************************************************************************
+;                                  CRITICAL SECTION METHOD 3 FUNCTIONS
+;
+; Description: Disable/Enable interrupts by preserving the state of interrupts.  Generally speaking you
+;              would store the state of the interrupt disable flag in the local variable 'cpu_sr' and then
+;              disable interrupts.  'cpu_sr' is allocated in all of uC/OS-II's functions that need to
+;              disable interrupts.  You would restore the interrupt disable state by copying back 'cpu_sr'
+;              into the CPU's status register.
+;
+; Prototypes : OS_CPU_SR  OS_CPU_SR_Save    (void);
+;              void       OS_CPU_SR_Restore (OS_CPU_SR  os_cpu_sr);
+;
+;
+; Note(s)    : (1) These functions are used in general like this:
+;
+;                 void Task (void  *p_arg)
+;                 {
+;                                                               /* Allocate storage for CPU status register.            */
+;                 #if (OS_CRITICAL_METHOD == 3)
+;                      OS_CPU_SR  os_cpu_sr;
+;                 #endif
+;
+;                          :
+;                          :
+;                      OS_ENTER_CRITICAL();                     /* os_cpu_sr = OS_CPU_SR_Save();                        */
+;                          :
+;                          :
+;                      OS_EXIT_CRITICAL();                      /* OS_CPU_SR_Restore(cpu_sr);                           */
+;                          :
+;                          :
+;                 }
+;********************************************************************************************************
+ 
+OS_CPU_SR_Save
+    MRS     R0, CPSR
+    ORR     R1, R0, #OS_CPU_ARM_CONTROL_INT_DIS                 ; Set IRQ and FIQ bits in CPSR to disable all interrupts.
+    MSR     CPSR_c, R1
+    BX      LR                                                  ; Disabled, return the original CPSR contents in R0.
+
+
+OS_CPU_SR_Restore
+    MSR     CPSR_c, R0
+    BX      LR 
+
 ;*******************************************************************************
 ;** The interrupt vector table
 ;*******************************************************************************
@@ -247,6 +298,42 @@ OSCtxSw
     ldr      sp, [r2]
     ldm      sp!, {r0}
     msr      spsr_fsxc, r0
+    ldm      sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, lr, pc}^
+
+
+;********************************************************************************************************
+;                     PERFORM A CONTEXT SWITCH (From interrupt level) - OSIntCtxSw()
+;
+; Note(s) : 1) OSIntCtxSw() is called in SVC mode with BOTH FIQ and IRQ interrupts DISABLED.
+;
+;           2) The pseudo-code for OSCtxSw() is:
+;              a) OSTaskSwHook();
+;              b) OSPrioCur             = OSPrioHighRdy;
+;              c) OSTCBCur              = OSTCBHighRdy;
+;              d) SP                    = OSTCBHighRdy->OSTCBStkPtr;
+;              e) Restore the new task's context from the new task's stack,
+;              f) Return to new task's code.
+;
+;           3) Upon entry:
+;              OSTCBCur      points to the OS_TCB of the task to suspend,
+;              OSTCBHighRdy  points to the OS_TCB of the task to resume.
+;********************************************************************************************************
+
+OSIntCtxSw
+    ldr        r0, =OSTaskSwHook
+    mov        lr, pc
+    bx         r0                                                  ; OSTaskSwHook
+    ldr        r0, =OSPrioCur                              ; dword_2348790c
+    ldr        r1, =OSPrioHighRdy                                 ; dword_23487910
+    ldrb       r2, [r1]
+    strb       r2, [r0]
+    ldr        r0, =OSTCBCur                              ; dword_23487914
+    ldr        r1, =OSTCBHighRdy                                 ; dword_23487918
+    ldr        r2, [r1]
+    str        r2, [r0]
+    ldr        sp, [r2]
+    ldm        sp!, {r0}
+    msr        spsr_fsxc, r0
     ldm      sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, lr, pc}^
 
 
@@ -421,6 +508,64 @@ OS_CPU_ARM_ExceptHndlr
     stmfd sp!,{r5-r8}                   ; store previous r3..r1 from IRQ stack on current task stack
     stmfd sp!,{r1}                      ; store spsr (passed in r1) current task stack (16 regs are stored)
 
+    ldr        r3, =OSRunning
+    ldrb       r4, [r3]                                            ; byte_20410016
+    cmp        r4, #0x1
+    bne        OS_CPU_ARM_ExceptHndlr_BreakNothing
+
+    ldr        r3, =OSIntNesting                                     ; dword_2040751c,0x20410010
+    ldrb       r4, [r3]                                            ; 0x20410010
+    add        r4, r4, #0x1
+    strb       r4, [r3]                                            ; 0x20410010
+    cmp        r4, #0x1
+    bne        OS_CPU_ARM_ExceptHndlr_BreakExcept
+
+;********************************************************************************************************
+;                                 EXCEPTION HANDLER: TASK INTERRUPTED
+;
+; Register Usage:  R0     Exception Type
+;                  R1
+;                  R2
+;                  R3
+;********************************************************************************************************
+
+OS_CPU_ARM_ExceptHndlr_BreakTask
+
+    ldr        r3, =OSTCBCur                                 ; dword_20407514,dword_20410024
+    ldr        r4, [r3]                                            ; dword_20410024
+    str        sp, [r4]
+    ldr        r3, =OS_CPU_ExceptStkBase
+    ldr        sp, [r3]
+    ldr        r1, =OS_CPU_ExceptHndlr
+    mov        lr, pc
+    bx         r1
+    msr        cpsr_c, #ARM1176_MODE_SVC_INT_OFF
+    ldr        r0, =OSIntExit
+    mov        lr, pc
+    bx         r0
+    ldr        r3, =OSTCBCur                                 ; dword_20407514
+    ldr        r4, [r3]
+    ldr        sp, [r4]
+    ldm        sp!,{r0}
+    msr        spsr_fsxc, r0
+    ldmfd sp!,{r0-r3,r4-r12,lr,pc}^    ; continue with new tasks context
+
+OS_CPU_ARM_ExceptHndlr_BreakExcept
+    ldr        r3, =Data_234942b0
+    str        sp, [r3]
+    ldr        r3, =OS_CPU_ExceptHndlr
+    mov        lr, pc
+    bx         r3
+    msr        cpsr_c, #ARM1176_MODE_SVC_INT_OFF
+    ldr        r3, =OSIntNesting                                     ; dword_2040751c
+    ldrb       r4, [r3]
+    sub        r4, r4, #0x1
+    strb       r4, [r3]
+    ldm        sp!, {r0}
+    msr        spsr_fsxc, r0
+    ldmfd sp!, {r0-r3,r4-r12,lr,pc}^
+
+OS_CPU_ARM_ExceptHndlr_BreakNothing
     ldr        r3, =OS_CPU_ExceptHndlr
     mov        lr, pc
     bx         r3

@@ -104,9 +104,13 @@ static void OS_InitEventList(void)
 /* 2343877C - complete */
 void OS_TaskIdle()
 {
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
 	while (1)
 	{
-//		uint32_t cpu_status = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 #if 0
 		console_send_string("OS_TaskIdle\r\n");
@@ -114,7 +118,7 @@ void OS_TaskIdle()
 
 		OSIdleCtr++;
 
-//		FAMOS_LeaveCriticalSection(cpu_status);
+		OS_EXIT_CRITICAL();
 
 		OSTaskIdleHook();
 	}
@@ -182,13 +186,16 @@ void OSInit()
 }
 
 
-#if 0
 /* 234388f8 - todo */
 void OSIntExit()
 {
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
 	if (OSRunning == 1)
 	{
-		uint32_t cpu_status = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 		if (OSIntNesting != 0)
 		{
@@ -211,15 +218,19 @@ void OSIntExit()
 		    }
 		}
 		//loc_23438984
-		FAMOS_LeaveCriticalSection(cpu_status);
+		OS_EXIT_CRITICAL();
 	}
 }
-#endif
+
 
 /* 234389c0 (1c8d10) - todo */
 void OS_Sched()
 {
-//	uint32_t cpu_status = FAMOS_EnterCriticalSection();
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+	OS_ENTER_CRITICAL();
 
 	if ((OSIntNesting == 0) && (OSLockNesting == 0))
 	{
@@ -235,7 +246,7 @@ void OS_Sched()
 		}
 	}
 
-//	FAMOS_LeaveCriticalSection(cpu_status);
+	OS_EXIT_CRITICAL();
 }
 
 
@@ -262,13 +273,16 @@ void OSTimeTick()
 {
 	RTOS_tTCB* pTask;
 	uint32_t r0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	OSTimeTickHook();
-//	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	OSTime++;
 
-//	FAMOS_LeaveCriticalSection(r0);
+	OS_EXIT_CRITICAL();
 
 	if (OSRunning == 1)
 	{
@@ -276,7 +290,7 @@ void OSTimeTick()
 		for (pTask = OSTCBList; pTask->prio != 63; )
 		{
 			//loc_23438b10
-//			r0 = FAMOS_EnterCriticalSection();
+			OS_ENTER_CRITICAL();
 
 			if (pTask->OSTCBDly != 0)
 			{
@@ -298,7 +312,7 @@ void OSTimeTick()
 			//loc_23438b68
 			pTask = pTask->next;
 
-//			FAMOS_LeaveCriticalSection(r0);
+			OS_EXIT_CRITICAL();
 		}
 	}
 }
@@ -421,16 +435,18 @@ int rtos_create_tcb(int prio/*r5*/, int stack_frame/*r6*/, int* f/*r8*/,
                     int e, int g/*sb*/, char* name/*sl*/, int i/*fp*/)
 {
 	RTOS_tTCB* tcb;
-	uint32_t cpu_status;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
-//	cpu_status = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	tcb = rtos_pTCBFree;
 	if (tcb != 0)
 	{
 	    rtos_pTCBFree = tcb->next;
 
-//		FAMOS_LeaveCriticalSection(cpu_status);
+		OS_EXIT_CRITICAL();
 
 	    tcb->stack_frame = stack_frame;
 	    tcb->prio = prio;
@@ -452,7 +468,7 @@ int rtos_create_tcb(int prio/*r5*/, int stack_frame/*r6*/, int* f/*r8*/,
 	    sub_23464610(tcb);
 	    OSTaskCreateHook(tcb);
 
-//		cpu_status = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 	    rtos_arThread[prio] = tcb;
 	    tcb->next = OSTCBList;
@@ -467,14 +483,14 @@ int rtos_create_tcb(int prio/*r5*/, int stack_frame/*r6*/, int* f/*r8*/,
 
 	    OSRdyTbl[tcb->OSTCBY] |= tcb->OSTCBBitX;
 
-//		FAMOS_LeaveCriticalSection(cpu_status);
+		OS_EXIT_CRITICAL();
 
 		return 0;
 	}
 	else
 	{
 		//loc_23448718: OS_NO_MORE_TCB
-//		FAMOS_LeaveCriticalSection(cpu_status);
+		OS_EXIT_CRITICAL();
 		return 70;
 	}
 }

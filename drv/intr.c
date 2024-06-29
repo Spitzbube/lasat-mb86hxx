@@ -1,5 +1,6 @@
 
 #include <stdint.h>
+#include "ucos_ii.h"
 
 typedef void (*ISR)(void);
 
@@ -83,8 +84,10 @@ void intr_set_vectaddrx(int index, int func)
 /* 2341b3b8 - todo */
 char sub_2341b3b8(uint32_t a, int b)
 {
-	int r0;
 	uint32_t mask;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	if (a >= 32)
 	{
@@ -93,7 +96,7 @@ char sub_2341b3b8(uint32_t a, int b)
 
 	mask = 1 << a;
 
-//	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	if (b != 0)
 	{
@@ -101,7 +104,7 @@ char sub_2341b3b8(uint32_t a, int b)
 	}
 	*((volatile uint32_t*)0xcf000300) |= mask; //FREG_IRQ_CTRL_ARMIRQMASK
 
-//	FAMOS_LeaveCriticalSection(r0);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }

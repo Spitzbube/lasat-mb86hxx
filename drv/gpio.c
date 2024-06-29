@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "sys_services.h"
 #include "gpio.h"
+#include "ucos_ii.h"
 
 
 #define FAPI_GPIO_PIN_COUNT           96
@@ -42,10 +43,11 @@ typedef union
 /* 2341a938 / 23426c1c - todo */
 int gpio_init(void)
 {
-	unsigned char pin;
-#if 0
-	int r8 = FAMOS_EnterCriticalSection();
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
 #endif
+	unsigned char pin;
+	OS_ENTER_CRITICAL();
 
 	Data_2040847c = (1 << 9);
 
@@ -88,9 +90,7 @@ int gpio_init(void)
 #endif
 	}
 
-#if 0
-	FAMOS_LeaveCriticalSection(r8);
-#endif
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }
@@ -99,6 +99,9 @@ int gpio_init(void)
 int gpio_open(Struct_20401328* pParams, Struct_20611068** r5)
 {
 	DataOut dataOut; //sp
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 //	int r6 = 0;
 	int bidi = 0;
@@ -110,7 +113,7 @@ int gpio_open(Struct_20401328* pParams, Struct_20611068** r5)
 	}
 	else
 	{
-//		int r0 = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 		if (pParams->bPin < FAPI_GPIO_PIN_COUNT)
 		{
@@ -119,7 +122,7 @@ int gpio_open(Struct_20401328* pParams, Struct_20611068** r5)
 
 			if (r1->bData_0 != 0xff)
 			{
-//				FAMOS_LeaveCriticalSection(r0);
+				OS_EXIT_CRITICAL();
 
 				return 4;
 			}
@@ -209,12 +212,12 @@ int gpio_open(Struct_20401328* pParams, Struct_20611068** r5)
 		else
 		{
 			//loc_2040147c
-//			FAMOS_LeaveCriticalSection(r0);
+			OS_EXIT_CRITICAL();
 
 			return 2;
 		}
 
-//		FAMOS_LeaveCriticalSection(r0);
+		OS_EXIT_CRITICAL();
 	}
 	//loc_20401474
 	return 0;

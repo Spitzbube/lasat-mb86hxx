@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include "sys_services.h"
+#include "ucos_ii.h"
 #include "timer.h"
 
 Struct_235b1c24 Data_235b1c24[10]; //235b1c24
@@ -16,7 +17,11 @@ void timer_init(void)
 {
 	unsigned char r4;
 	unsigned char r1;
-//	int r5 = FAMOS_EnterCriticalSection();
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+	OS_ENTER_CRITICAL();
 
 	for (r4 = 0; r4 < 3; r4++)
 	{
@@ -37,7 +42,7 @@ void timer_init(void)
 		Data_235b1c24[r1].Func_16 = 0;
 	}
 
-//	FAMOS_LeaveCriticalSection(r5);
+	OS_EXIT_CRITICAL();
 }
 
 
@@ -80,7 +85,9 @@ int timer_isr(void)
 int timer_open(uint32_t r6)
 {
 	int r4;
-	int r8;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 	unsigned char r7 = (r6 + 5);
 
 	if (r6 > 3)
@@ -88,7 +95,7 @@ int timer_open(uint32_t r6)
 		return 1;
 	}
 
-//	r8 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	if (0 != sys_get_device_id())
 	{
@@ -126,7 +133,7 @@ int timer_open(uint32_t r6)
 
 	sub_2341b904(1, 1);
 
-//	FAMOS_LeaveCriticalSection(r8);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }
@@ -135,15 +142,17 @@ int timer_open(uint32_t r6)
 /* 2341b7a8 - todo */
 Struct_235b1c24* timer_user_open(Timer_Params* r5)
 {
-	uint32_t r0;
 	uint8_t i;
 	Struct_235b1c24* r4 = 0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("timer_user_open (todo.c): TODO\r\n");
 #endif
 
-	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	for (i = 0; i < 10; i++)
 	{
@@ -164,7 +173,7 @@ Struct_235b1c24* timer_user_open(Timer_Params* r5)
 		r4->Data_0 = 1;
 	}
 	//loc_2341b814
-	FAMOS_LeaveCriticalSection(r0);
+	OS_EXIT_CRITICAL();
 
 	return r4;
 }
@@ -174,19 +183,21 @@ Struct_235b1c24* timer_user_open(Timer_Params* r5)
 int timer_user_control(void* h, int r5)
 {
 	Struct_235b1c24* r4 = h;
-	uint32_t r0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("timer_user_control (todo.c): TODO\r\n");
 #endif
 
-	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	r4->Data_0 = r5? 2: 1;
 
 	r4->Data_4 = r4->Data_8;
 
-	FAMOS_LeaveCriticalSection(r0);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }
@@ -196,7 +207,9 @@ int timer_user_control(void* h, int r5)
 void* sub_2341b85c(void* h)
 {
 	Struct_235b1c24* r4 = h;
-	uint32_t r0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("timer_user_control (todo.c): TODO\r\n");
@@ -207,11 +220,11 @@ void* sub_2341b85c(void* h)
 		return (void*) -1;
 	}
 
-	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	r4->Data_0 = 0;
 
-	FAMOS_LeaveCriticalSection(r0);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }

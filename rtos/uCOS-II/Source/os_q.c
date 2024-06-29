@@ -23,7 +23,6 @@ void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 #if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0;
 #endif
-    uint32_t cpu_sr;
 
 
 
@@ -40,7 +39,7 @@ void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 //        *err = 1; //OS_ERR_EVENT_TYPE;
         return ((void *)0);
     }
-//    cpu_sr = FAMOS_EnterCriticalSection();
+    OS_ENTER_CRITICAL();
     pq = (OS_Q *)pevent->OSEventPtr;             /* Point at queue control block                       */
     if (pq->OSQEntries > 0) {                    /* See if any messages in the queue                   */
         msg = *pq->OSQOut++;                     /* Yes, extract oldest message from the queue         */
@@ -54,7 +53,7 @@ void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 //        *err = OS_Q_EMPTY;
         msg  = (void *)0;                        /* Queue is empty                                     */
     }
-//    FAMOS_LeaveCriticalSection(cpu_sr);
+    OS_EXIT_CRITICAL();
     return (msg);                                /* Return message received (or NULL)                  */
 }
 
@@ -64,7 +63,9 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 {
 	OS_EVENT  *pevent; //r5
     OS_Q      *pq; //r4
-	uint32_t cpu_sr;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("OSQCreate (todo.c): TODO\r\n");
@@ -75,7 +76,7 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 		return 0;
 	}
 
-//	cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	pevent = OSEventFreeList;
 
@@ -84,11 +85,11 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 		OSEventFreeList = (OS_EVENT *)OSEventFreeList->OSEventPtr;
 	}
 
-//	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	if (pevent != 0)
 	{
-//		cpu_sr = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 		pq = OSQFreeList;
 
@@ -96,7 +97,7 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 		{
 			OSQFreeList = OSQFreeList->OSQPtr;
 
-//			FAMOS_LeaveCriticalSection(cpu_sr);
+			OS_EXIT_CRITICAL();
 
 			pq->OSQStart           = start;
 			pq->OSQEnd             = &start[size];
@@ -118,7 +119,7 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 			pevent->OSEventPtr = (void *)OSEventFreeList;
 			OSEventFreeList    = pevent;
 
-//			FAMOS_LeaveCriticalSection(cpu_sr);
+			OS_EXIT_CRITICAL();
 
 			pevent = 0;
 		}
@@ -206,7 +207,7 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free list  */
              pevent->OSEventCnt     = 0;
              OSEventFreeList        = pevent;              /* Get next free event control block        */
-             FAMOS_LeaveCriticalSection(cpu_sr);
+             OS_EXIT_CRITICAL();
              if (tasks_waiting == OS_TRUE) {                  /* Reschedule only if task(s) were waiting  */
                  OS_Sched();                               /* Find highest priority task ready to run  */
              }
@@ -215,7 +216,7 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
              break;
 
         default:
-        	FAMOS_LeaveCriticalSection(cpu_sr);
+        	OS_EXIT_CRITICAL();
              *err                   = OS_ERR_INVALID_OPT;
              pevent_return          = pevent;
              break;
@@ -231,7 +232,7 @@ uint8_t  OSQFlush (OS_EVENT *pevent)
 #if OS_CRITICAL_METHOD == 3                           /* Allocate storage for CPU status register      */
     OS_CPU_SR  cpu_sr = 0;
 #endif
-    uint32_t cpu_sr;
+//    uint32_t cpu_sr;
 
 
 #if 1 //OS_ARG_CHK_EN > 0
@@ -242,12 +243,12 @@ uint8_t  OSQFlush (OS_EVENT *pevent)
         return 1; //(OS_ERR_EVENT_TYPE);
     }
 #endif
-//    cpu_sr = FAMOS_EnterCriticalSection();
+    OS_ENTER_CRITICAL();
     pq             = (OS_Q *)pevent->OSEventPtr;      /* Point to queue storage structure              */
     pq->OSQIn      = pq->OSQStart;
     pq->OSQOut     = pq->OSQStart;
     pq->OSQEntries = 0;
-//    FAMOS_LeaveCriticalSection(cpu_sr);
+    OS_EXIT_CRITICAL();
     return 0; //(OS_NO_ERR);
 }
 
@@ -257,7 +258,9 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 {
     void      *msg;
     OS_Q      *pq;
-	uint32_t cpu_sr;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	if (OSIntNesting != 0)
 	{
@@ -277,7 +280,7 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 		return 0;
 	}
 
-//	cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	pq = (OS_Q *)pevent->OSEventPtr;
 	if (pq->OSQEntries != 0)
@@ -289,7 +292,7 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
             pq->OSQOut = pq->OSQStart;
         }
 
-//        FAMOS_LeaveCriticalSection(cpu_sr);
+        OS_EXIT_CRITICAL();
         *err = 0;
         return msg;
 	}
@@ -299,11 +302,11 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 
 	OS_EventTaskWait(pevent);
 
-//	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	OS_Sched();
 
-//	cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	msg = OSTCBCur->OSTCBMsg;
 	if (msg != 0)
@@ -312,7 +315,7 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 		OSTCBCur->OSTCBStat = 0;
 		OSTCBCur->OSTCBEventPtr = 0;
 
-//		FAMOS_LeaveCriticalSection(cpu_sr);
+		OS_EXIT_CRITICAL();
 
 		*err = 0;
 		return msg;
@@ -320,7 +323,7 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 	//loc_23463fdc
 	OS_EventTaskRemove(pevent);
 
-//	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	*err = 10;
 	return 0;
@@ -331,7 +334,9 @@ void* OSQPend(OS_EVENT *pevent, uint16_t timeout, uint8_t *err)
 uint8_t OSQPost(OS_EVENT *pevent, void *msg)
 {
     OS_Q      *pq;
-	uint32_t cpu_sr;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	if (pevent == 0)
 	{
@@ -348,13 +353,13 @@ uint8_t OSQPost(OS_EVENT *pevent, void *msg)
 		return 1;
 	}
 
-//	cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	if (pevent->OSEventGrp != 0)
 	{
 		OS_EventTaskRdy(pevent, msg, 4);
 
-//		FAMOS_LeaveCriticalSection(cpu_sr);
+		OS_EXIT_CRITICAL();
 
 		OS_Sched();
 		//->loc_234640bc
@@ -365,7 +370,7 @@ uint8_t OSQPost(OS_EVENT *pevent, void *msg)
 	    pq = (OS_Q *)pevent->OSEventPtr;                   /* Point to queue control block                 */
 	    if (pq->OSQEntries >= pq->OSQSize)
 	    {
-//			FAMOS_LeaveCriticalSection(cpu_sr);
+			OS_EXIT_CRITICAL();
 	        return 30; //(OS_Q_FULL);
 	    }
 	    //loc_23464084
@@ -375,7 +380,7 @@ uint8_t OSQPost(OS_EVENT *pevent, void *msg)
 	    {
 	        pq->OSQIn = pq->OSQStart;
 	    }
-//		FAMOS_LeaveCriticalSection(cpu_sr);
+		OS_EXIT_CRITICAL();
 	}
 	//loc_234640bc
     return 0;

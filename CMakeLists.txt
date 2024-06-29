@@ -4,14 +4,15 @@ project (mb86h60_hello_world)
 
 set(SRCS
    main.c
+   main1.c
    console.c
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
 
 add_subdirectory(boot/startup)
-add_subdirectory(drv)
 add_subdirectory(rtos/uCOS-II)
+add_subdirectory(drv)
 
 target_link_libraries(${PROJECT_NAME}
     startup
@@ -19,7 +20,7 @@ target_link_libraries(${PROJECT_NAME}
     ucos_ii
 )
 
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${PROJECT_NAME} PUBLIC
     drv
 )
 

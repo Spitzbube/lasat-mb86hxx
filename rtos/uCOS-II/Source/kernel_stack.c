@@ -4,6 +4,7 @@
 extern void* OS_CPU_ExceptStk; //23487950
 int Data_234942a8 = 0; //234942a8 +0
 void* OS_CPU_ExceptStkBase; //234942ac +4
+int Data_234942b0; //234942b0 +8
 
 
 /* 23464598 - todo */

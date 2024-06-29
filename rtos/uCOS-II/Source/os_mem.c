@@ -11,7 +11,9 @@ OS_MEM  *OSMemCreate (void *addr, uint32_t nblks, uint32_t blksize, uint8_t *err
     uint8_t     *pblk;
     void     **plink;
     uint32_t     i;
-    uint32_t  cpu_sr = 0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 
 #if 0
@@ -44,13 +46,13 @@ OS_MEM  *OSMemCreate (void *addr, uint32_t nblks, uint32_t blksize, uint8_t *err
     }
 #endif
 
-//    cpu_sr = FAMOS_EnterCriticalSection();
+    OS_ENTER_CRITICAL();
     pmem = OSMemFreeList;                             /* Get next free memory partition                */
     if (OSMemFreeList != (OS_MEM *)0)
     {               /* See if pool of free partitions was empty      */
         OSMemFreeList = (OS_MEM *)OSMemFreeList->OSMemFreeList;
     }
-//    FAMOS_LeaveCriticalSection(cpu_sr);
+    OS_EXIT_CRITICAL();
     if (pmem == (OS_MEM *)0)
     {                        /* See if we have a memory partition             */
         *err = 0x6e; //OS_MEM_INVALID_PART;
@@ -79,7 +81,9 @@ OS_MEM  *OSMemCreate (void *addr, uint32_t nblks, uint32_t blksize, uint8_t *err
 void  *OSMemGet (OS_MEM *pmem, uint8_t *err)
 {
     void      *pblk;
-    uint32_t  cpu_sr = 0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
     if (err == (INT8U *)0) {                          /* Validate 'err'                                */
@@ -92,19 +96,19 @@ void  *OSMemGet (OS_MEM *pmem, uint8_t *err)
         return ((void *)0);
     }
 
-//    cpu_sr = FAMOS_EnterCriticalSection();
+    OS_ENTER_CRITICAL();
 
     if (pmem->OSMemNFree > 0)
     {                       /* See if there are any free memory blocks       */
         pblk                = pmem->OSMemFreeList;    /* Yes, point to next free memory block          */
         pmem->OSMemFreeList = *(void **)pblk;         /*      Adjust pointer to new free list          */
         pmem->OSMemNFree--;                           /*      One less memory block in this partition  */
-//        FAMOS_LeaveCriticalSection(cpu_sr);
+        OS_EXIT_CRITICAL();
         *err = 0; //OS_NO_ERR;                             /*      No error                                 */
         return (pblk);                                /*      Return memory block to caller            */
     }
 
-//    FAMOS_LeaveCriticalSection(cpu_sr);
+    OS_EXIT_CRITICAL();
 
     *err = 0x71; //OS_MEM_NO_FREE_BLKS;                       /* No,  Notify caller of empty memory partition  */
 

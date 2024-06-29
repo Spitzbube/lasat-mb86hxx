@@ -35,9 +35,7 @@ extern "C" {
 
 #include <app_cfg.h>
 #include <os_cfg.h>
-#if 0
 #include <os_cpu.h>
-#endif
 
 #include <stdint.h>
 typedef uint8_t INT8U;
