@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#if 0
 extern uint8_t OSIntNesting; //23492c00
 extern uint8_t OSLockNesting; //23492c02 +2 //3a863a
 extern uint8_t OSRdyGrp; //23492c05 +5 //bData_3a863d
@@ -11,6 +12,7 @@ extern uint8_t OSTaskCtr; //23492c07 +7 //bData_3a8647
 extern OS_EVENT* OSEventFreeList; //23492c0c +0xc
 extern RTOS_tTCB* rtos_pTCBFree; //23492c18 +0x18
 extern RTOS_tTCB* OSTCBList; //23492c20 +0x20
+#endif
 #if 0
 extern RTOS_tTCB* OSTCBCur; //234b2ca8
 #endif
@@ -18,7 +20,9 @@ extern uint8_t OSRdyTbl[]; //23492c28 +0x28
 extern RTOS_tTCB* rtos_arThread[]; //237814dc +64*4 = 237815DC
 
 extern void rtos_init();
+#if 0
 extern void rtos_start();
+#endif
 extern void rtos_task_wait(uint16_t);
 
 extern void rtos_sema_enter(OS_EVENT*, int, int*);

@@ -54,11 +54,11 @@ typedef uint32_t INT32U;
 #define  OS_EXT  extern
 #endif
 
-#if 0
-
 #ifndef  OS_FALSE
 #define  OS_FALSE                     0u
 #endif
+
+#if 0
 
 #ifndef  OS_TRUE
 #define  OS_TRUE                         1u
@@ -80,8 +80,6 @@ typedef uint32_t INT32U;
 
 #define  OS_TASK_IDLE_PRIO  (OS_LOWEST_PRIO)            /* IDLE      task priority                     */
 
-#if 0
-
 #if OS_LOWEST_PRIO <= 63
 #define  OS_EVENT_TBL_SIZE ((OS_LOWEST_PRIO) / 8 + 1)   /* Size of event table                         */
 #define  OS_RDY_TBL_SIZE   ((OS_LOWEST_PRIO) / 8 + 1)   /* Size of ready table                         */
@@ -90,15 +88,15 @@ typedef uint32_t INT32U;
 #define  OS_RDY_TBL_SIZE   ((OS_LOWEST_PRIO) / 16 + 1)  /* Size of ready table                         */
 #endif
 
-#endif
-
 #define  OS_TASK_IDLE_ID          65535u                /* ID numbers for Idle, Stat and Timer tasks   */
 #if 0
 #define  OS_TASK_STAT_ID          65534u
 #define  OS_TASK_TMR_ID           65533u
+#endif
 
 #define  OS_EVENT_EN       (((OS_Q_EN > 0) && (OS_MAX_QS > 0)) || (OS_MBOX_EN > 0) || (OS_SEM_EN > 0) || (OS_MUTEX_EN > 0))
 
+#if 0
 /*$PAGE*/
 /*
 *********************************************************************************************************
@@ -188,6 +186,8 @@ typedef uint32_t INT32U;
 #define  OS_POST_OPT_FRONT         0x02u    /* Post to highest priority task waiting                   */
 #define  OS_POST_OPT_NO_SCHED      0x04u    /* Do not call the scheduler if this option is selected    */
 
+#endif
+
 /*
 *********************************************************************************************************
 *                                 TASK OPTIONS (see OSTaskCreateExt())
@@ -197,6 +197,8 @@ typedef uint32_t INT32U;
 #define  OS_TASK_OPT_STK_CHK     0x0001u    /* Enable stack checking for the task                      */
 #define  OS_TASK_OPT_STK_CLR     0x0002u    /* Clear the stack when the task is create                 */
 #define  OS_TASK_OPT_SAVE_FP     0x0004u    /* Save the contents of any floating-point registers       */
+
+#if 0
 
 /*
 *********************************************************************************************************
@@ -329,15 +331,20 @@ typedef uint32_t INT32U;
 
 #if OS_EVENT_EN && (OS_MAX_EVENTS > 0)
 typedef struct os_event {
-    INT8U    OSEventType;                    /* Type of event control block (see OS_EVENT_TYPE_xxxx)    */
-    void    *OSEventPtr;                     /* Pointer to message or queue structure                   */
-    INT16U   OSEventCnt;                     /* Semaphore Count (not used if other EVENT type)          */
+    INT8U    OSEventType;                    /* Type of event control block (see OS_EVENT_TYPE_xxxx)    */ //0
+    INT8U    OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */ //1
+	uint16_t wfill_2; //2
+    INT16U   OSEventCnt;                     /* Semaphore Count (not used if other EVENT type)          */ //4
+    void    *OSEventPtr;                     /* Pointer to message or queue structure                   */ //8
+    INT8U    OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */ //12
+#if 0
 #if OS_LOWEST_PRIO <= 63
     INT8U    OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */
     INT8U    OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */
 #else
     INT16U   OSEventGrp;                     /* Group corresponding to tasks waiting for event to occur */
     INT16U   OSEventTbl[OS_EVENT_TBL_SIZE];  /* List of tasks waiting for event to occur                */
+#endif
 #endif
 
 #if OS_EVENT_NAME_SIZE > 1
@@ -346,6 +353,7 @@ typedef struct os_event {
 } OS_EVENT;
 #endif
 
+#if 0
 typedef struct os_event
 {
 	uint8_t OSEventType; //0
@@ -356,6 +364,7 @@ typedef struct os_event
 	uint8_t OSEventTbl[8/*OS_EVENT_TBL_SIZE*/]; //12
 	//0x14
 } OS_EVENT;
+#endif
 
 #if 0
 
@@ -705,13 +714,13 @@ typedef  struct  os_tmr_wheel {
 *********************************************************************************************************
 */
 
-OS_EXT  INT32U            OSCtxSwCtr;               /* Counter of number of context switches           */
-
 #endif
 
-#if 1 //OS_EVENT_EN && (OS_MAX_EVENTS > 0)
-OS_EXT  OS_EVENT         *OSEventFreeList;          /* Pointer to list of free EVENT control blocks    */
-//OS_EXT  OS_EVENT          OSEventTbl[OS_MAX_EVENTS];/* Table of EVENT control blocks                   */
+OS_EXT  INT32U            OSCtxSwCtr;               /* Counter of number of context switches           */ //23492c08 +8 //Data_3a7f74
+
+#if OS_EVENT_EN && (OS_MAX_EVENTS > 0)
+OS_EXT  OS_EVENT         *OSEventFreeList;          /* Pointer to list of free EVENT control blocks    */ //23492c0c +0xc
+OS_EXT  OS_EVENT          OSEventTbl[OS_MAX_EVENTS];/* Table of EVENT control blocks                   */ //235f7b3c +200*20 = 235F8ADC
 #endif
 
 #if 0
@@ -731,40 +740,39 @@ OS_EXT  OS_STK            OSTaskStatStk[OS_TASK_STAT_STK_SIZE];      /* Statisti
 
 #endif
 
-OS_EXT  INT8U             OSIntNesting;             /* Interrupt nesting level                         */
+OS_EXT  INT8U             OSIntNesting;             /* Interrupt nesting level                         */ //23492c00 +0
 
-#if 0
+OS_EXT  INT8U             bData_23492c01; //23492c01 +1
 
-OS_EXT  INT8U             OSLockNesting;            /* Multitasking lock nesting level                 */
+OS_EXT  INT8U             OSLockNesting;            /* Multitasking lock nesting level                 */ //23492c02 +2 //3a863a
 
-OS_EXT  INT8U             OSPrioCur;                /* Priority of current task                        */
-OS_EXT  INT8U             OSPrioHighRdy;            /* Priority of highest priority task               */
+OS_EXT  INT8U             OSPrioCur;                /* Priority of current task                        */ //23492c03 +3
+OS_EXT  INT8U             OSPrioHighRdy;            /* Priority of highest priority task               */ //23492c04 +4
 
 #if OS_LOWEST_PRIO <= 63
-OS_EXT  INT8U             OSRdyGrp;                        /* Ready list group                         */
-OS_EXT  INT8U             OSRdyTbl[OS_RDY_TBL_SIZE];       /* Table of tasks which are ready to run    */
+OS_EXT  INT8U             OSRdyGrp;                        /* Ready list group                         */ //23492c05 +5 //bData_3a863d
+OS_EXT  INT8U             OSRdyTbl[OS_RDY_TBL_SIZE];       /* Table of tasks which are ready to run    */ //23492c28 +0x28
 #else
 OS_EXT  INT16U            OSRdyGrp;                        /* Ready list group                         */
 OS_EXT  INT16U            OSRdyTbl[OS_RDY_TBL_SIZE];       /* Table of tasks which are ready to run    */
 #endif
 
-OS_EXT  BOOLEAN           OSRunning;                       /* Flag indicating that kernel is running   */
+OS_EXT  BOOLEAN           OSRunning;                       /* Flag indicating that kernel is running   */ //23492c06 +6
 
-OS_EXT  INT8U             OSTaskCtr;                       /* Number of tasks created                  */
+OS_EXT  INT8U             OSTaskCtr;                       /* Number of tasks created                  */ //23492c07 +7 //bData_3a8647
 
-OS_EXT  volatile  INT32U  OSIdleCtr;                                 /* Idle counter                   */
+OS_EXT  volatile  INT32U  OSIdleCtr;                                 /* Idle counter                   */ //23492c10 +0x10
 
-OS_EXT  OS_STK            OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE];      /* Idle task stack                */
+OS_EXT  OS_STK            OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE];      /* Idle task stack                */ //235f8adc +0x400*4 = 235F9AD8+4
 
-#endif
+OS_EXT  /*OS_TCB*/RTOS_tTCB           *OSTCBCur;                        /* Pointer to currently running TCB         */ //23492c14 +0x14
+OS_EXT  OS_TCB           *rtos_pTCBFree/*OSTCBFreeList*/;                   /* Pointer to list of free TCBs             */ //23492c18 +0x18
+OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */ //23492c1c +0x1c
+OS_EXT  /*OS_TCB*/RTOS_tTCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */ //23492c20 +0x20
+OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */ //235f9adc +64*4 = 235F9BDC
+OS_EXT  /*OS_TCB*/RTOS_tTCB            rtos_arTCB/*OSTCBTbl*/[32/*OS_MAX_TASKS + OS_N_SYS_TASKS*/];   /* Table of TCBs                  */ //235f9bdc +32*0x30 = 235FA1DC
 
-OS_EXT  /*OS_TCB*/RTOS_tTCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
 #if 0
-OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */
-OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
-OS_EXT  OS_TCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */
-OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */
-OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS];   /* Table of TCBs                  */
 
 #if OS_TICK_STEP_EN > 0
 OS_EXT  INT8U             OSTickStepState;          /* Indicates the state of the tick step feature    */
@@ -778,15 +786,15 @@ OS_EXT  OS_MEM            OSMemTbl[OS_MAX_MEM_PART];/* Storage for memory partit
 #endif
 
 #if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
-OS_EXT  OS_Q             *OSQFreeList;              /* Pointer to list of free QUEUE control blocks    */
-OS_EXT  OS_Q              OSQTbl[OS_MAX_QS];        /* Table of QUEUE control blocks                   */
+OS_EXT  OS_Q             *OSQFreeList;              /* Pointer to list of free QUEUE control blocks    */ //23492c34 +0x34
+OS_EXT  OS_Q              OSQTbl[OS_MAX_QS];        /* Table of QUEUE control blocks                   */ //235fa400
+#endif
+
+#if OS_TIME_GET_SET_EN > 0
+OS_EXT  volatile  INT32U  OSTime;                   /* Current value of system time (in ticks)         */ //23492c24 +0x24
 #endif
 
 #if 0
-
-#if OS_TIME_GET_SET_EN > 0
-OS_EXT  volatile  INT32U  OSTime;                   /* Current value of system time (in ticks)         */
-#endif
 
 #if OS_TMR_EN > 0
 OS_EXT  INT16U            OSTmrFree;                /* Number of free entries in the timer pool        */
@@ -1106,6 +1114,8 @@ INT8U         OSTaskCreate          (void           (*task)(void *p_arg),
                                      INT8U            prio);
 #endif
 
+#endif
+
 #if OS_TASK_CREATE_EXT_EN > 0
 INT8U         OSTaskCreateExt       (void           (*task)(void *p_arg),
                                      void            *p_arg,
@@ -1117,6 +1127,8 @@ INT8U         OSTaskCreateExt       (void           (*task)(void *p_arg),
                                      void            *pext,
                                      INT16U           opt);
 #endif
+
+#if 0
 
 #if OS_TASK_DEL_EN > 0
 INT8U         OSTaskDel             (INT8U            prio);
@@ -1220,9 +1232,11 @@ INT8U        OSTmrSignal            (void);
 *                                             MISCELLANEOUS
 *********************************************************************************************************
 */
+#endif
 
 void          OSInit                (void);
 
+#if 0
 void          OSIntEnter            (void);
 void          OSIntExit             (void);
 
@@ -1230,9 +1244,11 @@ void          OSIntExit             (void);
 void          OSSchedLock           (void);
 void          OSSchedUnlock         (void);
 #endif
+#endif
 
 void          OSStart               (void);
 
+#if 0
 void          OSStatInit            (void);
 
 INT16U        OSVersion             (void);
@@ -1290,7 +1306,11 @@ INT8U         OS_StrCopy            (INT8U           *pdest,
 INT8U         OS_StrLen             (INT8U           *psrc);
 #endif
 
+#endif
+
 void          OS_TaskIdle           (void            *p_arg);
+
+#if 0
 
 #if OS_TASK_STAT_EN > 0
 void          OS_TaskStat           (void            *p_arg);

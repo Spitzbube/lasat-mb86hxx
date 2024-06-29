@@ -1,5 +1,6 @@
 
 #include "data.h"
+#include "ucos_ii.h"
 
 
 /* 23400424 - todo */
@@ -7,7 +8,7 @@ void startup_thread()
 {
 	while (1)
 	{
-#if 1
+#if 0
 		console_send_string("startup_thread\r\n");
 #endif
 		//loc_234004ac
@@ -35,7 +36,7 @@ int main()
 			"STARTUP",
 			0x03);
 
-	rtos_start();
+	OSStart(); 
 
     return 0;
 }

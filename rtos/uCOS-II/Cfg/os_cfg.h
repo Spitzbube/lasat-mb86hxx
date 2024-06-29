@@ -42,9 +42,8 @@
 #define OS_LOWEST_PRIO           63    /* Defines the lowest priority that can be assigned ...           */
                                        /* ... MUST NEVER be higher than 254!                             */
 
+#define OS_MAX_EVENTS           200    /* Max. number of event control blocks in your application        */
 #if 0
-
-#define OS_MAX_EVENTS            10    /* Max. number of event control blocks in your application        */
 #define OS_MAX_FLAGS              5    /* Max. number of Event Flag Groups    in your application        */
 #endif
 #define OS_MAX_MEM_PART          25    /* Max. number of memory partitions                               */
@@ -119,7 +118,9 @@
                                        /* --------------------- TASK MANAGEMENT ----------------------   */
 #define OS_TASK_CHANGE_PRIO_EN    1    /*     Include code for OSTaskChangePrio()                        */
 #define OS_TASK_CREATE_EN         1    /*     Include code for OSTaskCreate()                            */
+#endif
 #define OS_TASK_CREATE_EXT_EN     1    /*     Include code for OSTaskCreateExt()                         */
+#if 0
 #define OS_TASK_DEL_EN            1    /*     Include code for OSTaskDel()                               */
 #define OS_TASK_NAME_SIZE        16    /*     Determine the size of a task name                          */
 #define OS_TASK_PROFILE_EN        1    /*     Include variables in OS_TCB for profiling                  */
@@ -131,7 +132,9 @@
                                        /* --------------------- TIME MANAGEMENT ----------------------   */
 #define OS_TIME_DLY_HMSM_EN       1    /*     Include code for OSTimeDlyHMSM()                           */
 #define OS_TIME_DLY_RESUME_EN     1    /*     Include code for OSTimeDlyResume()                         */
+#endif
 #define OS_TIME_GET_SET_EN        1    /*     Include code for OSTimeGet() and OSTimeSet()               */
+#if 0
 #define OS_TIME_TICK_HOOK_EN      1    /*     Include code for OSTimeTickHook()                          */
 
 

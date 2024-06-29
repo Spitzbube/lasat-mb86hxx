@@ -3,13 +3,13 @@
 
 
 /* 23439064 - todo */
-char OSTaskCreateExt(void (*func)(int), int b,
-    int* stack, unsigned int prio/*r3/r4*/,
-    int e,
-    int* f,
-    int g/*r6*/,
-    char* h,
-    unsigned short i/*r7*/)
+INT8U OSTaskCreateExt(void (*func)(void *), void* b,
+    OS_STK* stack, INT8U prio/*r3/r4*/,
+    INT16U e,
+    OS_STK* f,
+    INT32U g/*r6*/,
+    void* h,
+    INT16U i/*r7*/)
 {
 	char res;
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
@@ -26,9 +26,9 @@ char OSTaskCreateExt(void (*func)(int), int b,
 	{
 		OS_ENTER_CRITICAL();
 
-		if (rtos_arThread[prio] == 0)
+		if (OSTCBPrioTbl[prio] == 0)
 		{
-			rtos_arThread[prio] = (RTOS_tTCB*) 1;
+			OSTCBPrioTbl[prio] = (RTOS_tTCB*) 1;
 			OS_EXIT_CRITICAL();
 
 			if ((i & 1) || (i & 2))
@@ -55,7 +55,7 @@ char OSTaskCreateExt(void (*func)(int), int b,
 			{
 				//loc_23439128: TCB creation failed
 				OS_ENTER_CRITICAL();
-				rtos_arThread[prio] = 0;
+				OSTCBPrioTbl[prio] = 0;
 				OS_EXIT_CRITICAL();
 			}
 		}
@@ -104,7 +104,7 @@ int OSTaskDel(uint8_t prio)
 		prio = OSTCBCur->prio;
 	}
 
-	ptcb = rtos_arThread[prio];
+	ptcb = OSTCBPrioTbl[prio];
 	if (ptcb == 0)
 	{
 		//loc_234392b4
@@ -154,7 +154,7 @@ int OSTaskDel(uint8_t prio)
 
     OSTaskCtr--;
 
-    rtos_arThread[prio] = 0;
+    OSTCBPrioTbl[prio] = 0;
 
     if (ptcb->OSTCBPrev == 0)
     {
@@ -208,7 +208,7 @@ uint8_t OSTaskDelReq(uint8_t prio)
 	//loc_234392f8
 	OS_ENTER_CRITICAL();
 
-	ptcb = /*OSTCBPrioTbl*/rtos_arThread[prio];
+	ptcb = OSTCBPrioTbl[prio];
 	if (ptcb != 0)
 	{
 		ptcb->l = 62;
@@ -267,7 +267,7 @@ int OSTimeDlyResume(uint8_t prio)
 
 	r0 = FAMOS_EnterCriticalSection();
 
-	ptcb = rtos_arThread[prio];
+	ptcb = OSTCBPrioTbl[prio];
 
 	if (ptcb == 0)
 	{

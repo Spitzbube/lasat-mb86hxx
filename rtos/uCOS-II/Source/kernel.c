@@ -7,6 +7,7 @@ const uint8_t Data_23489cc0[] = //23489cc0
 	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 };
 
+#if 0
 const uint8_t OSUnMapTbl[] = //23489cc8
 {
 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00,
@@ -26,33 +27,38 @@ const uint8_t OSUnMapTbl[] = //23489cc8
 0x05, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00,
 0x04, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00
 };
+#else
+extern const uint8_t OSUnMapTbl[]; //23489cc8
+#endif
 
-uint8_t OSIntNesting; //23492c00 +0
-uint8_t bData_23492c01; //23492c01 +1
-uint8_t OSLockNesting; //23492c02 +2 //3a863a
-uint8_t OSPrioCur; //23492c03 +3
-uint8_t OSPrioHighRdy; //23492c04 +4
-uint8_t OSRdyGrp; //23492c05 +5 //bData_3a863d
-uint8_t OSRunning; //23492c06 +6
-uint8_t OSTaskCtr; //23492c07 +7 //bData_3a8647
-int OSCtxSwCtr; //23492c08 +8 //Data_3a7f74
-OS_EVENT* OSEventFreeList; //23492c0c +0xc
-int OSIdleCtr; //23492c10 +0x10
-RTOS_tTCB* OSTCBCur; //23492c14 +0x14
-RTOS_tTCB* rtos_pTCBFree; //23492c18 +0x18
-RTOS_tTCB* OSTCBHighRdy; //23492c1c +0x1c
-RTOS_tTCB* OSTCBList; //23492c20 +0x20
-int OSTime; //23492c24 +0x24
-uint8_t OSRdyTbl[8]; //23492c28 +0x28
-OS_Q* OSQFreeList; //23492c34 +0x34
+//uint8_t OSIntNesting; //23492c00 +0
+//uint8_t bData_23492c01; //23492c01 +1
+//uint8_t OSLockNesting; //23492c02 +2 //3a863a
+//uint8_t OSPrioCur; //23492c03 +3
+//uint8_t OSPrioHighRdy; //23492c04 +4
+//uint8_t OSRdyGrp; //23492c05 +5 //bData_3a863d
+//uint8_t OSRunning; //23492c06 +6
+//uint8_t OSTaskCtr; //23492c07 +7 //bData_3a8647
+//int OSCtxSwCtr; 
+//OS_EVENT* OSEventFreeList; //23492c0c +0xc
+//int OSIdleCtr; //23492c10 +0x10
+//RTOS_tTCB* OSTCBCur; //23492c14 +0x14
+//RTOS_tTCB* rtos_pTCBFree; //23492c18 +0x18
+//RTOS_tTCB* OSTCBHighRdy; //23492c1c +0x1c
+//RTOS_tTCB* OSTCBList; //23492c20 +0x20
+//int OSTime; //23492c24 +0x24
+//uint8_t OSRdyTbl[8]; //23492c28 +0x28
+//OS_Q* OSQFreeList; //23492c34 +0x34
 
-OS_EVENT OSEventTbl[200]; //235f7b3c +200*20 = 235F8ADC
-int OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE]; //235f8adc +0x400*4 = 235F9AD8+4
+//OS_EVENT OSEventTbl[200]; //235f7b3c +200*20 = 235F8ADC
+//int OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE]; //235f8adc +0x400*4 = 235F9AD8+4
 //int Data_237814d8; //237814d8
-RTOS_tTCB* rtos_arThread[64]; //235f9adc +64*4 = 235F9BDC
-RTOS_tTCB rtos_arTCB[32]; //235f9bdc +32*0x30 = 235FA1DC
-OS_Q OSQTbl[OS_MAX_QS]; //235fa400
+//RTOS_tTCB* OSTCBPrioTbl[64]; //235f9adc +64*4 = 235F9BDC
+//RTOS_tTCB rtos_arTCB[32]; //235f9bdc +32*0x30 = 235FA1DC
+//OS_Q OSQTbl[OS_MAX_QS]; //235fa400
 
+
+#if 0
 
 static void rtos_thread_init(void)
 {
@@ -61,7 +67,7 @@ static void rtos_thread_init(void)
 	for (k = 0; k < 64; k++)
 	{
 		//loc_2343880c
-		rtos_arThread[k] = 0;
+		OSTCBPrioTbl[k] = 0;
 	}
 
 	{
@@ -185,6 +191,7 @@ void OSInit()
 	OSInitHookEnd();
 }
 
+#endif
 
 /* 234388f8 - todo */
 void OSIntExit()
@@ -210,7 +217,7 @@ void OSIntExit()
 
 		    if (OSPrioHighRdy != OSPrioCur)
 		    {
-		    	OSTCBHighRdy = rtos_arThread[OSPrioHighRdy];
+		    	OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
 
 		    	OSCtxSwCtr++;
 
@@ -240,7 +247,7 @@ void OS_Sched()
 
 		if (OSPrioHighRdy != OSPrioCur)
 		{
-			OSTCBHighRdy = rtos_arThread[OSPrioHighRdy];
+			OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
 			OSCtxSwCtr++;
 			OSCtxSw();
 		}
@@ -249,8 +256,8 @@ void OS_Sched()
 	OS_EXIT_CRITICAL();
 }
 
-
-/* 23438a88 - todo */
+#if 0
+/* 23438a88 - todo -> OSStart */
 void rtos_start()
 {
 	if (OSRunning == 0)
@@ -260,13 +267,13 @@ void rtos_start()
 	    OSPrioHighRdy = OSUnMapTbl[OSRdyTbl[r1]] + (r1 * 8);
 	    OSPrioCur = OSPrioHighRdy;
 
-	    OSTCBHighRdy = rtos_arThread[OSPrioHighRdy];
+	    OSTCBHighRdy = OSTCBPrioTbl[OSPrioHighRdy];
 	    OSTCBCur = OSTCBHighRdy;
 
 	    OSStartHighRdy();
 	}
 }
-
+#endif
 
 /* 23438ad4 - todo */
 void OSTimeTick()
@@ -347,7 +354,7 @@ int OS_EventTaskRdy(OS_EVENT *pevent, void *pmsg, int msk)
 		pevent->OSEventGrp &= ~lr;
 	}
 
-	ptcb = rtos_arThread[prio];
+	ptcb = OSTCBPrioTbl[prio];
 
 	ptcb->OSTCBDly = 0;
 	ptcb->OSTCBMsg = pmsg;
@@ -470,7 +477,7 @@ int rtos_create_tcb(int prio/*r5*/, int stack_frame/*r6*/, int* f/*r8*/,
 
 		OS_ENTER_CRITICAL();
 
-	    rtos_arThread[prio] = tcb;
+	    OSTCBPrioTbl[prio] = tcb;
 	    tcb->next = OSTCBList;
 	    tcb->OSTCBPrev = 0;
 	    if (OSTCBList != 0)

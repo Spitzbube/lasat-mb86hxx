@@ -5,6 +5,7 @@ set (
    Source/kernel.c
    Source/kernel_stack.c
    Source/kernel_task.c
+   Source/os_core.c
    Source/os_mem.c
    Source/os_q.c
 )
