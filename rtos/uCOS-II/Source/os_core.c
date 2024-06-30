@@ -959,6 +959,7 @@ void  OSStatInit (void)
 }
 #endif
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -974,9 +975,12 @@ void  OSStatInit (void)
 *********************************************************************************************************
 */
 
+/* 23438ad4 - todo */
 void  OSTimeTick (void)
 {
-    OS_TCB    *ptcb;
+    RTOS_tTCB/*OS_TCB*/    *ptcb;
+    INT8U* r6;
+    int r7;
 #if OS_TICK_STEP_EN > 0u
     BOOLEAN    step;
 #endif
@@ -1020,25 +1024,32 @@ void  OSTimeTick (void)
             return;
         }
 #endif
+        r6 = OSRdyTbl;
+        r7 = 1;
         ptcb = OSTCBList;                                  /* Point at first TCB in TCB list               */
         while (ptcb->OSTCBPrio != OS_TASK_IDLE_PRIO) {     /* Go through all TCBs in TCB list              */
             OS_ENTER_CRITICAL();
             if (ptcb->OSTCBDly != 0u) {                    /* No, Delayed or waiting for event with TO     */
                 ptcb->OSTCBDly--;                          /* Decrement nbr of ticks to end of delay       */
                 if (ptcb->OSTCBDly == 0u) {                /* Check for timeout                            */
-
+#if 0
                     if ((ptcb->OSTCBStat & OS_STAT_PEND_ANY) != OS_STAT_RDY) {
                         ptcb->OSTCBStat  &= (INT8U)~(INT8U)OS_STAT_PEND_ANY;   /* Yes, Clear status flag   */
                         ptcb->OSTCBStatPend = OS_STAT_PEND_TO;                 /* Indicate PEND timeout    */
                     } else {
                         ptcb->OSTCBStatPend = OS_STAT_PEND_OK;
                     }
-
+#endif
                     if ((ptcb->OSTCBStat & OS_STAT_SUSPEND) == OS_STAT_RDY) {  /* Is task suspended?       */
                         OSRdyGrp               |= ptcb->OSTCBBitY;             /* No,  Make ready          */
-                        OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
+                        /*OSRdyTbl*/r6[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
                         OS_TRACE_TASK_READY(ptcb);
                     }
+#if 1
+                    else {
+						ptcb->OSTCBDly = r7; //1;
+					}
+#endif                    
                 }
             }
             ptcb = ptcb->OSTCBNext;                        /* Point at next TCB in TCB list                */
@@ -1047,6 +1058,7 @@ void  OSTimeTick (void)
     }
 }
 
+#if 0
 
 /*
 *********************************************************************************************************
@@ -1205,7 +1217,6 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
 }
 #endif
 
-#if 0
 
 /*
 *********************************************************************************************************
@@ -1222,6 +1233,7 @@ INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
 *********************************************************************************************************
 */
 #if (OS_EVENT_EN)
+/* 23438c24 - todo */
 void  OS_EventTaskWait (OS_EVENT *pevent)
 {
     INT8U  y;
@@ -1229,18 +1241,30 @@ void  OS_EventTaskWait (OS_EVENT *pevent)
 
     OSTCBCur->OSTCBEventPtr               = pevent;                 /* Store ptr to ECB in TCB         */
 
+#if 0 //Original
     pevent->OSEventTbl[OSTCBCur->OSTCBY] |= OSTCBCur->OSTCBBitX;    /* Put task in waiting list        */
     pevent->OSEventGrp                   |= OSTCBCur->OSTCBBitY;
+#endif
 
     y             =  OSTCBCur->OSTCBY;            /* Task no longer ready                              */
-    OSRdyTbl[y]  &= (OS_PRIO)~OSTCBCur->OSTCBBitX;
+#if 0
+    OSRdyTbl[y]  &= /*(OS_PRIO)*/~OSTCBCur->OSTCBBitX;
     OS_TRACE_TASK_SUSPENDED(OSTCBCur);
     if (OSRdyTbl[y] == 0u) {                      /* Clear event grp bit if this was only task pending */
-        OSRdyGrp &= (OS_PRIO)~OSTCBCur->OSTCBBitY;
+#else
+    if ((OSRdyTbl[y]  &= ~OSTCBCur->OSTCBBitX) == 0u) {
+#endif
+        OSRdyGrp &= /*(OS_PRIO)*/~OSTCBCur->OSTCBBitY;
     }
+
+#if 1 //New
+    pevent->OSEventTbl[OSTCBCur->OSTCBY] |= OSTCBCur->OSTCBBitX;    /* Put task in waiting list        */
+    pevent->OSEventGrp                   |= OSTCBCur->OSTCBBitY;
+#endif
 }
 #endif
 
+#if 0
 
 /*
 *********************************************************************************************************
@@ -1286,6 +1310,7 @@ void  OS_EventTaskWaitMulti (OS_EVENT **pevents_wait)
 }
 #endif
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -1303,18 +1328,30 @@ void  OS_EventTaskWaitMulti (OS_EVENT **pevents_wait)
 *********************************************************************************************************
 */
 #if (OS_EVENT_EN)
-void  OS_EventTaskRemove (OS_TCB   *ptcb,
+/* 23438c8c - todo */
+void  OS_EventTaskRemove (/*OS_TCB   *ptcb,*/
                           OS_EVENT *pevent)
 {
     INT8U  y;
 
 
+#if 0 //Original
     y                       =  ptcb->OSTCBY;
     pevent->OSEventTbl[y]  &= (OS_PRIO)~ptcb->OSTCBBitX;    /* Remove task from wait list              */
     if (pevent->OSEventTbl[y] == 0u) {
         pevent->OSEventGrp &= (OS_PRIO)~ptcb->OSTCBBitY;
     }
     ptcb->OSTCBEventPtr     = (OS_EVENT  *)0;               /* Unlink OS_EVENT from OS_TCB             */
+#else
+    y                       =  OSTCBCur->OSTCBY;
+    if ((pevent->OSEventTbl[y]  &= ~OSTCBCur->OSTCBBitX) == 0)
+    {
+        pevent->OSEventGrp &= ~OSTCBCur->OSTCBBitY;
+    }
+
+    OSTCBCur->OSTCBStat = 0;
+    OSTCBCur->OSTCBEventPtr = 0;
+#endif
 }
 #endif
 
@@ -1376,6 +1413,7 @@ void  OS_EventTaskRemoveMulti (OS_TCB    *ptcb,
 *********************************************************************************************************
 */
 #if (OS_EVENT_EN)
+/* 23438cd4 - todo */
 void  OS_EventWaitListInit (OS_EVENT *pevent)
 {
     INT8U  i;
@@ -1388,7 +1426,6 @@ void  OS_EventWaitListInit (OS_EVENT *pevent)
 }
 #endif
 
-#endif
 
 /*
 *********************************************************************************************************
@@ -1721,12 +1758,12 @@ static  void  OS_InitTCBList (void)
 
 		for (k = 0; k < 32; k++, current++, next++)
 		{
-			current->next = next;
+			current->OSTCBNext = next;
 		}
 
-		current->next = 0;
+		current->OSTCBNext = 0;
 
-		rtos_pTCBFree = first; //+0x18
+		OSTCBFreeList = first; //+0x18
 	}
 #endif //TODO
 }
@@ -2117,6 +2154,7 @@ void  OS_TaskStatStkChk (void)
 }
 #endif
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -2161,6 +2199,7 @@ void  OS_TaskStatStkChk (void)
 *********************************************************************************************************
 */
 
+/* 23438d00 - todo */
 INT8U  OS_TCBInit (INT8U    prio,
                    OS_STK  *ptos,
                    OS_STK  *pbos,
@@ -2169,7 +2208,7 @@ INT8U  OS_TCBInit (INT8U    prio,
                    void    *pext,
                    INT16U   opt)
 {
-    OS_TCB    *ptcb;
+    RTOS_tTCB/*OS_TCB*/    *ptcb;
 #if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status register */
     OS_CPU_SR  cpu_sr = 0u;
 #endif
@@ -2191,7 +2230,9 @@ INT8U  OS_TCBInit (INT8U    prio,
         ptcb->OSTCBStkPtr        = ptos;                   /* Load Stack pointer in TCB                */
         ptcb->OSTCBPrio          = prio;                   /* Load task priority into TCB              */
         ptcb->OSTCBStat          = OS_STAT_RDY;            /* Task is ready to run                     */
+#if 0
         ptcb->OSTCBStatPend      = OS_STAT_PEND_OK;        /* Clear pend status                        */
+#endif
         ptcb->OSTCBDly           = 0u;                     /* Task is not delayed                      */
 
 #if OS_TASK_CREATE_EXT_EN > 0u
@@ -2209,19 +2250,21 @@ INT8U  OS_TCBInit (INT8U    prio,
 #endif
 
 #if OS_TASK_DEL_EN > 0u
-        ptcb->OSTCBDelReq        = OS_ERR_NONE;
+        ptcb->OSTCBDelReq        = 0; //OS_ERR_NONE;
 #endif
 
 #if OS_LOWEST_PRIO <= 63u                                         /* Pre-compute X, Y                  */
         ptcb->OSTCBY             = (INT8U)(prio >> 3u);
+        ptcb->OSTCBBitY          = Data_23489cc0[ptcb->OSTCBY];
         ptcb->OSTCBX             = (INT8U)(prio & 0x07u);
+        ptcb->OSTCBBitX          = Data_23489cc0[ptcb->OSTCBX];
 #else                                                             /* Pre-compute X, Y                  */
         ptcb->OSTCBY             = (INT8U)((INT8U)(prio >> 4u) & 0xFFu);
         ptcb->OSTCBX             = (INT8U) (prio & 0x0Fu);
 #endif
                                                                   /* Pre-compute BitX and BitY         */
-        ptcb->OSTCBBitY          = (OS_PRIO)(1uL << ptcb->OSTCBY);
-        ptcb->OSTCBBitX          = (OS_PRIO)(1uL << ptcb->OSTCBX);
+//        ptcb->OSTCBBitY          = (OS_PRIO)(1uL << ptcb->OSTCBY);
+//        ptcb->OSTCBBitX          = (OS_PRIO)(1uL << ptcb->OSTCBX);
 
 #if (OS_EVENT_EN)
         ptcb->OSTCBEventPtr      = (OS_EVENT  *)0;         /* Task is not pending on an  event         */
@@ -2259,11 +2302,10 @@ INT8U  OS_TCBInit (INT8U    prio,
 
         OSTCBInitHook(ptcb);
 
+        OSTaskCreateHook(ptcb);                            /* Call user defined hook                   */
+
         OS_ENTER_CRITICAL();
         OSTCBPrioTbl[prio] = ptcb;
-        OS_EXIT_CRITICAL();
-
-        OSTaskCreateHook(ptcb);                            /* Call user defined hook                   */
 
 #if OS_TASK_CREATE_EXT_EN > 0u
 #if defined(OS_TLS_TBL_SIZE) && (OS_TLS_TBL_SIZE > 0u)
@@ -2274,7 +2316,6 @@ INT8U  OS_TCBInit (INT8U    prio,
 #endif
 #endif
 
-        OS_ENTER_CRITICAL();
         ptcb->OSTCBNext = OSTCBList;                       /* Link into TCB chain                      */
         ptcb->OSTCBPrev = (OS_TCB *)0;
         if (OSTCBList != (OS_TCB *)0) {
@@ -2283,15 +2324,16 @@ INT8U  OS_TCBInit (INT8U    prio,
         OSTCBList               = ptcb;
         OSRdyGrp               |= ptcb->OSTCBBitY;         /* Make task ready to run                   */
         OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
+#if 0        
         OSTaskCtr++;                                       /* Increment the #tasks counter             */
+#endif
         OS_TRACE_TASK_READY(ptcb);
         OS_EXIT_CRITICAL();
-        return (OS_ERR_NONE);
+        return 0; //(OS_ERR_NONE);
     }
     OS_EXIT_CRITICAL();
-    return (OS_ERR_TASK_NO_MORE_TCB);
+    return 70; //(OS_ERR_TASK_NO_MORE_TCB);
 }
 
 #endif
 
-#endif

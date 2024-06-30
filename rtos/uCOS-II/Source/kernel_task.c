@@ -37,7 +37,7 @@ INT8U OSTaskCreateExt(void (*func)(void *), void* b,
 			}
 
 			stack_frame = OSTaskStkInit(func, b, stack, i);
-			res = rtos_create_tcb(prio, stack_frame, f, e, g, h, i);
+			res = OS_TCBInit(prio, stack_frame, f, e, g, h, i);
 
 			if (res == 0)
 			{

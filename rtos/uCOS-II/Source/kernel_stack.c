@@ -66,7 +66,7 @@ void OSTaskIdleHook()
 
 
 /* 23464610 - complete */
-void sub_23464610()
+void OSTCBInitHook()
 {
 #if 0
 	((volatile uint32_t*)0xc2000000)[0] = '3';

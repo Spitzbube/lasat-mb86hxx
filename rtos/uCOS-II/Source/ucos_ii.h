@@ -646,24 +646,24 @@ OS_TCB;
 
 typedef struct RTOS_tTCB
 {
-	int stack_frame; //0
-	char* name; //4
-	int c; //8
-	int d; //12
-	uint16_t e1; //16 = 0x10
-	uint16_t e2; //0x12
-	struct RTOS_tTCB* next; //0x14
+	int OSTCBStkPtr; //0
+	char* OSTCBExtPtr; //4
+	int OSTCBStkBottom; //8
+	int OSTCBStkSize; //12
+	uint16_t OSTCBOpt; //16 = 0x10
+	uint16_t OSTCBId; //0x12
+	struct RTOS_tTCB* OSTCBNext; //0x14
 	struct RTOS_tTCB* OSTCBPrev; //0x18
 	void* OSTCBEventPtr; //0x1c
 	void* OSTCBMsg; //0x20
 	uint16_t OSTCBDly; //0x24
 	uint8_t OSTCBStat; //0x26
-	uint8_t prio; //0x27
-	uint8_t k1; //0x28
+	uint8_t OSTCBPrio; //0x27
+	uint8_t OSTCBX; //0x28
 	uint8_t OSTCBY; //0x29
 	uint8_t OSTCBBitX; //0x2a
 	uint8_t OSTCBBitY; //0x2b
-	uint8_t l; //0x2c
+	uint8_t OSTCBDelReq; //0x2c
 
 	//0x30
 } RTOS_tTCB;
@@ -768,7 +768,7 @@ OS_EXT  volatile  INT32U  OSIdleCtr;                                 /* Idle cou
 OS_EXT  OS_STK            OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE];      /* Idle task stack                */ //235f8adc +0x400*4 = 235F9AD8+4
 
 OS_EXT  /*OS_TCB*/RTOS_tTCB           *OSTCBCur;                        /* Pointer to currently running TCB         */ //23492c14 +0x14
-OS_EXT  OS_TCB           *rtos_pTCBFree/*OSTCBFreeList*/;                   /* Pointer to list of free TCBs             */ //23492c18 +0x18
+OS_EXT  OS_TCB           *OSTCBFreeList;                   /* Pointer to list of free TCBs             */ //23492c18 +0x18
 OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */ //23492c1c +0x1c
 OS_EXT  /*OS_TCB*/RTOS_tTCB           *OSTCBList;                       /* Pointer to doubly linked list of TCBs    */ //23492c20 +0x20
 OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];/* Table of pointers to created TCBs        */ //235f9adc +64*4 = 235F9BDC

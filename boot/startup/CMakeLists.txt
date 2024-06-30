@@ -17,7 +17,7 @@ enable_language(ASM)
 add_definitions(
 #   --debug 
 #   -D__DEBUG__=1
-   -O3
+   -O2
 )
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \

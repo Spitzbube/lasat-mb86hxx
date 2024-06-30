@@ -2,7 +2,6 @@ project (ucos_ii)
 
 set (
    SRCS
-   Source/kernel.c
    Source/kernel_stack.c
    Source/kernel_task.c
    Source/os_core.c
@@ -20,4 +19,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 add_definitions(
     --gnu
+#    -O2
 )
