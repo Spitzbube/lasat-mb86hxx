@@ -288,6 +288,7 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
 }
 #endif
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -321,8 +322,10 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
 *********************************************************************************************************
 */
 
+/* 23464360 - todo */
 void  OSSemPend (OS_EVENT  *pevent,
-                 INT32U     timeout,
+//                 INT32U     timeout,
+                 INT16U     timeout,
                  INT8U     *perr)
 {
 #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register      */
@@ -336,6 +339,12 @@ void  OSSemPend (OS_EVENT  *pevent,
         return;
     }
 #endif
+
+    if (OSIntNesting > 0u) {                          /* See if called from ISR ...                    */
+        *perr = OS_ERR_PEND_ISR;                      /* ... can't PEND from an ISR                    */
+        OS_TRACE_SEM_PEND_EXIT(*perr);
+        return;
+    }
 
 #if OS_ARG_CHK_EN > 0u
     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                             */
@@ -351,8 +360,9 @@ void  OSSemPend (OS_EVENT  *pevent,
         OS_TRACE_SEM_PEND_EXIT(*perr);
         return;
     }
+#if 0
     if (OSIntNesting > 0u) {                          /* See if called from ISR ...                    */
-        *perr = OS_ERR_PEND_ISR;                      /* ... can't PEND from an ISR                    */
+        *perr = 2; //OS_ERR_PEND_ISR;                      /* ... can't PEND from an ISR                    */
         OS_TRACE_SEM_PEND_EXIT(*perr);
         return;
     }
@@ -361,6 +371,7 @@ void  OSSemPend (OS_EVENT  *pevent,
         OS_TRACE_SEM_PEND_EXIT(*perr);
         return;
     }
+#endif
     OS_ENTER_CRITICAL();
     if (pevent->OSEventCnt > 0u) {                    /* If sem. is positive, resource available ...   */
         pevent->OSEventCnt--;                         /* ... decrement semaphore only if positive.     */
@@ -371,12 +382,15 @@ void  OSSemPend (OS_EVENT  *pevent,
     }
                                                       /* Otherwise, must wait until event occurs       */
     OSTCBCur->OSTCBStat     |= OS_STAT_SEM;           /* Resource not available, pend on semaphore     */
+#if 0
     OSTCBCur->OSTCBStatPend  = OS_STAT_PEND_OK;
+#endif
     OSTCBCur->OSTCBDly       = timeout;               /* Store pend timeout in TCB                     */
     OS_EventTaskWait(pevent);                         /* Suspend task until event or timeout occurs    */
     OS_EXIT_CRITICAL();
     OS_Sched();                                       /* Find next highest priority task ready         */
     OS_ENTER_CRITICAL();
+#if 0
     switch (OSTCBCur->OSTCBStatPend) {                /* See if we timed-out or aborted                */
         case OS_STAT_PEND_OK:
              *perr = OS_ERR_NONE;
@@ -400,10 +414,25 @@ void  OSSemPend (OS_EVENT  *pevent,
     OSTCBCur->OSTCBEventMultiRdy = (OS_EVENT  *)0;
 #endif
     OS_EXIT_CRITICAL();
+#else
+    if (OSTCBCur->OSTCBStat & OS_STAT_SEM)
+    {
+        OS_EventTaskRemove(pevent);
+        OS_EXIT_CRITICAL();
+        *perr = OS_ERR_TIMEOUT;
+    }
+    else
+    {
+        OSTCBCur->OSTCBEventPtr = 0;
+        OS_EXIT_CRITICAL();
+        *perr = OS_ERR_NONE;
+    }
+#endif
 
     OS_TRACE_SEM_PEND_EXIT(*perr);
 }
 
+#if 0
 
 /*
 *********************************************************************************************************

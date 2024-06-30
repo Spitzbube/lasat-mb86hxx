@@ -6,7 +6,9 @@ set(SRCS
    main.c
    main1.c
    console.c
+   memblk.c
    usb.c
+   sub_23467de0.c
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -14,15 +16,23 @@ add_executable(${PROJECT_NAME} ${SRCS})
 add_subdirectory(boot/startup)
 add_subdirectory(rtos/uCOS-II)
 add_subdirectory(drv)
+add_subdirectory(subsystems/bus/musb)
 
 target_link_libraries(${PROJECT_NAME}
     startup
     drv
     ucos_ii
+    musb
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     drv
+    ${musb_SOURCE_DIR}/include
+)
+
+add_definitions(
+    --gnu
+#    -O2
 )
 
 set(ENTRY_FUNC ARM1176_Start)

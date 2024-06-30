@@ -237,8 +237,8 @@ typedef uint32_t INT32U;
 #define OS_ERR_NONE                   0u
 
 #define OS_ERR_EVENT_TYPE             1u
-#if 0
 #define OS_ERR_PEND_ISR               2u
+#if 0
 #define OS_ERR_POST_NULL_PTR          3u
 #endif
 #define OS_ERR_PEVENT_NULL            4u
@@ -248,8 +248,10 @@ typedef uint32_t INT32U;
 #define OS_ERR_INVALID_OPT            7u
 #define OS_ERR_TASK_WAITING           8u
 #define OS_ERR_PDATA_NULL             9u
+#endif
 
-#define OS_TIMEOUT                   10u
+#define OS_ERR_TIMEOUT               10u
+#if 0
 #define OS_TASK_NOT_EXIST            11u
 #define OS_ERR_EVENT_NAME_TOO_LONG   12u
 #define OS_ERR_FLAG_NAME_TOO_LONG    13u

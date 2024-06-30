@@ -3,6 +3,8 @@
 #include "ucos_ii.h"
 
 
+void main_base_init(void);
+void main_console_init(void);
 void main_usb_init(void);
 
 
@@ -45,40 +47,4 @@ int main()
 
     return 0;
 }
-
-
-/* 234017f0 / 234023e8 - todo */
-void main_usb_init()
-{
-#if 0
-	Struct_20401328 sp_0x10;
-	MemBlk_Params sp;
-
-	sp_0x10.dwOutFunction = 0;
-	sp_0x10.dwInFunction = 0xff;
-	sp_0x10.bPin = 0x53;
-
-	gpio_open(&sp_0x10, &main_hUsbGpio);
-
-	sp.addr = (int) &Data_2349d250;
-	sp.size = 0x8000;
-
-	main_hMemBlk2 = memblk_open(&sp);
-
-	if (main_hMemBlk2 != 0)
-#endif
-	{
-#if 0
-		sub_2343a162(sub_23400120);
-#endif
-		usb_init();
-#if 0
-		MGC_usbInitController();
-		usb_msd_init();
-#endif
-	}
-	//loc_23401858
-	return;
-}
-
 

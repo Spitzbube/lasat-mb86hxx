@@ -1,7 +1,16 @@
 
 #include "data.h"
 
+
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
+MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
+
+
+struct
+{
+	int fill_0[0x8000]; //0
+	//size????
+} Data_2349d250; //2349d250 
 
 
 /* 234006c4 - complete */
@@ -42,3 +51,40 @@ void main_console_init()
 	console_send_string(str);
 #endif
 }
+
+
+/* 234017f0 / 234023e8 - todo */
+void main_usb_init()
+{
+#if 0
+	Struct_20401328 sp_0x10;
+#endif
+	MemBlk_Params sp;
+
+#if 0
+	sp_0x10.dwOutFunction = 0;
+	sp_0x10.dwInFunction = 0xff;
+	sp_0x10.bPin = 0x53;
+
+	gpio_open(&sp_0x10, &main_hUsbGpio);
+#endif
+
+	sp.addr = (int) &Data_2349d250;
+	sp.size = 0x8000;
+
+	main_hMemBlk2 = memblk_open(&sp);
+	if (main_hMemBlk2 != 0)
+	{
+#if 0
+		sub_2343a162(sub_23400120);
+#endif
+		usb_init();
+		MGC_usbInitController();
+#if 0
+		usb_msd_init();
+#endif
+	}
+	//loc_23401858
+	return;
+}
+

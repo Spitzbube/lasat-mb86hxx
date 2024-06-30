@@ -102,69 +102,6 @@ OS_EVENT* OSSemDel(OS_EVENT* pevent, int opt, int* res)
 }
 
 
-/* 23464360 - todo */
-void OSSemPend(OS_EVENT* sema, INT16U r8, INT8U* res)
-{
-#if OS_CRITICAL_METHOD == 3u                               /* Allocate storage for CPU status register */
-    OS_CPU_SR  cpu_sr = 0u;
-#endif
-
-	if (OSIntNesting != 0)
-	{
-		//->23477554
-		*res = 2;
-	}
-	else if (sema == 0)
-	{
-		*res = 4;
-	}
-	else if (sema->OSEventType != 3)
-	{
-		*res = 1;
-	}
-	else
-	{
-		OS_ENTER_CRITICAL();
-
-		if (sema->OSEventCnt != 0)
-		{
-			sema->OSEventCnt--;
-			//->loc_23477560
-			OS_EXIT_CRITICAL();
-			*res = 0;
-		}
-		else
-		{
-			OSTCBCur->OSTCBStat |= 0x01;
-			OSTCBCur->OSTCBDly = r8;
-
-			OS_EventTaskWait(sema);
-			OS_EXIT_CRITICAL();
-
-			OS_Sched();
-
-			OS_ENTER_CRITICAL();
-
-			if (OSTCBCur->OSTCBStat & 0x01)
-			{
-				//23477540
-				OS_EventTaskRemove(sema);
-				OS_EXIT_CRITICAL();
-				*res = 10; //OS_ERR_TIMEOUT
-			}
-			else
-			{
-				//loc_2347755c
-				OSTCBCur->OSTCBEventPtr = 0;
-				//loc_23477560
-				OS_EXIT_CRITICAL();
-				*res = 0;
-			}
-		}
-	}
-}
-
-
 #if 0
 /* 23477570 - todo */
 void sub_23477570_()
