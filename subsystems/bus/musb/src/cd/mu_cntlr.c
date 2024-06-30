@@ -18,8 +18,6 @@
 
 #pragma thumb
 
-#if 0
-
 //#if CFG_USB
 
 #if 1//def MUSB_FDRC
@@ -29,6 +27,8 @@
 #ifndef MUSB_IRP_QUEUE_LENGTH
 #define MUSB_IRP_QUEUE_LENGTH	64  /* double-buffered, all endpoints both directions */
 #endif
+
+#if 0
 
 #ifdef MUSB_FDRC
 #include "mu_fdrpr.h"
@@ -81,14 +81,10 @@ typedef struct
     //704 = 0x2C0
 } MGC_ControllerWrapper;
 
-#if 0
-
 /**************************** GLOBALS *****************************/
 
 /** Requirements for one 10-millisecond timer */
 static uint32_t MGC_aOneTimer10Ms[] = { 10 }; //234942bc +8
-
-#endif
 
 /** List of all controllers */
 static MUSB_LinkedList MGC_ControllerList; //238ce0f0
@@ -129,7 +125,7 @@ static void MGC_ControllerInit(MGC_ControllerWrapper *pWrapper,
                                void *pControllerAddressIsr,
                                void *pControllerAddressIst)
 {
-#if 1
+#if 0
 	console_send_string("MGC_ControllerInit (todo.c): TODO\r\n");
 #endif
 
@@ -389,8 +385,6 @@ MUSB_Controller *MUSB_NewController(MUSB_SystemUtils *pUtils,
         /* endpoint config discovery, etc. */
         bOK = MGC_MhdrcInit(&(pWrapper->PortImpl));
 
-#if 0
-
 #ifdef MUSB_FORCE_FULLSPEED
         pWrapper->PortImpl.bWantHighSpeed = FALSE;
 #else
@@ -444,7 +438,6 @@ MUSB_Controller *MUSB_NewController(MUSB_SystemUtils *pUtils,
         pWrapper->PortImpl.pfDynamicFifoLocation = MGC_HdrcDynamicFifoLocation;
         pWrapper->Port.Type = MUSB_PORT_TYPE_OTG;
         pWrapper->Port.Speed = MUSB_PORT_SPEED_HIGH;
-#endif
         break;
 #endif	/* MHDRC */
 
@@ -506,7 +499,6 @@ MUSB_Controller *MUSB_NewController(MUSB_SystemUtils *pUtils,
     }	/* switch on controller type */
     } //if (pWrapper != 0)
 
-#if 0
     if(bOK)
     {
 
@@ -561,9 +553,6 @@ MUSB_Controller *MUSB_NewController(MUSB_SystemUtils *pUtils,
     }
 
     return pResult;
-#else
-    return 0;
-#endif
 }
 
 #if 0
@@ -595,6 +584,8 @@ uint32_t MUSB_SetControllerHostPower(MUSB_Controller *pController,
 
 #endif
 
+#endif
+
 /*
  * Start (or restart) a controller
  */
@@ -604,6 +595,10 @@ uint32_t MUSB_StartController(MUSB_Controller *pController,
                              )
 {
     MGC_Controller *pImpl = NULL;
+
+#if 1
+	console_send_string("MUSB_StartController (todo.c): TODO\r\n");
+#endif
 
     if(pController)
     {
@@ -636,7 +631,7 @@ uint32_t MUSB_StartController(MUSB_Controller *pController,
 /* 2346490c - complete */
 uint32_t MUSB_StopController(MUSB_Controller* pController)
 {
-#if 0
+#if 1
 	console_send_string("MUSB_StopController (todo.c): TODO\r\n");
 #endif
 
@@ -658,12 +653,11 @@ uint32_t MUSB_StopController(MUSB_Controller* pController)
 	}
 }
 
-
 /* 23464938 - todo */
 uint32_t MUSB_DestroyController(MUSB_Controller* pController)
 {
-#if 0
-	console_send_string("sub_23464938 (todo.c): TODO\r\n");
+#if 1
+	console_send_string("MUSB_DestroyController (todo.c): TODO\r\n");
 #endif
 
 	uint32_t res = 0xa8;
@@ -724,6 +718,8 @@ MUSB_Port *MUSB_GetPort(uint16_t index)
     return pResult;
 }
 
+#if 0
+
 /*
  * Implementation
  */
@@ -751,6 +747,10 @@ uint32_t MUSB_GetBusFrame(MUSB_BusHandle hBus)
     pPort->pfReadBusState(pPort);
     return pPort->dwFrame;
 }
+
+#endif //CFG_USB
+
+#endif
 
 /*
  * Implementation
@@ -795,6 +795,10 @@ void MUSB_SuspendBus(MUSB_BusHandle hBus)
 #endif
     }
 }
+
+#if 0
+
+#if 1//CFG_USB
 
 /*
  * Implementation

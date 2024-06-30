@@ -70,11 +70,10 @@ uint8_t MGC_HdrcInit(MGC_Port *pPort)
     MGC_Controller *pImplController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pImplController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcInit (todo.c): TODO\r\n");
 #endif
 
-#if 0
     /* read config data */
     MGC_SelectEnd(pBase, 0);
     config = MGC_ReadCsr8(pBase, MGC_O_HDRC_CONFIGDATA, 0);
@@ -148,7 +147,6 @@ uint8_t MGC_HdrcInit(MGC_Port *pPort)
         return FALSE;
     }
     return MGC_DrcInit(pPort);
-#endif
 #endif
 }
 
@@ -226,8 +224,6 @@ MGC_EndpointResource *MGC_HdrcBindDynamicEndpoint(MGC_Port *pPort,
 
 #endif
 
-#if 0
-
 /* 23466424 / - complete */
 int MGC_HdrcIsr(void *pParam)
 {
@@ -247,7 +243,16 @@ int MGC_HdrcIsr(void *pParam)
     bIntrUsbValue = MGC_Read8(pBase, MGC_O_HDRC_INTRUSB);
     wIntrTxValue = MGC_Read16(pBase, MGC_O_HDRC_INTRTX);
     wIntrRxValue = MGC_Read16(pBase, MGC_O_HDRC_INTRRX);
+#if 0
     result = MGC_DrcIsr(pControllerImpl, bIntrUsbValue, wIntrTxValue, wIntrRxValue);
+#else
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "MGC_HdrcIsr: bIntrUsbValue=0x%02x\r\n", 
+            bIntrUsbValue);
+		console_send_string(debug_string);
+	}
+#endif
 
 #ifdef MUSB_OVERHEAD
     dwTime = pUtils->pfGetTime() - dwStartTime;
@@ -276,6 +281,10 @@ uint32_t MGC_HdrcStart(MGC_Controller *pController)
     uint16_t val;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIsr;
     MGC_Port *pPort = pController->pPort;
+
+#if 1
+	console_send_string("MGC_HdrcStart (todo.c): TODO\r\n");
+#endif
 
     /*  Set INT enable registers */
     val = 0xffff & pPort->wEndMask;
@@ -310,6 +319,10 @@ uint32_t MGC_HdrcStop(MGC_Controller *pController)
 {
     uint16_t temp;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
+
+#if 1
+	console_send_string("MGC_HdrcStop (todo.c): TODO\r\n");
+#endif
 
     /* disable interrupts */
     MGC_Write8(pBase, MGC_O_HDRC_INTRUSBE, 0);
@@ -350,6 +363,10 @@ uint32_t MGC_HdrcReadBusState(MGC_Port *pPort)
     uint8_t vbus;
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
+
+#if 1
+	console_send_string("MGC_HdrcReadBusState (todo.c): TODO\r\n");
+#endif
 
     /* bConnectorId, bIsSession, bIsHost */
     devctl = MGC_Read8(pBase, MGC_O_HDRC_DEVCTL);
@@ -418,6 +435,10 @@ uint32_t MGC_HdrcProgramBusState(MGC_Port *pPort)
     uint8_t devctl = MGC_Read8(pBase, MGC_O_HDRC_DEVCTL);
     uint8_t nDevCtl = devctl;
     uint8_t bFuncAddr = MGC_Read8(pBase, MGC_O_HDRC_FADDR);
+
+#if 1
+	console_send_string("MGC_HdrcProgramBusState (todo.c): TODO\r\n");
+#endif
 
     /* reset? */
     if(pPort->bWantReset)
@@ -510,6 +531,8 @@ uint32_t MGC_HdrcProgramBusState(MGC_Port *pPort)
 
     return 0;
 }
+
+#if 0
 
 #if 0
 
@@ -1088,6 +1111,8 @@ uint32_t MGC_HdrcStartTx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
 
 #endif
 
+#endif
+
 /* Program the HDRC to flush the given endpoint wrt the given USB direction */
 /* 23466cd2 / - complete */
 uint32_t MGC_HdrcFlushEndpoint(MGC_Port *pPort, MGC_EndpointResource *pEnd,
@@ -1098,6 +1123,10 @@ uint32_t MGC_HdrcFlushEndpoint(MGC_Port *pPort, MGC_EndpointResource *pEnd,
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
     uint8_t bTx = FALSE;
     uint8_t bEnd = pEnd->bLocalEnd;
+
+#if 1
+	console_send_string("MGC_HdrcFlushEndpoint (todo.c): TODO\r\n");
+#endif
 
     /* select hw ep */
     MGC_SelectEnd(pBase, bEnd);
@@ -1175,6 +1204,8 @@ uint32_t MGC_HdrcFlushEndpoint(MGC_Port *pPort, MGC_EndpointResource *pEnd,
 
     return 0;
 }
+
+#if 0
 
 #if 0
 
@@ -1297,6 +1328,10 @@ uint32_t MGC_HdrcHaltEndpoint(MGC_Port *pPort, MGC_EndpointResource *pEnd,
     return 0;
 }
 
+#endif
+
+#endif
+
 /*
 * Respond on default endpoint
 */
@@ -1306,6 +1341,10 @@ uint32_t MGC_HdrcDefaultEndResponse(MGC_Port *pPort, uint8_t bStall)
     uint8_t bVal = MGC_M_CSR0_P_SVDRXPKTRDY;
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
+
+#if 1
+	console_send_string("MGC_HdrcDefaultEndResponse (todo.c): TODO\r\n");
+#endif
 
     MGC_SelectEnd(pBase, 0);
     wCsrVal = MGC_ReadCsr16(pBase, MGC_O_HDRC_CSR0, 0);
@@ -1351,8 +1390,6 @@ uint32_t MGC_HdrcDefaultEndResponse(MGC_Port *pPort, uint8_t bStall)
     return 0;
 }
 
-#endif
-
 /*
  * Handle default endpoint interrupt
  */
@@ -1370,6 +1407,10 @@ uint8_t MGC_HdrcServiceDefaultEnd(MGC_Port *pPort, MGC_BsrItem *pItem)
     uint8_t status = MUSB_STATUS_OK;
     MGC_EndpointResource *pEnd = MUSB_ArrayFetch(&(pPort->LocalEnds), 0);
     uint8_t *pBase = (uint8_t *)pPort->pController->pControllerAddressIsr;
+
+#if 1
+	console_send_string("MGC_HdrcServiceDefaultEnd (todo.c): TODO\r\n");
+#endif
 
     MGC_SelectEnd(pBase, 0);
     wCsrVal = MGC_ReadCsr16(pBase, MGC_O_HDRC_CSR0, 0);
@@ -1530,6 +1571,10 @@ uint8_t MGC_HdrcServiceTransmitAvail(MGC_Port *pPort, uint16_t wEndIndex, MGC_Bs
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
+#if 1
+	console_send_string("MGC_HdrcServiceTransmitAvail (todo.c): TODO\r\n");
+#endif
+
     pItem->bStatus = MUSB_STATUS_OK;
     pItem->bCause = MGC_BSR_CAUSE_NONE;
 
@@ -1684,6 +1729,10 @@ uint8_t MGC_HdrcServiceReceiveReady(MGC_Port *pPort, uint16_t wEndIndex, MGC_Bsr
     uint32_t status = MUSB_STATUS_OK;
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
+
+#if 1
+	console_send_string("MGC_HdrcServiceReceiveReady (todo.c): TODO\r\n");
+#endif
 
     pItem->bStatus = MUSB_STATUS_OK;
     pItem->bCause = MGC_BSR_CAUSE_NONE;
@@ -1877,6 +1926,8 @@ uint8_t MGC_HdrcServiceReceiveReady(MGC_Port *pPort, uint16_t wEndIndex, MGC_Bsr
 
 #if 0
 
+#if 0
+
 #ifdef MUSB_EHSET
 static void MGC_HdrcResetOff(void *pParam, uint16_t wTimer)
 {
@@ -1987,6 +2038,8 @@ void MGC_HdrcSetPortTestMode(MGC_Port *pPort, MUSB_HsetPortMode eMode)
     }
 #endif
 }
+
+#endif
 
 #endif
 
@@ -2113,6 +2166,8 @@ uint8_t MGC_HdrcWriteUlpiReg(MGC_Port *pPort, uint8_t bAddr, uint8_t bData)
 
     return TRUE;
 }
+
+#if 0
 
 #if 0
 

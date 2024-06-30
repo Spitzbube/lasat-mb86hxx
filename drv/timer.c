@@ -138,7 +138,7 @@ int timer_open(uint32_t r6)
 	return 0;
 }
 
-#if 0
+
 /* 2341b7a8 - todo */
 Struct_235b1c24* timer_user_open(Timer_Params* r5)
 {
@@ -229,6 +229,7 @@ void* sub_2341b85c(void* h)
 	return 0;
 }
 
+#if 0
 
 /* 2341b884 / 23426d8c - todo */
 uint64_t timer_get_timestamp(uint32_t resolution)

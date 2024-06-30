@@ -27,11 +27,9 @@ typedef struct
 {
 	uint8_t bData_0; //0
 	void* Data_4; //4
-#if 0
 	MUSB_DmaController Data_8; //8
 	MUSB_pfDmaChannelStatusChanged Data_0x30; //0x30
 	MUSB_pfSystemToBusAddress Data_0x34; //0x34
-#endif
 	void* Data_0x38; //0x38
 	uint8_t* Data_0x3c; //0x3c
 	uint8_t* Data_0x40; //0x40
@@ -44,7 +42,6 @@ typedef struct
 
 Struct_238ce0fc Data_238ce0fc[2]; //238ce0fc -> 238CE1FC
 
-#if 0
 
 /* 23467c40 - todo */
 uint8_t sub_23467c40(void* pPrivateData)
@@ -127,7 +124,6 @@ MUSB_DmaChannel* sub_23467d12(void* pPrivateData, uint8_t bLocalEnd,
 
 }
 
-#endif
 
 /* 23467d5a - complete */
 MUSB_DmaController* sub_23467d5a(MUSB_pfDmaChannelStatusChanged pfDmaChannelStatusChanged/*r6*/,
@@ -141,10 +137,10 @@ MUSB_DmaController* sub_23467d5a(MUSB_pfDmaChannelStatusChanged pfDmaChannelStat
 	console_send_string("sub_23467d5a (todo.c): TODO\r\n");
 #endif
 
-#if 0
+	uint32_t r4;
 	Struct_238ce0fc* r0 = 0;
 
-	for (uint32_t r4 = 0; r4 < 2; r4++)
+	for (r4 = 0; r4 < 2; r4++)
 	{
 		//loc_23467d64
 		if (Data_238ce0fc[r4].Data_4 == 0)
@@ -181,9 +177,6 @@ MUSB_DmaController* sub_23467d5a(MUSB_pfDmaChannelStatusChanged pfDmaChannelStat
 	r0->Data_8.pfDmaControllerIsr = 0;
 
 	return &r0->Data_8;
-#else
-	return 0;
-#endif
 }
 
 

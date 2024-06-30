@@ -18,6 +18,7 @@ add_definitions(
 #   --debug 
 #   -D__DEBUG__=1
    -O2
+   --apcs /interwork
 )
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \

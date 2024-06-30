@@ -43,14 +43,13 @@ uint8_t MGC_MhdrcInit(MGC_Port *pPort)
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_MhdrcInit (todo.c): TODO\r\n");
 #endif
 
     /* call HDRC init */
     bResult = MGC_HdrcInit(pPort);
 
-#if 0
     /* if >= 1.4, set CSR0's DisablePing bit */
     wVersion = MGC_Read16(pBase, MGC_O_MHDRC_HWVERS);
     bMajor = (wVersion & MGC_M_HWVERS_MAJOR) >> MGC_S_HWVERS_MAJOR;
@@ -58,6 +57,15 @@ uint8_t MGC_MhdrcInit(MGC_Port *pPort)
     MUSB_DIAG2(2, "Core version is ", bMajor, ".", wMinor, 10, 0);
 
     snprintf(str, 32, "%d.%d%s", bMajor, wMinor, (wVersion & 0x8000)? "RC": "");
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "MGC_MhdrcInit: bResult=%d, version=%s\r\n", 
+            bResult, str);
+		console_send_string(debug_string);
+	}
+#endif
 
     if((bMajor > 1) || ((1 == bMajor) && (wMinor >= 400)))
     {
@@ -68,12 +76,9 @@ uint8_t MGC_MhdrcInit(MGC_Port *pPort)
     {
         pPort->bHasRqPktCount = TRUE;
     }
-#endif
 
     return bResult;
 }
-
-#if 0
 
 /*
 * Find the MHDRC's first (host) or required (function)
@@ -95,6 +100,10 @@ MGC_EndpointResource *MGC_MhdrcBindEndpoint(MGC_Port *pPort,
     uint8_t reg = 0;
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
+
+#if 1
+	console_send_string("MGC_MhdrcBindEndpoint (todo.c): TODO\r\n");
+#endif
 
 #ifdef MUSB_C_DYNFIFO_DEF
     pEnd = MGC_HdrcBindDynamicEndpoint(pPort, pUsbEnd, pRequest, bBind, &bIsTx);
@@ -345,7 +354,7 @@ uint32_t MGC_MhdrcStartRx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
     MUSB_SystemServices *pServices = pController->pSystemServices;
     uint8_t bEnd = pEnd->bLocalEnd;
 
-#if 0
+#if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MGC_MhdrcStartRx: dwTotalBytes=%d, bAllowDma=%d\r\n",
@@ -666,7 +675,7 @@ uint32_t MGC_MhdrcStartTx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
 
     MGC_SelectEnd(pBase, bEnd);
 
-#if 1
+#if 0
     MUSB_PRT("[MGC] MhdrcStartTx:0x%x:0x%x:0x%x\r\n", dwTotalBytes, bEnd, pEnd->bBusEnd);
 #else
 	{
@@ -872,6 +881,8 @@ uint32_t MGC_MhdrcStartTx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
 
     return 0;
 }
+
+#if 0
 
 #if 0
 

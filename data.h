@@ -10,4 +10,4 @@
 #include "memblk.h"
 
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
-
+extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 

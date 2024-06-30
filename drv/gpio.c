@@ -223,3 +223,55 @@ int gpio_open(Struct_20401328* pParams, Struct_20611068** r5)
 	return 0;
 }
 
+
+/* 2341ab3c - todo */
+int gpio_set(Struct_20611068* r4, int b)
+{
+	int r6 = 7;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+#if 0
+	console_send_string("gpio_set (todo.c): TODO\r\n");
+#endif
+
+	if (r4 == 0)
+	{
+		return 0;
+	}
+
+	OS_ENTER_CRITICAL();
+
+	if ((r4->bData_0 != 0xff) && (r4->bData_0 < FAPI_GPIO_PIN_COUNT)
+			&& (r4->Data_8 < 2))
+	{
+		union
+		{
+			uint32_t dwData;
+			struct
+			{
+				uint32_t a: 8;
+				uint32_t b: 8;
+			} bData;
+		} sp;
+
+		sp.dwData = 0;
+		if (b == 0xff)
+		{
+			sp.bData.b = 1;
+		}
+		else
+		{
+			sp.bData.a = b;
+		}
+
+		((volatile uint32_t*)0xc3000000)[r4->bData_0] = sp.dwData;
+	}
+	//loc_2341ab94
+	OS_EXIT_CRITICAL();
+
+	return r6;
+
+}
+

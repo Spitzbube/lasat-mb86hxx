@@ -4,7 +4,7 @@
 
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
-
+Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
 
 struct
 {
@@ -56,18 +56,14 @@ void main_console_init()
 /* 234017f0 / 234023e8 - todo */
 void main_usb_init()
 {
-#if 0
 	Struct_20401328 sp_0x10;
-#endif
 	MemBlk_Params sp;
 
-#if 0
 	sp_0x10.dwOutFunction = 0;
 	sp_0x10.dwInFunction = 0xff;
 	sp_0x10.bPin = 0x53;
 
 	gpio_open(&sp_0x10, &main_hUsbGpio);
-#endif
 
 	sp.addr = (int) &Data_2349d250;
 	sp.size = 0x8000;
@@ -80,8 +76,11 @@ void main_usb_init()
 #endif
 		usb_init();
 		MGC_usbInitController();
-#if 0
 		usb_msd_init();
+
+#if 0 //Force USB On
+		usb_set_gpio(1);
+		sub_23439d06(0); 
 #endif
 	}
 	//loc_23401858

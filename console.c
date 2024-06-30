@@ -8,6 +8,7 @@ Uart_Module* consoleUart; //23492280 +0
 //int Data_23492284; //23492284 +4
 void (*Data_23492288)(); //23492288 +8
 
+char debug_string[500];
 
 
 /* 2341af84 - complete */

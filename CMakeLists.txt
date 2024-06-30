@@ -7,8 +7,10 @@ set(SRCS
    main1.c
    console.c
    memblk.c
+   dma.c
    usb.c
    sub_23467de0.c
+   todo.c
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -19,9 +21,9 @@ add_subdirectory(drv)
 add_subdirectory(subsystems/bus/musb)
 
 target_link_libraries(${PROJECT_NAME}
-    startup
+#    startup
     drv
-    ucos_ii
+#    ucos_ii
     musb
 )
 
