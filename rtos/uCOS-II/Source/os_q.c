@@ -27,9 +27,11 @@ void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 
 
 #if OS_ARG_CHK_EN > 0
+#if 0
     if (err == (uint8_t *)0) {                     /* Validate 'err'                                     */
         return ((void *)0);
     }
+#endif
 #endif
     if (pevent == (OS_EVENT *)0) {               /* Validate 'pevent'                                  */
 //        *err = OS_ERR_PEVENT_NULL;

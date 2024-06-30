@@ -1131,8 +1131,8 @@ void  OS_Dummy (void)
 /* 23438b8c - todo */
 INT8U  OS_EventTaskRdy (OS_EVENT  *pevent,
                         void      *pmsg,
-                        INT8U      msk,
-                        INT8U      pend_stat)
+                        INT8U      msk/*,
+                        INT8U      pend_stat*/)
 {
     RTOS_tTCB/*OS_TCB*/   *ptcb;
     INT8U     y;

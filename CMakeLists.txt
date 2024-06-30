@@ -6,6 +6,7 @@ set(SRCS
    main.c
    main1.c
    console.c
+   usb.c
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})

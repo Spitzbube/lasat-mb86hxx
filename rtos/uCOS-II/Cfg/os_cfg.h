@@ -30,9 +30,9 @@
 #endif
 #define OS_TASK_IDLE_STK_SIZE  1024    /* Idle       task stack size (# of OS_STK wide entries)          */
 
-#if 0
                                        /* ---------------------- MISCELLANEOUS -----------------------   */
-#define OS_ARG_CHK_EN             0    /* Enable (1) or Disable (0) argument checking                    */
+#define OS_ARG_CHK_EN             1    /* Enable (1) or Disable (0) argument checking                    */
+#if 0
 #define OS_CPU_HOOKS_EN           1    /* uC/OS-II hooks are found in the processor port files           */
 
 #define OS_DEBUG_EN               1    /* Enable(1) debug variables                                      */
@@ -110,8 +110,8 @@
 
                                        /* ------------------------ SEMAPHORES ------------------------   */
 #define OS_SEM_EN                 1    /* Enable (1) or Disable (0) code generation for SEMAPHORES       */
-#if 0
 #define OS_SEM_ACCEPT_EN          1    /*    Include code for OSSemAccept()                              */
+#if 0
 #define OS_SEM_DEL_EN             1    /*    Include code for OSSemDel()                                 */
 #define OS_SEM_QUERY_EN           1    /*    Include code for OSSemQuery()                               */
 #define OS_SEM_SET_EN             1    /*    Include code for OSSemSet()                                 */

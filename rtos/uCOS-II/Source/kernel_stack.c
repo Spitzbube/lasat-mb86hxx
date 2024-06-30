@@ -52,11 +52,7 @@ void OSTaskIdleHook()
 	}
 	else
 	{
-#if 0
 		usb_RunBackground();
-#else
-//		console_send_string("usb_RunBackground: TODO\r\n");
-#endif
 
 		Data_234942a8 = 100;
 	}

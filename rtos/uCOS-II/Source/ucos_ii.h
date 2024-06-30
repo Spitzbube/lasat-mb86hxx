@@ -103,8 +103,8 @@ typedef uint32_t INT32U;
 *********************************************************************************************************
 */
 #define  OS_STAT_RDY               0x00u    /* Ready to run                                            */
-#if 0
 #define  OS_STAT_SEM               0x01u    /* Pending on semaphore                                    */
+#if 0
 #define  OS_STAT_MBOX              0x02u    /* Pending on mailbox                                      */
 #define  OS_STAT_Q                 0x04u    /* Pending on queue                                        */
 #endif
@@ -123,12 +123,14 @@ typedef uint32_t INT32U;
 #define  OS_EVENT_TYPE_UNUSED         0u
 #define  OS_EVENT_TYPE_MBOX           1u
 #define  OS_EVENT_TYPE_Q              2u
+#endif
 #define  OS_EVENT_TYPE_SEM            3u
+#if 0
 #define  OS_EVENT_TYPE_MUTEX          4u
 #define  OS_EVENT_TYPE_FLAG           5u
 
 #define  OS_TMR_TYPE                100u    /* Used to identify Timers ...                             */
-                                            /* ... (Must be different value than OS_EVENT_TYPE_???)    */
+                                            /* ... (Must be different value than OS_EVENT_TYPE_*)    */
 
 /*
 *********************************************************************************************************
@@ -225,17 +227,22 @@ typedef uint32_t INT32U;
 #define  OS_TMR_STATE_COMPLETED       2u
 #define  OS_TMR_STATE_RUNNING         3u
 
+#endif
+
 /*
 *********************************************************************************************************
 *                                             ERROR CODES
 *********************************************************************************************************
 */
-#define OS_NO_ERR                     0u
+#define OS_ERR_NONE                   0u
 
 #define OS_ERR_EVENT_TYPE             1u
+#if 0
 #define OS_ERR_PEND_ISR               2u
 #define OS_ERR_POST_NULL_PTR          3u
+#endif
 #define OS_ERR_PEVENT_NULL            4u
+#if 0
 #define OS_ERR_POST_ISR               5u
 #define OS_ERR_QUERY_ISR              6u
 #define OS_ERR_INVALID_OPT            7u
@@ -259,9 +266,11 @@ typedef uint32_t INT32U;
 #define OS_PRIO_EXIST                40u
 #define OS_PRIO_ERR                  41u
 #define OS_PRIO_INVALID              42u
+#endif
 
-#define OS_SEM_OVF                   50u
+#define OS_ERR_SEM_OVF               50u
 
+#if 0
 #define OS_TASK_DEL_ERR              60u
 #define OS_TASK_DEL_IDLE             61u
 #define OS_TASK_DEL_REQ              62u
@@ -694,7 +703,7 @@ typedef  struct  os_tmr {
 #if OS_TMR_CFG_NAME_SIZE > 0
     INT8U            OSTmrName[OS_TMR_CFG_NAME_SIZE]; /* Name to give the timer                                        */
 #endif
-    INT8U            OSTmrOpt;                        /* Options (see OS_TMR_OPT_???)                                  */
+    INT8U            OSTmrOpt;                        /* Options (see OS_TMR_OPT_*)                                  */
     INT8U            OSTmrState;                      /* Indicates the state of the timer:                             */
                                                       /*     OS_TMR_STATE_UNUSED                                       */
                                                       /*     OS_TMR_STATE_RUNNING                                      */
@@ -1267,6 +1276,8 @@ INT16U        OSVersion             (void);
 void          OS_Dummy              (void);
 #endif
 
+#endif
+
 #if OS_EVENT_EN
 INT8U         OS_EventTaskRdy       (OS_EVENT        *pevent,
                                      void            *msg,
@@ -1278,6 +1289,8 @@ void          OS_EventTO            (OS_EVENT        *pevent);
 
 void          OS_EventWaitListInit  (OS_EVENT        *pevent);
 #endif
+
+#if 0
 
 #if (OS_VERSION >= 251) && (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
 void          OS_FlagInit           (void);
@@ -1299,7 +1312,11 @@ void          OS_MemInit            (void);
 void          OS_QInit              (void);
 #endif
 
+#endif
+
 void          OS_Sched              (void);
+
+#if 0
 
 #if (OS_EVENT_NAME_SIZE > 1) || (OS_FLAG_NAME_SIZE > 1) || (OS_MEM_NAME_SIZE > 1) || (OS_TASK_NAME_SIZE > 1)
 INT8U         OS_StrCopy            (INT8U           *pdest,
@@ -1352,6 +1369,8 @@ void          OSTmr_Init(void);
 void          OSDebugInit           (void);
 #endif
 
+#endif
+
 #if OS_VERSION >= 204
 void          OSInitHookBegin       (void);
 void          OSInitHookEnd         (void);
@@ -1363,6 +1382,8 @@ void          OSTaskDelHook         (OS_TCB          *ptcb);
 #if OS_VERSION >= 251
 void          OSTaskIdleHook        (void);
 #endif
+
+#if 0
 
 void          OSTaskStatHook        (void);
 OS_STK       *OSTaskStkInit         (void           (*task)(void *p_arg),
@@ -1378,9 +1399,13 @@ void          OSTaskSwHook          (void);
 void          OSTCBInitHook         (OS_TCB          *ptcb);
 #endif
 
+#endif
+
 #if OS_TIME_TICK_HOOK_EN > 0
 void          OSTimeTickHook        (void);
 #endif
+
+#if 0
 
 /*
 *********************************************************************************************************
