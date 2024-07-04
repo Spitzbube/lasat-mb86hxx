@@ -2,10 +2,16 @@
 #include "data.h"
 #include "timer.h"
 #include "ucos_ii.h"
-//#include <mu_arch.h>
+#include <mu_arch.h>
 #include <mu_cdi.h>
 #include <class/mu_msd.h>
 
+#pragma thumb
+
+#if 0
+#define USB_HUB
+#define USB_ASIX
+#endif
 
 extern int Data_234927c4; //234927c4
 extern int Data_234927c8; //234927c8
@@ -148,11 +154,10 @@ static uint32_t MUSB_BoardGetTime(void)
 /* 23439808 - complete */
 int usb_isr()
 {
-#if 1
+#if 0
 	console_send_string("usb_isr (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	uint32_t r0 = FREG(0xC70000F4)[0] & 1;
 	if (r0 != 0)
 	{
@@ -166,7 +171,6 @@ int usb_isr()
 	}
 	//loc_2343983a
 	FREG(0xC70000F8)[0] = Data_234927c8 = FREG(0xC70000F4)[0];
-#endif
 
 	return 0;
 }
@@ -181,7 +185,6 @@ void usb_RunBackground()
 
 	if (0 != OSSemAccept(Data_23492c44))
 	{
-#if 0
 		if (MGC_usbSystem.controllerPtr != 0)
 		{
 			if (MGC_usbSystem.Queue.tail != MGC_usbSystem.Queue.head)
@@ -197,7 +200,6 @@ void usb_RunBackground()
 
 			MGC_usbSystem.Data_0 = 0;
 		}
-#endif
 		//loc_23439876
 		OSSemPost(Data_23492c44);
 	}
@@ -247,7 +249,7 @@ void* usbServiceSystemToBusAddress(void* privateDataPtr, const void* sysAddress)
 /* 234398cc - todo */
 int usbServiceQueueBackgroundItem(void* privateDataPtr, void* itemPtr)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceQueueBackgroundItem (todo.c): TODO\r\n");
 #endif
 
@@ -289,7 +291,7 @@ int usbServiceQueueBackgroundItem(void* privateDataPtr, void* itemPtr)
 /* 2343991c - complete */
 uint8_t usbServiceDequeueBackgroundItem(void* a, void* itemPtr)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceDequeueBackgroundItem (todo.c): TODO\r\n");
 #endif
 
@@ -324,7 +326,7 @@ uint8_t usbServiceDequeueBackgroundItem(void* a, void* itemPtr)
 /* 23439966 - complete */
 void usbServiceFlushBackgroundQueue()
 {
-#if 1
+#if 0
 	console_send_string("usbServiceFlushBackgroundQueue (todo.c): TODO\r\n");
 #endif
 
@@ -344,7 +346,7 @@ void usbServiceFlushBackgroundQueue()
 /* 2343997a - complete */
 int sub_2343997a(void* a)
 {
-#if 1
+#if 0
 	console_send_string("sub_2343997a (todo.c): TODO\r\n");
 #endif
 
@@ -376,7 +378,7 @@ uint8_t usbServiceArmTimer(void* privateDataPtr,
                                    uint8_t    periodicFlag,
                                    MUSB_pfTimerExpired expiredCallback)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceArmTimer (todo.c): TODO\r\n");
 #endif
 
@@ -412,7 +414,7 @@ uint8_t usbServiceArmTimer(void* privateDataPtr,
 /* 23439a0c - complete */
 uint8_t usbServiceCancelTimer(void* privateDataPtr, uint16_t index)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceCancelTimer (todo.c): TODO\r\n");
 #endif
 
@@ -435,7 +437,7 @@ uint8_t usbServiceCancelTimer(void* privateDataPtr, uint16_t index)
 /* 23439a34 - complete */
 uint8_t usbServiceLock(void* a, uint16_t index)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceLock (todo.c): TODO\r\n");
 #endif
 
@@ -450,7 +452,7 @@ uint8_t usbServiceLock(void* a, uint16_t index)
 /* 23439a4a - complete */
 uint8_t usbServiceUnlock(void* a, uint16_t index)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceUnlock (todo.c): TODO\r\n");
 #endif
 
@@ -469,9 +471,11 @@ void sub_23439a5c()
 	console_send_string("sub_23439a5c (todo.c): TODO\r\n");
 #endif
 
-#if 0
-	uint32_t cpu_sr;
-//	uint8_t i = 0;
+#if 1
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+	uint8_t i; // = 0;
 
 	if ((MGC_usbSystem.MGC_hCdiBus != 0) &&
 			(0 != MUSB_DeactivateClient(MGC_usbSystem.MGC_hCdiBus)))
@@ -491,7 +495,7 @@ void sub_23439a5c()
 		MUSB_StopController(MGC_usbSystem.controllerPtr);
 		MUSB_DestroyController(MGC_usbSystem.controllerPtr);
 
-		cpu_sr = FAMOS_EnterCriticalSection();
+		OS_ENTER_CRITICAL();
 
 		Data_234927c4 = 0x7f;
 		FREG(0xC70000F0)[0] = Data_234927c4; //DMA_USB_INT_MASK
@@ -501,7 +505,7 @@ void sub_23439a5c()
 
 		MGC_usbSystem.controllerPtr = NULL;
 
-		FAMOS_LeaveCriticalSection(cpu_sr);
+		OS_EXIT_CRITICAL();
 	}
 	//loc_23439ad8
 	memset(&MGC_usbSystem.Queue, 0, sizeof(MGC_usbSystem.Queue)/*164*4*/);
@@ -512,7 +516,7 @@ void sub_23439a5c()
 		MGC_usbSystem.Timer[0].Data_0 = sub_2341b85c(MGC_usbSystem.Timer[0].Data_0);
 	}
 
-	for (uint8_t i = 0; i < 17; i++)
+	for (i = 0; i < 17; i++)
 	{
 		//loc_23439afa
 		if (MGC_usbSystem.lock[i] != 0)
@@ -528,7 +532,7 @@ void sub_23439a5c()
 /* 23439b18 - todo */
 void sub_23439b18(void* hClient, MUSB_BusHandle hBus, uint32_t status)
 {
-#if 1
+#if 0
 	console_send_string("sub_23439b18 (todo.c): TODO\r\n");
 #endif
 
@@ -542,7 +546,7 @@ void sub_23439b18(void* hClient, MUSB_BusHandle hBus, uint32_t status)
 /* 23439b20 - complete */
 void sub_23439b20(void* h, MUSB_BusHandle hBus, MUSB_OtgState state)
 {
-#if 1
+#if 0
 	console_send_string("sub_23439b20 (todo.c): TODO\r\n");
 #endif
 
@@ -635,25 +639,15 @@ int usb_msd_init()
 	MGC_usbSystem.MGC_MsdHostClient.bDeviceDriverListLength = 1;
 #endif
 
-#if 1
-	console_send_string("usb_msd_init (1): TODO\r\n");
-#endif
-
 	if (0 != MGC_HdrcUlpiVbusControl(MGC_usbSystem.portPtr->pPrivateData, 1, 0))
 	{
 		//0x23439ba0
-#if 1
-		console_send_string("usb_msd_init (2): TODO\r\n");
-#endif
 		MGC_usbSystem.MGC_hCdiBus = MUSB_RegisterOtgClient(MGC_usbSystem.portPtr,
 				/*(MUSB_FunctionClient*)*/NULL,
 				/*(MUSB_HostClient*)*/ &MGC_usbSystem.MGC_MsdHostClient,
 				/*(MUSB_OtgClient*)*/ &MGC_usbSystem.MGC_MsdOtgClient);
 	}
 	//loc_23439bb2
-#if 1
-	console_send_string("usb_msd_init (return): TODO\r\n");
-#endif
 	return 0;
 }
 

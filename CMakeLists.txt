@@ -30,6 +30,7 @@ target_link_libraries(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PUBLIC
     drv
     ${musb_SOURCE_DIR}/include
+    ${musb_SOURCE_DIR}/src/systems/FAPI4
 )
 
 add_definitions(

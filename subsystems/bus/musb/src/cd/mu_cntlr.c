@@ -718,8 +718,6 @@ MUSB_Port *MUSB_GetPort(uint16_t index)
     return pResult;
 }
 
-#if 0
-
 /*
  * Implementation
  */
@@ -736,6 +734,8 @@ uint8_t MUSB_DeactivateClient(MUSB_BusHandle hBus)
 
     return TRUE;
 }
+
+#if 0
 
 /*
  * Implementation

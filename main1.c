@@ -77,11 +77,6 @@ void main_usb_init()
 		usb_init();
 		MGC_usbInitController();
 		usb_msd_init();
-
-#if 0 //Force USB On
-		usb_set_gpio(1);
-		sub_23439d06(0); 
-#endif
 	}
 	//loc_23401858
 	return;

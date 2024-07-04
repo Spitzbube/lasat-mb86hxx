@@ -1,7 +1,7 @@
 
 #include <ucos_ii.h>
 
-#if 0
+#if 1
 
 /* 2346425c - todo */
 OS_EVENT* OSSemDel(OS_EVENT* pevent, int opt, int* res)

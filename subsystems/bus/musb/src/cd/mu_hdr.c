@@ -244,8 +244,6 @@ int MGC_HdrcIsr(void *pParam)
     wIntrTxValue = MGC_Read16(pBase, MGC_O_HDRC_INTRTX);
     wIntrRxValue = MGC_Read16(pBase, MGC_O_HDRC_INTRRX);
 #if 0
-    result = MGC_DrcIsr(pControllerImpl, bIntrUsbValue, wIntrTxValue, wIntrRxValue);
-#else
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MGC_HdrcIsr: bIntrUsbValue=0x%02x\r\n", 
@@ -253,6 +251,8 @@ int MGC_HdrcIsr(void *pParam)
 		console_send_string(debug_string);
 	}
 #endif
+
+    result = MGC_DrcIsr(pControllerImpl, bIntrUsbValue, wIntrTxValue, wIntrRxValue);
 
 #ifdef MUSB_OVERHEAD
     dwTime = pUtils->pfGetTime() - dwStartTime;
@@ -282,7 +282,7 @@ uint32_t MGC_HdrcStart(MGC_Controller *pController)
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIsr;
     MGC_Port *pPort = pController->pPort;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcStart (todo.c): TODO\r\n");
 #endif
 
@@ -320,7 +320,7 @@ uint32_t MGC_HdrcStop(MGC_Controller *pController)
     uint16_t temp;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcStop (todo.c): TODO\r\n");
 #endif
 
@@ -364,7 +364,7 @@ uint32_t MGC_HdrcReadBusState(MGC_Port *pPort)
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcReadBusState (todo.c): TODO\r\n");
 #endif
 
@@ -436,7 +436,7 @@ uint32_t MGC_HdrcProgramBusState(MGC_Port *pPort)
     uint8_t nDevCtl = devctl;
     uint8_t bFuncAddr = MGC_Read8(pBase, MGC_O_HDRC_FADDR);
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcProgramBusState (todo.c): TODO\r\n");
 #endif
 
@@ -1124,7 +1124,7 @@ uint32_t MGC_HdrcFlushEndpoint(MGC_Port *pPort, MGC_EndpointResource *pEnd,
     uint8_t bTx = FALSE;
     uint8_t bEnd = pEnd->bLocalEnd;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcFlushEndpoint (todo.c): TODO\r\n");
 #endif
 
@@ -1408,7 +1408,7 @@ uint8_t MGC_HdrcServiceDefaultEnd(MGC_Port *pPort, MGC_BsrItem *pItem)
     MGC_EndpointResource *pEnd = MUSB_ArrayFetch(&(pPort->LocalEnds), 0);
     uint8_t *pBase = (uint8_t *)pPort->pController->pControllerAddressIsr;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcServiceDefaultEnd (todo.c): TODO\r\n");
 #endif
 
@@ -1571,7 +1571,7 @@ uint8_t MGC_HdrcServiceTransmitAvail(MGC_Port *pPort, uint16_t wEndIndex, MGC_Bs
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcServiceTransmitAvail (todo.c): TODO\r\n");
 #endif
 
@@ -1730,7 +1730,7 @@ uint8_t MGC_HdrcServiceReceiveReady(MGC_Port *pPort, uint16_t wEndIndex, MGC_Bsr
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_HdrcServiceReceiveReady (todo.c): TODO\r\n");
 #endif
 

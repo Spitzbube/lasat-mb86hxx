@@ -354,7 +354,7 @@ uint32_t MGC_MhdrcStartRx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
     MUSB_SystemServices *pServices = pController->pSystemServices;
     uint8_t bEnd = pEnd->bLocalEnd;
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MGC_MhdrcStartRx: dwTotalBytes=%d, bAllowDma=%d\r\n",
@@ -675,9 +675,8 @@ uint32_t MGC_MhdrcStartTx(MGC_Port *pPort, MGC_EndpointResource *pEnd,
 
     MGC_SelectEnd(pBase, bEnd);
 
-#if 0
     MUSB_PRT("[MGC] MhdrcStartTx:0x%x:0x%x:0x%x\r\n", dwTotalBytes, bEnd, pEnd->bBusEnd);
-#else
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "[MGC] MhdrcStartTx:0x%x:0x%x:0x%x\r\n", dwTotalBytes, bEnd, pEnd->bBusEnd);

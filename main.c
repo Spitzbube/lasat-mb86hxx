@@ -23,6 +23,7 @@ void startup_thread()
 	}
 }
 
+
 /* 234004b8 - todo */
 int main()
 {

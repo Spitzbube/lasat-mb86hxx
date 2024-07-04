@@ -216,8 +216,6 @@ uint8_t MGC_DrcInit(MGC_Port *pPort)
     return bOk;
 }
 
-#if 0
-
 /*
  * DRC Interrupt Service Routine
  */
@@ -323,8 +321,6 @@ int MGC_DrcIsr(MGC_Controller *pController, uint8_t bIntrUsbValue,
 
     return iResult;
 }
-
-#endif
 
 /*
 * Find the DRC's first (host) or required (function)
@@ -463,7 +459,7 @@ uint8_t MGC_DrcServiceDefaultEnd(MGC_Port *pPort, MGC_BsrItem *pItem,
     uint8_t status = MUSB_STATUS_OK;
     MGC_EndpointResource *pEnd = (MGC_EndpointResource *)MUSB_ArrayFetch(&(pPort->LocalEnds), 0);
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcServiceDefaultEnd (todo.c): TODO\r\n");
 #endif
 
@@ -640,7 +636,7 @@ uint32_t MGC_DrcResetPort(MGC_Port *pPort)
 {
     MGC_Controller *pController = pPort->pController;
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcResetPort (todo.c): TODO\r\n");
 #endif
 
@@ -698,10 +694,6 @@ static void MGC_DrcFlushAll(MGC_Port *pPort)
     MGC_EndpointResource *pEnd;
     uint8_t *pBase = (uint8_t *)pPort->pController->pControllerAddressIst;
     MUSB_PRT("[MGC] DrcFlushAll\r\n");
-
-#if 1
-	console_send_string("DrcFlushAll (todo.c): TODO\r\n");
-#endif
 
 #if 0
     pEnd = (MGC_EndpointResource *)MUSB_ArrayFetch(&(pPort->LocalEnds), dwEndIndex);
@@ -1066,6 +1058,7 @@ void MGC_DrcChangeOtgState(uint8_t toOtg, MGC_Port *pPort)
     MUSB_SystemServices *pServices = pPort->pController->pSystemServices;
 
     MUSB_PRT("[MGC] DrcChangeOtgState\r\n");
+
 #if MUSB_DIAG > 1
     pPort->pController->pfDumpControllerState(pPort->pController);
 #endif
@@ -1209,8 +1202,6 @@ void MGC_CompleteOtgTransition(MGC_Port *pPort)
     }
 }
 
-#if 0
-
 /** Timer callback to turn off resume */
 static void MGC_DrcCompleteResume(void *pParam)
 {
@@ -1263,9 +1254,8 @@ uint8_t MGC_DrcUsbIsr(MGC_Port *pPort, uint8_t bIntrUsbVal)
     MUSB_SystemServices *pServices;
 
     pServices = pPort->pController->pSystemServices;
-#if 1
     MUSB_PRT("[MGC] DrcUsbIsr:%02x\r\n", bIntrUsbVal);
-#else
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "[MGC] DrcUsbIsr:%02x\r\n", bIntrUsbVal);
@@ -1360,7 +1350,7 @@ uint8_t MGC_DrcUsbIsr(MGC_Port *pPort, uint8_t bIntrUsbVal)
 
         if(bIntrUsbVal & MGC_M_INTR_RESET)
         {
-#if 0
+#if 1
             MUSB_PRT("usb reset interrupt\r\n");
 #else
 			console_send_string("usb reset interrupt\r\n");
@@ -1440,8 +1430,6 @@ uint8_t MGC_DrcUsbIsr(MGC_Port *pPort, uint8_t bIntrUsbVal)
     return bResult;
 }
 
-#endif
-
 //flag -- distinguishi CONNECT/DISCONNECT scanning bsr from
 //        init and read operation
 /* 23465efa - todo */
@@ -1464,7 +1452,7 @@ uint32_t MGC_DrcBsr(void *pParam)
     MUSB_SystemServices *pServices = pController->pSystemServices;
     MUSB_OtgClient *pOtgClient = (MUSB_OtgClient *)pPort->pOtgClient;
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcBsr (todo.c): TODO\r\n");
 #endif
 
@@ -1473,7 +1461,6 @@ uint32_t MGC_DrcBsr(void *pParam)
     uint32_t ReservedRetval = BSR_NONE_EVENT;
 #endif
 
-#if 0
     //->loc_23466198
     bOk = pServices->pfDequeueBackgroundItem(pServices->pPrivateData, &item);
     while(bOk)
@@ -1761,7 +1748,6 @@ uint32_t MGC_DrcBsr(void *pParam)
 
         bOk = pServices->pfDequeueBackgroundItem(pServices->pPrivateData, &item);
     }//end while()
-#endif
     //loc_234661a6
 #if 0
     if(BSR_DISCONNECT_EVENT == ReservedRetval)
@@ -1789,7 +1775,7 @@ uint8_t MGC_DrcServiceHostDefault(MGC_Port *pPort, uint16_t wCount,
     MUSB_ControlIrp *pIrp = (MUSB_ControlIrp *)pEnd->pTxIrp;
     MUSB_DeviceRequest *pRequest = (MUSB_DeviceRequest *)pIrp->pOutBuffer;
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcServiceHostDefault (todo.c): TODO\r\n");
 #endif
 
@@ -2020,6 +2006,8 @@ uint32_t MGC_DrcSetHostPower(MGC_Controller *pController,
 
 #endif
 
+#endif
+
 /**
  * Enter the OTG state GetId
  */
@@ -2028,6 +2016,7 @@ static void MGC_OtgStateGetId(MGC_Port *pPort, uint8_t bIsReset)
 {
     pPort->bWantSuspend = FALSE;
     pPort->bWantSession = TRUE;
+
     pPort->pfProgramBusState(pPort);
 
     /*
@@ -2065,21 +2054,20 @@ static void MGC_OtgStateGetId(MGC_Port *pPort, uint8_t bIsReset)
     }
 }
 
-#endif
-
 /* 2346632e - complete */
 MUSB_BusHandle MUSB_RegisterOtgClient(MUSB_Port *pPort,
                                       MUSB_FunctionClient *pFunctionClient,
                                       MUSB_HostClient *pHostClient,
                                       MUSB_OtgClient *pOtgClient)
 {
-    MUSB_OtgDescriptor *pOtgDesc; // = NULL;
+    MUSB_OtgDescriptor *pOtgDesc = NULL; // = NULL;
     uint32_t dwStatus = 0;
     void *pResult = NULL;
 
     MGC_Port *pImplPort = (MGC_Port *)pPort->pPrivateData;
 
     MUSB_PRT("[MGC] RegisterOtgClient\r\n");
+
     /* session still active? */
     if(!pImplPort->bSessionActive)
     {
@@ -2123,7 +2111,7 @@ MUSB_BusHandle MUSB_RegisterOtgClient(MUSB_Port *pPort,
             pImplPort->bWantSession = TRUE;//HOST
             pImplPort->bWantHost    = TRUE;// wangzhilei
 #endif
-//            MGC_OtgStateGetId(pImplPort, FALSE);
+            MGC_OtgStateGetId(pImplPort, FALSE);
 
             /* set return value */
             pResult = pImplPort;
@@ -2172,12 +2160,12 @@ uint8_t MUSB_RequestBus(MUSB_BusHandle hBus)
     switch(pPort->bOtgState)
     {
     case MUSB_AB_IDLE:
-//        MGC_OtgStateGetId(pPort, FALSE);
+        MGC_OtgStateGetId(pPort, FALSE);
         return TRUE;
     }
     if(!pPort->bIsSession)
     {
-//        MGC_OtgStateGetId(pPort, FALSE);
+        MGC_OtgStateGetId(pPort, FALSE);
         return TRUE;
     }
     return FALSE;

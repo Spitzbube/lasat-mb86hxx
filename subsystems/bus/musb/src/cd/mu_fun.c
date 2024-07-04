@@ -510,8 +510,6 @@ static uint8_t MGC_FunctionConfigSelected(MGC_Port *pPort, uint8_t bConfigValue)
     return bOk;
 }
 
-#if 0
-
 /**
  * Based on connection speed, set config pointer array to prepare for SET_CONFIGURATION()
  */
@@ -542,8 +540,6 @@ void MGC_FunctionSpeedSet(MGC_Port *pPort)
     }
     dwStatus ++;//avoid warning
 }
-
-#endif
 
 /*
 * Parse a setup and possibly handle it based on descriptors
