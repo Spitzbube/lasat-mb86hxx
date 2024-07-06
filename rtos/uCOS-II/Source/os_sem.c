@@ -139,8 +139,6 @@ OS_EVENT  *OSSemCreate (INT16U cnt)
     return (pevent);
 }
 
-#if 0
-
 /*
 *********************************************************************************************************
 *                                         DELETE A SEMAPHORE
@@ -185,6 +183,7 @@ OS_EVENT  *OSSemCreate (INT16U cnt)
 */
 
 #if OS_SEM_DEL_EN > 0u
+/* 2346425c - todo */
 OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
                      INT8U      opt,
                      INT8U     *perr)
@@ -211,6 +210,12 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
     }
 #endif
 
+	if (OSIntNesting != 0)
+	{
+		*perr = OS_ERR_DEL_ISR;
+		return pevent;
+	}
+
 #if OS_ARG_CHK_EN > 0u
     if (pevent == (OS_EVENT *)0) {                         /* Validate 'pevent'                        */
         *perr = OS_ERR_PEVENT_NULL;
@@ -225,11 +230,13 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
         OS_TRACE_SEM_DEL_EXIT(*perr);
         return (pevent);
     }
+#if 0
     if (OSIntNesting > 0u) {                               /* See if called from ISR ...               */
         *perr = OS_ERR_DEL_ISR;                            /* ... can't DELETE from an ISR             */
         OS_TRACE_SEM_DEL_EXIT(*perr);
         return (pevent);
     }
+#endif
     OS_ENTER_CRITICAL();
     if (pevent->OSEventGrp != 0u) {                        /* See if any tasks waiting on semaphore    */
         tasks_waiting = OS_TRUE;                           /* Yes                                      */
@@ -244,7 +251,9 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
 #endif
                  pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
                  pevent->OSEventPtr     = OSEventFreeList; /* Return Event Control Block to free list  */
+#if 0
                  pevent->OSEventCnt     = 0u;
+#endif
                  OSEventFreeList        = pevent;          /* Get next free event control block        */
                  OS_EXIT_CRITICAL();
                  *perr                  = OS_ERR_NONE;
@@ -258,14 +267,16 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
 
         case OS_DEL_ALWAYS:                                /* Always delete the semaphore              */
              while (pevent->OSEventGrp != 0u) {            /* Ready ALL tasks waiting for semaphore    */
-                 (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM, OS_STAT_PEND_ABORT);
+                 (void)OS_EventTaskRdy(pevent, (void *)0, OS_STAT_SEM/*, OS_STAT_PEND_ABORT*/);
              }
 #if OS_EVENT_NAME_EN > 0u
              pevent->OSEventName    = (INT8U *)(void *)"?";
 #endif
              pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free list  */
+#if 0
              pevent->OSEventCnt     = 0u;
+#endif
              OSEventFreeList        = pevent;              /* Get next free event control block        */
              OS_EXIT_CRITICAL();
              if (tasks_waiting == OS_TRUE) {               /* Reschedule only if task(s) were waiting  */
@@ -286,8 +297,6 @@ OS_EVENT  *OSSemDel (OS_EVENT  *pevent,
 
     return (pevent_return);
 }
-#endif
-
 #endif
 
 /*

@@ -92,4 +92,3 @@ void MGC_StartupAppEvent()
 
 }
 
-//MGC_OtgStateGetId

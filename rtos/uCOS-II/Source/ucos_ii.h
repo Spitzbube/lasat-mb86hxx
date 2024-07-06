@@ -120,7 +120,9 @@ typedef uint32_t INT32U;
 *                                        OS_EVENT types
 *********************************************************************************************************
 */
+#endif
 #define  OS_EVENT_TYPE_UNUSED         0u
+#if 0
 #define  OS_EVENT_TYPE_MBOX           1u
 #define  OS_EVENT_TYPE_Q              2u
 #endif
@@ -170,6 +172,8 @@ typedef uint32_t INT32U;
 #define  OS_TICK_STEP_ONCE            2u    /* Process tick once and wait for next cmd from uC/OS-View */
 #endif
 
+#endif
+
 /*
 *********************************************************************************************************
 *       Possible values for 'opt' argument of OSSemDel(), OSMboxDel(), OSQDel() and OSMutexDel()
@@ -177,6 +181,8 @@ typedef uint32_t INT32U;
 */
 #define  OS_DEL_NO_PEND               0u
 #define  OS_DEL_ALWAYS                1u
+
+#if 0
 
 /*
 *********************************************************************************************************
@@ -245,8 +251,10 @@ typedef uint32_t INT32U;
 #if 0
 #define OS_ERR_POST_ISR               5u
 #define OS_ERR_QUERY_ISR              6u
+#endif
 #define OS_ERR_INVALID_OPT            7u
 #define OS_ERR_TASK_WAITING           8u
+#if 0
 #define OS_ERR_PDATA_NULL             9u
 #endif
 
@@ -306,8 +314,10 @@ typedef uint32_t INT32U;
 #define OS_ERR_NOT_MUTEX_OWNER      120u
 
 #define OS_TASK_OPT_ERR             130u
+#endif
 
 #define OS_ERR_DEL_ISR              140u
+#if 0
 #define OS_ERR_CREATE_ISR           141u
 
 #define OS_FLAG_INVALID_PGRP        150u

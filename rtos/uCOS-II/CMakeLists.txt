@@ -2,7 +2,6 @@ project (ucos_ii)
 
 set (
    SRCS
-   Source/kernel_sema.c
    Source/kernel_stack.c
    Source/kernel_task.c
    Source/os_core.c

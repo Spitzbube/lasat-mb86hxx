@@ -247,7 +247,7 @@ MUSB_Controller *MUSB_NewController(MUSB_SystemUtils *pUtils,
         }
     }
 
-#if 1
+#if 0
 	console_send_string("MUSB_NewController (todo.c): TODO\r\n");
 #endif
 
@@ -596,7 +596,7 @@ uint32_t MUSB_StartController(MUSB_Controller *pController,
 {
     MGC_Controller *pImpl = NULL;
 
-#if 1
+#if 0
 	console_send_string("MUSB_StartController (todo.c): TODO\r\n");
 #endif
 

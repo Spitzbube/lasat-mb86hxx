@@ -58,7 +58,7 @@ uint8_t MGC_MhdrcInit(MGC_Port *pPort)
 
     snprintf(str, 32, "%d.%d%s", bMajor, wMinor, (wVersion & 0x8000)? "RC": "");
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MGC_MhdrcInit: bResult=%d, version=%s\r\n", 
@@ -101,7 +101,7 @@ MGC_EndpointResource *MGC_MhdrcBindEndpoint(MGC_Port *pPort,
     MGC_Controller *pController = pPort->pController;
     uint8_t *pBase = (uint8_t *)pController->pControllerAddressIst;
 
-#if 1
+#if 0
 	console_send_string("MGC_MhdrcBindEndpoint (todo.c): TODO\r\n");
 #endif
 

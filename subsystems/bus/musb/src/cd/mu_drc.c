@@ -348,7 +348,7 @@ MGC_EndpointResource *MGC_DrcBindEndpoint(MGC_Port *pPort,
     uint16_t wBestDiff = 0xffff;
     uint16_t wBestReqDiff = 0xffff;
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcBindEndpoint (todo.c): TODO\r\n");
 #endif
 
@@ -1906,7 +1906,7 @@ uint8_t MGC_DrcAcceptDevice(MGC_Port *pPort, MUSB_Device *pDevice,
     uint8_t bOk = TRUE;
     MUSB_OtgClient *pOtgClient = pPort->pOtgClient;
 
-#if 1
+#if 0
 	console_send_string("MGC_DrcAcceptDevice (todo.c): TODO\r\n");
 #endif
 
