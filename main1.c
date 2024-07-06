@@ -53,6 +53,42 @@ void main_console_init()
 }
 
 
+/* 23401488 - todo */
+void main_network_init()
+{
+#if 1
+	console_send_string("main_network_init (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	sub_23419454(sub_234012b0);
+
+	eth_set_buffer( sub_234019e0(0x10000) );
+#endif
+
+	uint32_t r4 = sub_234019e0(0x150000);
+
+#if 0
+	Data_23491df0 = sub_234019e0(0x10000);
+#endif
+
+	if (0 == network_init(r4))
+	{
+#if 0
+		ftpd_init();
+
+		tcp_console_init(main_process_uart_command);
+#endif
+	}
+#if 0 //TODO!!! Until network_init is fixed
+	else
+	{
+		tcp_console_init(main_process_uart_command);
+	}
+#endif
+}
+
+
 /* 234017f0 / 234023e8 - todo */
 void main_usb_init()
 {

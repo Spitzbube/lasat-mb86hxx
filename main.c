@@ -6,11 +6,13 @@
 void main_base_init(void);
 void main_console_init(void);
 void main_usb_init(void);
+void main_network_init(void);
 
 
 /* 23400424 - todo */
 void startup_thread()
 {
+	main_network_init();
 	main_usb_init();
 
 	while (1)

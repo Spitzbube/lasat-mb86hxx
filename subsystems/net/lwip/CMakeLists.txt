@@ -7,15 +7,28 @@ project(lwIP)
 # Example lwIP application
 set(LWIP_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-set (LWIP_DEFINITIONS LWIP_DEBUG=1)
+set (LWIP_DEFINITIONS 
+  LWIP_DEBUG=1
+)
 
-if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-  add_subdirectory(${LWIP_DIR}/contrib/ports/win32/example_app)
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-  add_subdirectory(${LWIP_DIR}/contrib/ports/unix/example_app)
-else()
-  message(WARNING "Host ${CMAKE_SYSTEM_NAME} is not supported to build example_app")
-endif()
+set (LWIP_COMPILER_FLAGS
+  --c99
+)
+
+set (LWIP_INCLUDE_DIRS 
+  ${LWIP_DIR}/src/include
+  ${ucos_ii_SOURCE_DIR}/Cfg
+  ${ucos_ii_SOURCE_DIR}/Source
+  ${ucos_ii_SOURCE_DIR}/Ports/ARM/Generic/RealView
+)
+
+#if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+#  add_subdirectory(${LWIP_DIR}/contrib/ports/win32/example_app)
+#elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+#  add_subdirectory(${LWIP_DIR}/contrib/ports/unix/example_app)
+#else()
+#  message(WARNING "Host ${CMAKE_SYSTEM_NAME} is not supported to build example_app")
+#endif()
 
 # Source package generation
 set(CPACK_SOURCE_GENERATOR "ZIP")

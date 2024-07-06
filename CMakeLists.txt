@@ -4,12 +4,14 @@ project (mb86h60_hello_world)
 
 set(SRCS
    main.c
+   sub_2340199c.c
    main1.c
    console.c
    memblk.c
    dma.c
    usb.c
    sub_23467de0.c
+   network.c
    todo.c
 )
 
@@ -36,6 +38,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     drv
     ${musb_SOURCE_DIR}/include
     ${musb_SOURCE_DIR}/src/systems/FAPI4
+    ${lwIP_SOURCE_DIR}/src/include
 )
 
 add_definitions(
