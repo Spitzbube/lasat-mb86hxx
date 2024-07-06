@@ -12,9 +12,8 @@ set (
    src/cd/mu_hsdma.c
    src/cd/mu_list.c
    src/cd/mu_pip.c
-   src/drivers/msd/mu_mapi.c
-   src/drivers/msd/mu_mbot.c
-   src/drivers/msd/mu_mscsi.c
+   src/lib/mu_bits.c
+   src/lib/mu_strng.c
    src/systems/FAPI4/mu_mem.c
    src/systems/FAPI4/mu_reg.c
 )
@@ -37,6 +36,7 @@ target_link_libraries(${PROJECT_NAME}
 
 add_definitions(
     --gnu
+    --c99
 #    -O2
 )
 
@@ -44,3 +44,6 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
     -DMUSB_MHDRC
     -DMUSB_DMA
 )
+
+add_subdirectory(src/drivers/hub)
+add_subdirectory(src/drivers/msd)

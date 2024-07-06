@@ -9,7 +9,6 @@
 #pragma thumb
 
 #if 0
-#define USB_HUB
 #define USB_ASIX
 #endif
 

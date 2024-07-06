@@ -25,6 +25,8 @@ target_link_libraries(${PROJECT_NAME}
     drv
 #    ucos_ii
     musb
+    musb_hub
+    musb_msd
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -36,6 +38,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 add_definitions(
     --gnu
 #    -O2
+)
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC
+    USB_HUB
 )
 
 set(ENTRY_FUNC ARM1176_Start)
