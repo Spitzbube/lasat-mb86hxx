@@ -43,7 +43,7 @@ add_definitions(
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     USB_HUB
-#    USB_ASIX
+    USB_ASIX
 )
 
 set(ENTRY_FUNC ARM1176_Start)

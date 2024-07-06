@@ -92,3 +92,25 @@ void MGC_StartupAppEvent()
 
 }
 
+
+void ethif_asixusb_init()
+{
+	console_send_string("ethif_asixusb_init (todo.c): TODO\r\n");
+
+}
+
+
+void ethif_asixusb_input()
+{
+	console_send_string("ethif_asixusb_input (todo.c): TODO\r\n");
+
+}
+
+
+int dhcp_start()
+{
+	console_send_string("dhcp_start (todo.c): TODO\r\n");
+
+	return 0;
+}
+

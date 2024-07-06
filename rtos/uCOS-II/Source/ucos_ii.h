@@ -104,8 +104,8 @@ typedef uint32_t INT32U;
 */
 #define  OS_STAT_RDY               0x00u    /* Ready to run                                            */
 #define  OS_STAT_SEM               0x01u    /* Pending on semaphore                                    */
-#if 0
 #define  OS_STAT_MBOX              0x02u    /* Pending on mailbox                                      */
+#if 0
 #define  OS_STAT_Q                 0x04u    /* Pending on queue                                        */
 #endif
 #define  OS_STAT_SUSPEND           0x08u    /* Task is suspended                                       */
@@ -122,8 +122,8 @@ typedef uint32_t INT32U;
 */
 #endif
 #define  OS_EVENT_TYPE_UNUSED         0u
-#if 0
 #define  OS_EVENT_TYPE_MBOX           1u
+#if 0
 #define  OS_EVENT_TYPE_Q              2u
 #endif
 #define  OS_EVENT_TYPE_SEM            3u
@@ -244,9 +244,7 @@ typedef uint32_t INT32U;
 
 #define OS_ERR_EVENT_TYPE             1u
 #define OS_ERR_PEND_ISR               2u
-#if 0
 #define OS_ERR_POST_NULL_PTR          3u
-#endif
 #define OS_ERR_PEVENT_NULL            4u
 #if 0
 #define OS_ERR_POST_ISR               5u
@@ -267,9 +265,11 @@ typedef uint32_t INT32U;
 #define OS_ERR_PNAME_NULL            15u
 #define OS_ERR_TASK_CREATE_ISR       16u
 #define OS_ERR_PEND_LOCKED           17u
+#endif
 
-#define OS_MBOX_FULL                 20u
+#define OS_ERR_MBOX_FULL             20u
 
+#if 0
 #define OS_Q_FULL                    30u
 #define OS_Q_EMPTY                   31u
 
