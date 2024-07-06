@@ -47,3 +47,4 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 add_subdirectory(src/drivers/hub)
 add_subdirectory(src/drivers/msd)
+add_subdirectory(src/drivers/asix)

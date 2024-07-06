@@ -8,10 +8,6 @@
 
 #pragma thumb
 
-#if 0
-#define USB_ASIX
-#endif
-
 extern int Data_234927c4; //234927c4
 extern int Data_234927c8; //234927c8
 extern int Data_234927cc; //234927cc

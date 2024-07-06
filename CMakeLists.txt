@@ -27,6 +27,7 @@ target_link_libraries(${PROJECT_NAME}
     musb
     musb_hub
     musb_msd
+    musb_asix
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -42,6 +43,7 @@ add_definitions(
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     USB_HUB
+#    USB_ASIX
 )
 
 set(ENTRY_FUNC ARM1176_Start)
