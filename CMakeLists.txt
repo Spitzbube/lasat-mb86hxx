@@ -19,6 +19,7 @@ add_subdirectory(boot/startup)
 add_subdirectory(rtos/uCOS-II)
 add_subdirectory(drv)
 add_subdirectory(subsystems/bus/musb)
+add_subdirectory(subsystems/net/lwip)
 
 target_link_libraries(${PROJECT_NAME}
 #    startup
@@ -28,6 +29,7 @@ target_link_libraries(${PROJECT_NAME}
     musb_hub
     musb_msd
     musb_asix
+    lwipcore
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
