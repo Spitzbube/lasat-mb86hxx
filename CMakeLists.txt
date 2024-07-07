@@ -16,6 +16,7 @@ set(SRCS
    ir_user.c
    ir_decode.c
    thumb.c
+   thumb1.c
    hexdump.c
    todo.c
 )
