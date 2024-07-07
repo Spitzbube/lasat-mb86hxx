@@ -23,6 +23,8 @@ ir_data Data_23492078 = //23492078 +0x10 / 234ac68c
 
 uint32_t ir_thread_stack[THREAD_STACK_SIZE_IR_USER_IN]; //235491e4
 uint32_t uart_in_thread_stack[THREAD_STACK_SIZE_UART_IN]; //23549824 -> 2354A4A4
+uint32_t Data_2354a4a4/*stack1*/[0x320]; //2354a4a4 +0x320*4 = 2354B124 / 235a6b04
+uint32_t Data_2354b124/*stack2*/[0x320]; //2354b124 +0x320*4 = 2354BDA4 / 235a7784
 Struct_2340d784 Data_2354bda4; //2354bda4 / 235a8404
 
 
@@ -287,4 +289,91 @@ void* ir_user_init(Struct_2340d784* r5)
 
 	return Data_2349206c;
 }
+
+
+/* 2340d840 / 2341475c - todo */
+int ui_thread_create(UI_Thread_Params* pThreadParams/*r5*/)
+{
+	void* pStackTop;
+	uint32_t retry = 16;
+	int* pStack = 0;
+
+	uint8_t res; //sp_0x2c;
+	UI_Thread_Params sp_0x14;
+
+	memcpy(&sp_0x14, pThreadParams, 24);
+
+	sp_0x14.pSema = OSSemCreate(0);
+
+	if (pThreadParams->threadFunc == 0)
+	{
+		//->loc_2340d92c
+		return 1;
+	}
+	//0x2340d880
+	if (Data_2354bda4.threadPrioUI == 0)
+	{
+		Data_2354bda4.threadPrioUI = Data_2354bda4.threadPrioUI_1;
+		//->loc_2340d8a0
+	}
+	else
+	{
+		//0x2340d898
+		res = OSTaskDelReq();
+	}
+	//loc_2340d8a0
+	if (Data_2354bda4.threadPrioUI == Data_2354bda4.threadPrioUI_1)
+	{
+		Data_2354bda4.threadPrioUI = Data_2354bda4.threadPrioUI_2;
+		pStack = Data_2354b124;
+		//->loc_2340d8cc
+	}
+	//0x2340d8bc
+	else if (Data_2354bda4.threadPrioUI == Data_2354bda4.threadPrioUI_2)
+	{
+		Data_2354bda4.threadPrioUI = Data_2354bda4.threadPrioUI_1;
+		pStack = Data_2354a4a4;
+	}
+	//loc_2340d8cc -> loc_2340d920
+	pStackTop = pStack + (0x320-1);
+	while (retry--)
+	{
+		//loc_2340d8d8
+#if 1
+		console_send_string("ui_thread_create (ir_user.c): create thread\r\n");
+#endif
+
+		res = OSTaskCreateExt(pThreadParams->threadFunc, &sp_0x14, pStackTop,
+				Data_2354bda4.threadPrioUI, Data_2354bda4.threadPrioUI,
+				pStack, 0x320, pThreadParams->threadName, 3);
+
+		if ((uint8_t)res == 40) //OS_ERR_PRIO_EXIST
+		{
+			//0x2340d918
+			rtos_task_wait(10);
+			//loc_2340d920
+		}
+		else
+		{
+			//loc_2340d934
+			OSSemPend(sp_0x14.pSema, 0, &res);
+#if 1
+    		console_send_string("ui_thread_create (ir_user.c): thread is running successfully\r\n");
+#endif
+			OSSemDel(sp_0x14.pSema, 1, &res);
+
+			return res;
+		}
+	} //while (retry--)
+	//0x2340d928
+	return 11;
+}
+
+
+/* sub_2340d95c / 23414878 - todo */
+void ui_thread_delete()
+{
+	OSTaskDel(Data_2354bda4.threadPrioUI);
+}
+
 

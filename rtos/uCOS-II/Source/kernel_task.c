@@ -72,12 +72,13 @@ INT8U OSTaskCreateExt(void (*func)(void *), void* b,
 }
 
 
-#if 0
 /* 2343914c - todo */
 int OSTaskDel(uint8_t prio)
 {
-	uint32_t cpu_status;
 	RTOS_tTCB* ptcb;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	if (OSIntNesting != 0)
 	{
@@ -101,7 +102,7 @@ int OSTaskDel(uint8_t prio)
 
 	if (prio == 0xff)
 	{
-		prio = OSTCBCur->prio;
+		prio = OSTCBCur->OSTCBPrio;
 	}
 
 	ptcb = OSTCBPrioTbl[prio];
@@ -158,17 +159,17 @@ int OSTaskDel(uint8_t prio)
 
     if (ptcb->OSTCBPrev == 0)
     {
-    	ptcb->next->OSTCBPrev = 0;
-    	OSTCBList = ptcb->next;
+    	ptcb->OSTCBNext->OSTCBPrev = 0;
+    	OSTCBList = ptcb->OSTCBNext;
     }
     else
     {
-    	ptcb->OSTCBPrev->next = ptcb->next;
-    	ptcb->next->OSTCBPrev = ptcb->OSTCBPrev;
+    	ptcb->OSTCBPrev->OSTCBNext = ptcb->OSTCBNext;
+    	ptcb->OSTCBNext->OSTCBPrev = ptcb->OSTCBPrev;
     }
 
-    ptcb->next = rtos_pTCBFree;
-    rtos_pTCBFree = ptcb;
+    ptcb->OSTCBNext = OSTCBFreeList;
+    OSTCBFreeList = ptcb;
 
 	OS_EXIT_CRITICAL();
 
@@ -181,9 +182,11 @@ int OSTaskDel(uint8_t prio)
 /* 234392c0 - todo */
 uint8_t OSTaskDelReq(uint8_t prio)
 {
-	uint32_t cpu_status;
 	RTOS_tTCB* ptcb;
 	uint8_t stat;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 	if (prio == 0x3f) //OS_TASK_IDLE_PRIO
 	{
@@ -199,7 +202,7 @@ uint8_t OSTaskDelReq(uint8_t prio)
 
 		OS_ENTER_CRITICAL();
 
-		stat = OSTCBCur->l;
+		stat = OSTCBCur->OSTCBDelReq;
 		//->loc_23439318
 		OS_EXIT_CRITICAL();
 
@@ -211,7 +214,7 @@ uint8_t OSTaskDelReq(uint8_t prio)
 	ptcb = OSTCBPrioTbl[prio];
 	if (ptcb != 0)
 	{
-		ptcb->l = 62;
+		ptcb->OSTCBDelReq = 62;
 		stat = 0;
 	}
 	else
@@ -223,7 +226,7 @@ uint8_t OSTaskDelReq(uint8_t prio)
 
 	return stat;
 }
-#endif
+
 
 /* 234395d0 - todo */
 void rtos_task_wait(uint16_t a)

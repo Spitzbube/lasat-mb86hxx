@@ -1079,6 +1079,7 @@ INT16U  OSVersion (void)
     return (OS_VERSION);
 }
 
+#endif
 
 /*
 *********************************************************************************************************
@@ -1093,11 +1094,10 @@ INT16U  OSVersion (void)
 */
 
 #if OS_TASK_DEL_EN > 0u
+/* 23438b88 - complete */
 void  OS_Dummy (void)
 {
 }
-#endif
-
 #endif
 
 /*

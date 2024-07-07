@@ -61,6 +61,7 @@ void main_console_init()
 void main_inputhandler_init()
 {
 	void* pMBox; //r4;
+	UI_Thread_Params sp_0x74;
 	Struct_2340d784 sp_0x5c;
 
 	ir_init(ir_user_send_data, 0x3b);
@@ -77,6 +78,13 @@ void main_inputhandler_init()
 	pMBox = ir_user_init(&sp_0x5c);
 	if (pMBox != 0)
 	{
+		//0x234009ec
+		sp_0x74.Data_20 = 0;
+		sp_0x74.threadFunc = mainfunction_thread;
+		sp_0x74.threadName = "MainInputHandler";
+		sp_0x74.pMBox = pMBox;
+
+		ui_thread_create(&sp_0x74);
 	}
 	//loc_23400a28
 }

@@ -43,6 +43,12 @@ void OSTaskCreateHook()
 }
 
 
+/* 234645d4 - complete */
+void OSTaskDelHook()
+{
+}
+
+
 /* 234645d8 / 23477714? - todo */
 void OSTaskIdleHook()
 {
