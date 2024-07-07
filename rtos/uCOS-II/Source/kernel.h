@@ -19,16 +19,10 @@ extern RTOS_tTCB* OSTCBCur; //234b2ca8
 extern uint8_t OSRdyTbl[]; //23492c28 +0x28
 extern RTOS_tTCB* rtos_arThread[]; //237814dc +64*4 = 237815DC
 
-extern void rtos_init();
-#if 0
-extern void rtos_start();
-#endif
 extern void rtos_task_wait(uint16_t);
 
 extern void rtos_sema_enter(OS_EVENT*, int, int*);
 
-extern OS_EVENT* OSMboxCreate(void* pmsg);
-extern void* OSMboxPend(OS_EVENT* pevent, int timeout, uint8_t* perr);
 
 extern void OS_QInit(void);
 extern OS_EVENT* OSQCreate(void **start, uint16_t size);

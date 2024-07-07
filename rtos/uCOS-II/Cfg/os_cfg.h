@@ -71,9 +71,11 @@
 #define OS_FLAG_QUERY_EN          1    /*     Include code for OSFlagQuery()                             */
 
 #define OS_FLAGS_NBITS           16    /* Size in #bits of OS_FLAGS data type (8, 16 or 32)              */
+#endif
 
                                        /* -------------------- MESSAGE MAILBOXES ---------------------   */
 #define OS_MBOX_EN                1    /* Enable (1) or Disable (0) code generation for MAILBOXES        */
+#if 0
 #define OS_MBOX_ACCEPT_EN         1    /*     Include code for OSMboxAccept()                            */
 #define OS_MBOX_DEL_EN            1    /*     Include code for OSMboxDel()                               */
 #define OS_MBOX_POST_EN           1    /*     Include code for OSMboxPost()                              */

@@ -89,13 +89,13 @@ void sub_2341b094(int a, int b)
 
 
 /* 2341b150 - todo */
-int sub_2341b150()
+int console_rx_empty()
 {
 #if 0
-	console_send_string("sub_2341b150 (todo.c): TODO\r\n");
+	console_send_string("console_rx_empty (todo.c): TODO\r\n");
 #endif
 
-	return sub_2341ad64(consoleUart);
+	return uart_rx_empty(consoleUart);
 }
 
 
@@ -111,7 +111,7 @@ void console_write_byte(uint8_t a)
 
 
 /* sub_2341b16c - todo */
-void console_read_byte(char* a)
+void console_read_byte(uint8_t* a)
 {
 	*a = uart_read_byte(consoleUart);
 }

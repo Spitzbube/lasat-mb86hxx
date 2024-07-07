@@ -912,6 +912,8 @@ OS_FLAGS      OSFlagQuery           (OS_FLAG_GRP     *pgrp,
 #endif
 #endif
 
+#endif
+
 /*
 *********************************************************************************************************
 *                                        MESSAGE MAILBOX MANAGEMENT
@@ -952,6 +954,8 @@ INT8U         OSMboxQuery           (OS_EVENT        *pevent,
                                      OS_MBOX_DATA    *p_mbox_data);
 #endif
 #endif
+
+#if 0
 
 /*
 *********************************************************************************************************

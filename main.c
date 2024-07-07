@@ -7,6 +7,7 @@ void main_base_init(void);
 void main_console_init(void);
 void main_usb_init(void);
 void main_network_init(void);
+void main_inputhandler_init(void);
 
 
 /* 23400158 - todo */
@@ -38,6 +39,8 @@ void startup_thread()
 {
 	main_network_init();
 	main_usb_init();
+	inputhandler_register_uart_callback(main_process_uart_command);
+	main_inputhandler_init();
 
 	while (1)
 	{

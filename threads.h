@@ -1,4 +1,8 @@
 
+#define THREAD_PRIO_UART_IN					10
+#define THREAD_PRIO_IR_USER_IN				16
+#define THREAD_PRIO_UI_1					49
+#define THREAD_PRIO_UI_2					50
 #define THREAD_PRIO_STARTUP					56
 #define THREAD_PRIO_IDLE					63
 //#define  OS_TASK_IDLE_PRIO  (OS_LOWEST_PRIO)
@@ -6,5 +10,6 @@
 
 //#define OS_TASK_IDLE_STK_SIZE				0x400
 #define THREAD_STACK_SIZE_STARTUP			0x320
+#define THREAD_STACK_SIZE_UART_IN			0x320
 
 

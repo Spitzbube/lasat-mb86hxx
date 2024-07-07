@@ -13,6 +13,7 @@ set(SRCS
    sub_23467de0.c
    network.c
    tcp_console.c
+   ir_user.c
    hexdump.c
    todo.c
 )

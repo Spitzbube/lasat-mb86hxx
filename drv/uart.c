@@ -1,12 +1,13 @@
 
 #include <stdint.h>
 #include "sys_services.h"
+#include "ucos_ii.h"
 #include "gpio.h"
 #include "uart.h"
 
 Uart_Module* Data_20408480; //20408480 +0
 unsigned int uartClockFrequency; //20408484 + 4
-//OS_EVENT* uartSema; //20408488 + 8
+OS_EVENT* uartSema; //20408488 + 8
 Struct_20611068* Data_2040848c; //2040848c
 Struct_20611068* Data_20408490; //20408490
 Uart_Module Data_20408494[2] = //20408494
@@ -22,7 +23,7 @@ Uart_Module Data_204084a4[2] = //204084a4
 
 
 /* 2341ad64 - todo */
-int sub_2341ad64(Uart_Module* r0)
+int uart_rx_empty(Uart_Module* r0)
 {
 	Uart_Regs* regs;
 	uint8_t sp;
@@ -35,11 +36,11 @@ int sub_2341ad64(Uart_Module* r0)
 		return 0;
 	}
 
-//	OSSemPend(uartSema, 0, &sp);
+	OSSemPend(uartSema, 0, &sp);
 
 	r4 = regs->FREG_UART_FR;
 
-//	OSSemPost(uartSema);
+	OSSemPost(uartSema);
 
 	if (r4 & ((1 << 4)/*Rxfe*/ | (1 << 3)/*Busy*/))
 	{
@@ -63,14 +64,14 @@ int uart_write_byte(Uart_Module* r0, unsigned char ch)
 
 	regs = r0->Data_4;
 
-//	OSSemPend(uartSema, 0, &sp);
+	OSSemPend(uartSema, 0, &sp);
 
 	while ((regs->FREG_UART_FR & 0x28) != 0)
 	{
 		/* Txff + Busy */
 	}
 
-//	OSSemPost(uartSema);
+	OSSemPost(uartSema);
 
 	regs->FREG_UART_DR = ch;
 
@@ -89,7 +90,7 @@ char uart_init(Uart_Init_Params* pParams, Uart_Module** ppModule)
 		return 3;
 	}
 
-//	OSSemPend(uartSema, 0, &sp);
+	OSSemPend(uartSema, 0, &sp);
 
 	if (Data_20408480[pParams->bData_0].bData_0 != 0)
 	{
@@ -136,7 +137,7 @@ char uart_init(Uart_Init_Params* pParams, Uart_Module** ppModule)
 	}
 
 	//loc_200015c0
-//	OSSemPost(uartSema);
+	OSSemPost(uartSema);
 
 	return sp;
 }
@@ -165,7 +166,7 @@ int uart_setup(void)
 		Data_20408480[i].Data_4->FREG_UART_CR = 0;
 	}
 
-//	uartSema = OSSemCreate(1);
+	uartSema = OSSemCreate(1);
 
 	return 0;
 }
@@ -183,7 +184,7 @@ unsigned char uart_read_byte(Uart_Module* r0)
 		return 0;
 	}
 
-//	OSSemPend(uartSema, 0, &sp);
+	OSSemPend(uartSema, 0, &sp);
 
 	while (pRegs->FREG_UART_FR & 0x18)
 	{
@@ -193,7 +194,7 @@ unsigned char uart_read_byte(Uart_Module* r0)
 
 	r4 = pRegs->FREG_UART_DR;
 
-//	OSSemPost(uartSema);
+	OSSemPost(uartSema);
 
 	return r4;
 }

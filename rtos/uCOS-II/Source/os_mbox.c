@@ -69,7 +69,7 @@ OS_EVENT* OSMboxCreate(void* pmsg)
 
 
 /* 23463874 - todo */
-void* OSMboxPend(OS_EVENT* pevent, int timeout, uint8_t* perr)
+void* OSMboxPend(OS_EVENT* pevent, INT16U timeout, INT8U* perr) 
 {
 	void* pmsg;
 #if OS_CRITICAL_METHOD == 3u                          /* Allocate storage for CPU status register      */
