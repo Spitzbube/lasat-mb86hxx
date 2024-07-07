@@ -20,6 +20,8 @@ set (LWIP_INCLUDE_DIRS
   ${ucos_ii_SOURCE_DIR}/Cfg
   ${ucos_ii_SOURCE_DIR}/Source
   ${ucos_ii_SOURCE_DIR}/Ports/ARM/Generic/RealView
+  ${musb_SOURCE_DIR}/include
+  ${musb_SOURCE_DIR}/src/systems/FAPI4
 )
 
 #if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")

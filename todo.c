@@ -95,20 +95,6 @@ void MGC_StartupAppEvent()
 }
 
 
-void ethif_asixusb_init()
-{
-	console_send_string("ethif_asixusb_init (todo.c): TODO\r\n");
-
-}
-
-
-void ethif_asixusb_input()
-{
-	console_send_string("ethif_asixusb_input (todo.c): TODO\r\n");
-
-}
-
-
 void dhcp_rebind ()
 {
 	console_send_string("dhcp_rebind (todo.c): TODO\r\n");
@@ -202,6 +188,30 @@ void tcpip_callback_with_block ()
 void sub_234699c0()
 {
 	console_send_string("sub_234699c0 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2347e394 - todo */
+void sub_2347e394()
+{
+	console_send_string("sub_2347e394 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23467e38 - todo */
+void sub_23467e38()
+{
+	console_send_string("sub_23467e38 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23468e7c - todo */
+void sub_23468e7c()
+{
+	console_send_string("sub_23468e7c (todo.c): TODO\r\n");
 
 }
 

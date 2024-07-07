@@ -1,11 +1,11 @@
 
-#include "musb/mu_arch.h"
-#include "musb/mu_cdi.h"
-#include "musb/mu_descs.h"
-#include "musb/mu_diag.h"
-#include "musb/mu_mem.h"
-#include "musb/mu_stdio.h"
-#include "musb/class/mu_asix.h"
+#include "mu_arch.h"
+#include "mu_cdi.h"
+#include "mu_descs.h"
+#include "mu_diag.h"
+#include "mu_mem.h"
+#include "mu_stdio.h"
+#include "class/mu_asix.h"
 #include "lwip/tcpip.h"
 #include "netif/etharp.h"
 

@@ -311,7 +311,6 @@ lwip_init(void)
   memp_init();
   pbuf_init();
   netif_init();
-#if 0
 #if 1 //TODO!!!
   sub_2347e394();
   sub_23467e38();
@@ -354,6 +353,4 @@ lwip_init(void)
 #if LWIP_TIMERS
   sys_timeouts_init();
 #endif /* LWIP_TIMERS */
-
-#endif
 }
