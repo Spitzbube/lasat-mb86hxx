@@ -7,6 +7,7 @@ set (
    uart.c
    intr.c
    timer.c
+   ir.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

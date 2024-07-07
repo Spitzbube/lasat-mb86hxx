@@ -14,6 +14,7 @@ set(SRCS
    network.c
    tcp_console.c
    ir_user.c
+   ir_decode.c
    hexdump.c
    todo.c
 )

@@ -7,9 +7,134 @@
 OS_EVENT* Data_23492068; //23492068 +0 / 234ac680
 OS_EVENT* Data_2349206c; //2349206c +4
 int (*inputhandler_uart_callback)(uint8_t*); //23492070 +8 / 234ac688
+void (*Data_23492074)(void*, void*); //23492074 +c
+typedef struct
+{
+	uint8_t bData_0;
+	uint16_t wData_2;
+	uint16_t wData_4;
 
+} ir_data;
+
+ir_data Data_23492078 = //23492078 +0x10 / 234ac68c
+{
+		0, 0, 0
+};
+
+uint32_t ir_thread_stack[THREAD_STACK_SIZE_IR_USER_IN]; //235491e4
 uint32_t uart_in_thread_stack[THREAD_STACK_SIZE_UART_IN]; //23549824 -> 2354A4A4
 Struct_2340d784 Data_2354bda4; //2354bda4 / 235a8404
+
+
+/* 2340d3ec - todo */
+void sub_2340d3ec()
+{
+
+}
+
+
+/* 2340d564 / 234143ec - todo */
+void ir_user_in_thread()
+{
+	struct
+	{
+		uint8_t bData_0; //0
+		uint8_t bData_1; //1
+		uint8_t bData_2; //2
+
+	} sp_0x18;
+	uint8_t sp_0x14;
+	uint8_t sp_0x10;
+	uint8_t sp_0xc;
+	uint8_t sp8; //sp8
+
+	int r5 = 0xff;
+	uint8_t r4 = 0;
+
+	while (1)
+	{
+		//loc_2340d57c
+		ir_data* pIRD;
+
+#if 0
+		console_send_string("ir_user_in_thread (before mBoxPend)\r\n");
+#endif
+
+		pIRD = (void*) OSMboxPend(Data_23492068, 0, &sp8);
+
+		if (sp8 == 10) //OS_ERR_TIMEOUT
+		{
+			//->loc_2340d57c
+			continue;
+		}
+		//2340d598
+		if (pIRD->bData_0 == 0)
+		{
+			int r0_;
+			if (0 != sub_23453d90(pIRD->wData_2, pIRD->wData_4, &sp_0x14, &sp_0xc, &sp_0x10))
+			{
+				//->loc_2340d57c
+#if 1
+				console_send_string("sub_23453d90 != 0\r\n");
+#endif
+				continue;
+			}
+			//2340d5c8
+			if ((sp_0x10 == r5) && (r4 != 0))
+			{
+#if 1
+				console_send_string("r4 != 0\r\n");
+#endif
+				r4--;
+				//->loc_2340d614
+			}
+			else
+			{
+				//loc_2340d5e4
+#if 0
+				console_send_string("OSMboxPost\r\n");
+#endif
+				if (Data_2349206c != 0)
+				{
+					sp_0x18.bData_0 = sp_0xc;
+					sp_0x18.bData_1 = sp_0x10;
+					sp_0x18.bData_2 = sp_0x14;
+
+#if 1
+                    {
+                        extern char debug_string[];
+                        sprintf(debug_string, "ir_user_in_thread: OSMboxPost with sp_0xc=0x%x, sp_0x10=0x%x, sp_0x14=0x%x\r\n", 
+                            sp_0xc, sp_0x10, sp_0x14);
+                        console_send_string(debug_string);
+                    }
+#endif
+
+					sp8 = OSMboxPost(Data_2349206c, &sp_0x18);
+
+					sub_23410fe4();
+				}
+				//loc_2340d614
+			}
+
+			r0_ = r5;
+			r5 = sp_0x10;
+			if (r0_ != r5)
+			{
+				r4 = 4;
+			}
+			//->loc_2340d57c
+		} //if (pIRD->bData_0 == 0)
+		else
+		{
+			//loc_2340d628
+			if (Data_23492074 != 0)
+			{
+				(Data_23492074)(pIRD, &sp_0x18);
+			}
+			//->loc_2340d57c
+		}
+	}
+}
 
 
 /* 2340d63c / 23414578 - todo */
@@ -123,6 +248,17 @@ void inputhandler_register_uart_callback(int (*pFunc)(uint8_t*))
 }
 
 
+/* 2340d764 / 234146a0 - todo */
+void ir_user_send_data(int a, int b, int c)
+{
+	Data_23492078.wData_2 = a;
+	Data_23492078.wData_4 = b;
+	Data_23492078.bData_0 = c;
+
+	OSMboxPost(Data_23492068, &Data_23492078);
+}
+
+
 /* 2340d784 / 234146c0 - todo */
 void* ir_user_init(Struct_2340d784* r5)
 {
@@ -130,6 +266,21 @@ void* ir_user_init(Struct_2340d784* r5)
 
 	Data_23492068 = (void*) OSMboxCreate(0);
 	Data_2349206c = (void*) OSMboxCreate(0);
+
+#if 1 //VDR110
+	if (Data_2354bda4.bData_20 != 0)
+	{
+		Data_23492074 = sub_2340d3ec;
+	}
+
+	if (Data_2354bda4.bData_21 != 0)
+	{
+		sub_23453d80();
+	}
+#endif
+
+	OSTaskCreateExt(ir_user_in_thread, 0, &ir_thread_stack[THREAD_STACK_SIZE_IR_USER_IN-1]/*0x23549820*/,
+			r5->threadPrioIR, r5->threadPrioIR, ir_thread_stack, THREAD_STACK_SIZE_IR_USER_IN, "IR_USER_IN" , 0x03);
 
 	OSTaskCreateExt(uart_in_thread, 0, &uart_in_thread_stack[THREAD_STACK_SIZE_UART_IN-1]/*0x2354a4a0*/,
 			r5->threadPrioUart, r5->threadPrioUart, uart_in_thread_stack, THREAD_STACK_SIZE_UART_IN, "STARTUP" , 0x03);

@@ -1,6 +1,7 @@
 
 #include "data.h"
 #include "ir_user.h"
+#include "ir.h"
 
 extern int main_process_uart_command(uint8_t*);
 
@@ -62,16 +63,16 @@ void main_inputhandler_init()
 	void* pMBox; //r4;
 	Struct_2340d784 sp_0x5c;
 
+	ir_init(ir_user_send_data, 0x3b);
+
 	memset(&sp_0x5c, 0, sizeof(Struct_2340d784));
 
 	sp_0x5c.threadPrioIR = THREAD_PRIO_IR_USER_IN;
 	sp_0x5c.threadPrioUart = THREAD_PRIO_UART_IN;
 	sp_0x5c.threadPrioUI_1 = THREAD_PRIO_UI_1;
 	sp_0x5c.threadPrioUI_2 = THREAD_PRIO_UI_2;
-#if 0
 	sp_0x5c.bData_20 = 1;
-	sp_0x5c.bData_21 = (sub_23418e98() == 4)? 1: 0;
-#endif
+	sp_0x5c.bData_21 = 1; //(sub_23418e98() == 4)? 1: 0;
 	//0x234009dc
 	pMBox = ir_user_init(&sp_0x5c);
 	if (pMBox != 0)
