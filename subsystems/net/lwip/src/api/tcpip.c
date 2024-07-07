@@ -84,7 +84,7 @@ tcpip_thread(void *arg)
   LOCK_TCPIP_CORE();
   while (1) {                          /* MAIN Loop */
 
-#if 1
+#if 0
 	console_send_string("tcpip_thread (todo.c): TODO\r\n");
 #endif
 

@@ -1,6 +1,8 @@
 
 #include "data.h"
 
+extern int main_process_uart_command(uint8_t*);
+
 
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
@@ -80,7 +82,7 @@ void main_network_init()
 		tcp_console_init(main_process_uart_command);
 #endif
 	}
-#if 0 //TODO!!! Until network_init is fixed
+#if 1 //TODO!!! Until network_init is fixed
 	else
 	{
 		tcp_console_init(main_process_uart_command);

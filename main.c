@@ -9,6 +9,30 @@ void main_usb_init(void);
 void main_network_init(void);
 
 
+/* 23400158 - todo */
+int main_process_uart_command(uint8_t* r4)
+{
+#if 0
+	console_send_string("main_process_uart_command (todo.c): TODO\r\n");
+#endif
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "main_process_uart_command: r4='%s'\r\n", r4);
+		console_send_string(debug_string);
+	}
+#endif
+
+//	else
+	{
+		//->loc_2340032c
+		console_send_string("\n unknown com");
+		return 0;
+	}
+}
+
+
 /* 23400424 - todo */
 void startup_thread()
 {

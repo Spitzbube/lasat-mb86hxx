@@ -12,6 +12,8 @@ set(SRCS
    usb.c
    sub_23467de0.c
    network.c
+   tcp_console.c
+   hexdump.c
    todo.c
 )
 
