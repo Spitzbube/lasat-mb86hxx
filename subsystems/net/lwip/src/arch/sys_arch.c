@@ -31,12 +31,9 @@
 #endif
 #include "ucos_ii.h"
 
-#if 0
 
 uint8_t Data_238ce28f[20*44/*size???*/]; //238ce28f, 238CE28C
-#endif
 uint32_t sys_thread_stacks[6][800]; //238ce600 -> 238D3100
-#if 0
 int Data_238d3100; //238d3100
 int Data_238d3104; //238d3104
 int Data_238d3108; //238d3108
@@ -44,12 +41,8 @@ int Data_238d3108; //238d3108
 extern int Data_234911e0; //234911e0
 
 //2349439c
-#endif
 uint8_t sys_thread_num = 0; //2349439c +0
-#if 0
 int/*OS_MEM* */ Data_234943a8 = 0; //234943a8 +0xc
-
-#endif
 
 #if 0
 
@@ -65,8 +58,6 @@ static uint32_t time_interval(uint64_t ts_start, uint64_t ts_end)
 }
 
 #endif
-
-#if 0
 
 /*
  * void sys_init(void)
@@ -95,8 +86,6 @@ void sys_init(void)
 	console_send_string("sys_init (sys_arch.c): TODO\r\n");
 
 }
-
-#endif
 
 #if 0
 
@@ -238,8 +227,6 @@ void sys_sem_set_invalid(sys_sem_t *sem)
 {
     *sem = NULL;
 }
-
-#if 0
 
 /* Mailbox functions. */
 
@@ -460,6 +447,7 @@ u32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, u32_t timeout)
 #endif
 }
 
+#if 0
 
 /** Wait for a new message to arrive in the mbox
  * @param mbox mbox to get a message from
@@ -517,6 +505,8 @@ void sys_mbox_free(sys_mbox_t *mbox)
 	sp = sub_23463b0c(Data_234943a8, *mbox);
 }
 
+#endif
+
 /** Check if an mbox is valid/allocated: return 1 for valid, 0 for invalid */
 /* 2346bc5a - complete */
 int sys_mbox_valid(sys_mbox_t *mbox)
@@ -524,6 +514,7 @@ int sys_mbox_valid(sys_mbox_t *mbox)
     return (*mbox != NULL);
 }
 
+#if 0
 
 /* 2346bc6e - complete */
 void sys_mbox_set_invalid(sys_mbox_t *mbox)

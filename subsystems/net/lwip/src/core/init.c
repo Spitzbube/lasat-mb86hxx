@@ -298,8 +298,6 @@ lwip_init(void)
   console_send_string("lwip_init: TODO\r\n");
 #endif
 
-#if 0
-
   /* Sanity check user-configurable values */
   lwip_sanity_check();
 
@@ -313,6 +311,7 @@ lwip_init(void)
   memp_init();
   pbuf_init();
   netif_init();
+#if 0
 #if 1 //TODO!!!
   sub_2347e394();
   sub_23467e38();

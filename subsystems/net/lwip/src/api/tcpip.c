@@ -88,9 +88,6 @@ tcpip_thread(void *arg)
 	console_send_string("tcpip_thread (todo.c): TODO\r\n");
 #endif
 
-#if 1
-		rtos_task_wait(100);
-#else
     UNLOCK_TCPIP_CORE();
     LWIP_TCPIP_THREAD_ALIVE();
     /* wait for a message, timeouts are processed while waiting */
@@ -163,11 +160,8 @@ tcpip_thread(void *arg)
       LWIP_ASSERT("tcpip_thread: invalid message", 0);
       break;
     }
-#endif
   }
 }
-
-#if 0
 
 /**
  * Pass a received packet to tcpip_thread for input processing
@@ -219,8 +213,6 @@ tcpip_input(struct pbuf *p, struct netif *inp)
 #endif /* LWIP_TCPIP_CORE_LOCKING_INPUT */
 }
 
-#endif
-
 #if 0
 
 /**
@@ -262,8 +254,6 @@ tcpip_callback_with_block(tcpip_callback_fn function, void *ctx, u8_t block)
 }
 
 #endif
-
-#if 0
 
 #if LWIP_TCPIP_TIMEOUT
 /**
@@ -433,8 +423,6 @@ tcpip_netifapi_lock(struct netifapi_msg* netifapimsg)
 
 #endif
 
-#endif
-
 /**
  * Initialize this module:
  * - initialize all sub modules
@@ -451,7 +439,6 @@ tcpip_init(tcpip_init_done_fn initfunc, void *arg)
 
   tcpip_init_done = initfunc;
   tcpip_init_done_arg = arg;
-#if 0
   if(sys_mbox_new(&mbox, TCPIP_MBOX_SIZE) != ERR_OK) {
     LWIP_ASSERT("failed to create tcpip_thread mbox", 0);
   }
@@ -460,7 +447,6 @@ tcpip_init(tcpip_init_done_fn initfunc, void *arg)
     LWIP_ASSERT("failed to create lock_tcpip_core", 0);
   }
 #endif /* LWIP_TCPIP_CORE_LOCKING */
-#endif
 
   sys_thread_new(TCPIP_THREAD_NAME, tcpip_thread, NULL, TCPIP_THREAD_STACKSIZE, TCPIP_THREAD_PRIO);
 }
