@@ -98,3 +98,6 @@ typedef struct Menu
 Menu;
 
 
+int sub_23471fa2(UI_Thread_Params* r4);
+
+

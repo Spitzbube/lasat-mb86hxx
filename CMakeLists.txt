@@ -17,6 +17,7 @@ set(SRCS
    ir_decode.c
    thumb.c
    thumb1.c
+   menu_general_settings.c
    hexdump.c
    todo.c
 )

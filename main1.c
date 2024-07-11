@@ -84,6 +84,8 @@ void main_inputhandler_init()
 		sp_0x74.threadName = "MainInputHandler";
 		sp_0x74.pMBox = pMBox;
 
+		sub_2343d458(&sp_0x74);
+
 		ui_thread_create(&sp_0x74);
 	}
 	//loc_23400a28

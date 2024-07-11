@@ -62,7 +62,7 @@ Menu Data_23495bac = //23495bac 0x23495b90 + 0x1c  -> 23495BE4
 		sub_2346ecfc, //Data_0x24
 		sub_2346ed1c, //Data_0x28
 		0xff, //Data_0x2c
-		25, //Data_0x30
+		25, //Data_0x30 = timeout
 		0 //Data_0x34
 #if 0
 		0x23495bac                        dw         0xffff                             ; DATA XREF=sub_2346f708+66, sub_2346f708+74
@@ -154,12 +154,12 @@ void* sub_2346ecd4(int* a)
 int sub_2346ecfc(int a)
 {
 #if 0
-	console_send_string("sub_2346ecfc (todo.c): TODO\r\n");
+	console_send_string("sub_2346ecfc (menu_root_initialize) (todo.c): TODO\r\n");
 #endif
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_2346ecfc: a=%d\r\n", a);
+        sprintf(debug_string, "sub_2346ecfc (menu_root_initialize): a=%d\r\n", a);
         console_send_string(debug_string);
     }
 #endif
@@ -207,11 +207,11 @@ int sub_2346f37c(Struct_2346f37c* r0)
 
 	if (r0 == 0)
 	{
-		//0x2346f390
-#if 1
+		//0x2346f390: handle timeout
+#if 0
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2346f37c: Data_23495970.Data_23495974=%d, Data_23495970.Data_23495978=%p\r\n",
+			sprintf(debug_string, "sub_2346f37c (menu_root_handle_event): Data_23495970.Data_23495974=%d, Data_23495970.Data_23495978=%p\r\n",
 					Data_23495970.Data_23495974, Data_23495970.Data_23495978);
 			console_send_string(debug_string);
 		}
@@ -261,7 +261,7 @@ int sub_2346f37c(Struct_2346f37c* r0)
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2346f37c: r7->bData_4=%d\r\n",
+			sprintf(debug_string, "sub_2346f37c (menu_root_handle_event): r7->bData_4=%d\r\n",
 					r7->bData_4);
 			console_send_string(debug_string);
 		}
@@ -415,11 +415,14 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//0x2346f554
-		else if (r7->bData_4 == 82/*0x52*/) //Menu
+		else 
+#endif		
+			if (r7->bData_4 == 82/*0x52*/) //Menu
 		{
 			menu_main_start();
 			//->loc_2346f6f0
 		}
+#if 0
 		//loc_2346f55e
 		else if (r7->bData_4 == 12/*0x0c*/) //On-Off
 		{
@@ -598,7 +601,7 @@ int sub_2346f708()
 	} sp4;
 
 #if 1
-	console_send_string("sub_2346f708 (todo.c): TODO\r\n");
+	console_send_string("sub_2346f708 (menu_root_start) (todo.c): TODO\r\n");
 #endif
 
 	r4 = Data_23495970.bData_0;
@@ -624,8 +627,8 @@ int sub_2346f708()
 	}
 #endif
 	//loc_2346f748
-	sub_2343d482(&Data_23495bac);
-	sub_2343d3ac(&Data_23495bac);
+	sub_2343d482(&Data_23495bac); //Add to the menu stack
+	sub_2343d3ac(&Data_23495bac); //Initialize the menu
 
 	return 0;
 }
