@@ -8,10 +8,10 @@
 
 
 /* 23471fa2 - complete */
-int sub_23471fa2(UI_Thread_Params* r4)
+int menu_general_settings_on_enter(UI_Thread_Params* r4)
 {
 #if 1
-	console_send_string("sub_23471fa2 (todo.c): TODO\r\n");
+	console_send_string("menu_general_settings_on_enter (todo.c): TODO\r\n");
 #endif
 
 #if 0

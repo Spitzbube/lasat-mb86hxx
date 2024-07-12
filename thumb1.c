@@ -3,16 +3,9 @@
 
 #pragma thumb
 
-typedef struct
-{
-	int fill_0; //0
-	uint8_t bData_4; //4
-	int fill_8; //8
-} Struct_2346f37c;
-
-int sub_2346f37c(Struct_2346f37c*);
-int sub_2346ecfc();
-int sub_2346ed1c();
+int menu_root_on_event(void*);
+int menu_root_on_enter(int);
+int menu_root_on_exit(int);
 
 //0x23495984
 struct
@@ -58,11 +51,11 @@ Menu Data_23495bac = //23495bac 0x23495b90 + 0x1c  -> 23495BE4
 		0, //maxItem
 		0, //currentItem
 		0, //Data_0x1c
-		0, //Data_0x20
-		sub_2346ecfc, //Data_0x24
-		sub_2346ed1c, //Data_0x28
+		0, //onNavigate //0x20
+		menu_root_on_enter, //onEnter //0x24
+		menu_root_on_exit, //onExit //0x28
 		0xff, //Data_0x2c
-		25, //Data_0x30 = timeout
+		25, //timeout //0x30
 		0 //Data_0x34
 #if 0
 		0x23495bac                        dw         0xffff                             ; DATA XREF=sub_2346f708+66, sub_2346f708+74
@@ -90,8 +83,8 @@ Menu_Item Data_23495be4 = //23495be4
 		0xffff,
 		{0, 0, 0, 0, 0},
 		0, //Data_0x18
-		sub_2346f37c, //Data_0x1c
-		mainfunction_thread, //inputThreadFunc
+		menu_root_on_event, //onEvent //0x1c
+		mainfunction_thread, //inputThreadFunc //0x20
 		0, //Data_0x24
 		0 //Data_0x28
 #if 0
@@ -151,15 +144,12 @@ void* sub_2346ecd4(int* a)
 
 
 /* 2346ecfc - complete */
-int sub_2346ecfc(int a)
+int menu_root_on_enter(int a)
 {
-#if 0
-	console_send_string("sub_2346ecfc (menu_root_initialize) (todo.c): TODO\r\n");
-#endif
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_2346ecfc (menu_root_initialize): a=%d\r\n", a);
+        sprintf(debug_string, "menu_root_on_enter: a=%d\r\n", a);
         console_send_string(debug_string);
     }
 #endif
@@ -178,10 +168,10 @@ int sub_2346ecfc(int a)
 
 
 /* 2346ed1c - complete */
-int sub_2346ed1c()
+int menu_root_on_exit(int a)
 {
 #if 0
-	console_send_string("sub_2346ed1c (todo.c): TODO\r\n");
+	console_send_string("menu_root_on_exit\r\n");
 #endif
 
 	return 0;
@@ -189,14 +179,14 @@ int sub_2346ed1c()
 
 
 /* 2346f37c - todo */
-int sub_2346f37c(Struct_2346f37c* r0)
+int menu_root_on_event(void* r0)
 {
 #if 0
 	Struct_2340bf0c sp4;
 #endif
 
 #if 0
-	console_send_string("sub_2346f37c (todo.c): TODO\r\n");
+	console_send_string("menu_root_on_event (todo.c): TODO\r\n");
 #endif
 
 	//r6 = 23495970
@@ -211,7 +201,7 @@ int sub_2346f37c(Struct_2346f37c* r0)
 #if 0
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2346f37c (menu_root_handle_event): Data_23495970.Data_23495974=%d, Data_23495970.Data_23495978=%p\r\n",
+			sprintf(debug_string, "menu_root_on_event: Data_23495970.Data_23495974=%d, Data_23495970.Data_23495978=%p\r\n",
 					Data_23495970.Data_23495974, Data_23495970.Data_23495978);
 			console_send_string(debug_string);
 		}
@@ -254,34 +244,34 @@ int sub_2346f37c(Struct_2346f37c* r0)
 		//loc_2346f3b8
 		//r5, =0x23495b90
 
-		Struct_2346f37c* r7 = r0;
+		Menu_Event* r7 = r0;
 
 		Data_23495970.bData_23495ba0 = 1;
 
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2346f37c (menu_root_handle_event): r7->bData_4=%d\r\n",
-					r7->bData_4);
+			sprintf(debug_string, "menu_root_on_event: r7->keyCode=%d\r\n",
+					r7->keyCode);
 			console_send_string(debug_string);
 		}
 #endif
 
 #if 0
-		if (!((r7->bData_4 >= 90/*0x5a*/ && r7->bData_4 < 98))) //S1...S8
+		if (!((r7->keyCode >= 90/*0x5a*/ && r7->keyCode < 98))) //S1...S8
 		{
 			//0x2346f3c8
 			Data_23495970.Data_23495b88 = 0;
 		}
 		//loc_2346f3cc
-		if ((r7->bData_4 > 9) && (r7->bData_4 != 87/*0x57*/))
+		if ((r7->keyCode > 9) && (r7->keyCode != 87/*0x57*/))
 		{
 			Data_23495970.bData_23495b96 = 0;
 		}
 		//loc_2346f3da
-		if ((r7->bData_4 >= 225/*0xe1*/) && (r7->bData_4 < 228/*0xe4*/))
+		if ((r7->keyCode >= 225/*0xe1*/) && (r7->keyCode < 228/*0xe4*/))
 		{
-			Data_23495970.wData_23495b8c = r7->bData_4-224/*0xe0*/ + Data_23495970.bData_23495b84;
+			Data_23495970.wData_23495b8c = r7->keyCode-224/*0xe0*/ + Data_23495970.bData_23495b84;
 			Data_23495970.bData_23495b84 = 0;
 			Data_23495970.Data_23495974 = 10;
 			Data_23495970.Data_23495978 = sub_2346ee6c;
@@ -290,7 +280,7 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//loc_2346f40a -> loc_2346f6f0
 		}
 		//loc_2346f3fc
-		else if (r7->bData_4 == 224/*0xe0*/)
+		else if (r7->keyCode == 224/*0xe0*/)
 		{
 			Data_23495970.Data_23495974 = 0;
 			Data_23495970.Data_23495978 = 0;
@@ -298,38 +288,38 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//loc_2346f40a -> loc_2346f6f0
 		}
 		//loc_2346f40c
-		else if (r7->bData_4 == 130/*0x82*/)
+		else if (r7->keyCode == 130/*0x82*/)
 		{
 			sub_2346f7a8(-1);
 			//->loc_2346f6f0
 		}
 		//loc_2346f416
-		else if (r7->bData_4 == 131/*0x83*/)
+		else if (r7->keyCode == 131/*0x83*/)
 		{
 			sub_2346f7a8(1);
 			//->loc_2346f6f0
 		}
 		//loc_2346f422
-		else if (r7->bData_4 == 128/*0x80*/)
+		else if (r7->keyCode == 128/*0x80*/)
 		{
 			sub_2346f790(1);
 			//->loc_2346f6f0
 		}
 		//loc_2346f42a
-		else if (r7->bData_4 == 129/*0x81*/)
+		else if (r7->keyCode == 129/*0x81*/)
 		{
 			sub_2346f790(-1);
 			//->loc_2346f6f0
 		}
 		//loc_2346f438
-		else if ((r7->bData_4 >= 90/*0x5a*/) && (r7->bData_4 < 97)) //S1...S8
+		else if ((r7->keyCode >= 90/*0x5a*/) && (r7->keyCode < 97)) //S1...S8
 		{
 			sub_2340bf0c(&sp4);
 
 			if (sp4.wData_0x28 != 0)
 			{
 				//0x2346f44e
-				Data_23495970.wData_23495b8c = r7->bData_4 - 89;
+				Data_23495970.wData_23495b8c = r7->keyCode - 89;
 
 				if (Data_23495970.Data_23495b88 == 0)
 				{
@@ -353,19 +343,19 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f3b6 -> loc_2346f6f0
 		}
 		//loc_2346f47e
-		else if (r7->bData_4 == 78/*0x4e*/) //Mode
+		else if (r7->keyCode == 78/*0x4e*/) //Mode
 		{
 			sub_234810f6();
 			//->loc_2346f6f0
 		}
 		//loc_2346f488
-		else if (r7->bData_4 == 70/*0x46*/) //USB
+		else if (r7->keyCode == 70/*0x46*/) //USB
 		{
 			sub_2346ff0e();
 			//->loc_2346f6f0
 		}
 		//loc_2346f492
-		else if (r7->bData_4 == 69/*0x45*/) //Radio
+		else if (r7->keyCode == 69/*0x45*/) //Radio
 		{
 			//r0 = 0;
 			//->loc_2346f4b0: TODO
@@ -380,14 +370,14 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4a0
-		else if (r7->bData_4 == 54/*0x36*/)
+		else if (r7->keyCode == 54/*0x36*/)
 		{
 			//loc_2346f4a4
 			sub_2346fac4(0);
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ac
-		else if (r7->bData_4 == 52/*0x34*/)
+		else if (r7->keyCode == 52/*0x34*/)
 		{
 			//loc_2346f4b0
 			if (0 == sub_2348112c(52))
@@ -401,14 +391,14 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ba
-		if (r7->bData_4 == 55/*0x37*/)
+		if (r7->keyCode == 55/*0x37*/)
 		{
 			//0x2346f4be
 
 			//TODO
 		}
 		//loc_2346f550
-		else if (r7->bData_4 == 234/*0xea*/)
+		else if (r7->keyCode == 234/*0xea*/)
 		{
 			//->loc_2346f4a4
 			sub_2346fac4(0);
@@ -417,21 +407,21 @@ int sub_2346f37c(Struct_2346f37c* r0)
 		//0x2346f554
 		else 
 #endif		
-			if (r7->bData_4 == 82/*0x52*/) //Menu
+			if (r7->keyCode == 82/*0x52*/) //Menu
 		{
 			menu_main_start();
 			//->loc_2346f6f0
 		}
 #if 0
 		//loc_2346f55e
-		else if (r7->bData_4 == 12/*0x0c*/) //On-Off
+		else if (r7->keyCode == 12/*0x0c*/) //On-Off
 		{
 			onoff_set_state(2/*Off*/, sub_2343d572(), standby_thread);
 			//->loc_2346f6f0
 		}
 		//loc_2346f572
-		else if ((r7->bData_4 == 32/*0x20*/) //Up
-				|| (r7->bData_4 == 48/*0x30*/))
+		else if ((r7->keyCode == 32/*0x20*/) //Up
+				|| (r7->keyCode == 48/*0x30*/))
 		{
 			//loc_2346f57a
 			channel_next();
@@ -440,8 +430,8 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f580
-		else if ((r7->bData_4 == 33/*0x21*/) //Down
-				|| (r7->bData_4 == 49/*0x31*/))
+		else if ((r7->keyCode == 33/*0x21*/) //Down
+				|| (r7->keyCode == 49/*0x31*/))
 		{
 			//loc_2346f588
 			channel_prev();
@@ -450,7 +440,7 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f592
-		else if (r7->bData_4 == 34/*0x22*/) // <->
+		else if (r7->keyCode == 34/*0x22*/) // <->
 		{
 			//0x2346f596
 			channel_swap();
@@ -459,8 +449,8 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f59c
-		else if ((r7->bData_4 == 17/*0x11*/) //Left
-				|| (r7->bData_4 == 65/*0x41*/)) //Vol-
+		else if ((r7->keyCode == 17/*0x11*/) //Left
+				|| (r7->keyCode == 65/*0x41*/)) //Vol-
 		{
 			//loc_2346f5a4
 			//->loc_2346f5b4
@@ -472,8 +462,8 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f5aa
-		else if ((r7->bData_4 == 16/*0x10*/) //Right
-				|| (r7->bData_4 == 64/*0x40*/)) //Vol+
+		else if ((r7->keyCode == 16/*0x10*/) //Right
+				|| (r7->keyCode == 64/*0x40*/)) //Vol+
 		{
 			//loc_2346f5b2
 			//movs       r1, #0x1
@@ -486,7 +476,7 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f5c6
-		else if (r7->bData_4 == 87/*0x57*/) //OK
+		else if (r7->keyCode == 87/*0x57*/) //OK
 		{
 			if (Data_23495970.bData_23495b96 == 0)
 			{
@@ -506,24 +496,24 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f5e2
-		else if (r7->bData_4 < 9)
+		else if (r7->keyCode < 9)
 		{
 			//TODO
 		}
 		//loc_2346f654
-		else if (r7->bData_4 == 42/*0x2a*/)
+		else if (r7->keyCode == 42/*0x2a*/)
 		{
 			//TODO
 
 		}
 		//loc_2346f65e
-		else if (r7->bData_4 == 44/*0x2c*/) //Info / EPG
+		else if (r7->keyCode == 44/*0x2c*/) //Info / EPG
 		{
 			//0x2346f666
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2346f37c: Info Key\r\n");
+				sprintf(debug_string, "menu_root_on_event: Info Key\r\n");
 				console_send_string(debug_string);
 			}
 #endif
@@ -562,19 +552,19 @@ int sub_2346f37c(Struct_2346f37c* r0)
 			}
 		}
 		//loc_2346f68c
-		else if (r7->bData_4 == 13/*0x0d*/) //Mute
+		else if (r7->keyCode == 13/*0x0d*/) //Mute
 		{
 			//TODO
 
 		}
 		//loc_2346f6c6
-		else if (r7->bData_4 == 47/*0x2f*/) // I / i
+		else if (r7->keyCode == 47/*0x2f*/) // I / i
 		{
 			//TODO
 
 		}
 		//loc_2346f6e4
-		else if (r7->bData_4 == 0xff)
+		else if (r7->keyCode == 0xff)
 		{
 			if (Data_23495970.Data_2349597c != 0)
 			{

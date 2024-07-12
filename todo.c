@@ -216,7 +216,17 @@ void sub_23468e7c()
 }
 
 
-void sub_23410fe4()
+/* 23410f28 - todo */
+void sub_23410f28(int r5)
+{
+#if 1
+	console_send_string("sub_23410f28 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+ void sub_23410fe4()
 {
 	console_send_string("sub_23410fe4 (todo.c): TODO\r\n");
 

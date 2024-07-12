@@ -33,7 +33,7 @@ typedef struct Menu_Item
 	uint16_t wData_2; //2
 	int fill_4[5]; //4
 	void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-	void* Data_0x1c; //0x1c = 28
+	void* onEvent; //0x1c = 28
 	void* inputThreadFunc; //0x20 = 32
 	void* Data_0x24; //0x24 = 36
 	void* Data_0x28; //0x28 = 40
@@ -87,17 +87,25 @@ typedef struct Menu
 	uint8_t maxItem; //0x18 = 24
 	int8_t currentItem; //0x19
 	void (*Data_0x1c)(); //0x1c
-	void (*Data_0x20)(); //0x20
-	void (*Data_0x24)(); //36 = 0x24
-	int (*Data_0x28)(); //0x28
+	int (*onNavigate)(int*); //0x20
+	int (*onEnter)(int); //36 = 0x24
+	int (*onExit)(int); //0x28
 	int Data_0x2c; //44 = 0x2c
-	int Data_0x30; //48
+	int timeout; //48 = 0x30
 	Menu_Item* (*Data_0x34)(struct Menu*); //52
 	//0x38 = 56?
 }
 Menu;
 
+typedef struct
+{
+	int fill_0; //0
+	uint8_t keyCode; //4
+	int fill_8; //8
+} Menu_Event;
 
-int sub_23471fa2(UI_Thread_Params* r4);
+
+
+int menu_general_settings_on_enter(UI_Thread_Params*);
 
 
