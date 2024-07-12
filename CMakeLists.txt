@@ -18,6 +18,9 @@ set(SRCS
    thumb.c
    thumb1.c
    menu_general_settings.c
+   vfd.c
+   fpc.c
+   onoff.c
    hexdump.c
    todo.c
 )
@@ -50,6 +53,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 add_definitions(
     --gnu
+    --c99
 #    -O2
 )
 

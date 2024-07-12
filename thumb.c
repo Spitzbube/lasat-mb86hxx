@@ -265,6 +265,8 @@ int menu_main_on_enter(int a)
 
 #if 0
 	frontdisplay_start_text(sub_2343d156);
+#else
+	vfd_display_text("Main Menu", 0, 12);
 #endif
 
 	return 0;

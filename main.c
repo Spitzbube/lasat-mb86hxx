@@ -8,6 +8,8 @@ void main_console_init(void);
 void main_usb_init(void);
 void main_network_init(void);
 void main_inputhandler_init(void);
+void main_frontpanel_init();
+void main_onoff_init();
 
 
 /* 23400158 - todo */
@@ -37,6 +39,8 @@ int main_process_uart_command(uint8_t* r4)
 /* 23400424 - todo */
 void startup_thread()
 {
+	main_onoff_init();
+	main_frontpanel_init();
 	main_network_init();
 	main_usb_init();
 	inputhandler_register_uart_callback(main_process_uart_command);

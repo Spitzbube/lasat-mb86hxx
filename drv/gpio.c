@@ -275,3 +275,52 @@ int gpio_set(Struct_20611068* r4, int b)
 
 }
 
+
+/* 2341abfc - todo */
+int sub_2341abfc(Struct_20611068* a)
+{
+	console_send_string("sub_2341abfc (gpio.c): TODO\r\n");
+
+}
+
+
+/* 2341ac54 - todo */
+int gpio_close(Struct_20611068* r4)
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+	if (r4 == 0)
+	{
+		return 0;
+	}
+
+	OS_ENTER_CRITICAL();
+
+	if (r4->bData_0 < 96)
+	{
+		union
+		{
+			uint32_t dwData;
+			struct
+			{
+				uint32_t a: 8;
+				uint32_t b: 8;
+			} bData;
+		} sp;
+
+		sp.dwData = 0;
+		sp.bData.b = 1;
+		((volatile uint32_t*)0xc3000000)[r4->bData_0] = sp.dwData;
+	}
+	//loc_2341ac94
+	r4->bData_0 = 0xff;
+
+	OS_EXIT_CRITICAL();
+
+	return 0;
+}
+
+
+ 

@@ -2,6 +2,9 @@
 #include "data.h"
 #include "ir_user.h"
 #include "ir.h"
+#include "vfd.h"
+#include "onoff.h"
+
 
 extern int main_process_uart_command(uint8_t*);
 
@@ -54,6 +57,27 @@ void main_console_init()
 #if 1
 	console_send_string(str);
 #endif
+}
+
+
+/* 2340088c / 23402068 - todo */
+void main_onoff_init()
+{
+	extern void sub_2343b992();
+	extern void sub_2343cc34();
+
+	Struct_23413284 sp4;
+
+	sp4.gpioPin = 6;
+	sp4.initialState = 1;
+	sp4.Data_8 = 0;
+	sp4.Data_12 = 0;
+#if 0
+	sp4.Data_16 = sub_2343cc34;
+	sp4.Data_20 = sub_2343b992;
+#endif
+
+	onoff_init(&sp4);
 }
 
 
@@ -124,6 +148,37 @@ void main_network_init()
 	{
 		tcp_console_init(main_process_uart_command);
 	}
+#endif
+}
+
+
+/* 234015ec / 23402000 - complete */
+void main_frontpanel_init()
+{
+#if 0
+	Struct_23410ea4 sp_0x18;
+#endif
+	Struct_23437974 vfdParams;
+	uint8_t sp4[] = {0x03, 0x04, 0x02,  0x07,  0x08, 0x05, 0x00, 0x00}; //234017DC
+
+	fpc_init(sp4);
+
+#if 0
+	sp_0x18.threadPrio = THREAD_PRIO_AV;
+	sp_0x18.Data_4 = 14;
+	sp_0x18.Data_8 = 13;
+
+	sub_23410ea4(&sp_0x18); //av.c? -> Display task
+#endif
+
+	vfdParams.Data_0 = 80;
+	vfdParams.Data_4 = 3;
+	vfdParams.Data_8 = 4;
+
+	vfd_init(&vfdParams);
+
+#if 0
+	frontdisplay_init();
 #endif
 }
 
