@@ -1,4 +1,6 @@
 
+#ifndef DRV_FLASH
+#define DRV_FLASH
 
 typedef struct
 {
@@ -30,3 +32,4 @@ typedef struct
 	//0x134 = 308
 } Struct_235f2e2c;
 
+#endif //DRV_FLASH

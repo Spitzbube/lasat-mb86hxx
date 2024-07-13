@@ -12,6 +12,7 @@
 extern int main_process_uart_command(uint8_t*);
 
 
+uint8_t bData_23491d8c = 0; //23491d8c +0
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
@@ -172,6 +173,67 @@ void main_inputhandler_init()
 		ui_thread_create(&sp_0x74);
 	}
 	//loc_23400a28
+}
+
+
+/* 234011f4 - todo */
+void sub_234011f4()
+{
+	Struct_234011f4 sp;
+	int oldCrc;
+	int calcCrc;
+	int r0;
+
+#if 0
+	console_send_string("sub_234011f4()\r\n");
+#endif
+
+	if (0 != sub_2340add4(0x40300000))
+	{
+		sub_2340aee4(0x40200000);
+
+		sub_23438194(Data_23491dc8);
+
+		bData_23491d8c = 1;
+		//->loc_23401234
+	}
+	//loc_23401228
+	if (bData_23491d8c == 1)
+	{
+		//loc_23401234
+		r0 = 0;
+	}
+	else
+	{
+		//loc_2340123c
+		sub_23438084(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+
+		oldCrc = sp.crc;
+		sp.crc = 0;
+
+		calcCrc = crc32((void*) &sp, sizeof(Struct_234011f4));
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_234011f4: oldCrc=0x%x, calcCrc=0x%x\r\n", oldCrc, calcCrc);
+			console_send_string(debug_string);
+		}
+#endif
+		if (oldCrc != calcCrc)
+		{
+			//->loc_23401234
+			r0 = 0;
+		}
+		else
+		{
+			//loc_23401274
+			r0 = sp.bData_15;
+		}
+	}
+	//loc_23401274
+	channel_init(r0);
+
+	sub_2340a794();
 }
 
 

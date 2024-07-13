@@ -1,11 +1,12 @@
 
 #include "data.h"
+#include "menu.h"
 
 #pragma thumb
 
 int menu_root_on_event(void*);
 int menu_root_on_enter(int);
-int menu_root_on_exit(int);
+int menu_root_on_exit(UI_Thread_Params*);
 
 //0x23495984
 struct
@@ -168,7 +169,7 @@ int menu_root_on_enter(int a)
 
 
 /* 2346ed1c - complete */
-int menu_root_on_exit(int a)
+int menu_root_on_exit(UI_Thread_Params* a)
 {
 #if 0
 	console_send_string("menu_root_on_exit\r\n");
@@ -623,4 +624,11 @@ int sub_2346f708()
 	return 0;
 }
 
+
+/* 2346f75e - todo */
+void sub_2346f75e()
+{
+	console_send_string("sub_2346f75e (todo.c): TODO\r\n");
+
+}
 

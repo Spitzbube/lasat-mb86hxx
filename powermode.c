@@ -331,3 +331,23 @@ int powermode_init(Powermode_Init_Params* pParams)
 }
 
 
+/* 23413310 - todo */
+int sub_23413310(void* r5, void* r6)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_23413310 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_2358be90.pSema, 0, &err);
+
+	Data_2358be90.Data_4 = r5;
+	Data_2358be90.Data_8 = r6;
+
+	err = OSSemPost(Data_2358be90.pSema);
+
+	return 0;
+}
+
+

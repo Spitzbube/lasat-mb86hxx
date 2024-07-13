@@ -248,3 +248,77 @@ void sub_23439624(int a, int b, int c, int d)
 
 }
 
+
+int sub_23470548() //UI_Thread_Params*);
+{
+	console_send_string("sub_23470548 (todo.c): TODO\r\n");
+
+}
+
+
+int sub_23471600() //UI_Thread_Params*);
+{
+	console_send_string("sub_23471600 (todo.c): TODO\r\n");
+
+}
+
+
+int menu_network_on_entry() //UI_Thread_Params*);
+{
+	console_send_string("menu_network_on_entry (todo.c): TODO\r\n");
+
+}
+
+
+int sub_2343d1ca() //UI_Thread_Params*);
+{
+	console_send_string("sub_2343d1ca (todo.c): TODO\r\n");
+
+}
+
+
+int sub_23471d2c() //UI_Thread_Params*);
+{
+	console_send_string("sub_23471d2c (todo.c): TODO\r\n");
+
+}
+
+
+int sub_2347004a() //UI_Thread_Params*)
+{
+	console_send_string("sub_2347004a (todo.c): TODO\r\n");
+
+}
+
+
+/* 2344f79c - todo */
+void sub_2344f79c()
+{
+	console_send_string("sub_2344f79c (todo.c): TODO\r\n");
+
+}
+
+
+/* 23487aa8 - todo */
+void sub_23487aa8()
+{
+	console_send_string("sub_23487aa8 (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2343dd2c()
+{
+	console_send_string("sub_2343dd2c (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2343deb4()
+{
+	console_send_string("sub_2343deb4 (todo.c): TODO\r\n");
+
+}
+
+
+

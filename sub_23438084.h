@@ -1,4 +1,6 @@
 
+#ifndef SUB_23438084
+#define SUB_23438084
 
 typedef struct
 {
@@ -44,3 +46,4 @@ void* sub_23437fd4(Struct_23437fd4*);
 int sub_23438084(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count);
 int sub_23438108(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count);
 
+#endif //SUB_23438084

@@ -277,6 +277,8 @@ int sub_234111a8()
 	{
 		return Data_2358bda4.Data_0x5c->bData_0x0d;
 	}
+#else
+	return 1;
 #endif
 
 	return 0;

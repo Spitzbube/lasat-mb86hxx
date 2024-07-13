@@ -12,6 +12,7 @@ void main_frontpanel_init(void);
 void main_powermode_init(void);
 void main_flash_init(void);
 void main_graphic_init(void);
+void sub_234011f4(void);
 
 
 /* 23400158 - todo */
@@ -43,6 +44,7 @@ void startup_thread()
 {
 	main_powermode_init();
 	main_flash_init();
+	sub_234011f4(); //channel???
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();

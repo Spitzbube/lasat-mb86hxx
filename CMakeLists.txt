@@ -25,6 +25,9 @@ set(SRCS
    av.c
    texttable.c
    sub_23438084.c
+   sub_2340a6a0.c
+   crc.c
+   sub_23470890.c
    hexdump.c
    todo.c
 )

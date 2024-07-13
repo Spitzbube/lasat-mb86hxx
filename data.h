@@ -8,9 +8,26 @@
 #include "threads.h"
 #include "ucos_ii.h"
 #include "memblk.h"
+#include "flash.h"
+#include "sub_23438084.h"
 
+
+extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 
+extern Struct_23438084* Data_23491dc8; //23491dc8 +0x3c
+
+
+typedef struct
+{
+	int crc; //0
+	int fill_4[2]; //4
+	uint16_t wData_12; //12
+	uint8_t bData_14; //14
+	uint8_t bData_15; //15
+	//16
+} Struct_234011f4;
+
 
 typedef struct
 {
@@ -26,6 +43,7 @@ typedef struct
 
 extern void mainfunction_thread(UI_Thread_Params*);
 extern void standby_thread(UI_Thread_Params*);
+extern void menu_item_event_thread(UI_Thread_Params*);
 
 
 typedef struct Menu_Item
@@ -90,7 +108,7 @@ typedef struct Menu
 	void (*Data_0x1c)(); //0x1c
 	int (*onNavigate)(int*); //0x20
 	int (*onEnter)(int); //36 = 0x24
-	int (*onExit)(int); //0x28
+	int (*onExit)(UI_Thread_Params*); //0x28
 	int Data_0x2c; //44 = 0x2c
 	int timeout; //48 = 0x30
 	Menu_Item* (*Data_0x34)(struct Menu*); //52
@@ -106,7 +124,10 @@ typedef struct
 } Menu_Event;
 
 
+extern int menu_items_navigate(int*);
+extern int menu_general_settings_entry(UI_Thread_Params*);
 
-int menu_general_settings_on_enter(UI_Thread_Params*);
 
+extern void sub_2343dd2c();
+extern void sub_2343deb4();
 

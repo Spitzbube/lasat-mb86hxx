@@ -1,11 +1,20 @@
 
 #include "data.h"
 #include "frontdisplay.h"
+#include "texttable.h"
+#include "menu.h"
 
 #pragma thumb
 
+extern int sub_23470548(UI_Thread_Params*);
+extern int sub_23471600(UI_Thread_Params*);
+extern int menu_network_on_entry(UI_Thread_Params*);
+extern int sub_2343d1ca(UI_Thread_Params*);
+extern int sub_23471d2c(UI_Thread_Params*);
+extern int sub_2347004a(UI_Thread_Params*);
+
 extern int menu_main_on_enter(int);
-extern int menu_main_on_exit(int);
+extern int menu_main_on_exit(UI_Thread_Params*);
 extern int menu_items_navigate(int*);
 extern void menu_event_thread(UI_Thread_Params*);
 
@@ -18,29 +27,13 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		menu_general_settings_on_enter, //void* onEvent; //0x1c = 28
+		menu_general_settings_entry, //void* onEvent; //0x1c = 28
 		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 0x23492fc4
-#if 0
-		0x23492f98                        dw         0x0050
-		0x23492f9a                        dw         0xffff
-		0x23492f9c                        dd         0x00000000
-		                              dword_23492fa0:
-		0x23492fa0                        dd         0x00000000                         ; DATA XREF=sub_2343d104+22, aTvradio+80
-		0x23492fa4                        dd         0x00000000
-		0x23492fa8                        dd         0x00000000
-		0x23492fac                        dd         0x00000000
-		0x23492fb0                        dd         0x00000000
-		0x23492fb4                        dd         0x23471fa3
-		0x23492fb8                        dd         0x2343d6e3
-		0x23492fbc                        dd         0x00000000
-		0x23492fc0                        dd         0x00000000
-#endif
 	},
 	//[1]
-#if 0
 	{
 		11, //"Sendersuche"
 		0xffff, //uint16_t wData_2; //2
@@ -51,23 +44,6 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 23492FF0
-#if 0
-		0x23492fc4                        dw         0x000b                             ; DATA XREF=sub_2343d104+18
-		0x23492fc6                        dw         0xffff
-		                              dword_23492fc8:
-		0x23492fc8                        dd         0x00000000                         ; DATA XREF=aIn1Optical+20
-		0x23492fcc                        dd         0x00000000
-		0x23492fd0                        dd         0x00000000
-		0x23492fd4                        dd         0x00000000
-		0x23492fd8                        dd         0x00000000
-		                              dword_23492fdc:
-		0x23492fdc                        dd         0x00000000                         ; DATA XREF=dword_23492eac+8
-		0x23492fe0                        dd         0x23470549
-		0x23492fe4                        dd         0x2343d6e3
-		0x23492fe8                        dd         0x00000000
-		                              dword_23492fec:
-		0x23492fec                        dd         0x00000000
-#endif
 	},
 	//[2]
 	{
@@ -80,21 +56,6 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0,
 		0
 		//0x2349301c
-#if 0
-			0x23492ff0                        dw         0x0191                             ; DATA XREF=dword_23492ec0+8
-			0x23492ff2                        dw         0xffff
-			0x23492ff4                        dd         0x00000000
-			0x23492ff8                        dd         0x00000000
-			0x23492ffc                        dd         0x00000000
-			0x23493000                        dd         0x00000000
-			0x23493004                        dd         0x00000000
-			0x23493008                        dd         0x00000000
-			0x2349300c                        dd         0x23471601                         ; DATA XREF=dword_23492c7c+80
-			0x23493010                        dd         0x2343d6e3
-			0x23493014                        dd         0x00000000                         ; DATA XREF=dword_23492c7c+88
-			0x23493018                        dd         0x00000000
-
-#endif
 	},
 	//[3]
 	{
@@ -107,20 +68,6 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0,
 		0
 		//0x23493048
-#if 0
-			0x2349301c                        dw         0x015d
-			0x2349301e                        dw         0xffff
-			0x23493020                        dd         0x00000000
-			0x23493024                        dd         0x00000000
-			0x23493028                        dd         0x00000000
-			0x2349302c                        dd         0x00000000
-			0x23493030                        dd         0x00000000
-			0x23493034                        dd         0x00000000
-			0x23493038                        dd         0x23470f23
-			0x2349303c                        dd         0x2343d6e3
-			0x23493040                        dd         0x00000000
-			0x23493044                        dd         0x00000000
-#endif
 	},
 	//[4]
 	{
@@ -133,20 +80,6 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0,
 		0
 		//0x23493074
-#if 0
-		0x23493048                        dw         0x0057
-		0x2349304a                        dw         0xffff
-		0x2349304c                        dd         0x00000000
-		0x23493050                        dd         0x00000000
-		0x23493054                        dd         0x00000000                         ; DATA XREF=dword_23492c7c+32
-		0x23493058                        dd         0x00000000
-		0x2349305c                        dd         0x00000000
-		0x23493060                        dd         0x00000000
-		0x23493064                        dd         0x2343d1cb
-		0x23493068                        dd         0x2343d6e3
-		0x2349306c                        dd         0x00000000
-		0x23493070                        dd         0x00000000
-#endif
 	},
 	//[5]
 	{
@@ -159,20 +92,6 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0,
 		0
 		//0x234930a0
-#if 0
-		0x23493074                        dw         0x003f
-		0x23493076                        dw         0xffff
-		0x23493078                        dd         0x00000000
-		0x2349307c                        dd         0x00000000
-		0x23493080                        dd         0x00000000
-		0x23493084                        dd         0x00000000
-		0x23493088                        dd         0x00000000
-		0x2349308c                        dd         0x00000000
-		0x23493090                        dd         0x23471d2d
-		0x23493094                        dd         0x2343d6e3
-		0x23493098                        dd         0x00000000
-		0x2349309c                        dd         0x00000000
-#endif
 	},
 	//[6]
 	{
@@ -185,22 +104,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0,
 		0
 		//0x234930cc
-#if 0
-		0x234930a0                        dw         0x01ca
-		0x234930a2                        dw         0xffff                             ; DATA XREF=sub_2343d104+48
-		0x234930a4                        dd         0x00000000                         ; DATA XREF=sub_2343d104+52
-		0x234930a8                        dd         0x00000000                         ; DATA XREF=sub_2343d104+58
-		0x234930ac                        dd         0x00000000
-		0x234930b0                        dd         0x00000000
-		0x234930b4                        dd         0x00000000
-		0x234930b8                        dd         0x00000000
-		0x234930bc                        dd         0x2347004b
-		0x234930c0                        dd         0x2343d6e3
-		0x234930c4                        dd         0x00000000
-		0x234930c8                        dd         0x00000000
-#endif
 	}
-#endif
 };
 
 Menu menuMain = //234930cc
@@ -211,36 +115,16 @@ Menu menuMain = //234930cc
 		0, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
 		0, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
 		0, //int Data_0x14; //20 = 0x14
-		0, //6, //uint8_t maxItem; //0x18 = 24
+		6, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
 		0, //void (*Data_0x1c)(); //0x1c
 		menu_items_navigate, //int (*onNavigate)(int*); //0x20
 		menu_main_on_enter, //int (*onEnter)(int); //36 = 0x24
-		menu_main_on_exit, //int (*onExit)(int); //0x28
+		menu_main_on_exit, //int (*onExit)(UI_Thread_Params*); //0x28
 		0, //int Data_0x2c; //44 = 0x2c
 		0, //int timeout; //48
 		0, //Menu_Item* (*Data_0x34)(struct Menu*); //52
 		//0x38 = 56?
-#if 0
-		0x234930cc                        dw         0x000a
-		0x234930ce                        dw         0x0000
-		0x234930d0                        dd         0x23492f98
-		0x234930d4                        dd         0x23492f98                         ; DATA XREF=sub_2343d104+10
-		0x234930d8                        dd         0x00000000
-		0x234930dc                        dd         0x00000000
-		0x234930e0                        dd         0x00000000
-		0x234930e4                        db  0x06 ; '.'
-		                              byte_234930e5:
-		0x234930e5                        db         0x00                               ; DATA XREF=sub_2343d104+8
-		0x234930e6 0000                   movs       r0, r0
-		0x234930e8                        dd         0x00000000
-		0x234930ec                        dd         0x2343d4c9
-		0x234930f0                        dd         0x2343d1ad
-		0x234930f4                        dd         0x2343d1bf
-		0x234930f8                        dd         0x00000000
-		0x234930fc                        dd         0x00000000
-		0x23493100                        dd         0x00000000
-#endif
 }; //23493104
 
 void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
@@ -340,12 +224,12 @@ int menu_main_on_enter(int a)
 
 
 /* 2343d1be - complete */
-int menu_main_on_exit(int a)
+int menu_main_on_exit(UI_Thread_Params* a)
 {
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "menu_main_on_exit: a=%d\r\n", a);
+        sprintf(debug_string, "menu_main_on_exit: a=%p\r\n", a);
         console_send_string(debug_string);
     }
 #endif
@@ -1188,6 +1072,173 @@ void standby_thread(UI_Thread_Params* a)
 			OSTaskDel(0xff);
 		}
 		//->loc_2343d8dc
+	} //while (1)
+}
+
+
+/* 2343da50 - todo */
+void menu_item_event_thread(UI_Thread_Params* p)
+{
+	void (*r6)() = 0;
+	Menu* r5;
+	Menu_Item* r1;
+	void (*r4)() = 0;
+	struct
+	{
+		uint8_t bData_0; //0
+		uint8_t bData_1; //1
+		uint8_t bData_2; //2
+
+	}* pMsg;
+	int r0;
+	uint8_t err; //sp_0x20
+	int sp_0x1c;
+	UI_Thread_Params sp4; //->sp0x1c
+
+#if 1
+	console_send_string("menu_item_event_thread (todo.c): TODO\r\n");
+#endif
+
+	sp4 = *p;
+
+	Data_235fdf70 = &sp4;
+
+	//r5, =0x235fdf58
+
+	err = OSSemPost(sp4.pSema);
+	OSMboxAccept(sp4.pMBox);
+
+	//r7 = r5 + 0x40 = 235FDF98
+
+	while (1)
+	{
+		//loc_2343da7a
+		int timeout;
+		if (menu_stack[ menu_stack_level ] != 0)
+		{
+			//0x2343da88
+			timeout = menu_stack[ menu_stack_level ]->timeout;
+		}
+		else
+		{
+			timeout = 0;
+		}
+		//loc_2343da8a
+		pMsg = (void*) OSMboxPend(sp4.pMBox, (uint16_t)timeout, &err);
+
+		r0 = pMsg->bData_0;
+		//loc_2343daa4
+		r5 = menu_stack[ menu_stack_level ];
+		r1 = r5->Data_4;
+
+		if (err != 10)
+		{
+			//0x2343dab6
+			switch (r0)
+			{
+			case 0x20: //Up
+				//loc_2343db10
+				sp_0x1c = 1;
+				//->loc_2343db16
+				r6 = r5->onNavigate;
+				//->loc_2343db20
+				break;
+
+			case 0x21: //Down
+				//loc_2343db14
+				sp_0x1c = 2;
+				//->loc_2343db16
+				r6 = r5->onNavigate;
+				//->loc_2343db20
+				break;
+
+			case 0x11: //Left
+				//0x2343dac4
+				sp_0x1c = 4;
+				r4 = r1->onEvent;
+				//->loc_2343db20
+				break;
+
+			case 0x10: //Right
+				//loc_2343db1c
+				sp_0x1c = 8;
+				r4 = r1->onEvent;
+				//->loc_2343db20
+				break;
+
+			case 0x2d: //EXIT
+				//0x2343dad4
+				if (r5 != 0)
+				{
+					if ((r5->onExit == 0) ||
+							(0 == (r5->onExit)(&sp4)))
+					{
+						//loc_2343dae6
+						r5 = sub_2343d482(0);
+
+						if (r5 != 0)
+						{
+							sub_2343d51e(r5, &sp4);
+
+							if (r5->onEnter != 0)
+							{
+								(r5->onEnter)(-1);
+							}
+							//loc_2343db20
+						}
+						else
+						{
+							//loc_2343db06
+							sub_2343d51e(0, &sp4);
+							//->loc_2343db20
+						}
+					}
+					//loc_2343db20
+				}
+				else
+				{
+					//loc_2343db06
+					sub_2343d51e(0, &sp4);
+					//->loc_2343db20
+				}
+				break;
+			} //switch (r0)
+			//loc_2343db20
+			if (r4 != 0)
+			{
+				(r4)(&sp_0x1c);
+
+				r4 = 0;
+			}
+			//loc_2343db2a
+			if (r6 != 0)
+			{
+				(r6)(&sp_0x1c);
+
+				err = sub_2343d51e(r5, &sp4);
+
+				r6 = 0;
+			}
+			//loc_2343db4c
+		} //if (err != 10)
+		else
+		{
+			//loc_2343db40
+			r4 = r1->onEvent;
+			if (r4 != 0)
+			{
+				(r4)(0);
+
+				r4 = 0;
+			}
+		}
+		//loc_2343db4c
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//0x2343db56
+			OSTaskDel(0xff);
+		}
+		//->loc_2343da7a
 	} //while (1)
 }
 
