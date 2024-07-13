@@ -24,7 +24,8 @@ typedef struct
 } UI_Thread_Params;
 
 
-extern void mainfunction_thread();
+extern void mainfunction_thread(UI_Thread_Params*);
+extern void standby_thread(UI_Thread_Params*);
 
 
 typedef struct Menu_Item

@@ -3,7 +3,8 @@
 #include "ir_user.h"
 #include "ir.h"
 #include "vfd.h"
-#include "onoff.h"
+#include "powermode.h"
+#include "av.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -18,6 +19,18 @@ struct
 	int fill_0[0x8000]; //0
 	//size????
 } Data_2349d250; //2349d250 
+
+
+/* 23400510 - complete */
+int sub_23400510(int a)
+{
+#if 0
+	char str[32];
+	sprintf("sub_23400510 (main.c): a=%d\r\n", a);
+	console_send_string(str);
+#endif
+	return 0;
+}
 
 
 /* 234006c4 - complete */
@@ -61,23 +74,23 @@ void main_console_init()
 
 
 /* 2340088c / 23402068 - todo */
-void main_onoff_init()
+void main_powermode_init()
 {
 	extern void sub_2343b992();
 	extern void sub_2343cc34();
 
-	Struct_23413284 sp4;
+	Powermode_Init_Params params;
 
-	sp4.gpioPin = 6;
-	sp4.initialState = 1;
-	sp4.Data_8 = 0;
-	sp4.Data_12 = 0;
+	params.gpioPin = 6;
+	params.initialState = 1;
+	params.Data_8 = 0;
+	params.Data_12 = 0;
 #if 0
-	sp4.Data_16 = sub_2343cc34;
-	sp4.Data_20 = sub_2343b992;
+	params.Data_16 = sub_2343cc34;
+	params.Data_20 = sub_2343b992;
 #endif
 
-	onoff_init(&sp4);
+	powermode_init(&params);
 }
 
 
@@ -155,21 +168,17 @@ void main_network_init()
 /* 234015ec / 23402000 - complete */
 void main_frontpanel_init()
 {
-#if 0
-	Struct_23410ea4 sp_0x18;
-#endif
+	Struct_23410ea4 avParams;
 	Struct_23437974 vfdParams;
 	uint8_t sp4[] = {0x03, 0x04, 0x02,  0x07,  0x08, 0x05, 0x00, 0x00}; //234017DC
 
 	fpc_init(sp4);
 
-#if 0
-	sp_0x18.threadPrio = THREAD_PRIO_AV;
-	sp_0x18.Data_4 = 14;
-	sp_0x18.Data_8 = 13;
+	avParams.threadPrio = THREAD_PRIO_AV;
+	avParams.Data_4 = 14;
+	avParams.Data_8 = 13;
 
-	sub_23410ea4(&sp_0x18); //av.c? -> Display task
-#endif
+	av_init(&avParams);
 
 	vfdParams.Data_0 = 80;
 	vfdParams.Data_4 = 3;
@@ -177,9 +186,7 @@ void main_frontpanel_init()
 
 	vfd_init(&vfdParams);
 
-#if 0
 	frontdisplay_init();
-#endif
 }
 
 

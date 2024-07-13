@@ -20,7 +20,9 @@ set(SRCS
    menu_general_settings.c
    vfd.c
    fpc.c
-   onoff.c
+   frontdisplay.c
+   powermode.c
+   av.c
    hexdump.c
    todo.c
 )

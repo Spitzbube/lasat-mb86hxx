@@ -10,5 +10,7 @@ typedef struct
 	void (*Data_20)(int); //20
 #endif
 	//24
-} Struct_23413284;
+} Powermode_Init_Params;
+
+extern int powermode_init(Powermode_Init_Params*);
 

@@ -412,14 +412,14 @@ int menu_root_on_event(void* r0)
 			menu_main_start();
 			//->loc_2346f6f0
 		}
-#if 0
 		//loc_2346f55e
 		else if (r7->keyCode == 12/*0x0c*/) //On-Off
 		{
-			onoff_set_state(2/*Off*/, sub_2343d572(), standby_thread);
+			powermode_set_state(2/*Off*/, sub_2343d572(), standby_thread);
 			//->loc_2346f6f0
 		}
 		//loc_2346f572
+#if 0
 		else if ((r7->keyCode == 32/*0x20*/) //Up
 				|| (r7->keyCode == 48/*0x30*/))
 		{

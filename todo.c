@@ -248,3 +248,10 @@ void sub_234089e8()
 }
 
 
+/* 23439624 - todo */
+void sub_23439624(int a, int b, int c, int d)
+{
+	console_send_string("sub_23439624 (todo.c): TODO\r\n");
+
+}
+

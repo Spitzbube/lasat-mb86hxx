@@ -242,7 +242,10 @@ Menu menuMain = //234930cc
 #endif
 }; //23493104
 
+void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
+
 UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 -0x70
+UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 - 0x18
 UI_Thread_Params Data_235fdf58; //235fdf58 235fdf98 -0x40
 UI_Thread_Params* Data_235fdf70; //235fdf70 / 2378336C -0x40 + 0x18
 Menu* menu_stack[13]; //235fdf74 -0x40 + 0x1c, size???
@@ -1012,6 +1015,117 @@ void menu_event_thread(UI_Thread_Params* p)
 	} //while (1)
 	//loc_2343d8b0
 	return;
+}
+
+
+/* 2343d8b4 - todo */
+void standby_thread(UI_Thread_Params* a)
+{
+	uint8_t err; //sp_0x5c
+#if 0
+	Struct_2340bf0c sp_0x28;
+	struct Struct_234fd8f0_Inner0 sp;
+#endif
+	struct
+	{
+		uint8_t bData_0; //0
+		uint8_t bData_1; //1
+		uint8_t bData_2; //2
+
+	}* pMsg;
+	uint8_t r6;
+
+#if 0
+	console_send_string("standby_thread (todo.c): TODO\r\n");
+#endif
+
+	memcpy(&Data_235fdf40, a, sizeof(UI_Thread_Params));
+
+	Data_235fdf70 = &Data_235fdf40;
+
+	err = OSSemPost(Data_235fdf40.pSema);
+
+	OSMboxAccept(Data_235fdf40.pMBox);
+
+	//r5 = 23493104
+
+	while (1)
+	{
+		//loc_2343d8dc
+#if 0
+		console_send_string("standby_thread (thumb.c): before OSMboxPend\r\n");
+#endif
+		pMsg = (void*) OSMboxPend(Data_235fdf40.pMBox, 0, &err);
+#if 0
+		console_send_string("standby_thread (thumb.c): after OSMboxPend\r\n");
+#endif
+
+		r6 = pMsg->bData_0;
+
+		if (err != 0)
+		{
+			sub_23439624(0, 0, 20, 0);
+		}
+		//loc_2343d8fc
+		//r3 = r6
+		switch (r6)
+		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 12: //OnOff
+		case 32/*0x20*/:
+		case 33/*0x21*/:
+		case 0x30:
+		case 0x31:
+		case 0x57:
+		case 0x82:
+		case 0x83:
+		case 0xe1:
+		case 0xe2:
+		case 0xe3:
+		case 0xe4:
+			//loc_2343d948
+			if (Data_23493104 != 0)
+			{
+				(Data_23493104)(&Data_235fdf40);
+
+				Data_23493104 = 0;
+				//->loc_2343d97c
+			}
+			else
+			{
+				//loc_2343d95a
+				if (0 == powermode_set_state(1/*On*/, &Data_235fdf40, mainfunction_thread))
+				{
+#if 0
+					sub_2340bf0c(&sp_0x28);
+
+					channel_start_number(&sp, sp_0x28.wData_0x2a, sp_0x28.wData_0x2a);
+#endif
+				}
+				//loc_2343d97c
+			}
+			break;
+
+		default:
+			//loc_2343d97c
+			break;
+		}
+		//loc_2343d97c
+		if (62 == OSTaskDelReq(0xff))
+		{
+			OSTaskDel(0xff);
+		}
+		//->loc_2343d8dc
+	} //while (1)
 }
 
 
