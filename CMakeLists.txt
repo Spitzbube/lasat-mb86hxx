@@ -23,6 +23,8 @@ set(SRCS
    frontdisplay.c
    powermode.c
    av.c
+   texttable.c
+   sub_23438084.c
    hexdump.c
    todo.c
 )

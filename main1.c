@@ -5,14 +5,25 @@
 #include "vfd.h"
 #include "powermode.h"
 #include "av.h"
+#include "flash.h"
+#include "sub_23438084.h"
 
 
 extern int main_process_uart_command(uint8_t*);
 
 
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
+Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
+Struct_23438084* Data_23491dc8 = 0; //23491dc8 +0x3c
+
+
+struct
+{
+	int fill_0[8]; //0
+	//size???
+} Data_2349d230; //2349d230 //TODO
 
 struct
 {
@@ -30,6 +41,41 @@ int sub_23400510(int a)
 	console_send_string(str);
 #endif
 	return 0;
+}
+
+
+/* 23400634 - todo / 23401298 - todo */
+void main_flash_init()
+{
+	int sp_0x24;
+	Struct_23437fd4 sp_0x10;
+
+	flash_init();
+
+	sp_0x24 = 1;
+
+	flash_open(&sp_0x24, &main_hFlash);
+
+	if (main_hFlash != 0)
+	{
+		sp_0x10.pFlash = main_hFlash;
+		sp_0x10.Data_16 = &Data_2349d230;
+		sp_0x10.Data_0 = 16;
+		sp_0x10.Data_4 = 0x40370000;
+		sp_0x10.Data_8 = 16;
+
+		Data_23491dc8 = sub_23437fd4(&sp_0x10);
+
+#if 0
+		Struct_23419cd0 sp4 = {0x40380000, 0, 0}; //23487b5c
+
+		sp4.hFlash = main_hFlash;
+		sp4.Data_8 = (void*) sub_234019e0(0x20000);
+
+		sub_23419cd0(&sp4);
+#endif
+	}
+	//loc_234006bc
 }
 
 
@@ -126,6 +172,26 @@ void main_inputhandler_init()
 		ui_thread_create(&sp_0x74);
 	}
 	//loc_23400a28
+}
+
+
+/* 2340146c / 2340195c - complete */
+void main_graphic_init()
+{
+#if 0 //Only v241!!!
+	Struct_234539f0 sp4;
+
+	sp4.Data_0 = 0x22000000;
+	sp4.Data_4 = 0x22048000;
+	sp4.Data_8 = 0x22090000;
+	sp4.Data_12 = 0x22240000;
+	sp4.threadPrio = THREAD_PRIO_GRAPHIC;
+	sp4.Data_16 = sub_234256fc;
+
+	graphic_init(&sp4);
+#endif
+
+	text_table_init(main_hFlash, 0x401b0000);
 }
 
 

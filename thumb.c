@@ -1,5 +1,6 @@
 
 #include "data.h"
+#include "frontdisplay.h"
 
 #pragma thumb
 
@@ -253,6 +254,72 @@ uint8_t menu_stack_level; //235fdfa8 235fdf98 + 0x10
 
 
 
+/* 2343d104 - complete */
+void* sub_2343d104(FrontDisplay_Job* r5)
+{
+#if 0
+	console_send_string("sub_2343d104 (todo.c): TODO\r\n");
+#endif
+
+	text_table_get_string(menuMain.Data_8[menuMain.currentItem].wData_0, r5->bData_8, 0xfe);
+
+	r5->bNumTextChars = strlen(r5->bData_8);
+	r5->bDisplayOffset = 0;
+	r5->bNumDisplayChars = 12;
+	r5->bData_0x10b = 0;
+	r5->holdTime = 0;
+	r5->Data_4 = 0;
+	r5->bData_0x10f = 0;
+	r5->bData_0x10c = 0;
+	r5->Data_0 = frontdisplay_draw_text;
+
+	if (r5->bNumTextChars > 12)
+	{
+		r5->bData_0x10c = 1;
+		r5->Data_0 = frontdisplay_draw_scroll_text;
+	}
+	//loc_2343d152
+	return sub_2343d104;
+}
+
+
+/* 2343d156 - todo */
+void* sub_2343d156(FrontDisplay_Job* r4)
+{
+	uint8_t* str; //r6
+	uint8_t len;
+
+#if 0
+	console_send_string("sub_2343d156 (todo.c): TODO\r\n");
+#endif
+
+	r4->bData_8[0] = 0x22;
+
+	text_table_get_string(menuMain.stringId, &r4->bData_8[1], 0xfc);
+
+	str = &r4->bData_8[0];
+
+	len = strlen(str);
+
+	r4->bData_8[len++] = 0x22;
+	r4->bData_8[len] = 0;
+
+	r4->bNumTextChars = strlen(str);
+	r4->bDisplayOffset = 0; //r5
+	r4->bNumDisplayChars = 12;
+	r4->bData_0x10b = 0; //r5
+	r4->bData_0x10c = 0; //r5
+	r4->bData_0x110 = 0; //r5
+	r4->holdTime = 15;
+
+	r4->Data_0 = frontdisplay_draw_text;
+	r4->Data_4 = 0; //r5
+	r4->bData_0x10f = 0; //r5
+
+	return sub_2343d104;
+}
+
+
 /* 2343d1ac - todo */
 int menu_main_on_enter(int a)
 {
@@ -266,11 +333,7 @@ int menu_main_on_enter(int a)
 
 	sub_23410f28(0);
 
-#if 0
 	frontdisplay_start_text(sub_2343d156);
-#else
-	vfd_display_text("Main Menu", 0, 12);
-#endif
 
 	return 0;
 }

@@ -233,13 +233,6 @@ void sub_23410f28(int r5)
 }
 
 
-void text_table_get_string()
-{
-	console_send_string("text_table_get_string (todo.c): TODO\r\n");
-
-}
-
-
 /* 234089e8 - todo */
 void sub_234089e8()
 {

@@ -18,4 +18,6 @@ typedef struct
 
 
 extern void frontdisplay_task();
+extern int frontdisplay_draw_text(uint8_t);
+extern int frontdisplay_draw_scroll_text(uint8_t);
 

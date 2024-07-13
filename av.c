@@ -265,3 +265,20 @@ void av_switch_powermode(int r7)
 }
 
 
+/* 234111a8 - complete */
+int sub_234111a8()
+{
+#if 1
+	console_send_string("sub_234111a8 (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	if (Data_2358bda4.Data_0x5c != 0)
+	{
+		return Data_2358bda4.Data_0x5c->bData_0x0d;
+	}
+#endif
+
+	return 0;
+}
+

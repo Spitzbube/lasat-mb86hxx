@@ -8,6 +8,7 @@ set (
    intr.c
    timer.c
    ir.c
+   flash.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
