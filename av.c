@@ -2,6 +2,7 @@
 #include "data.h"
 #include "vfd.h"
 #include "frontdisplay.h"
+#include "sub_2340a6a0.h"
 #include "av.h"
 
 
@@ -32,9 +33,9 @@ struct Struct_2358bda4
 #endif
 #endif
 	Struct_23410ea4 Data_0x34; //52 = 0x34 //2358bdd8
-#if 0
 	Struct_235441b0 Data_0x40; //64 = 0x40
 	Struct_235441b0* Data_0x5c; //92 = 0x5C
+#if 0
 	int Data_0x60; //96 = 0x60
 	int Data_0x64; //100 = 0x64
 	int Data_0x68; //104 = 0x68
@@ -83,8 +84,10 @@ void av_thread()
 		gpio_open(&sp, &Data_2358bda4.Data_8);
 	}
 	//loc_23410d5c
+#endif
 	sub_2340c970(1, &Data_2358bda4.Data_0x40);
 
+#if 0
 	Data_2358bda4.Data_12 = 0;
 	Data_2358bda4.Data_16 = 0;
 	Data_2358bda4.Data_20 = 0;
@@ -116,9 +119,9 @@ void av_thread()
 		console_send_string("av_thread (todo.c): TODO\r\n");
 #endif
 
-#if 0
 		sub_2340c970(1, &Data_2358bda4.Data_0x40);
 
+#if 0
 		if (Data_2358bda4.Data_0x84 != 0)
 		{
 			(Data_2358bda4.Data_0x84)();
@@ -181,9 +184,7 @@ int av_init(Struct_23410ea4* r4)
 
 	memcpy(&Data_2358bda4.Data_0x34, r4, sizeof(Struct_23410ea4));
 
-#if 0
 	Data_2358bda4.Data_0x5c = &Data_2358bda4.Data_0x40;
-#endif
 
 	Data_23492098 = OSSemCreate(1);
 
@@ -266,20 +267,16 @@ void av_switch_powermode(int r7)
 
 
 /* 234111a8 - complete */
-int sub_234111a8()
+int av_get_language()
 {
 #if 1
-	console_send_string("sub_234111a8 (todo.c): TODO\r\n");
+	console_send_string("av_get_language (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	if (Data_2358bda4.Data_0x5c != 0)
 	{
-		return Data_2358bda4.Data_0x5c->bData_0x0d;
+		return Data_2358bda4.Data_0x5c->menuLanguage;
 	}
-#else
-	return 1;
-#endif
 
 	return 0;
 }

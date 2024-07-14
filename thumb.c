@@ -3,6 +3,8 @@
 #include "frontdisplay.h"
 #include "texttable.h"
 #include "menu.h"
+#include "thumb2.h"
+
 
 #pragma thumb
 
@@ -16,8 +18,8 @@ extern int sub_2347004a(UI_Thread_Params*);
 extern int menu_main_on_enter(int);
 extern int menu_main_on_exit(UI_Thread_Params*);
 extern int menu_items_navigate(int*);
-extern void menu_event_thread(UI_Thread_Params*);
 
+OS_EVENT* Data_23492f94 = 0; //23492f94
 
 Menu_Item menu_main_items[7] = //23492f98 +4
 {
@@ -256,6 +258,68 @@ int menu_main_start()
 	sub_2343d51e(&menuMain, r4); //Backup UI thread params?
 
 	return 0;
+}
+
+
+/* 2343d1f6 - todo */
+void menu_main_adapt_items(int (*p)(Struct_235fc42c*, int, int, int))
+{
+	Struct_235fc42c sp;
+	uint8_t r5 = 0;
+	uint8_t r4;
+
+	Data_23492f94 = OSSemCreate(1);
+
+#if 1
+	console_send_string("menu_main_adapt_items (todo.c): TODO\r\n");
+#endif
+
+	if (p != 0)
+	{
+		if (0 == (p)(&sp, 0, 0, 0))
+		{
+#if 0	
+			sub_2346fa58(p);
+
+			sub_23471658(p);
+
+			sub_234709f2(sp.Data_235fc458);
+#endif
+			//->loc_2343d230
+		}
+		else
+		{
+			//loc_2343d22e
+			r5 = 1;
+		}
+	}
+	else
+	{
+		//loc_2343d22e
+		r5 = 1;
+	}
+	//loc_2343d230
+	//r6, =234930cc
+	if (0 == network_get_device())
+	{
+		r5++; //Skip "Netzwerk" at [3]
+	}
+	//loc_2343d23e
+	//r7 = 23492f94+4
+	//->loc_2343d268
+	while (r5--)
+	{
+		//loc_2343d244
+		for (r4 = 2; r4 < menuMain.maxItem; r4++)
+		{
+			//loc_2343d248
+			memcpy(&menu_main_items[r4], &menu_main_items[r4+1], sizeof(Menu_Item));
+		}
+		//0x2343d262
+		menuMain.maxItem--;
+	}
+	//0x2343d272
+	return;
 }
 
 

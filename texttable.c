@@ -2,6 +2,7 @@
 
 #include "data.h"
 #include "flash.h"
+#include "av.h"
 
 
 Struct_235f2e2c* Data_23491ff8/*pFlash*/; //23491ff8
@@ -173,7 +174,7 @@ int text_table_init(Struct_235f2e2c* pFlash, int r8)
 					flash_read(pFlash, sp + r4 * 4, 4, &Data_234fd8ac.language[r4]);
 				}
 				//0x234082c4
-				Data_234fd8ac.currentLanguage = sub_234111a8();
+				Data_234fd8ac.currentLanguage = av_get_language();
 
 				if (Data_234fd8ac.currentLanguage > Data_234fd8ac.numLanguages)
 				{

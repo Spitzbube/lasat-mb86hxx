@@ -9,3 +9,4 @@ typedef struct
 
 
 int av_init(Struct_23410ea4*);
+int av_get_language(void);

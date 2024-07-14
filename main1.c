@@ -7,6 +7,7 @@
 #include "av.h"
 #include "flash.h"
 #include "sub_23438084.h"
+#include "thumb2.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -150,6 +151,8 @@ void main_inputhandler_init()
 
 	ir_init(ir_user_send_data, 0x3b);
 
+	menu_main_adapt_items(sub_2343b946/*thumbb2.c*/);
+	
 	memset(&sp_0x5c, 0, sizeof(Struct_2340d784));
 
 	sp_0x5c.threadPrioIR = THREAD_PRIO_IR_USER_IN;
@@ -170,7 +173,46 @@ void main_inputhandler_init()
 
 		sub_2343d458(&sp_0x74);
 
-		ui_thread_create(&sp_0x74);
+#if 1
+		if (bData_23491d8c != 0)
+#else
+		if (1)
+#endif
+		{
+#if 0
+			sub_2343e196(&sp_0x74);
+#endif
+			//loc_23400a28
+		}
+		else
+		{
+			//loc_23400a30
+			int state = powermode_get_state();
+			if (state == 1)
+			{
+				//0x23400a3c
+				ui_thread_create(&sp_0x74);
+
+#if 0
+				sub_2340bf0c(&sp_0x28);
+
+				channel_start_number(&sp0, sp_0x28.wData_0x2a, sp_0x28.wData_0x2a);
+#endif
+				//->loc_23400a28
+			}
+			//loc_23400a60
+			else if (state == 2)
+			{
+				//0x23400a68
+				sp_0x74.Data_20 = 0;
+				sp_0x74.pMBox = pMBox;
+				sp_0x74.threadFunc = standby_thread;
+				sp_0x74.threadName = "MainInputHandler";
+
+				ui_thread_create(&sp_0x74);
+			}
+			//loc_23400a28
+		} 
 	}
 	//loc_23400a28
 }

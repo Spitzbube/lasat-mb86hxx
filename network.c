@@ -16,7 +16,9 @@ extern void sub_2345ace8();
 int Data_234920e8 = 0; //234920e8 +0
 void (*Data_234920ec)() = 0; //234920ec +4
 int Data_234920f0 = 0; //234920f0 +8
+#endif
 struct netif* network_pNetIF = 0; //234920f4 +0xc
+#if 0
 int Data_234920f8; //234920f8 +0x10
 ip_addr_t network_ipaddr; //23492100
 ip_addr_t network_netmask; //23492104
@@ -377,6 +379,7 @@ int network_set_defaults(struct Struct_23546128* r5, struct Struct_234fd8f0_Inne
 	return 0;
 }
 
+#endif
 
 /* 23419430 - todo */
 struct netif* network_get_device()
@@ -388,6 +391,7 @@ struct netif* network_get_device()
 	return network_pNetIF;
 }
 
+#if 0
 
 /* 2341943c - todo */
 uint32_t network_get_ipaddr()

@@ -43,6 +43,7 @@ typedef struct
 
 extern void mainfunction_thread(UI_Thread_Params*);
 extern void standby_thread(UI_Thread_Params*);
+extern void menu_event_thread(UI_Thread_Params*);
 extern void menu_item_event_thread(UI_Thread_Params*);
 
 
@@ -130,4 +131,5 @@ extern int menu_general_settings_entry(UI_Thread_Params*);
 
 extern void sub_2343dd2c();
 extern void sub_2343deb4();
+
 

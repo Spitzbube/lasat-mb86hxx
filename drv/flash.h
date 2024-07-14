@@ -32,4 +32,8 @@ typedef struct
 	//0x134 = 308
 } Struct_235f2e2c;
 
+
+extern int flash_read(Struct_235f2e2c* r4, int r5, int r6, void* r7);
+
+
 #endif //DRV_FLASH

@@ -26,6 +26,34 @@ typedef struct
 Powermode_Data Data_2358be90; //2358be90
 
 
+/* 23412ea4 - todo */
+int powermode_get_state()
+{
+	uint8_t sp;
+	int r5;
+
+#if 0
+	console_send_string("powermode_get_state (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_2358be90.pSema, 0, &sp);
+
+	r5 = Data_2358be90.state;
+
+	sp = OSSemPost(Data_2358be90.pSema);
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "powermode_get_state: r5=%d\r\n", r5);
+		console_send_string(debug_string);
+	}
+#endif
+
+	return r5;
+}
+
+
 /* 23412fbc - todo */
 int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/)
 {
