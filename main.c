@@ -13,6 +13,9 @@ void main_powermode_init(void);
 void main_flash_init(void);
 void main_graphic_init(void);
 void sub_234011f4(void);
+void main_frontend_i2c_init(void);
+void main_frontend_init(void);
+
 
 
 /* 23400158 - todo */
@@ -43,8 +46,10 @@ int main_process_uart_command(uint8_t* r4)
 void startup_thread()
 {
 	main_powermode_init();
+	main_frontend_i2c_init();
 	main_flash_init();
 	sub_234011f4(); //channel???
+	main_frontend_init();
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();

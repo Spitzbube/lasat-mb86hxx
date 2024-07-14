@@ -11,12 +11,14 @@
 void sub_234096ec();
 void sub_23409e64();
 void sub_2340a190();
+#endif
 int sub_2340b55c();
+#if 0
 void sub_2340d300();
 #endif
 void sub_2344f79c();
-#if 0
 void sub_23459188();
+#if 0
 void videc_audcallback_h264();
 void videc_audcallback_mpeg();
 
@@ -55,12 +57,14 @@ int Data_23492000 = 0; //23492000 +4
 #endif
 int Data_23492004 = 0; //23492004 +8
 OS_EVENT* channel_sema/*sema*/ = 0; //23492008 +0x0c
-#if 0
 int (*Data_23492014)() = sub_2340b55c; //23492014 +0x18
+#if 0
 int (*Data_23492018)() = 0; //23492018 +0x1c
+#endif
 void (*Data_2349201c)() = 0; //2349201c / 234ac62c +0x20
 void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
+#if 0
 void (*Data_23492028)() = 0; //23492028 +0x2c
 void (*Data_2349202c)() = 0; //2349202c +0x30
 void (*Data_23492030)() = 0; //23492030 +0x34
@@ -1929,7 +1933,6 @@ void sub_2340aee4()
 
 }
 
-#if 0
 
  /* 2340b22c / 2340d534 - todo */
 int sub_2340b22c(int r4)
@@ -1978,6 +1981,9 @@ int sub_2340b22c(int r4)
 	else
 	{
 		//loc_2340b2b0
+#if 0
+		console_send_string("loc_2340b2b0 (PES / Section Filter): TODO!!!!!!!!!!!\r\n");
+
 		int r0 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
 
 		//memcpy(&sp_0x18, &Data_234fd8f0.Data_234fd8f0[r0], 0, 24);
@@ -1998,6 +2004,7 @@ int sub_2340b22c(int r4)
 		Data_235462e4.bData_235491de |= 0x40;
 
 		Data_23492024 = sub_234096ec;
+#endif
 	}
 	//loc_2340b334
 	OSSemPost(channel_sema);
@@ -2066,7 +2073,11 @@ int sub_2340b55c()
 
 	Data_235462e4.wData_235491d2 = 0;
 
+#if 0
 	sub_23410f64(r5, Data_235462e4.bData_235491dd);
+#else
+	console_send_string("sub_2340b55c (call sub_23410f64): TODO!!!!!!!!!\r\n");
+#endif
 
 	if ((sp_0x2c.Data_0.wData_6 >> 15) != 0)
 	{
@@ -2105,6 +2116,7 @@ int sub_2340b55c()
 	return 0;
 }
 
+#if 0
 
 /* 2340b684 / 2340d98c - todo */
 void sub_2340b684(Struct_234a73e8* a)
@@ -2362,6 +2374,7 @@ uint16_t channel_swap()
 	return Data_235462e4.currentChannel;
 }
 
+#endif
 
 /* 2340be58 / 2340e0e0 - todo */
 void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
@@ -2406,13 +2419,15 @@ void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
 void sub_2340bf0c(Struct_2340bf0c* r6)
 {
 	Struct_2340bf0c sp4;
-	uint32_t r5;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("sub_2340bf0c (todo.c): TODO\r\n");
 #endif
 
-	r5 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	int r4 = Data_235462e4.currentChannel;
 
@@ -2423,22 +2438,25 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 	sp4.bData_0x31 = Data_235462e4.bData_235491dc;
 	sp4.wData_0x2c = Data_235462e4.wData_235491d2;
 
-	FAMOS_LeaveCriticalSection(r5);
+	OS_EXIT_CRITICAL();
 
 	*r6 = sp4;
 }
 
+#if 0
 
 /* 2340bf94 / 2340e21c - todo */
 void sub_2340bf94(int r7, struct Struct_234fd8f0_Inner0* r6, Struct_235fdfac* r4)
 {
-	uint32_t r5;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("sub_2340bf94 (todo.c): TODO\r\n");
 #endif
 
-	r5 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	*r6 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[r7] ];
 
@@ -2460,7 +2478,7 @@ void sub_2340bf94(int r7, struct Struct_234fd8f0_Inner0* r6, Struct_235fdfac* r4
 	}
 #endif
 	//loc_2340c010
-	FAMOS_LeaveCriticalSection(r5);
+	OS_EXIT_CRITICAL();
 }
 
 
@@ -2685,13 +2703,15 @@ int sub_2340c9b0(int get, struct Struct_23546128* r4)
 /* 2340ca1c - complete */
 int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 {
-	uint32_t r5;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("sub_2340ca5c (todo.c): TODO\r\n");
 #endif
 
-	r5 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	if (r4 != 0)
 	{
@@ -2702,7 +2722,7 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 		memcpy(&Data_234fd8f0.Data_235462cc, r6, 20);
 	}
 
-	FAMOS_LeaveCriticalSection(r5);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }

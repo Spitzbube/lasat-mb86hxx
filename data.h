@@ -10,9 +10,15 @@
 #include "memblk.h"
 #include "flash.h"
 #include "sub_23438084.h"
+#include "sub_2340a6a0.h"
+#include "frontend.h"
 
 
+
+extern void* main_hI2c0; //23491d98 +12 = 0xc
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
+extern Struct_2354dd70* Data_23491db4; //23491db4 +40 = 0x28 //Data_234ac4e8
+extern Struct_2354dd70* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 
 extern Struct_23438084* Data_23491dc8; //23491dc8 +0x3c

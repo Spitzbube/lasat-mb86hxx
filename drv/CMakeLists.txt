@@ -9,6 +9,7 @@ set (
    timer.c
    ir.c
    flash.c
+   i2c.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

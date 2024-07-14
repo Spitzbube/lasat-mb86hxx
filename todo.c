@@ -328,4 +328,146 @@ void sub_2346f77e()
 }
 
 
+void sub_23444da8()
+{
+	console_send_string("sub_23444da8 (todo.c): TODO\r\n");
+}
+
+
+void sub_234483e8()
+{
+	console_send_string("sub_234483e8 (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2344a9d2()
+{
+	console_send_string("sub_2344a9d2 (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2344b04c()
+{
+	console_send_string("sub_2344b04c (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2344a888()
+{
+	console_send_string("sub_2344a888 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234743ba - todo */
+void sub_234743ba()
+{
+	console_send_string("sub_234743ba (todo.c): TODO\r\n");
+
+}
+
+
+/* 23475854 - todo */
+void sub_23475854()
+{
+	console_send_string("sub_23475854 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23444856 - todo */
+void sub_23444856()
+{
+	console_send_string("sub_23444856 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234445ae - todo */
+void sub_234445ae()
+{
+	console_send_string("sub_234445ae (todo.c): TODO\r\n");
+
+}
+
+
+/* 234430c0 - todo */
+void sub_234430c0()
+{
+	console_send_string("sub_234430c0 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2344392a - todo */
+void sub_2344392a()
+{
+	console_send_string("sub_2344392a (todo.c): TODO\r\n");
+
+}
+
+
+/* 23443e82 - todo */
+void sub_23443e82()
+{
+	console_send_string("sub_23443e82 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23443d00 - todo */
+void sub_23443d00()
+{
+	console_send_string("sub_23443d00 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2344433c - todo */
+void sub_2344433c()
+{
+	console_send_string("sub_2344433c (todo.c): TODO\r\n");
+
+}
+
+
+/* 23447d1c - todo */
+void sub_23447d1c(/*Struct_23443080*/void* a)
+{
+	console_send_string("sub_23447d1c (todo.c): TODO\r\n");
+
+}
+
+
+void sub_23402d0c()
+{
+	console_send_string("sub_23402d0c (todo.c): TODO\r\n");
+
+}
+
+void sub_23403160()
+{
+	console_send_string("sub_23403160 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23459098 - todo */
+void sub_23459098()
+{
+	console_send_string("sub_23459098 (todo.c): TODO\r\n");
+
+}
+
+ 
+/* 23459188 - todo */
+void sub_23459188()
+{
+	console_send_string("sub_23459188 (todo.c): TODO\r\n");
+
+}
+
 

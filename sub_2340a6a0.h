@@ -1,4 +1,6 @@
 
+#ifndef SUB_2340a6a0
+#define SUB_2340a6a0
 
 typedef struct
 {
@@ -198,5 +200,21 @@ typedef struct
 } Struct_234fd8f0;
 
 
-extern int sub_2340c970(int get, Struct_235441b0*);
+typedef struct
+{
+	struct Struct_234fd8f0_Inner0 Data_0; //0
+	uint16_t wData_0x28; //0x28 = 40
+	uint16_t wData_0x2a; //0x2a = 42
+	uint16_t wData_0x2c; //0x2c
+	uint16_t fill_0x2e; //0x2e
+	uint8_t bData_0x30; //0x30
+	uint8_t bData_0x31; //0x31
+	//0x32 = 50
+} Struct_2340bf0c;
 
+
+
+extern int sub_2340c970(int get, Struct_235441b0*);
+extern void sub_2340bf0c(Struct_2340bf0c*);
+
+#endif //SUB_2340a6a0
