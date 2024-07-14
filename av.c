@@ -21,7 +21,9 @@ struct Struct_2358bda4
 	int Data_16; //16
 	int Data_20; //20
 	int Data_24; //24
+#endif
 	int Data_28; //28
+#if 0
 	int Data_32; //32
 	int fill_36; //36 = 0x24
 	int Data_0x28; //40 = 0x28
@@ -280,4 +282,22 @@ int av_get_language()
 
 	return 0;
 }
+
+
+/* 23411550 - complete */
+void sub_23411550()
+{
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_23411550 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &sp);
+
+	Data_2358bda4.Data_28 = 1;
+
+	OSSemPost(Data_23492098);
+}
+
 

@@ -197,3 +197,6 @@ typedef struct
 	//0x489f4???? -> 235462E4
 } Struct_234fd8f0;
 
+
+extern int sub_2340c970(int get, Struct_235441b0*);
+

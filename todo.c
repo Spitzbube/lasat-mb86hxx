@@ -321,4 +321,11 @@ void sub_2343deb4()
 }
 
 
+void sub_2346f77e()
+{
+	console_send_string("sub_2346f77e (todo.c): TODO\r\n");
+	
+}
+
+
 

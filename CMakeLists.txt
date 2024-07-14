@@ -28,6 +28,7 @@ set(SRCS
    sub_23438084.c
    sub_2340a6a0.c
    crc.c
+   sub_2346fac4.c
    sub_23470890.c
    hexdump.c
    todo.c

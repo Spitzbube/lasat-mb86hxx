@@ -619,7 +619,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 	if (menu_stack_level == 0)
 	{
-		sub_2346f708();
+		menu_root_start();
 	}
 
 	while (1)
@@ -679,7 +679,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 #endif
 			if (menu_stack_level == 0)
 			{
-				sub_2346f708();
+				menu_root_start();
 
 				r0 = menu_stack[menu_stack_level]->Data_4;
 			}
