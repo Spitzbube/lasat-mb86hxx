@@ -4,7 +4,7 @@
 
 extern void sub_23400510(int); //main
 
-volatile uint8_t bData_234920c8 = 0; //234920c8
+static volatile uint8_t powermode_shutdown_frontend_finished = 0; //234920c8
 
 
 typedef struct
@@ -51,6 +51,75 @@ int powermode_get_state()
 #endif
 
 	return r5;
+}
+
+
+/* 23412ed4 - todo */
+static int powermode_shutdown_frontend_callback()
+{
+#if 1
+	console_send_string("powermode_shutdown_frontend_callback (todo.c): TODO\r\n");
+#endif
+
+	powermode_shutdown_frontend_finished = 1;
+
+	return 0;
+}
+
+
+/* 23412ee8 - todo */
+void powermode_shutdown_frontend(Struct_2354dd70* a)
+{
+	if (a != 0)
+	{
+		uint32_t wait = 100;
+
+		powermode_shutdown_frontend_finished = 0;
+
+		if (0 != fe_manager_shutdown(a, 1, powermode_shutdown_frontend_callback))
+		{
+			return;
+		}
+		//->loc_23412f30
+		while (wait-- > 0)
+		{
+			//loc_23412f1c
+			if (powermode_shutdown_frontend_finished != 0)
+			{
+				break;
+			}
+
+			rtos_task_wait(3);
+		}
+	}
+}
+
+
+/* 23412f3c - complete */
+void powermode_save_lastmode(int r7)
+{
+	Struct_234011f4 sp;
+	uint32_t oldCrc;
+
+	sub_23438084(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+
+	oldCrc = sp.crc;
+	sp.crc = 0;
+
+	if (oldCrc == crc32((void*) &sp, sizeof(Struct_234011f4)))
+	{
+		sp.crc = 0;
+#if 1
+		sp.bData_14 = (sp.bData_14 & ~0x0f) | (r7 & 0x0f);
+#else
+		sp.bData_14_0 = r7;
+#endif
+
+		sp.crc = crc32((void*) &sp, sizeof(Struct_234011f4));
+
+		sub_23438108(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+	}
+	//loc_23412fb8
 }
 
 
@@ -142,17 +211,13 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 				ui_thread_create(r4);
 			}
 
-#if 0
-			sub_23412f3c(1);
-#endif
+			powermode_save_lastmode(1);
 		}
 		break;
 
 	case 2:
 		//loc_23413040 -> Switch Off
-#if 0
-		sub_23412f3c(2);
-#endif
+		powermode_save_lastmode(2);
 
 		Data_2358be90.state = 2;
 
@@ -196,12 +261,10 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 #endif
 		{
 			//loc_234130d8
-#if 0
-			sub_23412f3c(3);
+			powermode_save_lastmode(3);
 
-			sub_23412ee8(Data_23491db4);
-			sub_23412ee8(Data_23491db8);
-#endif
+			powermode_shutdown_frontend(main_hFrontend1);
+			powermode_shutdown_frontend(Data_23491db8);
 
 			sub_23400510(1);
 
@@ -229,12 +292,12 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 
 	case 3:
 		//loc_234130d8
+		powermode_save_lastmode(3);
+
+		powermode_shutdown_frontend(main_hFrontend1);
+		powermode_shutdown_frontend(Data_23491db8);
+
 #if 0
-		sub_23412f3c(3);
-
-		sub_23412ee8(Data_23491db4);
-		sub_23412ee8(Data_23491db8);
-
 		sub_23400510(1);
 
 		sub_23439d06(1);
@@ -372,6 +435,25 @@ int sub_23413310(void* r5, void* r6)
 
 	Data_2358be90.Data_4 = r5;
 	Data_2358be90.Data_8 = r6;
+
+	err = OSSemPost(Data_2358be90.pSema);
+
+	return 0;
+}
+
+
+/* 23413358 - todo */
+int sub_23413358(void* r5, void* r6)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_23413358 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_2358be90.pSema, 0, &err);
+
+	Data_2358be90.Data_28 = 1;
 
 	err = OSSemPost(Data_2358be90.pSema);
 

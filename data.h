@@ -17,7 +17,7 @@
 
 extern void* main_hI2c0; //23491d98 +12 = 0xc
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
-extern Struct_2354dd70* Data_23491db4; //23491db4 +40 = 0x28 //Data_234ac4e8
+extern Struct_2354dd70* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8
 extern Struct_2354dd70* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 
@@ -26,10 +26,18 @@ extern Struct_23438084* Data_23491dc8; //23491dc8 +0x3c
 
 typedef struct
 {
-	int crc; //0
-	int fill_4[2]; //4
-	uint16_t wData_12; //12
+	uint32_t crc; //0
+	uint16_t currentChannel; //4
+	uint16_t prevChannel; //6
+	uint16_t wData_8; //8
+	uint16_t wData_10; //10
+	uint8_t bData_12; //12
+	uint8_t bData_13; //13
+#if 1
 	uint8_t bData_14; //14
+#else
+	uint32_t bData_14_0: 4; //14 Bit0...3
+#endif
 	uint8_t bData_15; //15
 	//16
 } Struct_234011f4;

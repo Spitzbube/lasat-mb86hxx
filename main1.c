@@ -12,6 +12,8 @@
 #include "sub_2340a6a0.h"
 #include "frontend.h"
 #include "fe_manager.h"
+#include "bm.h"
+#include "tsd.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -21,7 +23,7 @@ uint8_t bData_23491d8c = 0; //23491d8c +0
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
-Struct_2354dd70* Data_23491db4 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
+Struct_2354dd70* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
 Struct_2354dd70* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
@@ -74,15 +76,6 @@ void main_frontend_i2c_init()
 	Struct_20401328 gpioParams;
 	uint32_t i = 2;
 
-#if 0
-	i2cParams.bData_0 = 0; // I2C0
-	i2cParams.bData_1 = 0;
-	i2cParams.clkPin = 25;
-	i2cParams.dataPin = 24;
-
-	i2c_open(&i2cParams, &main_hI2c0);
-#endif
-
 	gpioParams.dwInFunction = 0xff;
 	gpioParams.dwOutFunction = 0;
 
@@ -90,14 +83,6 @@ void main_frontend_i2c_init()
 	{
 		//loc_234005a4
 		gpioParams.bPin = Data_23491df4[i].pin;
-
-#if 0
-		{
-			char str[40];
-			sprintf(str, "main_frontend_i2c_init: i=%d, pin=%d\r\n", i, gpioParams.bPin);
-			console_send_string(str);
-		}
-#endif
 
 		gpio_open(&gpioParams, &hGpio);
 
@@ -109,54 +94,15 @@ void main_frontend_i2c_init()
 
 		gpio_set(hGpio, 1);
 
-#if 0
-//		rtos_task_wait((uint16_t)Data_23491df4[i].delay);
-		{
-			uint8_t rxData[1];
-			uint8_t* pRxData = &rxData[0];
-			int numRxBytes = sizeof(rxData);
-			uint16_t wTxData = 0;
-
-			for (uint8_t addr = 0x30; addr < 0x31; addr++)
-			{
-				int res = i2c_master_read_reg(main_hI2c0, addr, wTxData, pRxData, numRxBytes);
-
-				extern char debug_string[];
-				sprintf(debug_string, "main_frontend_i2c_init: addr=0x%x, res=%d\r\n", addr, res);
-				console_send_string(debug_string);
-			}
-		}
-#endif
-
 		gpio_close(hGpio);
 	}
 	//0x23400608
-#if 1 //orig
 	i2cParams.bData_0 = 0; // I2C0
 	i2cParams.bData_1 = 0;
 	i2cParams.clkPin = 25;
 	i2cParams.dataPin = 24;
 
 	i2c_open(&i2cParams, &main_hI2c0);
-#endif
-
-#if 0
-	{
-		uint8_t rxData[1];
-		uint8_t* pRxData = &rxData[0];
-		int numRxBytes = sizeof(rxData);
-		uint16_t wTxData = 0;
-
-		for (uint8_t addr = 0x30; addr < 0x31; addr++)
-		{
-			int res = i2c_master_read_reg(main_hI2c0, addr, wTxData, pRxData, numRxBytes);
-
-			extern char debug_string[];
-			sprintf(debug_string, "main_frontend_i2c_init: addr=0x%x, res=%d\r\n", addr, res);
-			console_send_string(debug_string);
-		}
-	}
-#endif
 }
 
 
@@ -332,6 +278,88 @@ void main_inputhandler_init()
 }
 
 
+/* 23400a8c / 2340154c - todo */
+void main_tsd_bm_init()
+{
+	TSD_InitParams sp_0x1c;
+
+	Struct_2342c4f8_Inner8 sp_0x14;
+
+	Struct_2342c4f8 sp4;
+
+	bm_init();
+
+	memset(&sp_0x1c, 0, sizeof(sp_0x1c));
+
+	memset(&sp4, 0, sizeof(sp4));
+
+	sp_0x1c.wData_0 = 0x24;
+	sp_0x1c.wData_2 = 0x23;
+	sp_0x1c.wData_4 = 0x26;
+	sp_0x1c.wData_6 = 0x1a;
+	sp_0x1c.wData_8 = 0x1c;
+	sp_0x1c.wData_10 = 0x1b;
+	sp_0x1c.wData_12 = 0x1d;
+	sp_0x1c.wData_14 = 0x1f;
+	sp_0x1c.wData_16 = 0x1e;
+	sp_0x1c.wData_18 = 0x22;
+	sp_0x1c.wData_20 = 0x25;
+	sp_0x1c.wData_24 = 0x38;
+	sp_0x1c.wData_26 = 0x3d;
+	sp_0x1c.wData_28 = 0x3c;
+	sp_0x1c.wData_30 = 0x33;
+	sp_0x1c.wData_32 = 0x34;
+	sp_0x1c.wData_34 = 0x30;
+	sp_0x1c.wData_36 = 0x31;
+	sp_0x1c.wData_38 = 0x32;
+	sp_0x1c.wData_40 = 0x35;
+	sp_0x1c.wData_42 = 0x36;
+	sp_0x1c.wData_44 = 0x37;
+	sp_0x1c.wData_48 = 0x4C;
+	sp_0x1c.wData_50 = 0x47;
+	sp_0x1c.wData_52 = 0x46;
+	sp_0x1c.wData_54 = 0x4b;
+	sp_0x1c.wData_56 = 0x4a;
+	sp_0x1c.wData_58 = 0x4e;
+	sp_0x1c.wData_60 = 0x44;
+	sp_0x1c.wData_62 = 0x4d;
+	sp_0x1c.wData_64 = 0x49;
+	sp_0x1c.wData_66 = 0x45;
+	sp_0x1c.wData_68 = 0x48;
+
+	tsd_init(&sp_0x1c);
+
+	sp_0x14.Data_4;
+	sp_0x14.Data_4 = 0x30;
+	sp_0x14.Data_0 = 0; //r4
+
+	sp4.Data_0 = 0; //r4
+	sp4.Data_4 = 1; //r5
+	sp4.Data_8 = &sp_0x14;
+	sp4.Data_12 = 0; //r4
+
+	sub_2342c4f8(&sp4);
+
+	sp4.Data_0 = 2;
+	sp4.Data_4 = 0; //r4
+
+	sp_0x14.Data_0 = 1; //r5
+
+	sub_2342c4f8(&sp4);
+
+	sp4.Data_0 = 3;
+	sp4.Data_4 = 0; //r4
+
+	sp_0x14.Data_0 = 1; //r5
+
+	sub_2342c4f8(&sp4);
+
+#if 0
+	sub_23435fc4(); //-> dpll.c / sync.c
+#endif
+}
+
+
 #if 1
 extern int sub_23401e92(uint8_t, uint8_t);
 extern int sub_23401ea4(Struct_2340e754*, int);
@@ -377,12 +405,7 @@ void main_frontend_init()
 {
 	typedef int (*func)();
 
-	struct
-	{
-		int fill_0[4]; //0
-		int Data_16; //16
-
-	} sp_0x94;
+	Struct_235441b0 sp_0x94;
 	fe_manager_Params sp_0x90;
 	Struct_2340e754 sp_0x7c;
 #if 0
@@ -469,8 +492,8 @@ void main_frontend_init()
 	sp_0xd0.bData_16 = 0xff;
 	sp_0xd0.hI2c = main_hI2c0;
 	//r4 = 0xff
-	Data_23491db4 = (void*) fe_manager_detect(&sp_0xd0, &sp_0x38[0]);
-	if (Data_23491db4 != 0)
+	main_hFrontend1 = (void*) fe_manager_detect(&sp_0xd0, &sp_0x38[0]);
+	if (main_hFrontend1 != 0)
 	{
 		//->loc_23401d20
 		sub_2340c970(1, &sp_0xe8);
@@ -500,14 +523,14 @@ void main_frontend_init()
 	sp_0x7c.bData_16 = 0xff;
 	sp_0x7c.hI2c = main_hI2c0;
 
-	Data_23491db4 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x50);
+	main_hFrontend1 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x50);
 
-	if (Data_23491db4 == 0)
+	if (main_hFrontend1 == 0)
 	{
 		//0x23401044
 		sp_0x7c.bData_9 = 0xd4;
 
-		Data_23491db4 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x50);
+		main_hFrontend1 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x50);
 	}
 #endif
 	{
@@ -543,7 +566,7 @@ void main_frontend_init()
 		/*Data_23491d8c.Data_0x2c*/Data_23491db8 = (void*) fe_manager_detect(&sp_0x7c, &sp4);
 #endif
 
-		if (Data_23491db4 == 0)
+		if (main_hFrontend1 == 0)
 		{
 			//0x234010c4
 #if 1 // Try FE type 3 with sp_0x30
@@ -560,20 +583,20 @@ void main_frontend_init()
 			sp_0x7c.bData_16 = 0xff;
 			sp_0x7c.hI2c = main_hI2c0;
 
-			Data_23491db4 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x30);
+			main_hFrontend1 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x30);
 
-			if (Data_23491db4 != 0)
+			if (main_hFrontend1 != 0)
 			{
 				//loc_2340111c
-				sub_2340c970(1, &sp_0x94);
+				sub_2340c970(1, &sp_0x94); //Get the settings
 
-				if (sp_0x94.Data_16 & 0x80)
+				if (sp_0x94.Data_0x10 & (1 << 7)) //Channel list update enabled?
 				{
-					sub_23413310(sub_2343dd2c, sub_2343deb4);
+					sub_23413310(sub_2343dd2c, sub_2343deb4); //->powermode.c
 				}
 				//loc_2340113c
 				return;
-			} //if (Data_23491db4 != 0)
+			} //if (main_hFrontend1 != 0)
 			else
 #endif
 			{
@@ -599,20 +622,18 @@ void main_frontend_init()
 					//loc_23401188
 					sp_0x7c.bData_8 = sp_0x2c[r4];
 
-					Data_23491db4 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x30);
+					main_hFrontend1 = (void*) fe_manager_detect(&sp_0x7c, &sp_0x30);
 
-					if (Data_23491db4 != 0)
+					if (main_hFrontend1 != 0)
 					{
-#if 0
 						sub_23413358();
 						//->loc_2340111c
-						sub_2340c970(1, &sp_0x94);
+						sub_2340c970(1, &sp_0x94); //Get the settings
 
-						if (sp_0x94.Data_16 & 0x80)
+						if (sp_0x94.Data_0x10 & (1<< 7)) //Channel list update enabled?
 						{
 							sub_23413310(sub_2343dd2c, sub_2343deb4);
 						}
-#endif
 						//loc_2340113c
 						return;
 					}
@@ -621,9 +642,9 @@ void main_frontend_init()
 				//loc_234011c0
 #endif
 			}
-		} //if (Data_23491db4 == 0)
+		} //if (main_hFrontend1 == 0)
 		//loc_234011c0
-		if ((Data_23491db4 == 0) && (/*Data_23491d8c.Data_0x2c*/Data_23491db8 == 0))
+		if ((main_hFrontend1 == 0) && (/*Data_23491d8c.Data_0x2c*/Data_23491db8 == 0))
 		{
 			//0x234011cc
 #if 0 // Try FE type 5
@@ -632,7 +653,7 @@ void main_frontend_init()
 			sp_0x7c.bData_17 = 0xff;
 			sp_0x7c.bData_15 = 0xff;
 
-			Data_23491db4 = (void*) fe_manager_detect(&sp_0x7c, 0);
+			main_hFrontend1 = (void*) fe_manager_detect(&sp_0x7c, 0);
 #endif
 		}
 	}
@@ -781,6 +802,47 @@ void main_frontpanel_init()
 	vfd_init(&vfdParams);
 
 	frontdisplay_init();
+}
+
+
+/* 23401748 - todo */
+void main_set_power_mode()
+{
+	uint8_t sp_0x10;
+	Struct_234011f4 sp;
+
+#if 0
+	console_send_string("main_set_power_mode (main.c)\r\n");
+#endif
+
+	rtos_task_wait(10);
+
+	if (0 == sub_23418e1c(&sp_0x10))
+	{
+		uint32_t r0 = sub_23418e98();
+
+		if ((r0 >= 3) && ((sp_0x10 & 0x40) == 0))
+		{
+			sub_23438084(Data_23491dc8, &sp, 0, sizeof(sp));
+
+			if (((sp.bData_14 & 0x0f) == 0x01) ||
+					((~sp.bData_14 & 0x0f) == 0))
+			{
+				//loc_234017b8
+				powermode_set_state(1, 0, 0);
+			}
+			else
+			{
+				powermode_set_state(2, 0, 0);
+			}
+		}
+		else
+		{
+			//loc_234017b8
+			powermode_set_state(1, 0, 0);
+		}
+	}
+	//loc_234017c8
 }
 
 

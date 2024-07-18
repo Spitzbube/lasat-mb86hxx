@@ -1529,17 +1529,7 @@ int sub_2340a794()
 {
 	void* sp_0x18;
 	uint8_t sp_0x14;
-	struct
-	{
-		int Data_0; //0
-		int16_t wData_4; //4
-		int16_t wData_6; //6
-		uint16_t wData_8; //8
-		uint16_t wData_10; //10
-		uint8_t bData_12; //12
-		uint8_t bData_13; //13
-		//16 = 0x10
-	} sp4;
+	Struct_234011f4 sp4;
 
 	int* sp;
 
@@ -1569,11 +1559,11 @@ int sub_2340a794()
 	Data_235462e4.bData_235491e0 = 0; //r7
 	Data_235462e4.bData_235491e1 = 0xff; //r0
 
-	sub_23438084(Data_23491dc8, &sp4, 0/*r7*/, 0x10);
+	sub_23438084(Data_23491dc8, &sp4, 0, sizeof(sp4));
 
-	int r8 = sp4.Data_0;
+	int r8 = sp4.crc;
 
-	sp4.Data_0 = 0; //r7
+	sp4.crc = 0; //r7
 
 	int r0 = crc32((void*) &sp4, 0x10);
 
@@ -1597,8 +1587,8 @@ int sub_2340a794()
 	if (r0 == r1)
 	{
 		//0x2340a840
-		Data_235462e4.currentChannel = sp4.wData_4;
-		Data_235462e4.prevChannel = sp4.wData_6;
+		Data_235462e4.currentChannel = sp4.currentChannel;
+		Data_235462e4.prevChannel = sp4.prevChannel;
 		Data_235462e4.wData_235491d4 = sp4.wData_8;
 		Data_235462e4.wData_235491d6 = sp4.wData_10;
 		Data_235462e4.bData_235491dc = sp4.bData_12;
@@ -1952,7 +1942,7 @@ int sub_2340b22c(int r4)
 	if (r4 == 0xff)
 	{
 		sub_2340ec54(Data_23491db8, 0);
-		sub_2340ec54(Data_23491db4, 0);
+		sub_2340ec54(main_hFrontend1, 0);
 	}
 	//loc_2340b260
 	OSSemPend(channel_sema, 0, &sp_0x40);
@@ -2090,7 +2080,7 @@ int sub_2340b55c()
 	{
 		//0x2340b604
 		sub_2340ec54(Data_23491db8, 0);
-		sub_2340ec54(Data_23491db4, 0);
+		sub_2340ec54(main_hFrontend1, 0);
 
 		sub_2345d710(/*0xffff*/r5 & (*((int*)&sp_0x2c.Data_0.wPcrPID)>>16)); //TODO!!!
 
@@ -2102,7 +2092,7 @@ int sub_2340b55c()
 		//loc_2340b634
 		if (sp_0x14.bData_0x16 == 0)
 		{
-			r4 = Data_23491db4;
+			r4 = main_hFrontend1;
 		}
 		else if (sp_0x14.bData_0x16 == 1)
 		{
@@ -2224,6 +2214,7 @@ int sub_2340baf0(int r7)
 	return 0;
 }
 
+#endif
 
 /* 2340bc38 / 2340dec4 - todo */
 int channel_next()
@@ -2236,7 +2227,7 @@ int channel_next()
 #endif
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2300,7 +2291,7 @@ int channel_prev()
 #endif
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2359,7 +2350,7 @@ uint16_t channel_swap()
 #endif
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2374,7 +2365,6 @@ uint16_t channel_swap()
 	return Data_235462e4.currentChannel;
 }
 
-#endif
 
 /* 2340be58 / 2340e0e0 - todo */
 void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
@@ -2386,7 +2376,7 @@ void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
 #endif
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &sp);
 
@@ -2556,6 +2546,52 @@ int sub_2340c01c(int r5, int r7)
 	return r4;
 }
 
+#endif
+
+/* 2340c0dc - todo */
+void sub_2340c0dc()
+{
+	Struct_234011f4 sp;
+	uint32_t crc;
+
+	if (Data_235462e4.numChannels != 0)
+	{
+		sub_23438084(Data_23491dc8, &sp, 0, sizeof(sp));
+
+		crc = sp.crc;
+		sp.crc = 0; //r7
+
+		uint32_t r0 = crc32(&sp, sizeof(sp));
+
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_2340c0dc: crc check r0=0x%x, crc=0x%x\r\n", r0, crc);
+			console_send_string(debug_string);
+		}
+#endif
+
+		if (r0 == crc)
+		{
+			sp.currentChannel = Data_235462e4.currentChannel;
+			sp.prevChannel = Data_235462e4.prevChannel;
+			sp.wData_8 = Data_235462e4.wData_235491d4;
+			sp.wData_10 = Data_235462e4.wData_235491d6;
+			sp.bData_12 = Data_235462e4.bData_235491dc;
+			sp.bData_13 = Data_235462e4.bData_235491dd;
+
+			sp.bData_15 = sub_2340c01c(0, 0);
+
+			sp.crc = 0;
+			sp.crc = crc32(&sp, sizeof(sp));
+
+			sub_23438108(Data_23491dc8, &sp, 0, sizeof(sp));
+		}
+	}
+	//loc_2340c198
+}
+
+#if 0
 
 /* 2340c368 - complete */
 int sub_2340c368(int get, int* r4)
@@ -2766,7 +2802,7 @@ int sub_2340caf0()
 	uint8_t sp;
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &sp);
 
@@ -2859,7 +2895,7 @@ int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
 	uint8_t sp_0x18;
 
 	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(Data_23491db4, 0);
+	sub_2340ec54(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &sp_0x18);
 
@@ -2876,7 +2912,7 @@ int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
 	{
 		if (r4->bData_0x16 == 0)
 		{
-			r6 = Data_23491db4;
+			r6 = main_hFrontend1;
 		}
 		else if (r4->bData_0x16 == 1)
 		{
@@ -2890,7 +2926,7 @@ int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
 		//loc_2340cf08
 		sub_2340eb74(Data_23491db8, *r4, 0, 0);
 
-		sub_2340eb74(Data_23491db4, *r4, sub_2340baf0, 0);
+		sub_2340eb74(main_hFrontend1, *r4, sub_2340baf0, 0);
 	}
 
 	OSSemPost(channel_sema);
@@ -3002,7 +3038,7 @@ void sub_2340d300()
 		if (audec_get_status(main_hAudec2) == -1)
 		{
 			sub_2340ec54(Data_23491db8, 0);
-			sub_2340ec54(Data_23491db4, 0);
+			sub_2340ec54(main_hFrontend1, 0);
 
 			OSSemPend(channel_sema, 0, &err);
 

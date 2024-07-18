@@ -7,11 +7,11 @@
 #pragma thumb
 
 #ifndef ROOT_MENU_STANDBY
-#define ROOT_MENU_STANDBY (2*60) //(12*60*60)/*3 hours?*/
+#define ROOT_MENU_STANDBY (12*60*60)/*3 hours?*/ //(2*60)
 #endif
 
 #ifndef ROOT_MENU_STANDBY_WARN
-#define ROOT_MENU_STANDBY_WARN (1*60) //(8*60)/*2 minutes?*/
+#define ROOT_MENU_STANDBY_WARN (8*60)/*2 minutes?*/ //(1*60)
 #endif
 
 int menu_root_on_event(void*);
@@ -210,6 +210,24 @@ int menu_root_on_exit(UI_Thread_Params* a)
 }
 
 
+/* 2346eeee - complete */
+static void* sub_2346eeee(int* a)
+{
+#if 0
+	console_send_string("sub_2346eeee (todo.c): TODO\r\n");
+#endif
+
+	(*a)--;
+
+	if (*a != 0)
+	{
+		return sub_2346eeee;
+	}
+	//loc_2346eefa
+	return 0;
+}
+
+
 /* 2346ef6c - todo */
 static void* standby_warn_timer_func(uint32_t* pCount)
 {
@@ -317,7 +335,7 @@ int menu_root_on_event(void* r0)
 	if (r0 == 0)
 	{
 		//0x2346f390: handle timeout
-#if 1
+#if 0
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "menu_root_on_event: Data_23495970.timerVal=%d, Data_23495970.timerFunc=%p\r\n",
@@ -538,7 +556,6 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f572
-#if 0
 		else if ((r7->keyCode == 32/*0x20*/) //Up
 				|| (r7->keyCode == 48/*0x30*/))
 		{
@@ -568,6 +585,7 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f59c
+#if 0
 		else if ((r7->keyCode == 17/*0x11*/) //Left
 				|| (r7->keyCode == 65/*0x41*/)) //Vol-
 		{
@@ -751,4 +769,18 @@ void sub_2346f75e()
 	console_send_string("sub_2346f75e (todo.c): TODO\r\n");
 
 }
+
+
+/* 2346f76c - complete */
+int sub_2346f76c()
+{
+#if 0
+	console_send_string("sub_2346f76c (todo.c): TODO\r\n");
+#endif
+
+	Data_23495970.timerVal = 10;
+	Data_23495970.timerFunc = sub_2346eeee;
+	Data_23495970.Data_2349597c = 0;
+}
+
 

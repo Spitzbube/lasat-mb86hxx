@@ -36,6 +36,7 @@ set(SRCS
    sub_2346fac4.c
    sub_23470890.c
    sub_2345d710.c
+   sub_23418e1c.c
    hexdump.c
    todo.c
 )

@@ -1,21 +1,7 @@
 
 #include "data.h"
 #include "ucos_ii.h"
-
-
-void main_base_init(void);
-void main_console_init(void);
-void main_usb_init(void);
-void main_network_init(void);
-void main_inputhandler_init(void);
-void main_frontpanel_init(void);
-void main_powermode_init(void);
-void main_flash_init(void);
-void main_graphic_init(void);
-void sub_234011f4(void);
-void main_frontend_i2c_init(void);
-void main_frontend_init(void);
-
+#include "startup.h"
 
 
 /* 23400158 - todo */
@@ -47,14 +33,16 @@ void startup_thread()
 {
 	main_powermode_init();
 	main_frontend_i2c_init();
+	main_tsd_bm_init();
 	main_flash_init();
 	sub_234011f4(); //channel???
 	main_frontend_init();
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();
-	main_usb_init();
 	inputhandler_register_uart_callback(main_process_uart_command);
+	main_usb_init();
+	main_set_power_mode();
 	main_inputhandler_init();
 
 	while (1)

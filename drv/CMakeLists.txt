@@ -10,6 +10,10 @@ set (
    ir.c
    flash.c
    i2c.c
+   clkpwr.c
+   bm.c
+   tsd.c
+   tsd_reg.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
@@ -19,3 +23,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
    ${ucos_ii_SOURCE_DIR}/Source
    ${ucos_ii_SOURCE_DIR}/Ports/ARM/Generic/RealView
 )
+
+add_definitions(
+#    --gnu
+    --c99
+#    -O2
+)
+

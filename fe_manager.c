@@ -87,7 +87,7 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 				r4->Data_0xa4, r4->Data_0xa8,
 				r4->Data_0xb0, r4->Data_0xac);
 
-#if 1
+#if 0
 		if (r4->bState != 0)
 		{
 			extern char debug_string[];
@@ -150,6 +150,15 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 			else
 			{
 				//0x2340df44
+#if 0
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "frontend_cable_thread_func: r8=%d, r4->bData_0x9c=%d\r\n", 
+							r8, r4->bData_0x9c);
+					console_send_string(debug_string);
+				}
+#endif
+
 				if (r8 != r4->bData_0x9c)
 				{
 					if (r4->bData_0x9c == 0)
@@ -174,7 +183,7 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 						}
 						//loc_2340dfb0
 					}
-				}
+				} //if (r8 != r4->bData_0x9c)
 				//loc_2340df8c
 				if (r4->bData_0x9c == 0)
 				{
@@ -934,21 +943,22 @@ int sub_2340ed18(Struct_235fdfac* r0)
 	return 4;
 }
 
+#endif
 
 /* 2340ed98 - complete */
-int sub_2340ed98(Struct_2354dd70* r4, int b, void (*func)())
+int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
 {
-	uint8_t sp;
+	uint8_t err;
 
 #if 1
-	console_send_string("sub_2340ed98 (filter_manager.c): complete\r\n");
+	console_send_string("fe_manager_shutdown (filter_manager.c): complete\r\n");
 #endif
 
 	if (r4 != 0)
 	{
-		OSSemPend(fe_manager_pSema, 0, &sp);
+		OSSemPend(fe_manager_pSema, 0, &err);
 
-		if (sp != 0)
+		if (err != 0)
 		{
 			return 0xff;
 		}
@@ -966,6 +976,7 @@ int sub_2340ed98(Struct_2354dd70* r4, int b, void (*func)())
 	return 0xff;
 }
 
+#if 0
 
 /* 2340ee34 - complete */
 int sub_2340ee34(Struct_2354dd70* p)

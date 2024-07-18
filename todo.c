@@ -471,3 +471,29 @@ void sub_23459188()
 }
 
 
+/* 2340c01c / 2340e43c - todo */
+int sub_2340c01c(int r5, int r7)
+{
+
+	console_send_string("sub_2340c01c (todo.c): TODO\r\n");
+}
+
+
+/* 2342a024 - todo */
+int sub_2342a024(int a, int b)
+{
+	console_send_string("sub_2342a024 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234357e4 / 23443838 - todo */
+void sync_PcrNotifier()
+{
+#if 1
+	console_send_string("sync_PcrNotifier (todo.c): TODO\r\n");
+#endif
+
+}
+
+
