@@ -12,6 +12,8 @@
 #include "sub_2340a6a0.h"
 #include "frontend.h"
 #include "fe_manager.h"
+#include "audec.h"
+#include "auout.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -29,6 +31,17 @@ MemBlk_Handle* main_hMemBlk1 = 0; //23491DBC +0x30
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
 Struct_23438084* Data_23491dc8 = 0; //23491dc8 +0x3c
+void* main_hPCR_TSD_Handle = 0; //23491dcc +0x40
+void* main_hPESParserAudio = 0; //23491dd0 +0x44
+void* main_hAuOut = 0; //23491dd4  +0x48
+void* main_hAudec2 = 0; //23491dd8 +0x4c
+void* main_hAudec1 = 0; //23491ddc +0x50
+void* main_hAudec0 = 0; //23491de0 +0x54
+void* main_hAudec4 = 0; //23491de4 +0x58
+void* main_hAudec5 = 0; //23491de8 +0x5c
+int Data_23491dec = 0; //23491dec +0x60
+void* main_hCurrentPCR_TSD_Handle = 0; //23491e08
+void* main_hPESParserVideo = 0; //23491e0c +0x80 / 234ac510
 
 
 struct
@@ -226,6 +239,85 @@ void main_console_init()
 #if 1
 	console_send_string(str);
 #endif
+}
+
+
+/* 23400768 / 234014c4 - complete */
+void main_audio_init()
+{
+	Struct_234298cc sp;
+
+	sp.pFlash = main_hFlash;
+	sp.Data_4 = 0x40200000;
+
+	audec_init(&sp);
+
+#if V241
+	aout_init(0x22fffc00);
+#else
+	aout_init( sub_234019e0(0x150) );
+#endif
+}
+
+
+/* 23400798 - todo */
+int sub_23400798()
+{
+#if 0
+	console_send_string("sub_23400798 (todo.c): TODO\r\n");
+#endif
+
+	Struct_23429ae8 sp8;
+	int sp4;
+
+	sp8.Data_0 = 1;
+	sp8.Data_4 = 16;
+	sp8.bmHandle = tsd_get_bm_handle(main_hPESParserAudio);
+	sp8.audioOutHandle = main_hAuOut;
+
+	if (0 == audec_open_decoder(&sp8, &main_hAudec1))
+	{
+		audec_get_status(main_hAudec1);
+	}
+
+	sp8.Data_0 = 2;
+
+	if (0 == audec_open_decoder(&sp8, &main_hAudec2))
+	{
+		audec_get_status(main_hAudec2);
+	}
+
+	sp8.Data_0 = 0;
+
+	if (0 == audec_open_decoder(&sp8, &main_hAudec0))
+	{
+		audec_get_status(main_hAudec0);
+	}
+
+	sp8.Data_0 = 4;
+
+	if (0 == audec_open_decoder(&sp8, &main_hAudec4))
+	{
+		audec_get_status(main_hAudec4);
+	}
+
+	sp8.Data_0 = 5;
+
+	if (0 == audec_open_decoder(&sp8, &main_hAudec5))
+	{
+		audec_get_status(main_hAudec5);
+	}
+
+	sp4 = sub_234019e0(0x104);
+
+	Data_23491dec = audec_set_params(&sp4);
+
+	if (Data_23491dec != 0)
+	{
+		sub_2341a744();
+	}
+
+	return 0;
 }
 
 
@@ -517,6 +609,109 @@ void main_psi_init()
 	sp4.size = 0x1db800;
 
 	main_hMemBlk1 = memblk_open(&sp4);
+}
+
+
+/* 23400e4c / 234028b4 - complete */
+int main_pes_init(void)
+{
+	TSD_PesParserParams sp_0x58;
+	AUOUT_OpenParams aoutParams;
+
+#if 0
+	console_send_string("main_pes_init (todo.c): TODO\r\n");
+#endif
+
+#if 0 //V241
+	sp_0x58.Data_4.pidChannel = 9;
+	sp_0x58.Data_0x38 = 0; //r4
+	sp_0x58.bData_0 = 0; //r4
+	sp_0x58.Data_4.bufferAddress = sub_2340199c(0x3ffc00);
+	sp_0x58.bData_1 = 0; //r4
+	sp_0x58.pid = 0; //r4
+	sp_0x58.Data_4.Data_4 = 0; //r4
+	sp_0x58.Data_4.bufferSize = 0x3ffc00; //r7
+	sp_0x58.Data_4.Data_0x14 = 1; //r5
+	sp_0x58.Data_4.Data_0x18 = 0; //r4
+	sp_0x58.Data_4.Data_0x1c = 0; //r4
+	sp_0x58.Data_4.handleOverflow = 0; //r4
+	sp_0x58.Data_4.Data_0x24 = 0; //r4
+	sp_0x58.Data_4.Data_0x28 = 0; //r4
+	sp_0x58.Data_4.Data_0x2c = 0; //r4
+	sp_0x58.Data_4.Data_0x30 = 0; //r4
+
+	tsd_open_pes_parser(&main_hPESParserVideo, &sp_0x58);
+#endif
+
+#if 1
+	sp_0x58.bData_0 = 0; //r4
+	sp_0x58.bData_1 = 0xff; //r6
+	sp_0x58.Data_4.pidChannel = 8;
+	sp_0x58.pid = 0; //r4
+	sp_0x58.Data_0x38 = 0; //r4
+	sp_0x58.Data_4.Data_4 = 0; //r4
+
+	sp_0x58.Data_4.bufferAddress = sub_2340199c(0x10000);
+	sp_0x58.Data_4.bufferSize = 0x10000; //r7
+	sp_0x58.Data_4.Data_0x14 = 1; //r8
+
+	sp_0x58.Data_4.Data_0x18 = 0; //r4
+	sp_0x58.Data_4.Data_0x1c = 0; //r4
+	sp_0x58.Data_4.handleOverflow = 0; //r4
+	sp_0x58.Data_4.Data_0x24 = 0; //r4
+	sp_0x58.Data_4.Data_0x28 = 0; //r4
+	sp_0x58.Data_4.Data_0x2c = 0; //r4
+	sp_0x58.Data_4.Data_0x30 = 0; //r4
+
+	tsd_open_pes_parser(&main_hPESParserAudio, &sp_0x58);
+#endif
+
+	if (main_hPESParserAudio != 0)
+	{
+		aoutParams.enableSPDIF = 1; //r8
+		aoutParams.spdifBufferAddress = sub_2340199c(0x20000);
+		aoutParams.spdifBufferSize = 0x20000; //r5
+		aoutParams.i2s0BufferAddress = sub_2340199c(0x20000);
+		aoutParams.i2s0BufferSize = 0x20000; //r5
+
+		aoutParams.speakerArr[1] = AUOUT_SPEAKER_RIGHT; //2;
+		aoutParams.speakerArr[2] = AUOUT_SPEAKER_UNDEF; //-1;
+		aoutParams.speakerArr[0] = AUOUT_SPEAKER_LEFT; //0; //r4
+
+		aoutParams.Data_0x4c = sub_23409770;
+		aoutParams.Data_0x50 = sub_23409788;
+
+		auout_open(&aoutParams, &main_hAuOut);
+
+		sub_23400798();
+
+		if (main_hPCR_TSD_Handle == 0)
+		{
+			sp_0x58.Data_4.Data_0x1c = 0; //r4
+			sp_0x58.Data_4.Data_4 = 0; //r4
+			sp_0x58.Data_4.Data_0 = 0x10000; //r7;
+			sp_0x58.Data_4.pidChannel = 18;
+			sp_0x58.Data_4.Data_0x14 = 1; //r8;
+			sp_0x58.Data_4.Data_0x18 = 0; //r4
+			sp_0x58.Data_4.handleOverflow = 0; //r4
+			sp_0x58.Data_4.Data_0x24 = 0; //r4
+			sp_0x58.Data_4.Data_0x28 = 0; //r4
+			sp_0x58.Data_4.Data_0x2c = 0; //r4
+			sp_0x58.Data_4.Data_0x30 = 0; //r4
+
+			sp_0x58.Data_4.bufferAddress = sub_2340199c(0x4000);
+			sp_0x58.Data_4.bufferSize = 0x4000;
+
+			sp_0x58.bData_0 = 0; //r4
+			sp_0x58.bData_1 = 0xff; //r6;
+			sp_0x58.pid = 0; //r4
+			sp_0x58.Data_0x38 = 0; //r4
+
+			tsd_open_pes_parser(&main_hPCR_TSD_Handle, &sp_0x58);
+		}
+	}
+	//23400F90
+	return 0;
 }
 
 

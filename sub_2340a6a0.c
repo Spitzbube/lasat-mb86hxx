@@ -3,13 +3,11 @@
 
 #include <stdint.h>
 #include "data.h"
+#include "auout.h"
 #include "sub_2340a6a0.h"
 
 
-#if 0
-
-void sub_234096ec();
-#endif
+void channel_stop();
 void sub_23409e64();
 #if 0
 void sub_2340a190();
@@ -24,6 +22,7 @@ void sub_23459188();
 void videc_audcallback_h264();
 void videc_audcallback_mpeg();
 
+#endif
 
 const uint8_t Data_23488068[] = //23488068
 {
@@ -33,6 +32,7 @@ const uint8_t Data_23488068[] = //23488068
 		0x9f, 0xaa, 0xb6, 0xc2, 0xce, 0xda, 0xe7, 0xf3, 0xff
 };
 
+#if 0
 
 typedef struct
 {
@@ -52,11 +52,11 @@ typedef struct
 	//8
 } Struct_23492040;
 
+#endif
 
 //0x23491ffc / 234ac60c
 uint8_t bData_23491ffc = 0; //23491ffc +0
 int Data_23492000 = 0; //23492000 +4
-#endif
 int Data_23492004 = 0; //23492004 +8
 OS_EVENT* channel_sema/*sema*/ = 0; //23492008 +0x0c
 int (*Data_23492014)() = sub_2340b55c; //23492014 +0x18
@@ -144,7 +144,6 @@ int sub_234085ac(uint8_t* a, uint8_t* b, int c)
 	return lr - c;
 }
 
-#if 0
 
 /* 2340956c / 2340b8d0 - complete */
 int channel_stop_audio()
@@ -160,7 +159,9 @@ int channel_stop_audio()
 
 	auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 0);
 
+#if 0
 	auout_stop_hdmi();
+#endif
 
 	audec_stop_decoder(main_hAudec2);
 	audec_stop_decoder(main_hAudec1);
@@ -182,6 +183,7 @@ int channel_stop_audio()
 	return 0;
 }
 
+#if 0
 
 /* 234095f4 / 2340b958 - complete */
 int channel_stop_video()
@@ -201,6 +203,7 @@ int channel_stop_video()
 	return 0;
 }
 
+#endif
 
 /* 23409628 / 2340b98c - todo */
 void channel_stop_pes()
@@ -218,12 +221,14 @@ void channel_stop_pes()
 	}
 #endif
 
+#if 0
 	if (Data_235462e4.bData_235491de & 1)
 	{
 		Data_235462e4.bData_235491de &= ~1;
 
 		channel_stop_video();
 	}
+#endif
 
 	if (Data_235462e4.bData_235491de & 2)
 	{
@@ -235,6 +240,7 @@ void channel_stop_pes()
 		sub_2342ba34(0);
 	}
 	//loc_23409664
+#if 0
 	if (Data_235462e4.bData_235491de & 8)
 	{
 		//Video Text
@@ -254,6 +260,7 @@ void channel_stop_pes()
 
 		sub_2345bb88();
 	}
+#endif
 	//r4 = 0;
 	if (main_hCurrentPCR_TSD_Handle != 0)
 	{
@@ -266,20 +273,24 @@ void channel_stop_pes()
 
 		main_hCurrentPCR_TSD_Handle = 0; //r4
 
+#if 0
 		sync_SetStcRegulation(r0, 0);
+#endif
 	}
 	//loc_234096e0
+#if 0
 	sub_2345ac28();
 
 	Data_2349202c = 0; //r4
+#endif
 }
 
 
 /* 234096ec / 2340ba50 - todo */
-void sub_234096ec()
+void channel_stop()
 {
 #if 0
-	console_send_string("sub_234096ec (todo.c): TODO\r\n");
+	console_send_string("channel_stop (todo.c): TODO\r\n");
 #endif
 
 	channel_stop_pes();
@@ -296,7 +307,7 @@ void sub_234096ec()
 
 
 /* 23409770 - complete */
-void sub_23409770()
+void sub_23409770(void)
 {
 #if 0
 	console_send_string("sub_23409770 (todo.c): TODO\r\n");
@@ -310,7 +321,7 @@ void sub_23409770()
 
 
 /* 23409788 - complete */
-void sub_23409788()
+void sub_23409788(void)
 {
 #if 0
 	console_send_string("sub_23409788 (todo.c): TODO\r\n");
@@ -323,6 +334,7 @@ void sub_23409788()
 	}
 }
 
+#if 0
 
 /* 234097f4 / 2340bb58 - complete */
 void sub_234097f4(int r5)
@@ -358,6 +370,7 @@ void sub_234097f4(int r5)
 	tsd_activate_pid_channel(main_hPESParserVideo);
 }
 
+#endif
 
 /* 2340988c / 2340bbf0 - complete */
 int channel_start_audio(uint16_t pid, void* hAudio)
@@ -366,7 +379,7 @@ int channel_start_audio(uint16_t pid, void* hAudio)
 	console_send_string("channel_start_audio (todo.c): TODO\r\n");
 #endif
 
-#if 0
+#if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "channel_start_audio: main_hPESParserAudio=%p, main_hAuOut=%p, pid=0x%x\r\n",
@@ -411,6 +424,7 @@ int channel_start_audio(uint16_t pid, void* hAudio)
 	return 0;
 }
 
+#if 0
 
 /* 23409928 / 2340bc8c - complete */
 int channel_start_video(int pid, int r4)
@@ -489,6 +503,7 @@ int channel_start_video(int pid, int r4)
 	return 0;
 }
 
+#endif
 
 /* 23409a6c - todo */
 void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/struct Struct_234fd8f0_Inner0 a)
@@ -526,7 +541,7 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 	}
 #endif
 
-
+#if 0
 //	int r1_ = a.Data_0.wData_2;
 //	uint16_t r8 = a.Data_0.wData_10;
 	if ((/*r8*/a.Data_0.wVideoPID != 0) &&
@@ -536,6 +551,7 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 
 		channel_start_video(/*r8*/a.Data_0.wVideoPID, a.Data_0.wData_2); //r1_);
 	}
+#endif
 	//loc_23409aa4
 //	int r0 = (a.Data_0.wData_2 >> 1) & 0x03;
 //	uint16_t r7 = a.Data_0.wData_12;
@@ -622,6 +638,7 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 		}
 	}
 	//loc_23409bd4
+#if 0
 	if (a.Data_0.wTtxPID != 0)
 	{
 		if ((Data_235462e4.bData_235491de & 8) == 0)
@@ -632,15 +649,21 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 			sub_23460b7c(a.Data_0.wTtxPID);
 		}
 	}
+#endif
 	//loc_23409bf4
+#if 0
 	if (main_hCurrentPCR_TSD_Handle != 0)
 	{
 		sync_SetStcRegulation(sb, 1);
 	}
+#endif
 
+#if 0
 	Data_2349202c = sub_2340a190;
+#endif
 }
 
+#if 0
 
 /* 23409c1c - todo */
 void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
@@ -1977,7 +2000,7 @@ int sub_2340b22c(int r4)
 	{
 		//loc_2340b2b0
 		console_send_string("loc_2340b2b0 (PES / Section Filter): TODO!!!!!!!!!!!\r\n");
-#if 0
+
 		int r0 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
 
 		//memcpy(&sp_0x18, &Data_234fd8f0.Data_234fd8f0[r0], 0, 24);
@@ -1987,6 +2010,7 @@ int sub_2340b22c(int r4)
 		//PES Parser (Audio, Video...)
 		sub_23409a6c(Data_234fd8f0.Data_234fd8f0[r0]/*Data_234fd8f0.Data_234fd8f0[r0].Data_0, Data_234fd8f0.Data_234fd8f0[r0].Data_0x10*/);
 
+#if 0
 		if (Data_2349201c != 0)
 		{
 			(Data_2349201c)(1);
@@ -1999,11 +2023,9 @@ int sub_2340b22c(int r4)
 			PSI_MASK_PAT | PSI_MASK_PMT | PSI_MASK_CAT | 0x08, //0x7f, 
 			sub_23409e64);
 
-#if 0
 		Data_235462e4.bData_235491de |= 0x40;
 
-		Data_23492024 = sub_234096ec;
-#endif
+		Data_23492024 = channel_stop;
 	}
 	//loc_2340b334
 	OSSemPost(channel_sema);
@@ -2106,7 +2128,7 @@ int sub_2340b55c()
 		}
 		//loc_2340b64c
 
-		sub_2340eb74(r4, sp_0x14, sub_2340b348, 0);
+		fe_manager_tune(r4, sp_0x14, sub_2340b348, 0);
 	}
 	//loc_2340b678
 	return 0;
@@ -2155,7 +2177,7 @@ void sub_2340b684(Struct_234a73e8* a)
 
 			sub_23409a6c(sp_0x1c);
 
-			Data_23492024 = sub_234096ec;
+			Data_23492024 = channel_stop;
 			//->loc_2340b744
 			break;
 		}
@@ -2925,14 +2947,14 @@ int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
 			r6 = Data_23491db8;
 		}
 
-		sub_2340eb74(r6, *r4, sub_2340baf0, 0);
+		fe_manager_tune(r6, *r4, sub_2340baf0, 0);
 	}
 	else
 	{
 		//loc_2340cf08
-		sub_2340eb74(Data_23491db8, *r4, 0, 0);
+		fe_manager_tune(Data_23491db8, *r4, 0, 0);
 
-		sub_2340eb74(main_hFrontend1, *r4, sub_2340baf0, 0);
+		fe_manager_tune(main_hFrontend1, *r4, sub_2340baf0, 0);
 	}
 
 	OSSemPost(channel_sema);

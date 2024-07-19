@@ -104,9 +104,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 
 			(r4->Data_0x30.Data_0x1c)(r4->Data_0x64.Data_0.Data_4);
 
-			if (r4->Data_0x54 != 0)
+			if (r4->stateChangeCallback != 0)
 			{
-				(r4->Data_0x54)(0, &r4->Data_0x64);
+				(r4->stateChangeCallback)(0, &r4->Data_0x64);
 			}
 
 			Data_23492084[r4->bData_0xd9] = 1; //r6
@@ -164,9 +164,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 					if (r4->bData_0x9c == 0)
 					{
 						//0x2340df58
-						if (r4->Data_0x54 != 0)
+						if (r4->stateChangeCallback != 0)
 						{
-							(r4->Data_0x54)(0x0f, &r4->Data_0x64);
+							(r4->stateChangeCallback)(0x0f, &r4->Data_0x64);
 							//loc_2340df8c
 						}
 						//loc_2340df98
@@ -176,9 +176,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 						//loc_2340df70
 						r4->wData_0xd4 = 5; //r5;
 
-						if (r4->Data_0x54 != 0)
+						if (r4->stateChangeCallback != 0)
 						{
-							(r4->Data_0x54)(0x00, &r4->Data_0x64);
+							(r4->stateChangeCallback)(0x00, &r4->Data_0x64);
 							//loc_2340df8c
 						}
 						//loc_2340dfb0
@@ -187,7 +187,7 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 				//loc_2340df8c
 				if (r4->bData_0x9c == 0)
 				{
-					//loc_2340df98
+					//loc_2340df98: Fall back to tune state after configured number of cycles
 					r4->wData_0xd4--;
 
 					if (r4->wData_0xd4 < 0)
@@ -730,7 +730,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 
 
 /* 2340eb74 / 23415a90 - todo */
-int sub_2340eb74(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*r6)(), uint16_t r7)
+int fe_manager_tune(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*callbackFunc/*r6*/)(), uint16_t r7)
 {
 //	int sp_0x24;
 	uint8_t err; //sp
@@ -739,7 +739,7 @@ int sub_2340eb74(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*r6)(), uin
 //	int r7 = sp_0x24.Data_4;
 
 #if 0
-	console_send_string("sub_2340eb74 (todo.c): TODO\r\n");
+	console_send_string("fe_manager_tune (todo.c): TODO\r\n");
 #endif
 
 	if (r4 == 0)
@@ -780,10 +780,10 @@ int sub_2340eb74(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*r6)(), uin
 		memcpy(&r4->Data_0x7c, &sp_0x24, sizeof(Struct_235fdfac));
 	}
 	//loc_2340ec28
-	Data_2354dd70[0].Data_0x54 = 0; //r8
-	Data_2354dd70[1].Data_0x54 = 0; //r8
+	Data_2354dd70[0].stateChangeCallback = 0; //r8
+	Data_2354dd70[1].stateChangeCallback = 0; //r8
 
-	r4->Data_0x54 = r6;
+	r4->stateChangeCallback = callbackFunc;
 	r4->wData_0xd4 = r7;
 
 	sub_23421a30(0, r4->Data_0x7c.bData_0x16);
@@ -809,7 +809,7 @@ int sub_2340ec54(Struct_2354dd70* r4, void (*func)())
 	{
 		OSSemPend(fe_manager_pSema, 0, &err);
 
-		r4->Data_0x54 = func;
+		r4->stateChangeCallback = func;
 
 		OSSemPost(fe_manager_pSema);
 	}
@@ -960,7 +960,7 @@ int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
 		}
 
 		r4->bState = 4;
-		r4->Data_0x54 = func;
+		r4->stateChangeCallback = func;
 
 		memset(&r4->Data_0x64, 0, sizeof(Struct_235fdfac));
 

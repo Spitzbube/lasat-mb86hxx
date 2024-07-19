@@ -216,5 +216,7 @@ typedef struct
 
 extern int sub_2340c970(int get, Struct_235441b0*);
 extern void sub_2340bf0c(Struct_2340bf0c*);
-
+extern void sub_23409770(void);
+extern void sub_23409788(void);
+ 
 #endif //SUB_2340a6a0

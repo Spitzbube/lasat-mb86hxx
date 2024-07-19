@@ -46,6 +46,8 @@ set(SRCS
    sub_2344ed20.c
    sub_23458874.c
    sub_23411b0c.c
+   sub_2341a744.c
+   audec.c
    hexdump.c
    todo.c
 )

@@ -28,7 +28,16 @@ extern MemBlk_Handle* main_hMemBlk1; //23491DBC +0x30
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 
 extern Struct_23438084* Data_23491dc8; //23491dc8 +0x3c
-
+extern void* main_hPCR_TSD_Handle; //23491dcc +0x40
+extern void* main_hPESParserAudio; //23491dd0 +0x44
+extern void* main_hAuOut; //23491dd4  +0x48
+extern void* main_hAudec2; //23491dd8 +0x4c
+extern void* main_hAudec1; //23491ddc +0x50
+extern void* main_hAudec0; //23491de0 +0x54
+extern void* main_hAudec4; //23491de4 +0x58
+extern void* main_hAudec5; //23491de8 +0x5c
+extern void* main_hCurrentPCR_TSD_Handle; //23491e08
+extern void* main_hPESParserVideo; //23491e0c +0x80 / 234ac510
 
 typedef struct
 {

@@ -36,7 +36,9 @@ void startup_thread()
 	main_tsd_bm_init();
 	main_psi_init();
 	main_flash_init();
+	main_audio_init();
 	sub_234011f4(); //channel???
+	main_pes_init();
 	main_frontend_init();
 	main_frontpanel_init();
 	main_graphic_init();

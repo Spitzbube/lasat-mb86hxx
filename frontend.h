@@ -30,7 +30,7 @@ typedef struct Struct_2354dd70
 		//0x20 = 32
 	} Data_0x30; //0x30
 	void (*threadFunc)(struct Struct_2354dd70*); //0x50 = 80
-	void (*Data_0x54)(); //0x54 = 84
+	void (*stateChangeCallback)(); //0x54 = 84
 	void (*Data_0x58)(struct Struct_2354dd70*); //0x58 = 88
 	void (*Data_0x5c)(); //0x5c
 	int (*Data_0x60)(); //0x60

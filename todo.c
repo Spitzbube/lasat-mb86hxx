@@ -554,3 +554,18 @@ void sub_2343ccee()
 }
 
 
+/* 2341e8dc - todo */
+void sub_2341e8dc()
+{
+	console_send_string("sub_2341e8dc (todo.c): TODO\r\n");
+
+}
+
+
+/* 2341e8b0 - todo */
+void sub_2341e8b0()
+{
+	console_send_string("sub_2341e8b0 (todo.c): TODO\r\n");
+
+}
+

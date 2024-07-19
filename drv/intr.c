@@ -1,6 +1,15 @@
 
 #include <stdint.h>
 #include "ucos_ii.h"
+#include "sys_services.h"
+
+
+int intr_pipeArmStatusHandle = 0; //2349228c
+int intr_pipeArmValueHandle = 0; //23492290 +4
+int Data_23492294 = 0; //23492294 +8
+int Data_23492298 = 0; //23492298 +12
+void (*intr_pipeCallbackFunction)(int) = 0; //2349229c +16
+
 
 typedef void (*ISR)(void);
 
@@ -13,6 +22,37 @@ void intr_set_isr(void (*a)(void), int b, int c)
 {
 	intr_arFuncs[c] = a;
 	Data_235b1ba4[c] = b;
+}
+
+
+/* 2341b2b0 - todo */
+int intr_isr31()
+{
+	int value; //r5
+
+#if 0
+	console_send_string("intr_isr31\r\n");
+#endif
+
+	if (1 == gpreg_read(intr_pipeArmStatusHandle))
+	{
+		*((volatile uint32_t*)0xcf000304) &= ~(1 << 31);
+
+		if (0 == gpreg_write(intr_pipeArmStatusHandle, 2))
+		{
+			value = gpreg_read(intr_pipeArmValueHandle);
+
+			if (0 == gpreg_write(intr_pipeArmValueHandle, 0))
+			{
+				if (intr_pipeCallbackFunction != 0)
+				{
+					(intr_pipeCallbackFunction)(value);
+				}
+			}
+		}
+	}
+	//loc_2341b31c
+	return 0;
 }
 
 
@@ -107,6 +147,141 @@ char sub_2341b3b8(uint32_t a, int b)
 	OS_EXIT_CRITICAL();
 
 	return 0;
+}
+
+
+/* 2341b43c - todo */
+void intr_init_irq31()
+{
+#if 0
+	console_send_string("intr_init_irq31 (todo.c): TODO\r\n");
+#endif
+
+	gpreg_open(2, &intr_pipeArmStatusHandle);
+	gpreg_open(3, &intr_pipeArmValueHandle);
+	gpreg_open(4, &Data_23492294);
+	gpreg_open(5, &Data_23492298);
+
+	intr_arFuncs[31] = intr_isr31;
+	Data_235b1ba4[31] = 0;
+
+	sub_2341b3b8(31, 0);
+
+	((volatile uint32_t*)0xe0000200)[31] = 0x0f; //VICVECTPRIORITYX
+}
+
+
+/* 2341b4a4 - complete */
+void intr_register_irq31_callback(void (*func)())
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+#if 0
+	console_send_string("intr_register_irq31_callback (todo.c): TODO\r\n");
+#endif
+
+	OS_ENTER_CRITICAL();
+
+	intr_pipeCallbackFunction = func;
+
+	OS_EXIT_CRITICAL();
+}
+
+
+/* 2341b4c0 - todo */
+int intr_write_pipe(int r4, int r1)
+{
+	uint32_t i;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+#if 0
+	console_send_string("intr_write_pipe (todo.c): TODO\r\n");
+#endif
+
+	if (r1 == 2)
+	{
+		if (0 != gpreg_write(Data_23492294, 1))
+		{
+			//->loc_2341b568
+			return 1;
+		}
+
+		if (0 != gpreg_write(Data_23492298, r4))
+		{
+			//->loc_2341b568
+			return 1;
+		}
+
+		OS_ENTER_CRITICAL();
+
+		*((volatile uint32_t*)0xcf000204) |= (1 << 31);
+
+		OS_EXIT_CRITICAL();
+
+		i = 0xfffff;
+		while (i--)
+		{
+			//loc_2341b518
+			if (2 == gpreg_read(Data_23492294))
+			{
+				OS_ENTER_CRITICAL();
+
+				*((volatile uint32_t*)0xcf000204) &= ~(1 << 31);
+
+				OS_EXIT_CRITICAL();
+
+				return 0;
+			}
+			//loc_2341b544
+		}
+		//0x2341b54c
+		OS_ENTER_CRITICAL();
+
+		*((volatile uint32_t*)0xcf000204) &= ~(1 << 31);
+
+		OS_EXIT_CRITICAL();
+
+		return 11;
+	}
+	else
+	{
+		//->loc_2341b568
+		return 1;
+	}
+}
+
+
+/* 2341b570 - todo */
+void sub_2341b570(int r4)
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+#if 0
+	console_send_string("sub_2341b570 (todo.c): TODO\r\n");
+#endif
+
+	OS_ENTER_CRITICAL();
+
+	int r1 = FREG(0xcf000304)[0];
+
+	if (r4 != 0)
+	{
+		r1 |= 0x800000;
+	}
+	else
+	{
+		r1 &= ~0x800000;
+	}
+
+	FREG(0xcf000304)[0] = r1;
+
+	OS_EXIT_CRITICAL();
 }
 
 
