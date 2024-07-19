@@ -12,8 +12,6 @@
 #include "sub_2340a6a0.h"
 #include "frontend.h"
 #include "fe_manager.h"
-#include "bm.h"
-#include "tsd.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -22,9 +20,12 @@ extern int main_process_uart_command(uint8_t*);
 uint8_t bData_23491d8c = 0; //23491d8c +0
 Uart_Module* main_hUart0 = 0; //23491d90 +4 
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
+Struct_234a73e8* main_hPSIDecoder1 = 0; //23491d9c / 234ac4d0 +16 = 0x10
+Struct_234a73e8* main_hPSIDecoder2 = 0; //23491da0 +20 = 0x14
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
 Struct_2354dd70* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
 Struct_2354dd70* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
+MemBlk_Handle* main_hMemBlk1 = 0; //23491DBC +0x30
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
 Struct_23438084* Data_23491dc8 = 0; //23491dc8 +0x3c
@@ -52,6 +53,53 @@ int sub_23400510(int a)
 	console_send_string(str);
 #endif
 	return 0;
+}
+
+
+/* 23400518 - complete */
+void sub_23400518()
+{
+#if 0
+	console_send_string("sub_23400518 (todo.c): TODO\r\n");
+#endif
+
+	/* empty */
+}
+
+
+/* 2340051c - complete */
+int sub_2340051c()
+{
+#if 0
+	console_send_string("sub_2340051c (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
+/* 2340052c - complete */
+void sub_2340052c()
+{
+#if 0
+	console_send_string("loc_2340052c (todo.c): TODO\r\n");
+#endif
+
+	/* empty */
+}
+
+
+/* 23400560 - todo */
+void main_on_new_psi_decoder1(Struct_234a73e8* h)
+{
+	main_hPSIDecoder1 = h;
+}
+
+
+/* 23400570 - todo */
+void main_on_new_psi_decoder2(Struct_234a73e8* h)
+{
+	main_hPSIDecoder2 = h;
 }
 
 
@@ -357,6 +405,118 @@ void main_tsd_bm_init()
 #if 0
 	sub_23435fc4(); //-> dpll.c / sync.c
 #endif
+}
+
+
+/* 23400c54 / 234016f0 - todo */
+void main_psi_init()
+{
+#if 0
+	struct
+	{
+		int fill_0[36]; //0
+		//0x90
+	} sp_0x14;
+
+	console_send_string("main_psi_init (todo.c): TODO\r\n");
+
+	memset(&sp_0x14, 0, 0x90);
+
+	sub_234063cc(0);
+
+	sub_2340199c(0x1000);
+
+	//TODO
+#endif
+
+	PSI_Params sp_0x14;
+	MemBlk_Params sp4;
+
+#if 0
+	console_send_string("main_psi_init (todo.c): TODO\r\n");
+#endif
+
+	memset(&sp_0x14, 0, sizeof(sp_0x14));
+
+	psi_init(0);
+
+	sp_0x14.onNewPSIDecoder = main_on_new_psi_decoder1;
+	sp_0x14.threadPrio = THREAD_PRIO_PSI_1;
+	sp_0x14.bufferParams.wData_0 = 0; //r6
+
+	sp_0x14.bufferParams.PAT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.PAT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.PMT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.PMT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.SDT_BAT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.SDT_BAT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.NIT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.NIT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.EIT_bufferAddress = sub_2340199c(0x4000);
+	sp_0x14.bufferParams.EIT_bufferSize = 0x4000; //r5
+	sp_0x14.bufferParams.TDT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.TDT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x24 = sub_2340199c(0x2000);
+	sp_0x14.bufferParams.Data_0x28 = 0x2000;
+	sp_0x14.bufferParams.Data_0x1c = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x20 = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x54 = sub_2340199c(0x4000);
+	sp_0x14.bufferParams.Data_0x58 = 0x4000; //r5
+	sp_0x14.bufferParams.Data_0x5c = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x60 = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x64 = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x68 = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x6c = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x70 = 0x1000; //r4
+
+	extern void sub_2343cb0e();
+	extern void sub_2343cc7c();
+	extern void sub_2343ccee();
+
+	sp_0x14.Data_0x7c = sub_2343cb0e;
+	sp_0x14.Data_0x88 = sub_2343cc7c; //r7
+	sp_0x14.Data_0x8c = sub_2343ccee;
+
+	psi_open(&sp_0x14);
+
+	while (main_hPSIDecoder1 == 0)
+	{
+		//sub_23400d7c
+		rtos_task_wait(1);
+	}
+	//0x23400d90
+	memset(&sp_0x14, 0, sizeof(sp_0x14));
+
+	sp_0x14.onNewPSIDecoder = main_on_new_psi_decoder2;
+	sp_0x14.threadPrio = THREAD_PRIO_PSI_2;
+	sp_0x14.bufferParams.wData_0 = 3;
+
+	sp_0x14.bufferParams.PAT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.PAT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.PMT_bufferAddress = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.PMT_bufferSize = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x5c = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x60 = 0x1000; //r4
+	sp_0x14.bufferParams.Data_0x64 = sub_2340199c(0x1000);
+	sp_0x14.bufferParams.Data_0x68 = 0x1000; //r4
+	sp_0x14.Data_0x80 = 0; //r6
+	sp_0x14.Data_0x84 = 0; //r6
+	sp_0x14.Data_0x7c = 0; //r6
+	sp_0x14.Data_0x88 = sub_2343cc7c; //r7
+	sp_0x14.Data_0x8c = 0; //r6
+
+	psi_open(&sp_0x14);
+
+	while (main_hPSIDecoder2 == 0)
+	{
+		//loc_23400e14
+		rtos_task_wait(1);
+	}
+	//0x23400e28
+	sp4.addr = sub_234019e0(0x1db800);
+	sp4.size = 0x1db800;
+
+	main_hMemBlk1 = memblk_open(&sp4);
 }
 
 

@@ -1,4 +1,6 @@
 
+#include <stdint.h>
+
 int Data_234911e0; //234911e0
 
 
@@ -493,6 +495,61 @@ void sync_PcrNotifier()
 #if 1
 	console_send_string("sync_PcrNotifier (todo.c): TODO\r\n");
 #endif
+
+}
+
+
+/* 23409148 - todo */
+void sub_23409148()
+{
+	console_send_string("sub_23409148 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234091ec - todo */
+void sub_234091ec()
+{
+	console_send_string("sub_234091ec (todo.c): TODO\r\n");
+
+}
+
+
+/* 2340925c - todo */
+void sub_2340925c(uint8_t* a, uint8_t b)
+{
+#if 0
+	console_send_string("sub_2340925c (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2340925c: b=%d, a='%s'\r\n", b, a);
+		console_send_string(debug_string);
+	}
+#endif
+
+}
+
+
+void sub_2343cb0e()
+{
+	console_send_string("sub_2343cb0e (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2343cc7c()
+{
+	console_send_string("sub_2343cc7c (todo.c): TODO\r\n");
+
+}
+
+
+void sub_2343ccee()
+{
+	console_send_string("sub_2343ccee (todo.c): TODO\r\n");
 
 }
 

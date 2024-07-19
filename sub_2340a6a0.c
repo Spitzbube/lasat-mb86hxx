@@ -9,7 +9,9 @@
 #if 0
 
 void sub_234096ec();
+#endif
 void sub_23409e64();
+#if 0
 void sub_2340a190();
 #endif
 int sub_2340b55c();
@@ -105,8 +107,6 @@ struct
 } Data_235462e4; //235462e4
 
 
-#if 0
-
 /* 234085ac - complete */
 int sub_234085ac(uint8_t* a, uint8_t* b, int c)
 {
@@ -144,6 +144,7 @@ int sub_234085ac(uint8_t* a, uint8_t* b, int c)
 	return lr - c;
 }
 
+#if 0
 
 /* 2340956c / 2340b8d0 - complete */
 int channel_stop_audio()
@@ -837,6 +838,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 	Data_23492040 = 0;
 }
 
+#endif
 
 /* 23409e64 - todo */
 void sub_23409e64(Struct_234a73e8* a)
@@ -845,6 +847,7 @@ void sub_23409e64(Struct_234a73e8* a)
 	console_send_string("sub_23409e64 (todo.c): TODO\r\n");
 #endif
 
+#if 0
 	int r6 = 1;
 	int r5 = 0;
 	int r8 = 1; //r6
@@ -1104,9 +1107,11 @@ void sub_23409e64(Struct_234a73e8* a)
 	} //for (uint16_t r0 = 0; r0 < r3; r0++)
 	//loc_2340a184
 	OSSemPost(channel_sema);
+#endif
 	//->loc_23409ea4();
 }
 
+#if 0
 
 /* 2340a190 - todo */
 void sub_2340a190()
@@ -1971,9 +1976,8 @@ int sub_2340b22c(int r4)
 	else
 	{
 		//loc_2340b2b0
-#if 0
 		console_send_string("loc_2340b2b0 (PES / Section Filter): TODO!!!!!!!!!!!\r\n");
-
+#if 0
 		int r0 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
 
 		//memcpy(&sp_0x18, &Data_234fd8f0.Data_234fd8f0[r0], 0, 24);
@@ -1987,10 +1991,15 @@ int sub_2340b22c(int r4)
 		{
 			(Data_2349201c)(1);
 		}
+#endif
 		//0x2340b304
 		//Section Filter (EIT...)
-		sub_23406418(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 0x7f, sub_23409e64);
+		sub_23406418(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 
+			PSI_MASK_NIT | PSI_MASK_EIT | PSI_MASK_TDT |
+			PSI_MASK_PAT | PSI_MASK_PMT | PSI_MASK_CAT | 0x08, //0x7f, 
+			sub_23409e64);
 
+#if 0
 		Data_235462e4.bData_235491de |= 0x40;
 
 		Data_23492024 = sub_234096ec;
@@ -2063,11 +2072,8 @@ int sub_2340b55c()
 
 	Data_235462e4.wData_235491d2 = 0;
 
-#if 0
+	//Send the channel number to the av module
 	sub_23410f64(r5, Data_235462e4.bData_235491dd);
-#else
-	console_send_string("sub_2340b55c (call sub_23410f64): TODO!!!!!!!!!\r\n");
-#endif
 
 	if ((sp_0x2c.Data_0.wData_6 >> 15) != 0)
 	{

@@ -786,13 +786,9 @@ int sub_2340eb74(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*r6)(), uin
 	r4->Data_0x54 = r6;
 	r4->wData_0xd4 = r7;
 
-#if 0
 	sub_23421a30(0, r4->Data_0x7c.bData_0x16);
 
 	OSTimeDlyResume(fe_manager_threadPrio);
-#else
-	console_send_string("sub_2340eb74 (call sub_23421a30): TODO\r\n");
-#endif
 	//->loc_2340ebd0
 	OSSemPost(fe_manager_pSema);
 

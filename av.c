@@ -17,8 +17,10 @@ struct Struct_2358bda4
 #if 0
 	Struct_20611068* Data_4; //4
 	Struct_20611068* Data_8; //8
+#endif
 	int Data_12; //12
 	int Data_16; //16
+#if 0
 	int Data_20; //20
 	int Data_24; //24
 #endif
@@ -195,6 +197,26 @@ int av_init(Struct_23410ea4* r4)
 			av_thread_stack, THREAD_STACK_SIZE_AV, "AV ", 3);
 
 	return 0;
+}
+
+
+/* 23410f64 / 23417f00 - todo */
+void sub_23410f64(int channelNr, int r6)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_23410f64 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &err);
+
+	Data_2358bda4.Data_12 = channelNr + 1;
+	Data_2358bda4.Data_16 = r6;
+
+	OSTimeDlyResume(Data_2358bda4.Data_0x34.threadPrio & 0xff);
+
+	OSSemPost(Data_23492098);
 }
 
 

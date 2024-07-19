@@ -13,4 +13,4 @@ void main_frontend_i2c_init(void);
 void main_frontend_init(void);
 void main_set_power_mode(void);
 void main_tsd_bm_init(void);
-
+void main_psi_init(void);

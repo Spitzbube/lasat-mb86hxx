@@ -37,6 +37,15 @@ set(SRCS
    sub_23470890.c
    sub_2345d710.c
    sub_23418e1c.c
+   psi.c
+   nit.c
+   eit.c
+   pat.c
+   pmt.c
+   sdt.c
+   sub_2344ed20.c
+   sub_23458874.c
+   sub_23411b0c.c
    hexdump.c
    todo.c
 )

@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 #include "sys_services.h"
+#include "timer.h"
 #include "gpio.h"
 #include "uart.h"
 #include "console.h"
@@ -12,13 +13,18 @@
 #include "sub_23438084.h"
 #include "sub_2340a6a0.h"
 #include "frontend.h"
-
+#include "bm.h"
+#include "tsd.h"
+#include "psi.h"
 
 
 extern void* main_hI2c0; //23491d98 +12 = 0xc
+extern Struct_234a73e8* main_hPSIDecoder1; //23491d9c / 234ac4d0 +16 = 0x10
+extern Struct_234a73e8* main_hPSIDecoder2; //23491da0 +20 = 0x14
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
 extern Struct_2354dd70* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8
 extern Struct_2354dd70* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec
+extern MemBlk_Handle* main_hMemBlk1; //23491DBC +0x30
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 
 extern Struct_23438084* Data_23491dc8; //23491dc8 +0x3c

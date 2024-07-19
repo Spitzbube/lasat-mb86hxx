@@ -257,8 +257,8 @@ typedef uint32_t INT32U;
 #endif
 
 #define OS_ERR_TIMEOUT               10u
-#if 0
 #define OS_TASK_NOT_EXIST            11u
+#if 0
 #define OS_ERR_EVENT_NAME_TOO_LONG   12u
 #define OS_ERR_FLAG_NAME_TOO_LONG    13u
 #define OS_ERR_TASK_NAME_TOO_LONG    14u
@@ -275,8 +275,8 @@ typedef uint32_t INT32U;
 
 #define OS_PRIO_EXIST                40u
 #define OS_PRIO_ERR                  41u
-#define OS_PRIO_INVALID              42u
 #endif
+#define OS_PRIO_INVALID              42u
 
 #define OS_ERR_SEM_OVF               50u
 
@@ -287,8 +287,10 @@ typedef uint32_t INT32U;
 #define OS_TASK_DEL_ISR              63u
 
 #define OS_NO_MORE_TCB               70u
+#endif
 
 #define OS_TIME_NOT_DLY              80u
+#if 0
 #define OS_TIME_INVALID_MINUTES      81u
 #define OS_TIME_INVALID_SECONDS      82u
 #define OS_TIME_INVALID_MILLI        83u

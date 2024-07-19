@@ -1,4 +1,6 @@
 
+#ifndef DRV_TSD_H
+#define DRV_TSD_H
 
 typedef struct
 {
@@ -190,4 +192,4 @@ void* tsd_get_bm_handle(void*);
 
 
 
-
+#endif //DRV_TSD_H

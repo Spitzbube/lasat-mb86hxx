@@ -1,5 +1,7 @@
 
 #define THREAD_PRIO_UART_IN					10
+#define THREAD_PRIO_PSI_1					11
+#define THREAD_PRIO_PSI_2					12
 #define THREAD_PRIO_IR_USER_IN				16
 #define THREAD_PRIO_AV						21
 #define THREAD_PRIO_UI_1					49
@@ -16,5 +18,6 @@
 #define THREAD_STACK_SIZE_IR_USER_IN		0x190
 #define THREAD_STACK_SIZE_AV				0x190
 #define THREAD_STACK_SIZE_FE_MANAGER		1000
+#define THREAD_STACK_SIZE_PSI				1000
 
 

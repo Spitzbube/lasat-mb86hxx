@@ -1,4 +1,6 @@
 
+#ifndef DRV_BM_H
+#define DRV_BM_H
 
 typedef struct
 {
@@ -21,3 +23,4 @@ typedef struct
 
 extern void* bm_open(BM_OpenParams* pOpenParams);
 
+#endif //DRV_BM_H

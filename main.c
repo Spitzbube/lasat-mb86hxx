@@ -34,6 +34,7 @@ void startup_thread()
 	main_powermode_init();
 	main_frontend_i2c_init();
 	main_tsd_bm_init();
+	main_psi_init();
 	main_flash_init();
 	sub_234011f4(); //channel???
 	main_frontend_init();

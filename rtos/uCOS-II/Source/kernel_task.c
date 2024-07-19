@@ -252,12 +252,14 @@ void rtos_task_wait(uint16_t a)
 	}
 }
 
-#if 0
+
 /* 234396d8 - todo */
 int OSTimeDlyResume(uint8_t prio)
 {
-	uint32_t r0;
 	RTOS_tTCB* ptcb;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("OSTimeDlyResume (todo.c): TODO\r\n");
@@ -265,44 +267,44 @@ int OSTimeDlyResume(uint8_t prio)
 
 	if (prio >= 0x3f)
 	{
-		return 42; //OS_PRIO_INVALID
+		return OS_PRIO_INVALID;
 	}
 
-	r0 = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	ptcb = OSTCBPrioTbl[prio];
 
 	if (ptcb == 0)
 	{
 		//loc_23439770
-		FAMOS_LeaveCriticalSection(r0);
-		return 11; //OS_TASK_NOT_EXIST
+		OS_EXIT_CRITICAL();
+		return OS_TASK_NOT_EXIST;
 	}
 	//0x23439700
 	if (ptcb->OSTCBDly == 0)
 	{
 		//loc_23439764
-		FAMOS_LeaveCriticalSection(r0);
-		return 80; //OS_TIME_NOT_DLY
+		OS_EXIT_CRITICAL();
+		return OS_TIME_NOT_DLY;
 	}
 	//0x2343970c
 	ptcb->OSTCBDly = 0;
 
-	if ((ptcb->OSTCBStat & 0x08/*OS_STAT_SUSPEND*/) == 0)
+	if ((ptcb->OSTCBStat & OS_STAT_SUSPEND) == 0)
 	{
 		OSRdyGrp |= ptcb->OSTCBBitY;
 		OSRdyTbl[ptcb->OSTCBY] |= ptcb->OSTCBBitX;
 
-		FAMOS_LeaveCriticalSection(r0);
+		OS_EXIT_CRITICAL();
 
 		OS_Sched();
 	}
 	else
 	{
 		//loc_23439758
-		FAMOS_LeaveCriticalSection(r0);
+		OS_EXIT_CRITICAL();
 	}
 	//loc_2343975c
 	return 0;
 }
-#endif
+

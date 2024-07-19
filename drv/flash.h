@@ -1,6 +1,6 @@
 
-#ifndef DRV_FLASH
-#define DRV_FLASH
+#ifndef DRV_FLASH_H
+#define DRV_FLASH_H
 
 typedef struct
 {
@@ -36,4 +36,4 @@ typedef struct
 extern int flash_read(Struct_235f2e2c* r4, int r5, int r6, void* r7);
 
 
-#endif //DRV_FLASH
+#endif //DRV_FLASH_H
