@@ -15,6 +15,7 @@ set (
    tsd.c
    tsd_reg.c
    auout.c
+   dpll.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

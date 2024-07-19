@@ -170,9 +170,7 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 			//loc_2341315c
 			if (Data_2358be90.state != 6)
 			{
-#if 0
 				clkpwr_full_power();
-#endif
 
 				rtos_task_wait(10);
 
@@ -283,9 +281,9 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 
 #if 0
 			sub_23418db0();
+#endif
 
 			clkpwr_low_power();
-#endif
 			//->loc_23413270
 		}
 		break;
@@ -312,9 +310,9 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 		gpio_set(Data_2358be90.pGpio, 0);
 
 		sub_23418db0();
+#endif
 
 		clkpwr_low_power();
-#endif
 		//->loc_23413270
 		break;
 

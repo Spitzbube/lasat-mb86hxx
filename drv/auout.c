@@ -361,7 +361,7 @@ int auout_isr()
 	int r4 = r0_ & r1;
 //	Struct_2349251c* r0 = Data_2349251c;
 
-#if 0
+#if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "auout_isr: r0_=0x%x, r1=0x%x\r\n", r0_, r1);

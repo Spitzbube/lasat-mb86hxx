@@ -1447,6 +1447,7 @@ int sub_2340a59c(int pid)
 	return 0;
 }
 
+#endif
 
 /* 2340a650 - complete */
 int sub_2340a650(uint8_t r0)
@@ -1480,7 +1481,6 @@ int sub_2340a650(uint8_t r0)
 	return ip;
 }
 
-#endif
 
 /* 2340a6a0 / 2340c9e0 - todo */
 int channel_init(int r5)
@@ -1500,7 +1500,6 @@ int channel_init(int r5)
 
 	channel_sema = OSSemCreate(1);
 
-#if 0
 	Data_235462e4.wAudioPID = 0xffff;
 	Data_235462e4.wVideoPID = 0xffff;
 
@@ -1516,7 +1515,6 @@ int channel_init(int r5)
 	}
 	//loc_2340a6f8
 	auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 0);
-#endif
 
 	return 0;
 }

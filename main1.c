@@ -342,6 +342,16 @@ void main_powermode_init()
 }
 
 
+/* 23400964 / 23401fec - todo */
+int main_clkpwr_init()
+{
+	clkpwr_reset();
+	clkpwr_low_power();
+
+	return clkpwr_full_power();
+}
+
+
 /* 23400978 / 23402150 - todo */
 void main_inputhandler_init()
 {
@@ -494,9 +504,7 @@ void main_tsd_bm_init()
 
 	sub_2342c4f8(&sp4);
 
-#if 0
 	sub_23435fc4(); //-> dpll.c / sync.c
-#endif
 }
 
 

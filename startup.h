@@ -16,3 +16,4 @@ void main_tsd_bm_init(void);
 void main_psi_init(void);
 void main_audio_init(void);
 void main_pes_init(void);
+int main_clkpwr_init(void);

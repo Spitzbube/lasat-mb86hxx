@@ -31,6 +31,7 @@ int main_process_uart_command(uint8_t* r4)
 /* 23400424 - todo */
 void startup_thread()
 {
+	main_clkpwr_init();
 	main_powermode_init();
 	main_frontend_i2c_init();
 	main_tsd_bm_init();

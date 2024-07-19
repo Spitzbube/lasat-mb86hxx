@@ -229,7 +229,6 @@ void* sub_2341b85c(void* h)
 	return 0;
 }
 
-#if 0
 
 /* 2341b884 / 23426d8c - todo */
 uint64_t timer_get_timestamp(uint32_t resolution)
@@ -243,7 +242,6 @@ uint64_t timer_get_timestamp(uint32_t resolution)
 
 	return counter_current / resolution;
 }
-#endif
 
 
 /* 2341b8bc - todo */
