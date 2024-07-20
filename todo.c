@@ -218,23 +218,6 @@ void sub_23468e7c()
 }
 
 
-/* 23410f28 - todo */
-void sub_23410f28(int r5)
-{
-#if 1
-	console_send_string("sub_23410f28 (todo.c): TODO\r\n");
-#endif
-
-}
-
-
- void sub_23410fe4()
-{
-	console_send_string("sub_23410fe4 (todo.c): TODO\r\n");
-
-}
-
-
 /* 234089e8 - todo */
 void sub_234089e8()
 {
@@ -582,8 +565,9 @@ void sub_234297d8()
 /* 2341a75c - todo */
 void sub_2341a75c()
 {
+#if 0
 	console_send_string("sub_2341a75c (todo.c): TODO\r\n");
-
+#endif
 }
 
 
@@ -844,6 +828,54 @@ void sub_2345e410()
 void sub_2345e694()
 {
 	console_send_string("sub_2345e694 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342d6ec - todo */
+void sub_2342d6ec()
+{
+	console_send_string("sub_2342d6ec (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342d878 - todo */
+void sub_2342d878()
+{
+	console_send_string("sub_2342d878 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342d9e0 - todo */
+void sub_2342d9e0()
+{
+	console_send_string("sub_2342d9e0 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342dc7c - todo */
+void sub_2342dc7c()
+{
+	console_send_string("sub_2342dc7c (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342df40 - todo */
+void sub_2342df40()
+{
+	console_send_string("sub_2342df40 (todo.c): TODO\r\n");
+
+}
+
+
+/* / 234256fc (v241!) - todo */
+void sub_234256fc()
+{
+	console_send_string("sub_234256fc (todo.c): TODO\r\n");
 
 }
 

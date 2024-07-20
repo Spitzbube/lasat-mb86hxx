@@ -18,6 +18,9 @@
 #include "hdmi.h"
 #include "clkpwr.h"
 #include "videc.h"
+#include "graphic.h"
+#include "sub_23419cd0.h"
+
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -197,14 +200,12 @@ void main_flash_init()
 
 		Data_23491dc8 = sub_23437fd4(&sp_0x10);
 
-#if 0
 		Struct_23419cd0 sp4 = {0x40380000, 0, 0}; //23487b5c
 
 		sp4.hFlash = main_hFlash;
 		sp4.Data_8 = (void*) sub_234019e0(0x20000);
 
 		sub_23419cd0(&sp4);
-#endif
 	}
 	//loc_234006bc
 }
@@ -215,6 +216,7 @@ void main_base_init()
 {
 	ARM1176_INTR_Initialise();
 	intr_init();
+	gpreg_init();
 	timer_init();
 	timer_open(0);
 }
@@ -1096,7 +1098,7 @@ void sub_234011f4()
 /* 2340146c / 2340195c - complete */
 void main_graphic_init()
 {
-#if 0 //Only v241!!!
+#if 1 //Only v241!!!
 	Struct_234539f0 sp4;
 
 	sp4.Data_0 = 0x22000000;

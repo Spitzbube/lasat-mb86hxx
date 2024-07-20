@@ -66,9 +66,7 @@ void (*Data_23492034)() = 0; //23492034 +0x38
 void (*Data_23492038)() = 0; //23492038 +0x3c
 Struct_2349203c* Data_2349203c = 0; //2349203c +0x40
 Struct_23492040* Data_23492040 = 0; //23492040 +0x44
-#if 0
 int channel_videoWritePtr = 0; //23492044 +0x48
-#endif
 int channel_audioWritePtr = 0; //23492048 +0x4c
 int Data_2349204c = 200; //2349204c +0x50
 int Data_23492050 = 300; //23492050 +0x54
@@ -1111,16 +1109,11 @@ void sub_2340a190()
 
 	//r4, =0x235482e4
 
-#if 0
 	int r6 = sub_2345f928();
-#else
-	int r6 = 0;
-#endif
 
 	//r8, =0x23491ffc
 	//r7, #0xc8
 
-#if 0
 	if (Data_235462e4.bData_235491de & 1)
 	{
 		//0x2340a1b8
@@ -1145,7 +1138,6 @@ void sub_2340a190()
 
 		channel_videoWritePtr = writePtr;
 	}
-#endif
 	//loc_2340a1e0
 	if (Data_235462e4.bData_235491de & 2)
 	{
@@ -1368,7 +1360,6 @@ void sub_2340a320(int a)
 	}
 }
 
-#if 0
 
 /* 2340a59c - complete */
 int sub_2340a59c(int pid)
@@ -1416,7 +1407,6 @@ int sub_2340a59c(int pid)
 	return 0;
 }
 
-#endif
 
 /* 2340a650 - complete */
 int sub_2340a650(uint8_t r0)
@@ -1975,12 +1965,10 @@ int sub_2340b22c(int r4)
 		//PES Parser (Audio, Video...)
 		sub_23409a6c(Data_234fd8f0.Data_234fd8f0[r0]/*Data_234fd8f0.Data_234fd8f0[r0].Data_0, Data_234fd8f0.Data_234fd8f0[r0].Data_0x10*/);
 
-#if 0
 		if (Data_2349201c != 0)
 		{
 			(Data_2349201c)(1);
 		}
-#endif
 		//0x2340b304
 		//Section Filter (EIT...)
 		sub_23406418(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 

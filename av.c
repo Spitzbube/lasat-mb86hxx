@@ -3,6 +3,8 @@
 #include "vfd.h"
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
+#include "clkpwr.h"
+#include "hdmi.h"
 #include "av.h"
 
 
@@ -431,16 +433,13 @@ int sub_23410398(uint8_t* r4)
 /* 23410620 / 234175d8 - todo */
 void sub_23410620(int r0)
 {
-#if 0
 	Struct_23427f24 sp_0x18;
 	HDMI_VideoParams sp4;
-#endif
 
-#if 1
+#if 0
 	console_send_string("sub_23410620 (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	while (1)
 	{
 		//loc_2341062c
@@ -555,7 +554,6 @@ void sub_23410620(int r0)
 	sub_2345f8f8();
 	hdmi_SetVideoParameters(Data_23491dac, &sp4);
 	hdmi_video_start(Data_23491dac);
-#endif
 }
 
 
@@ -1134,6 +1132,31 @@ int av_init(Struct_23410ea4* r4)
 }
 
 
+/* 23410f28 - todo */
+void sub_23410f28(int r5)
+{
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_23410f28 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &sp);
+
+	if (r5 == 0)
+	{
+		Data_2358bda4.Data_0x78 = 0;
+		Data_2358bda4.Data_0x7c = 0;
+	}
+	else
+	{
+		Data_2358bda4.Data_0x78 = sub_23410be8;
+	}
+
+	OSSemPost(Data_23492098);
+}
+
+
 /* 23410f64 / 23417f00 - todo */
 void sub_23410f64(int channelNr, int r6)
 {
@@ -1147,6 +1170,25 @@ void sub_23410f64(int channelNr, int r6)
 
 	Data_2358bda4.Data_12 = channelNr + 1;
 	Data_2358bda4.Data_16 = r6;
+
+	OSTimeDlyResume(Data_2358bda4.Data_0x34.threadPrio & 0xff);
+
+	OSSemPost(Data_23492098);
+}
+
+
+/* 23410fe4 - complete */
+void sub_23410fe4()
+{
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_23410fe4 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &sp);
+
+	Data_2358bda4.Data_32 = 3;
 
 	OSTimeDlyResume(Data_2358bda4.Data_0x34.threadPrio & 0xff);
 
