@@ -55,6 +55,8 @@ set(SRCS
    sub_234515f0.c
    ca_hw.c
    viscale_osd.c
+   videc.c
+   sub_234774c4.c
    hexdump.c
    todo.c
 )

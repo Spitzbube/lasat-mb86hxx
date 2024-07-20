@@ -17,6 +17,7 @@
 #include "thumb2.h"
 #include "hdmi.h"
 #include "clkpwr.h"
+#include "videc.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -1145,6 +1146,18 @@ void main_network_init()
 		tcp_console_init(main_process_uart_command);
 	}
 #endif
+}
+
+
+/*  / 234014a0 - todo */
+void main_vdec_init(void)
+{
+	Struct_2345fd98 sp;
+
+	sp.hFlash = main_hFlash;
+	sp.Data_4 = 0x40200000;
+
+	vdec_init(&sp);
 }
 
 

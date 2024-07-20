@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "data.h"
 #include "auout.h"
+#include "videc.h"
 #include "sub_2340a6a0.h"
 
 
@@ -16,11 +17,7 @@ void sub_2340d300();
 #endif
 void sub_2344f79c();
 void sub_23459188();
-#if 0
-void videc_audcallback_h264();
-void videc_audcallback_mpeg();
 
-#endif
 
 const uint8_t Data_23488068[] = //23488068
 {
@@ -177,12 +174,11 @@ int channel_stop_audio()
 	return 0;
 }
 
-#if 0
 
 /* 234095f4 / 2340b958 - complete */
 int channel_stop_video()
 {
-#if 0
+#if 1
 	console_send_string("channel_stop_video (todo.c): TODO\r\n");
 #endif
 
@@ -197,7 +193,6 @@ int channel_stop_video()
 	return 0;
 }
 
-#endif
 
 /* 23409628 / 2340b98c - todo */
 void channel_stop_pes()
@@ -215,14 +210,12 @@ void channel_stop_pes()
 	}
 #endif
 
-#if 0
 	if (Data_235462e4.bData_235491de & 1)
 	{
 		Data_235462e4.bData_235491de &= ~1;
 
 		channel_stop_video();
 	}
-#endif
 
 	if (Data_235462e4.bData_235491de & 2)
 	{
@@ -332,7 +325,6 @@ void sub_234097f4(int r5)
 	console_send_string("sub_234097f4 (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	void* bmHandle = tsd_get_bm_handle(main_hPESParserVideo);
 
 	tsd_deactivate_pid_channel(main_hPESParserVideo);
@@ -358,7 +350,6 @@ void sub_234097f4(int r5)
 	tsd_start_aud_filtering(main_hPESParserVideo);
 
 	tsd_activate_pid_channel(main_hPESParserVideo);
-#endif
 }
 
 
@@ -414,7 +405,6 @@ int channel_start_audio(uint16_t pid, void* hAudio)
 	return 0;
 }
 
-#if 0
 
 /* 23409928 / 2340bc8c - complete */
 int channel_start_video(int pid, int r4)
@@ -432,7 +422,6 @@ int channel_start_video(int pid, int r4)
 	}
 #endif
 
-#if 1
 	tsd_set_pes_pid_filter(main_hPESParserVideo, pid);
 
 	void* r7 = tsd_get_bm_handle(main_hPESParserVideo);
@@ -488,12 +477,10 @@ int channel_start_video(int pid, int r4)
 	tsd_activate_pid_channel(main_hPESParserVideo);
 
 	Data_235462e4.wVideoPID = pid;
-#endif
 
 	return 0;
 }
 
-#endif
 
 /* 23409a6c - todo */
 void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/struct Struct_234fd8f0_Inner0 a)
@@ -531,7 +518,6 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 	}
 #endif
 
-#if 0
 //	int r1_ = a.Data_0.wData_2;
 //	uint16_t r8 = a.Data_0.wData_10;
 	if ((/*r8*/a.Data_0.wVideoPID != 0) &&
@@ -541,7 +527,6 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 
 		channel_start_video(/*r8*/a.Data_0.wVideoPID, a.Data_0.wData_2); //r1_);
 	}
-#endif
 	//loc_23409aa4
 //	int r0 = (a.Data_0.wData_2 >> 1) & 0x03;
 //	uint16_t r7 = a.Data_0.wData_12;
@@ -1366,15 +1351,7 @@ void sub_2340a320(int a)
 		//loc_2340a4cc
 		OSSemPost(channel_sema);
 
-#if 0
 		int r4 = sub_2345ff98(); //->videc.c
-#else
-		int r4 = 0;
-		if (r4 == 0)
-		{
-			return;
-		}
-#endif
 
 		OSSemPend(channel_sema, 0, &sp);
 
