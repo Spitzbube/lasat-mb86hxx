@@ -1160,7 +1160,7 @@ void av_switch_powermode(int r7)
 	uint8_t sp_0xc;
 	Struct_23437974 sp;
 
-#if 1
+#if 0
 	console_send_string("av_switch_powermode (todo.c): TODO\r\n");
 #endif
 

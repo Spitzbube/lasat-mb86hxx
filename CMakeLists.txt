@@ -47,7 +47,13 @@ set(SRCS
    sub_23458874.c
    sub_23411b0c.c
    sub_2341a744.c
+   sub_2343df02.c
    audec.c
+   scan.c
+   menu_channel_search.c
+   sub_2344f770.c
+   sub_234515f0.c
+   ca_hw.c
    hexdump.c
    todo.c
 )

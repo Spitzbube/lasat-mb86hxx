@@ -755,7 +755,7 @@ int MGC_usbInitController()
 /* 23439d06 / 23449a3a - todo */
 int sub_23439d06(int r5)
 {
-#if 1
+#if 0
 	console_send_string("sub_23439d06 (todo.c): TODO\r\n");
 #endif
 

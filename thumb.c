@@ -137,6 +137,7 @@ UI_Thread_Params Data_235fdf58; //235fdf58 235fdf98 -0x40
 UI_Thread_Params* Data_235fdf70; //235fdf70 / 2378336C -0x40 + 0x18
 Menu* menu_stack[13]; //235fdf74 -0x40 + 0x1c, size???
 uint8_t menu_stack_level; //235fdfa8 235fdf98 + 0x10
+uint8_t bData_235fdfa9; //235fdfa9
 
 
 
@@ -570,6 +571,19 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 	ui_thread_create(r0);
 	//->loc_2343d532
 	return 0;
+}
+
+
+/* 2343d556 / 2344c756 - todo */
+void sub_2343d556(void* pMsg)
+{
+#if 0
+	console_send_string("sub_2343d556 (todo.c): TODO\r\n");
+#endif
+
+	OSMboxAccept(Data_235fdf70->pMBox);
+
+	OSMboxPost(Data_235fdf70->pMBox, pMsg);
 }
 
 
@@ -1137,6 +1151,122 @@ void standby_thread(UI_Thread_Params* a)
 		}
 		//->loc_2343d8dc
 	} //while (1)
+}
+
+
+/* 2343d98e - todo */
+void sub_2343d98e(UI_Thread_Params* r1)
+{
+	uint8_t sp_0x20;
+	int sp_0x1c;
+	UI_Thread_Params sp4;
+	struct
+	{
+		uint8_t bData_0; //0
+		uint8_t bData_1; //1
+		uint8_t bData_2; //2
+
+	}* pMsg;
+
+	void (*r4)() = 0;
+
+#if 0
+	console_send_string("sub_2343d98e (todo.c): TODO\r\n");
+#endif
+
+	memcpy(&sp4, r1, sizeof(UI_Thread_Params));
+
+	Data_235fdf70 = &sp4;
+
+	sp_0x20 = OSSemPost(sp4.pSema);
+
+	bData_235fdfa9 = 0; //TODO!!!
+
+	OSMboxAccept(sp4.pMBox);
+
+	while (1)
+	{
+		//loc_2343d9ba
+		Menu* r7;
+		Menu* r2;
+		Menu_Item* r1;
+
+		pMsg = (void*) OSMboxPend(sp4.pMBox, 0, &sp_0x20);
+
+		r2 = menu_stack[menu_stack_level];
+		r1 = r2->Data_4;
+
+		switch (pMsg->bData_0)
+		{
+		case 0x57:
+		case 0xea:
+			//loc_2343d9f8
+			//r0, #0x20
+			//->loc_2343da30
+			sp_0x1c = 0x20;
+
+			r4 = r1->onEvent;
+			//loc_2343da34
+			break;
+
+		case 0x2d: //EXIT
+		case 0xe0:
+			//loc_2343d9fc
+			if (r2->onExit != 0)
+			{
+				(r2->onExit)(0);
+			}
+			//loc_2343da06
+			r7 = sub_2343d482(0);
+			if (r7 != 0)
+			{
+				//0x2343da10
+				if (r7->onEnter != 0)
+				{
+					(r7->onEnter)(-1);
+				}
+				//loc_2343da1c
+				sub_2343d51e(r7, &sp4);
+				//->loc_2343da34
+			}
+			else
+			{
+				//loc_2343da26
+				sub_2343d51e(0, &sp4);
+			}
+			//->loc_2343da34
+			break;
+
+		case 0x10:
+		case 0x11:
+		case 0x2f:
+		case 0x80:
+		case 0x81:
+			//loc_2343da2c
+			sp_0x1c = 1 << 12;
+
+			r4 = r1->onEvent;
+			//loc_2343da34
+			break;
+
+		default:
+			//loc_2343da34
+			break;
+		}
+		//loc_2343da34
+		if (r4 != 0)
+		{
+			(r4)(&sp_0x1c);
+
+			r4 = 0;
+		}
+		//loc_2343da3e
+		if (62 == OSTaskDelReq(0xff))
+		{
+			OSTaskDel(0xff);
+		}
+		//->loc_2343d9ba
+	}
 }
 
 

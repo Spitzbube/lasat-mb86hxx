@@ -838,6 +838,7 @@ int sub_2340ec8c(void* h, void (*r6)())
 	return 0;
 }
 
+#endif
 
 /* 2340ecc0 - complete */
 int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
@@ -939,7 +940,6 @@ int sub_2340ed18(Struct_235fdfac* r0)
 	return 4;
 }
 
-#endif
 
 /* 2340ed98 - complete */
 int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
