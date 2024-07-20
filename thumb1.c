@@ -210,6 +210,17 @@ int menu_root_on_exit(UI_Thread_Params* a)
 }
 
 
+/* 2346ed20 - todo */
+int sub_2346ed20()
+{
+#if 1
+	console_send_string("sub_2346ed20 (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
 /* 2346eeee - complete */
 static void* sub_2346eeee(int* a)
 {
@@ -276,6 +287,16 @@ static void* standby_warn_timer_func(uint32_t* pCount)
 	r5->bData_0x10/*bKeyActivity*/ = 1; //r6
 
 	return 0;
+}
+
+
+/* 2346f2e2 - todo */
+void sub_2346f2e2()
+{
+#if 1
+	console_send_string("sub_2346f2e2 (todo.c): TODO\r\n");
+#endif
+
 }
 
 
@@ -585,7 +606,6 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f59c
-#if 0
 		else if ((r7->keyCode == 17/*0x11*/) //Left
 				|| (r7->keyCode == 65/*0x41*/)) //Vol-
 		{
@@ -613,6 +633,7 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f5c6
+#if 0
 		else if (r7->keyCode == 87/*0x57*/) //OK
 		{
 			if (Data_23495970.bData_23495b96 == 0)
@@ -716,6 +737,29 @@ int menu_root_on_event(void* r0)
 }
 
 
+/* 2346f6f6 - complete */
+void sub_2346f6f6(int r4)
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2346f6f6: r4=%d\r\n", r4);
+		console_send_string(debug_string);
+	}
+#endif
+
+	OS_ENTER_CRITICAL();
+
+	Data_23495970.bData_23495ba8 = r4;
+
+	OS_EXIT_CRITICAL();
+}
+
+
 /* 2346f708 - todo */
 int menu_root_start()
 {
@@ -748,13 +792,11 @@ int menu_root_start()
 		Data_23495970.bKeyActivity = 1;
 	}
 	//loc_2346f73a
-#if 0
 	if (r4 != 0)
 	{
 		sub_2340d1c8(sub_2346f6f6);
 		sub_2346f76c();
 	}
-#endif
 	//loc_2346f748
 	sub_2343d482(&Data_23495bac); //Add to the menu stack
 	sub_2343d3ac(&Data_23495bac); //Initialize the menu

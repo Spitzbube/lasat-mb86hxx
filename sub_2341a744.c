@@ -4,15 +4,12 @@
 
 
 //0x2349211c
-#if 0
 uint8_t bData_2349211c = 0; //2349211c +0
 uint8_t bData_2349211d = 0; //2349211d +1
 uint16_t wData_2349211e = 0; //2349211e +2
 uint8_t* Data_23492120 = 0; //23492120 +4
 uint32_t Data_23492124 = 0; //23492124 +8
-#endif
 OS_EVENT* Data_23492128/*sem*/ = 0; //23492128 +0x0c
-#if 0
 int Data_2349212c = 0; //2349212C +0x10
 
 uint8_t Data_235b1198[4][0x100];
@@ -119,7 +116,6 @@ void sub_2341a520(int r5)
 	//loc_2341a648
 }
 
-#endif
 
 /* 2341a744 - todo */
 void sub_2341a744()

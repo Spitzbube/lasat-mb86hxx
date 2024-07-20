@@ -17,3 +17,5 @@ void main_psi_init(void);
 void main_audio_init(void);
 void main_pes_init(void);
 int main_clkpwr_init(void);
+void sub_23401504(void);
+void sub_234014dc(void);

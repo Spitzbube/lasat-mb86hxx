@@ -14,16 +14,21 @@
 #include "fe_manager.h"
 #include "audec.h"
 #include "auout.h"
+#include "thumb2.h"
 
 
 extern int main_process_uart_command(uint8_t*);
 
 
 uint8_t bData_23491d8c = 0; //23491d8c +0
-Uart_Module* main_hUart0 = 0; //23491d90 +4 
+Uart_Module* main_hUart0 = 0; //23491d90 +4
+void* Data_23491d94 = 0; //23491d94 +8
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
 Struct_234a73e8* main_hPSIDecoder1 = 0; //23491d9c / 234ac4d0 +16 = 0x10
 Struct_234a73e8* main_hPSIDecoder2 = 0; //23491da0 +20 = 0x14
+int Data_23491da4 = 0; //23491da4 +0x18
+int Data_23491da8 = 0; //23491da8
+void* Data_23491dac = 0; //23491dac
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
 Struct_2354dd70* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
 Struct_2354dd70* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
@@ -333,10 +338,8 @@ void main_powermode_init()
 	params.initialState = 1;
 	params.Data_8 = 0;
 	params.Data_12 = 0;
-#if 0
 	params.Data_16 = sub_2343cc34;
 	params.Data_20 = sub_2343b992;
-#endif
 
 	powermode_init(&params);
 }
@@ -1140,6 +1143,90 @@ void main_network_init()
 		tcp_console_init(main_process_uart_command);
 	}
 #endif
+}
+
+
+/* 234014dc - complete */
+void sub_234014dc()
+{
+#if 0
+	console_send_string("sub_234014dc (todo.c): TODO\r\n");
+#endif
+
+	Struct_2343b8e6 sp;
+
+	sp.Data_0 = 0x13;
+	sp.Data_4 = 0xff;
+	sp.Data_8 = 0x12;
+
+	sub_2343b8e6(&sp);
+}
+
+
+/* 23401504 - todo */
+void sub_23401504()
+{
+#if 0
+	console_send_string("sub_23401504 (todo.c): TODO\r\n");
+#endif
+
+	Struct_20611068* sp_0x2c;
+	Struct_20401328 sp_0x20;
+	Uart_Init_Params sp4;
+
+	sp_0x20.dwOutFunction = 0xff; //r6
+	sp_0x20.dwInFunction = 0x40; //r7
+	sp_0x20.bPin = 0x14; //r5
+
+	int r4 = gpio_open(&sp_0x20, &sp_0x2c);
+	if (r4 == 0)
+	{
+		if (0 != sub_2341abfc(sp_0x2c))
+		{
+			gpio_close(sp_0x2c);
+			//loc_2340154c
+		}
+		else
+		{
+			//loc_2340157c
+			gpio_close(sp_0x2c);
+			//loc_23401584
+			return;
+		}
+	}
+	//loc_2340154c
+	sp_0x20.dwOutFunction = 0xff; //r6
+	sp_0x20.dwInFunction = 0x40; //r7
+	sp_0x20.bPin = 0x15; //r8
+
+	r4 |= gpio_open(&sp_0x20, &sp_0x2c);
+	if (r4 == 0)
+	{
+		if (0 != sub_2341abfc(sp_0x2c))
+		{
+			//loc_2340158c
+			gpio_close(sp_0x2c);
+
+			sp4.bData_0 = 1;
+			sp4.rxPin.bPin = 0x14; //r5
+			sp4.rxPin.dwOutFunction = 0xff; //r6
+			sp4.rxPin.dwInFunction = 0x40; //r7
+			sp4.txPin.dwOutFunction = 0x2c;
+			sp4.txPin.bPin = 0x15; //r8
+			sp4.txPin.dwInFunction = 0xff; //r6
+
+			uart_init(&sp4, &Data_23491d94);
+			//->loc_23401584
+		}
+		else
+		{
+			//loc_2340157c
+			gpio_close(sp_0x2c);
+			//loc_23401584
+		}
+	}
+	//loc_23401584
+	return;
 }
 
 

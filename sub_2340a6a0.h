@@ -202,6 +202,19 @@ typedef struct
 
 typedef struct
 {
+	int Data_0; //0
+	struct Struct_2340d1f4_Inner_4 Data_4[9]; //4
+	struct Struct_2340d1f4_Inner_0xb8 Data_0xb8[9]; //0xb8
+	uint8_t bData_16c; //0x16c
+	uint8_t bData_16d; //0x16d
+	uint8_t bData_16e; //0x16e
+	uint8_t bData_16f; //0x16f
+	//0x170
+} Struct_2340d1f4;
+
+
+typedef struct
+{
 	struct Struct_234fd8f0_Inner0 Data_0; //0
 	uint16_t wData_0x28; //0x28 = 40
 	uint16_t wData_0x2a; //0x2a = 42

@@ -1042,7 +1042,7 @@ int aout_init(void* a)
 {
 	uint32_t val;
 
-#if 0
+#if 1
 	console_send_string("aout_init (todo.c): TODO\r\n");
 #endif
 
@@ -1238,6 +1238,10 @@ int aout_init(void* a)
 
 	intr_set_isr(auout_isr, 0, 23); //FAPI_INTR_AUDIO
 	sub_2341b3b8(23, 0);
+
+#if 1
+	console_send_string("aout_init: isr enabled\r\n");
+#endif
 
 	FREG(0xe000025c)[0] = 0xf;
 

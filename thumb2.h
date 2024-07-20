@@ -1,4 +1,6 @@
 
+#ifndef THUMB2_H
+#define THUMB2_H
 
 typedef struct
 {
@@ -15,6 +17,16 @@ typedef struct
 	//0x3c
 } Struct_235fc42c;
 
+
+typedef struct
+{
+	uint32_t Data_0; //0
+	uint32_t Data_4; //4
+	uint32_t Data_8; //8
+	//12
+} Struct_2343b8e6;
+
+
 extern int sub_2343b946(Struct_235fc42c* r0, void* r6, uint8_t* r4, uint8_t* r5);
 
-
+#endif //THUMB2_H

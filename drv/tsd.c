@@ -946,7 +946,7 @@ void tsd_isr(int a)
 				break;
 			}
 
-#if 0
+#if 1
 			default:
 			{
 				extern char debug_string[];

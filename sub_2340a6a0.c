@@ -9,9 +9,7 @@
 
 void channel_stop();
 void sub_23409e64();
-#if 0
 void sub_2340a190();
-#endif
 int sub_2340b55c();
 #if 0
 void sub_2340d300();
@@ -32,7 +30,6 @@ const uint8_t Data_23488068[] = //23488068
 		0x9f, 0xaa, 0xb6, 0xc2, 0xce, 0xda, 0xe7, 0xf3, 0xff
 };
 
-#if 0
 
 typedef struct
 {
@@ -52,7 +49,6 @@ typedef struct
 	//8
 } Struct_23492040;
 
-#endif
 
 //0x23491ffc / 234ac60c
 uint8_t bData_23491ffc = 0; //23491ffc +0
@@ -66,21 +62,23 @@ int (*Data_23492018)() = 0; //23492018 +0x1c
 void (*Data_2349201c)() = 0; //2349201c / 234ac62c +0x20
 void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
-#if 0
 void (*Data_23492028)() = 0; //23492028 +0x2c
 void (*Data_2349202c)() = 0; //2349202c +0x30
 void (*Data_23492030)() = 0; //23492030 +0x34
+#if 0
 void (*Data_23492034)() = 0; //23492034 +0x38
+#endif
 void (*Data_23492038)() = 0; //23492038 +0x3c
 Struct_2349203c* Data_2349203c = 0; //2349203c +0x40
 Struct_23492040* Data_23492040 = 0; //23492040 +0x44
+#if 0
 int channel_videoWritePtr = 0; //23492044 +0x48
+#endif
 int channel_audioWritePtr = 0; //23492048 +0x4c
 int Data_2349204c = 200; //2349204c +0x50
 int Data_23492050 = 300; //23492050 +0x54
 int Data_23492054 = 0; //23492054 +0x58
 
-#endif
 
 Struct_234fd8f0 Data_234fd8f0; //234fd8f0 + 489f4 = 235462E4
 
@@ -273,16 +271,14 @@ void channel_stop_pes()
 
 		main_hCurrentPCR_TSD_Handle = 0; //r4
 
-#if 0
 		sync_SetStcRegulation(r0, 0);
-#endif
 	}
 	//loc_234096e0
 #if 0
 	sub_2345ac28();
+#endif
 
 	Data_2349202c = 0; //r4
-#endif
 }
 
 
@@ -334,15 +330,15 @@ void sub_23409788(void)
 	}
 }
 
-#if 0
 
 /* 234097f4 / 2340bb58 - complete */
 void sub_234097f4(int r5)
 {
-#if 0
+#if 1
 	console_send_string("sub_234097f4 (todo.c): TODO\r\n");
 #endif
 
+#if 0
 	void* bmHandle = tsd_get_bm_handle(main_hPESParserVideo);
 
 	tsd_deactivate_pid_channel(main_hPESParserVideo);
@@ -368,9 +364,9 @@ void sub_234097f4(int r5)
 	tsd_start_aud_filtering(main_hPESParserVideo);
 
 	tsd_activate_pid_channel(main_hPESParserVideo);
+#endif
 }
 
-#endif
 
 /* 2340988c / 2340bbf0 - complete */
 int channel_start_audio(uint16_t pid, void* hAudio)
@@ -651,19 +647,14 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 	}
 #endif
 	//loc_23409bf4
-#if 0
 	if (main_hCurrentPCR_TSD_Handle != 0)
 	{
 		sync_SetStcRegulation(sb, 1);
 	}
-#endif
 
-#if 0
 	Data_2349202c = sub_2340a190;
-#endif
 }
 
-#if 0
 
 /* 23409c1c - todo */
 void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
@@ -707,7 +698,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 					}
 					//0x23409c8c
 					if (0 != sub_234093d4(r7->Data_0x340[r5].Data_4[r4] + 1,
-							Data_234fd8f0.Data_235441b0.bData_0x0d))
+							Data_234fd8f0.Data_235441b0.menuLanguage))
 					{
 						sl = r5;
 						sb = r4;
@@ -754,7 +745,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 				{
 					//0x23409d24
 					if (0 != sub_234093d4(&r5[r4].Data_4,
-							Data_234fd8f0.Data_235441b0.bData_0x0d))
+							Data_234fd8f0.Data_235441b0.menuLanguage))
 					{
 						Data_23492040 = &r5[r4];
 						Data_2349203c = 0;
@@ -813,7 +804,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 				{
 					//0x23409de0
 					if (0 != sub_234093d4(&r5[r4].Data_4,
-							Data_234fd8f0.Data_235441b0.bData_0x0d))
+							Data_234fd8f0.Data_235441b0.menuLanguage))
 					{
 						Data_23492040 = &r5[r4];
 						//->loc_23409e1c
@@ -861,7 +852,6 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 	Data_23492040 = 0;
 }
 
-#endif
 
 /* 23409e64 - todo */
 void sub_23409e64(Struct_234a73e8* a)
@@ -870,7 +860,6 @@ void sub_23409e64(Struct_234a73e8* a)
 	console_send_string("sub_23409e64 (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	int r6 = 1;
 	int r5 = 0;
 	int r8 = 1; //r6
@@ -1130,11 +1119,9 @@ void sub_23409e64(Struct_234a73e8* a)
 	} //for (uint16_t r0 = 0; r0 < r3; r0++)
 	//loc_2340a184
 	OSSemPost(channel_sema);
-#endif
 	//->loc_23409ea4();
 }
 
-#if 0
 
 /* 2340a190 - todo */
 void sub_2340a190()
@@ -1145,11 +1132,16 @@ void sub_2340a190()
 
 	//r4, =0x235482e4
 
+#if 0
 	int r6 = sub_2345f928();
+#else
+	int r6 = 0;
+#endif
 
 	//r8, =0x23491ffc
 	//r7, #0xc8
 
+#if 0
 	if (Data_235462e4.bData_235491de & 1)
 	{
 		//0x2340a1b8
@@ -1174,6 +1166,7 @@ void sub_2340a190()
 
 		channel_videoWritePtr = writePtr;
 	}
+#endif
 	//loc_2340a1e0
 	if (Data_235462e4.bData_235491de & 2)
 	{
@@ -1270,7 +1263,9 @@ void sub_2340a320(int a)
 	{
 		Data_23492054 = 0; //r7
 
+#if 0
 		hdmi_power_down(Data_23491dac, 1);
+#endif
 	}
 	else
 	{
@@ -1286,6 +1281,7 @@ void sub_2340a320(int a)
 			(Data_2349202c)();
 		}
 
+#if 0
 		int r0 = sub_234253d0(Data_23491dac);
 		//r0 = 23492054
 		if (r0 != 0)
@@ -1376,14 +1372,19 @@ void sub_2340a320(int a)
 
 			Data_23492054 = 0;
 		}
+#endif
 		//loc_2340a4cc
 		OSSemPost(channel_sema);
 
-		int r4 = sub_2345ff98();
+#if 0
+		int r4 = sub_2345ff98(); //->videc.c
+#else
+		int r4 = 0;
 		if (r4 == 0)
 		{
 			return;
 		}
+#endif
 
 		OSSemPend(channel_sema, 0, &sp);
 
@@ -1400,6 +1401,7 @@ void sub_2340a320(int a)
 	}
 }
 
+#if 0
 
 /* 2340a59c - complete */
 int sub_2340a59c(int pid)
@@ -2459,7 +2461,6 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 	*r6 = sp4;
 }
 
-#if 0
 
 /* 2340bf94 / 2340e21c - todo */
 void sub_2340bf94(int r7, struct Struct_234fd8f0_Inner0* r6, Struct_235fdfac* r4)
@@ -2572,7 +2573,6 @@ int sub_2340c01c(int r5, int r7)
 	return r4;
 }
 
-#endif
 
 /* 2340c0dc - todo */
 void sub_2340c0dc()
@@ -2976,6 +2976,7 @@ int sub_2340d0d0()
 	return 0;
 }
 
+#endif
 
 /* 2340d1c8 / 2340f3b8 - todo */
 void sub_2340d1c8(void (*r5)())
@@ -2998,12 +2999,15 @@ void sub_2340d1c8(void (*r5)())
 int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 {
 	int res = 0;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("sub_2340d1f4 (todo.c): TODO\r\n");
 #endif
 
-	uint32_t sb = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	if (r7 != 0)
 	{
@@ -3038,7 +3042,7 @@ int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 		//loc_2340d2bc
 	}
 
-	FAMOS_LeaveCriticalSection(sb);
+	OS_EXIT_CRITICAL();
 
 	return res;
 }
@@ -3068,7 +3072,11 @@ void sub_2340d300()
 
 			OSSemPend(channel_sema, 0, &err);
 
-			int r5 = sub_23418bf0();
+#if 0
+			int r5 = sub_23418bf0(); //->ts_play
+#else
+			int r5 = 0;
+#endif
 
 			if (Data_23492024 != 0)
 			{
@@ -3089,4 +3097,4 @@ void sub_2340d300()
 	}
 }
 
-#endif
+

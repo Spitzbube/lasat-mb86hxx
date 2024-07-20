@@ -4,7 +4,6 @@
 
 #pragma thumb
 
-#if 0
 
 Struct_20611068* Data_23492d60 = 0; //23492d60
 Struct_20611068* Data_23492d64 = 0; //23492d64
@@ -52,11 +51,9 @@ struct
 
 } Data_235fc28c; //235fc28c -> 235FC42C
 
-#endif
-
 Struct_235fc42c Data_235fc42c; //235fc42c Addr??? -> 235FC468
 
-#if 0
+
 
 /* 2343b822 - todo */
 int sub_2343b822()
@@ -169,7 +166,6 @@ int sub_2343b8e6(Struct_2343b8e6* a)
 	return 0;
 }
 
-#endif
 
 /* 2343b946 - todo */
 int sub_2343b946(Struct_235fc42c* r0, void* r6, uint8_t* r4, uint8_t* r5)
@@ -208,7 +204,6 @@ int sub_2343b946(Struct_235fc42c* r0, void* r6, uint8_t* r4, uint8_t* r5)
 	return 0;
 }
 
-#if 0
 
 /* 2343b992 - todo */
 int sub_2343b992(int r0)
@@ -234,4 +229,3 @@ int sub_2343b992(int r0)
 	return 0;
 }
 
-#endif

@@ -44,6 +44,8 @@ void startup_thread()
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();
+	sub_23401504();
+	sub_234014dc();
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
 	main_set_power_mode();
@@ -53,6 +55,14 @@ void startup_thread()
 	{
 #if 0
 		console_send_string("startup_thread\r\n");
+#endif
+		//loc_23400498
+#if 0
+		if (Data_23491d88 != 0)
+		{
+			void* p = (Data_23491d88)();
+			Data_23491d88 = p;
+		}
 #endif
 		//loc_234004ac
 		rtos_task_wait(10);

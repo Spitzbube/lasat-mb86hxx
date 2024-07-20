@@ -12,10 +12,8 @@ typedef struct
 	void* pSema; //0
 	int (*Data_4)(int); //4
 	int (*Data_8)(int); //8
-#if 0
 	void (*Data_12)(int); //12
 	void (*Data_16)(int); //16
-#endif
 	int state; //20
 	Struct_20611068* pGpio; //24
 	int Data_28; //28
@@ -156,7 +154,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 	{
 	case 1:
 		//loc_23413138 -> Switch On
-#if 0
 		if ((Data_2358be90.Data_8 != 0) &&
 				(0 != (Data_2358be90.Data_8)(0)))
 		{
@@ -165,7 +162,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 			//->loc_23413270
 		}
 		else
-#endif
 		{
 			//loc_2341315c
 			if (Data_2358be90.state != 6)
@@ -180,26 +176,22 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 
 				sub_23400510(0);
 
-#if 0
 				if (Data_2358be90.Data_12 != 0)
 				{
 					(Data_2358be90.Data_12)(0);
 				}
 
 				sub_23439d06(0);
-#endif
 			}
 			//loc_234131a8
 			Data_2358be90.state = 1;
 
 			av_switch_powermode(0);
 
-#if 0
 			if (Data_2358be90.Data_16 != 0)
 			{
 				(Data_2358be90.Data_16)(0);
 			}
-#endif
 
 			if (r4 != 0)
 			{
@@ -227,7 +219,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 			ui_thread_create(r4);
 		}
 
-#if 0
 		sub_2340b22c(0xff);
 
 		if (Data_2358be90.Data_16 != 0)
@@ -256,7 +247,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 			//->loc_23413270
 		}
 		else
-#endif
 		{
 			//loc_234130d8
 			powermode_save_lastmode(3);
@@ -266,22 +256,18 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 
 			sub_23400510(1);
 
-#if 0
 			sub_23439d06(1);
 
 			if (Data_2358be90.Data_12 != 0)
 			{
 				(Data_2358be90.Data_12)(1);
 			}
-#endif
 
 			av_switch_powermode(1);
 
 			gpio_set(Data_2358be90.pGpio, 0);
 
-#if 0
 			sub_23418db0();
-#endif
 
 			clkpwr_low_power();
 			//->loc_23413270
@@ -398,10 +384,8 @@ int powermode_init(Powermode_Init_Params* pParams)
 	Data_2358be90.pSema = OSSemCreate(1);
 	Data_2358be90.Data_4 = pParams->Data_8;
 	Data_2358be90.Data_8 = pParams->Data_12;
-#if 0
 	Data_2358be90.Data_12 = pParams->Data_16;
 	Data_2358be90.Data_16 = pParams->Data_20;
-#endif
 	Data_2358be90.pGpio = 0;
 
 	if (pParams->gpioPin != 0xff)
