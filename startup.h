@@ -19,3 +19,4 @@ void main_pes_init(void);
 int main_clkpwr_init(void);
 void sub_23401504(void);
 void sub_234014dc(void);
+void main_video_hdmi_init(void);

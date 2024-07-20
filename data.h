@@ -170,3 +170,13 @@ extern void sub_23472004();
 extern void sub_234720a4();
  
 
+typedef struct
+{
+	int globalOffset; //0
+	int Data_4; //4
+	int Data_8; //8
+	int fill_12[2]; //12
+
+} Struct_2342e0cc;
+
+

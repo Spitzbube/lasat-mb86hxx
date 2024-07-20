@@ -16,6 +16,8 @@ set (
    tsd_reg.c
    auout.c
    dpll.c
+   hdmi.c
+   viout.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

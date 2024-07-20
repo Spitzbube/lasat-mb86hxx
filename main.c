@@ -37,6 +37,7 @@ void startup_thread()
 	main_tsd_bm_init();
 	main_psi_init();
 	main_flash_init();
+	main_video_hdmi_init();
 	main_audio_init();
 	sub_234011f4(); //channel???
 	main_pes_init();

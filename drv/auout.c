@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "bm.h"
 #include "tsd.h"
+#include "hdmi.h"
 #include "auout.h"
 
 
@@ -450,7 +451,6 @@ int auout_isr()
 	return 0;
 }
 
-#if 0
 
 /* 2342a300 - complete */
 void auoutSetHdmiSpeakerMapping(struct Struct_2342499c_Inner_0x20* r0, AUOUT_I2sBuffer* r1)
@@ -549,7 +549,6 @@ void auoutSetHdmiSpeakerMapping(struct Struct_2342499c_Inner_0x20* r0, AUOUT_I2s
 
 }
 
-#endif
 
 /* 2342a4b4 - todo */
 void sub_2342a4b4()
@@ -1550,7 +1549,6 @@ int sub_2342b2ac(void* a, int r8)
 	return 0;
 }
 
-#if 0
 
 /* 2342b360 - todo */
 int auout_start_hdmi(void* handle)
@@ -1603,7 +1601,7 @@ int auout_start_hdmi(void* handle)
 		hdmi_audio_stop(auout_handle_ptr);
 	}
 
-	FAPI_SYS_InvalidateDataCache(auout_handle_ptr, sizeof(Struct_2349251c));
+	sys_invalidate_data_cache(auout_handle_ptr, sizeof(Struct_2349251c));
 
 	int sf_index;
 
@@ -1813,7 +1811,6 @@ void auout_stop_hdmi()
 	auoutHdmiEnabIndex = -1;
 }
 
-#endif
 
 /* 2342b690 - todo */
 void sub_2342b690(void* a, int pid)

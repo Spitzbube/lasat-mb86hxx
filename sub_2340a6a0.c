@@ -56,9 +56,7 @@ int Data_23492000 = 0; //23492000 +4
 int Data_23492004 = 0; //23492004 +8
 OS_EVENT* channel_sema/*sema*/ = 0; //23492008 +0x0c
 int (*Data_23492014)() = sub_2340b55c; //23492014 +0x18
-#if 0
 int (*Data_23492018)() = 0; //23492018 +0x1c
-#endif
 void (*Data_2349201c)() = 0; //2349201c / 234ac62c +0x20
 void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
@@ -157,9 +155,7 @@ int channel_stop_audio()
 
 	auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 0);
 
-#if 0
 	auout_stop_hdmi();
-#endif
 
 	audec_stop_decoder(main_hAudec2);
 	audec_stop_decoder(main_hAudec1);
@@ -1261,9 +1257,7 @@ void sub_2340a320(int a)
 	{
 		Data_23492054 = 0; //r7
 
-#if 0
 		hdmi_power_down(Data_23491dac, 1);
-#endif
 	}
 	else
 	{
@@ -1279,7 +1273,6 @@ void sub_2340a320(int a)
 			(Data_2349202c)();
 		}
 
-#if 0
 		int r0 = sub_234253d0(Data_23491dac);
 		//r0 = 23492054
 		if (r0 != 0)
@@ -1370,7 +1363,6 @@ void sub_2340a320(int a)
 
 			Data_23492054 = 0;
 		}
-#endif
 		//loc_2340a4cc
 		OSSemPost(channel_sema);
 

@@ -15,6 +15,8 @@
 #include "audec.h"
 #include "auout.h"
 #include "thumb2.h"
+#include "hdmi.h"
+#include "clkpwr.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -1252,6 +1254,61 @@ void main_frontpanel_init()
 	vfd_init(&vfdParams);
 
 	frontdisplay_init();
+}
+
+
+/* 23401654 / 234013ac - todo */
+void main_video_hdmi_init()
+{
+	sub_23427ef4();
+
+	Struct_234248a0 sp_0x28;
+	Struct_23427f24 sp_0x18;
+	HDMI_VideoParams sp4;
+
+	sp_0x18.Data_12 = 5;
+	sp_0x18.Data_0 = 2;
+	sp_0x18.Data_4 = 1;
+	sp_0x18.Data_8 = 4; //r8
+
+	int r0 = sub_23427f24(&sp_0x18, &Data_23491da4);
+	if (r0 == 0)
+	{
+		sub_23427fe8(Data_23491da4);
+	}
+
+	sp_0x18.Data_8 = 0;
+	sp_0x18.Data_0 = 3; //r7
+	sp_0x18.Data_4 = 4; // r8
+	sp_0x18.Data_12 = 4; //r8
+
+	r0 = sub_23427f24(&sp_0x18, &Data_23491da8);
+	if (r0 == 0)
+	{
+		sub_23427fe8(Data_23491da8);
+	}
+
+	sub_23434718(0);
+
+	sub_234345a4(4);
+
+	r0 = sub_2342d668(0, 0, 0, 0xff);
+
+	sub_234344d0((r0 >> 16) & 0xff, (r0 >> 24) & 0xff, (r0 >> 8) & 0xff);
+
+	hdmi_init();
+
+	sp_0x28.Data_0 = 3; //r7;
+
+	hdmi_open(&sp_0x28, &Data_23491dac);
+
+	sp4.activeFormat = 8;
+	sp4.inputType = 2; //r5;
+	sp4.videoCode = 20;
+	sp4.scanInfo = 1; //r6;
+	sp4.outputType = 2; //r5
+
+	hdmi_SetVideoParameters(Data_23491dac, &sp4);
 }
 
 
