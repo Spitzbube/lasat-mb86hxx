@@ -675,7 +675,7 @@ void psi_default_data_handler(Struct_234a73e8* a)
 	console_send_string("psi_default_data_handler (todo.c): TODO\r\n");
 #endif
 
-	uint16_t r1 = pat_get_num_programs(a->Data_0);
+	uint16_t r1 = pat_get_num_programs(a->index);
 
 	for (uint16_t i = 0; i < r1; i++)
 	{
@@ -691,7 +691,7 @@ struct Struct_234a73e8_Inner_0x248* sub_23406a9c(Struct_234a73e8* a)
 	console_send_string("sub_23406a9c (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_234a73e8_Inner_0x248* r0 = a->Data_0x248;
+	struct Struct_234a73e8_Inner_0x248* r0 = a->programs;
 
 	for (uint32_t i = 0; i < 150; i++)
 	{
@@ -721,7 +721,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 		for (uint32_t i = 0; i < r7->wData_0x21e10; i++)
 		{
 			//loc_23403ad8
-			PAT_Program* r5 = pat_get_program(r7->Data_0, i);
+			PAT_Program* r5 = pat_get_program(r7->index, i);
 
 			if (r5->program_number != 0)
 			{
@@ -741,8 +741,8 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 	if ((r6 & 0x08) && (r7->Data_0x21e04 & 0x08))
 	{
 		//0x23403b44
-		uint8_t r4 = sub_2344cd54(r7->Data_0)->table_id;
-		struct SDT_Service* r5 = sub_2344cd54(r7->Data_0)->Data_8;
+		uint8_t r4 = sub_2344cd54(r7->index)->table_id;
+		struct SDT_Service* r5 = sub_2344cd54(r7->index)->Data_8;
 
 #if 0
 		{
@@ -758,7 +758,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 			while (r5 != 0)
 			{
 				//loc_23403b70
-				struct Struct_234a73e8_Inner_0x248* r0 = r7->Data_0x248;
+				struct Struct_234a73e8_Inner_0x248* r0 = r7->programs;
 				//->loc_23403bb4
 				while (r0->bData_0 & 0x80)
 				{
@@ -784,12 +784,12 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 				r5 = r5->next;
 			} //while (r5 != 0)
 			//0x23403bcc
-			r5 = sub_2344cd54(r7->Data_0)->Data_8;
+			r5 = sub_2344cd54(r7->index)->Data_8;
 			//->loc_23403cf4
 			while (r5 != 0)
 			{
 				//loc_23403be0
-				struct Struct_234a73e8_Inner_0x248* r4 = r7->Data_0x248;
+				struct Struct_234a73e8_Inner_0x248* r4 = r7->programs;
 				//->loc_23403ce4
 				while (r4->bData_0 & 0x80)
 				{
@@ -802,8 +802,8 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						{
 							//0x23403c04
 							r4->service_name = /*r0*/r5->Data_0x10->service_name;
-							r4->Data_0x32c = sub_2344cd54(r7->Data_0)->transport_stream_id;
-							r4->Data_0x330 = sub_2344cd54(r7->Data_0)->original_network_id;
+							r4->Data_0x32c = sub_2344cd54(r7->index)->transport_stream_id;
+							r4->Data_0x330 = sub_2344cd54(r7->index)->original_network_id;
 
 							uint8_t r0 = r5->Data_0x10->service_type;
 
@@ -842,8 +842,8 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						else
 						{
 							//loc_23403ca0
-							r4->Data_0x32c = sub_2344cd54(r7->Data_0)->transport_stream_id;
-							r4->Data_0x330 = sub_2344cd54(r7->Data_0)->original_network_id;
+							r4->Data_0x32c = sub_2344cd54(r7->index)->transport_stream_id;
+							r4->Data_0x330 = sub_2344cd54(r7->index)->original_network_id;
 
 							r4->bData_0 |= 0x08;
 							r4->bData_0 &= 0xbf;
@@ -883,11 +883,11 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 	{
 		//0x23403de8
 		int sb = 0;
-		struct Struct_236001c8* sp4 = pmt_get_data(r7->Data_0 & 0xff);
+		struct Struct_236001c8* sp4 = pmt_get_data(r7->index & 0xff);
 		//sl = sp4 + 0x1000;
-		struct Struct_234a73e8_Inner_0x248* r5 = r7->Data_0x248;
+		struct Struct_234a73e8_Inner_0x248* r5 = r7->programs;
 
-		r7->Data_0x248[0].bData_1 = sp4->version_number;
+		r7->programs[0].bData_1 = sp4->version_number;
 		//->loc_234043a4
 		while ((r5->bData_0 & 0x80) != 0)
 		{
@@ -1352,17 +1352,17 @@ int psi_handle_queue_item(Struct_234a73e8* r5, Queue_Item* pItem/*r6*/)
 
 		timer_user_control(r5->hTimer, 0);
 
-		sub_23422460(r5->Data_0 >> 1);
+		sub_23422460(r5->index >> 1);
 
 		if (pItem->pData->wData_0x14 != 0)
 		{
 			if (0 == sub_23458874())
 			{
-				sub_234224a0(r5->Data_0);
+				sub_234224a0(r5->index);
 			}
 		}
 		//loc_23404ea8
-		sub_23400518(r5->Data_0 & 0xff);
+		sub_23400518(r5->index & 0xff);
 		//->loc_23404e4c: Ack
 		pItem->pData->handled = 1; //sb
 		//->loc_23405080
@@ -1479,7 +1479,7 @@ int psi_handle_queue_item(Struct_234a73e8* r5, Queue_Item* pItem/*r6*/)
 						(r5->Data_0x228)(r5->wData_0x21e10, r5->wData_0x21e12);
 					}
 
-					PAT_Program* r0 = pat_get_program(r5->Data_0 & 0xff, r5->wData_0x21e10 & 0xff);
+					PAT_Program* r0 = pat_get_program(r5->index & 0xff, r5->wData_0x21e10 & 0xff);
 
 #if 0
 					{
@@ -1587,7 +1587,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 
 				psi_register_version_number(r4, 0x01, (sl[5] >> 1) & 0x1f);
 
-				uint16_t r0 = pat_decode_section(r4->Data_0 & 0xff, sl, 1);
+				uint16_t r0 = pat_decode_section(r4->index & 0xff, sl, 1);
 
 				if (r0 & 0x03)
 				{
@@ -1610,7 +1610,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 					psi_change_activity(r4, 0x01, 0);
 
 					/*r6->wData_0x12 = r6->wData_0x10 = */
-					r4->wData_0x21e12 = r4->wData_0x21e10 = pat_get_num_programs(r4->Data_0 & 0xff);
+					r4->wData_0x21e12 = r4->wData_0x21e10 = pat_get_num_programs(r4->index & 0xff);
 
 					sub_23403ab4(0x01, r4);
 
@@ -1640,7 +1640,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 					(r4->Data_0x228)(/*r6->wData_0x10*/r4->wData_0x21e10, /*r6->wData_0x12*/r4->wData_0x21e12);
 				}
 
-				PAT_Program* r0 = pat_get_program(r4->Data_0 & 0xff, /*r6->wData_0x10*/r4->wData_0x21e10 & 0xff);
+				PAT_Program* r0 = pat_get_program(r4->index & 0xff, /*r6->wData_0x10*/r4->wData_0x21e10 & 0xff);
 
 				if (r0 == 0)
 				{
@@ -1678,7 +1678,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 				while (r7 < /*r6->wData_0x10*/r4->wData_0x21e10)
 				{
 					//loc_23405238
-					PAT_Program* r0 = pat_get_program(r4->Data_0 & 0xff, r7 & 0xff);
+					PAT_Program* r0 = pat_get_program(r4->index & 0xff, r7 & 0xff);
 
 					if (r0->program_number != /*r6->wData_0x14*/r4->wData_0x21e14)
 					{
@@ -1712,7 +1712,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 						//0x234052a0
 						int r7 = r4->activeMask;
 
-						PAT_Program* r0 = pat_get_program(r4->Data_0 & 0xff, 0);
+						PAT_Program* r0 = pat_get_program(r4->index & 0xff, 0);
 
 						/*r6->wData_0x14*/r4->wData_0x21e14 = r0->program_number;
 
@@ -1776,7 +1776,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 
 				psi_register_version_number(r4, 0x02, ((sl[5] >> 1) & 0x1f)/*version_number*/);
 
-				uint16_t r6 = pmt_decode_section(r4->Data_0 & 0xff, sl);
+				uint16_t r6 = pmt_decode_section(r4->index & 0xff, sl);
 
 #if 0
 				{
@@ -1847,7 +1847,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 								(r4->Data_0x228)(/*r6->wData_0x10*/r4->wData_0x21e10, /*r6->wData_0x12*/r4->wData_0x21e12);
 							}
 
-							PAT_Program* r0 = pat_get_program(r4->Data_0 & 0xff, /*r6->wData_0x10*/r4->wData_0x21e10 & 0xff);
+							PAT_Program* r0 = pat_get_program(r4->index & 0xff, /*r6->wData_0x10*/r4->wData_0x21e10 & 0xff);
 
 #if 1
 							{
@@ -1879,7 +1879,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 						int sp_0x20;
 						int sp_0x1c;
 
-						int r7 = sub_2344c7cc(r4->Data_0 & 0xff);
+						int r7 = sub_2344c7cc(r4->index & 0xff);
 #if 0 //TODO!!!
 						if (r7 & 0x03)
 						{
@@ -2011,7 +2011,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 						//0x234056c8
 						r4->bData_0x21e82 |= sectionNumberBit;
 
-						sdt_decode_section(r4->Data_0 & 0xff, r6, r4->bData_0x21e8c);
+						sdt_decode_section(r4->index & 0xff, r6, r4->bData_0x21e8c);
 
 						r4->bData_0x21e8c = 0; //r8
 					}
@@ -2079,7 +2079,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 						//0x234057d8
 						r4->bData_0x21e85 |= sectionNumberBit;
 
-						nit_decode_section(r4->Data_0 & 0xff, sl, r4->bData_0x21e8d);
+						nit_decode_section(r4->index & 0xff, sl, r4->bData_0x21e8d);
 
 						r4->bData_0x21e8d = 0; //r8
 					}
@@ -2237,7 +2237,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 					//0x23405a28
 					r4->bNIT_SectionNumberBits |= sectionNumberBit;
 
-					nit_decode_section(r4->Data_0 & 0xff, r6, r4->bData_0x21e8b);
+					nit_decode_section(r4->index & 0xff, r6, r4->bData_0x21e8b);
 
 					r4->bData_0x21e8b = 0; //r8
 				}
@@ -2860,7 +2860,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->PAT_bufferSize != 0)
 	{
 		//0x234069b8
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0x00; //r7 //PAT
 		sp.sectionDataNotify = psi_handle_PAT_section;
 
@@ -2891,7 +2891,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->PMT_bufferSize != 0)
 	{
 		//0x23406a50
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0; //r7
 		sp.sectionDataNotify = psi_handle_PMT_section;
 
@@ -2928,7 +2928,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->SDT_BAT_bufferSize != 0)
 	{
 		//0x23406b04
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0x11; //SDT or BAT???
 		sp.sectionDataNotify = psi_handle_SDT_BAT_section;
 
@@ -2967,7 +2967,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->NIT_bufferAddress != 0)
 	{
 		//0x23406bc4
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0x10; //NIT???
 		sp.sectionDataNotify = psi_handle_NIT_section;
 
@@ -3004,7 +3004,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->TDT_bufferAddress != 0)
 	{
 		//0x23406c80
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0x14; //fp //TDT or TOT???
 		sp.sectionDataNotify = psi_handle_TDT_section;
 
@@ -3035,7 +3035,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->EIT_bufferAddress != 0)
 	{
 		//0x23406d20
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0x12; //EIT
 		sp.sectionDataNotify = psi_handle_EIT_section;
 
@@ -3076,7 +3076,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->Data_0x24 != 0)
 	{
 		//0x23406de4
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0; //r7
 		sp.sectionDataNotify = sub_234059b0;
 
@@ -3122,7 +3122,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->Data_0x1c != 0)
 	{
 		//0x23406eb8
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 1; //r8 //CAT???
 		sp.sectionDataNotify = psi_handle_CAT_section;
 		sp.Data_4->bNumTargetIndex = 1; //r8
@@ -3155,7 +3155,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->Data_0x5c != 0)
 	{
 		//0x23406f5c
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0; //r7
 		sp.sectionDataNotify = sub_234059f0;
 
@@ -3186,7 +3186,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->Data_0x64 != 0)
 	{
 		//0x23406ff4
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0; //r7
 		sp.sectionDataNotify = sub_23405a30;
 
@@ -3250,7 +3250,7 @@ int sub_234044f0(Struct_234a73e8* r6, PSI_BufferParams* r5)
 	if (r5->Data_0x54 != 0)
 	{
 		//0x23407124
-		sp.bData_0 = r6->Data_0;
+		sp.bData_0 = r6->index;
 		sp.pid = 0; //r7
 		sp.sectionDataNotify = sub_23405ab0;
 
@@ -3369,9 +3369,9 @@ void* psi_open(PSI_Params* r5)
 	r4->Data_0x238 = r5->Data_0x88;
 	r4->Data_0x23c = r5->Data_0x8c;
 
-	OSTaskCreateExt(psi_thread, r4, &Data_234a5490[r4->Data_0].words[THREAD_STACK_SIZE_PSI-1],
+	OSTaskCreateExt(psi_thread, r4, &Data_234a5490[r4->index].words[THREAD_STACK_SIZE_PSI-1],
 			r5->threadPrio & 0xff, r5->threadPrio,
-			Data_234a5490[r4->Data_0].words, THREAD_STACK_SIZE_PSI,
+			Data_234a5490[r4->index].words, THREAD_STACK_SIZE_PSI,
 			"FILTER_MANAGER", 3);
 
 	return r4;
@@ -3389,7 +3389,7 @@ int psi_init(int sb)
 	{
 		memset(&Data_234a73e8[i], 0, sizeof(Struct_234a73e8));
 
-		Data_234a73e8[i].Data_0 = i;
+		Data_234a73e8[i].index = i;
 	}
 
 	sub_2344ec24(sb);
@@ -3546,14 +3546,14 @@ int sub_23406654(void* h, uint32_t r5, struct Struct_234a73e8_Inner_0x248* r6)
 
 	OSSemPend(r4->sema, 100, &sp);
 
-	uint32_t r0 = pat_get_num_programs(r4->Data_0 & 0xff);
+	uint32_t r0 = pat_get_num_programs(r4->index & 0xff);
 	if (r0 <= r5)
 	{
 		sp = 7;
 	}
 	else
 	{
-		*r6 = r4->Data_0x248[r5];
+		*r6 = r4->programs[r5];
 	}
 
 	OSSemPost(r4->sema);
@@ -3578,15 +3578,15 @@ int sub_234066d0(void* h, struct Struct_234a73e8_Inner_0x248* r6)
 			(((r4->Data_0x21e04 & 0x02) | 0x09) == 0x0b) &&
 			(r4->wData_0x21e14 != 0))
 	{
-		uint16_t r0 = pat_get_num_programs(r4->Data_0 & 0xff);
+		uint16_t r0 = pat_get_num_programs(r4->index & 0xff);
 		//->loc_23406788
 		while (r0--)
 		{
 			//loc_23406744
-			if (r4->Data_0x248[r0].pat_program_number == r4->wData_0x21e14)
+			if (r4->programs[r0].pat_program_number == r4->wData_0x21e14)
 			{
-				//memcpy(r6, &r4->Data_0x248[r0], sizeof(struct Struct_234a73e8_Inner_0x248));
-				*r6 = r4->Data_0x248[r0];
+				//memcpy(r6, &r4->programs[r0], sizeof(struct Struct_234a73e8_Inner_0x248));
+				*r6 = r4->programs[r0];
 
 				OSSemPost(r4->sema);
 
@@ -3603,28 +3603,29 @@ int sub_234066d0(void* h, struct Struct_234a73e8_Inner_0x248* r6)
 
 
 /* 234067a8 - complete */
-int sub_234067a8(Struct_234a73e8* r4, uint16_t* r6, struct Struct_234a73e8_Inner_0x248** r7)
+int psi_get_all_current_programs(Struct_234a73e8* r4, 
+		uint16_t* pNumPrograms, struct Struct_234a73e8_Inner_0x248** ppPrograms)
 {
 #if 0
-	console_send_string("sub_234067a8 (todo.c): TODO\r\n");
+	console_send_string("psi_get_all_current_programs (todo.c): TODO\r\n");
 #endif
 
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_234067a8: r4->Data_0x21e08=0x%x\r\n", r4->Data_0x21e08);
+		sprintf(debug_string, "psi_get_all_current_programs: r4->Data_0x21e08=0x%x\r\n", r4->Data_0x21e08);
 		console_send_string(debug_string);
 	}
 #endif
 
 	if (r4->Data_0x21e08 & 1)
 	{
-		*r6 = 0;
+		*pNumPrograms = 0;
 	}
 	else
 	{
-		*r6 = pat_get_num_programs(r4->Data_0);
-		*r7 = r4->Data_0x248;
+		*pNumPrograms = pat_get_num_programs(r4->index);
+		*ppPrograms = r4->programs;
 	}
 
 	return r4->Data_0x21e08;
@@ -3642,7 +3643,7 @@ void sub_23406834(Struct_234a73e8* r4)
 
 	OSSemPend(r4->sema, 100, &sp);
 
-	sub_2344dcf4(r4->Data_0, -1);
+	sub_2344dcf4(r4->index, -1);
 
 	OSSemPost(r4->sema);
 }
@@ -3660,7 +3661,7 @@ void psi_get_network_info(Struct_2344dc3c* r5, Struct_234a73e8* r4)
 
 	OSSemPend(r4->sema, 100, &sp_0xc);
 
-	sub_2344dc3c(r4->Data_0, &sp);
+	sub_2344dc3c(r4->index, &sp);
 
 	OSSemPost(r4->sema);
 
@@ -3681,13 +3682,13 @@ void sub_234068f0(Struct_234a73e8* r4, int r6, int r7, int r5, int r8)
 
 	if (r8 != 0)
 	{
-		sub_2344c730(r4->Data_0 & 0xff, r6, r7 & 0xff, r5);
+		sub_2344c730(r4->index & 0xff, r6, r7 & 0xff, r5);
 		//->loc_2340694c
 	}
 	else
 	{
 		//loc_2340693c
-		sub_2344c79c(r4->Data_0 & 0xff, r5);
+		sub_2344c79c(r4->index & 0xff, r5);
 	}
 	//loc_2340694c
 	OSSemPost(r4->sema);
@@ -3701,7 +3702,7 @@ void sub_23406a74(Struct_234a73e8* r4)
 	console_send_string("sub_23406a74 (todo.c): TODO\r\n");
 #endif
 
-	memset(r4->Data_0x248, 0, 150 * sizeof(struct Struct_234a73e8_Inner_0x248));
+	memset(r4->programs, 0, 150 * sizeof(struct Struct_234a73e8_Inner_0x248));
 	memset(r4->Data_0x21d58, 0, 0xa0);
 }
 

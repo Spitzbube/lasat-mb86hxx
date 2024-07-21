@@ -24,7 +24,7 @@ struct
     int Data_23825960; //23825960
     Struct_2349203c Data_23825964; //23825964
     int Data_2382596c; //2382596c
-    int fill_23825970[7]; //23825970
+    int Data_23825970[7]; //23825970
     uint16_t wData_2382598c; //2382598c
     //???
 } Data_237e5900; //237e5900 +x = 
@@ -61,6 +61,43 @@ static void sub_2345b350()
 {
 	console_send_string("sub_2345b350 (sub_2345bc50.c): TODO\r\n");
 
+}
+
+
+/* 2345b99c - todo */
+void sub_2345b99c()
+{
+    if (0 == OSSemAccept(Data_237e5900.sema))
+    {
+        return;
+    }
+
+    if (Data_237e5900.Data_237e5908 != 0)
+    {
+#if 1
+    	console_send_string("sub_2345b99c (sub_2345bc50.c): TODO\r\n");
+#endif
+
+        if (Data_237e5900.Data_237e5908 == 1)
+        {
+            Data_237e5900.Data_237e5908 = 0;
+            //->loc_2345bb70
+        }
+        else
+        {
+            //0x2345b9d0
+
+        }
+
+        //TODO
+
+        {
+            //loc_2345bb70
+            sub_23453b88(0, &Data_237e5900.Data_23825970[0]);
+        }
+    } 
+    //loc_2345bb7c
+    OSSemPost(Data_237e5900.sema);
 }
 
 

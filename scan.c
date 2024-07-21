@@ -314,7 +314,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 		scanData.state = 5;
 		scanData.wData_0x15c = 0;
 
-		int r5 = sub_234067a8(r5_, &sp4, &sp8);
+		int r5 = psi_get_all_current_programs(r5_, &sp4, &sp8);
 
 #if 1
 		{

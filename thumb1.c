@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
+#include "eit.h"
 
 #pragma thumb
 
@@ -17,6 +18,7 @@
 int menu_root_on_event(void*);
 int menu_root_on_enter(int);
 int menu_root_on_exit(UI_Thread_Params*);
+void menu_root_start_event_display();
 
 //0x23495984
 struct
@@ -35,7 +37,7 @@ struct
 	uint16_t fill_548; //548, 23495b94
 	uint8_t bData_23495b96; //0x226 = 550   23495b96
 	uint8_t fill_23495b97; //23495b97
-	uint8_t bData_23495b98; //0x228 = 552, 23495b98
+	uint8_t bEventDisplayMode; //0x228 = 552, 23495b98
 	int (*standbyTimerFunc)(); //0x22C = 556, 23495b9c  0x23495b90 - 0x20 +0x2c
 	uint8_t bKeyActivity; //0x230 = 560, 23495ba0 23495b90 + 0x10
 	uint32_t standbyCount; //564, 23495ba4, 23495b90 +0x14
@@ -221,6 +223,56 @@ int sub_2346ed20()
 }
 
 
+/* 2346edaa - complete */
+static void* event_string_display(FrontDisplay_Job* r5)
+{
+	strncpy(r5->bData_8, &Data_23495970.strText[0], 0xff);
+
+	r5->bNumTextChars = strlen(r5->bData_8);
+	r5->bDisplayOffset = 0;
+	r5->bNumDisplayChars = 12;
+	r5->bData_0x10b = 0;
+	r5->holdTime = 0;
+	r5->Data_4 = 0;
+	r5->bData_0x10f = 0;
+	r5->bData_0x110 = 0;
+	r5->bData_0x10c = 0;
+	r5->Data_0 = frontdisplay_draw_text;
+
+	if (r5->bNumTextChars > 12)
+	{
+		r5->bData_0x10c = 1;
+		r5->Data_0 = frontdisplay_draw_scroll_text;
+	}
+	//loc_2346edec
+	return event_string_display;
+}
+
+
+/* 2346edf0 - complete */
+static void* now_next_display(FrontDisplay_Job* r5)
+{
+#if 0
+	console_send_string("now_next_display (todo.c): TODO\r\n");
+#endif
+
+	text_table_get_string(443 + Data_23495970.bEventDisplayMode, r5->bData_8, 0xfe);
+
+	r5->bNumTextChars = strlen(r5->bData_8);
+	r5->bDisplayOffset = 0;
+	r5->bNumDisplayChars = 12;
+	r5->bData_0x10b = 0;
+	r5->bData_0x10c = 0;
+	r5->bData_0x110 = 0;
+	r5->holdTime = 15;
+	r5->Data_0 = frontdisplay_draw_text;
+	r5->Data_4 = 0;
+	r5->bData_0x10f = 0;
+
+	return event_string_display;
+}
+
+
 /* 2346eeee - complete */
 static void* sub_2346eeee(int* a)
 {
@@ -236,6 +288,20 @@ static void* sub_2346eeee(int* a)
 	}
 	//loc_2346eefa
 	return 0;
+}
+
+
+/* 2346eefe - complete */
+void sub_2346eefe()
+{
+#if 0
+	console_send_string("sub_2346eefe (todo.c): TODO\r\n");
+#endif
+
+	Data_23495970.timerVal = 0;
+	Data_23495970.timerFunc = 0;
+	Data_23495970.Data_2349597c = 0;
+
 }
 
 
@@ -287,6 +353,199 @@ static void* standby_warn_timer_func(uint32_t* pCount)
 	r5->bData_0x10/*bKeyActivity*/ = 1; //r6
 
 	return 0;
+}
+
+
+/* 2346efd4 - todo */
+static void* event_display_timer_func(uint32_t* pCount)
+{
+	int r4;
+
+	Struct_2340bf0c sp_0x48;
+	Struct_235fdfac sp_0x30;
+	struct Struct_234fd8f0_Inner0 sp8;
+
+#if 0
+	console_send_string("event_display_timer_func (todo.c): TODO\r\n");
+#endif
+
+	(*pCount)--;
+
+	if (*pCount != 0)
+	{
+		//0x2346efe2
+#if 0
+		//r5, =0x23495984
+		if (0 != sub_23418bf0()) //->ts_play
+		{
+			//0x2346efec
+			sub_2345d5c4(&Data_23495970.strText[0], 0xff);
+			//->loc_2346f082
+		}
+		else
+#endif
+		{
+			//loc_2346eff6
+			sub_2340bf0c(&sp_0x48);
+
+			uint8_t sp4[] = " ";
+
+			sub_2340bf94(sp_0x48.wData_0x2a, &sp8, &sp_0x30);
+
+			Struct_2377b8d0* pEITSectionData =
+					eit_get_section_data(sp8.Data_0.service_id, sp_0x30.transport_stream_id);
+#if 0
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "event_display_timer_func: sp8.Data_0.service_id=%d, sp_0x30.transport_stream_id=%d, pEITSectionData=%p\r\n",
+						sp8.Data_0.service_id, sp_0x30.transport_stream_id, pEITSectionData);
+				console_send_string(debug_string);
+			}
+#endif
+			if (pEITSectionData != 0)
+			{
+				//0x2346f01e
+				struct Struct_2377b8d0_Inner8* r0 =
+						sub_2344ec90(pEITSectionData, 4 - 3 * Data_23495970.bEventDisplayMode);
+#if 0
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "event_display_timer_func: Data_23495970.bEventDisplayMode=%d, r0=%p\r\n",
+							Data_23495970.bEventDisplayMode, r0);
+					console_send_string(debug_string);
+				}
+#endif
+				if (r0 != 0)
+				{
+					//0x2346f034
+					struct Struct_2377b8d0_Inner8_Inner8* r0_ = r0->Data_8;
+					if (r0_ != 0)
+					{
+						//0x2346f03a
+						struct Struct_2377b8d0_Inner8_Inner8_Inner0* r0 = r0_->Data_0;
+
+						uint8_t* eventName = r0->strName;
+
+						if (eventName != 0)
+						{
+							//0x2346f042
+							if ((eventName[0] != 0) && (eventName[0] < 0x21))
+							{
+								//0x2346f04c
+								eventName++;
+							}
+							//loc_2346f052
+						}
+						else
+						{
+							//loc_2346f050
+							eventName = sp4;
+						}
+						//loc_2346f052
+						uint8_t* eventText = r0->strText;
+						//int r1 = 0x100;
+
+						if (eventText != 0)
+						{
+							//0x2346f05c
+							if ((eventText[0] != 0) && (eventText[0] < 0x21))
+							{
+								//0x2346f066
+								eventText++;
+							}
+							//loc_2346f068
+							snprintf(&Data_23495970.strText[0], /*r1*/0x100, "%s - %s ", eventName, eventText);
+							//->loc_2346f082
+						}
+						else
+						{
+							//loc_2346f074
+							snprintf(&Data_23495970.strText[0], /*r1*/0x100, "%s ", eventName);
+							//->loc_2346f082
+						}
+#if 0
+						{
+							extern char debug_string[];
+							sprintf(debug_string, "event_display_timer_func: eventName='%s', eventText='%s'\r\n",
+									eventName, eventText? eventText: "");
+							console_send_string(debug_string);
+						}
+#endif
+					} //if (r0_ != 0)
+					else
+					{
+						//loc_2346f078
+						text_table_get_string(40, &Data_23495970.strText[0], 0xff);
+					}
+				} //if (r0 != 0)
+				else
+				{
+					//loc_2346f078
+					text_table_get_string(40, &Data_23495970.strText[0], 0xff);
+				}
+			} //if (pEITSectionData != 0)
+			else
+			{
+				//loc_2346f078
+				text_table_get_string(40, &Data_23495970.strText[0], 0xff);
+			}
+		}
+		//loc_2346f082
+		uint32_t r0 = strlen(&Data_23495970.strText[0]);
+
+		r4 = *pCount;
+
+		if (r0 < 13)
+		{
+			//0x2346f08e
+			r4 = 20;
+			//->loc_2346f100
+		}
+		else
+		{
+			//loc_2346f0f8
+			if (r0 > 40)
+			{
+				//0x2346f0fc
+				r4 = r0 + 10;
+			}
+			//loc_2346f100
+		}
+		//loc_2346f100
+		frontdisplay_start_text(now_next_display);
+	} //if (*pCount != 0)
+	else
+	{
+		//->loc_2346f092 -> loc_2346f108
+		r4 = 1;
+		//loc_2346f10a
+	}
+	//loc_2346f10a
+	sub_2346f77e();
+
+	Data_23495970.timerVal = r4;
+
+	return Data_23495970.timerFunc;
+}
+
+
+/* 2346f118 - todo */
+void sub_2346f118()
+{
+#if 1
+	console_send_string("sub_2346f118 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 2346f1a8 - todo */
+void sub_2346f1a8()
+{
+#if 1
+	console_send_string("sub_2346f1a8 (todo.c): TODO\r\n");
+#endif
+
 }
 
 
@@ -664,11 +923,12 @@ int menu_root_on_event(void* r0)
 			//TODO
 
 		}
+#endif
 		//loc_2346f65e
 		else if (r7->keyCode == 44/*0x2c*/) //Info / EPG
 		{
 			//0x2346f666
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "menu_root_on_event: Info Key\r\n");
@@ -683,15 +943,15 @@ int menu_root_on_event(void* r0)
 				//loc_2346f678
 				//r0, #0x0
 				//->loc_2346f684
-				Data_23495970.bData_23495b98/*[r5, #0x8]*/ = 0;
+				Data_23495970.bEventDisplayMode/*[r5, #0x8]*/ = 0;
 
-				sub_2346f7ce();
+				menu_root_start_event_display();
 				//->loc_2346f6f0
 			}
 			else
 			{
 				//loc_2346f67c
-				if (Data_23495970.bData_23495b98/*[r5, #0x8]*/ != 0)
+				if (Data_23495970.bEventDisplayMode/*[r5, #0x8]*/ != 0)
 				{
 					//->loc_2346f5d0 -> loc_2346f49a
 					sub_2346f77e();
@@ -702,21 +962,22 @@ int menu_root_on_event(void* r0)
 				else
 				{
 					//0x2346f682
-					Data_23495970.bData_23495b98/*[r5, #0x8]*/ = 1;
+					Data_23495970.bEventDisplayMode/*[r5, #0x8]*/ = 1;
 
-					sub_2346f7ce();
+					menu_root_start_event_display();
 					//->loc_2346f6f0
 				}
 			}
 		}
 		//loc_2346f68c
+#if 0
 		else if (r7->keyCode == 13/*0x0d*/) //Mute
 		{
 			//TODO
 
 		}
 		//loc_2346f6c6
-		else if (r7->keyCode == 47/*0x2f*/) // I / i
+		else if (r7->keyCode == 47/*0x2f*/) // I / i (Displaytext aktualisieren)
 		{
 			//TODO
 
@@ -794,7 +1055,7 @@ int menu_root_start()
 	//loc_2346f73a
 	if (r4 != 0)
 	{
-		sub_2340d1c8(sub_2346f6f6);
+		channel_set_psi_data_callback(sub_2346f6f6);
 		sub_2346f76c();
 	}
 	//loc_2346f748
@@ -822,6 +1083,32 @@ int sub_2346f76c()
 
 	Data_23495970.timerVal = 10;
 	Data_23495970.timerFunc = sub_2346eeee;
+	Data_23495970.Data_2349597c = 0;
+}
+
+
+/* 2346f77e - complete */
+void sub_2346f77e()
+{
+#if 0
+	console_send_string("sub_2346f77e (todo.c): TODO\r\n");
+#endif
+
+	Data_23495970.timerVal = 5;
+	Data_23495970.timerFunc = sub_2346ecd4;
+	Data_23495970.Data_2349597c = sub_2346eefe;
+}
+
+
+/* 2346f7ce - complete */
+void menu_root_start_event_display()
+{
+#if 0
+	console_send_string("menu_root_start_event_display (todo.c): TODO\r\n");
+#endif
+
+	Data_23495970.timerVal = 45;
+	Data_23495970.timerFunc = event_display_timer_func;
 	Data_23495970.Data_2349597c = 0;
 }
 

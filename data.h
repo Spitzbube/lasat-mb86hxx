@@ -24,7 +24,7 @@ extern Struct_234a73e8* main_hPSIDecoder1; //23491d9c / 234ac4d0 +16 = 0x10
 extern Struct_234a73e8* main_hPSIDecoder2; //23491da0 +20 = 0x14
 extern int Data_23491da4; //23491da4 +0x18
 extern int Data_23491da8; //23491da8
-extern void* Data_23491dac; //23491dac
+extern void* main_hHdmi; //23491dac
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
 extern Struct_2354dd70* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8
 extern Struct_2354dd70* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec

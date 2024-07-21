@@ -10,8 +10,8 @@
 
 
 void channel_stop();
-void sub_23409e64();
-void sub_2340a190();
+static void channel_on_psi_data(Struct_234a73e8*);
+static void channel_check_streaming(void);
 int sub_2340b55c();
 #if 0
 void sub_2340d300();
@@ -50,12 +50,12 @@ void (*Data_2349201c)() = 0; //2349201c / 234ac62c +0x20
 void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
 void (*Data_23492028)() = 0; //23492028 +0x2c
-void (*Data_2349202c)() = 0; //2349202c +0x30
+void (*channel_pfCheckStreaming)() = 0; //2349202c +0x30
 void (*Data_23492030)() = 0; //23492030 +0x34
 #if 0
 void (*Data_23492034)() = 0; //23492034 +0x38
 #endif
-void (*Data_23492038)() = 0; //23492038 +0x3c
+void (*channel_pfPSIDataCallback)(int) = 0; //23492038 +0x3c
 Struct_2349203c* Data_2349203c = 0; //2349203c +0x40
 Struct_23492040* Data_23492040 = 0; //23492040 +0x44
 int channel_videoWritePtr = 0; //23492044 +0x48
@@ -177,7 +177,7 @@ int channel_stop_video()
 	console_send_string("channel_stop_video (todo.c): TODO\r\n");
 #endif
 
-	hdmi_video_stop(Data_23491dac);
+	hdmi_video_stop(main_hHdmi);
 
 	tsd_deactivate_pid_channel(main_hPESParserVideo);
 
@@ -260,7 +260,7 @@ void channel_stop_pes()
 	//loc_234096e0
 	sub_2345ac28();
 
-	Data_2349202c = 0; //r4
+	channel_pfCheckStreaming = 0; //r4
 }
 
 
@@ -627,12 +627,12 @@ void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_
 		sync_SetStcRegulation(sb, 1);
 	}
 
-	Data_2349202c = sub_2340a190;
+	channel_pfCheckStreaming = channel_check_streaming;
 }
 
 
 /* 23409c1c - todo */
-void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
+void sub_23409c1c(PSI_Program* r7)
 {
 #if 0
 	console_send_string("sub_23409c1c (todo.c): TODO\r\n");
@@ -829,10 +829,10 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 
 
 /* 23409e64 - todo */
-void sub_23409e64(Struct_234a73e8* a)
+void channel_on_psi_data(Struct_234a73e8* a)
 {
 #if 1
-	console_send_string("sub_23409e64 (todo.c): TODO\r\n");
+	console_send_string("channel_on_psi_data (todo.c): TODO\r\n");
 #endif
 
 	int r6 = 1;
@@ -840,25 +840,25 @@ void sub_23409e64(Struct_234a73e8* a)
 	int r8 = 1; //r6
 
 	struct Struct_234fd8f0_Inner0 sp_0x24;
-	struct Struct_234a73e8_Inner_0x248* sp_0x20;
-	uint16_t sp_0x1c = 0; //r5
+	PSI_Program* pPrograms; //sp_0x20
+	uint16_t wNumPrograms = 0; //r5 //sp_0x1c
 
-	if (0 != sub_234067a8(a, &sp_0x1c, &sp_0x20))
+	if (0 != psi_get_all_current_programs(a, &wNumPrograms, &pPrograms))
 	{
-		if (Data_23492038 != 0)
+		if (channel_pfPSIDataCallback != 0)
 		{
-			(Data_23492038)(1);
+			(channel_pfPSIDataCallback)(1);
 		}
 		//loc_23409ea4
 		return;
 	}
 	//loc_23409eac
-	if (Data_23492038 != 0)
+	if (channel_pfPSIDataCallback != 0)
 	{
-		(Data_23492038)(0);
+		(channel_pfPSIDataCallback)(0);
 	}
 
-	if (sp_0x1c == 0)
+	if (wNumPrograms == 0)
 	{
 		//loc_23409ea4
 		return;
@@ -876,40 +876,40 @@ void sub_23409e64(Struct_234a73e8* a)
 	sp_0x24 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
 
 //	int r2 = sp_0x24.Data_0.service_id;
-//	struct Struct_234a73e8_Inner_0x248* r1 = sp_0x20;
-	//int r3 = sp_0x1c;
+//	struct Struct_234a73e8_Inner_0x248* r1 = pPrograms;
+	//int r3 = wNumPrograms;
 	//ip, #0x73
 	//->loc_2340a17c
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23409e64: sp_0x24.Data_0.service_id=%d, sp_0x1c=%d\r\n",
-				sp_0x24.Data_0.service_id, sp_0x1c);
+		sprintf(debug_string, "channel_on_psi_data: sp_0x24.Data_0.service_id=%d, wNumPrograms=%d\r\n",
+				sp_0x24.Data_0.service_id, wNumPrograms);
 		console_send_string(debug_string);
 	}
 #endif
 
-	for (uint16_t r0 = 0; r0 < /*r3*/sp_0x1c; r0++)
+	for (uint16_t r0 = 0; r0 < /*r3*/wNumPrograms; r0++)
 	{
 		//loc_23409f18
-		if (/*r2*/sp_0x24.Data_0.service_id == /*r1*/sp_0x20[r0].pat_program_number)
+		if (/*r2*/sp_0x24.Data_0.service_id == /*r1*/pPrograms[r0].pat_program_number)
 		{
 			//0x23409f2c
-			sub_2345b08c(&/*r1*/sp_0x20[r0]);
+			sub_2345b08c(&/*r1*/pPrograms[r0]);
 
-			if (sp_0x20[r0].service_name != 0)
+			if (pPrograms[r0].service_name != 0)
 			{
 #if 1
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "sub_23409e64: sp_0x20[%d].service_name='%s'\r\n",
-							r0, sp_0x20[r0].service_name);
+					sprintf(debug_string, "channel_on_psi_data: pPrograms[%d].service_name='%s'\r\n",
+							r0, pPrograms[r0].service_name);
 					console_send_string(debug_string);
 				}
 #endif
 
-				strncpy(/*r7->*/sp_0x24.Data_0x10.service_name, sp_0x20[r0].service_name, 19);
-			}
+				strncpy(/*r7->*/sp_0x24.Data_0x10.service_name, pPrograms[r0].service_name, 19);
+			} //if (pPrograms[r0].service_name != 0)
 			//0x23409f54
 #if 0
 			int r3 = sp_0x24.Data_0x10.wData_0;
@@ -919,12 +919,12 @@ void sub_23409e64(Struct_234a73e8* a)
 				if (sp_0x24.Data_0.wData_12 == 0)
 				{
 					//0x23409f70
-					if (sp_0x20[r0].wData_0x33c == 0)
+					if (pPrograms[r0].wData_0x33c == 0)
 					{
 						r6 = 0;
 					}
 
-					if (sp_0x20[r0].wData_0x338 != 0)
+					if (pPrograms[r0].wData_0x338 != 0)
 					{
 						//0x23409f94 -> loc_2340a040
 						if (r8 != 0)
@@ -932,11 +932,11 @@ void sub_23409e64(Struct_234a73e8* a)
 							//0x2340a048
 							r5 = 1;
 
-							sp_0x24.Data_0.wData_12 = sp_0x20[r0].wData_0x338;
+							sp_0x24.Data_0.wData_12 = pPrograms[r0].wData_0x338;
 
 							if ((r3 == 0) && (sp_0x24.Data_0.wData_12 == 0))
 							{
-								sp_0x24.Data_0x10.wData_0 = sp_0x20[r0].wData_0x33c;
+								sp_0x24.Data_0x10.wData_0 = pPrograms[r0].wData_0x33c;
 							}
 							//loc_2340a074
 						}
@@ -951,12 +951,12 @@ void sub_23409e64(Struct_234a73e8* a)
 					uint16_t r0_ = 0;
 					//int ip = sp_0x24.Data_0.wData_12 & ~0xe000;
 					//->loc_2340a030
-					while (sp_0x20[r0].Data_0xd0[r0_] != 0)
+					while (pPrograms[r0].Data_0xd0[r0_] != 0)
 					{
 						//loc_2340a00c
-						if ((sp_0x20[r0].wData_6[r0_]) == /*ip*/(sp_0x24.Data_0.wData_12 & ~0xe000))
+						if ((pPrograms[r0].wData_6[r0_]) == /*ip*/(sp_0x24.Data_0.wData_12 & ~0xe000))
 						{
-							if (sp_0x20[r0].Data_0x198[r0_] != 0)
+							if (pPrograms[r0].Data_0x198[r0_] != 0)
 							{
 								r8 = 0;
 							}
@@ -969,11 +969,11 @@ void sub_23409e64(Struct_234a73e8* a)
 					{
 						//0x2340a048
 						r5 = 1;
-						sp_0x24.Data_0.wData_12 = sp_0x20[r0].wData_0x338;
+						sp_0x24.Data_0.wData_12 = pPrograms[r0].wData_0x338;
 
 						if ((r3 == 0) && (sp_0x24.Data_0.wData_12 == 0))
 						{
-							sp_0x24.Data_0x10.wData_0 = sp_0x20[r0].wData_0x33c;
+							sp_0x24.Data_0x10.wData_0 = pPrograms[r0].wData_0x33c;
 						}
 					}
 					//loc_2340a074
@@ -984,14 +984,14 @@ void sub_23409e64(Struct_234a73e8* a)
 				//loc_23409f98
 				uint16_t r0_ = 0;
 				//int ip = r3 & ~0xe000;
-				//r2 = &sp_0x20[r0];
+				//r2 = &pPrograms[r0];
 				//->loc_23409fd0
-				while ((sp_0x20[r0].Data_0xd0[r0_] == 0) && (sp_0x20[r0].Data_0x260[r0_] != 0))
+				while ((pPrograms[r0].Data_0xd0[r0_] == 0) && (pPrograms[r0].Data_0x260[r0_] != 0))
 				{
 					//loc_23409fac
-					if ((sp_0x20[r0].wData_6[r0_] & ~0xe000) == /*ip*/(r3 & ~0xe000))
+					if ((pPrograms[r0].wData_6[r0_] & ~0xe000) == /*ip*/(r3 & ~0xe000))
 					{
-						if (sp_0x20[r0].Data_0x198[r0_] == 0)
+						if (pPrograms[r0].Data_0x198[r0_] == 0)
 						{
 							r6 = 0;
 						}
@@ -1006,12 +1006,12 @@ void sub_23409e64(Struct_234a73e8* a)
 					uint16_t r0_ = 0;
 					//int ip = sp_0x24.Data_0.wData_12 & ~0xe000;
 					//->loc_2340a030
-					while (sp_0x20[r0].Data_0xd0[r0_] != 0)
+					while (pPrograms[r0].Data_0xd0[r0_] != 0)
 					{
 						//loc_2340a00c
-						if ((sp_0x20[r0].wData_6[r0_]) == /*ip*/(sp_0x24.Data_0.wData_12 & ~0xe000))
+						if ((pPrograms[r0].wData_6[r0_]) == /*ip*/(sp_0x24.Data_0.wData_12 & ~0xe000))
 						{
-							if (sp_0x20[r0].Data_0x198[r0_] != 0)
+							if (pPrograms[r0].Data_0x198[r0_] != 0)
 							{
 								r8 = 0;
 							}
@@ -1024,11 +1024,11 @@ void sub_23409e64(Struct_234a73e8* a)
 					{
 						//0x2340a048
 						r5 = 1;
-						sp_0x24.Data_0.wData_12 = sp_0x20[r0].wData_0x338;
+						sp_0x24.Data_0.wData_12 = pPrograms[r0].wData_0x338;
 
 						if ((r3 == 0) && (sp_0x24.Data_0.wData_12 == 0))
 						{
-							sp_0x24.Data_0x10.wData_0 = sp_0x20[r0].wData_0x33c;
+							sp_0x24.Data_0x10.wData_0 = pPrograms[r0].wData_0x33c;
 						}
 					}
 					//loc_2340a074
@@ -1038,16 +1038,16 @@ void sub_23409e64(Struct_234a73e8* a)
 			//loc_2340a074
 			if (r6 != 0)
 			{
-				sp_0x24.Data_0x10.wData_0 = sp_0x20[r0].wData_0x33c;
+				sp_0x24.Data_0x10.wData_0 = pPrograms[r0].wData_0x33c;
 				r5 = 1;
 			}
 #endif
 
-			if ((sp_0x24.Data_0.wData_2 & 0x10) != (sp_0x20[r0].bData_0 & 0x10))
+			if ((sp_0x24.Data_0.wData_2 & 0x10) != (pPrograms[r0].bData_0 & 0x10))
 			{
 				//0x2340a0ac
 				sp_0x24.Data_0.wData_2 &= ~0x10;
-				sp_0x24.Data_0.wData_2 |= (sp_0x20[r0].bData_0 & 0x10);
+				sp_0x24.Data_0.wData_2 |= (pPrograms[r0].bData_0 & 0x10);
 				sp_0x24.Data_0.wData_2 &= ~0x100;
 				sp_0x24.Data_0.wData_2 &= ~0x200;
 				sp_0x24.Data_0.wData_2 &= ~0x400;
@@ -1055,21 +1055,21 @@ void sub_23409e64(Struct_234a73e8* a)
 				r5 = 1;
 			}
 			//loc_2340a0ec
-			if (sp_0x24.Data_0.wVideoPID != sp_0x20[r0].wData_0x336)
+			if (sp_0x24.Data_0.wVideoPID != pPrograms[r0].wData_0x336)
 			{
-				sp_0x24.Data_0.wVideoPID = sp_0x20[r0].wData_0x336;
+				sp_0x24.Data_0.wVideoPID = pPrograms[r0].wData_0x336;
 				r5 = 1;
 			}
 
-			if (sp_0x24.Data_0.wPcrPID != sp_0x20[r0].wData_0x334)
+			if (sp_0x24.Data_0.wPcrPID != pPrograms[r0].wData_0x334)
 			{
-				sp_0x24.Data_0.wPcrPID = sp_0x20[r0].wData_0x334;
+				sp_0x24.Data_0.wPcrPID = pPrograms[r0].wData_0x334;
 				r5 = 1;
 			}
 
-			if (sp_0x24.Data_0.wTtxPID != sp_0x20[r0].wData_0x33a)
+			if (sp_0x24.Data_0.wTtxPID != pPrograms[r0].wData_0x33a)
 			{
-				sp_0x24.Data_0.wTtxPID = sp_0x20[r0].wData_0x33a;
+				sp_0x24.Data_0.wTtxPID = pPrograms[r0].wData_0x33a;
 				r5 = 1;
 			}
 			//0x2340a130
@@ -1086,12 +1086,12 @@ void sub_23409e64(Struct_234a73e8* a)
 			}
 #endif
 			//loc_2340a164
-			sub_23409c1c(&sp_0x20[r0]);
+			sub_23409c1c(&pPrograms[r0]);
 			//->loc_2340a184
 			break;
-		} //if (r2 == /*r1*/sp_0x20[r0].pat_program_number)
+		} //if (/*r2*/sp_0x24.Data_0.service_id == /*r1*/pPrograms[r0].pat_program_number)
 		//loc_2340a174
-	} //for (uint16_t r0 = 0; r0 < /*r3*/sp_0x1c; r0++)
+	} //for (uint16_t r0 = 0; r0 < /*r3*/wNumPrograms; r0++)
 	//loc_2340a184
 	OSSemPost(channel_sema);
 	//->loc_23409ea4();
@@ -1099,15 +1099,15 @@ void sub_23409e64(Struct_234a73e8* a)
 
 
 /* 2340a190 - todo */
-void sub_2340a190()
+void channel_check_streaming(void)
 {
 #if 0
-	console_send_string("sub_2340a190 (todo.c): TODO\r\n");
+	console_send_string("channel_check_streaming (todo.c): TODO\r\n");
 #endif
 
 	//r4, =0x235482e4
 
-	int r6 = sub_2345f928();
+	int r6 = sub_2345f928(); //Get videc state?
 
 	//r8, =0x23491ffc
 	//r7, #0xc8
@@ -1122,7 +1122,7 @@ void sub_2340a190()
 #if 0
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2340a190: channel_videoWritePtr=%d, writePtr=%d, Data_2349204c=%d\r\n",
+				sprintf(debug_string, "channel_check_streaming: channel_videoWritePtr=%d, writePtr=%d, Data_2349204c=%d\r\n",
 						channel_videoWritePtr, writePtr, Data_2349204c);
 				console_send_string(debug_string);
 			}
@@ -1135,7 +1135,7 @@ void sub_2340a190()
 		}
 
 		channel_videoWritePtr = writePtr;
-	}
+	} //if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO)
 	//loc_2340a1e0
 	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO)
 	{
@@ -1153,7 +1153,7 @@ void sub_2340a190()
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2340a190: channel_audioWritePtr=%d, writePtr=%d, Data_2349204c=%d\r\n",
+				sprintf(debug_string, "channel_check_streaming: channel_audioWritePtr=%d, writePtr=%d, Data_2349204c=%d\r\n",
 						channel_audioWritePtr, writePtr, Data_2349204c);
 				console_send_string(debug_string);
 			}
@@ -1167,7 +1167,7 @@ void sub_2340a190()
 		}
 
 		channel_audioWritePtr = writePtr;
-	}
+	} //if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO)
 	//loc_2340a224
 	//sb, =0x235462e4
 	//sl, =0x234fd8f0
@@ -1189,12 +1189,12 @@ void sub_2340a190()
 			(Data_2349201c)(1);
 		}
 
-		psi_start_for_service(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 0x7f, sub_23409e64);
+		psi_start_for_service(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 0x7f, channel_on_psi_data);
 
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_PSI;
 
 		Data_2349204c = 200;
-	}
+	} //if (Data_2349204c <= 0)
 	//loc_2340a2b8
 	if (r6 == 1)
 	{
@@ -1216,23 +1216,23 @@ void sub_2340a190()
 
 
 /* 2340a320 - todo */
-void sub_2340a320(int a)
+void channel_periodic_check(int powerdown)
 {
 	uint8_t sp;
 
 #if 0
-	console_send_string("sub_2340a320 (todo.c): TODO\r\n");
+	console_send_string("channel_periodic_check (todo.c): TODO\r\n");
 #endif
 
 	//int r7 = 0;
 	//r4, =dword_23491dac
 	//r5, =0x23491ffc
 
-	if (a != 0)
+	if (powerdown != 0)
 	{
 		Data_23492054 = 0; //r7
 
-		hdmi_power_down(Data_23491dac, 1);
+		hdmi_power_down(main_hHdmi, 1);
 	}
 	else
 	{
@@ -1243,12 +1243,12 @@ void sub_2340a320(int a)
 
 		OSSemPend(channel_sema, 0, &sp);
 
-		if (Data_2349202c != 0)
+		if (channel_pfCheckStreaming != 0)
 		{
-			(Data_2349202c)();
+			(channel_pfCheckStreaming)();
 		}
 
-		int r0 = sub_234253d0(Data_23491dac);
+		int r0 = sub_234253d0(main_hHdmi);
 		//r0 = 23492054
 		if (r0 != 0)
 		{
@@ -1256,7 +1256,7 @@ void sub_2340a320(int a)
 			if (Data_23492054 == 0)
 			{
 				//0x2340a394
-				hdmi_read_edid(Data_23491dac);
+				hdmi_read_edid(main_hHdmi);
 				//r0 = 23492054
 				//->loc_2340a4a8
 				Data_23492054++;
@@ -1269,9 +1269,9 @@ void sub_2340a320(int a)
 				if (Data_23492054 == 10)
 				{
 					//0x2340a3b0
-					hdmi_power_down(Data_23491dac, 0);
-					hdmi_video_start(Data_23491dac);
-					sub_23424f14(Data_23491dac);
+					hdmi_power_down(main_hHdmi, 0);
+					hdmi_video_start(main_hHdmi);
+					sub_23424f14(main_hHdmi);
 
 					auout_start_hdmi(main_hAuOut);
 					//mvn        r0, #0x0
@@ -1286,13 +1286,13 @@ void sub_2340a320(int a)
 					if (Data_23492018 != 0)
 					{
 						//0x2340a3f0
-						int r0 = (Data_23492018)(Data_23491dac);
+						int r0 = (Data_23492018)(main_hHdmi);
 						if (r0 == 0)
 						{
 							//0x2340a400
 							Data_23492018 = 0; //r7
 
-							sub_23424f14(Data_23491dac);
+							sub_23424f14(main_hHdmi);
 
 							if (bData_23491ffc == 2)
 							{
@@ -1333,7 +1333,7 @@ void sub_2340a320(int a)
 			//loc_2340a4b8
 			if (Data_23492054 != 0)
 			{
-				hdmi_power_down(Data_23491dac, 1);
+				hdmi_power_down(main_hHdmi, 1);
 			}
 
 			Data_23492054 = 0;
@@ -1970,7 +1970,7 @@ int sub_2340b22c(int r4)
 		psi_start_for_service(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 
 			PSI_MASK_NIT | PSI_MASK_EIT | PSI_MASK_TDT |
 			PSI_MASK_PAT | PSI_MASK_PMT | PSI_MASK_CAT | 0x08, //0x7f, 
-			sub_23409e64);
+			channel_on_psi_data);
 
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_PSI;
 
@@ -2096,7 +2096,7 @@ void sub_2340b684(Struct_234a73e8* a)
 	struct Struct_234a73e8_Inner_0x248* sp_0x44;
 	struct Struct_234fd8f0_Inner0 sp_0x1c;
 
-	int r0 = sub_234067a8(a, &sp_0x48, &sp_0x44);
+	int r0 = psi_get_all_current_programs(a, &sp_0x48, &sp_0x44);
 	if (r0 != 0)
 	{
 		//->loc_2340b744
@@ -2928,17 +2928,17 @@ int sub_2340d0d0()
 
 
 /* 2340d1c8 / 2340f3b8 - todo */
-void sub_2340d1c8(void (*r5)())
+void channel_set_psi_data_callback(void (*r5)())
 {
-	uint8_t sp;
+	uint8_t err;
 
 #if 0
-	console_send_string("sub_2340d1c8 (todo.c): TODO\r\n");
+	console_send_string("channel_set_psi_data_callback (todo.c): TODO\r\n");
 #endif
 
-	OSSemPend(channel_sema, 0, &sp);
+	OSSemPend(channel_sema, 0, &err);
 
-	Data_23492038 = r5;
+	channel_pfPSIDataCallback = r5;
 
 	OSSemPost(channel_sema);
 }

@@ -71,7 +71,7 @@ struct Struct_2358bda4
 	void (*Data_0x78)(void*, void*); //120 = 0x78
 	void (*Data_0x7c)(); //124 = 0x7c
 	void (*frontDisplayTask)(); //128 = 0x80
-	void (*Data_0x84)(); //132 = 0x84
+	void (*pfPeriodicCheck)(); //132 = 0x84
 
 } Data_2358bda4; //2358bda4
 
@@ -552,8 +552,8 @@ void sub_23410620(int r0)
 	//loc_234107d0
 	sub_2342803c(&sp_0x18, Data_23491da8);
 	sub_2345f8f8();
-	hdmi_SetVideoParameters(Data_23491dac, &sp4);
-	hdmi_video_start(Data_23491dac);
+	hdmi_SetVideoParameters(main_hHdmi, &sp4);
+	hdmi_video_start(main_hHdmi);
 }
 
 
@@ -608,7 +608,7 @@ int sub_23410804()
 		if ((r0 & 0x78000000) == 0)
 		{
 			//0x234108bc
-			if (0 == sub_234251f4(Data_23491dac))
+			if (0 == sub_234251f4(main_hHdmi))
 			{
 				r4 = 1;
 			}
@@ -622,7 +622,7 @@ int sub_23410804()
 				if (((r0 >> 27) & 0x0f) == 2) //r2)
 				{
 					//0x234108e4
-					if (0 == sub_234251f4(Data_23491dac))
+					if (0 == sub_234251f4(main_hHdmi))
 					{
 						r4 = 1;
 					}
@@ -988,13 +988,13 @@ void sub_23410be8(int* r6, int* r7)
 
 
 /* 23410ce4 - complete */
-void sub_23410ce4()
+void av_periodic_check()
 {
 #if 0
-	console_send_string("sub_23410ce4 (todo.c): TODO\r\n");
+	console_send_string("av_periodic_check (todo.c): TODO\r\n");
 #endif
 
-	sub_2340a320(0);
+	channel_periodic_check(0);
 
 	sub_23460c88();
 
@@ -1043,7 +1043,7 @@ void av_thread()
 	Data_2358bda4.Data_0x60 = 3; /* HDMI: 20 1920x1080i @ 50Hz */
 	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x40.Data_4 & 3) / 2;
 	Data_2358bda4.Data_0x78 = 0;
-	Data_2358bda4.Data_0x84 = 0;
+	Data_2358bda4.pfPeriodicCheck = 0;
 
 	sp_0x10 = 0;
 	sp_0xc = 0;
@@ -1063,9 +1063,9 @@ void av_thread()
 
 		sub_2340c970(1, &Data_2358bda4.Data_0x40);
 
-		if (Data_2358bda4.Data_0x84 != 0)
+		if (Data_2358bda4.pfPeriodicCheck != 0)
 		{
-			(Data_2358bda4.Data_0x84)();
+			(Data_2358bda4.pfPeriodicCheck)();
 		}
 
 		if (Data_2349209c != 0)
@@ -1197,7 +1197,7 @@ void sub_23410fe4()
 
 
 /* 234110a0 - todo */
-void av_switch_powermode(int r7)
+void av_switch_powermode(int powerdown)
 {
 	uint8_t sp_0xc;
 	Struct_23437974 sp;
@@ -1208,7 +1208,7 @@ void av_switch_powermode(int r7)
 
 	OSSemPend(Data_23492098, 0, &sp_0xc);
 
-	if (r7 != 0)
+	if (powerdown != 0)
 	{
 		//0x234110cc
 		if (Data_2358bda4.Data_0x7c != 0)
@@ -1221,9 +1221,9 @@ void av_switch_powermode(int r7)
 		Data_2358bda4.Data_0x78 = 0;
 		Data_2358bda4.frontDisplayTask = 0;
 		Data_2358bda4.Data_0x64 = 0;
-		Data_2358bda4.Data_0x84 = 0;
+		Data_2358bda4.pfPeriodicCheck = 0;
 
-		sub_2340a320(1);
+		channel_periodic_check(1);
 
 		sub_2343655c(2);
 
@@ -1231,13 +1231,13 @@ void av_switch_powermode(int r7)
 
 		gpio_set(Data_2358bda4.Data_4, 1);
 		gpio_set(Data_2358bda4.Data_8, 0);
-	}
+	} //if (powerdown != 0)
 	else
 	{
 		//loc_23411128
 		Data_2358bda4.Data_0x78 = sub_23410be8;
 		Data_2358bda4.frontDisplayTask = frontdisplay_task;
-		Data_2358bda4.Data_0x84 = sub_23410ce4;
+		Data_2358bda4.pfPeriodicCheck = av_periodic_check;
 		Data_2358bda4.Data_0x28 = 0;
 		memset(&Data_2358bda4.Data_2358bdd0, 0, 8);
 #if 0

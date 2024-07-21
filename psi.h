@@ -198,10 +198,39 @@ typedef struct
 	//0x16c
 } Struct_234a73e8_Inner8;
 
+typedef struct Struct_234a73e8_Inner_0x248
+{
+	uint8_t bData_0; //0
+	uint8_t bData_1; //1
+	uint16_t pat_program_number; //2
+	uint16_t pmt_pid; //4
+	uint16_t wData_6[50]; //6
+	uint16_t wData_0x6a[50]; //0x6A
+	int Data_0xd0[50]; //0xd0
+	int Data_0x198[50]; //0x198
+	int Data_0x260[50]; //0x260
+	uint8_t* service_name; //0x328
+	int Data_0x32c; //0x32c
+	int Data_0x330; //0x330
+	uint16_t wData_0x334; //0x334
+	uint16_t wData_0x336; //0x336
+	uint16_t wData_0x338; //0x338
+	uint16_t wData_0x33a; //0x33a
+	uint16_t wData_0x33c; //0x33c
+	struct
+	{
+		uint16_t wData_0; //0
+		int Data_4[4]; //4
+		//20
+	} Data_0x340[4]; //0x340
+	int Data_0x390; //0x390
+	uint8_t bData_0x394; //0x394
+	//0x398 = 920
+} PSI_Program;
 
 typedef struct Struct_234a73e8
 {
-	uint32_t Data_0; //0
+	uint32_t index; //0
 	PSI_Params* Data_4; //4
 	Struct_234a73e8_Inner8 Data_8; //8
 	OS_EVENT* sema; //0x174
@@ -219,35 +248,7 @@ typedef struct Struct_234a73e8
 	void (*Data_0x23c)(); //0x23c
 	Struct_236e5834* Data_0x240; //0x240
 	uint8_t bData_0x244; //0x244
-	struct Struct_234a73e8_Inner_0x248
-	{
-		uint8_t bData_0; //0
-		uint8_t bData_1; //1
-		uint16_t pat_program_number; //2
-		uint16_t pmt_pid; //4
-		uint16_t wData_6[50]; //6
-		uint16_t wData_0x6a[50]; //0x6A
-		int Data_0xd0[50]; //0xd0
-		int Data_0x198[50]; //0x198
-		int Data_0x260[50]; //0x260
-		uint8_t* service_name; //0x328
-		int Data_0x32c; //0x32c
-		int Data_0x330; //0x330
-		uint16_t wData_0x334; //0x334
-		uint16_t wData_0x336; //0x336
-		uint16_t wData_0x338; //0x338
-		uint16_t wData_0x33a; //0x33a
-		uint16_t wData_0x33c; //0x33c
-		struct
-		{
-			uint16_t wData_0; //0
-			int Data_4[4]; //4
-			//20
-		} Data_0x340[4]; //0x340
-		int Data_0x390; //0x390
-		uint8_t bData_0x394; //0x394
-		//0x398 = 920
-	} Data_0x248[150]; //0x248
+	PSI_Program programs[150]; //0x248
 	int Data_0x21d58[40]; //0x21d58
 	int activeMask; //0x21df8
 	int Data_0x21dfc; //0x21dfc
