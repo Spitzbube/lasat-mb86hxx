@@ -1397,3 +1397,16 @@ void main_usb_init()
 	return;
 }
 
+#if 1 //Only v290
+
+/*  / 23402948 - todo */
+void sub_23402948(void)
+{
+
+#if 0
+	/*sub_2345bc50*/sub_23425e88(/*Struct_2345bc50* pParams*/);
+#endif
+}
+
+#endif
+

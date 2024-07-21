@@ -5,6 +5,7 @@
 #include "data.h"
 #include "auout.h"
 #include "videc.h"
+#include "sub_2345bc50.h"
 #include "sub_2340a6a0.h"
 
 
@@ -26,15 +27,6 @@ const uint8_t Data_23488068[] = //23488068
 		0x51, 0x5a, 0x63, 0x6c, 0x76, 0x80, 0x8a, 0x94,
 		0x9f, 0xaa, 0xb6, 0xc2, 0xce, 0xda, 0xe7, 0xf3, 0xff
 };
-
-
-typedef struct
-{
-	uint16_t wData_0; //0
-	uint16_t wData_2; //2
-	uint16_t wData_4; //4
-
-} Struct_2349203c;
 
 
 typedef struct
@@ -75,6 +67,11 @@ int Data_23492054 = 0; //23492054 +0x58
 
 Struct_234fd8f0 Data_234fd8f0; //234fd8f0 + 489f4 = 235462E4
 
+#define CHANNEL_ACTIVE_STREAM_VIDEO      (1 << 0)
+#define CHANNEL_ACTIVE_STREAM_AUDIO      (1 << 1)
+#define CHANNEL_ACTIVE_STREAM_TTX        (1 << 3)
+#define CHANNEL_ACTIVE_STREAM_PSI        (1 << 6)
+
 struct
 {
 	void (*Data_0)(); //0 235462E4
@@ -89,7 +86,7 @@ struct
 	uint16_t wVideoPID; //235491da
 	uint8_t bData_235491dc; //0xef8 235491dc
 	uint8_t bData_235491dd; //0xEF9 235491dd
-	uint8_t bData_235491de; //235491de 235482e4 + 0xefa
+	uint8_t activeStreamMask; //235491de 235482e4 + 0xefa
 	uint8_t bData_235491df; //235491df
 	uint8_t bData_235491e0; //235491e0 0xefc
 	uint8_t bData_235491e1; //235491e1 0xefd
@@ -202,23 +199,23 @@ void channel_stop_pes()
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "channel_stop_pes: Data_235462e4.bData_235491de=0x%x\r\n",
-				Data_235462e4.bData_235491de);
+		sprintf(debug_string, "channel_stop_pes: Data_235462e4.activeStreamMask=0x%x\r\n",
+				Data_235462e4.activeStreamMask);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (Data_235462e4.bData_235491de & 1)
+	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO)
 	{
-		Data_235462e4.bData_235491de &= ~1;
+		Data_235462e4.activeStreamMask &= ~CHANNEL_ACTIVE_STREAM_VIDEO;
 
 		channel_stop_video();
 	}
 
-	if (Data_235462e4.bData_235491de & 2)
+	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO)
 	{
 		//Audio
-		Data_235462e4.bData_235491de &= ~2;
+		Data_235462e4.activeStreamMask &= ~CHANNEL_ACTIVE_STREAM_AUDIO;
 
 		channel_stop_audio();
 
@@ -226,10 +223,10 @@ void channel_stop_pes()
 	}
 	//loc_23409664
 #if 0
-	if (Data_235462e4.bData_235491de & 8)
+	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_TTX)
 	{
 		//Video Text
-		Data_235462e4.bData_235491de &= ~8;
+		Data_235462e4.activeStreamMask &= ~CHANNEL_ACTIVE_STREAM_TTX;
 
 		sub_23460bfc();
 
@@ -238,14 +235,14 @@ void channel_stop_pes()
 			(Data_23492028)(0);
 		}
 	}
+#endif
 	//loc_23409690
-	if (Data_235462e4.bData_235491de & 0x20)
+	if (Data_235462e4.activeStreamMask & 0x20)
 	{
-		Data_235462e4.bData_235491de &= ~0x20;
+		Data_235462e4.activeStreamMask &= ~0x20;
 
 		sub_2345bb88();
 	}
-#endif
 	//r4 = 0;
 	if (main_hCurrentPCR_TSD_Handle != 0)
 	{
@@ -283,7 +280,7 @@ void channel_stop()
 
 	psi_stop(main_hPSIDecoder1, 1);
 
-	Data_235462e4.bData_235491de &= ~0x40;
+	Data_235462e4.activeStreamMask &= ~CHANNEL_ACTIVE_STREAM_PSI;
 }
 
 
@@ -481,10 +478,10 @@ int channel_start_video(int pid, int r4)
 
 
 /* 23409a6c - todo */
-void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/struct Struct_234fd8f0_Inner0 a)
+void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/struct Struct_234fd8f0_Inner0 a)
 {
 #if 0
-	console_send_string("sub_23409a6c (todo.c): TODO\r\n");
+	console_send_string("channel_start_pes (todo.c): TODO\r\n");
 #endif
 
 	int sb = 0;
@@ -493,23 +490,23 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 	{
 		extern char debug_string[];
 
-		sprintf(debug_string, "sub_23409a6c: a.Data_0.wPcrPID=0x%x\r\n",
+		sprintf(debug_string, "channel_start_pes: a.Data_0.wPcrPID=0x%x\r\n",
 				a.Data_0.wPcrPID);
 		console_send_string(debug_string);
 
-		sprintf(debug_string, "sub_23409a6c: a.Data_0.wVideoPID=0x%x\r\n",
+		sprintf(debug_string, "channel_start_pes: a.Data_0.wVideoPID=0x%x\r\n",
 				a.Data_0.wVideoPID);
 		console_send_string(debug_string);
 
-		sprintf(debug_string, "sub_23409a6c: a.Data_0.wData_12=0x%x\r\n",
+		sprintf(debug_string, "channel_start_pes: a.Data_0.wData_12=0x%x\r\n",
 				a.Data_0.wData_12);
 		console_send_string(debug_string);
 
-		sprintf(debug_string, "sub_23409a6c: a.Data_0.wTtxPID=0x%x\r\n",
+		sprintf(debug_string, "channel_start_pes: a.Data_0.wTtxPID=0x%x\r\n",
 				a.Data_0.wTtxPID);
 		console_send_string(debug_string);
 
-		sprintf(debug_string, "sub_23409a6c: a.Data_0x10.wAudioPID=0x%x\r\n",
+		sprintf(debug_string, "channel_start_pes: a.Data_0x10.wAudioPID=0x%x\r\n",
 				a.Data_0x10.wAudioPID);
 		console_send_string(debug_string);
 
@@ -519,9 +516,9 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 //	int r1_ = a.Data_0.wData_2;
 //	uint16_t r8 = a.Data_0.wData_10;
 	if ((/*r8*/a.Data_0.wVideoPID != 0) &&
-			((Data_235462e4.bData_235491de & 1) == 0))
+			((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO) == 0))
 	{
-		Data_235462e4.bData_235491de |= 1;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_VIDEO;
 
 		channel_start_video(/*r8*/a.Data_0.wVideoPID, a.Data_0.wData_2); //r1_);
 	}
@@ -530,9 +527,9 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 //	uint16_t r7 = a.Data_0.wData_12;
 //	uint16_t r5 = a.Data_0x10.wAudioPID;
 	if ((/*r7*/a.Data_0.wData_12 != 0) && (/*r5*/a.Data_0x10.wAudioPID == 0) &&
-			((Data_235462e4.bData_235491de & 2) == 0))
+			((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO) == 0))
 	{
-		Data_235462e4.bData_235491de |= 2;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_AUDIO;
 
 		sub_2342ba34((a.Data_0.wData_2 >> 1) & 0x03); //r0);
 		//->loc_23409b24
@@ -540,10 +537,11 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 		//loc_23409b28
 	}
 	//loc_23409af0
-	if ((/*r5*/a.Data_0x10.wAudioPID != 0) && ((Data_235462e4.bData_235491de & 2) == 0))
+	if ((/*r5*/a.Data_0x10.wAudioPID != 0) && 
+		((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO) == 0))
 	{
 		//loc_23409af8
-		Data_235462e4.bData_235491de |= 2;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_AUDIO;
 
 		sub_2342ba34((a.Data_0.wData_2 >> 1) & 0x03); //r0);
 
@@ -614,10 +612,10 @@ void sub_23409a6c(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd
 #if 0
 	if (a.Data_0.wTtxPID != 0)
 	{
-		if ((Data_235462e4.bData_235491de & 8) == 0)
+		if ((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_TTX) == 0)
 		{
 			//Video Text
-			Data_235462e4.bData_235491de |= 8;
+			Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_TTX;
 
 			sub_23460b7c(a.Data_0.wTtxPID);
 		}
@@ -692,7 +690,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 
 			Struct_2349203c sp;
 
-			sp.wData_0 = r7->Data_0x340[sl].wData_0;
+			sp.pid = r7->Data_0x340[sl].wData_0;
 			struct
 			{
 				int fill_0; //0
@@ -706,7 +704,7 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 			sp.wData_4 = r0->wData_8;
 
 			Data_2349203c = &sp;
-		}
+		} //if (r7->Data_0x340[0].Data_4[0] != 0)
 
 		if (fp == 0)
 		{
@@ -746,14 +744,14 @@ void sub_23409c1c(struct Struct_234a73e8_Inner_0x248* r7)
 	//loc_23409d6c
 	if (Data_2349203c != 0)
 	{
-		if (Data_2349203c->wData_0 != 0)
+		if (Data_2349203c->pid != 0)
 		{
-			//0x23409d88
+			//0x23409d88: Set the pid and start streaming
 			sub_2345bbcc(Data_2349203c);
 
 			Data_2349203c = 0;
 
-			Data_235462e4.bData_235491de |= 0x20;
+			Data_235462e4.activeStreamMask |= 0x20;
 		}
 		//loc_23409da4
 		return;
@@ -1084,7 +1082,7 @@ void sub_23409e64(Struct_234a73e8* a)
 				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ] = sp_0x24;
 //				*r7 = sp_0x24;
 
-				sub_23409a6c(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+				channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
 			}
 #endif
 			//loc_2340a164
@@ -1093,7 +1091,7 @@ void sub_23409e64(Struct_234a73e8* a)
 			break;
 		} //if (r2 == /*r1*/sp_0x20[r0].pat_program_number)
 		//loc_2340a174
-	} //for (uint16_t r0 = 0; r0 < r3; r0++)
+	} //for (uint16_t r0 = 0; r0 < /*r3*/sp_0x1c; r0++)
 	//loc_2340a184
 	OSSemPost(channel_sema);
 	//->loc_23409ea4();
@@ -1114,7 +1112,7 @@ void sub_2340a190()
 	//r8, =0x23491ffc
 	//r7, #0xc8
 
-	if (Data_235462e4.bData_235491de & 1)
+	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO)
 	{
 		//0x2340a1b8
 		int writePtr = sub_23422268(main_hPESParserVideo);
@@ -1139,7 +1137,7 @@ void sub_2340a190()
 		channel_videoWritePtr = writePtr;
 	}
 	//loc_2340a1e0
-	if (Data_235462e4.bData_235491de & 2)
+	if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO)
 	{
 		//0x2340a1ec
 		void* r0_ = main_hPESParserAudio;
@@ -1184,16 +1182,16 @@ void sub_2340a190()
 		struct Struct_234fd8f0_Inner0 sp_0x18 =
 				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
 
-		sub_23409a6c(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+		channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
 
 		if (Data_2349201c != 0)
 		{
 			(Data_2349201c)(1);
 		}
 
-		sub_23406418(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 0x7f, sub_23409e64);
+		psi_start_for_service(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 0x7f, sub_23409e64);
 
-		Data_235462e4.bData_235491de |= 0x40;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_PSI;
 
 		Data_2349204c = 200;
 	}
@@ -1206,7 +1204,7 @@ void sub_2340a190()
 		struct Struct_234fd8f0_Inner0 sp_0x18 =
 				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
 
-		sub_23409a6c(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+		channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
 	}
 	//loc_2340a308
 	else if (r6 == 2)
@@ -1347,7 +1345,7 @@ void sub_2340a320(int a)
 
 		OSSemPend(channel_sema, 0, &sp);
 
-		if (Data_235462e4.bData_235491de & 1)
+		if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO)
 		{
 			//0x2340a500
 			int r1 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
@@ -1910,7 +1908,7 @@ void sub_2340aee4()
  /* 2340b22c / 2340d534 - todo */
 int sub_2340b22c(int r4)
 {
-	uint8_t sp_0x40;
+	uint8_t err; //sp_0x40
 	struct Struct_234fd8f0_Inner0 sp_0x18;
 	struct Struct_234fd8f0_Inner0_Inner_0x10 sp;
 
@@ -1928,9 +1926,9 @@ int sub_2340b22c(int r4)
 		sub_2340ec54(main_hFrontend1, 0);
 	}
 	//loc_2340b260
-	OSSemPend(channel_sema, 0, &sp_0x40);
+	OSSemPend(channel_sema, 0, &err);
 
-	if (sp_0x40 != 0)
+	if (err != OS_ERR_NONE)
 	{
 		return 0xff;
 	}
@@ -1950,12 +1948,10 @@ int sub_2340b22c(int r4)
 			}
 		}
 		//loc_2340b334
-	}
+	} //if (r4 != 0)
 	else
 	{
 		//loc_2340b2b0
-		console_send_string("loc_2340b2b0 (PES / Section Filter): TODO!!!!!!!!!!!\r\n");
-
 		int r0 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
 
 		//memcpy(&sp_0x18, &Data_234fd8f0.Data_234fd8f0[r0], 0, 24);
@@ -1963,7 +1959,7 @@ int sub_2340b22c(int r4)
 //		sp = Data_234fd8f0.Data_234fd8f0[r0].Data_0x10;
 
 		//PES Parser (Audio, Video...)
-		sub_23409a6c(Data_234fd8f0.Data_234fd8f0[r0]/*Data_234fd8f0.Data_234fd8f0[r0].Data_0, Data_234fd8f0.Data_234fd8f0[r0].Data_0x10*/);
+		channel_start_pes(Data_234fd8f0.Data_234fd8f0[r0]/*Data_234fd8f0.Data_234fd8f0[r0].Data_0, Data_234fd8f0.Data_234fd8f0[r0].Data_0x10*/);
 
 		if (Data_2349201c != 0)
 		{
@@ -1971,12 +1967,12 @@ int sub_2340b22c(int r4)
 		}
 		//0x2340b304
 		//Section Filter (EIT...)
-		sub_23406418(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 
+		psi_start_for_service(main_hPSIDecoder1, sp_0x18.Data_0.service_id, 
 			PSI_MASK_NIT | PSI_MASK_EIT | PSI_MASK_TDT |
 			PSI_MASK_PAT | PSI_MASK_PMT | PSI_MASK_CAT | 0x08, //0x7f, 
 			sub_23409e64);
 
-		Data_235462e4.bData_235491de |= 0x40;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_PSI;
 
 		Data_23492024 = channel_stop;
 	}
@@ -2128,7 +2124,7 @@ void sub_2340b684(Struct_234a73e8* a)
 
 			sp_0x1c.Data_0.wData_2 = sp_0x44[i].bData_0;
 
-			sub_23409a6c(sp_0x1c);
+			channel_start_pes(sp_0x1c);
 
 			Data_23492024 = channel_stop;
 			//->loc_2340b744
@@ -2168,7 +2164,7 @@ int sub_2340baf0(int r7)
 
 		psi_stop(main_hPSIDecoder1, 1);
 
-		Data_235462e4.bData_235491de &= ~0x40;
+		Data_235462e4.activeStreamMask &= ~CHANNEL_ACTIVE_STREAM_PSI;
 
 		if (r7 == 0x0f)
 		{
@@ -2185,9 +2181,9 @@ int sub_2340baf0(int r7)
 			(Data_2349201c)(1);
 		}
 
-		sub_23406418(main_hPSIDecoder1, Data_235462e4.wData_235491d2, 0x3f, sub_2340b684);
+		psi_start_for_service(main_hPSIDecoder1, Data_235462e4.wData_235491d2, 0x3f, sub_2340b684);
 
-		Data_235462e4.bData_235491de |= 0x40;
+		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_PSI;
 	}
 
 	OSSemPost(channel_sema);

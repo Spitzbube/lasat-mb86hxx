@@ -3399,13 +3399,13 @@ int psi_init(int sb)
 
 
 /* 23406418 - complete */
-int sub_23406418(Struct_234a73e8* r0, int r1, int sectionMask, void (*onPSIData)(Struct_234a73e8*))
+int psi_start_for_service(Struct_234a73e8* r0, int r1, int sectionMask, void (*onPSIData)(Struct_234a73e8*))
 {
 	Queue_Item queueItem; //sp_0x20
 	Queue_Item_Data sp4;
 
 #if 0
-	console_send_string("sub_23406418 (todo.c): TODO\r\n");
+	console_send_string("psi_start_for_service (todo.c): TODO\r\n");
 #endif
 
 	queueItem.state = PSI_STATE_START;

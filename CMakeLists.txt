@@ -59,6 +59,7 @@ set(SRCS
    sub_234774c4.c
    graphic.c
    sub_23419cd0.c
+   sub_2345bc50.c
    hexdump.c
    todo.c
 )

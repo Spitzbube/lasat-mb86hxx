@@ -44,6 +44,9 @@ void startup_thread()
 	main_audio_init();
 	sub_234011f4(); //channel???
 	main_pes_init();
+#if 0 //v290
+	sub_23402948();
+#endif
 	main_frontend_init();
 	main_frontpanel_init();
 	main_graphic_init();
