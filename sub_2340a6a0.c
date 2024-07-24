@@ -1239,7 +1239,7 @@ void channel_periodic_check(int powerdown)
 		//loc_2340a34c
 		sub_2340d300();
 
-		sub_2341a520(Data_235462e4.currentChannel);
+		radiotext_check_data(Data_235462e4.currentChannel);
 
 		OSSemPend(channel_sema, 0, &sp);
 

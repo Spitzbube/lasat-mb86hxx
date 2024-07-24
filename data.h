@@ -40,7 +40,7 @@ extern void* main_hAudec1; //23491ddc +0x50
 extern void* main_hAudec0; //23491de0 +0x54
 extern void* main_hAudec4; //23491de4 +0x58
 extern void* main_hAudec5; //23491de8 +0x5c
-extern int Data_23491dec; //23491dec +0x60
+extern void* main_hAudecRadioText; //23491dec +0x60
 extern void* main_hCurrentPCR_TSD_Handle; //23491e08
 extern void* main_hPESParserVideo; //23491e0c +0x80 / 234ac510
 

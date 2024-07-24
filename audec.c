@@ -638,7 +638,7 @@ int audec_set_params(int* r5)
 
 	OSSemPost(Data_234924d0);
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "audec_set_params: sp=0x%x\r\n", sp);

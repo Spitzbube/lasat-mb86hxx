@@ -4,6 +4,7 @@
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
 #include "eit.h"
+#include "radiotext.h"
 
 #pragma thumb
 
@@ -19,6 +20,12 @@ int menu_root_on_event(void*);
 int menu_root_on_enter(int);
 int menu_root_on_exit(UI_Thread_Params*);
 void menu_root_start_event_display();
+
+//0x2349596c
+uint8_t bData_2349596c = 0; //2349596c +0
+uint8_t bData_2349596d = 0; //2349596e +1
+uint8_t bData_2349596e = 0; //2349596e +2
+uint8_t bData_2349596f = 0; //2349596F +3
 
 //0x23495984
 struct
@@ -270,6 +277,30 @@ static void* now_next_display(FrontDisplay_Job* r5)
 	r5->bData_0x10f = 0;
 
 	return event_string_display;
+}
+
+
+/* 2346ee32 - todo */
+static void* rds_text_display(FrontDisplay_Job* p)
+{
+#if 0
+	console_send_string("rds_text_display (todo.c): TODO\r\n");
+#endif
+
+	strncpy(p->bData_8, &Data_23495970.strText[0], 255);
+
+	p->bNumTextChars = strlen(p->bData_8);
+	p->bDisplayOffset = 0;
+	p->bNumDisplayChars = 12;
+	p->bData_0x10b = 0;
+	p->holdTime = 0;
+	p->Data_4 = 0;
+	p->bData_0x10f = 0;
+	p->bData_0x110 = 0;
+	p->bData_0x10c = 1;
+	p->Data_0 = frontdisplay_draw_scroll_text;
+
+	return rds_text_display;
 }
 
 
@@ -530,22 +561,139 @@ static void* event_display_timer_func(uint32_t* pCount)
 
 
 /* 2346f118 - todo */
-void sub_2346f118()
+static void* rds_text_timer_func(uint32_t* pCount/*r4*/)
 {
-#if 1
-	console_send_string("sub_2346f118 (todo.c): TODO\r\n");
+	int r4;
+
+#if 0
+	console_send_string("rds_text_timer_func (todo.c): TODO\r\n");
 #endif
 
+	if (--(*pCount) != 0)
+	{
+		//0x2346f130
+		radiotext_get_string(RDS_RADIOTEXT, &Data_23495970.strText[0], 255);
+
+		if (Data_23495970.strText[0] == 0)
+		{
+			//0x2346f140
+			text_table_get_string(0x1BD, &Data_23495970.strText[0], 255);
+		}
+		//loc_2346f14c
+		uint32_t r7 = strlen(&Data_23495970.strText[0]);
+
+		if (0 == strcmp(&Data_23495970.strText[0], &Data_23495970.Data_23495a84[0]))
+		{
+			//0x2346f162
+			uint8_t sp[] = {0x00, 0x20, 0x00, 0x00};
+			if (r7 < 255)
+			{
+				//0x2346f16c
+				Data_23495970.strText[r7] = sp[bData_2349596c];
+				Data_23495970.strText[r7 + 1] = 0;
+			}
+			//loc_2346f17a
+			r4 = *pCount;
+			//->loc_2346f18a
+		}
+		else
+		{
+			//loc_2346f17e
+			strcpy(&Data_23495970.Data_23495a84[0], &Data_23495970.strText[0]);
+
+			r4 = r7;
+			r4 += 25;
+		}
+		//loc_2346f18a
+		bData_2349596c = 0;
+
+		frontdisplay_start_text(rds_text_display);
+		//->loc_2346f1a2
+	} //if (--(*pCount) != 0)
+	else
+	{
+		//loc_2346f196
+		r4 = strlen(&Data_23495970.strText[0]);
+		r4 += 25;
+
+		bData_2349596c = 1;
+	}
+	//loc_2346f1a2
+	Data_23495970.timerVal = r4;
+	
+	return Data_23495970.timerFunc;
 }
 
 
 /* 2346f1a8 - todo */
-void sub_2346f1a8()
+static void* rds_ps_name_timer_func(uint32_t* pCount/*r4*/)
 {
-#if 1
-	console_send_string("sub_2346f1a8 (todo.c): TODO\r\n");
+	uint32_t r4;
+
+#if 0
+	console_send_string("rds_ps_name_timer_func (todo.c): TODO\r\n");
 #endif
 
+	radiotext_get_string(RDS_PS_NAME, &Data_23495970.strText[0], 255);
+
+	if (Data_23495970.strText[0] == 0)
+	{
+		//0x2346f1c2
+		text_table_get_string(0x1BE, &Data_23495970.strText[0], 255);
+
+		(*pCount)--;
+		if ((*pCount) != 0)
+		{
+			//0x2346f1da
+			uint32_t r7 = strlen(&Data_23495970.strText[0]);
+
+			if (0 == strcmp(&Data_23495970.strText[0], &Data_23495970.Data_23495a84[0]))
+			{
+				//0x2346f1ee
+				uint8_t sp[] = {0x00, 0x20, 0x00, 0x00};
+				if (r7 < 255)
+				{
+					//0x2346f1f8
+					Data_23495970.strText[r7] = sp[bData_2349596d];
+					Data_23495970.strText[r7 + 1] = 0;
+				}
+				//loc_2346f206
+				r4 = *pCount;
+				//->loc_2346f216
+			}
+			else
+			{
+				//loc_2346f20a
+				strcpy(&Data_23495970.Data_23495a84[0], &Data_23495970.strText[0]);
+
+				r4 = r7;
+				r4 += 25;
+			}
+			//loc_2346f216
+			bData_2349596d = 0;
+
+			frontdisplay_start_text(rds_text_display);
+			//->loc_2346f22e
+		}
+		else
+		{
+			//loc_2346f222
+			r4 = strlen(&Data_23495970.strText[0]);
+			r4 += 25;
+
+			bData_2349596d = 1;
+		}
+		//loc_2346f22e
+		Data_23495970.timerVal = r4;
+		//->loc_2346f238
+	}
+	else
+	{
+		//loc_2346f232
+		frontdisplay_start_text(string_display);
+	}
+	//loc_2346f238
+	return Data_23495970.timerFunc;
 }
 
 
@@ -925,6 +1073,8 @@ int menu_root_on_event(void* r0)
 		}
 #endif
 		//loc_2346f65e
+		//r1, =0x2346f1a9
+		//r4, =0x2346f119
 		else if (r7->keyCode == 44/*0x2c*/) //Info / EPG
 		{
 			//0x2346f666
@@ -937,8 +1087,8 @@ int menu_root_on_event(void* r0)
 #endif
 			if ((Data_23495970.timerVal/*r3*/ == 0) ||
 					(Data_23495970.timerFunc/*r2*/ == sub_2346eeee) ||
-					(Data_23495970.timerFunc/*r2*/ == sub_2346f118) ||
-					(Data_23495970.timerFunc/*r2*/ == sub_2346f1a8))
+					(Data_23495970.timerFunc/*r2*/ == rds_text_timer_func/*r4*/) ||
+					(Data_23495970.timerFunc/*r2*/ == rds_ps_name_timer_func/*r1*/))
 			{
 				//loc_2346f678
 				//r0, #0x0
@@ -968,7 +1118,7 @@ int menu_root_on_event(void* r0)
 					//->loc_2346f6f0
 				}
 			}
-		}
+		} //else if (r7->keyCode == 44/*0x2c*/) //Info / EPG
 		//loc_2346f68c
 #if 0
 		else if (r7->keyCode == 13/*0x0d*/) //Mute
@@ -976,12 +1126,44 @@ int menu_root_on_event(void* r0)
 			//TODO
 
 		}
+#endif
 		//loc_2346f6c6
 		else if (r7->keyCode == 47/*0x2f*/) // I / i (Displaytext aktualisieren)
 		{
-			//TODO
-
-		}
+			//0x2346f6ca
+			//r0, #0x19
+			if (Data_23495970.timerFunc/*r2*/ == rds_text_timer_func/*r4*/)
+			{
+				//0x2346f6d0
+				Data_23495970.timerFunc = rds_ps_name_timer_func/*r1*/;
+				Data_23495970.timerVal = 25;
+				//->loc_2346f6e0
+				//r0, #0x0
+				//->loc_2346f408
+				Data_23495970.Data_2349597c = 0;
+				//loc_2346f40a -> loc_2346f6f0
+			}
+			//loc_2346f6d6
+			else if (Data_23495970.timerFunc == rds_ps_name_timer_func/*r1*/)
+			{
+				//->loc_2346f49a
+				sub_2346f77e();
+				//->loc_2346f5dc
+				Data_23495970.timerVal = 1;
+				//->loc_2346f6f0
+			}
+			else
+			{
+				//loc_2346f6dc
+				Data_23495970.timerFunc = rds_text_timer_func/*r4*/;
+				Data_23495970.timerVal = 25;
+				//loc_2346f6e0
+				//r0, #0x0
+				//->loc_2346f408
+				Data_23495970.Data_2349597c = 0;
+				//loc_2346f40a -> loc_2346f6f0
+			}
+		} //else if (r7->keyCode == 47/*0x2f*/) // I / i (Displaytext aktualisieren)
 		//loc_2346f6e4
 		else if (r7->keyCode == 0xff)
 		{
@@ -990,7 +1172,6 @@ int menu_root_on_event(void* r0)
 				(Data_23495970.Data_2349597c)();
 			}
 		}
-#endif
 		//loc_2346f6f0
 	}
 

@@ -555,15 +555,6 @@ void sub_234297d8()
 }
 
 
-/* 2341a75c - todo */
-void sub_2341a75c()
-{
-#if 0
-	console_send_string("sub_2341a75c (todo.c): TODO\r\n");
-#endif
-}
-
-
 /* 234097b8 / 2340bb1c - todo */
 void sub_234097b8()
 {
@@ -869,6 +860,5 @@ void sub_23453b88()
 	console_send_string("sub_23453b88 (todo.c): TODO\r\n");
 
 }
-
 
 

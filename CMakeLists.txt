@@ -21,7 +21,8 @@ set(SRCS
    menu_general_settings.c
    vfd.c
    fpc.c
-   frontdisplay.c
+   frontdisplay.c  #?   0x23492118
+   radiotext.c  #0x2341a42c 0x2349211c
    powermode.c
    av.c
    fe_manager.c
@@ -46,7 +47,6 @@ set(SRCS
    sub_2344ed20.c
    sub_23458874.c
    sub_23411b0c.c
-   sub_2341a744.c
    sub_2343df02.c
    audec.c
    scan.c

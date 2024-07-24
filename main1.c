@@ -20,6 +20,7 @@
 #include "videc.h"
 #include "graphic.h"
 #include "sub_23419cd0.h"
+#include "radiotext.h"
 
 
 
@@ -50,7 +51,7 @@ void* main_hAudec1 = 0; //23491ddc +0x50
 void* main_hAudec0 = 0; //23491de0 +0x54
 void* main_hAudec4 = 0; //23491de4 +0x58
 void* main_hAudec5 = 0; //23491de8 +0x5c
-int Data_23491dec = 0; //23491dec +0x60
+void* main_hAudecRadioText = 0; //23491dec +0x60
 void* main_hCurrentPCR_TSD_Handle = 0; //23491e08
 void* main_hPESParserVideo = 0; //23491e0c +0x80 / 234ac510
 
@@ -318,13 +319,12 @@ int sub_23400798()
 		audec_get_status(main_hAudec5);
 	}
 
-	sp4 = sub_234019e0(0x104);
+	sp4 = sub_234019e0(sizeof(AUDEC_RadioText));
 
-	Data_23491dec = audec_set_params(&sp4);
-
-	if (Data_23491dec != 0)
+	main_hAudecRadioText = audec_set_params(&sp4);
+	if (main_hAudecRadioText != 0)
 	{
-		sub_2341a744();
+		radiotext_init();
 	}
 
 	return 0;
