@@ -60,7 +60,7 @@ uint8_t radiotext_strPS[0x100]; //235b1698
 void radiotext_parse_rds(uint8_t* r0, uint16_t r1);
 
 
-/* 2341a42c - todo */
+/* 2341a42c / / 2347bd7c - todo */
 uint8_t radiotext_decode(uint8_t* r4, uint8_t b)
 {
 	uint8_t err;

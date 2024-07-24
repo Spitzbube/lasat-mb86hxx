@@ -64,11 +64,23 @@ void sub_2343dcfc()
 }
 
 
-/* 2343dd14 - todo */
-void sub_2343dd14()
+/* 2343dd14 - complete */
+int sub_2343dd14(int a)
 {
+#if 0
 	console_send_string("sub_2343dd14 (todo.c): TODO\r\n");
+#endif
 
+	if (a == 0)
+	{
+		Data_23493110 = 1;	
+	}
+	else if (a == 0x0f)
+	{
+		Data_23493110 = -1;
+	}
+
+	return 0;
 }
 
 

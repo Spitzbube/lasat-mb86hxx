@@ -21,9 +21,9 @@ set(SRCS
    menu_general_settings.c
    vfd.c
    fpc.c
-   frontdisplay.c  #?   0x23492118
-   radiotext.c  #0x2341a42c 0x2349211c
-   powermode.c
+   frontdisplay.c           #0x23419fd4   0x23492118
+   radiotext.c              #0x2341a42c 0x2349211c
+   powermode.c              #0x23412ea4
    av.c
    fe_manager.c
    sub_23402e8e.c

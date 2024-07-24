@@ -10,8 +10,8 @@ static volatile uint8_t powermode_shutdown_frontend_finished = 0; //234920c8
 typedef struct
 {
 	void* pSema; //0
-	int (*Data_4)(int); //4
-	int (*Data_8)(int); //8
+	int (*pfOnSwitchOff)(int); //4
+	int (*pfOnSwitchOn)(int); //8
 	void (*Data_12)(int); //12
 	void (*Data_16)(int); //16
 	int state; //20
@@ -154,8 +154,8 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 	{
 	case 1:
 		//loc_23413138 -> Switch On
-		if ((Data_2358be90.Data_8 != 0) &&
-				(0 != (Data_2358be90.Data_8)(0)))
+		if ((Data_2358be90.pfOnSwitchOn != 0) &&
+				(0 != (Data_2358be90.pfOnSwitchOn)(0)))
 		{
 			//loc_23413154
 			ret = -1;
@@ -231,8 +231,8 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 			gpio_set(Data_2358be90.pGpio, 0);
 		}
 
-		if ((Data_2358be90.Data_4 != 0) &&
-				((Data_2358be90.Data_4)(0) != 0))
+		if ((Data_2358be90.pfOnSwitchOff != 0) &&
+				((Data_2358be90.pfOnSwitchOff)(0) != 0))
 		{
 			sub_23400510(1);
 
@@ -305,8 +305,8 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 	case 6:
 		//0x23413020
 #if 0
-		if ((Data_2358be90.Data_8 != 0) &&
-				(0 != (Data_2358be90.Data_8)(0)))
+		if ((Data_2358be90.pfOnSwitchOn != 0) &&
+				(0 != (Data_2358be90.pfOnSwitchOn)(0)))
 		{
 			//loc_23413154
 			ret = -1;
@@ -382,8 +382,8 @@ int powermode_init(Powermode_Init_Params* pParams)
 	memset(&Data_2358be90, 0, sizeof(Data_2358be90));
 
 	Data_2358be90.pSema = OSSemCreate(1);
-	Data_2358be90.Data_4 = pParams->Data_8;
-	Data_2358be90.Data_8 = pParams->Data_12;
+	Data_2358be90.pfOnSwitchOff = pParams->pfOnSwitchOff;
+	Data_2358be90.pfOnSwitchOn = pParams->pfOnSwitchOn;
 	Data_2358be90.Data_12 = pParams->Data_16;
 	Data_2358be90.Data_16 = pParams->Data_20;
 	Data_2358be90.pGpio = 0;
@@ -405,18 +405,18 @@ int powermode_init(Powermode_Init_Params* pParams)
 
 
 /* 23413310 - todo */
-int sub_23413310(void* r5, void* r6)
+int powermode_set_onoff_callbacks(void* pfOnSwitchOff, void* pfOnSwitchOn)
 {
 	uint8_t err;
 
 #if 0
-	console_send_string("sub_23413310 (todo.c): TODO\r\n");
+	console_send_string("powermode_set_onoff_callbacks (todo.c): TODO\r\n");
 #endif
 
 	OSSemPend(Data_2358be90.pSema, 0, &err);
 
-	Data_2358be90.Data_4 = r5;
-	Data_2358be90.Data_8 = r6;
+	Data_2358be90.pfOnSwitchOff = pfOnSwitchOff;
+	Data_2358be90.pfOnSwitchOn = pfOnSwitchOn;
 
 	err = OSSemPost(Data_2358be90.pSema);
 

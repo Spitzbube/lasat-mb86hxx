@@ -106,12 +106,12 @@ int on_channel_list_update_change()
 
 	if ((settings_work_copy.Data_0x10 >> 7) & 1)
 	{
-		sub_23413310(sub_2343dd2c, sub_2343deb4); //->powermode.c
+		powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
 	}
 	else
 	{
 		//loc_23471da2
-		sub_23413310(0, 0); //->powermode.c
+		powermode_set_onoff_callbacks(0, 0);
 	}
 
 	return 0;

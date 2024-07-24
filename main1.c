@@ -341,8 +341,8 @@ void main_powermode_init()
 
 	params.gpioPin = 6;
 	params.initialState = 1;
-	params.Data_8 = 0;
-	params.Data_12 = 0;
+	params.pfOnSwitchOff = 0;
+	params.pfOnSwitchOn = 0;
 	params.Data_16 = sub_2343cc34;
 	params.Data_20 = sub_2343b992;
 
@@ -871,7 +871,7 @@ void main_frontend_init()
 
 		if (sp_0xe8.Data_0x10 & 0x80)
 		{
-			sub_23413310(sub_2343dd2c, sub_2343deb4);
+			powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
 		}
 
 		return;
@@ -963,7 +963,7 @@ void main_frontend_init()
 
 				if (sp_0x94.Data_0x10 & (1 << 7)) //Channel list update enabled?
 				{
-					sub_23413310(sub_2343dd2c, sub_2343deb4); //->powermode.c
+					powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
 				}
 				//loc_2340113c
 				return;
@@ -1003,7 +1003,7 @@ void main_frontend_init()
 
 						if (sp_0x94.Data_0x10 & (1<< 7)) //Channel list update enabled?
 						{
-							sub_23413310(sub_2343dd2c, sub_2343deb4);
+							powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
 						}
 						//loc_2340113c
 						return;
