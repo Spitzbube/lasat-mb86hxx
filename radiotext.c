@@ -70,7 +70,7 @@ uint8_t radiotext_decode(uint8_t* r4, uint8_t b)
 	console_send_string("radiotext_decode (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
 	hex_dump("radiotext_decode", r4, b);
 #endif
 
@@ -150,7 +150,7 @@ void radiotext_check_data(int channel)
 		radiotext_channel = channel;
 	}
 	//loc_2341a578
-#if 1
+#if 0
 	hex_dump("radiotext_check_data", 
 		pAudecRadiotext->Data_4, pAudecRadiotext->Data_0);
 #endif
@@ -315,7 +315,7 @@ void radiotext_parse_rds(uint8_t* pbData, uint16_t b)
 	console_send_string("radiotext_parse_rds (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
 	hex_dump("radiotext_parse_rds", pbData, b);
 #endif
 

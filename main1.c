@@ -415,7 +415,8 @@ void main_inputhandler_init()
 
 				sub_2340bf0c(&sp_0x28);
 
-				channel_start_number(&sp0, sp_0x28.wData_0x2a, sp_0x28.wData_0x2a);
+				channel_start_number(&sp0, 
+					sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
 				//->loc_23400a28
 			}
 			//loc_23400a60

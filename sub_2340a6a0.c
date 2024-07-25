@@ -1728,25 +1728,27 @@ int sub_2340a794()
 		memset(sp_0x18, 0xff, 2000);
 	}
 	//loc_2340ab40
-	r0 = crc32((void*) &Data_234fd8f0.Data_235449a8, 2000);
+	r0 = crc32((void*) &Data_234fd8f0.favourites, 
+			sizeof(sizeof(Data_234fd8f0.favourites)));
 
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "loc_2340ab40: crc check r0=0x%x, Data_234fd8f0.Data_2354611c=0x%x\r\n",
-				r0, Data_234fd8f0.Data_2354611c);
+		sprintf(debug_string, "loc_2340ab40: crc check r0=0x%x, Data_234fd8f0.dwCrcFavourites=0x%x\r\n",
+				r0, Data_234fd8f0.dwCrcFavourites);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == Data_234fd8f0.Data_2354611c)
+	if (r0 == Data_234fd8f0.dwCrcFavourites)
 	{
 		Data_235462e4.bData_235491e0++;
 		//->loc_2340ab78
 	}
 	else
 	{
-		memset(&Data_234fd8f0.Data_235449a8, 0xff, 2000);
+		memset(&Data_234fd8f0.favourites, 0xff, 
+			sizeof(Data_234fd8f0.favourites));
 	}
 	//loc_2340ab78
 	r0 = crc32((void*) &Data_234fd8f0.Data_23545178, 2000);
@@ -2399,8 +2401,8 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 	int r4 = Data_235462e4.currentChannel;
 
 	sp4.Data_0 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[r4] ];
-	sp4.wData_0x2a = r4;
-	sp4.wData_0x28 = Data_235462e4.numChannels;
+	sp4.wCurrentChannel = r4;
+	sp4.wNumChannels = Data_235462e4.numChannels;
 	sp4.bData_0x30 = Data_235462e4.bData_235491dd;
 	sp4.bData_0x31 = Data_235462e4.bData_235491dc;
 	sp4.wData_0x2c = Data_235462e4.wData_235491d2;
@@ -2564,6 +2566,16 @@ void sub_2340c0dc()
 		}
 	}
 	//loc_2340c198
+}
+
+
+/* sub_2340c204 - todo */
+void sub_2340c204(int a)
+{
+#if 0
+	console_send_string("sub_2340c204 (todo.c): TODO\r\n");
+#endif
+
 }
 
 

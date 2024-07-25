@@ -119,7 +119,7 @@ int sub_2343dd2c(void)
 	if (0 != sub_2340ecc0(main_hFrontend1, &sp_0x90, &sp_0x8c))
 	{
 		sub_2340bf0c(&sp_0x54);
-		sub_2340bf94(sp_0x54.wData_0x2a, &sp_0x2c, &sp_0x14);
+		sub_2340bf94(sp_0x54.wCurrentChannel, &sp_0x2c, &sp_0x14);
 
 		if ((Data_23489ebc.Data_0.Data_4 != sp_0x14.Data_0.Data_4) //sp24)
 				|| ((Data_23489ebc.Data_0.Data_0.Bitfield_0.Data_28_31/*bData_3 >> 4*/) !=

@@ -143,10 +143,10 @@ typedef struct
 	} Data_235441d8;
 	struct
 	{
-		uint16_t wData_235449a8[8]; //235449a8 470B8
+		uint16_t arChannel[8]; //235449a8 470B8
 		int fill_235449b8[496]; //235449b8
 		//0x7D0 size???
-	} Data_235449a8; //235449a8 470B8
+	} favourites; //235449a8 470B8
 	struct
 	{
 		int fill_0[500]; //0
@@ -158,7 +158,7 @@ typedef struct
 		//0x7D0 size???
 	} Data_23545948; //23545948
 	int Data_23546118; //23546118
-	uint32_t Data_2354611c; //2354611c
+	uint32_t dwCrcFavourites; //2354611c 0x4882c
 	uint32_t Data_23546120; //23546120
 	uint32_t Data_23546124; //23546124
 	struct Struct_23546128
@@ -216,8 +216,8 @@ typedef struct
 typedef struct
 {
 	struct Struct_234fd8f0_Inner0 Data_0; //0
-	uint16_t wData_0x28; //0x28 = 40
-	uint16_t wData_0x2a; //0x2a = 42
+	uint16_t wNumChannels; //0x28 = 40
+	uint16_t wCurrentChannel; //0x2a = 42
 	uint16_t wData_0x2c; //0x2c
 	uint16_t fill_0x2e; //0x2e
 	uint8_t bData_0x30; //0x30

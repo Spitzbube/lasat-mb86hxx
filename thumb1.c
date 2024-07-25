@@ -39,7 +39,7 @@ struct
 	uint8_t Data_23495a84[256]; //23495a84
 	uint8_t bData_23495b84; //0x214 = 532, 23495b84
 	int Data_23495b88; //0x218 = 536, 23495b88
-	uint16_t wData_23495b8c; //0x21C = 540, 23495b8c
+	uint16_t wFavouriteIndex; //0x21C = 540, 23495b8c
 	int Data_23495b90; //544, 23495b90
 	uint16_t fill_548; //548, 23495b94
 	uint8_t bData_23495b96; //0x226 = 550   23495b96
@@ -304,6 +304,53 @@ static void* rds_text_display(FrontDisplay_Job* p)
 }
 
 
+/* 2346ee6c - todo */
+static void* store_favourite_timer_func(uint32_t* pCount)
+{
+	Struct_2340bf0c sp4; //sp4
+
+#if 0
+	console_send_string("store_favourite_timer_func (todo.c): TODO\r\n");
+#endif
+
+	(*pCount)--;
+	if (*pCount != 0)
+	{
+		return store_favourite_timer_func;
+	}
+	else
+	{
+		//loc_2346ee7e
+		Data_23495970.Data_2349597c = 0;
+
+		sub_2340bf0c(&sp4);
+
+		Struct_234fd8f0* r5 = sub_2344f770();
+
+		snprintf(&Data_23495970.strText[0], 256, "Ch %d->S%d",
+			sp4.wCurrentChannel + 1,
+			Data_23495970.wFavouriteIndex);
+
+		frontdisplay_start_text(string_display);
+
+		uint16_t* pFav = &r5->favourites.arChannel[0];
+		pFav[Data_23495970.wFavouriteIndex - 1] = sp4.wCurrentChannel;
+
+		uint32_t* pCrc = &r5->dwCrcFavourites;
+		*pCrc = crc32(&r5->favourites.arChannel[0], 
+			sizeof(r5->favourites));
+
+		sub_2340c204(1);
+		sub_2340c8a8();
+		sub_2340c204(0);
+
+		Data_23495970.timerVal = 5;
+
+		return sub_2346ecd4;
+	}
+}
+
+
 /* 2346eeee - complete */
 static void* sub_2346eeee(int* a)
 {
@@ -421,7 +468,7 @@ static void* event_display_timer_func(uint32_t* pCount)
 
 			uint8_t sp4[] = " ";
 
-			sub_2340bf94(sp_0x48.wData_0x2a, &sp8, &sp_0x30);
+			sub_2340bf94(sp_0x48.wCurrentChannel, &sp8, &sp_0x30);
 
 			Struct_2377b8d0* pEITSectionData =
 					eit_get_section_data(sp8.Data_0.service_id, sp_0x30.transport_stream_id);
@@ -698,21 +745,21 @@ static void* rds_ps_name_timer_func(uint32_t* pCount/*r4*/)
 
 
 /* 2346f26c - todo */
-void sub_2346f26c()
+static void check_favourite_channel(void)
 {
 	Struct_2340bf0c sp_0x2c; //sp_0x2c
 	struct Struct_234fd8f0_Inner0 sp4; //sp4
 
 #if 0
-	console_send_string("sub_2346f26c (todo.c): TODO\r\n");
+	console_send_string("check_favourite_channel (todo.c): TODO\r\n");
 #endif
 
 	Struct_234fd8f0* r0 = sub_2344f770();
-	uint16_t* r1 = &r0->Data_235449a8.wData_235449a8[0];
-	int r4 = r1[Data_23495970.wData_23495b8c - 1];
+	uint16_t* pFav = &r0->favourites.arChannel[0];
+	int channel = pFav[Data_23495970.wFavouriteIndex - 1];
 	Data_23495970.Data_23495b88 = 0;
 
-	if (r4 == 0xffff)
+	if (channel == 0xffff)
 	{
 		//0x2346f290
 		text_table_get_string(0x1C0, &Data_23495970.strText[0], 255);
@@ -726,15 +773,15 @@ void sub_2346f26c()
 		//loc_2346f2a6
 		sub_2340bf0c(&sp_0x2c);
 
-		if (r4 == sp_0x2c.wData_0x2a)
+		if (channel == sp_0x2c.wCurrentChannel)
 		{
-			//loc_2346f2b4
+			//loc_2346f2b4: Already active channel
 			sub_2346f77e();
 		}
 		else
 		{
 			//loc_2346f2ba
-			channel_start_number(&sp4, r4, 0);
+			channel_start_number(&sp4, channel, 0);
 			sub_2346f76c();
 		}
 	}
@@ -742,19 +789,19 @@ void sub_2346f26c()
 
 
 /* 2346f2ca - todo */
-static void* sub_2346f2ca(uint32_t* pCount)
+static void* check_favourite_timer_func(uint32_t* pCount)
 {
 #if 0
-	console_send_string("sub_2346f2ca (todo.c): TODO\r\n");
+	console_send_string("check_favourite_timer_func (todo.c): TODO\r\n");
 #endif
 
 	(*pCount)--;
 	if ((*pCount) != 0)
 	{
-		return sub_2346f2ca;
+		return check_favourite_timer_func;
 	}
 
-	sub_2346f26c();
+	check_favourite_channel();
 
 	return Data_23495970.timerFunc;
 }
@@ -889,7 +936,6 @@ int menu_root_on_event(void* r0)
 			Data_23495970.Data_23495b88 = 0;
 		}
 		//loc_2346f3cc
-#if 0
 		if ((r7->keyCode > 9) && (r7->keyCode != 87/*0x57*/))
 		{
 			Data_23495970.bData_23495b96 = 0;
@@ -897,15 +943,16 @@ int menu_root_on_event(void* r0)
 		//loc_2346f3da
 		if ((r7->keyCode >= 225/*0xe1*/) && (r7->keyCode < 228/*0xe4*/))
 		{
-			Data_23495970.wData_23495b8c = r7->keyCode-224/*0xe0*/ + Data_23495970.bData_23495b84;
+			Data_23495970.wFavouriteIndex = r7->keyCode-224/*0xe0*/ + Data_23495970.bData_23495b84;
 			Data_23495970.bData_23495b84 = 0;
 			Data_23495970.timerVal = 10;
-			Data_23495970.timerFunc = sub_2346ee6c;
-			Data_23495970.Data_2349597c = sub_2346f26c;
+			Data_23495970.timerFunc = store_favourite_timer_func;
+			Data_23495970.Data_2349597c = check_favourite_channel;
 			//->loc_2346f408
 			//loc_2346f40a -> loc_2346f6f0
 		}
 		//loc_2346f3fc
+#if 0
 		else if (r7->keyCode == 224/*0xe0*/)
 		{
 			Data_23495970.timerVal = 0;
@@ -938,36 +985,33 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f438
-		else 
 #endif		
-			if ((r7->keyCode >= 90/*0x5a*/) && (r7->keyCode < 97)) //S1...S8
+		else if ((r7->keyCode >= 90/*0x5a*/) && (r7->keyCode < 97)) //S1...S8
 		{
 			sub_2340bf0c(&sp4);
 
-			if (sp4.wData_0x28 != 0)
+			if (sp4.wNumChannels != 0)
 			{
 				//0x2346f44e
-				Data_23495970.wData_23495b8c = r7->keyCode - 89;
+				Data_23495970.wFavouriteIndex = r7->keyCode - 89;
 
 				if (Data_23495970.Data_23495b88 == 0)
 				{
 					Data_23495970.timerVal = 3;
-					Data_23495970.timerFunc = sub_2346f2ca;
+					Data_23495970.timerFunc = check_favourite_timer_func;
 					Data_23495970.Data_2349597c = 0;
 
 					Data_23495970.Data_23495b88 = 10;
 				}
 				//loc_2346f46a
-#if 0				
 				Data_23495970.Data_23495b88--;
 
 				if (Data_23495970.Data_23495b88 == 1)
 				{
 					//0x2346f472
-					Data_23495970.timerFunc = sub_2346ee6c(&Data_23495970.Data_23495b88);
+					Data_23495970.timerFunc = store_favourite_timer_func(&Data_23495970.Data_23495b88);
 					//->loc_2346f6f0
 				}
-#endif				
 				//->loc_2346f3b6 -> loc_2346f6f0
 			}
 			//->loc_2346f3b6 -> loc_2346f6f0
