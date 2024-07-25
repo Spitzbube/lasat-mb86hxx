@@ -37,14 +37,18 @@ struct
 	int fill_23495980; //16  23495980
 	uint8_t strText[0x100]; //20  23495984
 	uint8_t Data_23495a84[256]; //23495a84
+
 	uint8_t bData_23495b84; //0x214 = 532, 23495b84
-	int Data_23495b88; //0x218 = 536, 23495b88
+	int nCountToStoreFavourite; //0x218 = 536, 23495b88
 	uint16_t wFavouriteIndex; //0x21C = 540, 23495b8c
-	int Data_23495b90; //544, 23495b90
-	uint16_t fill_548; //548, 23495b94
-	uint8_t bData_23495b96; //0x226 = 550   23495b96
+
+	uint8_t* arDirectChannelString; //544, 23495b90
+	uint16_t wDirectChannelNr; //548, 23495b94
+	uint8_t bDirectChannelDigits; //0x226 = 550   23495b96
 	uint8_t fill_23495b97; //23495b97
+
 	uint8_t bEventDisplayMode; //0x228 = 552, 23495b98
+	
 	int (*standbyTimerFunc)(); //0x22C = 556, 23495b9c  0x23495b90 - 0x20 +0x2c
 	uint8_t bKeyActivity; //0x230 = 560, 23495ba0 23495b90 + 0x10
 	uint32_t standbyCount; //564, 23495ba4, 23495b90 +0x14
@@ -202,7 +206,7 @@ int menu_root_on_enter(int a)
 		Data_23495970.Data_2349597c = 0;
 	}
 	//loc_2346ed10
-	memset(&Data_23495970.Data_23495b90, 0, 8);
+	memset(&Data_23495970.arDirectChannelString, 0, 8);
 
 	return 0;
 }
@@ -383,6 +387,52 @@ void sub_2346eefe()
 }
 
 
+/* sub_2346ef0c - todo */
+static void* direct_channel_input_timer_func(uint32_t* pCount)
+{
+	Struct_2340bf0c sp_0x2c;
+	struct Struct_234fd8f0_Inner0 sp4;
+
+#if 0
+	console_send_string("direct_channel_input_timer_func (todo.c): TODO\r\n");
+#endif
+
+	(*pCount)--;
+
+	if (*pCount != 0)
+	{
+		return direct_channel_input_timer_func;
+	}
+	//loc_2346ef1e
+	Data_23495970.bDirectChannelDigits = 0;
+
+	sub_2340bf0c(&sp_0x2c);
+
+	if (Data_23495970.wDirectChannelNr > sp_0x2c.wNumChannels)
+	{
+		//0x2346ef38
+		text_table_get_string(0x1c1, &Data_23495970.strText[0], 255);
+		frontdisplay_start_text(string_display);
+
+		sub_2346f77e();
+
+		Data_23495970.timerVal = 2;
+		//->loc_2346ef68
+	}
+	else
+	{
+		//loc_2346ef54
+		channel_start_number(&sp4, 
+			(uint16_t)(Data_23495970.wDirectChannelNr - 1), 0);
+
+		sub_23411550();
+		sub_2346f76c();
+	}
+	//loc_2346ef68
+	return Data_23495970.timerFunc;
+}
+
+
 /* 2346ef6c - todo */
 static void* standby_warn_timer_func(uint32_t* pCount)
 {
@@ -390,25 +440,16 @@ static void* standby_warn_timer_func(uint32_t* pCount)
 	console_send_string("standby_warn_timer_func (todo.c): TODO\r\n");
 #endif
 
-//	int r6 = 1;
-
 	(*pCount)--;
-
-	struct
-	{
-		int fill_0[4]; //0
-		uint8_t bData_0x10; //0x10
-
-	}* r5 = (void*) &Data_23495970.Data_23495b90; //0x220 = 544
 
 	if (*pCount != 0)
 	{
-		if (r5->bData_0x10/*bKeyActivity*/ != 0)
+		if (Data_23495970.bKeyActivity != 0)
 		{
 			//0x2346ef8c: Abort auto-standby warning
 			sub_2346f77e();
 
-			Data_23495970.timerVal = 1; //r6
+			Data_23495970.timerVal = 1;
 			return Data_23495970.timerFunc;
 		}
 		//loc_2346ef9a
@@ -428,7 +469,7 @@ static void* standby_warn_timer_func(uint32_t* pCount)
 
 	powermode_set_state(2/*Off*/, r1, standby_thread);
 
-	r5->bData_0x10/*bKeyActivity*/ = 1; //r6
+	Data_23495970.bKeyActivity = 1;
 
 	return 0;
 }
@@ -757,7 +798,7 @@ static void check_favourite_channel(void)
 	Struct_234fd8f0* r0 = sub_2344f770();
 	uint16_t* pFav = &r0->favourites.arChannel[0];
 	int channel = pFav[Data_23495970.wFavouriteIndex - 1];
-	Data_23495970.Data_23495b88 = 0;
+	Data_23495970.nCountToStoreFavourite = 0;
 
 	if (channel == 0xffff)
 	{
@@ -933,12 +974,12 @@ int menu_root_on_event(void* r0)
 		if (!((r7->keyCode >= 90/*0x5a*/ && r7->keyCode < 98))) //S1...S8
 		{
 			//0x2346f3c8
-			Data_23495970.Data_23495b88 = 0;
+			Data_23495970.nCountToStoreFavourite = 0;
 		}
 		//loc_2346f3cc
 		if ((r7->keyCode > 9) && (r7->keyCode != 87/*0x57*/))
 		{
-			Data_23495970.bData_23495b96 = 0;
+			Data_23495970.bDirectChannelDigits = 0;
 		}
 		//loc_2346f3da
 		if ((r7->keyCode >= 225/*0xe1*/) && (r7->keyCode < 228/*0xe4*/))
@@ -995,21 +1036,21 @@ int menu_root_on_event(void* r0)
 				//0x2346f44e
 				Data_23495970.wFavouriteIndex = r7->keyCode - 89;
 
-				if (Data_23495970.Data_23495b88 == 0)
+				if (Data_23495970.nCountToStoreFavourite == 0)
 				{
 					Data_23495970.timerVal = 3;
 					Data_23495970.timerFunc = check_favourite_timer_func;
 					Data_23495970.Data_2349597c = 0;
 
-					Data_23495970.Data_23495b88 = 10;
+					Data_23495970.nCountToStoreFavourite = 10;
 				}
 				//loc_2346f46a
-				Data_23495970.Data_23495b88--;
+				Data_23495970.nCountToStoreFavourite--;
 
-				if (Data_23495970.Data_23495b88 == 1)
+				if (Data_23495970.nCountToStoreFavourite == 1)
 				{
 					//0x2346f472
-					Data_23495970.timerFunc = store_favourite_timer_func(&Data_23495970.Data_23495b88);
+					Data_23495970.timerFunc = store_favourite_timer_func(&Data_23495970.nCountToStoreFavourite);
 					//->loc_2346f6f0
 				}
 				//->loc_2346f3b6 -> loc_2346f6f0
@@ -1149,10 +1190,9 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f5c6
-#if 0
 		else if (r7->keyCode == 87/*0x57*/) //OK
 		{
-			if (Data_23495970.bData_23495b96 == 0)
+			if (Data_23495970.bDirectChannelDigits == 0)
 			{
 				//->loc_2346f49a
 				sub_2346f77e();
@@ -1163,18 +1203,68 @@ int menu_root_on_event(void* r0)
 				//loc_2346f5d2
 				frontdisplay_start_text(string_display);
 
-				sub_2346f7c0();
+				menu_root_start_direct_channel_input();
 				//loc_2346f5dc
 			}
 			Data_23495970.timerVal = 1;
 			//->loc_2346f6f0
 		}
 		//loc_2346f5e2
+		//sp_0x38 = 0x23495984
 		else if (r7->keyCode < 9)
 		{
-			//TODO
+			//0x2346f5ea
+			if (Data_23495970.bDirectChannelDigits != 0)
+			{
+				//0x2346f5f0
+				Data_23495970.wDirectChannelNr = r7->keyCode + 
+					(Data_23495970.wDirectChannelNr * 10);
+
+				Data_23495970.arDirectChannelString[0] = Data_23495970.arDirectChannelString[1];
+				Data_23495970.arDirectChannelString[1] = Data_23495970.arDirectChannelString[2];
+				Data_23495970.arDirectChannelString[2] = Data_23495970.arDirectChannelString[3];
+				Data_23495970.arDirectChannelString[3] = r7->keyCode + '0';
+				Data_23495970.arDirectChannelString[4] = 0;
+
+				if (Data_23495970.bDirectChannelDigits < 3)
+				{
+					//->loc_2346f642
+					frontdisplay_start_text(string_display);
+					menu_root_start_direct_channel_input();
+
+					Data_23495970.bDirectChannelDigits++;
+					//->loc_2346f6f0
+				}
+				else
+				{
+					//->loc_2346f5d2
+					frontdisplay_start_text(string_display);
+					menu_root_start_direct_channel_input();
+					//loc_2346f5dc
+					Data_23495970.timerVal = 1;
+					//->loc_2346f6f0
+				}
+			}
+			else
+			{
+				//loc_2346f622
+				Data_23495970.wDirectChannelNr = r7->keyCode;
+				Data_23495970.arDirectChannelString = &Data_23495970.strText[0];
+				Data_23495970.strText[0] = '-';
+				Data_23495970.strText[1] = '-';
+				Data_23495970.strText[2] = '-';
+				Data_23495970.strText[3] = r7->keyCode + '0';
+				Data_23495970.strText[4] = 0;
+				//loc_2346f642
+				frontdisplay_start_text(string_display);
+				menu_root_start_direct_channel_input();
+
+				Data_23495970.bDirectChannelDigits++;
+				//->loc_2346f6f0
+			}
 		}
 		//loc_2346f654
+#if 0
 		else if (r7->keyCode == 42/*0x2a*/)
 		{
 			//TODO
@@ -1387,6 +1477,18 @@ void sub_2346f77e()
 	Data_23495970.timerVal = 5;
 	Data_23495970.timerFunc = sub_2346ecd4;
 	Data_23495970.Data_2349597c = sub_2346eefe;
+}
+
+
+/* 2346f7c0 - todo */
+void menu_root_start_direct_channel_input()
+{
+#if 0
+	console_send_string("menu_root_start_direct_channel_input (todo.c): TODO\r\n");
+#endif
+
+	Data_23495970.timerVal = 15;
+	Data_23495970.timerFunc = direct_channel_input_timer_func;
 }
 
 
