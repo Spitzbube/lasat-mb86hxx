@@ -228,6 +228,26 @@ uint8_t OSTaskDelReq(uint8_t prio)
 }
 
 
+/* 23439324 - todo */
+void sub_23439324()
+{
+#if 0
+	console_send_string("sub_23439324 (kernel_task.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23439478 - todo */
+void sub_23439478()
+{
+#if 0
+	console_send_string("sub_23439478 (kernel_task.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 234395d0 - todo */
 void rtos_task_wait(uint16_t a)
 {

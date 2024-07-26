@@ -611,11 +611,11 @@ int sub_23402b6c(/*Struct_235fdfac ???*/Struct_23491e28_Inner0* r4)
 
 	WriteReg(0x80, 0x01);
 
-	sub_23402efe(r4->Data_4 / 10);
+	sub_23402efe(r4->frequency / 10);
 
 	M88DC2000RegInitial_TC2800();
 
-	M88DC2000SetSym(r4->wData_8, 28800);
+	M88DC2000SetSym(r4->symbol_rate, 28800);
 
 //	M88DC2000SetQAM(r4->bData_3 >> 4);
 	M88DC2000SetQAM(r4->Data_0.Bitfield_0.Data_28_31);
@@ -746,12 +746,12 @@ int sub_23402c9a(uint8_t* r4)
 	{
 		r0 = sub_23402c22(28800);
 
-		if (((Data_23491e20->Data_0.Data_0.wData_8 - 10) > r0) ||
-				(Data_23491e20->Data_0.Data_0.wData_8 + 10) < r0)
+		if (((Data_23491e20->Data_0.Data_0.symbol_rate - 10) > r0) ||
+				(Data_23491e20->Data_0.Data_0.symbol_rate + 10) < r0)
 		{
 			//loc_23402cec
-			Data_23491e20->Data_0.Data_0.wData_8 = r0;
-			Data_23491e20->Data_0.Data_0x10-> wData_8 = r0;
+			Data_23491e20->Data_0.Data_0.symbol_rate = r0;
+			Data_23491e20->Data_0.Data_0x10-> symbol_rate = r0;
 		}
 		//loc_23402cf2
 		r0_ = ReadReg(0x83);

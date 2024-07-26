@@ -52,9 +52,7 @@ void (*Data_23492024)() = 0; //23492024 +0x28
 void (*Data_23492028)() = 0; //23492028 +0x2c
 void (*channel_pfCheckStreaming)() = 0; //2349202c +0x30
 void (*Data_23492030)() = 0; //23492030 +0x34
-#if 0
 void (*Data_23492034)() = 0; //23492034 +0x38
-#endif
 void (*channel_pfPSIDataCallback)(int) = 0; //23492038 +0x3c
 Struct_2349203c* Data_2349203c = 0; //2349203c +0x40
 Struct_23492040* Data_23492040 = 0; //23492040 +0x44
@@ -77,7 +75,7 @@ struct
 	void (*Data_0)(); //0 235462E4
 	int currentChannel; //4 235462E8
 	int prevChannel; //8 235462EC
-	uint16_t wData_0xc[6000]; //12 = 0xc, 235462F0, size????
+	uint16_t arChannelIdx[CHANNELS_MAX_NUM]; //12 = 0xc, 235462F0, size????
 	uint16_t numChannels; //0xEEC 235491d0
 	uint16_t wData_235491d2; //0xEEE 235491d2
 	uint16_t wData_235491d4; //235491D4 +0xf0
@@ -85,7 +83,7 @@ struct
 	uint16_t wAudioPID; //235491d8
 	uint16_t wVideoPID; //235491da
 	uint8_t bData_235491dc; //0xef8 235491dc
-	uint8_t bData_235491dd; //0xEF9 235491dd
+	uint8_t currentChList; //0xEF9 235491dd
 	uint8_t activeStreamMask; //235491de 235482e4 + 0xefa
 	uint8_t bData_235491df; //235491df
 	uint8_t bData_235491e0; //235491e0 0xefc
@@ -478,7 +476,7 @@ int channel_start_video(int pid, int r4)
 
 
 /* 23409a6c - todo */
-void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/struct Struct_234fd8f0_Inner0 a)
+void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_234fd8f0_Inner0_Inner_0x10 b*/Channel a)
 {
 #if 0
 	console_send_string("channel_start_pes (todo.c): TODO\r\n");
@@ -513,17 +511,17 @@ void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_
 	}
 #endif
 
-//	int r1_ = a.Data_0.wData_2;
+//	int r1_ = a.Data_0.wFlags_2;
 //	uint16_t r8 = a.Data_0.wData_10;
 	if ((/*r8*/a.Data_0.wVideoPID != 0) &&
 			((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO) == 0))
 	{
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_VIDEO;
 
-		channel_start_video(/*r8*/a.Data_0.wVideoPID, a.Data_0.wData_2); //r1_);
+		channel_start_video(/*r8*/a.Data_0.wVideoPID, a.Data_0.wFlags_2); //r1_);
 	}
 	//loc_23409aa4
-//	int r0 = (a.Data_0.wData_2 >> 1) & 0x03;
+//	int r0 = (a.Data_0.wFlags_2 >> 1) & 0x03;
 //	uint16_t r7 = a.Data_0.wData_12;
 //	uint16_t r5 = a.Data_0x10.wAudioPID;
 	if ((/*r7*/a.Data_0.wData_12 != 0) && (/*r5*/a.Data_0x10.wAudioPID == 0) &&
@@ -531,7 +529,7 @@ void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_
 	{
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_AUDIO;
 
-		sub_2342ba34((a.Data_0.wData_2 >> 1) & 0x03); //r0);
+		sub_2342ba34((a.Data_0.wFlags_2 >> 1) & 0x03); //r0);
 		//->loc_23409b24
 		channel_start_audio(/*r7*/a.Data_0.wData_12, main_hAudec1);
 		//loc_23409b28
@@ -543,7 +541,7 @@ void channel_start_pes(/*struct Struct_234fd8f0_Inner0_Inner_0 a, struct Struct_
 		//loc_23409af8
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_AUDIO;
 
-		sub_2342ba34((a.Data_0.wData_2 >> 1) & 0x03); //r0);
+		sub_2342ba34((a.Data_0.wFlags_2 >> 1) & 0x03); //r0);
 
 		if (/*r5*/a.Data_0x10.wAudioPID & 0x4000)
 		{
@@ -839,7 +837,7 @@ void channel_on_psi_data(Struct_234a73e8* a)
 	int r5 = 0;
 	int r8 = 1; //r6
 
-	struct Struct_234fd8f0_Inner0 sp_0x24;
+	Channel sp_0x24;
 	PSI_Program* pPrograms; //sp_0x20
 	uint16_t wNumPrograms = 0; //r5 //sp_0x1c
 
@@ -870,10 +868,10 @@ void channel_on_psi_data(Struct_234a73e8* a)
 		return;
 	}
 
-//	struct Struct_234fd8f0_Inner0* r7 = &Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
+//	Channel* r7 = &Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ];
 //	sp_0x24 = *r7; //memcpy
 
-	sp_0x24 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
+	sp_0x24 = Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ];
 
 //	int r2 = sp_0x24.Data_0.service_id;
 //	struct Struct_234a73e8_Inner_0x248* r1 = pPrograms;
@@ -1043,15 +1041,15 @@ void channel_on_psi_data(Struct_234a73e8* a)
 			}
 #endif
 
-			if ((sp_0x24.Data_0.wData_2 & 0x10) != (pPrograms[r0].bData_0 & 0x10))
+			if ((sp_0x24.Data_0.wFlags_2 & 0x10) != (pPrograms[r0].bData_0 & 0x10))
 			{
 				//0x2340a0ac
-				sp_0x24.Data_0.wData_2 &= ~0x10;
-				sp_0x24.Data_0.wData_2 |= (pPrograms[r0].bData_0 & 0x10);
-				sp_0x24.Data_0.wData_2 &= ~0x100;
-				sp_0x24.Data_0.wData_2 &= ~0x200;
-				sp_0x24.Data_0.wData_2 &= ~0x400;
-				sp_0x24.Data_0.wData_2 &= ~0x800;
+				sp_0x24.Data_0.wFlags_2 &= ~0x10;
+				sp_0x24.Data_0.wFlags_2 |= (pPrograms[r0].bData_0 & 0x10);
+				sp_0x24.Data_0.wFlags_2 &= ~0x100;
+				sp_0x24.Data_0.wFlags_2 &= ~0x200;
+				sp_0x24.Data_0.wFlags_2 &= ~0x400;
+				sp_0x24.Data_0.wFlags_2 &= ~0x800;
 				r5 = 1;
 			}
 			//loc_2340a0ec
@@ -1079,10 +1077,10 @@ void channel_on_psi_data(Struct_234a73e8* a)
 				//loc_2340a138
 				channel_stop_pes();
 
-				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ] = sp_0x24;
+				Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ] = sp_0x24;
 //				*r7 = sp_0x24;
 
-				channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+				channel_start_pes(Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ]);
 			}
 #endif
 			//loc_2340a164
@@ -1179,10 +1177,10 @@ void channel_check_streaming(void)
 			(Data_23492024)();
 		}
 
-		struct Struct_234fd8f0_Inner0 sp_0x18 =
-				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
+		Channel sp_0x18 =
+				Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ];
 
-		channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+		channel_start_pes(Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ]);
 
 		if (Data_2349201c != 0)
 		{
@@ -1201,10 +1199,10 @@ void channel_check_streaming(void)
 		//0x2340a2c0
 		channel_stop_pes();
 
-		struct Struct_234fd8f0_Inner0 sp_0x18 =
-				Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ];
+		Channel sp_0x18 =
+				Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ];
 
-		channel_start_pes(Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ]);
+		channel_start_pes(Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ]);
 	}
 	//loc_2340a308
 	else if (r6 == 2)
@@ -1348,10 +1346,10 @@ void channel_periodic_check(int powerdown)
 		if (Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_VIDEO)
 		{
 			//0x2340a500
-			int r1 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
+			int r1 = Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ];
 
-			Data_234fd8f0.Data_234fd8f0[ r1 ].Data_0.wData_2 =
-					(Data_234fd8f0.Data_234fd8f0[ r1 ].Data_0.wData_2 & 0xff) | r4;
+			Data_234fd8f0.arChannels[ r1 ].Data_0.wFlags_2 =
+					(Data_234fd8f0.arChannels[ r1 ].Data_0.wFlags_2 & 0xff) | r4;
 		}
 		//loc_2340a528
 		OSSemPost(channel_sema);
@@ -1484,23 +1482,23 @@ void sub_2340a71c()
 	console_send_string("sub_2340a71c (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_234fd8f0_Inner0* r2;
+	Channel* pChannel;
 	uint32_t i = 0;
 	Data_235462e4.numChannels = 0;
 
-	r2 = Data_234fd8f0.Data_234fd8f0;
+	pChannel = Data_234fd8f0.arChannels;
 
-	for (i = 0; i < 6000; i++)
+	for (i = 0; i < CHANNELS_MAX_NUM; i++)
 	{
-		if (r2[i].Data_0.service_id == 0xffff)
+		if (pChannel[i].Data_0.service_id == 0xffff)
 		{
 			break;
 		}
 
-		if ((r2[i].Data_0.wData_2 & (1 << 7)) &&
-				(((r2[i].Data_0.wData_2 & (1 << 3)) >> 3) == Data_235462e4.bData_235491dd))
+		if ((pChannel[i].Data_0.wFlags_2 & (1 << 7)) &&
+				(((pChannel[i].Data_0.wFlags_2 & (1 << 3)) >> 3) == Data_235462e4.currentChList))
 		{
-			Data_235462e4.wData_0xc[Data_235462e4.numChannels] = i;
+			Data_235462e4.arChannelIdx[Data_235462e4.numChannels] = i;
 			Data_235462e4.numChannels++;
 		}
 	}
@@ -1508,21 +1506,21 @@ void sub_2340a71c()
 
 
 /* 2340a794 - todo */
-int sub_2340a794()
+int channel_load_lists(void)
 {
 	void* sp_0x18;
-	uint8_t sp_0x14;
-	Struct_234011f4 sp4;
+	uint8_t err; //sp_0x14
+	LastMode lastmode; //sp4
 
 	int* sp;
 
 #if 0
-	console_send_string("sub_2340a794 (todo.c): TODO\r\n");
+	console_send_string("channel_load_lists (todo.c): TODO\r\n");
 #endif
 
 	//r6, =0x234fd8f0
 
-	OSSemPend(channel_sema, 0, &sp_0x14);
+	OSSemPend(channel_sema, 0, &err);
 
 	//r4, =0x235490e4
 	//r7 = 0;
@@ -1531,7 +1529,7 @@ int sub_2340a794()
 	Data_235462e4.numChannels = 0; //r7
 	Data_235462e4.wData_235491d6 = 0; //r7
 	Data_235462e4.wData_235491d4 = 0; //r7
-	Data_235462e4.bData_235491dd = 1; //r0
+	Data_235462e4.currentChList = 1; //r0
 
 	//sub sb, r5, #0x2000 = 235462E4
 
@@ -1542,18 +1540,18 @@ int sub_2340a794()
 	Data_235462e4.bData_235491e0 = 0; //r7
 	Data_235462e4.bData_235491e1 = 0xff; //r0
 
-	sub_23438084(Data_23491dc8, &sp4, 0, sizeof(sp4));
+	sub_23438084(Data_23491dc8, &lastmode, 0, sizeof(lastmode));
 
-	int r8 = sp4.crc;
+	int r8 = lastmode.crc;
 
-	sp4.crc = 0; //r7
+	lastmode.crc = 0; //r7
 
-	int r0 = crc32((void*) &sp4, 0x10);
+	int r0 = crc32((void*) &lastmode, 0x10);
 
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340a794: crc check r0=0x%x, r8=0x%x\r\n", r0, r8);
+		sprintf(debug_string, "channel_load_lists: crc check r0=0x%x, r8=0x%x\r\n", r0, r8);
 		console_send_string(debug_string);
 	}
 #endif
@@ -1570,12 +1568,12 @@ int sub_2340a794()
 	if (r0 == r1)
 	{
 		//0x2340a840
-		Data_235462e4.currentChannel = sp4.currentChannel;
-		Data_235462e4.prevChannel = sp4.prevChannel;
-		Data_235462e4.wData_235491d4 = sp4.wData_8;
-		Data_235462e4.wData_235491d6 = sp4.wData_10;
-		Data_235462e4.bData_235491dc = sp4.bData_12;
-		Data_235462e4.bData_235491dd = sp4.bData_13;
+		Data_235462e4.currentChannel = lastmode.currentChannel;
+		Data_235462e4.prevChannel = lastmode.prevChannel;
+		Data_235462e4.wData_235491d4 = lastmode.wData_8;
+		Data_235462e4.wData_235491d6 = lastmode.wData_10;
+		Data_235462e4.bData_235491dc = lastmode.bData_12;
+		Data_235462e4.currentChList = lastmode.currentChList;
 
 		if ((Data_235462e4.bData_235491dc & 0x02) != 0)
 		{
@@ -1588,7 +1586,7 @@ int sub_2340a794()
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2340a794: crc check r0=0x%x, sp[0]=0x%x\r\n", r0, sp[0]);
+				sprintf(debug_string, "channel_load_lists: crc check r0=0x%x, sp[0]=0x%x\r\n", r0, sp[0]);
 				console_send_string(debug_string);
 			}
 #endif
@@ -1619,17 +1617,17 @@ int sub_2340a794()
 					Data_235462e4.prevChannel = 0; //r7
 				}
 
-				if (Data_235462e4.bData_235491dd == 1)
+				if (Data_235462e4.currentChList == 1)
 				{
 					Data_235462e4.wData_235491d4 = Data_235462e4.currentChannel;
 					//->loc_2340a90c
 				}
-				else if (Data_235462e4.bData_235491dd == 0)
+				else if (Data_235462e4.currentChList == 0)
 				{
 					Data_235462e4.wData_235491d6 = Data_235462e4.currentChannel;
 				}
 				//loc_2340a90c
-				memcpy(&Data_235462e4.wData_0xc[0], r6, Data_235462e4.numChannels * 2);
+				memcpy(&Data_235462e4.arChannelIdx[0], r6, Data_235462e4.numChannels * 2);
 				//->loc_2340a9c0
 			} //if (r0 == sp[0])
 			//loc_2340a9c0
@@ -1637,28 +1635,28 @@ int sub_2340a794()
 		else
 		{
 			//loc_2340a920
-			for (uint32_t r0 = 0; r0 < /*sl*/6000; r0++)
+			for (uint32_t i = 0; i < /*sl*/CHANNELS_MAX_NUM; i++)
 			{
 				//loc_2340a920
-				struct Struct_234fd8f0_Inner0* r1 = &Data_234fd8f0.Data_234fd8f0[r0];
+				Channel* pChannel = &Data_234fd8f0.arChannels[i];
 
-				if (r1->Data_0.service_id == r8/*0xffff*/)
+				if (pChannel->Data_0.service_id == r8/*0xffff*/)
 				{
 					//->loc_2340a970
 					break;
 				}
 				//0x2340a934
-				if (r1->Data_0.wData_2 & 0x80)
+				if (pChannel->Data_0.wFlags_2 & (1 << 7))
 				{
 					//0x2340a940
-					if (Data_235462e4.bData_235491dd == ((r1->Data_0.wData_2 & (1 << 3)) >> 3))
+					if (Data_235462e4.currentChList == ((pChannel->Data_0.wFlags_2 & (1 << 3)) >> 3))
 					{
-						Data_235462e4.wData_0xc[Data_235462e4.numChannels] = r0;
+						Data_235462e4.arChannelIdx[Data_235462e4.numChannels] = i;
 						Data_235462e4.numChannels++;
 					}
 				}
 				//loc_2340a964
-			} //for (uint32_t r0 = 0; r0 < sl/*6000*/; r0++)
+			} //for (uint32_t i = 0; i < CHANNELS_MAX_NUM; i++)
 			//loc_2340a970
 			if (Data_235462e4.numChannels <= Data_235462e4.currentChannel)
 			{
@@ -1667,12 +1665,12 @@ int sub_2340a794()
 
 			if (Data_235462e4.bData_235491dc & 0x04)
 			{
-				sub_23487aa8(&Data_235462e4.wData_0xc[0], Data_235462e4.numChannels, 2, sub_2344f79c);
+				sub_23487aa8(&Data_235462e4.arChannelIdx[0], Data_235462e4.numChannels, 2, sub_2344f79c);
 			}
 			//->loc_2340a9c0
 		}
 		//loc_2340a9c0
-		while (((/*fp*/Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ].Data_0.wData_6) >> 15) != 0)
+		while (((/*fp*/Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ].Data_0.wData_6) >> 15) != 0)
 		{
 			//loc_2340a99c
 			Data_235462e4.currentChannel++;
@@ -1700,7 +1698,7 @@ int sub_2340a794()
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2340a794: loc_2340a9f4: TODO!!!\r\n");
+			sprintf(debug_string, "channel_load_lists: loc_2340a9f4: TODO!!!\r\n");
 			console_send_string(debug_string);
 		}
 #endif
@@ -1815,16 +1813,16 @@ int sub_2340add4(int r5)
 
 	flash_read(main_hFlash, r5, 0x489f4, &Data_234fd8f0); //234fd8f0 + 489f4 = 235462E4
 
-	crc = crc32((void*) &Data_234fd8f0.Data_234fd8f0[0], 0x3a980/*60000 * 4*/);
+	crc = crc32((void*) &Data_234fd8f0.arChannels[0], sizeof(Channel) * CHANNELS_MAX_NUM);
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340add4: Data_234fd8f0.Data_235441cc=0x%x, crc=0x%x\r\n",
-				Data_234fd8f0.Data_235441cc, crc);
+		sprintf(debug_string, "sub_2340add4: Data_234fd8f0.dwCrcChannels=0x%x, crc=0x%x\r\n",
+				Data_234fd8f0.dwCrcChannels, crc);
 		console_send_string(debug_string);
 	}
 #endif
-	if (crc != Data_234fd8f0.Data_235441cc)
+	if (crc != Data_234fd8f0.dwCrcChannels)
 	{
 		res = 7;
 		//->loc_2340ae9c
@@ -1833,16 +1831,16 @@ int sub_2340add4(int r5)
 	{
 		Data_23492004 = (Data_234fd8f0.Data_235441b0.Data_0x10/*Data_235441c0*/ << 17) >> 31;
 
-		crc = crc32((void*) &Data_234fd8f0.Data_23538270, 0xbb80/*12000 * 4*/);
+		crc = crc32((void*) &Data_234fd8f0.arTransponders, sizeof(Transponder) * TRANSPONDERS_MAX_NUM);
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2340add4: Data_234fd8f0.Data_235441d0=0x%x, crc=0x%x\r\n",
-					Data_234fd8f0.Data_235441d0, crc);
+			sprintf(debug_string, "sub_2340add4: Data_234fd8f0.dwCrcTransponders=0x%x, crc=0x%x\r\n",
+					Data_234fd8f0.dwCrcTransponders, crc);
 			console_send_string(debug_string);
 		}
 #endif
-		if (crc != Data_234fd8f0.Data_235441d0)
+		if (crc != Data_234fd8f0.dwCrcTransponders)
 		{
 			//->loc_2340ae6c
 			res = 7;
@@ -1864,10 +1862,10 @@ int sub_2340add4(int r5)
 		}
 
 		//loc_2340ae70
-		for (i = 0; i < 6000; i++)
+		for (i = 0; i < CHANNELS_MAX_NUM; i++)
 		{
 			//loc_2340ae80
-			if (Data_234fd8f0.Data_234fd8f0[i].Data_0.service_id == 0xffff)
+			if (Data_234fd8f0.arChannels[i].Data_0.service_id == 0xffff)
 			{
 				break;
 			}
@@ -1880,18 +1878,18 @@ int sub_2340add4(int r5)
 }
 
 
-/* 2340aeac - todo */
-int sub_2340aeac()
+/* 2340aeac /  / 2340d988 - todo */
+int channel_clear_channel_list(void)
 {
 	uint8_t err;
 
 #if 0
-	console_send_string("sub_2340aeac (todo.c): TODO\r\n");
+	console_send_string("channel_clear_channel_list (todo.c): TODO\r\n");
 #endif
 
 	OSSemPend(channel_sema, 0, &err);
 
-	memset(&Data_234fd8f0.Data_234fd8f0[0], 0xff, 6000 * 40);
+	memset(&Data_234fd8f0.arChannels[0], 0xff, sizeof(Data_234fd8f0.arChannels));
 
 	OSSemPost(channel_sema);
 
@@ -1911,7 +1909,7 @@ void sub_2340aee4()
 int sub_2340b22c(int r4)
 {
 	uint8_t err; //sp_0x40
-	struct Struct_234fd8f0_Inner0 sp_0x18;
+	Channel sp_0x18;
 	struct Struct_234fd8f0_Inner0_Inner_0x10 sp;
 
 #if 0
@@ -1954,14 +1952,14 @@ int sub_2340b22c(int r4)
 	else
 	{
 		//loc_2340b2b0
-		int r0 = Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ];
+		int r0 = Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ];
 
-		//memcpy(&sp_0x18, &Data_234fd8f0.Data_234fd8f0[r0], 0, 24);
-		sp_0x18 = Data_234fd8f0.Data_234fd8f0[r0];
-//		sp = Data_234fd8f0.Data_234fd8f0[r0].Data_0x10;
+		//memcpy(&sp_0x18, &Data_234fd8f0.arChannels[r0], 0, 24);
+		sp_0x18 = Data_234fd8f0.arChannels[r0];
+//		sp = Data_234fd8f0.arChannels[r0].Data_0x10;
 
 		//PES Parser (Audio, Video...)
-		channel_start_pes(Data_234fd8f0.Data_234fd8f0[r0]/*Data_234fd8f0.Data_234fd8f0[r0].Data_0, Data_234fd8f0.Data_234fd8f0[r0].Data_0x10*/);
+		channel_start_pes(Data_234fd8f0.arChannels[r0]/*Data_234fd8f0.arChannels[r0].Data_0, Data_234fd8f0.arChannels[r0].Data_0x10*/);
 
 		if (Data_2349201c != 0)
 		{
@@ -1986,7 +1984,7 @@ int sub_2340b22c(int r4)
 
 
 /* 2340b348 - todo */
-int sub_2340b348(uint8_t r6, Struct_235fdfac* r5)
+int sub_2340b348(uint8_t r6, Transponder* r5)
 {
 	uint8_t sp;
 
@@ -2000,9 +1998,9 @@ int sub_2340b348(uint8_t r6, Struct_235fdfac* r5)
 	{
 		if (r5 != 0)
 		{
-			Data_234fd8f0.Data_23538270[
-					Data_234fd8f0.Data_234fd8f0[
-							Data_235462e4.wData_0xc[ Data_235462e4.currentChannel ] ].Data_0.wData_4 ] = *r5;
+			Data_234fd8f0.arTransponders[
+					Data_234fd8f0.arChannels[
+							Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ].Data_0.wData_4 ] = *r5;
 		}
 		//loc_2340b3b8
 		OSSemPost(channel_sema);
@@ -2023,8 +2021,8 @@ void sub_2340b3cc()
 /* 2340b55c - todo */
 int sub_2340b55c()
 {
-	struct Struct_234fd8f0_Inner0 sp_0x2c;
-	Struct_235fdfac sp_0x14;
+	Channel sp_0x2c;
+	Transponder sp_0x14;
 
 #if 1
 	console_send_string("sub_2340b55c (todo.c): TODO\r\n");
@@ -2039,14 +2037,14 @@ int sub_2340b55c()
 
 	int r5 = Data_235462e4.currentChannel;
 
-	sp_0x2c = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[ r5 ] ];
+	sp_0x2c = Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[ r5 ] ];
 
-	sp_0x14 = Data_234fd8f0.Data_23538270[ sp_0x2c.Data_0.wData_4 ];
+	sp_0x14 = Data_234fd8f0.arTransponders[ sp_0x2c.Data_0.wData_4 ];
 
 	Data_235462e4.wData_235491d2 = 0;
 
 	//Send the channel number to the av module
-	sub_23410f64(r5, Data_235462e4.bData_235491dd);
+	sub_23410f64(r5, Data_235462e4.currentChList);
 
 	if ((sp_0x2c.Data_0.wData_6 >> 15) != 0)
 	{
@@ -2096,7 +2094,7 @@ void sub_2340b684(Struct_234a73e8* a)
 
 	uint16_t sp_0x48;
 	struct Struct_234a73e8_Inner_0x248* sp_0x44;
-	struct Struct_234fd8f0_Inner0 sp_0x1c;
+	Channel sp_0x1c;
 
 	int r0 = psi_get_all_current_programs(a, &sp_0x48, &sp_0x44);
 	if (r0 != 0)
@@ -2124,7 +2122,7 @@ void sub_2340b684(Struct_234a73e8* a)
 
 			memcpy(&sp_0x1c.Data_0.wPcrPID, &sp_0x44[i].wData_0x334, 12);
 
-			sp_0x1c.Data_0.wData_2 = sp_0x44[i].bData_0;
+			sp_0x1c.Data_0.wFlags_2 = sp_0x44[i].bData_0;
 
 			channel_start_pes(sp_0x1c);
 
@@ -2346,7 +2344,7 @@ uint16_t channel_swap()
 
 
 /* 2340be58 / 2340e0e0 - todo */
-void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
+void channel_start_number(Channel* r8, uint32_t channelNr)
 {
 	uint8_t sp;
 
@@ -2359,7 +2357,7 @@ void channel_start_number(struct Struct_234fd8f0_Inner0* r8, uint32_t channelNr)
 
 	OSSemPend(channel_sema, 0, &sp);
 
-	struct Struct_234fd8f0_Inner0* r4 = &Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[channelNr] ];
+	Channel* r4 = &Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[channelNr] ];
 
 	if ((r4->Data_0.service_id != 0xfffe) &&
 			(channelNr < Data_235462e4.numChannels))
@@ -2400,10 +2398,10 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 
 	int r4 = Data_235462e4.currentChannel;
 
-	sp4.Data_0 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[r4] ];
+	sp4.Data_0 = Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[r4] ];
 	sp4.wCurrentChannel = r4;
 	sp4.wNumChannels = Data_235462e4.numChannels;
-	sp4.bData_0x30 = Data_235462e4.bData_235491dd;
+	sp4.bData_0x30 = Data_235462e4.currentChList;
 	sp4.bData_0x31 = Data_235462e4.bData_235491dc;
 	sp4.wData_0x2c = Data_235462e4.wData_235491d2;
 
@@ -2414,7 +2412,7 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 
 
 /* 2340bf94 / 2340e21c - todo */
-void sub_2340bf94(int r7, struct Struct_234fd8f0_Inner0* r6, Struct_235fdfac* r4)
+void sub_2340bf94(int r7, Channel* pChannel, Transponder* pTransponder)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;
@@ -2426,22 +2424,22 @@ void sub_2340bf94(int r7, struct Struct_234fd8f0_Inner0* r6, Struct_235fdfac* r4
 
 	OS_ENTER_CRITICAL();
 
-	*r6 = Data_234fd8f0.Data_234fd8f0[ Data_235462e4.wData_0xc[r7] ];
+	*pChannel = Data_234fd8f0.arChannels[ Data_235462e4.arChannelIdx[r7] ];
 
-	if (r6->Data_0.wData_4 == 0xffff)
+	if (pChannel->Data_0.wData_4 == 0xffff)
 	{
-		memset(r4, 0xff, sizeof(Struct_235fdfac));
+		memset(pTransponder, 0xff, sizeof(Transponder));
 	}
 	else
 	{
 		//loc_2340bff4
-		*r4 = Data_234fd8f0.Data_23538270[r6->Data_0.wData_4];
+		*pTransponder = Data_234fd8f0.arTransponders[pChannel->Data_0.wData_4];
 	}
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340bf94: r7=%d, r6->Data_0.service_id=%d, r6->Data_0.wData_4=%d, r4->Data_0.Data_4=%d\r\n",
-				r7, r6->Data_0.service_id, r6->Data_0.wData_4, r4->Data_0.Data_4);
+		sprintf(debug_string, "sub_2340bf94: r7=%d, pChannel->Data_0.service_id=%d, pChannel->Data_0.wData_4=%d, pTransponder->Data_0.Data_4=%d\r\n",
+				r7, pChannel->Data_0.service_id, pChannel->Data_0.wData_4, pTransponder->Data_0.Data_4);
 		console_send_string(debug_string);
 	}
 #endif
@@ -2528,7 +2526,7 @@ int sub_2340c01c(int r5, int r7)
 /* 2340c0dc - todo */
 void sub_2340c0dc()
 {
-	Struct_234011f4 sp;
+	LastMode sp;
 	uint32_t crc;
 
 	if (Data_235462e4.numChannels != 0)
@@ -2555,7 +2553,7 @@ void sub_2340c0dc()
 			sp.wData_8 = Data_235462e4.wData_235491d4;
 			sp.wData_10 = Data_235462e4.wData_235491d6;
 			sp.bData_12 = Data_235462e4.bData_235491dc;
-			sp.bData_13 = Data_235462e4.bData_235491dd;
+			sp.currentChList = Data_235462e4.currentChList;
 
 			sp.bData_15 = sub_2340c01c(0, 0);
 
@@ -2614,38 +2612,38 @@ int sub_2340c368(int get, int* r4)
 
 
 /* 2340c488 - todo */
-uint16_t sub_2340c488(uint16_t r6, Struct_235fdfac list[], uint16_t max)
+uint16_t channel_get_transponder_list(uint16_t r6, Transponder list[], uint16_t maxNum)
 {
 	uint8_t err; //sp
 	uint16_t i;
 	uint16_t count = 0;
 
 #if 0
-	console_send_string("sub_2340c488 (todo.c): TODO\r\n");
+	console_send_string("channel_get_transponder_list (todo.c): TODO\r\n");
 #endif
 
 	OSSemPend(channel_sema, 0, &err);
 
-	for (i = 0; i < 2000; i++)
+	for (i = 0; i < TRANSPONDERS_MAX_NUM; i++)
 	{
 		//loc_2340c4b8
-		Struct_235fdfac* r1 = &Data_234fd8f0.Data_23538270[i];
+		Transponder* pTransponder = &Data_234fd8f0.arTransponders[i];
 
-		if (r1->Data_0.Data_4 == -1)
+		if (pTransponder->Data_0.frequency == -1)
 		{
 			//->loc_2340c510
 			break;
 		}
 
-		if (r1->Data_0.wData_0x0a == r6)
+		if (pTransponder->Data_0.wData_0x0a == r6)
 		{
-			if (count >= max)
+			if (count >= maxNum)
 			{
 				//->loc_2340c510
 				break;
 			}
 			//0x2340c4e8
-			list[count++] = *r1;
+			list[count++] = *pTransponder;
 		}
 		//loc_2340c500
 	}
@@ -2777,13 +2775,12 @@ int sub_2340ca5c(int get, void* r6)
 	return 0;
 }
 
-#if 0
 
 /* 2340caf0 - complete */
-int sub_2340caf0()
+int channel_switch_lists(void)
 {
 #if 0
-	console_send_string("sub_2340caf0 (todo.c): TODO\r\n");
+	console_send_string("channel_switch_lists (todo.c): TODO\r\n");
 #endif
 
 	uint8_t sp;
@@ -2793,16 +2790,16 @@ int sub_2340caf0()
 
 	OSSemPend(channel_sema, 0, &sp);
 
-	if (Data_235462e4.bData_235491dd == 1)
+	if (Data_235462e4.currentChList == 1)
 	{
-		Data_235462e4.bData_235491dd = 0;
+		Data_235462e4.currentChList = 0;
 		Data_235462e4.wData_235491d4 = Data_235462e4.currentChannel;
 		//->loc_2340cb70
 		Data_235462e4.currentChannel = Data_235462e4.wData_235491d6;
 	}
-	else if (Data_235462e4.bData_235491dd == 0)
+	else if (Data_235462e4.currentChList == 0)
 	{
-		Data_235462e4.bData_235491dd = 1;
+		Data_235462e4.currentChList = 1;
 		Data_235462e4.wData_235491d6 = Data_235462e4.currentChannel;
 		Data_235462e4.currentChannel = Data_235462e4.wData_235491d4;
 	}
@@ -2825,7 +2822,7 @@ int sub_2340caf0()
 
 	if (Data_23492034 != 0)
 	{
-		(Data_23492034)(Data_235462e4.bData_235491dd);
+		(Data_23492034)(Data_235462e4.currentChList);
 	}
 
 	OSSemPost(channel_sema);
@@ -2833,6 +2830,7 @@ int sub_2340caf0()
 	return Data_235462e4.numChannels;
 }
 
+#if 0
 
 /* 2340cbc4 - complete */
 int channel_get_audio_pid()
@@ -2872,7 +2870,7 @@ void sub_2340ce18(void** r0)
 
 
 /* 2340ce30 / 2340f04c - todo */
-int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
+int sub_2340ce30(Transponder* r4, uint16_t* r5)
 {
 #if 0
 	console_send_string("sub_2340ce30 (todo.c): TODO\r\n");
@@ -2893,7 +2891,7 @@ int sub_2340ce30(Struct_235fdfac* r4, uint16_t* r5)
 
 	Data_235462e4.wData_235491d2 = *r5;
 
-	sub_23410f64(Data_235462e4.currentChannel, Data_235462e4.bData_235491dd);
+	sub_23410f64(Data_235462e4.currentChannel, Data_235462e4.currentChList);
 
 	if (Data_23492014 == sub_2340b55c)
 	{

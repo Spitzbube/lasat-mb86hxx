@@ -21,9 +21,10 @@ set(SRCS
    menu_general_settings.c
    vfd.c
    fpc.c
-   frontdisplay.c           #0x23419fd4   0x23492118
-   radiotext.c              #0x2341a42c 0x2349211c
-   powermode.c              #0x23412ea4
+   frontdisplay.c           #0x23419fd4     0x23492118
+   radiotext.c              #0x2341a42c     0x2349211c
+   powermode.c              #0x23412ea4     0x234920c8      0x2358be90
+   ota.c                    #0x234133a0     0x234920cc      0x2358c124
    av.c
    fe_manager.c
    sub_23402e8e.c
@@ -32,7 +33,7 @@ set(SRCS
    sub_2340217c.c
    texttable.c
    sub_23438084.c
-   sub_2340a6a0.c
+   sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    crc.c
    sub_2346fac4.c
    sub_23470890.c
@@ -47,10 +48,11 @@ set(SRCS
    sub_2344ed20.c
    sub_23458874.c
    sub_23411b0c.c
-   sub_2343df02.c
+   channel_list_update.c    #0x2343dcfc
    audec.c
    scan.c
-   menu_channel_search.c
+   menu_channel_search.c    #0x23470090     0x23495ea0      0x238de5d0
+   sub_23472004.c           #0x23471fe4     0x23496474      0x238e0ad4
    sub_2344f770.c
    sub_234515f0.c
    ca_hw.c
@@ -60,6 +62,7 @@ set(SRCS
    graphic.c
    sub_23419cd0.c
    sub_2345bc50.c
+   menu_guided_install.c    #?
    hexdump.c
    todo.c
 )

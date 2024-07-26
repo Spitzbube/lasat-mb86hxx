@@ -826,8 +826,8 @@ void av_display_program_name(int r4)
 	uint8_t sp_0x6c = 0; //r6
 	uint8_t chNumberString[8];
 	uint8_t chNameString[32];
-	struct Struct_234fd8f0_Inner0 sp_0x1c;
-	Struct_235fdfac sp4;
+	Channel sp_0x1c;
+	Transponder sp4;
 	int r5 = 0;
 
 	sub_234363d0(r4 + 1);

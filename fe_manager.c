@@ -102,7 +102,7 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 
 			memcpy(&r4->Data_0x64, &r4->Data_0x7c, 24);
 
-			(r4->Data_0x30.Data_0x1c)(r4->Data_0x64.Data_0.Data_4);
+			(r4->Data_0x30.Data_0x1c)(r4->Data_0x64.Data_0.frequency);
 
 			if (r4->stateChangeCallback != 0)
 			{
@@ -730,7 +730,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 
 
 /* 2340eb74 / 23415a90 - todo */
-int fe_manager_tune(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*callbackFunc/*r6*/)(), uint16_t r7)
+int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFunc/*r6*/)(), uint16_t r7)
 {
 //	int sp_0x24;
 	uint8_t err; //sp
@@ -766,7 +766,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*callbac
 	//loc_2340ebe4
 	r4->bState = 1; //sb
 
-	if (0 == memcmp(&r4->Data_0x7c, &sp_0x24, sizeof(Struct_235fdfac)))
+	if (0 == memcmp(&r4->Data_0x7c, &sp_0x24, sizeof(Transponder)))
 	{
 		r4->bData_0x9c = 0; //r8
 		r4->wData_0xd4 = 5;
@@ -777,7 +777,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Struct_235fdfac sp_0x24, void (*callbac
 		//0x2340ec14
 		r4->bState = 1; //sb
 
-		memcpy(&r4->Data_0x7c, &sp_0x24, sizeof(Struct_235fdfac));
+		memcpy(&r4->Data_0x7c, &sp_0x24, sizeof(Transponder));
 	}
 	//loc_2340ec28
 	Data_2354dd70[0].stateChangeCallback = 0; //r8
@@ -888,7 +888,7 @@ int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
 
 
 /* 2340ed18 - todo */
-int sub_2340ed18(Struct_235fdfac* r0)
+int sub_2340ed18(Transponder* r0)
 {
 #if 0
 	{
@@ -908,7 +908,7 @@ int sub_2340ed18(Struct_235fdfac* r0)
 	}
 
 	if (((r0->Data_0.Data_0.Data_0 > 3399000) && (r0->Data_0.Data_0.Data_0 < 13000000)) &&
-			((r0->Data_0.Data_4 > 1000) && (r0->Data_0.Data_4 < 70000)))
+			((r0->Data_0.frequency > 1000) && (r0->Data_0.frequency < 70000)))
 	{
 #if 0
 		console_send_string("sub_2340ed18: return 0\r\n");
@@ -916,7 +916,7 @@ int sub_2340ed18(Struct_235fdfac* r0)
 		return 0;
 	}
 
-	if (((r0->Data_0.Data_4 >= 1775000) && (r0->Data_0.Data_4 <= 8580000)) &&
+	if (((r0->Data_0.frequency >= 1775000) && (r0->Data_0.frequency <= 8580000)) &&
 			(r0->Data_0.wData_0x0a == 0))
 	{
 #if 0
@@ -925,7 +925,7 @@ int sub_2340ed18(Struct_235fdfac* r0)
 		return 2;
 	}
 
-	if ((r0->Data_0.Data_4 >= 500000) && (r0->Data_0.Data_4 <= 8600000))
+	if ((r0->Data_0.frequency >= 500000) && (r0->Data_0.frequency <= 8600000))
 	{
 #if 0
 		console_send_string("sub_2340ed18: return 1\r\n");
@@ -962,7 +962,7 @@ int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
 		r4->bState = 4;
 		r4->stateChangeCallback = func;
 
-		memset(&r4->Data_0x64, 0, sizeof(Struct_235fdfac));
+		memset(&r4->Data_0x64, 0, sizeof(Transponder));
 
 		OSSemPost(fe_manager_pSema);
 
@@ -972,7 +972,6 @@ int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
 	return 0xff;
 }
 
-#if 0
 
 /* 2340ee34 - complete */
 int sub_2340ee34(Struct_2354dd70* p)
@@ -985,6 +984,7 @@ int sub_2340ee34(Struct_2354dd70* p)
 	return 5;
 }
 
+#if 0
 
 /* 2340ee78 / 23415d94 - complete */
 void sub_2340ee78(int r6, int r5)

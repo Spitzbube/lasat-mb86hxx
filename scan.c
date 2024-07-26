@@ -1,7 +1,7 @@
 
 #include <stdint.h>
 #include "data.h"
-#include "sub_2343df02.h"
+#include "channel_list_update.h"
 #include "nit.h"
 #include "scan.h"
 
@@ -31,7 +31,7 @@ typedef struct
 	uint8_t bData_0x18; //0x18 = 24
 	uint16_t wData_0x1a; //0x1a = 26
 	uint16_t Data_0x1c[150]; //0x1c = 28
-	Struct_235fdfac* pList; //0x148
+	Transponder* pList; //0x148
 	OS_EVENT* sema; //0x14c
 	int (*pfUpdateTransponderList)(); //0x150
 	void (*pfProgress)(); //0x154
@@ -75,7 +75,7 @@ int scan_update_transponder_list()
 	console_send_string("scan_update_transponder_list (todo.c): TODO\r\n");
 #endif
 
-	Struct_235fdfac* r4 = &scanData.pList[scanData.numItems];
+	Transponder* r4 = &scanData.pList[scanData.numItems];
 
 	psi_get_network_info(&sp, main_hPSIDecoder1);
 
@@ -104,11 +104,11 @@ int scan_update_transponder_list()
 				(0 == scan_check_NIT(r5, r6)))
 		{
 			//0x2340f4cc
-			r4->Data_0.Data_4 = r5->frequency * 100;
-			r4->Data_0.wData_8 = r5->symbol_rate;
+			r4->Data_0.frequency = r5->frequency * 100;
+			r4->Data_0.symbol_rate = r5->symbol_rate;
 			r4->Data_0.wData_0x0c = 0; //r8
 			r4->Data_0.wData_0x0a = 0xffff;
-			r4->Data_0.wData_0x0e = sub_234512d8(r4->Data_0.Data_4);
+			r4->Data_0.wData_0x0e = sub_234512d8(r4->Data_0.frequency);
 #if 1 //TODO!!!
 			r4->Data_0.Data_0.Bitfield_0.Data_0_18 = 0;
 			r4->Data_0.Data_0.Bitfield_0.Data_19 = 0;
@@ -161,12 +161,12 @@ void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
 	struct
 	{
 		struct Struct_234a73e8_Inner_0x248* Data_0; //0 = sp_0x28
-		Struct_235fdfac* Data_4; //4 = sp_0x2c
+		Transponder* Data_4; //4 = sp_0x2c
 		int Data_8; //8 = sp_0x30
 		uint16_t wData_12; //12 = sp_0x34
 
 	} sp_0x28;
-	Struct_235fdfac sp_0x10;
+	Transponder sp_0x10;
 	Struct_2344dc3c sp4;
 
 	uint16_t r7 = 0;
@@ -368,7 +368,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 
 
 /* 2340f97c - todo */
-int scan_frontend_callback(uint8_t r6, Struct_235fdfac* r4)
+int scan_frontend_callback(uint8_t r6, Transponder* r4)
 {
 	uint8_t sp;
 
@@ -396,15 +396,15 @@ int scan_frontend_callback(uint8_t r6, Struct_235fdfac* r4)
 			//0x2340f9b8
 			scanData.state = 4;
 
-			Struct_235fdfac* r0 = &scanData.pList[scanData.currentItem];
+			Transponder* r0 = &scanData.pList[scanData.currentItem];
 
 			if (r4 != 0)
 			{
 #if 0
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "scan_frontend_callback: r0->transport_stream_id=0x%x, r0->Data_0.wData_8=%d, r0->Data_0.Data_0.Bitfield_0.Data_19=%d\r\n",
-							r0->transport_stream_id, r0->Data_0.wData_8, r0->Data_0.Data_0.Bitfield_0.Data_19);
+					sprintf(debug_string, "scan_frontend_callback: r0->transport_stream_id=0x%x, r0->Data_0.symbol_rate=%d, r0->Data_0.Data_0.Bitfield_0.Data_19=%d\r\n",
+							r0->transport_stream_id, r0->Data_0.symbol_rate, r0->Data_0.Data_0.Bitfield_0.Data_19);
 					console_send_string(debug_string);
 				}
 #endif
@@ -415,18 +415,18 @@ int scan_frontend_callback(uint8_t r6, Struct_235fdfac* r4)
 					//0x2340f9e8
 					{
 						extern char debug_string[];
-						sprintf(debug_string, "scan_frontend_callback: r4->Data_0.wData_8=%d, r4->Data_0.Data_0.Bitfield_0.Data_19=%d\r\n",
-								r4->Data_0.wData_8, r4->Data_0.Data_0.Bitfield_0.Data_19);
+						sprintf(debug_string, "scan_frontend_callback: r4->Data_0.symbol_rate=%d, r4->Data_0.Data_0.Bitfield_0.Data_19=%d\r\n",
+								r4->Data_0.symbol_rate, r4->Data_0.Data_0.Bitfield_0.Data_19);
 						console_send_string(debug_string);
 					}
 
 					int r2 = r4->Data_0.Data_0.Bitfield_0.Data_19;
 
-					if (((r0->Data_0.wData_8 - 10) > r4->Data_0.wData_8) ||
-							((r0->Data_0.wData_8 + 10) < r4->Data_0.wData_8))
+					if (((r0->Data_0.symbol_rate - 10) > r4->Data_0.symbol_rate) ||
+							((r0->Data_0.symbol_rate + 10) < r4->Data_0.symbol_rate))
 					{
 						//loc_2340fa14
-						r0->Data_0.wData_8 = r4->Data_0.wData_8;
+						r0->Data_0.symbol_rate = r4->Data_0.symbol_rate;
 					}
 					//loc_2340fa18
 					if (r2 != r0->Data_0.Data_0.Bitfield_0.Data_19)
@@ -541,7 +541,7 @@ int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
 	console_send_string("scan_check_NIT (todo.c): TODO\r\n");
 #endif
 
-	Struct_235fdfac* pList = scanData.pList;
+	Transponder* pList = scanData.pList;
 	uint32_t freq = a->frequency * 100;
 
 #if 0
@@ -586,7 +586,7 @@ int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
 	for (uint16_t i = 0; i < r1; i++)
 	{
 		//loc_23410330
-		if (pList->Data_0.Data_4 == freq)
+		if (pList->Data_0.frequency == freq)
 		{
 			//0x2341033c
 #if 0
@@ -603,7 +603,7 @@ int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
 				return 1;
 			}
 			//0x23410348
-			if (pList->Data_0.wData_8 == a->symbol_rate/*r4*/)
+			if (pList->Data_0.symbol_rate == a->symbol_rate/*r4*/)
 			{
 				//0x23410354
 #if 0
@@ -920,7 +920,7 @@ int scan_start(Struct_2343df02* r4)
 			else
 			{
 				//0x23410038
-				Struct_235fdfac* r0;
+				Transponder* r0;
 
 				scanData.pfUpdateTransponderList = scan_update_transponder_list;
 

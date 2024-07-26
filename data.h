@@ -52,7 +52,10 @@ typedef struct
 	uint16_t wData_8; //8
 	uint16_t wData_10; //10
 	uint8_t bData_12; //12
-	uint8_t bData_13; //13
+	uint8_t currentChList; //13
+	/*
+		Bit 0...3: Powermode
+	 */
 #if 1
 	uint8_t bData_14; //14
 #else
@@ -60,7 +63,7 @@ typedef struct
 #endif
 	uint8_t bData_15; //15
 	//16
-} Struct_234011f4;
+} LastMode;
 
 
 typedef struct
@@ -163,12 +166,6 @@ extern int menu_items_navigate(int*);
 extern int menu_general_settings_entry(UI_Thread_Params*);
 
 
-extern int sub_2343dd2c(void);
-extern int sub_2343deb4(int);
-
-extern void sub_23472004();
-extern void sub_234720a4();
- 
 
 typedef struct
 {

@@ -8,6 +8,7 @@
 #define THREAD_PRIO_UI_1					49
 #define THREAD_PRIO_UI_2					50
 #define THREAD_PRIO_FE_MANAGER				51
+#define THREAD_PRIO_OTA     				52
 #define THREAD_PRIO_STARTUP					56
 #define THREAD_PRIO_IDLE					63
 //#define  OS_TASK_IDLE_PRIO  (OS_LOWEST_PRIO)

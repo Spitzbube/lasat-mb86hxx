@@ -49,10 +49,10 @@ void sub_234515f0(int r4, int r7)
 			{
 				//0x23451644
 				Data_2377d870[i].wData_0 =
-						Data_234fd8f0.Data_234fd8f0[ Data_234fd8f0.favourites.arChannel[i] ].Data_0.service_id;
+						Data_234fd8f0.arChannels[ Data_234fd8f0.favourites.arChannel[i] ].Data_0.service_id;
 
 				Data_2377d870[i].wData_2 =
-						Data_234fd8f0.Data_23538270[ Data_234fd8f0.Data_234fd8f0[ /*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] ].Data_0.wData_4 ].transport_stream_id;
+						Data_234fd8f0.arTransponders[ Data_234fd8f0.arChannels[ /*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] ].Data_0.wData_4 ].transport_stream_id;
 			}
 			//loc_23451680
 		}
@@ -72,7 +72,7 @@ void sub_234515f0(int r4, int r7)
 					int ip;
 					int sl;
 					//loc_234516ac
-					int r3 = Data_234fd8f0.Data_234fd8f0[j].Data_0.service_id;
+					int r3 = Data_234fd8f0.arChannels[j].Data_0.service_id;
 					if (r3 == 0xffff)
 					{
 						/*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] = 0xffff;
@@ -80,9 +80,9 @@ void sub_234515f0(int r4, int r7)
 						break;
 					}
 					//0x234516c4
-					ip = Data_234fd8f0.Data_234fd8f0[j].Data_0.wData_4;
+					ip = Data_234fd8f0.arChannels[j].Data_0.wData_4;
 					sl = Data_2377d870[i].wData_0;
-					ip = Data_234fd8f0.Data_23538270[ ip ].transport_stream_id;
+					ip = Data_234fd8f0.arTransponders[ ip ].transport_stream_id;
 
 					if (sl == r3)
 					{

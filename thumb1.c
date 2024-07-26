@@ -48,7 +48,7 @@ struct
 	uint8_t fill_23495b97; //23495b97
 
 	uint8_t bEventDisplayMode; //0x228 = 552, 23495b98
-	
+
 	int (*standbyTimerFunc)(); //0x22C = 556, 23495b9c  0x23495b90 - 0x20 +0x2c
 	uint8_t bKeyActivity; //0x230 = 560, 23495ba0 23495b90 + 0x10
 	uint32_t standbyCount; //564, 23495ba4, 23495b90 +0x14
@@ -391,7 +391,7 @@ void sub_2346eefe()
 static void* direct_channel_input_timer_func(uint32_t* pCount)
 {
 	Struct_2340bf0c sp_0x2c;
-	struct Struct_234fd8f0_Inner0 sp4;
+	Channel sp4;
 
 #if 0
 	console_send_string("direct_channel_input_timer_func (todo.c): TODO\r\n");
@@ -481,8 +481,8 @@ static void* event_display_timer_func(uint32_t* pCount)
 	int r4;
 
 	Struct_2340bf0c sp_0x48;
-	Struct_235fdfac sp_0x30;
-	struct Struct_234fd8f0_Inner0 sp8;
+	Transponder sp_0x30;
+	Channel sp8;
 
 #if 0
 	console_send_string("event_display_timer_func (todo.c): TODO\r\n");
@@ -789,7 +789,7 @@ static void* rds_ps_name_timer_func(uint32_t* pCount/*r4*/)
 static void check_favourite_channel(void)
 {
 	Struct_2340bf0c sp_0x2c; //sp_0x2c
-	struct Struct_234fd8f0_Inner0 sp4; //sp4
+	Channel sp4; //sp4
 
 #if 0
 	console_send_string("check_favourite_channel (todo.c): TODO\r\n");
@@ -936,7 +936,6 @@ int menu_root_on_event(void* r0)
 			if ((Data_23495970.standbyTimerFunc == 0) ||
 					(0 == (Data_23495970.standbyTimerFunc)()))
 			{
-#if 0
 				//loc_2346f3aa
 				if (0 != sub_2346f7e0())
 				{
@@ -948,7 +947,6 @@ int menu_root_on_event(void* r0)
 					sub_2346f844();
 					//loc_2346f3b6 -> loc_2346f6f0
 				}
-#endif
 			}
 			//loc_2346f3b6 -> loc_2346f6f0
 		}
@@ -1086,14 +1084,14 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4a0
-		else if (r7->keyCode == 54/*0x36*/)
+		else if (r7->keyCode == 54/*0x36*/) //EQ
 		{
 			//loc_2346f4a4
 			sub_2346fac4(0);
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ac
-		else if (r7->keyCode == 52/*0x34*/)
+		else if (r7->keyCode == 52/*0x34*/) //BT
 		{
 			//loc_2346f4b0
 			if (0 == sub_2348112c(52))
@@ -1107,7 +1105,7 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ba
-		if (r7->keyCode == 55/*0x37*/)
+		if (r7->keyCode == 55/*0x37*/) // X
 		{
 			//0x2346f4be
 
@@ -1211,7 +1209,7 @@ int menu_root_on_event(void* r0)
 		}
 		//loc_2346f5e2
 		//sp_0x38 = 0x23495984
-		else if (r7->keyCode < 9)
+		else if (r7->keyCode <= 9)
 		{
 			//0x2346f5ea
 			if (Data_23495970.bDirectChannelDigits != 0)
@@ -1502,6 +1500,103 @@ void menu_root_start_event_display()
 	Data_23495970.timerVal = 45;
 	Data_23495970.timerFunc = event_display_timer_func;
 	Data_23495970.Data_2349597c = 0;
+}
+
+
+/* 2346f7e0 - todo */
+int sub_2346f7e0()
+{
+	Struct_2354dd70* r0;
+	int r4;
+	int sp4 = 0;
+	int sp = 0;
+
+#if 0
+	console_send_string("sub_2346f7e0 (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	if (0 != sub_23418bf0()) //->ts_play
+	{
+		//loc_2346f7f0
+		return 1;
+	}
+#endif
+	//loc_2346f7f4
+	if (6 == sub_2340ee34(Data_23491db8))
+	{
+		r0 = Data_23491db8;
+		//->loc_2346f808
+	}
+	else
+	{
+		//loc_2346f804
+		r0 = main_hFrontend1;
+	}
+
+	r4 = 0xff & sub_2340ecc0(r0, &sp4, &sp);
+	if (r4 == 0)
+	{
+		text_table_get_string(41, //"Kein Empfang"
+				&Data_23495970.strText[0], 255);
+
+		frontdisplay_start_text(string_display);
+
+		bData_2349596e = r4;
+		//->loc_2346f7f0
+		return 1;
+	}
+	//loc_2346f82c
+	else if (bData_2349596e == 0)
+	{
+		sub_2346f77e();
+
+		Data_23495970.timerVal = 1;
+	}
+	//loc_2346f83e
+	bData_2349596e = r4;
+
+	return 0;
+}
+
+
+/* 2346f844 - todo */
+int sub_2346f844()
+{
+#if 0
+	console_send_string("sub_2346f844 (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2346f844: Data_23495970.bData_23495ba8=%d\r\n",
+				Data_23495970.bData_23495ba8);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (Data_23495970.bData_23495ba8 != 0)
+	{
+		text_table_get_string(0x1BF, &Data_23495970.strText[0], 0xff);
+
+		frontdisplay_start_text(string_display);
+
+		bData_2349596f = Data_23495970.bData_23495ba8;
+
+		return 1;
+	}
+	//loc_2346f86a
+	if (bData_2349596f != 0)
+	{
+		sub_2346f77e();
+
+		Data_23495970.timerVal = 1;
+	}
+	//loc_2346f87c
+	bData_2349596f = Data_23495970.bData_23495ba8;
+
+	return 0;
 }
 
 

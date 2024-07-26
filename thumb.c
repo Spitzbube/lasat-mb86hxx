@@ -8,7 +8,7 @@
 
 #pragma thumb
 
-extern int sub_23470548(UI_Thread_Params*);
+extern int menu_channel_search_entry(UI_Thread_Params*);
 extern int sub_23471600(UI_Thread_Params*);
 extern int menu_network_on_entry(UI_Thread_Params*);
 extern int sub_2343d1ca(UI_Thread_Params*);
@@ -41,7 +41,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_23470548, //void* Data_0x1c; //0x1c = 28
+		menu_channel_search_entry, //void* Data_0x1c; //0x1c = 28
 		menu_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40

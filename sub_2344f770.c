@@ -19,7 +19,7 @@ struct Struct_234fd8f0_Inner0* sub_2344f770()
 
 	OSSemPend(channel_sema, 0, &err);
 
-	r4 = &Data_234fd8f0.Data_234fd8f0[0];
+	r4 = &Data_234fd8f0; //.Data_234fd8f0[0];
 
 	OSSemPost(channel_sema);
 

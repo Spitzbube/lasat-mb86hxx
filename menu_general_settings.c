@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
+#include "channel_list_update.h"
 
 #pragma thumb
 
@@ -106,7 +107,7 @@ int on_channel_list_update_change()
 
 	if ((settings_work_copy.Data_0x10 >> 7) & 1)
 	{
-		powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
+		powermode_set_onoff_callbacks(channel_list_update_start, sub_2343deb4);
 	}
 	else
 	{

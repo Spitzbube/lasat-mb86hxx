@@ -21,13 +21,13 @@
 #include "graphic.h"
 #include "sub_23419cd0.h"
 #include "radiotext.h"
-
+#include "channel_list_update.h"
 
 
 extern int main_process_uart_command(uint8_t*);
 
 
-uint8_t bData_23491d8c = 0; //23491d8c +0
+uint8_t main_bNeedSetup = 0; //23491d8c +0
 Uart_Module* main_hUart0 = 0; //23491d90 +4
 void* Data_23491d94 = 0; //23491d94 +8
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
@@ -367,7 +367,7 @@ void main_inputhandler_init()
 	UI_Thread_Params sp_0x74;
 	Struct_2340d784 sp_0x5c;
 	Struct_2340bf0c sp_0x28;
-	struct Struct_234fd8f0_Inner0 sp0;
+	Channel channel;
 
 	ir_init(ir_user_send_data, 0x3b);
 
@@ -394,14 +394,12 @@ void main_inputhandler_init()
 		sub_2343d458(&sp_0x74);
 
 #if 1
-		if (bData_23491d8c != 0)
+		if (main_bNeedSetup != 0)
 #else
 		if (1)
 #endif
 		{
-#if 0
-			sub_2343e196(&sp_0x74);
-#endif
+			menu_guided_install_entry(&sp_0x74);
 			//loc_23400a28
 		}
 		else
@@ -415,7 +413,7 @@ void main_inputhandler_init()
 
 				sub_2340bf0c(&sp_0x28);
 
-				channel_start_number(&sp0, 
+				channel_start_number(&channel, 
 					sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
 				//->loc_23400a28
 			}
@@ -872,7 +870,7 @@ void main_frontend_init()
 
 		if (sp_0xe8.Data_0x10 & 0x80)
 		{
-			powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
+			powermode_set_onoff_callbacks(channel_list_update_start, sub_2343deb4);
 		}
 
 		return;
@@ -964,7 +962,7 @@ void main_frontend_init()
 
 				if (sp_0x94.Data_0x10 & (1 << 7)) //Channel list update enabled?
 				{
-					powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
+					powermode_set_onoff_callbacks(channel_list_update_start, sub_2343deb4);
 				}
 				//loc_2340113c
 				return;
@@ -1004,7 +1002,7 @@ void main_frontend_init()
 
 						if (sp_0x94.Data_0x10 & (1<< 7)) //Channel list update enabled?
 						{
-							powermode_set_onoff_callbacks(sub_2343dd2c, sub_2343deb4);
+							powermode_set_onoff_callbacks(channel_list_update_start, sub_2343deb4);
 						}
 						//loc_2340113c
 						return;
@@ -1036,15 +1034,15 @@ void main_frontend_init()
 
 
 /* 234011f4 - todo */
-void sub_234011f4()
+void main_channel_init()
 {
-	Struct_234011f4 sp;
+	LastMode lastmode;
 	int oldCrc;
 	int calcCrc;
 	int r0;
 
 #if 0
-	console_send_string("sub_234011f4()\r\n");
+	console_send_string("main_channel_init()\r\n");
 #endif
 
 	if (0 != sub_2340add4(0x40300000))
@@ -1053,11 +1051,11 @@ void sub_234011f4()
 
 		sub_23438194(Data_23491dc8);
 
-		bData_23491d8c = 1;
+		main_bNeedSetup = 1;
 		//->loc_23401234
 	}
 	//loc_23401228
-	if (bData_23491d8c == 1)
+	if (main_bNeedSetup == 1)
 	{
 		//loc_23401234
 		r0 = 0;
@@ -1065,16 +1063,16 @@ void sub_234011f4()
 	else
 	{
 		//loc_2340123c
-		sub_23438084(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+		sub_23438084(Data_23491dc8, &lastmode, 0, sizeof(LastMode));
 
-		oldCrc = sp.crc;
-		sp.crc = 0;
+		oldCrc = lastmode.crc;
+		lastmode.crc = 0;
 
-		calcCrc = crc32((void*) &sp, sizeof(Struct_234011f4));
+		calcCrc = crc32((void*) &lastmode, sizeof(LastMode));
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_234011f4: oldCrc=0x%x, calcCrc=0x%x\r\n", oldCrc, calcCrc);
+			sprintf(debug_string, "main_channel_init: oldCrc=0x%x, calcCrc=0x%x\r\n", oldCrc, calcCrc);
 			console_send_string(debug_string);
 		}
 #endif
@@ -1086,13 +1084,13 @@ void sub_234011f4()
 		else
 		{
 			//loc_23401274
-			r0 = sp.bData_15;
+			r0 = lastmode.bData_15;
 		}
 	}
 	//loc_23401274
 	channel_init(r0);
 
-	sub_2340a794();
+	channel_load_lists();
 }
 
 
@@ -1332,7 +1330,7 @@ void main_video_hdmi_init()
 void main_set_power_mode()
 {
 	uint8_t sp_0x10;
-	Struct_234011f4 sp;
+	LastMode sp;
 
 #if 0
 	console_send_string("main_set_power_mode (main.c)\r\n");
@@ -1397,6 +1395,18 @@ void main_usb_init()
 	//loc_23401858
 	return;
 }
+
+
+/* 234018c8 - todo */
+void sub_234018c8(void)
+{
+#if 0
+	console_send_string("sub_234018c8 (main.c)\r\n");
+#endif
+
+	ota_init(THREAD_PRIO_OTA);
+}
+
 
 #if 1 //Only v290
 

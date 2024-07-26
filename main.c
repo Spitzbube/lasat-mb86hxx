@@ -42,7 +42,7 @@ void startup_thread()
 #endif
 	main_video_hdmi_init();
 	main_audio_init();
-	sub_234011f4(); //channel???
+	main_channel_init();
 	main_pes_init();
 #if 0 //v290
 	sub_23402948();
@@ -55,6 +55,7 @@ void startup_thread()
 	sub_234014dc();
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
+	sub_234018c8();
 	main_set_power_mode();
 	main_inputhandler_init();
 

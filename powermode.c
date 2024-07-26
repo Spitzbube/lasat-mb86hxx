@@ -96,15 +96,15 @@ void powermode_shutdown_frontend(Struct_2354dd70* a)
 /* 23412f3c - complete */
 void powermode_save_lastmode(int r7)
 {
-	Struct_234011f4 sp;
+	LastMode sp;
 	uint32_t oldCrc;
 
-	sub_23438084(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+	sub_23438084(Data_23491dc8, &sp, 0, sizeof(LastMode));
 
 	oldCrc = sp.crc;
 	sp.crc = 0;
 
-	if (oldCrc == crc32((void*) &sp, sizeof(Struct_234011f4)))
+	if (oldCrc == crc32((void*) &sp, sizeof(LastMode)))
 	{
 		sp.crc = 0;
 #if 1
@@ -113,9 +113,9 @@ void powermode_save_lastmode(int r7)
 		sp.bData_14_0 = r7;
 #endif
 
-		sp.crc = crc32((void*) &sp, sizeof(Struct_234011f4));
+		sp.crc = crc32((void*) &sp, sizeof(LastMode));
 
-		sub_23438108(Data_23491dc8, &sp, 0, sizeof(Struct_234011f4));
+		sub_23438108(Data_23491dc8, &sp, 0, sizeof(LastMode));
 	}
 	//loc_23412fb8
 }
@@ -404,7 +404,7 @@ int powermode_init(Powermode_Init_Params* pParams)
 }
 
 
-/* 23413310 - todo */
+/* 23413310 - complete */
 int powermode_set_onoff_callbacks(void* pfOnSwitchOff, void* pfOnSwitchOn)
 {
 	uint8_t err;
@@ -419,6 +419,20 @@ int powermode_set_onoff_callbacks(void* pfOnSwitchOff, void* pfOnSwitchOn)
 	Data_2358be90.pfOnSwitchOn = pfOnSwitchOn;
 
 	err = OSSemPost(Data_2358be90.pSema);
+
+	return 0;
+}
+
+
+/* 23413348 - complete */
+int powermode_set_onoff_callbacks_ex(void* pfOnSwitchOff, void* pfOnSwitchOn)
+{
+#if 0
+	console_send_string("powermode_set_onoff_callbacks_ex (todo.c): TODO\r\n");
+#endif
+
+	Data_2358be90.pfOnSwitchOff = pfOnSwitchOff;
+	Data_2358be90.pfOnSwitchOn = pfOnSwitchOn;
 
 	return 0;
 }

@@ -2,6 +2,9 @@
 #ifndef SUB_2340a6a0
 #define SUB_2340a6a0
 
+#define CHANNELS_MAX_NUM 6000
+#define TRANSPONDERS_MAX_NUM 2000
+
 typedef struct
 {
 	uint16_t fill_0; //0 235441b0
@@ -41,8 +44,8 @@ typedef struct
 			uint8_t Data_28_31: 4; //bData_3 & 0xf0
 		} Bitfield_0;
 	} Data_0; //0
-	uint32_t Data_4; //4
-	uint16_t wData_8; //8
+	uint32_t frequency; //4
+	uint16_t symbol_rate; //8
 	uint16_t wData_0x0a; //10 = 0x0a
 	uint16_t wData_0x0c; //12 = 0x0c
 	uint16_t wData_0x0e; //14 = 0x0e
@@ -75,46 +78,50 @@ typedef struct
 	uint16_t wData_0x14; //0x14 = 20
 	uint8_t bData_0x16; //0x16
 	//0x18 = 24
-} Struct_235fdfac;
+} Transponder;
 
 
 typedef struct
 {
-	Struct_235fdfac Data_0; //0
+	Transponder Data_0; //0
 	uint16_t wData_0x18; //0x18 = 24
 	uint16_t wData_0x1a; //0x1a
 	uint32_t crc; //0x1c
 	//0x20
 } Struct_2354613c;
 
+typedef struct //Struct_234fd8f0_Inner0
+{
+	struct Struct_234fd8f0_Inner0_Inner_0
+	{
+		uint16_t service_id; //0
+		/*
+			Bit 3: TV / Radio
+		*/
+		uint16_t wFlags_2; //2
+		uint16_t wData_4; //4
+		uint16_t wData_6; //6
+//			int Data_8; //8
+		uint16_t wPcrPID; //8
+		uint16_t wVideoPID; //10
+		uint16_t wData_12; //12
+		uint16_t wTtxPID; //14
+		//16 = 0x10
+	} Data_0; //0
+	struct Struct_234fd8f0_Inner0_Inner_0x10
+	{
+		uint16_t wAudioPID; //0
+		uint16_t fill_2; //2
+		uint8_t service_name[20]; //4
+		//0x18 = 24
+	} Data_0x10; //0x10
+	//40 = 0x28
+} Channel;
 
 typedef struct
 {
-	struct Struct_234fd8f0_Inner0
-	{
-		struct Struct_234fd8f0_Inner0_Inner_0
-		{
-			uint16_t service_id; //0
-			uint16_t wData_2; //2
-			uint16_t wData_4; //4
-			uint16_t wData_6; //6
-//			int Data_8; //8
-			uint16_t wPcrPID; //8
-			uint16_t wVideoPID; //10
-			uint16_t wData_12; //12
-			uint16_t wTtxPID; //14
-			//16 = 0x10
-		} Data_0; //0
-		struct Struct_234fd8f0_Inner0_Inner_0x10
-		{
-			uint16_t wAudioPID; //0
-			uint16_t fill_2; //2
-			uint8_t service_name[20]; //4
-			//0x18 = 24
-		} Data_0x10; //0x10
-		//40 = 0x28
-	} Data_234fd8f0[6000]; //234fd8f0 +0x3a980 -> 23538270
-	Struct_235fdfac Data_23538270[2000]; //23538270 +0xbb80 -> 23543DF0
+	Channel arChannels[CHANNELS_MAX_NUM]; //234fd8f0 +0x3a980 -> 23538270
+	Transponder arTransponders[TRANSPONDERS_MAX_NUM]; //23538270 +0xbb80 -> 23543DF0
 	struct
 	{
 		int fill_0[240]; //0
@@ -133,8 +140,8 @@ typedef struct
 #else
 	Struct_235441b0 Data_235441b0; //235441b0
 #endif
-	int Data_235441cc; //235441cc 468DC
-	int Data_235441d0; //235441d0 468E0
+	uint32_t dwCrcChannels; //235441cc 468DC
+	uint32_t dwCrcTransponders; //235441d0 468E0
 	int Data_235441d4; //235441d4 468E4
 	struct
 	{
@@ -215,7 +222,7 @@ typedef struct
 
 typedef struct
 {
-	struct Struct_234fd8f0_Inner0 Data_0; //0
+	Channel Data_0; //0
 	uint16_t wNumChannels; //0x28 = 40
 	uint16_t wCurrentChannel; //0x2a = 42
 	uint16_t wData_0x2c; //0x2c
