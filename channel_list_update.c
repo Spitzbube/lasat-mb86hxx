@@ -172,8 +172,16 @@ int channel_list_update_start(void)
 			channel_list_update_tune_status = 0;
 
 			rtos_task_wait(10);
-		}
+		} //while (r6--)
 		//0x2343ddbe
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "channel_list_update_start(fe): r4=%d, r6=%d, r5=%d\r\n", 
+				r4, r6, r5);
+			console_send_string(debug_string);
+		}
+#endif
 		if (r5 != 0)
 		{
 			//loc_2343ddc2
@@ -192,7 +200,7 @@ int channel_list_update_start(void)
 					//->loc_2343ddf0
 					break;
 				}
-			}
+			} //while (r6--)
 			//loc_2343ddf0
 			psi_stop(main_hPSIDecoder1, 1);
 			if (channel_list_update_psi_status <= 0)
@@ -207,6 +215,14 @@ int channel_list_update_start(void)
 			}
 		} //if (r5 != 0)
 		//loc_2343de02
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "channel_list_update_start(si): r4=%d, r6=%d, r5=%d\r\n", 
+				r4, r6, r5);
+			console_send_string(debug_string);
+		}
+#endif
 		if (r4 != 0)
 		{
 			//0x2343de06
@@ -225,6 +241,15 @@ loc_2343de26:
 				Struct_2344dc3c sp8;
 
 				psi_get_network_info(&sp8, main_hPSIDecoder1);
+
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "channel_list_update_start: sp8.Data_4->wData_0x1a=0x%x, sp_0x88=0x%x\r\n", 
+						sp8.Data_4->wData_0x1a, sp_0x88);
+					console_send_string(debug_string);
+				}
+#endif
 
 				if (sp8.Data_4->wData_0x1a == sp_0x88)
 				{
@@ -264,7 +289,7 @@ loc_2343de26:
 	sub_23406834(main_hPSIDecoder1);
 	//loc_2343de74
 loc_2343de74:
-	listLen = channel_get_transponder_list(0xffff, Data_235fdfac, 200);
+	listLen = channel_get_transponder_list(0xffff, &Data_235fdfac[0], 200);
 	//r0, =0x235fdfac
 	//->loc_2343de9a
 	for (i = 0; i < listLen; i++)
@@ -275,7 +300,7 @@ loc_2343de74:
 	//0x2343de9e
 	channel_list_update_sema = OSSemCreate(1);
 
-	sub_234701da(Data_235fdfac, listLen, channel_list_update_sema);
+	sub_234701da(&Data_235fdfac[0], listLen, channel_list_update_sema);
 	//loc_2343deb0
 	return 1;
 }
@@ -340,21 +365,21 @@ void sub_2343df02(Struct_2343df02* r4)
 	//0x2343df0a
 	sub_2340c970(1, &sp);
 
-	memset(Data_235fdfac, 0, 200 * sizeof(Transponder));
+	memset(&Data_235fdfac[0], 0, 200 * sizeof(Transponder));
 
-	r4->pList = Data_235fdfac;
+	r4->pList = &Data_235fdfac[0];
 	r4->bData_0x10 = 1;
 	r4->bData_0x11 = 1;
-	r4->bData_0x12 = (sp.Data_4 << 7) >> 30;
+	r4->bData_0x12 = (sp.Data_4 >> 23) & 0x03;
 
 	sub_2340ca5c(1, &sp_0x1c);
 
 	crc = sp_0x1c.crc;
 	sp_0x1c.crc = 0;
 
-	if (crc == crc32((void*) &sp_0x1c.Data_0, sizeof(sp_0x1c)))
+	if (crc == crc32((void*) &sp_0x1c, sizeof(sp_0x1c)))
 	{
-		memcpy(&Data_235fdfac[0], &sp_0x1c, sizeof(Transponder));
+		Data_235fdfac[0] = sp_0x1c.transponder;
 
 		r4->listLen = 1;
 		r4->wData_0x16 = sp_0x1c.wData_0x18;
@@ -365,7 +390,7 @@ void sub_2343df02(Struct_2343df02* r4)
 	else
 	{
 		//loc_2343df62
-		r4->listLen = channel_get_transponder_list(0xffff, Data_235fdfac, 200); //get list
+		r4->listLen = channel_get_transponder_list(0xffff, &Data_235fdfac[9], 200);
 		r4->wData_0x16 = 0;
 		r4->wData_0x14 = -1;
 		//->loc_2343df8c

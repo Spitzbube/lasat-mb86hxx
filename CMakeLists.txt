@@ -3,20 +3,22 @@ cmake_minimum_required(VERSION 3.13)
 project (mb86h60_hello_world)
 
 set(SRCS
-   main.c
-   sub_2340199c.c
-   main1.c
-   console.c
+   main.c                   #?                              0x2349c5a0? -> 2349D220?
+   main1.c                  #0x23400510?    0x23491d8c      0x2349d230?
+   sub_2340199c.c           #0x2340199c     0x23491e10
+   sub_23402e8e.c           #0x2340257c?    0x23491e20
+   sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
+   console.c                #0x2341af84?
    memblk.c
    dma.c
    usb.c
    sub_23467de0.c
    network.c
    tcp_console.c
-   ir_user.c
-   ir_decode.c
-   thumb.c
-   thumb1.c
+   ir_user.c                #0x2340d3ec     0x23492068      0x235491e4
+   ir_decode.c              #0x23453d34     0x23493628?
+   thumb.c                  #0x2343d104?    ?               0x235fdf28?
+   thumb1.c                 #0x2346ec9c     0x2349596c?
    thumb2.c
    menu_general_settings.c
    vfd.c
@@ -27,13 +29,11 @@ set(SRCS
    ota.c                    #0x234133a0     0x234920cc      0x2358c124
    av.c
    fe_manager.c
-   sub_23402e8e.c
    m88dc2800.c
    sub_23472ef0.c
    sub_2340217c.c
    texttable.c
    sub_23438084.c
-   sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    crc.c
    sub_2346fac4.c
    sub_23470890.c

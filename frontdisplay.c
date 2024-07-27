@@ -14,7 +14,7 @@ struct
 #else
 	FrontDisplay_Job Data_0[4]; //0
 #endif
-	void* (*Prepare)(void*); //0x450
+	void* (*Prepare)(FrontDisplay_Job*); //0x450
 	int Data_0x454; //0x454
 
 } Data_235b0d40; //235b0d40
@@ -287,7 +287,7 @@ int sub_2341a290(uint8_t* sb, uint32_t r5)
 
 
 /* 2341a394 - complete */
-int frontdisplay_start_text(void (*f)())
+int frontdisplay_start_text(void* (*f)(FrontDisplay_Job*))
 {
 #if 0
 	console_send_string("frontdisplay_start_text (todo.c): TODO\r\n");

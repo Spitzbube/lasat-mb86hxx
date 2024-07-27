@@ -1,14 +1,16 @@
 
+#include <string.h>
 #include "data.h"
 #include "ucos_ii.h"
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
+#include "nit.h"
 #include "channel_list_update.h"
+#include "frontdisplay.h"
 
 #pragma thumb
 
 extern OS_EVENT* Data_23492f94;
-extern void sub_2343df02();
 int sub_23470356();
 static int menu_channel_search_on_enter();
 static int menu_channel_search_lock();
@@ -143,27 +145,17 @@ Menu_Item Data_23495f50 = //23495f50
 };
 
 
-struct
-{
-	int fill_0[1000]; //0
-	//0xfa0 = 4000
-} Data_238de5d0; //238de5d0 +0xfa0 -> 238DF570
-
-
-struct
-{
-	int fill_0[1000]; //0
-	//0xfa0 = 4000
-} Data_238df570; //238df570 +0xfa0 -> 238E0510
+uint16_t Data_238de5d0[2000]; //238de5d0 +0xfa0 -> 238DF570
+uint16_t Data_238df570[2000]; //238df570 +0xfa0 -> 238E0510
 
 struct
 {
 	int Data_0; //0
 	OS_EVENT* sema; //4
-	void* Data_8; //8
+	uint16_t* Data_8; //8
 	int fill_12; //12 = 0xc
 	uint16_t wData_0x10; //16 = 0x10
-	void* Data_0x14; //20 = 0x14
+	uint16_t* Data_0x14; //20 = 0x14
 	int fill_0x18; //24 = 0x18
 	uint16_t wData_0x1c; //28 = 0x1c
 	uint32_t dwCrcChannels; //32 = 0x20
@@ -172,6 +164,280 @@ struct
 
 } Data_238e0510; //238e0510
 
+
+/* 23470090 - todo */
+void sub_23470090(void* a, uint16_t r7, uint16_t* c, uint16_t* d)
+{
+#if 0
+	console_send_string("sub_23470090 (todo.c): TODO\r\n");
+#endif
+
+	Transponder transponder; //sp_0x2c
+	Channel channel; //sp4
+
+	uint16_t i;
+	uint16_t* r4 = a;
+	uint16_t r5 = 0;
+	uint16_t r6 = 0;
+
+	for (i = 0; i < 1999; i++)
+	{
+		//loc_234700a4
+		if (Data_238e0510.Data_8[i] == 0xffff)
+		{
+			r6 = i;
+			//->loc_234700ba
+			break;
+		}
+	}
+	//loc_234700ba
+	for (i = 0; i < 1999; i++)
+	{
+		//loc_234700c0
+		if (Data_238e0510.Data_0x14[i] == 0xffff)
+		{
+			r5 = i;
+			//->loc_234700d6
+			break;
+		}
+	}
+
+	do
+	{
+		//loc_234700d6
+		sub_2340c19c(r4[0], &channel, &transponder);
+
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_23470090: r7=%d, r6=%d, r5=%d, *r4=0x%x\r\n", 
+				r7, r6, r5, r4[0]);
+			console_send_string(debug_string);
+		}
+#endif
+
+		if (channel.Data_0.wFlags_2 & (1 << 3))
+		{
+			//0x234700ea
+			if (r6 < 2000)
+			{
+				//0x234700ee
+				Data_238e0510.Data_8[r6++] = r4[0];
+			}
+			//loc_2347010e
+		}
+		else
+		{
+			//loc_234700fc
+			if (r5 < 2000)
+			{
+				//0x23470100
+				Data_238e0510.Data_0x14[r5++] = r4[0];
+			}
+			//loc_2347010e
+		}
+		//loc_2347010e
+		r4++;
+		r7--;
+	}
+	while (r7 != 0);
+	//0x23470118
+	*c = r6;
+	*d = r5;
+}
+
+
+/* 23470124 - complete */
+static void sub_23470124(int r4)
+{
+#if 0
+	console_send_string("sub_23470124 (todo.c): TODO\r\n");
+#endif
+
+	sub_23418e54(0);
+
+	powermode_set_state(1, 0, 0);
+
+	sub_23470890(r4, 24);
+
+	return 0;
+}
+
+
+/* 23470144 - todo */
+static void sub_23470144(void* r5, int r6, int r4)
+{
+	Struct_2344dc3c sp4;
+	int sp;
+	Struct_234fd8f0* r5_;
+	uint32_t r1, r0;
+	int crcFail;
+
+#if 0
+	console_send_string("sub_23470144 (todo.c): TODO\r\n");
+#endif
+
+	if (0 != menu_channel_search_lock())
+	{
+		return;
+	}
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_23470144: r6=%d, r4=%d\r\n", 
+			r6, r4);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (r4 == 1)
+	{
+		sub_23470090(r5, r6, &Data_238e0510.wData_0x10, &Data_238e0510.wData_0x1c);
+		//->loc_234701d4
+	}
+	//loc_2347016a
+	else if (r4 == 3)
+	{
+		//0x2347016e
+		Data_238e0510.Data_0 = ((int*)r5)[0];
+
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_23470144: Data_238e0510.Data_0=%d\r\n", 
+				Data_238e0510.Data_0);
+			console_send_string(debug_string);
+		}
+#endif
+
+		if (Data_238e0510.Data_0 == 1)
+		{
+			//->loc_234701d4
+		}
+		else
+		{
+			if (Data_238e0510.Data_0 == 2)
+			{
+				//0x2347017c
+				r5_ = sub_2344f770();
+
+				psi_get_network_info(&sp4, main_hPSIDecoder1);
+
+				sp = sp4.Data_4->wData_0x1a;
+
+				sub_2340c368(0, &sp);
+
+				r0 = crc32(r5_->arChannels, sizeof(r5_->arChannels));
+				r1 = Data_238e0510.dwCrcChannels;
+
+				crcFail = (r0 - r1);
+				if (crcFail)
+				{
+					//0x234701aa
+					sub_234515f0(1, 1);
+					sub_23418e54(1);
+					sub_2343dca8(sub_23470124);
+				}
+				//loc_234701be
+				powermode_set_state(3, 0, 0);
+				//->loc_234701ce
+				sub_2343deb4(1);
+			}
+			else if (Data_238e0510.Data_0 == 3)
+			{
+				//0x234701ce
+				sub_2343deb4(1);
+			}
+		}
+	}
+	//loc_234701d4
+	menu_channel_search_unlock();
+}
+
+
+/* 234701da - todo */
+int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
+{
+	Struct_2343df02 sp_0x40;
+	Struct_235441b0 sp_0x24;
+	Struct_2354613c sp4;
+
+#if 0
+	console_send_string("sub_234701da (todo.c): TODO\r\n");
+#endif
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_234701da: numTransponders=%d\r\n", numTransponders);
+		console_send_string(debug_string);
+	}
+#endif
+
+	Struct_234fd8f0* r6 = sub_2344f770();
+
+	Data_238e0510.sema = sema;
+
+	menu_channel_search_lock();
+
+	Data_238e0510.dwCrcChannels = crc32(&r6->arChannels[0], sizeof(r6->arChannels));
+	Data_238e0510.Data_8 = &Data_238de5d0[0];
+	Data_238e0510.wData_0x10 = 0; //r5
+	Data_238e0510.Data_0x14 = &Data_238df570[0];
+	Data_238e0510.wData_0x1c = 0; //r5
+
+	memset(&Data_238e0510.Data_0x14[0], 0xff, 4000);
+	memset(&Data_238e0510.Data_8[0], 0xff, 4000);
+	memset(&sp_0x40, 0, sizeof(Struct_2343df02));
+
+	sp_0x40.bData_0x11 = 1; //r6
+	sp_0x40.Data_8 = 0; //r5
+	sp_0x40.pfProgress = sub_23470144;
+	sp_0x40.listLen = numTransponders;
+	sp_0x40.pList = arTransponders;
+	sp_0x40.bData_0x10 = 1; //r6
+
+	sub_2340c970(1, &sp_0x24);
+
+	sp_0x40.bData_0x12 = (sp_0x24.Data_4 >> 23) & 0x03;
+
+	sub_2340ca5c(1, &sp4);
+
+	uint32_t r4 = sp4.crc;
+	sp4.crc = 0; //r5
+
+	uint32_t r0 = crc32(&sp4, sizeof(sp4));
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_234701da: r4=0x%x, r0=0x%x\r\n", r4, r0);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (r0 == r4)
+	{
+		//0x23470264
+		arTransponders[0] = sp4.transponder;
+
+		sp_0x40.listLen = 1;
+		sp_0x40.wData_0x16 = sp4.wData_0x18;
+		sp_0x40.wData_0x14 = sp4.wData_0x1a;
+	}
+	else
+	{
+		//loc_23470280
+		sp_0x40.wData_0x14 = 0xffff;
+	}
+
+	scan_start(&sp_0x40);
+
+	menu_channel_search_unlock();
+
+	return 0;
+}
 
 
 /* 23470298 - todo */
@@ -405,15 +671,15 @@ int sub_2347045a(UI_Thread_Params* r0_, void (*r5)(void*))
 	Data_238e0510.dwCrcChannels = crc32( (void*) sub_2344f770(), 
 		sizeof(Channel) * CHANNELS_MAX_NUM);
 
-	Data_238e0510.Data_8 = &Data_238de5d0;
+	Data_238e0510.Data_8 = &Data_238de5d0[0];
 	Data_238e0510.sema = Data_23492f94;
 	Data_238e0510.wData_0x10 = 0; //r4
-	Data_238e0510.Data_0x14 = &Data_238df570;
+	Data_238e0510.Data_0x14 = &Data_238df570[0];
 	Data_238e0510.wData_0x1c = 0; //r4
 	Data_238e0510.Data_0x24 = 0; //r4
 
-	memset(&Data_238df570, 0xff, 0xfa0); //r7
-	memset(Data_238e0510.Data_8, 0xff, 0xfa0); //r7
+	memset(&Data_238e0510.Data_0x14[0], 0xff, 0xfa0); //r7
+	memset(&Data_238e0510.Data_8[0], 0xff, 0xfa0); //r7
 	//->loc_234704f4
 	memset(&sp4, 0, sizeof(Struct_2343df02));
 

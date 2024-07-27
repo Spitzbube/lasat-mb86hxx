@@ -83,7 +83,7 @@ typedef struct
 
 typedef struct
 {
-	Transponder Data_0; //0
+	Transponder transponder; //0
 	uint16_t wData_0x18; //0x18 = 24
 	uint16_t wData_0x1a; //0x1a
 	uint32_t crc; //0x1c
@@ -120,7 +120,7 @@ typedef struct //Struct_234fd8f0_Inner0
 
 typedef struct
 {
-	Channel arChannels[CHANNELS_MAX_NUM]; //234fd8f0 +0x3a980 -> 23538270
+	Channel arChannels[CHANNELS_MAX_NUM]; //0 234fd8f0 +0x3a980 -> 23538270
 	Transponder arTransponders[TRANSPONDERS_MAX_NUM]; //23538270 +0xbb80 -> 23543DF0
 	struct
 	{

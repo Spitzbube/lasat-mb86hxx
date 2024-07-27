@@ -6,6 +6,7 @@
 #include "auout.h"
 #include "videc.h"
 #include "sub_2345bc50.h"
+#include "scan.h"
 #include "sub_2340a6a0.h"
 
 
@@ -2567,10 +2568,29 @@ void sub_2340c0dc()
 }
 
 
-/* sub_2340c204 - todo */
+/* 2340c19c - complete */
+void sub_2340c19c(int channelIdx, Channel* pChannel, Transponder* pTransponder)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_2340c19c (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	*pChannel = Data_234fd8f0.arChannels[channelIdx];
+
+	*pTransponder = Data_234fd8f0.arTransponders[pChannel->Data_0.wData_4];
+
+	OSSemPost(channel_sema);
+}
+
+
+/* 2340c204 - todo */
 void sub_2340c204(int a)
 {
-#if 0
+#if 1
 	console_send_string("sub_2340c204 (todo.c): TODO\r\n");
 #endif
 
@@ -2654,6 +2674,245 @@ uint16_t channel_get_transponder_list(uint16_t r6, Transponder list[], uint16_t 
 }
 
 
+/* 2340c538 - todo */
+int sub_2340c538(Struct_2340c538* r7)
+{
+	uint8_t err;
+	uint16_t r4;
+	Channel* pChannel;
+	Transponder* sl;
+	Transponder* r5 = r7->pTransponder;
+	PSI_Program* r6 = r7->Data_0;
+
+#if 0
+	console_send_string("sub_2340c538 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	int r0 = fe_manager_get_transponder_type(r5);
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2340c538: r0=%d\r\n", r0);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (r0 == 0)
+	{
+		//0x2340c574
+		console_send_string("sub_2340c538: transponderType=0: TODO!!!\r\n");
+#if 0
+		sl = 0;
+
+		for (r4 = 0; r4 < 2000; r4++)
+		{
+			//loc_2340c57c
+			uint32_t r0 = Data_234fd8f0.arTransponders[r4].Data_0.Data_0.Data_0;
+
+			if (r0 == 0xffffffff)
+			{
+				//0x2340c594
+				sl = &Data_234fd8f0.arTransponders[r4];
+				*sl = *r5;
+				//->loc_2340c63c
+				break;
+			}
+			//loc_2340c5b8
+			uint32_t ip = r5->Data_0.Data_0.Data_0;
+
+			if (ip > (r0 - 2000))
+			{
+				//0x2340c5c8: TODO!!!
+				r0 += 2000;
+				if ((ip < r0) ||
+					(Data_234fd8f0.arTransponders[r4].Data_0.symbol_rate == r5->Data_0.symbol_rate) ||
+					(Data_234fd8f0.arTransponders[r4].transport_stream_id == r5->transport_stream_id) ||
+					(Data_234fd8f0.arTransponders[r4].Data_0.wData_0x0a == r5->Data_0.wData_0x0a))
+					{
+						//0x2340c604
+						sl = &Data_234fd8f0.arTransponders[r4];
+
+						if (Data_234fd8f0.arTransponders[r4].Data_0.frequency != r5->Data_0.frequency)
+						{
+							Data_234fd8f0.arTransponders[r4].Data_0.frequency = r5->Data_0.frequency;
+						}
+						//->loc_2340c63c
+						break;
+					}
+			}
+			//loc_2340c62c
+		} //for (r4 = 0; r4 < 2000; r4++)
+		//loc_2340c63c
+		if (sl == 0)
+		{
+			//->loc_2340c7b0
+			OSSemPost(channel_sema);
+
+			return 0xff;
+		}
+		//loc_2340c798
+
+		//TODO
+#endif
+	} //if (r0 == 0)
+	//loc_2340c648
+	else if (r0 == 2)
+	{
+		//0x2340c650
+		console_send_string("sub_2340c538: transponderType=2: TODO!!!\r\n");
+#if 0
+		r4 = 0;
+		int r0 = 0;
+
+		while (r4 < 2000)
+		{
+			//loc_2340c65c
+
+		} //while (r4 < 2000)
+		//loc_2340c6a8
+		if (r0 == 0)
+		{
+			//->loc_2340c7b0
+			OSSemPost(channel_sema);
+
+			return 0xff;
+		}
+		//loc_2340c798
+
+		//TODO
+#endif
+	} //else if (r0 == 2)
+	//loc_2340c6b4
+	else if (r0 == 1)
+	{
+		//0x2340c6bc
+		r4 = 0; 
+		Transponder* sl = 0;
+
+		while (r4 < 2000)
+		{
+			//loc_2340c6c4
+			uint32_t r0 = Data_234fd8f0.arTransponders[r4].Data_0.frequency;
+			if (r0 == 0xffffffff)
+			{
+				sl = &Data_234fd8f0.arTransponders[r4];
+				//->loc_2340c74c
+				*r5 = *sl;
+				//->loc_2340c770
+				break;
+			}
+			else
+			{
+				//0x2340c6ec
+				if ((Data_234fd8f0.arTransponders[r4].Data_0.wData_0x0a == 0xffff) &&
+					(r5->Data_0.frequency > (r0 - 25001) &&
+					(r5->Data_0.frequency < (r0 + 25001))))
+				{
+					sl = &Data_234fd8f0.arTransponders[r4];
+
+					if (0 != memcmp(sl, r5, sizeof(Transponder)))
+					{
+						//loc_2340c74c
+						*r5 = *sl;
+					}
+					//loc_2340c770
+					break;
+				}
+			}
+			//loc_2340c760
+			r4++;
+		} //while (r4 < 2000)
+		//loc_2340c770
+		if (sl == 0)
+		{
+			//->loc_2340c7b0
+			//loc_2340c7b0
+			OSSemPost(channel_sema);
+			return 0xff;
+		}
+		//0x2340c774
+		sl->transport_stream_id = r6->Data_0x32c;
+		sl->wData_0x12 = r6->Data_0x330;
+		//->loc_2340c798
+	}
+	//loc_2340c78c
+	else if (r0 == 3)
+	{
+		//0x2340c794
+		console_send_string("sub_2340c538: transponderType=3: TODO!!!\r\n");
+#if 0
+		r4 = 0xffff; //sb
+		//loc_2340c798
+#endif
+	}
+	else
+	{
+		//loc_2340c7b0
+		OSSemPost(channel_sema);
+		return 0xff;
+	}
+	//loc_2340c798
+	r7->wData_12 = 0; //r3
+	pChannel = &Data_234fd8f0.arChannels[0];
+	uint16_t r0_ = 0; //r3
+
+	while (r0_ < 5999)
+	{
+		//loc_2340c7c0
+		if (pChannel->Data_0.wFlags_2 == 0xffff)
+		{
+			pChannel->Data_0.wFlags_2 = r6->bData_0 | (1 << 7);
+			pChannel->Data_0.wData_6 = 0; //r3
+			pChannel->Data_0.service_id = r6->pat_program_number;
+			pChannel->Data_0.wData_4 = r4;
+
+			memcpy(&pChannel->Data_0.wPcrPID, &r6->wData_0x334, 12);
+
+			if (r6->service_name == 0)
+			{
+				//0x2340c804
+				sprintf(&pChannel->Data_0x10.service_name[0], "SID %d", 
+					pChannel->Data_0.service_id);
+			}
+			else
+			{
+				//loc_2340c818
+				memcpy(&pChannel->Data_0x10.service_name[0], r6->service_name, 
+					sizeof(pChannel->Data_0x10.service_name));
+			}
+			//loc_2340c824
+			memset(pChannel + 1, 0xff, sizeof(Channel));
+
+			OSSemPost(channel_sema);
+
+			return 0;
+		}
+		//loc_2340c844
+		if ((pChannel->Data_0.service_id == r6->pat_program_number) &&
+			(pChannel->Data_0.wData_4 == r4))
+		{
+			//0x2340c85c
+			pChannel->Data_0.wData_6 &= ~(1 << 14);
+
+			OSSemPost(channel_sema);
+
+			return 4;
+		}
+		//loc_2340c878
+		r7->wData_12++;
+		pChannel++;
+		r0_++;
+	}
+	//0x2340c898
+	OSSemPost(channel_sema);
+
+	return 5;
+}
+
+
 /* 2340c8a8 - todo */
 void sub_2340c8a8()
 {
@@ -2718,7 +2977,7 @@ int sub_2340c9b0(int get, struct Struct_23546128* r4)
 	return 0;
 }
 
-
+^
 /* 2340ca1c - complete */
 int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 {
@@ -2727,7 +2986,7 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 #endif
 
 #if 0
-	console_send_string("sub_2340ca5c (todo.c): TODO\r\n");
+	console_send_string("sub_2340ca1c (todo.c): TODO\r\n");
 #endif
 
 	OS_ENTER_CRITICAL();

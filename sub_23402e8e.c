@@ -152,7 +152,7 @@ void M88DC2000SetQAM(int qam)
 	uint8_t reg8BH, reg8EH;
 #endif
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "M88DC2000SetQAM: qam=%d\r\n", qam);
@@ -986,7 +986,7 @@ void M88DC2000SetSym(uint32_t sym, uint32_t xtal)
 	uint32_t dwValue;
 	double fValue;
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "M88DC2000SetSym: sym=%d, xtal=%d\r\n", sym, xtal);

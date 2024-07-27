@@ -14,6 +14,8 @@ typedef struct
 	//0x18 = 24
 } Struct_2343df02;
 
+
+extern void sub_2343df02(Struct_2343df02*);
 extern int channel_list_update_start(void);
 extern int sub_2343deb4(int);
 

@@ -22,3 +22,4 @@ void sub_234014dc(void);
 void main_video_hdmi_init(void);
 void main_vdec_init(void);
 void sub_234018c8(void);
+void main_scan_init(void);

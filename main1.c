@@ -22,6 +22,7 @@
 #include "sub_23419cd0.h"
 #include "radiotext.h"
 #include "channel_list_update.h"
+#include "scan.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -347,6 +348,20 @@ void main_powermode_init()
 	params.Data_20 = sub_2343b992;
 
 	powermode_init(&params);
+}
+
+
+/* 234008d0 / 23401fd4 - todo */
+void main_scan_init(void)
+{
+	Scan_Params sp;
+
+	sp.threadPrio = THREAD_PRIO_SCAN;
+#ifndef V241
+	sp.bData_2 = 1;
+#endif
+
+	scan_init(&sp);
 }
 
 

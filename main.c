@@ -48,6 +48,7 @@ void startup_thread()
 	sub_23402948();
 #endif
 	main_frontend_init();
+	main_scan_init();
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();

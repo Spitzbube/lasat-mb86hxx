@@ -888,12 +888,12 @@ int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
 
 
 /* 2340ed18 - todo */
-int sub_2340ed18(Transponder* r0)
+int fe_manager_get_transponder_type(Transponder* r0)
 {
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340ed18: r0->Data_0.Data_0.Data_0=%d, r0->Data_0.Data_4=%d\r\n",
+		sprintf(debug_string, "fe_manager_get_transponder_type: r0->Data_0.Data_0.Data_0=%d, r0->Data_0.Data_4=%d\r\n",
 				r0->Data_0.Data_0.Data_0, r0->Data_0.Data_4);
 		console_send_string(debug_string);
 	}
@@ -902,7 +902,7 @@ int sub_2340ed18(Transponder* r0)
 	if (r0->bData_0x16 == 0xff)
 	{
 #if 0
-		console_send_string("sub_2340ed18: return 3\r\n");
+		console_send_string("fe_manager_get_transponder_type: return 3\r\n");
 #endif
 		return 3;
 	}
@@ -911,7 +911,7 @@ int sub_2340ed18(Transponder* r0)
 			((r0->Data_0.frequency > 1000) && (r0->Data_0.frequency < 70000)))
 	{
 #if 0
-		console_send_string("sub_2340ed18: return 0\r\n");
+		console_send_string("fe_manager_get_transponder_type: return 0\r\n");
 #endif
 		return 0;
 	}
@@ -920,7 +920,7 @@ int sub_2340ed18(Transponder* r0)
 			(r0->Data_0.wData_0x0a == 0))
 	{
 #if 0
-		console_send_string("sub_2340ed18: return 2\r\n");
+		console_send_string("fe_manager_get_transponder_type: return 2\r\n");
 #endif
 		return 2;
 	}
@@ -928,13 +928,13 @@ int sub_2340ed18(Transponder* r0)
 	if ((r0->Data_0.frequency >= 500000) && (r0->Data_0.frequency <= 8600000))
 	{
 #if 0
-		console_send_string("sub_2340ed18: return 1\r\n");
+		console_send_string("fe_manager_get_transponder_type: return 1\r\n");
 #endif
 		return 1;
 	}
 
 #if 0
-		console_send_string("sub_2340ed18: return 4\r\n");
+		console_send_string("fe_manager_get_transponder_type: return 4\r\n");
 #endif
 
 	return 4;

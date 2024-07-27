@@ -1,4 +1,7 @@
 
+#ifndef FRONTDISPLAY_H
+#define FRONTDISPLAY_H
+
 typedef struct
 {
 	int (*Data_0)(); //0
@@ -16,8 +19,16 @@ typedef struct
 	//0x114?
 } FrontDisplay_Job;
 
+typedef struct FrontDisplay_Job_Func 
+{
+    struct FrontDisplay_Job_Func (*FrontDisplay_Job_Func) (FrontDisplay_Job*);
+} FrontDisplay_Job_Func;
+
 
 extern void frontdisplay_task();
 extern int frontdisplay_draw_text(uint8_t);
 extern int frontdisplay_draw_scroll_text(uint8_t);
+extern int frontdisplay_start_text(/*FrontDisplay_Job_Func*/void* (*)(FrontDisplay_Job*));
 
+
+#endif //FRONTDISPLAY_H

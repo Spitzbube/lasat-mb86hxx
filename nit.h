@@ -17,7 +17,7 @@ typedef struct
 	struct Struct_23627118_Inner0x18
 	{
 		uint16_t network_id; //24 = 0x18
-		uint16_t wData_0x1a; //26 = 0x1a
+		int16_t wData_0x1a; //26 = 0x1a
 		uint16_t fill_0x1c; //28 = 0x1c
 		uint8_t fill_0x1e; //0x1e
 		uint8_t network_name[50]; //0x1f

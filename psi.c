@@ -952,7 +952,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 
 					text_table_get_string(0, &sp, 4);
 
-#if 1
+#if 0
 					{
 						extern char debug_string[];
 						sprintf(debug_string, "loc_23403eac: r4->bData_8=%d\r\n",
@@ -996,7 +996,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						//TODO!!!
 					}
 #if 1 //TODO!!!
-#if 1
+#if 0
 					{
 						extern char debug_string[];
 						sprintf(debug_string, "0x23403fe8: r4->stream_type=0x%x\r\n",
@@ -3604,7 +3604,7 @@ int sub_234066d0(void* h, struct Struct_234a73e8_Inner_0x248* r6)
 
 /* 234067a8 - complete */
 int psi_get_all_current_programs(Struct_234a73e8* r4, 
-		uint16_t* pNumPrograms, struct Struct_234a73e8_Inner_0x248** ppPrograms)
+		uint16_t* pNumPrograms, PSI_Program** ppPrograms)
 {
 #if 0
 	console_send_string("psi_get_all_current_programs (todo.c): TODO\r\n");

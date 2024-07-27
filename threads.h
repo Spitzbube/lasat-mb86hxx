@@ -4,6 +4,7 @@
 #define THREAD_PRIO_PSI_2					12
 #define THREAD_PRIO_GRAPHIC					15
 #define THREAD_PRIO_IR_USER_IN				16
+#define THREAD_PRIO_SCAN					20
 #define THREAD_PRIO_AV						21
 #define THREAD_PRIO_UI_1					49
 #define THREAD_PRIO_UI_2					50

@@ -152,21 +152,14 @@ void sub_2340f5ac()
 
 
 /* 2340f5c0 - todo */
-void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
+void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 {
 #if 0
 	console_send_string("sub_2340f5c0 (todo.c): TODO\r\n");
 #endif
 
-	struct
-	{
-		struct Struct_234a73e8_Inner_0x248* Data_0; //0 = sp_0x28
-		Transponder* Data_4; //4 = sp_0x2c
-		int Data_8; //8 = sp_0x30
-		uint16_t wData_12; //12 = sp_0x34
-
-	} sp_0x28;
-	Transponder sp_0x10;
+	Struct_2340c538 sp_0x28;
+	Transponder transponder; //sp_0x10
 	Struct_2344dc3c sp4;
 
 	uint16_t r7 = 0;
@@ -176,7 +169,7 @@ void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
 	for (r7 = 0; r7 < r1; r7++)
 	{
 		//loc_2340f5e0
-		struct Struct_234a73e8_Inner_0x248* r6 = &r4[r7];
+		PSI_Program* r6 = &r4[r7];
 		sp_0x28.Data_0 = r6;
 
 		if (((r6->bData_0 & 1) != 0) && (scanData.bData_0x16 != 0))
@@ -264,8 +257,8 @@ void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
 			//loc_2340f6e4
 		}
 		//loc_2340f6e4
-		sp_0x10 = scanData.pList[scanData.currentItem];
-		sp_0x28.Data_4 = &sp_0x10;
+		transponder = scanData.pList[scanData.currentItem];
+		sp_0x28.pTransponder = &transponder;
 		sp_0x28.Data_8 = 0;
 
 		if (scanData.bData_0x15 == 0)
@@ -273,8 +266,8 @@ void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
 			//0x2340f71c
 			if (fp != 0)
 			{
-				sp_0x10.transport_stream_id = r6->Data_0x32c;
-				sp_0x10.wData_0x12 = r6->Data_0x330;
+				transponder.transport_stream_id = r6->Data_0x32c;
+				transponder.wData_0x12 = r6->Data_0x330;
 			}
 		}
 		//loc_2340f730
@@ -298,15 +291,15 @@ void sub_2340f5c0(struct Struct_234a73e8_Inner_0x248* r4, uint16_t r1, int sb)
 void scan_psi_callback(Struct_234a73e8* r5_)
 {
 	Struct_2344dc3c sp_0x10;
-	uint8_t sp_0xc;
-	struct Struct_234a73e8_Inner_0x248* sp8;
-	uint16_t sp4;
+	uint8_t err; //sp_0xc
+	PSI_Program* pPrograms; //sp8
+	uint16_t numPrograms; //sp4
 
 #if 0
 	console_send_string("scan_psi_callback (todo.c): TODO\r\n");
 #endif
 
-	OSSemPend(scanData.sema, 0, &sp_0xc);
+	OSSemPend(scanData.sema, 0, &err);
 
 	if (scanData.state == 3)
 	{
@@ -314,13 +307,13 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 		scanData.state = 5;
 		scanData.wData_0x15c = 0;
 
-		int r5 = psi_get_all_current_programs(r5_, &sp4, &sp8);
+		int r5 = psi_get_all_current_programs(r5_, &numPrograms, &pPrograms);
 
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "scan_psi_callback: r5=0x%x, sp4=%d\r\n",
-					r5, sp4);
+			sprintf(debug_string, "scan_psi_callback: r5=0x%x, numPrograms=%d\r\n",
+					r5, numPrograms);
 			console_send_string(debug_string);
 		}
 #endif
@@ -339,14 +332,14 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 			return;
 		}
 		//0x2340f91c
-		if (sp4 == 0)
+		if (numPrograms == 0)
 		{
 			//loc_2340f930
 			OSSemPost(scanData.sema);
 			return;
 		}
 		//0x2340f928
-		if (sp4 < 150)
+		if (numPrograms < 150)
 		{
 			//loc_2340f940
 			if (scanData.PSISectionMask & 0x40)
@@ -359,7 +352,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 				sub_2340f1f0(sp_0x10.Data_8);
 			}
 
-			sub_2340f5c0(sp8, sp4, r5);
+			sub_2340f5c0(pPrograms, numPrograms, r5);
 		}
 	}
 	//loc_2340f930
@@ -508,7 +501,7 @@ void scan_next(int r0)
 	//loc_2340fbac
 	psi_stop(main_hPSIDecoder1, 1);
 
-#if 1 //Limit Scan to a few transponders
+#if 0 //Limit Scan to a few transponders
 	if (scanData.currentItem < 40)
 #else
 	if (scanData.currentItem < scanData.numItems)
@@ -673,8 +666,8 @@ void scan_thread()
 			if (scanData.state == 2)
 			{
 				int r0;
-				int r4 = sub_2340ed18(&scanData.pList[scanData.currentItem]);
-				if (r4 != 4)
+				int transponderType = fe_manager_get_transponder_type(&scanData.pList[scanData.currentItem]);
+				if (transponderType != 4)
 				{
 					scanData.state = sb; //3
 
@@ -686,14 +679,14 @@ void scan_thread()
 								scanData.pList[scanData.currentItem],
 								scan_frontend_callback, 0);
 
-						if (r4 == 0)
+						if (transponderType == 0)
 						{
 							//->loc_2340fd44
 							r0 = 0xc8;
 							//->loc_2340fda0
 						}
 						//loc_2340fd90
-						else if (r4 == 2)
+						else if (transponderType == 2)
 						{
 							r0 = 0x0f;
 							//->loc_2340fda0
@@ -708,7 +701,7 @@ void scan_thread()
 					else
 					{
 						//loc_2340fccc
-						if (r4 == 0)
+						if (transponderType == 0)
 						{
 							//0x2340fcd4
 							fe_manager_tune(/*Data_23491d8c.Data_0x2c*/Data_23491db8/*sl*/,
@@ -723,7 +716,7 @@ void scan_thread()
 							//->loc_2340fda0
 						}
 						//loc_2340fd4c
-						else if (r4 == 1)
+						else if (transponderType == 1)
 						{
 							//0x2340fd54
 							fe_manager_tune(/*Data_23491d8c.Data_0x28*/main_hFrontend1/*r6*/,
@@ -733,7 +726,7 @@ void scan_thread()
 							r0 = 22;
 						}
 						//loc_2340fd90
-						else if (r4 == 2)
+						else if (transponderType == 2)
 						{
 							r0 = 15;
 							//->loc_2340fda0
@@ -760,7 +753,7 @@ void scan_thread()
 						(scanData.pfProgress)(&sp_0x20, 0, 3);
 					}
 					//->loc_2340fee0
-				} //if (r4 != 4)
+				} //if (transpnderType != 4)
 				else
 				{
 					//loc_2340fe00
@@ -884,7 +877,7 @@ int scan_start(Struct_2343df02* r4)
 	}
 #endif
 
-#if 1 //Skip first transponders
+#if 0 //Skip first transponders
 	scanData.currentItem = 35;
 #else
 	scanData.currentItem = 0;
@@ -912,7 +905,9 @@ int scan_start(Struct_2343df02* r4)
 		else
 		{
 			//0x23410024
-			if (0 == sub_2340ed18(scanData.pList))
+			int transpnderType = fe_manager_get_transponder_type(scanData.pList);
+
+			if (transpnderType == 0)
 			{
 				scanData.pfUpdateTransponderList = sub_2340f0c8;
 				//->loc_2341007c
