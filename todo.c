@@ -830,14 +830,6 @@ void sub_23454df4()
 }
 
 
-/* 23418e54 - todo */
-void sub_23418e54()
-{
-	console_send_string("sub_23418e54 (todo.c): TODO\r\n");
-
-}
-
-
 /* 2343dca8 - todo */
 void sub_2343dca8()
 {

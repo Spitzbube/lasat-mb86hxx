@@ -784,6 +784,127 @@ int sub_23470680(UI_Thread_Params* r4, uint16_t stringId, void* r2, void* r3)
 }
 
 
+/* 2347075c - todo */
+static int sub_2347075c(void)
+{
+#if 0
+	console_send_string("sub_2347075c (todo.c): TODO\r\n");
+#endif
+
+	sub_2340add4(0x40300000);
+
+	sub_2343d482(0);
+
+	sub_2343dcce();
+
+	return 0;
+}
+
+
+/* 23470772 - todo */
+static void sub_23470772()
+{
+#if 1
+	console_send_string("sub_23470772 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 234707ec - complete */
+int sub_234707ec()
+{
+#if 1
+	console_send_string("sub_234707ec (todo.c): TODO\r\n");
+#endif
+
+#if 0
+	struct Struct_23546128 sp_0x18;
+	struct Struct_234fd8f0_Inner_489DC sp4;
+
+	sub_234706aa();
+	sub_23470f3e(&sp_0x18);
+	sub_2340c9b0(0, &sp_0x18);
+	sub_23470f48(&sp4);
+	sub_2340ca1c(0, &sp4);
+	network_set_defaults(&sp_0x18, &sp4);
+	sub_2340c8a8();
+	sub_2343d482(0);
+#endif
+
+	return 0;
+}
+
+
+/* 23470890 - todo */
+int sub_23470890(UI_Thread_Params* r5, int r1)
+{
+	Menu* r4 = &Data_23495f18;
+
+	switch (r1)
+	{
+#if 0
+	case 1:
+		//loc_234708de
+		break;
+#endif
+
+	case 5:
+		//loc_2347090a
+		r4->stringId = 0x184;
+		Data_23495f0c = sub_23470772;
+		Data_23495f10 = sub_2347075c;
+		//->loc_234708d4
+		break;
+
+#if 0
+	case 8:
+		//0x234708b2
+		break;
+
+	case 0x16:
+		//loc_234708e8
+		break;
+
+	case 0x18:
+		//loc_23470900
+		break;
+
+	case 0x19:
+		//loc_234708f2
+		break;
+
+	case 0x1b:
+		//0x234708cc
+		break;
+#endif
+
+	default:
+		//loc_234708da
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_23470890 (TODO): r1=%d\r\n", r1);
+			console_send_string(debug_string);
+		}
+#endif
+		return 9;
+	}
+	//loc_234708d4
+	if (r4 == 0)
+	{
+		//loc_234708da
+		return 9;
+	}
+	//->loc_23470914
+	sub_2343d482(r4);
+	sub_2343d3ac(r4);
+	sub_2343d51e(r4, r5);
+
+	return 0;
+}
+
+
 /* 2347092c - todo */
 void sub_2347092c()
 {

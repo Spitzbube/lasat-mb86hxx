@@ -36,7 +36,6 @@ set(SRCS
    sub_23438084.c
    crc.c
    sub_2346fac4.c
-   sub_23470890.c
    sub_2345d710.c
    sub_23418e1c.c
    psi.c

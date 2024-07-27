@@ -71,6 +71,14 @@ int sub_23418e1c(uint8_t* r4)
 }
 
 
+/* 23418e54 - todo */
+void sub_23418e54()
+{
+	console_send_string("sub_23418e54 (todo.c): TODO\r\n");
+
+}
+
+
 /* 23418e98 / 23423734 - complete */
 int sub_23418e98()
 {
