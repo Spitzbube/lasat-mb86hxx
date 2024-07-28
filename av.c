@@ -1259,7 +1259,7 @@ void av_switch_powermode(int powerdown)
 /* 234111a8 - complete */
 int av_get_language()
 {
-#if 1
+#if 0
 	console_send_string("av_get_language (todo.c): TODO\r\n");
 #endif
 
@@ -1269,6 +1269,23 @@ int av_get_language()
 	}
 
 	return 0;
+}
+
+
+/* 2341151c - complete */
+void sub_2341151c(uint8_t* r5)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_2341151c (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &err);
+
+	sub_2341a290(r5, 0);;
+
+	OSSemPost(Data_23492098);
 }
 
 

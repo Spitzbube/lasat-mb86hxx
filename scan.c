@@ -71,7 +71,7 @@ int scan_update_transponder_list()
 {
 	Struct_2344dc3c sp;
 
-#if 1
+#if 0
 	console_send_string("scan_update_transponder_list (todo.c): TODO\r\n");
 #endif
 
@@ -79,7 +79,7 @@ int scan_update_transponder_list()
 
 	psi_get_network_info(&sp, main_hPSIDecoder1);
 
-	struct Struct_23627118_Inner0x54* r5 = sp.Data_8;
+	NIT_TransportStream* pTransportStream = sp.pTransportStream;
 
 	uint16_t r6 = scanData.numItems;
 
@@ -92,20 +92,20 @@ int scan_update_transponder_list()
 			break;
 		}
 
-		if (r5 == 0)
+		if (pTransportStream == 0)
 		{
 			//->loc_2340f5a4
 			break;
 		}
 
-		if ((r5->transport_stream_id != 0) &&
-				(r5->original_network_id != 0) &&
+		if ((pTransportStream->transport_stream_id != 0) &&
+				(pTransportStream->original_network_id != 0) &&
 				//0x2340f4b8
-				(0 == scan_check_NIT(r5, r6)))
+				(0 == scan_check_NIT(pTransportStream, r6)))
 		{
 			//0x2340f4cc
-			r4->Data_0.frequency = r5->frequency * 100;
-			r4->Data_0.symbol_rate = r5->symbol_rate;
+			r4->Data_0.frequency = pTransportStream->frequency * 100;
+			r4->Data_0.symbol_rate = pTransportStream->symbol_rate;
 			r4->Data_0.wData_0x0c = 0; //r8
 			r4->Data_0.wData_0x0a = 0xffff;
 			r4->Data_0.wData_0x0e = sub_234512d8(r4->Data_0.frequency);
@@ -114,10 +114,10 @@ int scan_update_transponder_list()
 			r4->Data_0.Data_0.Bitfield_0.Data_19 = 0;
 			r4->Data_0.Data_0.Bitfield_0.Data_20_27 = 0;
 #endif
-			r4->Data_0.Data_0.Bitfield_0.Data_28_31 = r5->bData_0x17;
+			r4->Data_0.Data_0.Bitfield_0.modulation = pTransportStream->modulation;
 
-			r4->transport_stream_id = r5->transport_stream_id;
-			r4->wData_0x12 = r5->original_network_id;
+			r4->transport_stream_id = pTransportStream->transport_stream_id;
+			r4->original_network_id = pTransportStream->original_network_id;
 			r4->wData_0x14 = 0; //r8
 			r4->bData_0x16 = scanData.pList[scanData.currentItem].bData_0x16;
 
@@ -125,8 +125,8 @@ int scan_update_transponder_list()
 			r4++;
 		}
 		//loc_2340f580
-		r5++;
-		if (r5->wData_4 != 0)
+		pTransportStream++;
+		if (pTransportStream->wData_4 != 0)
 		{
 			//->loc_2340f5a4
 			break;
@@ -170,7 +170,7 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 	{
 		//loc_2340f5e0
 		PSI_Program* r6 = &r4[r7];
-		sp_0x28.Data_0 = r6;
+		sp_0x28.pPsiProgram = r6;
 
 		if (((r6->bData_0 & 1) != 0) && (scanData.bData_0x16 != 0))
 		{
@@ -194,7 +194,7 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 			//0x2340f628
 			psi_get_network_info(&sp4, main_hPSIDecoder1);
 
-			struct Struct_23627118_Inner0x18* r0 = sp4.Data_4;
+			NIT_NetworkData* r0 = sp4.pNetworkData;
 			uint16_t r1 = scanData.wData_0x10;
 
 			if (r0->network_id != r1)
@@ -207,7 +207,7 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 		//loc_2340f64c
 		int fp = 1;
 
-		if (sp_0x28.Data_0->bData_0 & 0x40)
+		if (sp_0x28.pPsiProgram->bData_0 & 0x40)
 		{
 			//0x2340f660
 			if ((sb & ~0x40) == 0x08)
@@ -227,7 +227,7 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 				//loc_2340f68c
 				fp = 0;
 
-				if (r6->wData_0x336 != 0)
+				if (r6->wVideoPID != 0)
 				{
 					//0x2340f6a0
 					if (scanData.bData_0x17 != 0)
@@ -244,7 +244,7 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 				else
 				{
 					//loc_2340f6b8
-					if ((r6->wData_0x33c == 0) && (r6->wData_0x338 == 0))
+					if ((r6->wAudioPID == 0) && (r6->wData_0x338 == 0))
 					{
 						//loc_2340f764
 						continue;
@@ -266,8 +266,8 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 			//0x2340f71c
 			if (fp != 0)
 			{
-				transponder.transport_stream_id = r6->Data_0x32c;
-				transponder.wData_0x12 = r6->Data_0x330;
+				transponder.transport_stream_id = r6->transport_stream_id;
+				transponder.original_network_id = r6->original_network_id;
 			}
 		}
 		//loc_2340f730
@@ -349,7 +349,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 
 			if (scanData.bData_0x14 != 0)
 			{
-				sub_2340f1f0(sp_0x10.Data_8);
+				sub_2340f1f0(sp_0x10.pTransportStream);
 			}
 
 			sub_2340f5c0(pPrograms, numPrograms, r5);
@@ -491,7 +491,7 @@ void scan_next(int r0)
 			//loc_2340fb74
 			if (scanData.currentItem < scanData.numItems)
 			{
-				scanData.pList[scanData.currentItem].Data_0.Data_0.Bitfield_0.Data_28_31 =
+				scanData.pList[scanData.currentItem].Data_0.Data_0.Bitfield_0.modulation =
 						scanData.wData_0x1a;
 			}
 			//loc_2340fbac
@@ -528,7 +528,7 @@ void scan_next(int r0)
 
 
 /* 234102d8 - todo */
-int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
+int scan_check_NIT(NIT_TransportStream* a, uint32_t r1)
 {
 #if 0
 	console_send_string("scan_check_NIT (todo.c): TODO\r\n");
@@ -557,18 +557,18 @@ int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
 	}
 
 	//0x23410314
-	uint32_t lr = a->bData_0x17 & 0x0f;
+	uint32_t modulation = a->modulation & 0x0f;
 
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "scan_check_NIT: lr=%d\r\n",
-				lr);
+		sprintf(debug_string, "scan_check_NIT: modulation=%d\r\n",
+				modulation);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (lr > 5)
+	if (modulation > 5)
 	{
 		//loc_23410368
 		return 1;
@@ -613,7 +613,7 @@ int scan_check_NIT(struct Struct_23627118_Inner0x54* a, uint32_t r1)
 					return 1;
 				}
 				//0x2341035c
-				if (lr == pList->Data_0.Data_0.Bitfield_0.Data_28_31)
+				if (modulation == pList->Data_0.Data_0.Bitfield_0.modulation)
 				{
 					//loc_23410368
 					return 1;
@@ -922,14 +922,14 @@ int scan_start(Struct_2343df02* r4)
 				r0 = &scanData.pList[scanData.currentItem];
 
 //				if ((r0->bData_3 >> 4) == 6)
-				if (r0->Data_0.Data_0.Bitfield_0.Data_28_31 == 6)
+				if (r0->Data_0.Data_0.Bitfield_0.modulation == 6)
 				{
 					//0x23410060
 					scanData.bData_0x18 = 1; //r7
 					scanData.wData_0x1a = 5;
 
 //					r0->bData_3 = (r0->bData_3 & ~0xf0) | 0x50;
-					r0->Data_0.Data_0.Bitfield_0.Data_28_31 = 5;
+					r0->Data_0.Data_0.Bitfield_0.modulation = 5;
 				}
 				//loc_2341007c
 			}

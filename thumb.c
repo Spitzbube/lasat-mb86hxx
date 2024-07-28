@@ -1047,10 +1047,8 @@ void menu_event_thread(UI_Thread_Params* p)
 void standby_thread(UI_Thread_Params* a)
 {
 	uint8_t err; //sp_0x5c
-#if 0
 	Struct_2340bf0c sp_0x28;
-	struct Struct_234fd8f0_Inner0 sp;
-#endif
+	Channel sp;
 	struct
 	{
 		uint8_t bData_0; //0
@@ -1130,11 +1128,10 @@ void standby_thread(UI_Thread_Params* a)
 				//loc_2343d95a
 				if (0 == powermode_set_state(1/*On*/, &Data_235fdf40, mainfunction_thread))
 				{
-#if 0
 					sub_2340bf0c(&sp_0x28);
 
-					channel_start_number(&sp, sp_0x28.wData_0x2a, sp_0x28.wData_0x2a);
-#endif
+					channel_start_number(&sp, 
+						sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
 				}
 				//loc_2343d97c
 			}
@@ -1434,6 +1431,26 @@ void menu_item_event_thread(UI_Thread_Params* p)
 		}
 		//->loc_2343da7a
 	} //while (1)
+}
+
+
+/* 2343dcce - complete */
+void sub_2343dcce(void)
+{
+	Struct_2340bf0c sp_0x28;
+	Channel sp;
+
+#if 0
+	console_send_string("sub_2343dcce (todo.c): TODO\r\n");
+#endif
+
+	sub_2340bf0c(&sp_0x28);
+
+	if (sp_0x28.wNumChannels != 0)
+	{
+		channel_start_number(&sp, 
+			sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
+	}
 }
 
 

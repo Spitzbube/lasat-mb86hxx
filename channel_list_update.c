@@ -10,7 +10,7 @@
 const Transponder channel_list_update_initial_transponder = //23489ebc
 {
 		{
-				{0x50000000/*{.Data_28_31 = 5}*/}, //0, 0, 0, 5, //TODO!!
+				{0x50000000/*{.modulation = 5}*/}, //0, 0, 0, 5, //TODO!!
 				4420000, //Data_0.Data_4
 				6900/*0x1AF4*/, //Data_0.wData_8
 				0xffff, //Data_0.wData_0x0a
@@ -33,7 +33,7 @@ const Transponder channel_list_update_initial_transponder = //23489ebc
 				uint32_t Data_0_18: 19;
 				uint8_t Data_19: 1; //bData_2 & 0xf7
 				uint32_t Data_20_27: 8; //
-				uint8_t Data_28_31: 4; //bData_3 & 0xf0
+				uint8_t modulation: 4; //bData_3 & 0xf0
 			} Bitfield_0;
 		} Data_0; //0
 		uint32_t Data_4; //4
@@ -138,8 +138,8 @@ int channel_list_update_start(void)
 		sub_2340bf94(sp_0x54.wCurrentChannel, &channel, &transponder);
 
 		if ((channel_list_update_initial_transponder.Data_0.frequency != transponder.Data_0.frequency) //sp24)
-				|| ((channel_list_update_initial_transponder.Data_0.Data_0.Bitfield_0.Data_28_31/*bData_3 >> 4*/) !=
-						(transponder.Data_0.Data_0.Bitfield_0.Data_28_31/*bData_3 >> 4*/)))
+				|| ((channel_list_update_initial_transponder.Data_0.Data_0.Bitfield_0.modulation/*bData_3 >> 4*/) !=
+						(transponder.Data_0.Data_0.Bitfield_0.modulation/*bData_3 >> 4*/)))
 		{
 			//loc_2343dd7c
 			r4 = 2;
@@ -245,13 +245,13 @@ loc_2343de26:
 #if 1
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "channel_list_update_start: sp8.Data_4->wData_0x1a=0x%x, sp_0x88=0x%x\r\n", 
-						sp8.Data_4->wData_0x1a, sp_0x88);
+					sprintf(debug_string, "channel_list_update_start: sp8.pNetworkData->wData_0x1a=0x%x, sp_0x88=0x%x\r\n", 
+						sp8.pNetworkData->wData_0x1a, sp_0x88);
 					console_send_string(debug_string);
 				}
 #endif
 
-				if (sp8.Data_4->wData_0x1a == sp_0x88)
+				if (sp8.pNetworkData->wData_0x1a == sp_0x88)
 				{
 					//0x2343de3c
 					powermode_set_onoff_callbacks_ex(sub_234720a4, sub_23472004);
@@ -295,7 +295,7 @@ loc_2343de74:
 	for (i = 0; i < listLen; i++)
 	{
 		//loc_2343de86
-		Data_235fdfac[i].Data_0.Data_0.Bitfield_0.Data_28_31 = 6;
+		Data_235fdfac[i].Data_0.Data_0.Bitfield_0.modulation = 6;
 	}
 	//0x2343de9e
 	channel_list_update_sema = OSSemCreate(1);
@@ -398,7 +398,7 @@ void sub_2343df02(Struct_2343df02* r4)
 		{
 			//->loc_2343df7a
 //			Data_235fdfac[i].bData_3 = (Data_235fdfac[i].bData_3 & 0x0f) + 0x60;
-			Data_235fdfac[i].Data_0.Data_0.Bitfield_0.Data_28_31 = 6;
+			Data_235fdfac[i].Data_0.Data_0.Bitfield_0.modulation = 6;
 		}
 		//->loc_2343df5e
 	}

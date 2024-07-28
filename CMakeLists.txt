@@ -39,11 +39,6 @@ set(SRCS
    sub_2345d710.c
    sub_23418e1c.c
    psi.c
-   nit.c
-   eit.c
-   pat.c
-   pmt.c
-   sdt.c
    sub_2344ed20.c
    sub_23458874.c
    sub_23411b0c.c
@@ -71,6 +66,7 @@ add_executable(${PROJECT_NAME} ${SRCS})
 add_subdirectory(boot/startup)
 add_subdirectory(rtos/uCOS-II)
 add_subdirectory(drv)
+add_subdirectory(subsystems/psi_si)
 add_subdirectory(subsystems/bus/musb)
 add_subdirectory(subsystems/net/lwip)
 
@@ -78,6 +74,7 @@ target_link_libraries(${PROJECT_NAME}
 #    startup
     drv
 #    ucos_ii
+    psi_si
     musb
     musb_hub
     musb_msd
@@ -87,6 +84,7 @@ target_link_libraries(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     drv
+    ${psi_si_SOURCE_DIR}
     ${musb_SOURCE_DIR}/include
     ${musb_SOURCE_DIR}/src/systems/FAPI4
     ${lwIP_SOURCE_DIR}/src/include
@@ -101,6 +99,7 @@ add_definitions(
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     USB_HUB
     USB_ASIX
+#    PSI_PMT_FILTER_DEBUG
 )
 
 set(ENTRY_FUNC ARM1176_Start)

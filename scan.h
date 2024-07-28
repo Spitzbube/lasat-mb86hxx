@@ -19,7 +19,7 @@ typedef struct
 
 typedef struct
 {
-	PSI_Program* Data_0; //0 = sp_0x28
+	PSI_Program* pPsiProgram; //0 = sp_0x28
 	Transponder* pTransponder; //4 = sp_0x2c
 	int Data_8; //8 = sp_0x30
 	uint16_t wData_12; //12 = sp_0x34

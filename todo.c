@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 int Data_234911e0; //234911e0
+int Data_23492240; //23492240
 
 
 void MGC_HdrcDestroy ()
@@ -655,14 +656,6 @@ void sub_234512d8()
 }
 
 
-/* 2343dcce - todo */
-void sub_2343dcce()
-{
-	console_send_string("sub_2343dcce (todo.c): TODO\r\n");
-
-}
-
-
 void sub_2345ac28()
 {
 	console_send_string("sub_2345ac28 (todo.c): TODO\r\n");
@@ -836,7 +829,6 @@ void sub_2343dca8()
 	console_send_string("sub_2343dca8 (todo.c): TODO\r\n");
 
 }
-
 
 
 

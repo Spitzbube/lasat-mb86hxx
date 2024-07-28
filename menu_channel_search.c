@@ -16,7 +16,7 @@ static int menu_channel_search_on_enter();
 static int menu_channel_search_lock();
 static void menu_channel_search_unlock();
 int sub_23470680(UI_Thread_Params*, uint16_t stringId, void*, void*);
-void sub_2347092c();
+int sub_2347092c(void*);
 void sub_2343d98e();
 int sub_234709d4();
 int sub_234709e0();
@@ -74,7 +74,7 @@ Menu_Item menu_channel_search_items[] = //23495edc
 extern Menu_Item Data_23495f50;
 
 uint8_t bData_23495f08 = 0; //23495f08
-void* Data_23495f0c = 0; //23495f0c
+int (*Data_23495f0c)() = 0; //23495f0c
 void (*Data_23495f10)() = 0; //23495f10
 int Data_23495f14 = 0; //23495f14
 Menu Data_23495f18 = //23495f18
@@ -121,8 +121,8 @@ Menu_Item Data_23495f50 = //23495f50
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_2347092c, //void* Data_0x1c; //0x1c = 28
-		sub_2343d98e, //void* Data_0x20; //0x20 = 32
+		sub_2347092c, //void* onEvent; //0x1c = 28
+		sub_2343d98e, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 44
@@ -324,7 +324,7 @@ static void sub_23470144(void* r5, int r6, int r4)
 
 				psi_get_network_info(&sp4, main_hPSIDecoder1);
 
-				sp = sp4.Data_4->wData_0x1a;
+				sp = sp4.pNetworkData->wData_0x1a;
 
 				sub_2340c368(0, &sp);
 
@@ -784,6 +784,22 @@ int sub_23470680(UI_Thread_Params* r4, uint16_t stringId, void* r2, void* r3)
 }
 
 
+/* 234706aa - todo */
+void sub_234706aa(void)
+{
+#if 0
+	console_send_string("sub_234706aa (todo.c): TODO\r\n");
+#endif
+
+	uint8_t sp[20];
+
+	memset(&sp[0], 0, 20);
+	text_table_get_string(0xd1, &sp[0], 19);
+
+	sub_2341151c(&sp[0]);
+}
+
+
 /* 2347075c - todo */
 static int sub_2347075c(void)
 {
@@ -801,13 +817,30 @@ static int sub_2347075c(void)
 }
 
 
-/* 23470772 - todo */
-static void sub_23470772()
+/* 23470772 - complete */
+static int sub_23470772(void)
 {
-#if 1
+	Struct_2344dc3c sp4;
+	int sp;
+
+#if 0
 	console_send_string("sub_23470772 (todo.c): TODO\r\n");
 #endif
 
+	sub_234706aa();
+	psi_get_network_info(&sp4, main_hPSIDecoder1);
+
+	sp = sp4.pNetworkData->wData_0x1a;
+
+	sub_2340c368(0, &sp);
+
+	sub_23470a02();
+
+	sub_2343d482(0);
+
+	sub_2343dcce();
+
+	return 0;
 }
 
 
@@ -906,10 +939,56 @@ int sub_23470890(UI_Thread_Params* r5, int r1)
 
 
 /* 2347092c - todo */
-void sub_2347092c()
+int sub_2347092c(void* a)
 {
-	console_send_string("sub_2347092c (todo.c): TODO\r\n");
+	UI_Thread_Params* r5;
+	Menu* pMenu;
+	int* r0 = a;
 
+#if 0
+	console_send_string("sub_2347092c (todo.c): TODO\r\n");
+#endif
+
+	if (*r0 == 32)
+	{
+		if (Data_23495f0c != 0)
+		{
+			int r0 = (Data_23495f0c)();
+			if (r0 != 0)
+			{
+				//->loc_23470974
+				return 0;
+			}
+		}
+		//loc_23470944
+		r5 = sub_2343d572();
+		pMenu = sub_2343d482(0);
+
+		if (pMenu != 0)
+		{
+			//0x23470954
+			if (pMenu->onEnter != 0)
+			{
+				//0x2347095a
+				(pMenu->onEnter)(-1);
+			}
+			//loc_23470960
+			sub_2343d51e(pMenu, r5);
+		}
+		else
+		{
+			//loc_2347096a
+			sub_2343d51e(0, r5);
+		}
+		//->loc_23470974
+	}
+	else
+	{
+		//loc_23470970
+		bData_23495f08 = 1;
+	}
+	//loc_23470974
+	return 0;
 }
 
 
@@ -978,4 +1057,17 @@ int sub_234709e0()
 	//loc_234709ee
 	return 0;
 }
+
+
+/* 23470a02 - complete */
+void sub_23470a02(void)
+{
+#if 0
+	console_send_string("sub_23470a02 (todo.c): TODO\r\n");
+#endif
+
+	sub_2340c8a8();
+	channel_load_lists();
+}
+
 

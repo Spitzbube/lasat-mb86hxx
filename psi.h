@@ -204,19 +204,19 @@ typedef struct Struct_234a73e8_Inner_0x248
 	uint8_t bData_1; //1
 	uint16_t pat_program_number; //2
 	uint16_t pmt_pid; //4
-	uint16_t wData_6[50]; //6
-	uint16_t wData_0x6a[50]; //0x6A
-	int Data_0xd0[50]; //0xd0
+	uint16_t arAudioPids[50]; //6
+	uint16_t arAudioComponentTags[50]; //0x6A
+	char* arAudioLanguageStrings[50]; //0xd0
 	int Data_0x198[50]; //0x198
-	int Data_0x260[50]; //0x260
+	char* arAudioLanguage2Strings[50]; //0x260
 	uint8_t* service_name; //0x328
-	int Data_0x32c; //0x32c
-	int Data_0x330; //0x330
-	uint16_t wData_0x334; //0x334
-	uint16_t wData_0x336; //0x336
+	int transport_stream_id; //0x32c
+	int original_network_id; //0x330
+	uint16_t wPcrPID; //0x334
+	uint16_t wVideoPID; //0x336
 	uint16_t wData_0x338; //0x338
-	uint16_t wData_0x33a; //0x33a
-	uint16_t wData_0x33c; //0x33c
+	uint16_t wTtxPID; //0x33a
+	uint16_t wAudioPID; //0x33c
 	struct
 	{
 		uint16_t wData_0; //0

@@ -1054,21 +1054,21 @@ void channel_on_psi_data(Struct_234a73e8* a)
 				r5 = 1;
 			}
 			//loc_2340a0ec
-			if (sp_0x24.Data_0.wVideoPID != pPrograms[r0].wData_0x336)
+			if (sp_0x24.Data_0.wVideoPID != pPrograms[r0].wVideoPID)
 			{
-				sp_0x24.Data_0.wVideoPID = pPrograms[r0].wData_0x336;
+				sp_0x24.Data_0.wVideoPID = pPrograms[r0].wVideoPID;
 				r5 = 1;
 			}
 
-			if (sp_0x24.Data_0.wPcrPID != pPrograms[r0].wData_0x334)
+			if (sp_0x24.Data_0.wPcrPID != pPrograms[r0].wPcrPID)
 			{
-				sp_0x24.Data_0.wPcrPID = pPrograms[r0].wData_0x334;
+				sp_0x24.Data_0.wPcrPID = pPrograms[r0].wPcrPID;
 				r5 = 1;
 			}
 
-			if (sp_0x24.Data_0.wTtxPID != pPrograms[r0].wData_0x33a)
+			if (sp_0x24.Data_0.wTtxPID != pPrograms[r0].wTtxPID)
 			{
-				sp_0x24.Data_0.wTtxPID = pPrograms[r0].wData_0x33a;
+				sp_0x24.Data_0.wTtxPID = pPrograms[r0].wTtxPID;
 				r5 = 1;
 			}
 			//0x2340a130
@@ -2121,7 +2121,7 @@ void sub_2340b684(Struct_234a73e8* a)
 			sp_0x1c.Data_0x10.service_name[3] = 'A';
 			sp_0x1c.Data_0x10.service_name[4] = 0;
 
-			memcpy(&sp_0x1c.Data_0.wPcrPID, &sp_0x44[i].wData_0x334, 12);
+			memcpy(&sp_0x1c.Data_0.wPcrPID, &sp_0x44[i].wPcrPID, 12);
 
 			sp_0x1c.Data_0.wFlags_2 = sp_0x44[i].bData_0;
 
@@ -2682,7 +2682,7 @@ int sub_2340c538(Struct_2340c538* r7)
 	Channel* pChannel;
 	Transponder* sl;
 	Transponder* r5 = r7->pTransponder;
-	PSI_Program* r6 = r7->Data_0;
+	PSI_Program* r6 = r7->pPsiProgram;
 
 #if 0
 	console_send_string("sub_2340c538 (todo.c): TODO\r\n");
@@ -2690,17 +2690,17 @@ int sub_2340c538(Struct_2340c538* r7)
 
 	OSSemPend(channel_sema, 0, &err);
 
-	int r0 = fe_manager_get_transponder_type(r5);
+	int transponderType = fe_manager_get_transponder_type(r5);
 
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340c538: r0=%d\r\n", r0);
+		sprintf(debug_string, "sub_2340c538: transponderType=%d\r\n", transponderType);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == 0)
+	if (transponderType == 0)
 	{
 		//0x2340c574
 		console_send_string("sub_2340c538: transponderType=0: TODO!!!\r\n");
@@ -2757,9 +2757,9 @@ int sub_2340c538(Struct_2340c538* r7)
 
 		//TODO
 #endif
-	} //if (r0 == 0)
+	} //if (transponderType == 0)
 	//loc_2340c648
-	else if (r0 == 2)
+	else if (transponderType == 2)
 	{
 		//0x2340c650
 		console_send_string("sub_2340c538: transponderType=2: TODO!!!\r\n");
@@ -2784,9 +2784,9 @@ int sub_2340c538(Struct_2340c538* r7)
 
 		//TODO
 #endif
-	} //else if (r0 == 2)
+	} //else if (transponderType == 2)
 	//loc_2340c6b4
-	else if (r0 == 1)
+	else if (transponderType == 1)
 	{
 		//0x2340c6bc
 		r4 = 0; 
@@ -2834,12 +2834,12 @@ int sub_2340c538(Struct_2340c538* r7)
 			return 0xff;
 		}
 		//0x2340c774
-		sl->transport_stream_id = r6->Data_0x32c;
-		sl->wData_0x12 = r6->Data_0x330;
+		sl->transport_stream_id = r6->transport_stream_id;
+		sl->original_network_id = r6->original_network_id;
 		//->loc_2340c798
 	}
 	//loc_2340c78c
-	else if (r0 == 3)
+	else if (transponderType == 3)
 	{
 		//0x2340c794
 		console_send_string("sub_2340c538: transponderType=3: TODO!!!\r\n");
@@ -2869,7 +2869,7 @@ int sub_2340c538(Struct_2340c538* r7)
 			pChannel->Data_0.service_id = r6->pat_program_number;
 			pChannel->Data_0.wData_4 = r4;
 
-			memcpy(&pChannel->Data_0.wPcrPID, &r6->wData_0x334, 12);
+			memcpy(&pChannel->Data_0.wPcrPID, &r6->wPcrPID, 12);
 
 			if (r6->service_name == 0)
 			{

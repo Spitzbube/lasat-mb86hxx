@@ -618,7 +618,7 @@ int sub_23402b6c(/*Struct_235fdfac ???*/Struct_23491e28_Inner0* r4)
 	M88DC2000SetSym(r4->symbol_rate, 28800);
 
 //	M88DC2000SetQAM(r4->bData_3 >> 4);
-	M88DC2000SetQAM(r4->Data_0.Bitfield_0.Data_28_31);
+	M88DC2000SetQAM(r4->Data_0.Bitfield_0.modulation);
 
 	M88DC2000SetTxMode(Data_23491e20->Data_0.bData_0x14, 0);
 

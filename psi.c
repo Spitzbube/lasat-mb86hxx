@@ -115,7 +115,7 @@ const int psi_arSectionNumberBits[] = //23487e98
 };
 
 
-uint8_t bData_23491f68[4/*size???*/] = {0}; //23491f68
+uint8_t psi_arAudioLanguage[4/*size???*/] = {0}; //23491f68
 
 
 Queue_Item Data_234ac594 = //23491f84 / 234ac594
@@ -685,13 +685,13 @@ void psi_default_data_handler(Struct_234a73e8* a)
 
 
 /* 23406a9c - complete */
-struct Struct_234a73e8_Inner_0x248* sub_23406a9c(Struct_234a73e8* a)
+PSI_Program* sub_23406a9c(Struct_234a73e8* a)
 {
 #if 0
 	console_send_string("sub_23406a9c (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_234a73e8_Inner_0x248* r0 = a->programs;
+	PSI_Program* r0 = a->programs;
 
 	for (uint32_t i = 0; i < 150; i++)
 	{
@@ -726,7 +726,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 			if (r5->program_number != 0)
 			{
 				//0x23403af8
-				struct Struct_234a73e8_Inner_0x248* r0 = sub_23406a9c(r7);
+				PSI_Program* r0 = sub_23406a9c(r7);
 
 				r0->bData_0 |= 0xc0;
 				r0->pat_program_number = r5->program_number;
@@ -744,7 +744,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 		uint8_t r4 = sub_2344cd54(r7->index)->table_id;
 		struct SDT_Service* r5 = sub_2344cd54(r7->index)->Data_8;
 
-#if 0
+#if 1
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "sub_23403ab4: r4=0x%02x\r\n", r4);
@@ -758,7 +758,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 			while (r5 != 0)
 			{
 				//loc_23403b70
-				struct Struct_234a73e8_Inner_0x248* r0 = r7->programs;
+				PSI_Program* r0 = r7->programs;
 				//->loc_23403bb4
 				while (r0->bData_0 & 0x80)
 				{
@@ -766,7 +766,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 					if (r5->service_id == r0->pat_program_number)
 					{
 						//0x23403b88
-						struct Struct_234a73e8_Inner_0x248* r0 = sub_23406a9c(r7);
+						PSI_Program* r0 = sub_23406a9c(r7);
 
 						if (r0 != 0)
 						{
@@ -789,7 +789,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 			while (r5 != 0)
 			{
 				//loc_23403be0
-				struct Struct_234a73e8_Inner_0x248* r4 = r7->programs;
+				PSI_Program* r4 = r7->programs;
 				//->loc_23403ce4
 				while (r4->bData_0 & 0x80)
 				{
@@ -802,8 +802,8 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						{
 							//0x23403c04
 							r4->service_name = /*r0*/r5->Data_0x10->service_name;
-							r4->Data_0x32c = sub_2344cd54(r7->index)->transport_stream_id;
-							r4->Data_0x330 = sub_2344cd54(r7->index)->original_network_id;
+							r4->transport_stream_id = sub_2344cd54(r7->index)->transport_stream_id;
+							r4->original_network_id = sub_2344cd54(r7->index)->original_network_id;
 
 							uint8_t r0 = r5->Data_0x10->service_type;
 
@@ -824,7 +824,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 									(r0 == 0x0a)) //advanced codec digital radio sound service
 							{
 								//0x23403c74
-								r4->bData_0 &= 0x08;
+								r4->bData_0 &= ~0x08;
 								//->loc_23403c7c
 								r4->bData_0 &= 0xbf;
 							}
@@ -842,8 +842,8 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						else
 						{
 							//loc_23403ca0
-							r4->Data_0x32c = sub_2344cd54(r7->index)->transport_stream_id;
-							r4->Data_0x330 = sub_2344cd54(r7->index)->original_network_id;
+							r4->transport_stream_id = sub_2344cd54(r7->index)->transport_stream_id;
+							r4->original_network_id = sub_2344cd54(r7->index)->original_network_id;
 
 							r4->bData_0 |= 0x08;
 							r4->bData_0 &= 0xbf;
@@ -868,9 +868,50 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 			while (r5 != 0)
 			{
 				//loc_23403d0c
+				if (r5->Data_0x10 != 0)
+				{
+					//0x23403d18
+					PSI_Program* r4 = sub_23406a9c(r7);
 
-				//TODO!!!
+					r4->bData_0 |= 0xc0;
+					r4->pat_program_number = r5->service_id;
+					r4->pmt_pid = 0; //fp;
+					r4->service_name = r5->Data_0x10->service_name;
+					r4->transport_stream_id = sub_2344cd54(r7->index)->transport_stream_id;
+					r4->original_network_id = sub_2344cd54(r7->index)->original_network_id;
 
+					uint8_t r0 = r5->Data_0x10->service_type;
+
+					if ((r0 == 0x11) || //MPEG-2 HD digital television service
+							(r0 == 0x01) || //digital television service
+							(r0 == 0x16) || //advanced codec SD digital television service
+							(r0 == 0x19) || //advanced codec HD digital television service
+							(r0 == 0x1f) ||
+							(r0 == 0x86) ||
+							(r0 == 0xd3))
+					{
+						r4->bData_0 |= 0x08;
+						//->loc_23403db4
+						r4->bData_0 &= 0xbf;
+					}
+					else if ((r0 == 0x02) || //digital radio sound service
+							(r0 == 0x0a)) //advanced codec digital radio sound service
+					{
+						//0x23403dac
+						r4->bData_0 &= ~0x08;
+						//loc_23403db4
+						r4->bData_0 &= 0xbf;
+					}
+					//loc_23403dbc
+					if (r5->free_CA_mode != 0)
+					{
+						r4->bData_0 |= 1;
+					}
+					else
+					{
+						r4->bData_0 &= ~1;
+					}
+				} //if (r5->Data_0x10 != 0)
 				//loc_23403dd4
 				r5 = r5->next;
 			}
@@ -885,7 +926,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 		int sb = 0;
 		struct Struct_236001c8* sp4 = pmt_get_data(r7->index & 0xff);
 		//sl = sp4 + 0x1000;
-		struct Struct_234a73e8_Inner_0x248* r5 = r7->programs;
+		PSI_Program* r5 = r7->programs;
 
 		r7->programs[0].bData_1 = sp4->version_number;
 		//->loc_234043a4
@@ -913,21 +954,21 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 				}
 #endif
 
-				r5->wData_0x334 = sp4->PCR_PID;
+				r5->wPcrPID = sp4->PCR_PID;
 
-				struct Struct_236001c8_Inner_0x14e0* r4 = sp4->Data_0x14dc;
+				PMT_ElementaryStream* r4 = sp4->pFirstElementaryStreams;
 
-				r5->wData_0x33c = 0; //fp;
+				r5->wAudioPID = 0; //fp;
 				r5->wData_0x338 = 0; //fp;
 
 				for (uint32_t i = 0; i < 50; i++)
 				{
 					//loc_23403e3c
-					r5->wData_6[i] = 0; //fp
-					r5->wData_0x6a[i] = 0; //fp
-					r5->Data_0xd0[i] = 0; //fp
+					r5->arAudioPids[i] = 0; //fp
+					r5->arAudioComponentTags[i] = 0; //fp
+					r5->arAudioLanguageStrings[i] = 0; //fp
 					r5->Data_0x198[i] = 0; //fp
-					r5->Data_0x260[i] = 0; //fp
+					r5->arAudioLanguage2Strings[i] = 0; //fp
 				}
 				//0x23403e64
 				memset(r5->Data_0x340, 0, 0x50);
@@ -972,21 +1013,21 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						else
 						{
 							//0x23403edc
-							if (0 != strlen(r4->Data_0xa))
+							if (0 != strlen(r4->language))
 							{
 								//0x23403eec
 #if 1
 								{
 									extern char debug_string[];
-									sprintf(debug_string, "loc_23403eac: r4->bData_0xa='%s'\r\n",
-											r4->Data_0xa);
+									sprintf(debug_string, "loc_23403eac: r4->blanguage='%s'\r\n",
+											r4->language);
 									console_send_string(debug_string);
 								}
 #endif
-								if (0 == strcmp(r4->Data_0xa, sp))
+								if (0 == strcmp(r4->language, sp))
 								{
 									r5->wData_0x338 = r4->elementary_PID;
-									r5->wData_0x33c = 0; //fp
+									r5->wAudioPID = 0; //fp
 								}
 							}
 							//loc_23403f08
@@ -1007,115 +1048,115 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 					//loc_23403fdc
 					switch (r4->stream_type)
 					{
-					case 1:
-					case 2:
+					case 1: //ISO/IEC 11172-2 Video
+					case 2: //ITU-T Rec H.262 | ISO/IEC 13818-2 Video stream descriptor or ISO/IEC 11172-2 constrained parameter video stream
 						//2340424C
 						//TODO!!!
 						break;
 
-					case 3:
-					case 4:
+					case 3: //ISO/IEC 11172-3 Audio stream descriptor
+					case 4: //ISO/IEC 13818-3 Audio MPEG Audio layer 1/2
 						//23404054
 						if (sb == 0)
 						{
 							//0x2340405c
-#if 1
+#if 0
 							{
 								extern char debug_string[];
-								sprintf(debug_string, "0x2340405c: r5->wData_0x33c=0x%x\r\n",
-										r5->wData_0x33c);
+								sprintf(debug_string, "0x2340405c: r5->wAudioPID=0x%x\r\n",
+										r5->wAudioPID);
 								console_send_string(debug_string);
 							}
 #endif
-							if (r5->wData_0x33c == 0)
+							if (r5->wAudioPID == 0)
 							{
 								//0x23404068
-								r5->wData_0x33c = r4->elementary_PID;
+								r5->wAudioPID = r4->elementary_PID;
 
-								if (0 == strlen(r4->Data_0xa))
+								if (0 == strlen(r4->language))
 								{
 									//0x23404084
-									bData_23491f68[0] = 0; //fp
+									psi_arAudioLanguage[0] = 0; //fp
 									//->loc_23404170
 								}
 								else
 								{
 									//r0, =0x23491f68
 									//->loc_23404160
-#if 1
+#if 0
 									{
 										extern char debug_string[];
-										sprintf(debug_string, "loc_23404160: r4->bData_0xa='%s'\r\n",
-												r4->Data_0xa);
+										sprintf(debug_string, "loc_23404160: r4->language='%s'\r\n",
+												r4->language);
 										console_send_string(debug_string);
 									}
 #endif
-									memcpy(bData_23491f68, r4->Data_0xa, 4); //strcpy?
+									memcpy(psi_arAudioLanguage, r4->language, 4); //strcpy?
 									//loc_23404170
 								}
-							} //if (r5->wData_0x33c == 0)
+							} //if (r5->wAudioPID == 0)
 							else
 							{
 								//loc_2340411c
-								if ((0 != strcmp(bData_23491f68, sp)) &&
-										(0 != strlen(r4->Data_0xa)) &&
-										(0 == strcmp(r4->Data_0xa, sp)))
+								if ((0 != strcmp(psi_arAudioLanguage, sp)) &&
+										(0 != strlen(r4->language)) &&
+										(0 == strcmp(r4->language, sp)))
 								{
 									//0x23404154
-									r5->wData_0x33c = r4->elementary_PID;
+									r5->wAudioPID = r4->elementary_PID;
 									//loc_23404160
-									memcpy(bData_23491f68, r4->Data_0xa, 4); //strcpy?
+									memcpy(psi_arAudioLanguage, r4->language, 4); //strcpy?
 								}
 								//loc_23404170
 							}
-						}
+						} //if (sb == 0)
 						//loc_23404170
-						for (uint32_t r0 = 0; r0 < 50; r0++)
+						for (uint32_t langIdx = 0; langIdx < 50; langIdx++)
 						{
 							//loc_23404174
-							if (r5->wData_6[r0] == 0)
+							if (r5->arAudioPids[langIdx] == 0)
 							{
 								//0x23404184
-								r5->wData_6[r0] = r4->elementary_PID;
-								r5->wData_0x6a[r0] = r4->component_tag;
-								r5->Data_0x198[r0] = 0; //fp
+								r5->arAudioPids[langIdx] = r4->elementary_PID;
+								r5->arAudioComponentTags[langIdx] = r4->component_tag;
+								r5->Data_0x198[langIdx] = 0; //fp
 
-								if (0 != strlen(r4->Data_0xa))
+								if (0 != strlen(r4->language))
 								{
 									//loc_234041b0
-									//r0, r4, #0xa
+									//langIdx, r4, #0xa
 									//->loc_23404104
-									r5->Data_0xd0[r0] = (int) r4->Data_0xa;
+									r5->arAudioLanguageStrings[langIdx] = &r4->language[0];
 									//->loc_23404394
 								}
 								//loc_2340421c
-								else if (0 != strlen(&r4->Data_0xa[4]))
+								else if (0 != strlen(&r4->language[4]))
 								{
-									r5->Data_0x260[r0] = (int) &r4->Data_0xa[4];
+									r5->arAudioLanguage2Strings[langIdx] = &r4->language[4];
 									//->loc_23404394
 								}
 								else
 								{
 									//loc_23404234
-									//ldr        r0, =aDefault
+									//ldr        langIdx, =aDefault
 									//loc_23404104
-									r5->Data_0xd0[r0] = (int) "default";
+									r5->arAudioLanguageStrings[langIdx] = "default";
 								}
 								//->loc_23404394
 								break;
 							}
 							//loc_2340423c
-						} //for (uint32_t r0 = 0; r0 < 50; r0++)
+						} //for (uint32_t langIdx = 0; langIdx < 50; langIdx++)
 						//->loc_23404394
 						break;
 
-					case 6:
+					case 6: //ITU-T Rec H.222.0 | ISO/IEC 13818-1 Private PES data packets
 						//23404264
 						//TODO!!!
 						break;
 
-					case 11:
-					case 13:
+					case 11: //ISO/IEC 13818-6 type B
+					case 13: //ISO/IEC 13818-6 type D
 						//loc_23404308
 						//		//sl = sp4 + 0x1000;
 						if (sp4->bData_0x14cc == 0)
@@ -1142,13 +1183,105 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 						//loc_23404394
 						break;
 
-					case 15:
-					case 17:
+					case 15: //ISO/IEC 13818-7 MPEG2 Audio with ADTS transport syntax
+					case 17: //ISO/IEC 14496-3 MPEG4 Audio with the LATM transport syntax as defined in ISO/IEC 14496-3
 						//0x23404048
-						//TODO!!!
+						r4->elementary_PID |= (1 << 14);
+						
+						if (sb == 0)
+						{
+							//0x2340405c
+#if 0
+							{
+								extern char debug_string[];
+								sprintf(debug_string, "0x2340405c: r5->wAudioPID=0x%x\r\n",
+										r5->wAudioPID);
+								console_send_string(debug_string);
+							}
+#endif
+							if (r5->wAudioPID == 0)
+							{
+								//0x23404068
+								r5->wAudioPID = r4->elementary_PID;
+
+								if (0 == strlen(r4->language))
+								{
+									//0x23404084
+									psi_arAudioLanguage[0] = 0; //fp
+									//->loc_23404170
+								}
+								else
+								{
+									//r0, =0x23491f68
+									//->loc_23404160
+#if 0
+									{
+										extern char debug_string[];
+										sprintf(debug_string, "loc_23404160: r4->language='%s'\r\n",
+												r4->language);
+										console_send_string(debug_string);
+									}
+#endif
+									memcpy(psi_arAudioLanguage, r4->language, 4); //strcpy?
+									//loc_23404170
+								}
+							} //if (r5->wAudioPID == 0)
+							else
+							{
+								//loc_2340411c
+								if ((0 != strcmp(psi_arAudioLanguage, sp)) &&
+										(0 != strlen(r4->language)) &&
+										(0 == strcmp(r4->language, sp)))
+								{
+									//0x23404154
+									r5->wAudioPID = r4->elementary_PID;
+									//loc_23404160
+									memcpy(psi_arAudioLanguage, r4->language, 4); //strcpy?
+								}
+								//loc_23404170
+							}
+						} //if (sb == 0)
+						//loc_23404170
+						for (uint32_t langIdx = 0; langIdx < 50; langIdx++)
+						{
+							//loc_23404174
+							if (r5->arAudioPids[langIdx] == 0)
+							{
+								//0x23404184
+								r5->arAudioPids[langIdx] = r4->elementary_PID;
+								r5->arAudioComponentTags[langIdx] = r4->component_tag;
+								r5->Data_0x198[langIdx] = 0; //fp
+
+								if (0 != strlen(r4->language))
+								{
+									//loc_234041b0
+									//langIdx, r4, #0xa
+									//->loc_23404104
+									r5->arAudioLanguageStrings[langIdx] = &r4->language[0];
+									//->loc_23404394
+								}
+								//loc_2340421c
+								else if (0 != strlen(&r4->language[4]))
+								{
+									r5->arAudioLanguage2Strings[langIdx] = &r4->language[4];
+									//->loc_23404394
+								}
+								else
+								{
+									//loc_23404234
+									//ldr        langIdx, =aDefault
+									//loc_23404104
+									r5->arAudioLanguageStrings[langIdx] = "default";
+								}
+								//->loc_23404394
+								break;
+							}
+							//loc_2340423c
+						} //for (uint32_t langIdx = 0; langIdx < 50; langIdx++)
+						//->loc_23404394
 						break;
 
-					case 27:
+					case 27: //AVC video stream as defined in ITU-T Rec. H.264 | ISO/IEC 14496-10 Video
 						//0x2340402c
 						//TODO!!!
 						break;
@@ -1849,7 +1982,7 @@ int psi_handle_state(Struct_234a73e8* r4)
 
 							PAT_Program* r0 = pat_get_program(r4->index & 0xff, /*r6->wData_0x10*/r4->wData_0x21e10 & 0xff);
 
-#if 1
+#ifdef PSI_PMT_FILTER_DEBUG
 							{
 								extern char debug_string[];
 								sprintf(debug_string, "psi_handle_state: Continue PMT filter for PID=0x%x, r4->wData_0x21e10=%d\r\n",
@@ -3530,7 +3663,7 @@ int psi_stop(Struct_234a73e8* r0, uint16_t r1)
 
 
 /* 23406654 / 23408ab0 - complete */
-int sub_23406654(void* h, uint32_t r5, struct Struct_234a73e8_Inner_0x248* r6)
+int sub_23406654(void* h, uint32_t r5, PSI_Program* r6)
 {
 #if 0
 	console_send_string("sub_23406654 (todo.c): TODO\r\n");
@@ -3563,7 +3696,7 @@ int sub_23406654(void* h, uint32_t r5, struct Struct_234a73e8_Inner_0x248* r6)
 
 
 /* 234066d0 - complete */
-int sub_234066d0(void* h, struct Struct_234a73e8_Inner_0x248* r6)
+int sub_234066d0(void* h, PSI_Program* r6)
 {
 #if 0
 	console_send_string("sub_234066d0 (todo.c): TODO\r\n");
@@ -3585,7 +3718,7 @@ int sub_234066d0(void* h, struct Struct_234a73e8_Inner_0x248* r6)
 			//loc_23406744
 			if (r4->programs[r0].pat_program_number == r4->wData_0x21e14)
 			{
-				//memcpy(r6, &r4->programs[r0], sizeof(struct Struct_234a73e8_Inner_0x248));
+				//memcpy(r6, &r4->programs[r0], sizeof(PSI_Program));
 				*r6 = r4->programs[r0];
 
 				OSSemPost(r4->sema);
@@ -3702,7 +3835,7 @@ void sub_23406a74(Struct_234a73e8* r4)
 	console_send_string("sub_23406a74 (todo.c): TODO\r\n");
 #endif
 
-	memset(r4->programs, 0, 150 * sizeof(struct Struct_234a73e8_Inner_0x248));
+	memset(r4->programs, 0, 150 * sizeof(PSI_Program));
 	memset(r4->Data_0x21d58, 0, 0xa0);
 }
 

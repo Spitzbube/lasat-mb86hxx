@@ -41,7 +41,7 @@ typedef struct
 			uint32_t Data_0_18: 19;
 			uint8_t Data_19: 1; //bData_2 & 0xf7
 			uint32_t Data_20_27: 8; //
-			uint8_t Data_28_31: 4; //bData_3 & 0xf0
+			uint8_t modulation: 4; //bData_3 & 0xf0
 		} Bitfield_0;
 	} Data_0; //0
 	uint32_t frequency; //4
@@ -63,7 +63,7 @@ typedef struct
 		struct
 		{
 			uint32_t Data_0_27: 28;
-			uint8_t Data_28_31: 4;
+			uint8_t modulation: 4;
 		} Bitfield_0;
 	} Data_0; //0
 	uint32_t Data_4; //4
@@ -74,7 +74,7 @@ typedef struct
 	Struct_23491e28_Inner0 Data_0; //0
 #endif
 	uint16_t transport_stream_id; //0x10 = 16
-	uint16_t wData_0x12; //0x12 = 18
+	uint16_t original_network_id; //0x12 = 18
 	uint16_t wData_0x14; //0x14 = 20
 	uint8_t bData_0x16; //0x16
 	//0x18 = 24
