@@ -142,7 +142,7 @@ typedef struct
 #endif
 	uint32_t dwCrcChannels; //235441cc 468DC
 	uint32_t dwCrcTransponders; //235441d0 468E0
-	int Data_235441d4; //235441d4 468E4
+	uint32_t Data_235441d4; //235441d4 468E4
 	struct
 	{
 		int fill_0[500]; //235441d8

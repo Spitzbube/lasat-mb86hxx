@@ -87,26 +87,142 @@ void sub_2342bf70()
 
 
 /* 2342bfbc - todo */
-void sub_2342bfbc()
+int sub_2342bfbc(uint32_t a)
 {
+#if 0
 	console_send_string("sub_2342bfbc (flash.c): TODO\r\n");
+#endif
 
+	int r0_;
+	int r2 = 0x06;
+	int r3 = 0xd8;
+
+	Data_23492650[1] = r2;
+	r0_ = Data_23492650[0];
+	Data_23492650[1] = r3;
+	Data_23492650[0] = a & 0xffffff;
+
+	r2 = 0x05;
+	while (1) 
+	{
+		Data_23492650[1] = r2;
+
+		r0_ = Data_23492650[0];
+		if ((r0_ & 1) == 0)
+		{
+			break;
+		}
+	}
+
+	Data_23492650[1] = 0x04;
+
+	r0_ = Data_23492650[0];
+
+	return 0;
 }
 
 
 /* 2342c008 - todo */
-void sub_2342c008()
+int sub_2342c008(uint16_t* pwData, uint32_t numWords, uint32_t c)
 {
+#if 0
 	console_send_string("sub_2342c008 (flash.c): TODO\r\n");
+#endif
 
+	numWords /= 2;
+
+	int r4 = 0x06;
+	int r5 = 0x02;
+	int lr = 0x05;
+	int r3;
+
+	if (c % 0x100)
+	{
+		Data_23492650[1] = r4;
+		r3 = Data_23492650[0];
+		Data_23492650[1] = r5;
+		Data_23492650[0] = c & 0xffffff;
+	}
+	//->loc_2342c088
+	while (numWords--)
+	{
+		//loc_2342c040
+		if ((c % 0x100) == 0)
+		{
+			Data_23492650[1] = r4;
+			r3 = Data_23492650[0];
+			Data_23492650[1] = r5;
+			Data_23492650[0] = c & 0xffffff;
+		}
+
+		r3 = *pwData;
+		uint16_t r6 = *(++pwData);
+		pwData++;
+		Data_23492650[0] = (r3 << 16) | r6;
+
+		c += 4;
+
+		if ((c % 0x100) == 0)
+		{
+			while (1)
+			{
+				//loc_2342c078
+				Data_23492650[1] = lr;
+
+				int r3 = Data_23492650[0];
+				if ((r3 & 1) == 0)
+				{
+					break;
+				}
+			}
+		}
+		//loc_2342c088
+	}
+	//0x2342c090
+	if ((c % 0x100) != 0)
+	{
+		while (1)
+		{
+			//loc_2342c098
+			Data_23492650[1] = lr;
+
+			int r0 = Data_23492650[0];
+			if ((r0 & 1) == 0)
+			{
+				break;
+			}
+		}
+	}
+	//loc_2342c0a8
+	Data_23492650[1] = 0x04;
+
+	int r0 = Data_23492650[0];
+
+	return 0;
 }
 
 
-/* 2342c0bc - todo */
-void sub_2342c0bc()
+/* 2342c0bc - complete */
+int sub_2342c0bc(void* a, uint32_t b, Struct_235f2e2c* c)
 {
-	console_send_string("sub_2342c0bc (flash.c): TODO\r\n");
+	uint16_t i;
+	int res = 0;
 
+#if 0
+	console_send_string("sub_2342c0bc (flash.c): TODO\r\n");
+#endif
+
+	for (i = 0; i < c->numSectors; i++)
+	{
+		if (c->Data_0x2c[i] != 0)
+		{
+			sub_2342c008(a, b / 2, c->Data_0x20[i].Data_0);
+
+			break;
+		}
+	}
+
+	return res;
 }
 
 
@@ -143,6 +259,65 @@ void flash_read_dwords(uint32_t a, uint32_t b, uint8_t* c)
 		}
 #endif
 	}
+}
+
+
+/* 2342c170 - complete */
+int sub_2342c170(Struct_235f2e2c* r0, uint32_t r1)
+{
+	uint16_t i;
+
+#if 0
+	console_send_string("sub_2342c170 (todo.c): TODO\r\n");
+#endif
+
+	for (i = 0; i < r0->numSectors; i++)
+	{
+		if (r0->Data_0x20[i].Data_0 <= r1)
+		{
+			if (r0->Data_0x20[i].Data_4 >= r1)
+			{
+				r0->Data_0x2c[i] = 1;
+
+				return 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+/* 2342c1c8 - complete */
+int sub_2342c1c8(Struct_235f2e2c* r7, int r5, uint32_t r6)
+{
+	uint32_t r4, r0;
+
+#if 0
+	console_send_string("sub_2342c1c8 (todo.c): TODO\r\n");
+#endif
+
+	memset(&r7->Data_0x2c[0], 0, sizeof(r7->Data_0x2c));
+
+	r4 = 0;
+	while (r4 < r6)
+	{
+		//loc_2342c1ec
+		if (0 == sub_2342c170(r7, r5))
+		{
+			return 2;
+		}
+
+		r5 += 2;
+		r4 += 2;
+	}
+
+	for (r0 = 0; r0 < r7->numSectors; r0++)
+	{
+
+	}
+
+	return 0;
 }
 
 
@@ -341,5 +516,74 @@ int flash_read(Struct_235f2e2c* r4, int r5, int r6, void* r7)
 
 	return 0;
 }
+
+
+/* 2342c738 - todo */
+int flash_write(void* h, int r5, int r6, void* r7)
+{
+	Struct_235f2e2c* r4 = h;
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_2342c738 (todo.c): TODO\r\n");
+#endif
+
+	if (r4->sema != 0)
+	{
+		OSSemPend(r4->sema, 0, &err);
+		if (err != 0)
+		{
+			return err;
+		}
+	}
+	//loc_2342c770
+	if (0 == sub_2342c1c8(r4, r5, r6))
+	{
+		//0x2342c788
+		sub_2342c898(r4);
+
+		(r4->Data_8.Data_4)(r7, r6, r4);
+
+		if (r4->sema != 0)
+		{
+			OSSemPost(r4->sema);
+		}
+
+		return 0;
+	}
+	else
+	{
+		//loc_2342c7b8
+		if (r4->sema != 0)
+		{
+			OSSemPost(r4->sema);
+		}
+
+		return 1;
+	}
+}
+
+
+/* 2342c898 - complete */
+int sub_2342c898(Struct_235f2e2c* r5)
+{
+	uint16_t i;
+
+#if 0
+	console_send_string("sub_2342c898 (todo.c): TODO\r\n");
+#endif
+
+	for (i = 0; i < r5->numSectors; i++)
+	{
+		if (r5->Data_0x2c[i] != 0)
+		{
+			(r5->Data_8.Data_12)(r5->Data_0x20[i].Data_0);
+		}
+
+	}
+
+	return 0;
+}
+
 
 

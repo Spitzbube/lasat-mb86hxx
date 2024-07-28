@@ -27,7 +27,7 @@ typedef struct
 	}* Data_0x20; //0x20 = 32
 	int Data_0x24; //0x24
 	uint32_t numSectors; //0x28
-	int fill_0x2c[65]; //0x2c
+	uint8_t Data_0x2c[260]; //0x2c
 	uint32_t jedec_id; //0x130
 	//0x134 = 308
 } Struct_235f2e2c;

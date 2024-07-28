@@ -2913,11 +2913,32 @@ int sub_2340c538(Struct_2340c538* r7)
 }
 
 
-/* 2340c8a8 - todo */
-void sub_2340c8a8()
+/* 2340c8a8 - complete */
+int sub_2340c8a8(void)
 {
-	console_send_string("sub_2340c8a8 (todo.c): TODO\r\n");
+	uint8_t err;
+	uint32_t r0;
 
+#if 0
+	console_send_string("sub_2340c8a8 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	r0 = crc32(&Data_234fd8f0.arChannels[0], sizeof(Data_234fd8f0.arChannels));
+	Data_234fd8f0.dwCrcChannels = r0;
+
+	r0 = crc32(&Data_234fd8f0.arTransponders[0], sizeof(Data_234fd8f0.arTransponders));
+	Data_234fd8f0.dwCrcTransponders = r0;
+
+	r0 = crc32(&Data_234fd8f0.Data_23543df0, sizeof(Data_234fd8f0.Data_23543df0));
+	Data_234fd8f0.Data_235441d4 = r0;
+
+	OSSemPost(channel_sema);
+
+	flash_write(main_hFlash, 0x40300000, sizeof(Data_234fd8f0), &Data_234fd8f0);
+
+	return 0;
 }
 
 
