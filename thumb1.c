@@ -329,7 +329,7 @@ static void* store_favourite_timer_func(uint32_t* pCount)
 
 		sub_2340bf0c(&sp4);
 
-		Struct_234fd8f0* r5 = sub_2344f770();
+		Channel_Database* r5 = sub_2344f770();
 
 		snprintf(&Data_23495970.strText[0], 256, "Ch %d->S%d",
 			sp4.wCurrentChannel + 1,
@@ -345,7 +345,7 @@ static void* store_favourite_timer_func(uint32_t* pCount)
 			sizeof(r5->favourites));
 
 		sub_2340c204(1);
-		sub_2340c8a8();
+		channel_write_database();
 		sub_2340c204(0);
 
 		Data_23495970.timerVal = 5;
@@ -512,7 +512,7 @@ static void* event_display_timer_func(uint32_t* pCount)
 			sub_2340bf94(sp_0x48.wCurrentChannel, &sp8, &sp_0x30);
 
 			Struct_2377b8d0* pEITSectionData =
-					eit_get_section_data(sp8.Data_0.service_id, sp_0x30.transport_stream_id);
+					eit_get_section_data(sp8.service_id, sp_0x30.transport_stream_id);
 #if 0
 			{
 				extern char debug_string[];
@@ -795,7 +795,7 @@ static void check_favourite_channel(void)
 	console_send_string("check_favourite_channel (todo.c): TODO\r\n");
 #endif
 
-	Struct_234fd8f0* r0 = sub_2344f770();
+	Channel_Database* r0 = sub_2344f770();
 	uint16_t* pFav = &r0->favourites.arChannel[0];
 	int channel = pFav[Data_23495970.wFavouriteIndex - 1];
 	Data_23495970.nCountToStoreFavourite = 0;

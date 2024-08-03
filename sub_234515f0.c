@@ -4,10 +4,10 @@
 
 
 extern OS_EVENT* channel_sema;
-extern Struct_234fd8f0 Data_234fd8f0;
+extern Channel_Database channel_database;
 
 
-#if 0 //Moved to Struct_234fd8f0
+#if 0 //Moved to Channel_Database
 struct
 {
 	uint16_t arChannel[8]; //235449a8
@@ -45,14 +45,14 @@ void sub_234515f0(int r4, int r7)
 		for (i = 0; i < 8; i++)
 		{
 			//loc_23451634
-			if (/*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] != 0xffff)
+			if (channel_database.favourites.arChannel[i] != 0xffff)
 			{
 				//0x23451644
 				Data_2377d870[i].wData_0 =
-						Data_234fd8f0.arChannels[ Data_234fd8f0.favourites.arChannel[i] ].Data_0.service_id;
+						channel_database.arChannels[ channel_database.favourites.arChannel[i] ].service_id;
 
 				Data_2377d870[i].wData_2 =
-						Data_234fd8f0.arTransponders[ Data_234fd8f0.arChannels[ /*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] ].Data_0.wData_4 ].transport_stream_id;
+						channel_database.arTransponders[ channel_database.arChannels[ channel_database.favourites.arChannel[i] ].wTransponderIndex ].transport_stream_id;
 			}
 			//loc_23451680
 		}
@@ -64,7 +64,7 @@ void sub_234515f0(int r4, int r7)
 		for (i = 0; i < 8; i++)
 		{
 			//loc_23451690
-			if (/*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] != 0xffff)
+			if (channel_database.favourites.arChannel[i] != 0xffff)
 			{
 				//0x234516a0
 				for (j = 0; j < 6000; j++)
@@ -72,17 +72,17 @@ void sub_234515f0(int r4, int r7)
 					int ip;
 					int sl;
 					//loc_234516ac
-					int r3 = Data_234fd8f0.arChannels[j].Data_0.service_id;
+					int r3 = channel_database.arChannels[j].service_id;
 					if (r3 == 0xffff)
 					{
-						/*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] = 0xffff;
+						channel_database.favourites.arChannel[i] = 0xffff;
 						//->loc_23451710
 						break;
 					}
 					//0x234516c4
-					ip = Data_234fd8f0.arChannels[j].Data_0.wData_4;
+					ip = channel_database.arChannels[j].wTransponderIndex;
 					sl = Data_2377d870[i].wData_0;
-					ip = Data_234fd8f0.arTransponders[ ip ].transport_stream_id;
+					ip = channel_database.arTransponders[ ip ].transport_stream_id;
 
 					if (sl == r3)
 					{
@@ -90,7 +90,7 @@ void sub_234515f0(int r4, int r7)
 						if ((r7 != 0) || (Data_2377d870[i].wData_2 == ip))
 						{
 							//loc_234516fc
-							/*Data_235449a8*/Data_234fd8f0.favourites.arChannel[i] = j;
+							channel_database.favourites.arChannel[i] = j;
 							//->loc_23451710
 							break;
 						}
@@ -108,8 +108,8 @@ void sub_234515f0(int r4, int r7)
 			//loc_2345171c
 		}
 		//0x23451728
-		Data_234fd8f0.dwCrcFavourites = crc32((void*) &Data_234fd8f0.favourites, 
-			sizeof(Data_234fd8f0.favourites));
+		channel_database.dwCrcFavourites = crc32((void*) &channel_database.favourites, 
+			sizeof(channel_database.favourites));
 	}
 	//loc_23451738
 	OSSemPost(channel_sema);

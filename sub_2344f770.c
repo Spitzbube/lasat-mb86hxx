@@ -4,14 +4,14 @@
 
 
 extern OS_EVENT* channel_sema;
-extern Struct_234fd8f0 Data_234fd8f0;
+extern Channel_Database channel_database;
 
 
 /* 2344f770 - complete */
-struct Struct_234fd8f0_Inner0* sub_2344f770()
+struct Channel_Database* sub_2344f770()
 {
 	uint8_t err;
-	struct Struct_234fd8f0_Inner0* r4;
+	struct Channel_Database* r4;
 
 #if 0
 	console_send_string("sub_2344f770 (todo.c): TODO\r\n");
@@ -19,7 +19,7 @@ struct Struct_234fd8f0_Inner0* sub_2344f770()
 
 	OSSemPend(channel_sema, 0, &err);
 
-	r4 = &Data_234fd8f0; //.Data_234fd8f0[0];
+	r4 = &channel_database;
 
 	OSSemPost(channel_sema);
 

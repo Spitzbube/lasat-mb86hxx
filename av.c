@@ -877,7 +877,7 @@ void av_display_program_name(int r4)
 
 		sub_2341a290(chNumberString, r5);
 
-		uint8_t* r1 = sp_0x1c.Data_0x10.service_name;
+		uint8_t* r1 = sp_0x1c.service_name;
 		if ((r1[0] != 0) && (r1[0] < 0x21))
 		{
 			r1++;

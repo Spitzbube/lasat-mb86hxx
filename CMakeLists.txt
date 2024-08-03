@@ -57,6 +57,7 @@ set(SRCS
    sub_23419cd0.c
    sub_2345bc50.c
    menu_guided_install.c    #?
+   ttx.c
    hexdump.c
    todo.c
 )

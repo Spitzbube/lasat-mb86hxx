@@ -90,31 +90,23 @@ typedef struct
 	//0x20
 } Struct_2354613c;
 
-typedef struct //Struct_234fd8f0_Inner0
+typedef struct
 {
-	struct Struct_234fd8f0_Inner0_Inner_0
-	{
-		uint16_t service_id; //0
-		/*
-			Bit 3: TV / Radio
-		*/
-		uint16_t wFlags_2; //2
-		uint16_t wData_4; //4
-		uint16_t wData_6; //6
+	uint16_t service_id; //0
+	/*
+		Bit 3: TV / Radio
+	*/
+	uint16_t wFlags_2; //2
+	uint16_t wTransponderIndex; //4
+	uint16_t wData_6; //6
 //			int Data_8; //8
-		uint16_t wPcrPID; //8
-		uint16_t wVideoPID; //10
-		uint16_t wData_12; //12
-		uint16_t wTtxPID; //14
-		//16 = 0x10
-	} Data_0; //0
-	struct Struct_234fd8f0_Inner0_Inner_0x10
-	{
-		uint16_t wAudioPID; //0
-		uint16_t fill_2; //2
-		uint8_t service_name[20]; //4
-		//0x18 = 24
-	} Data_0x10; //0x10
+	uint16_t wPcrPID; //8
+	uint16_t wVideoPID; //10
+	uint16_t wData_12; //12
+	uint16_t wTtxPID; //14
+	uint16_t wAudioPID; //16
+	uint16_t fill_2; //18
+	uint8_t service_name[20]; //20
 	//40 = 0x28
 } Channel;
 
@@ -204,7 +196,7 @@ typedef struct
 	} Data_235462cc; //235462cc, 489DC
 	int Data_235462e0; //235462E0, 489F0
 	//0x489f4???? -> 235462E4
-} Struct_234fd8f0;
+} Channel_Database;
 
 
 typedef struct

@@ -216,7 +216,7 @@ void sub_23470090(void* a, uint16_t r7, uint16_t* c, uint16_t* d)
 		}
 #endif
 
-		if (channel.Data_0.wFlags_2 & (1 << 3))
+		if (channel.wFlags_2 & (1 << 3))
 		{
 			//0x234700ea
 			if (r6 < 2000)
@@ -269,7 +269,7 @@ static void sub_23470144(void* r5, int r6, int r4)
 {
 	Struct_2344dc3c sp4;
 	int sp;
-	Struct_234fd8f0* r5_;
+	Channel_Database* r5_;
 	uint32_t r1, r0;
 	int crcFail;
 
@@ -375,7 +375,7 @@ int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
 	}
 #endif
 
-	Struct_234fd8f0* r6 = sub_2344f770();
+	Channel_Database* r6 = sub_2344f770();
 
 	Data_238e0510.sema = sema;
 
@@ -529,7 +529,7 @@ int sub_23470356()
 	console_send_string("sub_23470356 (todo.c): TODO\r\n");
 #endif
 
-	Struct_234fd8f0* r4 = sub_2344f770();
+	Channel_Database* r4 = sub_2344f770();
 
 	sub_234101e8();
 
@@ -861,7 +861,7 @@ int sub_234707ec()
 	sub_23470f48(&sp4);
 	sub_2340ca1c(0, &sp4);
 	network_set_defaults(&sp_0x18, &sp4);
-	sub_2340c8a8();
+	channel_write_database();
 	sub_2343d482(0);
 #endif
 
@@ -1066,7 +1066,7 @@ void sub_23470a02(void)
 	console_send_string("sub_23470a02 (todo.c): TODO\r\n");
 #endif
 
-	sub_2340c8a8();
+	channel_write_database();
 	channel_load_lists();
 }
 
