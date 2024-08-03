@@ -49,8 +49,8 @@ typedef struct
 	uint32_t crc; //0
 	uint16_t currentChannel; //4
 	uint16_t prevChannel; //6
-	uint16_t wData_8; //8
-	uint16_t wData_10; //10
+	uint16_t currentTvChannel; //8
+	uint16_t currentRadioChannel; //10
 	uint8_t bData_12; //12
 	uint8_t currentChList; //13
 	/*

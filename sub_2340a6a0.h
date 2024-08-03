@@ -94,7 +94,7 @@ typedef struct
 {
 	uint16_t service_id; //0
 	/*
-		Bit 3: TV / Radio
+		Bit 3: TV=1 / Radio=0
 	*/
 	uint16_t wFlags_2; //2
 	uint16_t wTransponderIndex; //4
@@ -219,7 +219,7 @@ typedef struct
 	uint16_t wCurrentChannel; //0x2a = 42
 	uint16_t wData_0x2c; //0x2c
 	uint16_t fill_0x2e; //0x2e
-	uint8_t bData_0x30; //0x30
+	uint8_t bCurrentChList; //0x30
 	uint8_t bData_0x31; //0x31
 	//0x32 = 50
 } Struct_2340bf0c;

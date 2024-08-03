@@ -79,8 +79,8 @@ struct
 	uint16_t arChannelIdx[CHANNELS_MAX_NUM]; //12 = 0xc, 235462F0, size????
 	uint16_t numChannels; //0xEEC 235491d0
 	uint16_t wData_235491d2; //0xEEE 235491d2
-	uint16_t wData_235491d4; //235491D4 +0xf0
-	uint16_t wData_235491d6; //235491d6 + 0xf2
+	uint16_t currentTvChannel; //235491D4 +0xf0
+	uint16_t currentRadioChannel; //235491d6 + 0xf2
 	uint16_t wAudioPID; //235491d8
 	uint16_t wVideoPID; //235491da
 	uint8_t bData_235491dc; //0xef8 235491dc
@@ -1509,8 +1509,8 @@ int channel_load_lists(void)
 	//sub r5, r4, #0xe00 = 235482E4
 
 	Data_235462e4.numChannels = 0; //r7
-	Data_235462e4.wData_235491d6 = 0; //r7
-	Data_235462e4.wData_235491d4 = 0; //r7
+	Data_235462e4.currentRadioChannel = 0; //r7
+	Data_235462e4.currentTvChannel = 0; //r7
 	Data_235462e4.currentChList = 1; //r0
 
 	//sub sb, r5, #0x2000 = 235462E4
@@ -1552,8 +1552,8 @@ int channel_load_lists(void)
 		//0x2340a840
 		Data_235462e4.currentChannel = lastmode.currentChannel;
 		Data_235462e4.prevChannel = lastmode.prevChannel;
-		Data_235462e4.wData_235491d4 = lastmode.wData_8;
-		Data_235462e4.wData_235491d6 = lastmode.wData_10;
+		Data_235462e4.currentTvChannel = lastmode.currentTvChannel;
+		Data_235462e4.currentRadioChannel = lastmode.currentRadioChannel;
 		Data_235462e4.bData_235491dc = lastmode.bData_12;
 		Data_235462e4.currentChList = lastmode.currentChList;
 
@@ -1601,12 +1601,12 @@ int channel_load_lists(void)
 
 				if (Data_235462e4.currentChList == 1)
 				{
-					Data_235462e4.wData_235491d4 = Data_235462e4.currentChannel;
+					Data_235462e4.currentTvChannel = Data_235462e4.currentChannel;
 					//->loc_2340a90c
 				}
 				else if (Data_235462e4.currentChList == 0)
 				{
-					Data_235462e4.wData_235491d6 = Data_235462e4.currentChannel;
+					Data_235462e4.currentRadioChannel = Data_235462e4.currentChannel;
 				}
 				//loc_2340a90c
 				memcpy(&Data_235462e4.arChannelIdx[0], r6, Data_235462e4.numChannels * 2);
@@ -2377,12 +2377,12 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 
 	OS_ENTER_CRITICAL();
 
-	int r4 = Data_235462e4.currentChannel;
+	int currentChannel = Data_235462e4.currentChannel;
 
-	sp4.Data_0 = channel_database.arChannels[ Data_235462e4.arChannelIdx[r4] ];
-	sp4.wCurrentChannel = r4;
+	sp4.Data_0 = channel_database.arChannels[ Data_235462e4.arChannelIdx[currentChannel] ];
+	sp4.wCurrentChannel = currentChannel;
 	sp4.wNumChannels = Data_235462e4.numChannels;
-	sp4.bData_0x30 = Data_235462e4.currentChList;
+	sp4.bCurrentChList = Data_235462e4.currentChList;
 	sp4.bData_0x31 = Data_235462e4.bData_235491dc;
 	sp4.wData_0x2c = Data_235462e4.wData_235491d2;
 
@@ -2523,7 +2523,12 @@ void channel_write_lastmode(void)
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "channel_write_lastmode: crc check calcCrc=0x%x, lastmodeCrc=0x%x\r\n", calcCrc, lastmodeCrc);
+			sprintf(debug_string, "channel_write_lastmode: crc check calcCrc=0x%x, lastmodeCrc=0x%x\r\n", 
+				calcCrc, lastmodeCrc);
+			console_send_string(debug_string);
+
+			sprintf(debug_string, "channel_write_lastmode: currentChannel=%d, currentChList=%d\r\n", 
+				Data_235462e4.currentChannel, Data_235462e4.currentChList);
 			console_send_string(debug_string);
 		}
 #endif
@@ -2532,8 +2537,8 @@ void channel_write_lastmode(void)
 		{
 			lastmode.currentChannel = Data_235462e4.currentChannel;
 			lastmode.prevChannel = Data_235462e4.prevChannel;
-			lastmode.wData_8 = Data_235462e4.wData_235491d4;
-			lastmode.wData_10 = Data_235462e4.wData_235491d6;
+			lastmode.currentTvChannel = Data_235462e4.currentTvChannel;
+			lastmode.currentRadioChannel = Data_235462e4.currentRadioChannel;
 			lastmode.bData_12 = Data_235462e4.bData_235491dc;
 			lastmode.currentChList = Data_235462e4.currentChList;
 
@@ -3044,25 +3049,26 @@ int channel_switch_lists(void)
 	console_send_string("channel_switch_lists (todo.c): TODO\r\n");
 #endif
 
-	uint8_t sp;
+	uint8_t err;
 
 	sub_2340ec54(Data_23491db8, 0);
 	sub_2340ec54(main_hFrontend1, 0);
 
-	OSSemPend(channel_sema, 0, &sp);
+	OSSemPend(channel_sema, 0, &err);
 
 	if (Data_235462e4.currentChList == 1)
 	{
+		// TV -> Radio
 		Data_235462e4.currentChList = 0;
-		Data_235462e4.wData_235491d4 = Data_235462e4.currentChannel;
-		//->loc_2340cb70
-		Data_235462e4.currentChannel = Data_235462e4.wData_235491d6;
+		Data_235462e4.currentTvChannel = Data_235462e4.currentChannel;
+		Data_235462e4.currentChannel = Data_235462e4.currentRadioChannel;
 	}
 	else if (Data_235462e4.currentChList == 0)
 	{
+		// Radio -> TV
 		Data_235462e4.currentChList = 1;
-		Data_235462e4.wData_235491d6 = Data_235462e4.currentChannel;
-		Data_235462e4.currentChannel = Data_235462e4.wData_235491d4;
+		Data_235462e4.currentRadioChannel = Data_235462e4.currentChannel;
+		Data_235462e4.currentChannel = Data_235462e4.currentTvChannel;
 	}
 	else
 	{
