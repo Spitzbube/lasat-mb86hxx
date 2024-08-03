@@ -7,7 +7,7 @@
 #include "av.h"
 #include "flash.h"
 #include "i2c.h"
-#include "sub_23438084.h"
+#include "lastmode.h"
 #include "thumb2.h"
 #include "sub_2340a6a0.h"
 #include "frontend.h"
@@ -43,7 +43,7 @@ Struct_2354dd70* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
 MemBlk_Handle* main_hMemBlk1 = 0; //23491DBC +0x30
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
-Struct_23438084* Data_23491dc8 = 0; //23491dc8 +0x3c
+Lastmode_Instance* main_hLastmode = 0; //23491dc8 +0x3c
 void* main_hPCR_TSD_Handle = 0; //23491dcc +0x40
 void* main_hPESParserAudio = 0; //23491dd0 +0x44
 void* main_hAuOut = 0; //23491dd4  +0x48
@@ -184,7 +184,7 @@ void main_frontend_i2c_init()
 void main_flash_init()
 {
 	int sp_0x24;
-	Struct_23437fd4 sp_0x10;
+	Lastmode_Params lastmode_params;
 
 	flash_init();
 
@@ -194,13 +194,13 @@ void main_flash_init()
 
 	if (main_hFlash != 0)
 	{
-		sp_0x10.pFlash = main_hFlash;
-		sp_0x10.Data_16 = &Data_2349d230;
-		sp_0x10.Data_0 = 16;
-		sp_0x10.Data_4 = 0x40370000;
-		sp_0x10.Data_8 = 16;
+		lastmode_params.pFlash = main_hFlash;
+		lastmode_params.pBuffer = &Data_2349d230;
+		lastmode_params.Data_0 = 16;
+		lastmode_params.Data_4 = 0x40370000;
+		lastmode_params.Data_8 = 16;
 
-		Data_23491dc8 = sub_23437fd4(&sp_0x10);
+		main_hLastmode = lastmode_init(&lastmode_params);
 
 		Struct_23419cd0 sp4 = {0x40380000, 0, 0}; //23487b5c
 
@@ -1054,7 +1054,7 @@ void main_channel_init()
 	LastMode lastmode;
 	int oldCrc;
 	int calcCrc;
-	int r0;
+	int bVolume;
 
 #if 0
 	console_send_string("main_channel_init()\r\n");
@@ -1064,7 +1064,7 @@ void main_channel_init()
 	{
 		sub_2340aee4(0x40200000);
 
-		sub_23438194(Data_23491dc8);
+		sub_23438194(main_hLastmode);
 
 		main_bNeedSetup = 1;
 		//->loc_23401234
@@ -1073,12 +1073,12 @@ void main_channel_init()
 	if (main_bNeedSetup == 1)
 	{
 		//loc_23401234
-		r0 = 0;
+		bVolume = 0;
 	}
 	else
 	{
 		//loc_2340123c
-		sub_23438084(Data_23491dc8, &lastmode, 0, sizeof(LastMode));
+		lastmode_read(main_hLastmode, &lastmode, 0, sizeof(LastMode));
 
 		oldCrc = lastmode.crc;
 		lastmode.crc = 0;
@@ -1094,16 +1094,16 @@ void main_channel_init()
 		if (oldCrc != calcCrc)
 		{
 			//->loc_23401234
-			r0 = 0;
+			bVolume = 0;
 		}
 		else
 		{
 			//loc_23401274
-			r0 = lastmode.bData_15;
+			bVolume = lastmode.bVolume;
 		}
 	}
 	//loc_23401274
-	channel_init(r0);
+	channel_init(bVolume);
 
 	channel_load_lists();
 }
@@ -1359,7 +1359,7 @@ void main_set_power_mode()
 
 		if ((r0 >= 3) && ((sp_0x10 & 0x40) == 0))
 		{
-			sub_23438084(Data_23491dc8, &sp, 0, sizeof(sp));
+			lastmode_read(main_hLastmode, &sp, 0, sizeof(sp));
 
 			if (((sp.bData_14 & 0x0f) == 0x01) ||
 					((~sp.bData_14 & 0x0f) == 0))

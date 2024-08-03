@@ -45,8 +45,8 @@ struct Struct_2358bda4
 	int fill_0; //0
 	Struct_20611068* Data_4; //4
 	Struct_20611068* Data_8; //8
-	int Data_12; //12
-	int Data_16; //16
+	int channelNr; //12
+	int channelList; //16
 	int Data_20; //20
 	int Data_24; //24
 	int Data_28; //28
@@ -67,13 +67,13 @@ struct Struct_2358bda4
 	int Data_0x68; //104 = 0x68
 	int Data_0x6c; //108 = 0x6c
 	int Data_0x70; //112 = 0x70
-	int Data_0x74; //116 = 0x74
-	void (*Data_0x78)(void*, void*); //120 = 0x78
-	void (*Data_0x7c)(); //124 = 0x7c
+	int writeLastmodeDelay; //116 = 0x74
+	void (*Data_0x78)(int*, int*); //120 = 0x78
+	void (*pfWriteLastmode)(); //124 = 0x7c
 	void (*frontDisplayTask)(); //128 = 0x80
 	void (*pfPeriodicCheck)(); //132 = 0x84
 
-} Data_2358bda4; //2358bda4
+} Data_2358bda4; //2358bda4 -> 2358BE2C?
 
 //2358bdd0
 
@@ -918,7 +918,7 @@ void av_display_program_name(int r4)
 
 
 /* 23410be8 - complete */
-void sub_23410be8(int* r6, int* r7)
+void sub_23410be8(int* pChannelNr, int* pChannelList)
 {
 #if 0
 	console_send_string("sub_23410be8 (todo.c): TODO\r\n");
@@ -927,24 +927,22 @@ void sub_23410be8(int* r6, int* r7)
 	uint8_t sp;
 //	int r5 = 0;
 
-	if ((Data_2358bda4.Data_12 != *r6) ||
-			(Data_2358bda4.Data_16 != *r7))
+	if ((Data_2358bda4.channelNr != *pChannelNr) ||
+			(Data_2358bda4.channelList != *pChannelList))
 	{
-		extern void sub_2340c0dc(); 
-
-		Data_2358bda4.Data_0x7c = sub_2340c0dc;
-		Data_2358bda4.Data_0x74 = 100;
+		Data_2358bda4.pfWriteLastmode = channel_write_lastmode;
+		Data_2358bda4.writeLastmodeDelay = 100;
 		Data_2358bda4.Data_28 = 0; //r5
 
-		av_display_program_name(Data_2358bda4.Data_12 - 1);
+		av_display_program_name(Data_2358bda4.channelNr - 1);
 
-		*r6 = Data_2358bda4.Data_12;
-		*r7 = Data_2358bda4.Data_16;
+		*pChannelNr = Data_2358bda4.channelNr;
+		*pChannelList = Data_2358bda4.channelList;
 	}
 	//loc_23410c44
 	if (Data_2358bda4.Data_28 != 0)
 	{
-		av_display_program_name(Data_2358bda4.Data_12 - 1);
+		av_display_program_name(Data_2358bda4.channelNr - 1);
 
 		Data_2358bda4.Data_28 = 0; //r5
 	}
@@ -1007,8 +1005,8 @@ void av_thread()
 {
 	int r0;
 	uint8_t sp_0x14;
-	int sp_0x10 = 0;
-	int sp_0xc = 0;
+	int channelNr = 0; //sp_0x10
+	int channelList = 0; //sp_0xc
 	Struct_20401328 sp;
 
 	if (Data_2358bda4.Data_0x34.Data_4 != 0xff)
@@ -1031,8 +1029,8 @@ void av_thread()
 	//loc_23410d5c
 	sub_2340c970(1, &Data_2358bda4.Data_0x40);
 
-	Data_2358bda4.Data_12 = 0;
-	Data_2358bda4.Data_16 = 0;
+	Data_2358bda4.channelNr = 0;
+	Data_2358bda4.channelList = 0;
 	Data_2358bda4.Data_20 = 0;
 	Data_2358bda4.Data_24 = 0;
 	Data_2358bda4.Data_28 = 0;
@@ -1045,8 +1043,8 @@ void av_thread()
 	Data_2358bda4.Data_0x78 = 0;
 	Data_2358bda4.pfPeriodicCheck = 0;
 
-	sp_0x10 = 0;
-	sp_0xc = 0;
+	channelNr = 0;
+	channelList = 0;
 
 	r0 = ((sub_23428178(Data_23491da8) - 4) != 0)? 1: 0;
 	if (Data_2358bda4.Data_0x68 != r0)
@@ -1077,20 +1075,20 @@ void av_thread()
 
 		if (Data_2358bda4.Data_0x78 != 0)
 		{
-			(Data_2358bda4.Data_0x78)(&sp_0x10, &sp_0xc);
+			(Data_2358bda4.Data_0x78)(&channelNr, &channelList);
 		}
 
-		if (Data_2358bda4.Data_0x7c != 0)
+		if (Data_2358bda4.pfWriteLastmode != 0)
 		{
-			if (Data_2358bda4.Data_0x74 != 0)
+			if (Data_2358bda4.writeLastmodeDelay != 0)
 			{
-				Data_2358bda4.Data_0x74--;
+				Data_2358bda4.writeLastmodeDelay--;
 			}
 			else
 			{
-				(Data_2358bda4.Data_0x7c)();
+				(Data_2358bda4.pfWriteLastmode)();
 
-				Data_2358bda4.Data_0x7c = 0;
+				Data_2358bda4.pfWriteLastmode = 0;
 			}
 			//loc_23410e54
 		}
@@ -1146,7 +1144,7 @@ void sub_23410f28(int r5)
 	if (r5 == 0)
 	{
 		Data_2358bda4.Data_0x78 = 0;
-		Data_2358bda4.Data_0x7c = 0;
+		Data_2358bda4.pfWriteLastmode = 0;
 	}
 	else
 	{
@@ -1158,7 +1156,7 @@ void sub_23410f28(int r5)
 
 
 /* 23410f64 / 23417f00 - todo */
-void sub_23410f64(int channelNr, int r6)
+void sub_23410f64(int channelNr, int channelList)
 {
 	uint8_t err;
 
@@ -1168,8 +1166,8 @@ void sub_23410f64(int channelNr, int r6)
 
 	OSSemPend(Data_23492098, 0, &err);
 
-	Data_2358bda4.Data_12 = channelNr + 1;
-	Data_2358bda4.Data_16 = r6;
+	Data_2358bda4.channelNr = channelNr + 1;
+	Data_2358bda4.channelList = channelList;
 
 	OSTimeDlyResume(Data_2358bda4.Data_0x34.threadPrio & 0xff);
 
@@ -1211,11 +1209,11 @@ void av_switch_powermode(int powerdown)
 	if (powerdown != 0)
 	{
 		//0x234110cc
-		if (Data_2358bda4.Data_0x7c != 0)
+		if (Data_2358bda4.pfWriteLastmode != 0)
 		{
-			(Data_2358bda4.Data_0x7c)();
+			(Data_2358bda4.pfWriteLastmode)();
 
-			Data_2358bda4.Data_0x7c = 0;
+			Data_2358bda4.pfWriteLastmode = 0;
 		}
 		//loc_234110e0
 		Data_2358bda4.Data_0x78 = 0;
@@ -1247,7 +1245,7 @@ void av_switch_powermode(int powerdown)
 
 		vfd_init(&sp);
 
-		av_display_program_name(Data_2358bda4.Data_12 - 1);
+		av_display_program_name(Data_2358bda4.channelNr - 1);
 		//->loc_23411114
 		gpio_set(Data_2358bda4.Data_4, 0);
 	}

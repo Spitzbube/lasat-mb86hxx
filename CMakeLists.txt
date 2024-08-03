@@ -33,7 +33,7 @@ set(SRCS
    sub_23472ef0.c
    sub_2340217c.c
    texttable.c
-   sub_23438084.c
+   lastmode.c
    crc.c
    sub_2346fac4.c
    sub_2345d710.c

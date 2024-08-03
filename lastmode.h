@@ -1,6 +1,6 @@
 
-#ifndef SUB_23438084
-#define SUB_23438084
+#ifndef LASTMODE_H
+#define LASTMODE_H
 
 typedef struct
 {
@@ -9,17 +9,17 @@ typedef struct
 	uint8_t* data; //8
 	Struct_235f2e2c* pFlash; //12
 	uint32_t Data_16; //16
-	int Data_20; //20
+	uint32_t Data_20; //20
 	//0x18 = 24
 } Struct_23438084;
 
 typedef struct
 {
 	void* pData; //0
-	int crc; //4
-	int Data_8; //8
-	int Data_12; //12
-	int Data_16; //16
+	uint32_t crc; //4
+	uint32_t Data_8; //8
+	uint32_t Data_12; //12
+	uint32_t Data_16; //16
 	//20
 } Struct_235f3784_Inner_0x18;
 
@@ -29,7 +29,7 @@ typedef struct
 	Struct_235f3784_Inner_0x18 Data_24[10]; //24 = 0x18
 //	int Data_24[50]; //24 = 0x18
 	//0xe0 = 224
-} Struct_235f3784;
+} Lastmode_Instance;
 
 typedef struct
 {
@@ -37,13 +37,13 @@ typedef struct
 	int Data_4; //4
 	int Data_8; //8
 	Struct_235f2e2c* pFlash; //12
-	void* Data_16; //16
+	void* pBuffer; //16
 
-} Struct_23437fd4;
+} Lastmode_Params;
 
-void* sub_23437fd4(Struct_23437fd4*);
+void* lastmode_init(Lastmode_Params*);
 
-int sub_23438084(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count);
-int sub_23438108(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count);
+int lastmode_read(Lastmode_Instance* p, void* buf, uint32_t offset, uint32_t count);
+int lastmode_write(Lastmode_Instance* p, void* buf, uint32_t offset, uint32_t count);
 
-#endif //SUB_23438084
+#endif //LASTMODE_H

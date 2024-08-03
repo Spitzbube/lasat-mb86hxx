@@ -1166,7 +1166,7 @@ int menu_root_on_event(void* r0)
 		{
 			//loc_2346f5a4
 			//->loc_2346f5b4
-			sub_2340c01c(1, -1);
+			channel_change_volume(1, -1);
 
 			frontdisplay_start_text(sub_2346ed20);
 
@@ -1180,7 +1180,7 @@ int menu_root_on_event(void* r0)
 			//loc_2346f5b2
 			//movs       r1, #0x1
 			//loc_2346f5b4
-			sub_2340c01c(1, 1);
+			channel_change_volume(1, 1);
 
 			frontdisplay_start_text(sub_2346ed20);
 

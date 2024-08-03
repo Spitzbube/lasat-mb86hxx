@@ -99,7 +99,7 @@ void powermode_save_lastmode(int r7)
 	LastMode sp;
 	uint32_t oldCrc;
 
-	sub_23438084(Data_23491dc8, &sp, 0, sizeof(LastMode));
+	lastmode_read(main_hLastmode, &sp, 0, sizeof(LastMode));
 
 	oldCrc = sp.crc;
 	sp.crc = 0;
@@ -115,7 +115,7 @@ void powermode_save_lastmode(int r7)
 
 		sp.crc = crc32((void*) &sp, sizeof(LastMode));
 
-		sub_23438108(Data_23491dc8, &sp, 0, sizeof(LastMode));
+		lastmode_write(main_hLastmode, &sp, 0, sizeof(LastMode));
 	}
 	//loc_23412fb8
 }

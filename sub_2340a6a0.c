@@ -86,7 +86,7 @@ struct
 	uint8_t bData_235491dc; //0xef8 235491dc
 	uint8_t currentChList; //0xEF9 235491dd
 	uint8_t activeStreamMask; //235491de 235482e4 + 0xefa
-	uint8_t bData_235491df; //235491df
+	uint8_t bVolume; //235491df
 	uint8_t bData_235491e0; //235491e0 0xefc
 	uint8_t bData_235491e1; //235491e1 0xefd
 	uint8_t bData_235491e2; //235491E2 0xefe
@@ -305,7 +305,7 @@ void sub_23409788(void)
 	if (Data_23492000 == 0)
 	{
 		auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL,
-				Data_23488068[ Data_235462e4.bData_235491df ]);
+				Data_23488068[ Data_235462e4.bVolume ]);
 	}
 }
 
@@ -487,7 +487,7 @@ void channel_start_pes(Channel ch)
 	{
 		extern char debug_string[];
 
-		sprintf(debug_string, "channel_start_pes: a.wPcrPID=0x%x\r\n", ch.wPcrPID);
+		sprintf(debug_string, "channel_start_pes: ch.wPcrPID=0x%x\r\n", ch.wPcrPID);
 		console_send_string(debug_string);
 
 		sprintf(debug_string, "channel_start_pes: ch.wVideoPID=0x%x\r\n", ch.wVideoPID);
@@ -1420,12 +1420,12 @@ int sub_2340a650(uint8_t r0)
 
 
 /* 2340a6a0 / 2340c9e0 - todo */
-int channel_init(int r5)
+int channel_init(int bVolume)
 {
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "channel_init: r5=0x%x\r\n", r5);
+		sprintf(debug_string, "channel_init: bVolume=0x%x\r\n", bVolume);
 		console_send_string(debug_string);
 	}
 #endif
@@ -1440,15 +1440,15 @@ int channel_init(int r5)
 	Data_235462e4.wAudioPID = 0xffff;
 	Data_235462e4.wVideoPID = 0xffff;
 
-	if (r5 != 0)
+	if (bVolume != 0)
 	{
-		Data_235462e4.bData_235491df = r5;
+		Data_235462e4.bVolume = bVolume;
 		//->loc_2340a6f8
 	}
 	else
 	{
 		//0x2340a6e8
-		Data_235462e4.bData_235491df = sub_2340a650(channel_database.Data_235441b0.bData_8/*235441b8*/);
+		Data_235462e4.bVolume = sub_2340a650(channel_database.Data_235441b0.bData_8/*235441b8*/);
 	}
 	//loc_2340a6f8
 	auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 0);
@@ -1522,7 +1522,7 @@ int channel_load_lists(void)
 	Data_235462e4.bData_235491e0 = 0; //r7
 	Data_235462e4.bData_235491e1 = 0xff; //r0
 
-	sub_23438084(Data_23491dc8, &lastmode, 0, sizeof(lastmode));
+	lastmode_read(main_hLastmode, &lastmode, 0, sizeof(lastmode));
 
 	int r8 = lastmode.crc;
 
@@ -1671,7 +1671,7 @@ int channel_load_lists(void)
 	else
 	{
 		//loc_2340a9e4
-		sub_23438194(Data_23491dc8);
+		sub_23438194(main_hLastmode);
 
 		//mov        r1, #0x2
 		//loc_2340a9f4
@@ -2004,10 +2004,10 @@ void sub_2340b3cc()
 /* 2340b55c - todo */
 int sub_2340b55c()
 {
-	Channel sp_0x2c;
-	Transponder sp_0x14;
+	Channel channel; //sp_0x2c
+	Transponder transponder; //sp_0x14
 
-#if 1
+#if 0
 	console_send_string("sub_2340b55c (todo.c): TODO\r\n");
 #endif
 
@@ -2018,31 +2018,30 @@ int sub_2340b55c()
 		(Data_23492024)();
 	}
 
-	int r5 = Data_235462e4.currentChannel;
+	int currentChannel = Data_235462e4.currentChannel;
 
-	sp_0x2c = channel_database.arChannels[ Data_235462e4.arChannelIdx[ r5 ] ];
+	channel = channel_database.arChannels[ Data_235462e4.arChannelIdx[ currentChannel ] ];
 
-	sp_0x14 = channel_database.arTransponders[ sp_0x2c.wTransponderIndex ];
+	transponder = channel_database.arTransponders[ channel.wTransponderIndex ];
 
 	Data_235462e4.wData_235491d2 = 0;
 
 	//Send the channel number to the av module
-	sub_23410f64(r5, Data_235462e4.currentChList);
+	sub_23410f64(currentChannel, Data_235462e4.currentChList);
 
-	if ((sp_0x2c.wData_6 >> 15) != 0)
+	if ((channel.wData_6 >> 15) != 0)
 	{
 		//->loc_2340b67c
 		return 0xff;
 	}
 	//0x2340b5ec
-	r5 = 0xffff;
-	if (sp_0x2c.wTransponderIndex == /*0xffff*/r5)
+	if (channel.wTransponderIndex == 0xffff)
 	{
 		//0x2340b604
 		sub_2340ec54(Data_23491db8, 0);
 		sub_2340ec54(main_hFrontend1, 0);
 
-		sub_2345d710(/*0xffff*/r5 & (*((int*)&sp_0x2c.wPcrPID)>>16)); //TODO!!!
+		sub_2345d710(((channel.wPcrPID << 16) | (channel.wVideoPID << 0)) & 0xffff);
 
 		Data_23492024 = sub_23459188;
 		//->loc_2340b678
@@ -2050,17 +2049,16 @@ int sub_2340b55c()
 	else
 	{
 		//loc_2340b634
-		if (sp_0x14.bData_0x16 == 0)
+		if (transponder.bData_0x16 == 0)
 		{
 			r4 = main_hFrontend1;
 		}
-		else if (sp_0x14.bData_0x16 == 1)
+		else if (transponder.bData_0x16 == 1)
 		{
 			r4 = Data_23491db8;
 		}
 		//loc_2340b64c
-
-		fe_manager_tune(r4, sp_0x14, sub_2340b348, 0);
+		fe_manager_tune(r4, transponder, sub_2340b348, 0);
 	}
 	//loc_2340b678
 	return 0;
@@ -2432,13 +2430,13 @@ void sub_2340bf94(int r7, Channel* pChannel, Transponder* pTransponder)
 
 
 /* 2340c01c / 2340e43c - todo */
-int sub_2340c01c(int r5, int r7)
+int channel_change_volume(int r5, int r7)
 {
 	uint8_t err; //sp
-	int r4;
+	int bVolume;
 
 #if 0
-	console_send_string("sub_2340c01c (todo.c): TODO\r\n");
+	console_send_string("channel_change_volume (todo.c): TODO\r\n");
 #endif
 
 	OSSemPend(channel_sema, 0, &err);
@@ -2447,12 +2445,12 @@ int sub_2340c01c(int r5, int r7)
 	{
 		Data_23492000 = 0;
 
-		uint8_t r5 = Data_235462e4.bData_235491df;
+		uint8_t r5 = Data_235462e4.bVolume;
 
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2340c01c: r7=%d, r5=%d\r\n",
+			sprintf(debug_string, "channel_change_volume: r7=%d, r5=%d\r\n",
 					r7, r5);
 			console_send_string(debug_string);
 		}
@@ -2483,67 +2481,68 @@ int sub_2340c01c(int r5, int r7)
 			//loc_2340c080
 		}
 		//loc_2340c080
-		Data_235462e4.bData_235491df += r7;
+		Data_235462e4.bVolume += r7;
 
-		if (Data_235462e4.bData_235491df > 32)
+		if (Data_235462e4.bVolume > 32)
 		{
-			Data_235462e4.bData_235491df = 32;
+			Data_235462e4.bVolume = 32;
 		}
 
-		auout_set_volume(main_hAuOut, 8, Data_23488068[Data_235462e4.bData_235491df]);
+		auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 
+			Data_23488068[Data_235462e4.bVolume]);
 
 		if (Data_23492030 != 0)
 		{
-			(Data_23492030)(Data_235462e4.bData_235491df);
+			(Data_23492030)(Data_235462e4.bVolume);
 		}
 	}
 	//loc_2340c0c8
-	r4 = Data_235462e4.bData_235491df;
+	bVolume = Data_235462e4.bVolume;
 
 	OSSemPost(channel_sema);
 
-	return r4;
+	return bVolume;
 }
 
 
 /* 2340c0dc - todo */
-void sub_2340c0dc()
+void channel_write_lastmode(void)
 {
-	LastMode sp;
-	uint32_t crc;
+	LastMode lastmode;
+	uint32_t lastmodeCrc;
 
 	if (Data_235462e4.numChannels != 0)
 	{
-		sub_23438084(Data_23491dc8, &sp, 0, sizeof(sp));
+		lastmode_read(main_hLastmode, &lastmode, 0, sizeof(lastmode));
 
-		crc = sp.crc;
-		sp.crc = 0; //r7
+		lastmodeCrc = lastmode.crc;
+		lastmode.crc = 0; //r7
 
-		uint32_t r0 = crc32(&sp, sizeof(sp));
+		uint32_t calcCrc = crc32(&lastmode, sizeof(lastmode));
 
 #if 1
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_2340c0dc: crc check r0=0x%x, crc=0x%x\r\n", r0, crc);
+			sprintf(debug_string, "channel_write_lastmode: crc check calcCrc=0x%x, lastmodeCrc=0x%x\r\n", calcCrc, lastmodeCrc);
 			console_send_string(debug_string);
 		}
 #endif
 
-		if (r0 == crc)
+		if (calcCrc == lastmodeCrc)
 		{
-			sp.currentChannel = Data_235462e4.currentChannel;
-			sp.prevChannel = Data_235462e4.prevChannel;
-			sp.wData_8 = Data_235462e4.wData_235491d4;
-			sp.wData_10 = Data_235462e4.wData_235491d6;
-			sp.bData_12 = Data_235462e4.bData_235491dc;
-			sp.currentChList = Data_235462e4.currentChList;
+			lastmode.currentChannel = Data_235462e4.currentChannel;
+			lastmode.prevChannel = Data_235462e4.prevChannel;
+			lastmode.wData_8 = Data_235462e4.wData_235491d4;
+			lastmode.wData_10 = Data_235462e4.wData_235491d6;
+			lastmode.bData_12 = Data_235462e4.bData_235491dc;
+			lastmode.currentChList = Data_235462e4.currentChList;
 
-			sp.bData_15 = sub_2340c01c(0, 0);
+			lastmode.bVolume = channel_change_volume(0, 0);
 
-			sp.crc = 0;
-			sp.crc = crc32(&sp, sizeof(sp));
+			lastmode.crc = 0;
+			lastmode.crc = crc32(&lastmode, sizeof(lastmode));
 
-			sub_23438108(Data_23491dc8, &sp, 0, sizeof(sp));
+			lastmode_write(main_hLastmode, &lastmode, 0, sizeof(lastmode));
 		}
 	}
 	//loc_2340c198

@@ -2,47 +2,46 @@
 
 #include "data.h"
 #include "flash.h"
-#include "sub_23438084.h"
+#include "lastmode.h"
 
 
-Struct_235f3784 Data_235f3784[4]; //235f3784
+Lastmode_Instance lastmode_instance[4]; //235f3784
 
 
 /* 23437d9c - todo */
-//crc32
-void sub_23437d9c(uint32_t* a, uint8_t* b, uint32_t c)
+void lastmode_get_crc(uint32_t* pCrc, uint8_t* pData, uint32_t numBytes)
 {
 #if 0
-	console_send_string("sub_23437d9c (todo.c): TODO\r\n");
+	console_send_string("lastmode_get_crc (todo.c): TODO\r\n");
 #endif
 
 	//->loc_23437de0
-	while (c--)
+	while (numBytes--)
 	{
 		//loc_23437da8
 		uint8_t bit;
 		for (bit = 0x80; bit != 0; bit >>= 1)
 		{
 			//loc_23437dac
-			if (((*((uint8_t*)a) * bit) & bit) != (*b & bit))
+			if (((*((uint8_t*)pCrc) * bit) & bit) != (*pData & bit))
 			{
-				*a = (*a >> 1) ^ 0xedb88320;
+				*pCrc = (*pCrc >> 1) ^ 0xedb88320;
 			}
 			else
 			{
-				*a = (*a >> 1);
+				*pCrc = (*pCrc >> 1);
 			}
 		}
 
-		b++;
+		pData++;
 	}
 }
 
 
 /* 23437dec - todo */
-int sub_23437dec(Struct_235f3784* r5)
+int sub_23437dec(Lastmode_Instance* r5)
 {
-	uint8_t sp_0xc;
+	uint8_t err; //sp_0xc
 	int32_t sp8 = r5->Data_0.length;
 	uint8_t* sl = r5->Data_0.data;
 	uint32_t fp;
@@ -58,11 +57,11 @@ int sub_23437dec(Struct_235f3784* r5)
 	if (pFlash->sema != 0)
 	{
 		//0x23437e14
-		OSSemPend(pFlash->sema, 0, &sp_0xc);
-		if (sp_0xc != 0)
+		OSSemPend(pFlash->sema, 0, &err);
+		if (err != 0)
 		{
 			//loc_23437fb8
-			return sp_0xc;
+			return err;
 		}
 	}
 	//loc_23437e2c -> loc_23437f9c
@@ -172,7 +171,7 @@ int sub_23437dec(Struct_235f3784* r5)
 				}
 #endif
 
-				sub_23437d9c(&r4->crc, sl, r5->Data_0.Data_20);
+				lastmode_get_crc(&r4->crc, sl, r5->Data_0.Data_20);
 
 				sl += r5->Data_0.Data_20;
 				sp8 -= r5->Data_0.Data_20;
@@ -203,13 +202,13 @@ int sub_23437dec(Struct_235f3784* r5)
 
 
 /* 23437fd4 - complete */
-void* sub_23437fd4(Struct_23437fd4* r5)
+void* lastmode_init(Lastmode_Params* pParams)
 {
 	uint8_t err;
-	Struct_235f3784* h = &Data_235f3784[0];
+	Lastmode_Instance* h = &lastmode_instance[0];
 	uint8_t i = 4;
 #if 0
-	console_send_string("sub_23437fd4 (todo.c): TODO\r\n");
+	console_send_string("lastmode_init (todo.c): TODO\r\n");
 #endif
 
 	//->loc_2343806c
@@ -226,13 +225,13 @@ void* sub_23437fd4(Struct_23437fd4* r5)
 				return 0;
 			}
 			//0x23438008
-			h->Data_0.length = r5->Data_8;
-			h->Data_0.data = r5->Data_16;
-			h->Data_0.Data_16 = r5->Data_4;
-			h->Data_0.Data_20 = r5->Data_0;
-			h->Data_0.pFlash = r5->pFlash;
+			h->Data_0.length = pParams->Data_8;
+			h->Data_0.data = pParams->pBuffer;
+			h->Data_0.Data_16 = pParams->Data_4;
+			h->Data_0.Data_20 = pParams->Data_0;
+			h->Data_0.pFlash = pParams->pFlash;
 
-			memset(h->Data_24, 0, 10*20);
+			memset(&h->Data_24[0], 0, 10 * sizeof(Struct_235f3784_Inner_0x18));
 
 			if (0 == sub_23437dec(h))
 			{
@@ -254,28 +253,28 @@ void* sub_23437fd4(Struct_23437fd4* r5)
 
 
 /* 23438084 - todo */
-int sub_23438084(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count)
+int lastmode_read(Lastmode_Instance* p, void* buf, uint32_t offset, uint32_t count)
 {
 	uint8_t err;
 
 #if 0
-	console_send_string("sub_23438084 (todo.c): TODO\r\n");
+	console_send_string("lastmode_read (todo.c): TODO\r\n");
 #endif
 
 	if (p != 0)
 	{
-		OSSemPend(p->sema, 0, &err);
+		OSSemPend(p->Data_0.sema, 0, &err);
 
 		if (err == 0)
 		{
-			if ((offset + count) > p->length)
+			if ((offset + count) > p->Data_0.length)
 			{
-				OSSemPost(p->sema);
+				OSSemPost(p->Data_0.sema);
 				return 0xff;
 			}
 			else
 			{
-				uint8_t* src = p->data + offset;
+				uint8_t* src = p->Data_0.data + offset;
 				uint8_t* dest = buf;
 				//->loc_234380f0
 				for (; count-- > 0; dest++)
@@ -284,7 +283,7 @@ int sub_23438084(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count)
 					*dest = *src++; //TODO
 				}
 
-				OSSemPost(p->sema);
+				OSSemPost(p->Data_0.sema);
 			}
 		}
 	}
@@ -294,17 +293,48 @@ int sub_23438084(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count)
 
 
 /* 23438108 - todo */
-int sub_23438108(Struct_23438084* p, void* buf, uint32_t offset, uint32_t count)
+int lastmode_write(Lastmode_Instance* p, void* buf, uint32_t offset, uint32_t count)
 {
-#if 1
-	console_send_string("sub_23438108 (todo.c): TODO\r\n");
+	uint8_t err; //sp
+
+#if 0
+	console_send_string("lastmode_write (todo.c): TODO\r\n");
 #endif
 
+	if (p != 0)
+	{
+		OSSemPend(p->Data_0.sema, 0, &err);
+
+		if (err == 0)
+		{
+			if ((offset + count) > p->Data_0.length)
+			{
+				OSSemPost(p->Data_0.sema);
+
+				return 0xff;
+			}
+
+			uint8_t* src = buf;
+			uint8_t* tgt = p->Data_0.data + offset;
+			while (count--)
+			{
+				void* r0 = tgt + 1;
+				*tgt = *src++;
+				tgt = r0;
+			}
+
+			sub_23438244(p);
+
+			OSSemPost(p->Data_0.sema);
+		}
+	}
+
+	return 0;
 }
 
 
 /* 23438194 - complete */
-int sub_23438194(Struct_235f3784* r5)
+int sub_23438194(Lastmode_Instance* r5)
 {
 	uint32_t i; //r4
 	uint8_t err1;
@@ -355,4 +385,74 @@ int sub_23438194(Struct_235f3784* r5)
 	//loc_2343823c
 	return 0;
 }
+
+
+/* 23438244 - todo */
+int sub_23438244(Lastmode_Instance* r5)
+{
+	uint32_t r6;
+	uint8_t err; //sp4
+	Struct_235f3784_Inner_0x18* r4 = &r5->Data_24[0];
+	
+#if 0
+	console_send_string("sub_23438244 (todo.c): TODO\r\n");
+#endif
+
+	Struct_235f2e2c* pFlash = r5->Data_0.pFlash;
+	if (pFlash->sema != 0)
+	{
+		OSSemPend(pFlash->sema, 0, &err);
+
+		if (err != 0)
+		{
+			return err;
+		}
+	}
+	//loc_23438278
+	for (r6 = 0; r6 < 10; r6++, r4++)
+	{
+		//loc_2343827c
+		if (r4->pData == 0)
+		{
+			//->loc_23438320
+			break;
+		}
+		//0x23438288
+		uint32_t crc = 0;
+
+		lastmode_get_crc(&crc, r4->pData, r5->Data_0.Data_20);
+
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_23438244: crc=0x%x, r4->crc=0x%x\r\n", crc, r4->crc);
+			console_send_string(debug_string);
+		}
+#endif
+
+		if (r4->crc != crc)
+		{
+			//0x234382b0
+			uint32_t r8 = (r4->Data_12 - r4->Data_8) & r4->Data_16;
+			if (r8 == 0)
+			{
+				(pFlash->Data_8.Data_12)(r4->Data_8);
+			}
+
+			(pFlash->Data_8.Data_20)(r4->pData, r5->Data_0.Data_20 / 2, r4->Data_8 + r8);
+
+			r4->Data_16 = (r4->Data_16 + r5->Data_0.Data_20) & (r4->Data_12 - r4->Data_8);
+			r4->crc = crc;
+		}
+		//loc_23438310
+	} //for (r6 = 0; r6 < 10; r6++, r4++)
+	//loc_23438320
+	if (pFlash->sema != 0)
+	{
+		OSSemPost(pFlash->sema);
+	}
+
+	return 0;
+}
+
 
