@@ -656,13 +656,6 @@ void sub_234512d8()
 }
 
 
-void sub_2345ac28()
-{
-	console_send_string("sub_2345ac28 (todo.c): TODO\r\n");
-
-}
-
-
 /* 2342e2d8 - todo */
 void sub_2342e2d8()
 {
@@ -807,27 +800,20 @@ void sub_23470572()
 }
 
 
-/* 23414198 - todo */
-void sub_23414198()
-{
-	console_send_string("sub_23414198 (todo.c): TODO\r\n");
-
-}
-
-
-/* 23454df4 - todo */
-void sub_23454df4()
-{
-	console_send_string("sub_23454df4 (todo.c): TODO\r\n");
-
-}
-
-
 /* 2343dca8 - todo */
 void sub_2343dca8()
 {
 	console_send_string("sub_2343dca8 (todo.c): TODO\r\n");
 
 }
+
+
+/* 2344db20 - todo */
+void sub_2344db20()
+{
+	console_send_string("sub_2344db20 (todo.c): TODO\r\n");
+
+}
+
 
 

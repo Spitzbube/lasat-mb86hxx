@@ -3765,6 +3765,26 @@ int psi_get_all_current_programs(Struct_234a73e8* r4,
 }
 
 
+/* 234067f0 - todo */
+void sub_234067f0(Struct_2344dbdc* a, Struct_234a73e8* b)
+{
+	uint8_t sp_0xc;
+	Struct_2344dbdc sp;
+
+#if 0
+	console_send_string("sub_234067f0 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(b->sema, 100, &sp_0xc);
+
+	sub_2344dbdc(b->index, &sp);
+
+	OSSemPost(b->sema);
+
+	*a = sp;
+}
+
+
 /* 23406834 - complete */
 void sub_23406834(Struct_234a73e8* r4)
 {
@@ -3799,6 +3819,25 @@ void psi_get_network_info(Struct_2344dc3c* r5, Struct_234a73e8* r4)
 	OSSemPost(r4->sema);
 
 	*r5 = sp;
+}
+
+
+/* 234068ac - todo */
+void sub_234068ac(Struct_2344dbdc* a, Struct_234a73e8* b)
+{
+	uint8_t sp_0xc;
+	Struct_2344dbdc sp;
+
+#if 0
+	console_send_string("sub_234068ac (todo.c): TODO\r\n");
+#endif
+	OSSemPend(b->sema, 100, &sp_0xc);
+
+	sub_2344dc7c(b->index, &sp);
+
+	OSSemPost(b->sema);
+
+	*a = sp;
 }
 
 

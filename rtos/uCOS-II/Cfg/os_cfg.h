@@ -77,8 +77,10 @@
 #define OS_MBOX_EN                1    /* Enable (1) or Disable (0) code generation for MAILBOXES        */
 #if 0
 #define OS_MBOX_ACCEPT_EN         1    /*     Include code for OSMboxAccept()                            */
+#endif
 #define OS_MBOX_DEL_EN            1    /*     Include code for OSMboxDel()                               */
 #define OS_MBOX_POST_EN           1    /*     Include code for OSMboxPost()                              */
+#if 0
 #define OS_MBOX_POST_OPT_EN       1    /*     Include code for OSMboxPostOpt()                           */
 #define OS_MBOX_QUERY_EN          1    /*     Include code for OSMboxQuery()                             */
 #endif

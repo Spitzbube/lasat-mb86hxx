@@ -12,29 +12,7 @@ void* ota_mbox; //234920cc
 
 uint32_t ota_thread_stack[600]; //2358c124
 
-struct
-{
-	int sema; //0
-	int Data_4; //4
-	int fill_8; //8
-	void (*Data_0xc)(); //12
-	int fill_0x10; //0x10 16
-	int (*Data_0x14)(); //20 0x14
-	int fill_0x18; //24 0x18
-	void (*Data_0x1c)(); //28 0x1c
-	
-} Data_2358ca84; //2358ca84
-
-struct
-{
-	int fill_0[626]; //0
-	int Data_0x9c8; //0x9c8
-	int fill_0x9cc[217]; //0x9cc
-	uint16_t fill_0xd30; //0xd30
-	uint8_t bData_0xd32; //0xd32
-	uint8_t bData_0xd33; //0xd33
-	//???
-} Data_23594a84; //23594a84
+Struct_2358ca84 Data_2358ca84; //2358ca84 -> 235957B8???
 
 
 /* 23413cd0 - todo */
@@ -66,30 +44,39 @@ static void ota_thread()
 	console_send_string("ota_thread (todo.c): TODO\r\n");
 #endif
 
-	Data_23594a84.bData_0xd32 = 0;
+	Data_2358ca84.bData_0x8d32 = 0;
 
 	ota_mbox = OSMboxCreate(0);
 
 	while (1)
 	{
 		//loc_23414048
-		void* r7 = OSMboxPend(ota_mbox, Data_23594a84.bData_0xd32, &err);
+		Struct_23414198* r7 = OSMboxPend(ota_mbox, Data_2358ca84.bData_0x8d32, &err);
 
 		ota_lock();
 
 		if (err != OS_ERR_TIMEOUT)
 		{
 			//0x2341406c
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "ota_thread: r7->bData_0xe=%d\r\n",
+					r7->bData_0xe);
+				console_send_string(debug_string);
+			}
+#endif
+
 			if (Data_2358ca84.Data_0x1c != 0)
 			{
 				//0x23414078
 				(Data_2358ca84.Data_0x1c)(r7);
 			}
 			//loc_234140a4
-		}
+		} //if (err != OS_ERR_TIMEOUT)
 		else
 		{
-			//loc_23414080
+			//loc_23414080: Timeout
 			if (Data_2358ca84.Data_0x14 != 0)
 			{
 				//0x23414078
@@ -132,7 +119,7 @@ int ota_init(uint32_t prio)
 	}
 	else
 	{
-		Data_23594a84.bData_0xd33 = prio;
+		Data_2358ca84.bData_0x8d33 = prio;
 
 		sub_23439478(prio & 0xff);
 	}
@@ -160,16 +147,78 @@ int sub_2341413c(Struct_2341413c* a)
 	{
 		Data_2358ca84.Data_0x1c = sub_23454df4;
 
-		Data_23594a84.Data_0x9c8 = a->bData_0;
+		Data_2358ca84.Data_0x89c8 = a->bData_0;
 	}
 	else
 	{
 		Data_2358ca84.Data_0x1c = sub_23413f10;
 	}
 
-	sub_23439324(Data_23594a84.bData_0xd33);
+	sub_23439324(Data_2358ca84.bData_0x8d33);
 
 	return 0;
+}
+
+
+/* 23414198 - todo */
+int sub_23414198(uint8_t r7, int bCreateMbox, int r8, uint16_t sb, Struct_23414198* r4)
+{
+#if 0
+	console_send_string("sub_23414198 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err; 
+	int res = 0;
+
+	if (ota_mbox == 0)
+	{
+		return 1;
+	}
+
+	if (bCreateMbox != 0)
+	{
+		r4->mbox = OSMboxCreate(0);
+	}
+	else
+	{
+		r4->mbox = 0;
+	}
+
+	r4->bData_0xe = r7;
+	r4->Data_4 = r8;
+	r4->wData_0xc = sb;
+
+	err = OSMboxPost(ota_mbox, r4);
+
+	if (err != 0)
+	{
+		res = 3;
+	}
+
+	if (r4->mbox != 0)
+	{
+		OSMboxPend(r4->mbox, 100, &err);
+
+		if ((err == OS_ERR_TIMEOUT) && (res == 0))
+		{
+			res = 2;
+		}
+
+		r4->mbox = OSMboxDel(r4->mbox, 1, &err);
+	}
+	//loc_2341423c
+	return res;
+}
+
+
+/* 23414244 - todo */
+Struct_2358ca84* sub_23414244(void)
+{
+#if 0
+	console_send_string("sub_23414244 (todo.c): TODO\r\n");
+#endif
+
+	return &Data_2358ca84;
 }
 
 

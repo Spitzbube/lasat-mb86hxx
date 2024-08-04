@@ -10,11 +10,17 @@
 
 void* Data_23496474 = 0; //23496474
 
-struct
+Struct_23414198 Data_238e0ad4; //238e0ad4
+
+
+/* 23471fe4 - todo */
+static void sub_23471fe4(void)
 {
-    int fill_0[10/*size???*/]; //0
-    //?
-} Data_238e0ad4; //238e0ad4
+#if 0
+	console_send_string("sub_23471fe4 (todo.c): TODO\r\n");
+#endif
+
+}
 
 
 /* 23472004 - todo */
@@ -68,12 +74,23 @@ int sub_23472004(int a)
 
 
 /* 2347207e - todo */
-static void sub_2347207e(int a)
+static int sub_2347207e(int a)
 {
-#if 1
+#if 0
 	console_send_string("sub_2347207e (todo.c): TODO\r\n");
 #endif
 
+    if (a == 0)
+    {
+        sub_23418e54(1);
+        sub_2343dca8(sub_23471fe4);
+    }
+    //loc_23472090
+    sub_23472004(1);
+
+    powermode_set_state(3, 0, 0);
+
+    return 0;
 }
 
 

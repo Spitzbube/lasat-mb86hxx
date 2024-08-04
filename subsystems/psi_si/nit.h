@@ -37,20 +37,21 @@ typedef struct Struct_23627118_Inner0x54
 
 typedef struct
 {
-	int fill_0; //0
+	uint16_t wData_0; //0
+	uint16_t wData_2; //2
+	uint16_t wData_4; //4
+	uint8_t bData_6; //6
+	uint8_t bData_7; //7
+} Struct_23627118_Inner8;
+
+typedef struct
+{
+	uint16_t wData_0; //0
+	uint16_t fill_2; //2
 	uint16_t fill_4; //4
 	uint8_t bData_6; //6
-	struct
-	{
-		int fill_0[2]; //0
-	} Data_8; //8;
-	struct
-	{
-		int fill_0; //0
-		uint16_t wData_4; //4
-		uint8_t fill_6; //6
-		uint8_t bData_7; //7 = 0x17
-	} Data_0x10; //16 = 0x10
+	Struct_23627118_Inner8 Data_8; //8;
+	Struct_23627118_Inner8 Data_0x10; //16 = 0x10
 	NIT_NetworkData networkData; //0x18
 	NIT_TransportStream arTransportStreams[200]; //0x54 -> 50E14
 	int fill_0x50e14; //0x50E14
@@ -67,8 +68,18 @@ typedef struct
 } Struct_2344dc3c;
 
 
+typedef struct 
+{
+	Struct_23627118_Inner8* Data_0; //0
+	NIT_NetworkData* pNetworkData; //4
+	NIT_TransportStream* pTransportStream; //8
+	//12
+} Struct_2344dbdc;
+
 
 int sub_2344dc3c(uint8_t, Struct_2344dc3c*);
+int sub_2344dbdc(uint8_t, Struct_2344dbdc*);
+int sub_2344dc7c(uint8_t, Struct_2344dbdc*);
 void sub_2344dcf4(uint8_t, int);
 
 

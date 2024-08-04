@@ -584,6 +584,40 @@ int nit_decode_section(uint8_t a, char* r5, int r2)
 }
 
 
+/* 2344dbdc - todo */
+int sub_2344dbdc(uint8_t a, Struct_2344dbdc* b)
+{
+#if 0
+	console_send_string("sub_2344dbdc (todo.c): TODO\r\n");
+#endif
+
+	Struct_23627118* r0 = &Data_23627118[a];
+
+	b->pNetworkData = &r0->networkData;
+	b->pTransportStream = &r0->arTransportStreams[0];
+
+	if (r0->Data_8.wData_4 != 0xffff)
+	{
+		if ((r0->Data_8.wData_4 != 0) ||
+			(r0->Data_8.wData_2 != 0) ||
+			(r0->Data_8.bData_6 != 0))
+		{
+			b->Data_0 = &r0->Data_8;
+		}
+		else
+		{
+			b->Data_0 = 0;
+		}
+	}
+	else
+	{
+		b->Data_0 = 0;
+	}
+
+	return 0;
+}
+
+
 /* 2344dc3c - todo */
 int sub_2344dc3c(uint8_t a, Struct_2344dc3c* b)
 {
@@ -605,6 +639,39 @@ int sub_2344dc3c(uint8_t a, Struct_2344dc3c* b)
 	else
 	{
 		b->Data_0 = 0;
+	}
+
+	return 0;
+}
+
+
+/* 2344dc7c - todo */
+int sub_2344dc7c(uint8_t a, Struct_2344dbdc* b)
+{
+#if 0
+	console_send_string("sub_2344dc7c (todo.c): TODO\r\n");
+#endif
+
+	Struct_23627118* r0 = &Data_23627118[a];
+
+	b->pNetworkData = &r0->networkData;
+	b->pTransportStream = &r0->arTransportStreams[0];
+	b->Data_0 = 0;
+
+	if (Data_23493604 == 0)
+	{
+		if (r0->Data_8.wData_4 != 0xffff)
+		{
+			b->Data_0 = &r0->Data_8;
+		}
+	}
+	else 
+	{
+		//loc_2344dccc
+		if (r0->Data_0x10.wData_4 != 0xffff)
+		{
+			b->Data_0 = &r0->Data_0x10;
+		}
 	}
 
 	return 0;

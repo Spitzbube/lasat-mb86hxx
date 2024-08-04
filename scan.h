@@ -4,8 +4,9 @@ typedef struct
 {
 	void* Data_0; //0
 	uint16_t wData_4; //4
-	int fill_8; //8
+	int Data_8; //8
 	void (*Data_12)(); //12
+	uint8_t bData_16; //16
 
 } Struct_23410148;
 
@@ -28,3 +29,4 @@ typedef struct
 
 
 void scan_init(Scan_Params* pParams);
+int sub_23410148(Struct_23410148* r5, int r6, void (*r7)(), int r8);
