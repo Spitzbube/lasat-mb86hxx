@@ -14,7 +14,9 @@ extern void sub_2345ace8();
 
 //0x234920e8
 int Data_234920e8 = 0; //234920e8 +0
+#endif
 void (*Data_234920ec)() = 0; //234920ec +4
+#if 0
 int Data_234920f0 = 0; //234920f0 +8
 #endif
 struct netif* network_pNetIF = 0; //234920f4 +0xc

@@ -93,7 +93,7 @@ Menu_Item menu_general_settings_items[] = //234963f0
 	} //23496474
 };
 
-static Struct_235441b0 settings_work_copy; //238e0ab8
+static User_Settings settings_work_copy; //238e0ab8
 
 
 /* 23471d8c - todo */
@@ -179,7 +179,7 @@ int on_auto_standby_change()
 
 	settings_work_copy.Data_0x10 ^= (1 << 15);
 
-	sub_2346f75e((settings_work_copy.Data_0x10 >> 15) & 1);
+	menu_root_set_standby_timer_func((settings_work_copy.Data_0x10 >> 15) & 1);
 
 	return 0;
 }
@@ -342,7 +342,7 @@ int on_menu_enter(int a)
 #endif
 
 	// Get the settings
-	sub_2340c970(1, &settings_work_copy);
+	channel_handle_user_settings(1, &settings_work_copy);
 
 	frontdisplay_start_text(caption_string_display);
 
@@ -357,13 +357,13 @@ int on_menu_exit(UI_Thread_Params* r4)
 	console_send_string("on_menu_exit (todo.c): TODO\r\n");
 #endif
 
-	Struct_235441b0 oldSettings;
+	User_Settings oldSettings;
 
 	// Get the old settings
-	sub_2340c970(1, &oldSettings);
+	channel_handle_user_settings(1, &oldSettings);
 
 	// Compare with the work copy
-	if (0 != memcmp(&oldSettings, &settings_work_copy, sizeof(Struct_235441b0)))
+	if (0 != memcmp(&oldSettings, &settings_work_copy, sizeof(User_Settings)))
 	{
 		// To save dialog?
 		sub_23470890(r4, 1);
@@ -389,4 +389,10 @@ int menu_general_settings_entry(UI_Thread_Params* r4)
 	return 0;
 }
 
+
+/* 23471fbe - todo */
+User_Settings* sub_23471fbe(void)
+{
+	return &settings_work_copy;
+}
 

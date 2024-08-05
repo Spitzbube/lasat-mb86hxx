@@ -26,7 +26,7 @@ typedef struct
 	uint8_t bData_0x17; //23 = 0x17 //displayFormat
 	int fill_0x18; //24 235441c8
 	//28 = 0x1c
-} Struct_235441b0;
+} User_Settings;
 
 
 typedef struct
@@ -102,7 +102,7 @@ typedef struct
 //			int Data_8; //8
 	uint16_t wPcrPID; //8
 	uint16_t wVideoPID; //10
-	uint16_t wData_12; //12
+	uint16_t wAc3PID; //12
 	uint16_t wTtxPID; //14
 	uint16_t wAudioPID; //16
 	uint16_t fill_2; //18
@@ -112,26 +112,18 @@ typedef struct
 
 typedef struct
 {
+	int fill_0[2]; //0
+	char Data_8[24]; //8, size?
+	//0x20 = 32
+} Struct_23543df0;
+
+
+typedef struct
+{
 	Channel arChannels[CHANNELS_MAX_NUM]; //0 234fd8f0 +0x3a980 -> 23538270
 	Transponder arTransponders[TRANSPONDERS_MAX_NUM]; //23538270 +0xbb80 -> 23543DF0
-	struct
-	{
-		int fill_0[240]; //0
-		//0x3c0
-	} Data_23543df0; //23543df0 -> 235441B0
-#if 0
-	struct
-	{
-		int fill_235441b0[2]; //235441b0 0
-		uint8_t bData_235441b8; //235441b8 8
-		int fill_235441bc; //235441bc 12
-		uint32_t Data_235441c0; //235441c0 16
-		int fill_235441c4[2]; //235441c4 20
-		//28 = 0x1c
-	}
-#else
-	Struct_235441b0 Data_235441b0; //235441b0
-#endif
+	Struct_23543df0 Data_23543df0[30]; //23543df0 -> 235441B0
+	User_Settings Data_235441b0; //235441b0
 	uint32_t dwCrcChannels; //235441cc 468DC
 	uint32_t dwCrcTransponders; //235441d0 468E0
 	uint32_t Data_235441d4; //235441d4 468E4
@@ -226,7 +218,7 @@ typedef struct
 
 
 
-extern int sub_2340c970(int get, Struct_235441b0*);
+extern int channel_handle_user_settings(int get, User_Settings*);
 extern void sub_2340bf0c(Struct_2340bf0c*);
 extern void sub_23409770(void);
 extern void sub_23409788(void);

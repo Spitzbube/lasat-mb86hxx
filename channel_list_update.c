@@ -349,7 +349,7 @@ int sub_2343deb4(int r1)
 void sub_2343df02(Struct_2343df02* r4)
 {
 	Struct_2354613c sp_0x1c;
-	Struct_235441b0 sp;
+	User_Settings sp;
 	uint32_t crc;
 	uint32_t i;
 
@@ -363,7 +363,7 @@ void sub_2343df02(Struct_2343df02* r4)
 		return;
 	}
 	//0x2343df0a
-	sub_2340c970(1, &sp);
+	channel_handle_user_settings(1, &sp);
 
 	memset(&Data_235fdfac[0], 0, 200 * sizeof(Transponder));
 

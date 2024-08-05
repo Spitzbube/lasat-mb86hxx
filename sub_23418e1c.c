@@ -13,7 +13,7 @@ Struct_23434e00 Data_235b0c4c; //235b0c4c
 int sub_23418db0()
 {
 	int r4;
-	Struct_235441b0 sp4;
+	User_Settings sp4;
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;
 #endif
@@ -28,7 +28,7 @@ int sub_23418db0()
 		return 8;
 	}
 
-	sub_2340c970(1, &sp4); //Get settings
+	channel_handle_user_settings(1, &sp4); //Get settings
 
 	if (sp4.Data_0x10 & (1 << 6)) //Deep standby
 	{

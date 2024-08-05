@@ -7,6 +7,7 @@ set(SRCS
    main1.c                  #0x23400510?    0x23491d8c      0x2349d230?
    sub_2340199c.c           #0x2340199c     0x23491e10
    sub_23402e8e.c           #0x2340257c?    0x23491e20
+   sub_234070cc.c
    sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    console.c                #0x2341af84?
    memblk.c
@@ -58,6 +59,7 @@ set(SRCS
    sub_23454df4.c
    sub_2345ac28.c
    sub_2345bc50.c
+   sub_23471d2c.c
    menu_guided_install.c    #?
    ttx.c
    hexdump.c

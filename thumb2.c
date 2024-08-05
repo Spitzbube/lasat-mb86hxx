@@ -58,7 +58,7 @@ Struct_235fc42c Data_235fc42c; //235fc42c Addr??? -> 235FC468
 /* 2343b822 - todo */
 int sub_2343b822()
 {
-	Struct_235441b0 sp4;
+	User_Settings sp4;
 
 #if 0
 	console_send_string("sub_2343b822 (todo.c): TODO\r\n");
@@ -69,7 +69,7 @@ int sub_2343b822()
 
 	sub_2340d1f4(1, &Data_235fc28c.Data_235fc298);
 
-	sub_2340c970(1, &sp4);
+	channel_handle_user_settings(1, &sp4);
 
 	gpio_set(Data_23492d60, 0);
 

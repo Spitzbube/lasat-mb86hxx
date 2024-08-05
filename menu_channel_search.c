@@ -360,7 +360,7 @@ static void sub_23470144(void* r5, int r6, int r4)
 int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
 {
 	Struct_2343df02 sp_0x40;
-	Struct_235441b0 sp_0x24;
+	User_Settings sp_0x24;
 	Struct_2354613c sp4;
 
 #if 0
@@ -398,7 +398,7 @@ int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
 	sp_0x40.pList = arTransponders;
 	sp_0x40.bData_0x10 = 1; //r6
 
-	sub_2340c970(1, &sp_0x24);
+	channel_handle_user_settings(1, &sp_0x24);
 
 	sp_0x40.bData_0x12 = (sp_0x24.Data_4 >> 23) & 0x03;
 
@@ -869,6 +869,40 @@ int sub_234707ec()
 }
 
 
+/* 23470862 - todo */
+static int sub_23470862(void)
+{
+#if 0
+	console_send_string("sub_23470862 (todo.c): TODO\r\n");
+#endif
+
+	sub_2343d482(0);
+
+	return 0;
+}
+
+
+/* 2347086e - todo */
+static int sub_2347086e(void)
+{
+#if 0
+	console_send_string("sub_2347086e (todo.c): TODO\r\n");
+#endif
+
+	User_Settings* r4 = sub_23471fbe();
+
+	sub_234706aa();
+
+	channel_handle_user_settings(0, r4);
+
+	channel_write_database();
+
+	sub_2343d482(0);
+
+	return 0;
+}
+
+
 /* 23470890 - todo */
 int sub_23470890(UI_Thread_Params* r5, int r1)
 {
@@ -876,11 +910,13 @@ int sub_23470890(UI_Thread_Params* r5, int r1)
 
 	switch (r1)
 	{
-#if 0
 	case 1:
 		//loc_234708de
+		r4->stringId = 0x85;
+		Data_23495f0c = sub_2347086e;
+		Data_23495f10 = sub_23470862;
+		//->loc_234708d4
 		break;
-#endif
 
 	case 5:
 		//loc_2347090a

@@ -256,13 +256,6 @@ int sub_2343d1ca() //UI_Thread_Params*);
 }
 
 
-int sub_23471d2c() //UI_Thread_Params*);
-{
-	console_send_string("sub_23471d2c (todo.c): TODO\r\n");
-
-}
-
-
 int sub_2347004a() //UI_Thread_Params*)
 {
 	console_send_string("sub_2347004a (todo.c): TODO\r\n");
@@ -815,5 +808,12 @@ void sub_2344db20()
 
 }
 
+
+/* 2340929c - todo */
+void sub_2340929c()
+{
+	console_send_string("sub_2340929c (todo.c): TODO\r\n");
+
+}
 
 

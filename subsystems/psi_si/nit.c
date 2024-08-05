@@ -6,7 +6,7 @@ extern uint32_t Data_23492240; //23492240
 
 //23493600
 Struct_23627118* Data_23493600 = 0; //23493600 +0
-int (*Data_23493604)() = 0; //23493604 +4
+int (*Data_23493604)() = 0; //23493604 /  / 234dcd68 +4
 uint32_t nit_private_data_value = 0; //23493608 +8
 #if 0
   STR_TABLE  Table[] = {
@@ -645,7 +645,7 @@ int sub_2344dc3c(uint8_t a, Struct_2344dc3c* b)
 }
 
 
-/* 2344dc7c - todo */
+/* 2344dc7c /  / 23475464 - todo */
 int sub_2344dc7c(uint8_t a, Struct_2344dbdc* b)
 {
 #if 0
@@ -678,7 +678,18 @@ int sub_2344dc7c(uint8_t a, Struct_2344dbdc* b)
 }
 
 
-/* 2344dcf4 - complete */
+/* 2344dce8 /  / 234754d0 - todo */
+void sub_2344dce8(int a)
+{
+#if 0
+	console_send_string("sub_2344dce8 (todo.c): TODO\r\n");
+#endif
+
+	Data_23493604 = a;
+}
+
+
+/* 2344dcf4 /  / 234754dc - complete */
 void sub_2344dcf4(uint8_t a, int b)
 {
 #if 0

@@ -3785,7 +3785,7 @@ void sub_234067f0(Struct_2344dbdc* a, Struct_234a73e8* b)
 }
 
 
-/* 23406834 - complete */
+/* 23406834 /  / 23409310 - complete */
 void sub_23406834(Struct_234a73e8* r4)
 {
 	uint8_t sp;

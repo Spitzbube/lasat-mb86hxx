@@ -64,12 +64,53 @@ void sub_2340dce8()
 
 }
 
+typedef struct
+{
+	int Data_0; //0
+	int Data_4; //4
+	int Data_8; //8
+	int Data_12; //12
+	int Data_16; //16
+	int Data_20; //20
+} Struct_2340dd74;
+
 
 /* 2340dd74 - todo */
-void sub_2340dd74()
-{
+int sub_2340dd74(Struct_2354dd70* r4)
+{	
+#if 0
 	console_send_string("sub_2340dd74 (filter_manager.c): TODO\r\n");
+#endif
 
+	r4->bData_0x9f = 1;
+
+	(r4->Data_0x30.Data_4)(r4->bData_0xd9, 
+		 r4->Data_0xc8 & 0xff,
+		 r4->Data_0xc4 & 0xff, 0, 
+		 r4->hI2c,
+		 r4->resetGpio,
+		 r4->Data_0xa4,
+		 r4->Data_0xa8,
+		 r4->Data_0xb0,
+		 r4->Data_0xac);
+
+	(r4->Data_0x30.Data_0x10)(&r4->bData_0x9d);
+	(r4->Data_0x30.Data_0x14)(&r4->bData_0x9e);
+	(r4->Data_0x30.Data_0x18)(&r4->Data_0x94);
+
+	if (r4->Data_0x5c != 0)
+	{
+		(r4->Data_0x5c)(&r4->Data_0x94);
+	}
+
+#if 0
+sub_234483e8 (todo.c): TODO
+sub_23402d0c (todo.c): TODO
+sub_23403160 (todo.c): TODO
+sub_2347192c (todo.c): TODO
+#endif
+
+	return 0;
 }
 
 
@@ -315,7 +356,7 @@ int fe_manager_init(fe_manager_Params* pParams)
 			//28 = 0x1c
 		} sp;
 
-		sub_2340c970(1, &sp);
+		channel_handle_user_settings(1, &sp);
 
 		gpioParams.dwInFunction = 0xff;
 		gpioParams.dwOutFunction = (sp.Data_4 << 13) >> 31; //TODO
@@ -703,7 +744,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 					//28 = 0x1c
 				} sp;
 
-				sub_2340c970(1, &sp);
+				channel_handle_user_settings(1, &sp);
 
 				if (sp.Data_4 & 0x40000)
 				{
@@ -817,7 +858,6 @@ int sub_2340ec54(Struct_2354dd70* r4, void (*func)())
 	return 0;
 }
 
-#if 0
 
 /* 2340ec8c / 23415ba8 - complete */
 int sub_2340ec8c(void* h, void (*r6)())
@@ -838,7 +878,6 @@ int sub_2340ec8c(void* h, void (*r6)())
 	return 0;
 }
 
-#endif
 
 /* 2340ecc0 - complete */
 int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)

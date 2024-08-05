@@ -1403,7 +1403,7 @@ void sub_2346f6f6(int r4)
 int menu_root_start()
 {
 	uint8_t r4;
-	Struct_235441b0 settings; //sp4
+	User_Settings settings; //sp4
 
 #if 1
 	console_send_string("menu_root_start (menu_root_start) (todo.c): TODO\r\n");
@@ -1411,7 +1411,7 @@ int menu_root_start()
 
 	r4 = Data_23495970.bData_0;
 
-	sub_2340c970(1, &settings);
+	channel_handle_user_settings(1, &settings);
 
 	memset(&Data_23495970, 0, sizeof(Data_23495970)); //4*143);
 
@@ -1445,10 +1445,20 @@ int menu_root_start()
 
 
 /* 2346f75e - todo */
-void sub_2346f75e()
+void menu_root_set_standby_timer_func(int a)
 {
-	console_send_string("sub_2346f75e (todo.c): TODO\r\n");
+#if 0
+	console_send_string("menu_root_set_standby_timer_func (todo.c): TODO\r\n");
+#endif
 
+	if (a != 0)
+	{
+		Data_23495970.standbyTimerFunc = standby_timer_func;
+	}
+	else
+	{
+		Data_23495970.standbyTimerFunc = 0;
+	}
 }
 
 

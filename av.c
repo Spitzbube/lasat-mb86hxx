@@ -60,8 +60,8 @@ struct Struct_2358bda4
 	int Data_0x30; //48 = 0x30
 #endif
 	Struct_23410ea4 Data_0x34; //52 = 0x34 //2358bdd8
-	Struct_235441b0 Data_0x40; //64 = 0x40
-	Struct_235441b0* Data_0x5c; //92 = 0x5C
+	User_Settings Data_0x40; //64 = 0x40
+	User_Settings* Data_0x5c; //92 = 0x5C
 	int Data_0x60; //96 = 0x60
 	int Data_0x64; //100 = 0x64
 	int Data_0x68; //104 = 0x68
@@ -1027,7 +1027,7 @@ void av_thread()
 		gpio_open(&sp, &Data_2358bda4.Data_8);
 	}
 	//loc_23410d5c
-	sub_2340c970(1, &Data_2358bda4.Data_0x40);
+	channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
 
 	Data_2358bda4.channelNr = 0;
 	Data_2358bda4.channelList = 0;
@@ -1059,7 +1059,7 @@ void av_thread()
 		console_send_string("av_thread (todo.c): TODO\r\n");
 #endif
 
-		sub_2340c970(1, &Data_2358bda4.Data_0x40);
+		channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
 
 		if (Data_2358bda4.pfPeriodicCheck != 0)
 		{

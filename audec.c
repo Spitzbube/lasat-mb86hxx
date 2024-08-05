@@ -735,6 +735,13 @@ int audec_open_decoder(Struct_23429ae8* r4, void** pHandle)
 }
 
 
+/* 23429bf8 - complete */
+int sub_23429bf8(void)
+{
+	return Data_234924cc & (1 << 0);
+}
+
+
 /* 23429c08 - complete */
 int audio_crc32(uint8_t* buf, int len)
 {

@@ -790,7 +790,7 @@ void main_frontend_init()
 {
 	typedef int (*func)();
 
-	Struct_235441b0 sp_0x94;
+	User_Settings sp_0x94;
 	fe_manager_Params sp_0x90;
 	Struct_2340e754 sp_0x7c;
 #if 0
@@ -831,7 +831,7 @@ void main_frontend_init()
 	fe_manager_init(&sp_0x90);
 
 #if 0 //Cable Frontends from V241
-	Struct_235441b0 sp_0xe8;
+	User_Settings sp_0xe8;
 	Struct_2340e754 sp_0xd0; //+0x14
 	struct
 	{
@@ -881,7 +881,7 @@ void main_frontend_init()
 	if (main_hFrontend1 != 0)
 	{
 		//->loc_23401d20
-		sub_2340c970(1, &sp_0xe8);
+		channel_handle_user_settings(1, &sp_0xe8);
 
 		if (sp_0xe8.Data_0x10 & 0x80)
 		{
@@ -973,7 +973,7 @@ void main_frontend_init()
 			if (main_hFrontend1 != 0)
 			{
 				//loc_2340111c
-				sub_2340c970(1, &sp_0x94); //Get the settings
+				channel_handle_user_settings(1, &sp_0x94); //Get the settings
 
 				if (sp_0x94.Data_0x10 & (1 << 7)) //Channel list update enabled?
 				{
@@ -1013,7 +1013,7 @@ void main_frontend_init()
 					{
 						sub_23413358();
 						//->loc_2340111c
-						sub_2340c970(1, &sp_0x94); //Get the settings
+						channel_handle_user_settings(1, &sp_0x94); //Get the settings
 
 						if (sp_0x94.Data_0x10 & (1<< 7)) //Channel list update enabled?
 						{

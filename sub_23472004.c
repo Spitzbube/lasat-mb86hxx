@@ -27,7 +27,7 @@ static void sub_23471fe4(void)
 int sub_23472004(int a)
 {
     uint8_t err;
-    Struct_235441b0 sp8;
+    User_Settings sp8;
 
 #if 0
 	console_send_string("sub_23472004 (todo.c): TODO\r\n");
@@ -40,7 +40,7 @@ int sub_23472004(int a)
         {
             Data_23496474 = OSSemDel(Data_23496474, 1, &err);
 
-            sub_2340c970(1, &sp8);
+            channel_handle_user_settings(1, &sp8);
 
             if (sp8.Data_0x10 & (1 << 7))
             {
@@ -59,7 +59,7 @@ int sub_23472004(int a)
 
                 sub_23414198(2, 1, 0, 0, &Data_238e0ad4);
 
-                sub_2340c970(1, &sp8);
+                channel_handle_user_settings(1, &sp8);
 
                 if (sp8.Data_0x10 & (1 << 7))
                 {

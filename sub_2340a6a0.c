@@ -493,7 +493,7 @@ void channel_start_pes(Channel ch)
 		sprintf(debug_string, "channel_start_pes: ch.wVideoPID=0x%x\r\n", ch.wVideoPID);
 		console_send_string(debug_string);
 
-		sprintf(debug_string, "channel_start_pes: ch.wData_12=0x%x\r\n", ch.wData_12);
+		sprintf(debug_string, "channel_start_pes: ch.wAc3PID=0x%x\r\n", ch.wAc3PID);
 		console_send_string(debug_string);
 
 		sprintf(debug_string, "channel_start_pes: ch.wTtxPID=0x%x\r\n", ch.wTtxPID);
@@ -512,14 +512,14 @@ void channel_start_pes(Channel ch)
 		channel_start_video(ch.wVideoPID, ch.wFlags_2);
 	}
 	//loc_23409aa4
-	if ((ch.wData_12 != 0) && (ch.wAudioPID == 0) &&
+	if ((ch.wAc3PID != 0) && (ch.wAudioPID == 0) &&
 			((Data_235462e4.activeStreamMask & CHANNEL_ACTIVE_STREAM_AUDIO) == 0))
 	{
 		Data_235462e4.activeStreamMask |= CHANNEL_ACTIVE_STREAM_AUDIO;
 
 		sub_2342ba34((ch.wFlags_2 >> 1) & 0x03);
 		//->loc_23409b24
-		channel_start_audio(ch.wData_12, main_hAudec1);
+		channel_start_audio(ch.wAc3PID, main_hAudec1);
 		//loc_23409b28
 	}
 	//loc_23409af0
@@ -561,10 +561,10 @@ void channel_start_pes(Channel ch)
 		else
 		{
 			//loc_23409b5c
-			if ((ch.wData_12 & ~0xe000) == ch.wPcrPID)
+			if ((ch.wAc3PID & ~0xe000) == ch.wPcrPID)
 			{
 				void* r0 = main_hPESParserAudio;
-				if (ch.wData_12 & 0x2000)
+				if (ch.wAc3PID & 0x2000)
 				{
 					r0 = (void*) sub_2342ba04(r0);
 				}
@@ -2583,6 +2583,34 @@ void sub_2340c204(int a)
 }
 
 
+/* 2340c29c - todo */
+void sub_2340c29c(Struct_23543df0* r5, uint32_t r4)
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+	Struct_23543df0 sp;
+
+#if 0
+	console_send_string("sub_2340c29c (todo.c): TODO\r\n");
+#endif
+
+	if (r4 < 30)
+	{
+		OS_ENTER_CRITICAL();
+		sp = channel_database.Data_23543df0[r4];
+		OS_EXIT_CRITICAL();
+	}
+	else
+	{
+		memset(&sp, 0, sizeof(sp));
+		snprintf(&sp.Data_8[0], 20, "Kabel");
+	}
+
+	*r5 = sp;
+}
+
+
 /* 2340c368 - complete */
 int sub_2340c368(int get, int* r4)
 {
@@ -2929,14 +2957,14 @@ int channel_write_database(void)
 
 
 /* 2340c970 - complete */
-int sub_2340c970(int get, Struct_235441b0* r6)
+int channel_handle_user_settings(int get, User_Settings* r6)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;
 #endif
 
 #if 0
-	console_send_string("sub_2340c970 (todo.c): TODO\r\n");
+	console_send_string("channel_handle_user_settings (todo.c): TODO\r\n");
 #endif
 
 	OS_ENTER_CRITICAL();

@@ -131,7 +131,8 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "powermode_set_state: state=%d, r4=%p, pFunc=%p\r\n", state, r4, pFunc);
+		sprintf(debug_string, "powermode_set_state: state=%d, r4=%p, pFunc=%p\r\n", 
+			state, r4, pFunc);
 		console_send_string(debug_string);
 	}
 #endif
@@ -281,7 +282,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 		powermode_shutdown_frontend(main_hFrontend1);
 		powermode_shutdown_frontend(Data_23491db8);
 
-#if 0
 		sub_23400510(1);
 
 		sub_23439d06(1);
@@ -296,7 +296,6 @@ int powermode_set_state(int state/*r5*/, UI_Thread_Params* r4, void* pFunc/*r7*/
 		gpio_set(Data_2358be90.pGpio, 0);
 
 		sub_23418db0();
-#endif
 
 		clkpwr_low_power();
 		//->loc_23413270
