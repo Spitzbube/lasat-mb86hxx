@@ -285,13 +285,6 @@ void sub_23444da8()
 }
 
 
-void sub_234483e8()
-{
-	console_send_string("sub_234483e8 (todo.c): TODO\r\n");
-
-}
-
-
 void sub_2344a9d2()
 {
 	console_send_string("sub_2344a9d2 (todo.c): TODO\r\n");

@@ -2,6 +2,7 @@
 
 #include "data.h"
 #include "sub_2340a6a0.h"
+#include "mt_fe_tn_tc3800.h"
 #include "Struct_23443080.h"
 
 
@@ -9,13 +10,13 @@
 
 
 
-void sub_234448ec(Struct_23443080*, int);
+void sub_234448ec(MT_FE_Tuner_Handle_TC3800, int);
 void sub_23444da8();
 void sub_23444700();
-void sub_23447d2e(Struct_23443080*, int);
-void sub_234483e8();
+void sub_23447d2e(MT_FE_Tuner_Handle_TC3800, int);
+/*S32*/int32_t mt_fe_tn_get_signal_strength_tc3800(MT_FE_Tuner_Handle_TC3800);
 void sub_23447c3e();
-void sub_2344a9d2(Struct_23443080*, int);
+void sub_2344a9d2(MT_FE_Tuner_Handle_TC3800, int);
 void sub_2344b04c();
 void sub_2344a888();
 
@@ -29,7 +30,7 @@ const Struct_23491e28_Inner_0x98 Data_23487cb0 = //23487cb0
 const Struct_23491e28_Inner_0x98 Data_23487cbc = //23487cbc
 {
 		sub_23447d2e,
-		sub_234483e8,
+		mt_fe_tn_get_signal_strength_tc3800,
 		sub_23447c3e
 };
 const Struct_23491e28_Inner_0x98 Data_23487cc8 = //23487cc8
@@ -777,7 +778,7 @@ int sub_23402da0(uint8_t* r4)
 	console_send_string("sub_23402da0 (todo.c): TODO\r\n");
 #endif
 
-	r0 = (Data_23491e20->Data_0x98->Data_4)(0x20);
+	r0 = (Data_23491e20->Data_0x98->Data_4)(&Data_23491e20->Data_0x20);
 
 	if (r0 < -109)
 	{

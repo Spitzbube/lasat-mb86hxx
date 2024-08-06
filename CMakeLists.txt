@@ -30,7 +30,7 @@ set(SRCS
    ota.c                    #0x234133a0     0x234920cc      0x2358c124
    av.c
    fe_manager.c
-   m88dc2800.c
+   mt_fe_tn_tc3800.c
    sub_23472ef0.c
    sub_2340217c.c
    texttable.c

@@ -815,7 +815,7 @@ void main_frontend_init()
 			sub_23402e8e, //set addresses
 			sub_23402b6c, //tune
 			sub_23402c9a, //get lock
-			sub_23402da0,
+			sub_23402da0, //get signal strength
 			sub_23402d0c,
 			sub_23403160,
 			sub_23402e68
