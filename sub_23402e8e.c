@@ -692,7 +692,7 @@ uint16_t sub_23402c22(uint32_t r4)
 
 
 /* 23402c9a - todo */
-int sub_23402c9a(uint8_t* r4)
+int M88DC2000GetLock(uint8_t* r4)
 {
 	uint16_t r0;
 	uint8_t r0_;
@@ -707,7 +707,7 @@ int sub_23402c9a(uint8_t* r4)
 		uint8_t reg_0x91 = ReadReg(0x91);
 		uint8_t reg_0x43 = ReadReg(0x43);
 
-		sprintf(debug_string, "sub_23402c9a: reg_0x80=0x%02x, reg_0x85=0x%02x, reg_0xdf=0x%02x, reg_0x91=0x%02x, reg_0x43=0x%02x\r\n",
+		sprintf(debug_string, "M88DC2000GetLock: reg_0x80=0x%02x, reg_0x85=0x%02x, reg_0xdf=0x%02x, reg_0x91=0x%02x, reg_0x43=0x%02x\r\n",
 				reg_0x80, reg_0x85, reg_0xdf, reg_0x91, reg_0x43);
 		console_send_string(debug_string);
 	}
@@ -769,13 +769,13 @@ int sub_23402c9a(uint8_t* r4)
 
 
 /* 23402d0c - todo */
-int sub_23402d0c(uint8_t* r6)
+int M88DC2000GetSNR(uint8_t* r6)
 {
 #if 0
-	console_send_string("sub_23402d0c (todo.c): TODO\r\n");
+	console_send_string("M88DC2000GetSNR (todo.c): TODO\r\n");
 #endif
 
-	uint32_t sp4[80] = //23487cd4
+	uint32_t mes_log[80] = //23487cd4
 	{
 			0,  3010,  4771,  6021,  6990,  7781,  8451,  9031,
 		 9542, 10000, 10414, 10792, 11139, 11461, 11761, 12041,
@@ -789,70 +789,61 @@ int sub_23402d0c(uint8_t* r6)
 		18633, 18692, 18751, 18808, 18865, 18921, 18976, 19031
 	}; 
 
-	if ((ReadReg(0x91) & 0x23) == 0x03)
+	uint32_t snr;
+	uint8_t i;
+	uint32_t mse;
+
+	if ((ReadReg(0x91) & 0x23) != 0x03)
 	{
-		//loc_23402d32
-		uint32_t r5 = 0;
-		for (uint8_t r4 = 0; r4 < 30; r4++)
-		{
-			//loc_23402d36
-			r5 += (ReadReg(0x08) << 8) + ReadReg(0x07);
-		}
-		//0x23402d50
-		uint32_t r4 = r5 / 30;
-		if (r4 > 80)
-		{
-			r4 = 80;
-		}
-		//loc_23402d60
-		uint8_t r0_ = ReadReg(0x00);
-		uint32_t r1 = 40310;
-		switch (r0_)
-		{
-			case 0x00:
-				//0x23402d74
-				//r1, =0x8520 
-				r1 = 34080;
-				break;
-
-			case 0x10:
-				//0x23402d78
-				//r1, =0x92e0
-				r1 = 37600;
-				break;
-				
-			case 0x20:
-				//0x23402d7c
-				//r1, =0xaac8
-				r1 = 43720;
-				break;
-				
-			case 0x30:
-				//0x23402d80
-				//r1, =0xb536
-				r1 = 46390;
-				break;
-#if 0
-			default:
-				//r1, =0x9d76
-				break;
-#endif
-		}
-		//loc_23402d82
-		uint32_t r0 = sp4[r4 - 1];
-		r0 = r1 - r0;
-		r0 = r0 / 1000;
-
-		if (r0 < 0xff)
-		{
-			*r6 = r0;
-		}
-		else
-		{
-			*r6 = 0xff;
-		}
+		return 0;
 	}
-	//loc_23402d2c
+
+	mse = 0;
+	for (i = 0; i < 30; i++)
+	{
+		mse += (ReadReg(0x08) << 8) + ReadReg(0x07);
+	}
+
+	mse /= 30;
+	if (mse > 80)
+	{
+		mse = 80;
+	}
+
+	uint8_t qam = ReadReg(0x00); // >> 4;
+	//TODO!!!
+	switch (qam)
+	{
+		case 0x00: //16QAM
+			snr = 34080;
+			break;
+
+		case 0x10: //32QAM
+			snr = 37600;
+			break;
+			
+		case 0x20: //128QAM
+			snr = 43720;
+			break;
+			
+		case 0x30: //256QAM
+			snr = 46390;
+			break;
+
+		default:
+			snr = 40310;
+			break;
+	}
+
+	snr -= mes_log[mse - 1];
+	snr /= 1000;
+
+	if (snr > 0xff)
+	{
+		snr = 0xff;
+	}
+
+	*r6 = snr;
 	return 0;
 }
 
@@ -1174,6 +1165,42 @@ void M88DC2000SetSym(uint32_t sym, uint32_t xtal)
 		WriteReg(0x6D, 0x10);
 		WriteReg(0x6E, 0x18);
 	}
+}
+
+
+/* 23403160 - todo */
+int M88DC2000GetBER(uint32_t* r5)
+{
+#if 0
+	console_send_string("M88DC2000GetBER (todo.c): TODO\r\n");
+#endif
+
+	double* ber = &Data_23491e20->Data_0.fBER;
+	uint16_t tmp;
+	uint8_t sp4;
+
+	M88DC2000GetLock(&sp4);
+
+	if (sp4 == 0)
+	{
+		*ber = 9999.0;
+		return 0x0f;
+	}
+
+	if ((ReadReg(0xA0) & 0x80) != 0x80)
+	{
+		tmp  = ReadReg(0xA2) << 8;
+		tmp += ReadReg(0xA1);
+		*ber  = tmp;
+		*ber /= 33554432.0;					/*	(2^(2*5+12))*8		*/
+
+		WriteReg(0xA0,0x05);
+		WriteReg(0xA0,0x85);
+	} 
+
+	*r5 = *ber * 10000000.0;
+
+	return 0;
 }
 
 

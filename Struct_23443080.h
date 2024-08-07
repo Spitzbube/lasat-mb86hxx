@@ -17,7 +17,7 @@ typedef struct
 		Struct_23491e28_Inner0* Data_0x10; //16 = 0x10
 		uint8_t bData_0x14; //20 = 0x14
 		uint8_t bData_0x15; //21 = 0x15
- 		int fill_0x18[2]; //24 = 0x18
+		double fBER; //24 = 0x18
 		//32
 	} Data_0; //0
 	MT_FE_TN_DEVICE_SETTINGS_TC3800 Data_0x20; //0x20 == 32

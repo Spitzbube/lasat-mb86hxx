@@ -760,10 +760,10 @@ extern void sub_2340ca9c();
 extern void sub_23402df4();
 extern void sub_23402e8e();
 extern void sub_23402b6c();
-extern void sub_23402c9a();
+extern void M88DC2000GetLock();
 extern void sub_23402da0();
-extern void sub_23402d0c();
-extern void sub_23403160();
+extern void M88DC2000GetSNR();
+extern void M88DC2000GetBER();
 extern void sub_23402e68();
 extern void sub_23402280();
 extern void sub_2340229c();
@@ -814,10 +814,10 @@ void main_frontend_init()
 			sub_23402df4, //init
 			sub_23402e8e, //set addresses
 			sub_23402b6c, //tune
-			sub_23402c9a, //get lock
+			M88DC2000GetLock, //get lock
 			sub_23402da0, //get signal strength
-			sub_23402d0c,
-			sub_23403160,
+			M88DC2000GetSNR,
+			M88DC2000GetBER,
 			sub_23402e68
 	};
 
