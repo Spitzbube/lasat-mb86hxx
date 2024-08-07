@@ -386,12 +386,6 @@ void sub_23447d1c(/*Struct_23443080*/void* a)
 }
 
 
-void sub_23402d0c()
-{
-	console_send_string("sub_23402d0c (todo.c): TODO\r\n");
-
-}
-
 void sub_23403160()
 {
 	console_send_string("sub_23403160 (todo.c): TODO\r\n");
