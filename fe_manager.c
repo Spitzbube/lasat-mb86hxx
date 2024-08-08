@@ -82,7 +82,7 @@ int sub_2340dd74(Struct_2354dd70* r4)
 	console_send_string("sub_2340dd74 (filter_manager.c): TODO\r\n");
 #endif
 
-	r4->bData_0x9f = 1;
+	r4->Data_0x94.bData_0xb = 1;
 
 	(r4->Data_0x30.Data_4)(r4->bData_0xd9, 
 		 r4->Data_0xc8 & 0xff,
@@ -94,9 +94,9 @@ int sub_2340dd74(Struct_2354dd70* r4)
 		 r4->Data_0xb0,
 		 r4->Data_0xac);
 
-	(r4->Data_0x30.Data_0x10)(&r4->bData_0x9d);
-	(r4->Data_0x30.Data_0x14)(&r4->bData_0x9e);
-	(r4->Data_0x30.Data_0x18)(&r4->Data_0x94);
+	(r4->Data_0x30.Data_0x10)(&r4->Data_0x94.bStrength);
+	(r4->Data_0x30.Data_0x14)(&r4->Data_0x94.bSNR);
+	(r4->Data_0x30.Data_0x18)(&r4->Data_0x94.dwBER);
 
 	if (r4->Data_0x5c != 0)
 	{
@@ -170,7 +170,7 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 			//loc_2340def8
 			if (0 == (r4->Data_0x30.Data_8)(sb))
 			{
-				r4->bData_0x9c = 0; //r7
+				r4->Data_0x94.bLock = 0; //r7
 				r4->bState = 2;
 				r4->wData_0xd4 = 5; //r5
 				//->loc_2340df28
@@ -181,11 +181,11 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 		if (r4->bState == 2) //Check Lock
 		{
 			//loc_2340df28
-			uint8_t r8 = r4->bData_0x9c;
+			uint8_t r8 = r4->Data_0x94.bLock;
 
-			if (0 != (r4->Data_0x30.Data_0x0c)(&r4->bData_0x9c))
+			if (0 != (r4->Data_0x30.Data_0x0c)(&r4->Data_0x94.bLock))
 			{
-				r4->bData_0x9c = 0; //r7
+				r4->Data_0x94.bLock = 0; //r7
 				//->loc_2340dfb0
 			}
 			else
@@ -194,15 +194,15 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 #if 0
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "frontend_cable_thread_func: r8=%d, r4->bData_0x9c=%d\r\n", 
-							r8, r4->bData_0x9c);
+					sprintf(debug_string, "frontend_cable_thread_func: r8=%d, r4->Data_0x94.bLock=%d\r\n", 
+							r8, r4->Data_0x94.bLock);
 					console_send_string(debug_string);
 				}
 #endif
 
-				if (r8 != r4->bData_0x9c)
+				if (r8 != r4->Data_0x94.bLock)
 				{
-					if (r4->bData_0x9c == 0)
+					if (r4->Data_0x94.bLock == 0)
 					{
 						//0x2340df58
 						if (r4->stateChangeCallback != 0)
@@ -224,9 +224,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 						}
 						//loc_2340dfb0
 					}
-				} //if (r8 != r4->bData_0x9c)
+				} //if (r8 != r4->Data_0x94.bLock)
 				//loc_2340df8c
-				if (r4->bData_0x9c == 0)
+				if (r4->Data_0x94.bLock == 0)
 				{
 					//loc_2340df98: Fall back to tune state after configured number of cycles
 					r4->wData_0xd4--;
@@ -730,7 +730,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 			r4->Data_0xd0 = r5->Data_4;
 			r4->bState = 0; //sl;
 			r4->bData_0xda = 0xff;
-			r4->Data_0x98 = r4->bData_0xd9 = bData_23492080++;
+			r4->Data_0x94.Data_4 = r4->bData_0xd9 = bData_23492080++;
 
 			if (bData_23492080 == 2)
 			{
@@ -809,7 +809,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFun
 
 	if (0 == memcmp(&r4->Data_0x7c, &sp_0x24, sizeof(Transponder)))
 	{
-		r4->bData_0x9c = 0; //r8
+		r4->Data_0x94.bLock = 0; //r8
 		r4->wData_0xd4 = 5;
 		//->loc_2340ec28
 	}
@@ -860,10 +860,10 @@ int sub_2340ec54(Struct_2354dd70* r4, void (*func)())
 
 
 /* 2340ec8c / 23415ba8 - complete */
-int sub_2340ec8c(void* h, void (*r6)())
+int fe_manager_register_measurement_callback(void* h, int (*cbk)(Struct_2347192c*))
 {
 #if 0
-	console_send_string("sub_2340ec8c (todo.c): TODO\r\n");
+	console_send_string("fe_manager_register_measurement_callback (todo.c): TODO\r\n");
 #endif
 
 	Struct_2354dd70* r4 = h;
@@ -871,7 +871,7 @@ int sub_2340ec8c(void* h, void (*r6)())
 
 	OSSemPend(fe_manager_pSema, 0, &err);
 
-	r4->Data_0x5c = r6;
+	r4->Data_0x5c = cbk;
 
 	OSSemPost(fe_manager_pSema);
 
@@ -922,7 +922,7 @@ int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
 	//loc_2340ed0c
 	*r5 = r0;
 
-	return r4->bData_0x9c;
+	return r4->Data_0x94.bLock;
 }
 
 
@@ -1045,7 +1045,7 @@ void sub_2340ee78(int r6, int r5)
 
 		if (r5 != 0)
 		{
-			Data_2354dd70[1].bData_0x9c = 0;
+			Data_2354dd70[1].Data_0x94.bLock = 0;
 			Data_2354dd70[1].bState = 1;
 		}
 	}

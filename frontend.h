@@ -2,6 +2,18 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
+typedef struct
+{
+	uint32_t dwBER; //0
+	int Data_4; //4
+	uint8_t bLock; //8
+	uint8_t bStrength; //9
+	uint8_t bSNR; //10
+	uint8_t bData_0xb; //11 = 0x9f
+
+} Struct_2347192c;
+
+
 typedef struct Struct_2354dd70
 {
 	uint16_t wData_0; //0
@@ -38,12 +50,16 @@ typedef struct Struct_2354dd70
 	int (*Data_0x60)(); //0x60
 	Transponder Data_0x64; //0x64 +0x18
 	Transponder Data_0x7c; //0x7c +0x18
-	int Data_0x94; //0x94
+#if 0
+	uint32_t Data_0x94; //0x94
 	int Data_0x98; //0x98
-	uint8_t bData_0x9c; //0x9c
-	uint8_t bData_0x9d; //0x9d
-	uint8_t bData_0x9e; //0x9e
+	uint8_t bLock; //0x9c
+	uint8_t bStrength; //0x9d
+	uint8_t bSNR; //0x9e
 	uint8_t bData_0x9f; //0x9f
+#else
+	Struct_2347192c Data_0x94; //0x94
+#endif
 	Struct_20611068* resetGpio; //0xa0
 	Struct_20611068* Data_0xa4; //0xa4
 	Struct_20611068* Data_0xa8; //0xa8
