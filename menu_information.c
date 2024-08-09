@@ -400,7 +400,7 @@ void* sub_234718c6(FrontDisplay_Job a[])
 
 
 /* 2347192c - todo */
-static int menu_information_get_frontend_strings(Struct_2347192c* r4)
+static int menu_information_get_frontend_strings(Frontend_Measurement* r4)
 {
 #if 0
 	console_send_string("menu_information_get_frontend_strings (todo.c): TODO\r\n");

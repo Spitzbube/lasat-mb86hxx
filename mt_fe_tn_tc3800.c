@@ -2,6 +2,7 @@
 
 #include "data.h"
 #include "sub_2340a6a0.h"
+#include "mt_fe_def.h"
 #include "mt_fe_tn_tc3800.h"
 #include "Struct_23443080.h"
 #include "m88dc2800.h"
@@ -621,14 +622,14 @@ int m88dc2800_get_chip_version(MT_FE_Tuner_Handle_TC3800 a)
 	//loc_23444d5a
 	else if (((id >> 4) == 0x0b)) //VDR110: 0xb5
 	{
-		return 10;
+		return TN_MONTAGE_TC3800;
 	}
 	//loc_23444d64
 	else if ((id == 0x0d) //D1
 			|| (id == 0x8e)) //E1
 	{
 		//loc_23444d6c
-		return 1;
+		return TN_MONTAGE_TC2800;
 	}
 	//loc_23444d70
 	else
@@ -3425,14 +3426,14 @@ void sub_23447c2c(MT_FE_Tuner_Handle_TC3800 a)
 
 
 /* 23447c3e - complete */
-void sub_23447c3e(MT_FE_Tuner_Handle_TC3800 r4)
+void mt_fe_tn_sleep_tc3800(MT_FE_Tuner_Handle_TC3800 r4)
 {
 	uint8_t sp = 0;
 
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23447c3e: r4->tuner_mode=%d, r4->tuner_gpio_out=%d\r\n",
+		sprintf(debug_string, "mt_fe_tn_sleep_tc3800: r4->tuner_mode=%d, r4->tuner_gpio_out=%d\r\n",
 				r4->tuner_mode, r4->tuner_gpio_out);
 		console_send_string(debug_string);
 	}
@@ -3542,7 +3543,7 @@ int mt_fe_tn_init_tc2800(MT_FE_Tuner_Handle_TC3800 r4)
 
 
 /* 23447d2e - todo */
-void sub_23447d2e(MT_FE_Tuner_Handle_TC3800 r4, int r5)
+void mt_fe_tn_set_freq_tc3800(MT_FE_Tuner_Handle_TC3800 r4, int r5)
 {
 	uint8_t sp_0x18 = 0;
 	uint8_t sp_0x14 = 0;
@@ -3557,7 +3558,7 @@ void sub_23447d2e(MT_FE_Tuner_Handle_TC3800 r4, int r5)
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23447d2e: r5=%d\r\n", r5);
+		sprintf(debug_string, "mt_fe_tn_set_freq_tc3800: r5=%d\r\n", r5);
 		console_send_string(debug_string);
 	}
 #endif
@@ -3901,7 +3902,7 @@ void sub_23447d2e(MT_FE_Tuner_Handle_TC3800 r4, int r5)
 #if 0
 		{
 			extern char debug_string[];
-			sprintf(debug_string, "sub_23447d2e: sp_0x10=0x%x, sp_0xc=0x%x\r\n", sp_0x10, sp_0xc);
+			sprintf(debug_string, "mt_fe_tn_set_freq_tc3800: sp_0x10=0x%x, sp_0xc=0x%x\r\n", sp_0x10, sp_0xc);
 			console_send_string(debug_string);
 		}
 #endif

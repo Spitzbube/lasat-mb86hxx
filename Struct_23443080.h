@@ -2,9 +2,9 @@
 
 typedef struct
 {
-	void (*Data_0)(MT_FE_Tuner_Handle_TC3800, int); //0
-	int (*Data_4)(); //4
-	void (*Data_8)(); //8
+	void (*tuner_set)(MT_FE_Tuner_Handle_TC3800, int); //0
+	int (*tuner_get_strength)(); //4
+	void (*tuner_sleep)(); //8
 	//12 = 0x0c
 } Struct_23491e28_Inner_0x98;
 

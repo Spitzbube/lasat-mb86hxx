@@ -11,7 +11,21 @@ typedef struct
 	uint8_t bSNR; //10
 	uint8_t bData_0xb; //11 = 0x9f
 
-} Struct_2347192c;
+} Frontend_Measurement;
+
+
+typedef struct
+{
+	int (*init)(void); //0 (0x30)
+	void (*setParams)(); //4 (0x34)
+	int (*tune)(); //8 (0x38)
+	int (*getLock)(); //0x0c = 12 (0x3c)
+	void (*getSignalStrength)(); //0x10 = 0x40
+	void (*getSNR)(); //0x14 = 0x44
+	void (*getBER)(); //0x18 = 24 (0x48)
+	void (*sleep)(); //1c = 28 (0x4c)
+	//0x20 = 32
+} Frontend_Cable_Funcs;
 
 
 typedef struct Struct_2354dd70
@@ -31,35 +45,15 @@ typedef struct Struct_2354dd70
 	int (*Data_0x1c)(int); //0x1c
 	int fill_0x20[4]; //0x20
 #endif
-	struct
-	{
-		void (*Data_0)(); //0 (0x30)
-		void (*Data_4)(); //4 (0x34)
-		int (*Data_8)(); //8 (0x38)
-		int (*Data_0x0c)(); //0x0c = 12 (0x3c)
-		void (*Data_0x10)(); //0x10 = 0x40
-		void (*Data_0x14)(); //0x14 = 0x44
-		void (*Data_0x18)(); //0x18 = 24 (0x48)
-		void (*Data_0x1c)(); //1c = 28 (0x4c)
-		//0x20 = 32
-	} Data_0x30; //0x30
+	Frontend_Cable_Funcs cableFuncs; //0x30
 	void (*threadFunc)(struct Struct_2354dd70*); //0x50 = 80
 	void (*stateChangeCallback)(); //0x54 = 84
-	void (*Data_0x58)(struct Struct_2354dd70*); //0x58 = 88
-	void (*Data_0x5c)(); //0x5c
+	void (*measurementFunc)(struct Struct_2354dd70*); //0x58 = 88
+	void (*measurementCallback)(); //0x5c
 	int (*Data_0x60)(); //0x60
 	Transponder Data_0x64; //0x64 +0x18
 	Transponder Data_0x7c; //0x7c +0x18
-#if 0
-	uint32_t Data_0x94; //0x94
-	int Data_0x98; //0x98
-	uint8_t bLock; //0x9c
-	uint8_t bStrength; //0x9d
-	uint8_t bSNR; //0x9e
-	uint8_t bData_0x9f; //0x9f
-#else
-	Struct_2347192c Data_0x94; //0x94
-#endif
+	Frontend_Measurement measurementData; //0x94
 	Struct_20611068* resetGpio; //0xa0
 	Struct_20611068* Data_0xa4; //0xa4
 	Struct_20611068* Data_0xa8; //0xa8
@@ -79,7 +73,7 @@ typedef struct Struct_2354dd70
 	uint8_t bData_0xd9; //0xd9
 	uint8_t bData_0xda; //0xda = 218
 	//220 = 0xdc?
-} Struct_2354dd70;
+} Frontend;
 
 
 typedef struct

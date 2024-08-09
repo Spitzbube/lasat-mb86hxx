@@ -648,8 +648,8 @@ void scan_thread()
 		void* Data_8; //8
 	} sp_0x20;
 	int sb = 3;
-	Struct_2354dd70** r8;
-	Struct_2354dd70* sp_0x18[2];
+	Frontend** r8;
+	Frontend* sp_0x18[2];
 
 	sp_0x18[0] = /*Data_23491d8c.Data_0x28*/main_hFrontend1;
 	sp_0x18[1] = /*Data_23491d8c.Data_0x2c*/Data_23491db8;
@@ -771,7 +771,7 @@ void scan_thread()
 				scanData.wData_0x12--;
 				if (scanData.wData_0x12 == 0)
 				{
-					Struct_2354dd70* r4 = /*Data_23491d8c.Data_0x28*/main_hFrontend1;
+					Frontend* r4 = main_hFrontend1;
 
 					if (0 == sub_2340d0d0())
 					{
