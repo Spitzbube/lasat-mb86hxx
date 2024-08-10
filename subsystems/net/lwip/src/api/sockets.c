@@ -953,7 +953,9 @@ lwip_sendto(int s, const void *data, size_t size, int flags,
 
   LWIP_DEBUGF(SOCKETS_DEBUG, ("lwip_sendto(%d, data=%p, short_size=%"U16_F", flags=0x%x to=",
               s, data, short_size, flags));
+#if 0
   ip_addr_debug_print(SOCKETS_DEBUG, &buf.addr);
+#endif
   LWIP_DEBUGF(SOCKETS_DEBUG, (" port=%"U16_F"\n", remote_port));
 
   /* make the buffer point to the data that should be sent */

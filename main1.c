@@ -53,6 +53,7 @@ void* main_hAudec0 = 0; //23491de0 +0x54
 void* main_hAudec4 = 0; //23491de4 +0x58
 void* main_hAudec5 = 0; //23491de8 +0x5c
 void* main_hAudecRadioText = 0; //23491dec +0x60
+uint32_t Data_23491df0 = 0; //23491df0 +0x64
 void* main_hCurrentPCR_TSD_Handle = 0; //23491e08
 void* main_hPESParserVideo = 0; //23491e0c +0x80 / 234ac510
 
@@ -1109,6 +1110,14 @@ void main_channel_init()
 }
 
 
+/* 234012b0 - todo */
+void sub_234012b0()
+{
+	console_send_string("sub_234012b0 (todo.c): TODO\r\n");
+
+}
+
+
 /* 2340146c / 2340195c - complete */
 void main_graphic_init()
 {
@@ -1136,25 +1145,23 @@ void main_network_init()
 	console_send_string("main_network_init (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	sub_23419454(sub_234012b0);
 
+#if 0
 	eth_set_buffer( sub_234019e0(0x10000) );
 #endif
 
 	uint32_t r4 = sub_234019e0(0x150000);
 
-#if 0
 	Data_23491df0 = sub_234019e0(0x10000);
-#endif
 
 	if (0 == network_init(r4))
 	{
 #if 0
 		ftpd_init();
+#endif
 
 		tcp_console_init(main_process_uart_command);
-#endif
 	}
 #if 1 //TODO!!! Until network_init is fixed
 	else

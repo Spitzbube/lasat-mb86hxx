@@ -53,7 +53,6 @@ int network_lwip_init()
 
 	sys_sem_t tcpip_init_sema; //sp_0x54
 
-#if 0
 	struct
 	{
 		int fill_0; //0
@@ -78,7 +77,6 @@ int network_lwip_init()
 	struct Struct_234fd8f0_Inner_489DC sp_0x14;
 
 	struct Struct_234fd8f0_Inner_489DC sp;
-#endif
 
 	int sl = 0;
 
@@ -104,12 +102,12 @@ int network_lwip_init()
 		IP4_ADDR(&network_netmask, 0,0,0,0);
 		IP4_ADDR(&network_gw, 0,0,0,0);
 	}
+#endif
 
 	if (Data_234920ec != 0)
 	{
 		(Data_234920ec)(&sp_0x3c, &sp_0x34);
 	}
-#endif
 
 	sys_sem_new(&tcpip_init_sema, 0);
 
@@ -405,6 +403,7 @@ uint32_t network_get_ipaddr()
 	return Data_235b0c60.ip_addr.addr;
 }
 
+#endif
 
 /* 23419454 - todo */
 void sub_23419454(void (*a)())
@@ -417,6 +416,7 @@ void sub_23419454(void (*a)())
 
 }
 
+#if 0
 
 /* 23419520 - todo */
 void sub_23419520 ()

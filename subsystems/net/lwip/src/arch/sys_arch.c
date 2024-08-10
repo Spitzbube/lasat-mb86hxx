@@ -447,7 +447,6 @@ u32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, u32_t timeout)
 #endif
 }
 
-#if 0
 
 /** Wait for a new message to arrive in the mbox
  * @param mbox mbox to get a message from
@@ -505,7 +504,6 @@ void sys_mbox_free(sys_mbox_t *mbox)
 	sp = sub_23463b0c(Data_234943a8, *mbox);
 }
 
-#endif
 
 /** Check if an mbox is valid/allocated: return 1 for valid, 0 for invalid */
 /* 2346bc5a - complete */
@@ -514,7 +512,6 @@ int sys_mbox_valid(sys_mbox_t *mbox)
     return (*mbox != NULL);
 }
 
-#if 0
 
 /* 2346bc6e - complete */
 void sys_mbox_set_invalid(sys_mbox_t *mbox)
@@ -522,7 +519,6 @@ void sys_mbox_set_invalid(sys_mbox_t *mbox)
     *mbox = NULL;
 }
 
-#endif
 
 /*********************************************************************
  * If threads are supported by the underlying operating system and if

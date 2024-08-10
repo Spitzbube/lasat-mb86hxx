@@ -26,24 +26,28 @@ typedef struct
 
 uint8_t Data_237bfd6c[4000]; //237bfd6c +0xfa0 = 237C0D0C
 
-#if 0
 
 //0x237c0d0c
 struct
 {
 	int Data_0; //0
+#if 0
 	int Data_237c0d10; //0x237c0d10 +4
 	uint16_t wData_237c0d14; //237c0d14 +8
 	int fill_12[3]; //12
 	void* (*Data_237c0d24)(); //237c0d24 +0x18 = 24
+#endif
 	void (*Data_0x1c)(); //237C0D28 +0x1c = 28
+#if 0
 	TSD_Handle** Data_0x20; //237C0D2C +0x20
 	int fill_0x24; //0x24
 	Struct_2345b028_1 Data_237c0d34; //237c0d34 +0x28
 	struct sockaddr_in Data_237c0d70; //237c0d70 +0x64
+#endif
 
 } Data_237c0d0c; //237c0d0c
 
+#if 0
 
 uint8_t bData_23493e7c; //23493e7c
 int Data_23494094; //23494094
@@ -254,6 +258,7 @@ void web_interface_send_channel_list(int s, int r7)
 	//loc_2345970c
 }
 
+#endif
 
 /* 23459714 - todo */
 void sub_23459714(int s)
@@ -262,6 +267,7 @@ void sub_23459714(int s)
 	console_send_string("sub_23459714 (todo.c): TODO\r\n");
 #endif
 
+#if 0
 	struct sockaddr sp_0x2c;
 	struct Struct_23546128 sp_0x20;
 	socklen_t sp_0x1c;
@@ -328,6 +334,7 @@ void sub_23459714(int s)
 			strlen("Das VLC-Plugin scheint nicht installiert zu sein.<br>Die Stream-Adresse lautet: UDP://@192.168.018.103:1234"));
 	lwip_write(s, "</fieldset>\r\n", 0x0d);
 	lwip_write(s, "</dev>\r\n", 0x08);
+#endif
 	//0x2345996c
 	lwip_write(s, "</body>\r\n</html>", 0x10);
 }
@@ -340,6 +347,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	console_send_string("web_interface_send_response (todo.c): TODO\r\n");
 #endif
 
+#if 0
 	Struct_2340bf0c sp_0x50;
 	struct Struct_234fd8f0_Inner0 sp_0x28;
 	Struct_235fdfac sp_0x10;
@@ -352,6 +360,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	//0x23459a78
 
 	//TODO!!!
+#endif
 
 	//loc_23459b1c
 	lwip_write(s, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n", 0x2c);
@@ -410,7 +419,9 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	lwip_write(s, "<form action=\"list\">\r\n", 0x16);
 	//->loc_23459e80
 	lwip_write(s, "<select name=\"program\" title=\"TV-List\">\r\n", 0x29);
+#if 0
 	web_interface_send_channel_list(s, 1);
+#endif
 	lwip_write(s, "</select><br>\r\n", 0x0f);
 	lwip_write(s, "<input type=submit value=\"Start\">\r\n", 0x23);
 	lwip_write(s, "</form>\r\n", 0x09);
@@ -420,7 +431,9 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	lwip_write(s, "<legend>RADIO-Liste</legend>\r\n", 0x1e);
 	lwip_write(s, "<form action=\"list_radio\">\r\n", 0x1c);
 	lwip_write(s, "<select name=\"program\" title=\"RADIO-List\">\r\n", 0x2c);
+#if 0
 	web_interface_send_channel_list(s, 0);
+#endif
 	lwip_write(s, "</select><br>\r\n", 0x0f);
 	lwip_write(s, "<input type=submit value=\"Start\">\r\n", 0x23);
 	lwip_write(s, "</form>\r\n", 0x09);
@@ -440,6 +453,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	//0x2345a010
 	lwip_write(s, "</div>\r\n", 0x08);
 
+#if 0
 	lwip_write(s, "<div class=\"middle cont\">\r\n", 0x1b);
 
 	lwip_write(s, "<fieldset>\r\n", 0x0c);
@@ -489,11 +503,11 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	//loc_2345a178
 	lwip_write(s, "</fieldset>\r\n", 0x0d);
 	lwip_write(s, "</div>\r\n", 0x08);
+#endif
 	//0x2345a198
 	sub_23459714(s);
 }
 
-#endif
 
 /* 2345a1a8 - todo */
 void web_interface_decode_request(int r8, uint8_t sb[], int r2)
@@ -505,15 +519,14 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 #if 0
 	Struct_2340bf0c sp_0x28;
 	struct Struct_234fd8f0_Inner0 sp;
+#endif
 
 	int r4;
 	int r5;
 	int r6 = 0;
-#endif
 
 	hex_dump("web_interface_decode_request", sb, r2);
 
-#if 0
 	if ((r2 < 5) || (0 != strncmp(sb, "GET", 3)))
 	{
 		//loc_2345a42c
@@ -543,6 +556,7 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 		//->loc_2345a418
 	}
 	//loc_2345a230
+#if 0
 	else if (0 == strncmp(sb, "GET /StreamIn", 13))
 	{
 		//0x2345a248
@@ -647,11 +661,11 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	}
 	//loc_2345a3ac
 	//TODO!!!
+#endif
 
 	//loc_2345a418
 	web_interface_send_response(r8, r4, r5, r6);
 	//loc_2345a42c
-#endif
 }
 
 
@@ -1148,42 +1162,48 @@ int sub_2345b270()
 	return 0;
 }
 
+#endif
 
 /* 2345b29c - complete */
-int sub_2345b29c()
+int sub_2345b29c(void)
 {
 #if 0
 	console_send_string("sub_2345b29c (todo.c): TODO\r\n");
 #endif
 
 	int r4;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
-	uint32_t cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	r4 = (int) Data_237c0d0c.Data_0x1c;
 
-	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	return r4;
 }
 
 
 /* 2345b2b8 - complete */
-int sub_2345b2b8()
+int sub_2345b2b8(void)
 {
 #if 0
 	console_send_string("sub_2345b2b8 (todo.c): TODO\r\n");
 #endif
 
 	int r4;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
-	uint32_t cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	r4 = (int) Data_237c0d0c.Data_0;
 
-	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	return r4;
 }
 
-#endif

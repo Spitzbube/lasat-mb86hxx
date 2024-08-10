@@ -797,4 +797,53 @@ void sub_2340929c()
 }
 
 
+void raw_bind()
+{
+	console_send_string("raw_bind (todo.c): TODO\r\n");
+
+}
+
+
+void raw_send ()
+{
+	console_send_string("raw_send (todo.c): TODO\r\n");
+
+}
+
+
+void raw_sendto ()
+{
+	console_send_string("raw_sendto (todo.c): TODO\r\n");
+
+}
+
+
+void udp_send ()
+{
+	console_send_string("udp_send (todo.c): TODO\r\n");
+
+}
+
+
+void raw_remove ()
+{
+	console_send_string("raw_remove (todo.c): TODO\r\n");
+
+}
+
+
+void raw_new ()
+{
+	console_send_string("raw_new (todo.c): TODO\r\n");
+
+}
+
+
+void raw_recv ()
+{
+	console_send_string("raw_recv (todo.c): TODO\r\n");
+
+}
+
+
 
