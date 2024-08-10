@@ -94,7 +94,7 @@ set(lwipapi_SRCS
 #    ${LWIP_DIR}/src/api/netbuf.c
 #    ${LWIP_DIR}/src/api/netdb.c
 #    ${LWIP_DIR}/src/api/netifapi.c
-#    ${LWIP_DIR}/src/api/sockets.c
+    ${LWIP_DIR}/src/api/sockets.c
     ${LWIP_DIR}/src/api/tcpip.c
 )
 

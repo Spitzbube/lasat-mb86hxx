@@ -62,6 +62,7 @@ set(SRCS
    menu_information.c
    menu_guided_install.c    #?
    ttx.c
+   web_interface.c
    hexdump.c
    todo.c
 )

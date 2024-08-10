@@ -1,4 +1,5 @@
 
+#define THREAD_PRIO_NETWORK_HTTP			9
 #define THREAD_PRIO_UART_IN					10
 #define THREAD_PRIO_PSI_1					11
 #define THREAD_PRIO_PSI_2					12

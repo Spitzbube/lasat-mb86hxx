@@ -5,10 +5,10 @@
 #include "lwip/netif.h"
 #include "lwip/dhcp.h"
 
-#if 0
 
 extern void web_interface_http_thread();
 extern void web_interface_streaming_thread();
+#if 0
 extern void sub_2345ace8();
 
 
@@ -289,9 +289,9 @@ int network_init(uint32_t r4)
 
 		return 0;
 	}
-//#else
+#else
 	sys_thread_new("\n HTTP", web_interface_http_thread, 0, 0, THREAD_PRIO_NETWORK_HTTP);
-	sys_thread_new("\n streaming", web_interface_streaming_thread, 0, 0, THREAD_PRIO_NETWORK_STREAMING);
+//	sys_thread_new("\n streaming", web_interface_streaming_thread, 0, 0, THREAD_PRIO_NETWORK_STREAMING);
 #endif
 	//loc_234191c0
 	return 0xff;
