@@ -6,7 +6,7 @@ set(SRCS
    main.c                   #?                              0x2349c5a0? -> 2349D220?
    main1.c                  #0x23400510?    0x23491d8c      0x2349d230?
    sub_2340199c.c           #0x2340199c     0x23491e10
-   sub_23402e8e.c           #0x2340257c?    0x23491e20
+   m88dc2800.c              #0x2340257c?    0x23491e20
    sub_234070cc.c
    sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    console.c                #0x2341af84?
@@ -30,7 +30,7 @@ set(SRCS
    ota.c                    #0x234133a0     0x234920cc      0x2358c124
    av.c
    fe_manager.c
-   m88dc2800.c
+   mt_fe_tn_tc3800.c
    sub_23472ef0.c
    sub_2340217c.c
    texttable.c
@@ -59,7 +59,7 @@ set(SRCS
    sub_23454df4.c
    sub_2345ac28.c
    sub_2345bc50.c
-   sub_23471d2c.c
+   menu_information.c
    menu_guided_install.c    #?
    ttx.c
    hexdump.c

@@ -66,7 +66,7 @@ static int powermode_shutdown_frontend_callback()
 
 
 /* 23412ee8 - todo */
-void powermode_shutdown_frontend(Struct_2354dd70* a)
+void powermode_shutdown_frontend(Frontend* a)
 {
 	if (a != 0)
 	{

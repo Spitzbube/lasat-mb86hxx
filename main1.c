@@ -38,8 +38,8 @@ int Data_23491da4 = 0; //23491da4 +0x18
 int Data_23491da8 = 0; //23491da8
 void* main_hHdmi = 0; //23491dac
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
-Struct_2354dd70* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
-Struct_2354dd70* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
+Frontend* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
+Frontend* Data_23491db8 = 0; //23491db8 +44 = 0x2c //Data_234ac4ec
 MemBlk_Handle* main_hMemBlk1 = 0; //23491DBC +0x30
 MemBlk_Handle* main_hMemBlk2 = 0; //23491dc0 +0x34
 Struct_20611068* main_hUsbGpio = 0; //23491dc4 +0x38 
@@ -759,12 +759,12 @@ extern void sub_2340c970_();
 extern void sub_2340ca9c();
 extern void sub_23402df4();
 extern void sub_23402e8e();
-extern void sub_23402b6c();
-extern void sub_23402c9a();
-extern void sub_23402da0();
-extern void sub_23402d0c();
-extern void sub_23403160();
-extern void sub_23402e68();
+extern void M88DC2000SetChannel();
+extern void M88DC2000GetLock();
+extern void M88DC2000GetSignalStrength();
+extern void M88DC2000GetSNR();
+extern void M88DC2000GetBER();
+extern void M88DC2000Sleep();
 extern void sub_23402280();
 extern void sub_2340229c();
 extern void sub_23402364();
@@ -809,16 +809,16 @@ void main_frontend_init()
 			sub_2340ca9c
 	};
 #endif
-	func sp_0x30[8] = //23487b94
+	Frontend_Cable_Funcs sp_0x30 = //23487b94
 	{
 			sub_23402df4, //init
 			sub_23402e8e, //set addresses
-			sub_23402b6c, //tune
-			sub_23402c9a, //get lock
-			sub_23402da0,
-			sub_23402d0c,
-			sub_23403160,
-			sub_23402e68
+			M88DC2000SetChannel, //tune
+			M88DC2000GetLock, //get lock
+			M88DC2000GetSignalStrength, //get signal strength
+			M88DC2000GetSNR,
+			M88DC2000GetBER,
+			M88DC2000Sleep
 	};
 
 	sp_0x90.threadPrio = THREAD_PRIO_FE_MANAGER;

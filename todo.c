@@ -285,13 +285,6 @@ void sub_23444da8()
 }
 
 
-void sub_234483e8()
-{
-	console_send_string("sub_234483e8 (todo.c): TODO\r\n");
-
-}
-
-
 void sub_2344a9d2()
 {
 	console_send_string("sub_2344a9d2 (todo.c): TODO\r\n");
@@ -389,19 +382,6 @@ void sub_2344433c()
 void sub_23447d1c(/*Struct_23443080*/void* a)
 {
 	console_send_string("sub_23447d1c (todo.c): TODO\r\n");
-
-}
-
-
-void sub_23402d0c()
-{
-	console_send_string("sub_23402d0c (todo.c): TODO\r\n");
-
-}
-
-void sub_23403160()
-{
-	console_send_string("sub_23403160 (todo.c): TODO\r\n");
 
 }
 
@@ -815,5 +795,6 @@ void sub_2340929c()
 	console_send_string("sub_2340929c (todo.c): TODO\r\n");
 
 }
+
 
 

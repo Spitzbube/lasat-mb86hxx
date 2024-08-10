@@ -23,11 +23,11 @@ void* fe_manager_pSema = 0; //23492088 +8
 Struct_20611068* Data_2349208c/*hGpio*/ = 0; //2349208c +12
 
 int fe_manager_threadStack[THREAD_STACK_SIZE_FE_MANAGER]; //2354cdd0 ->2354DD70
-Struct_2354dd70 Data_2354dd70[2];
+Frontend Data_2354dd70[2];
 
 
 /* 2340dc48 - complete */
-int frontend_reset_by_gpio(Struct_2354dd70* r4)
+int frontend_reset_by_gpio(Frontend* r4)
 {
 #if 0
 	console_send_string("frontend_reset_by_gpio\r\n");
@@ -64,43 +64,33 @@ void sub_2340dce8()
 
 }
 
-typedef struct
-{
-	int Data_0; //0
-	int Data_4; //4
-	int Data_8; //8
-	int Data_12; //12
-	int Data_16; //16
-	int Data_20; //20
-} Struct_2340dd74;
-
 
 /* 2340dd74 - todo */
-int sub_2340dd74(Struct_2354dd70* r4)
+static int frontend_cable_measurement_func(Frontend* fe)
 {	
 #if 0
-	console_send_string("sub_2340dd74 (filter_manager.c): TODO\r\n");
+	console_send_string("frontend_cable_measurement_func (filter_manager.c): TODO\r\n");
 #endif
 
-	r4->bData_0x9f = 1;
+	fe->measurementData.bData_0xb = 1;
 
-	(r4->Data_0x30.Data_4)(r4->bData_0xd9, 
-		 r4->Data_0xc8 & 0xff,
-		 r4->Data_0xc4 & 0xff, 0, 
-		 r4->hI2c,
-		 r4->resetGpio,
-		 r4->Data_0xa4,
-		 r4->Data_0xa8,
-		 r4->Data_0xb0,
-		 r4->Data_0xac);
+	(fe->cableFuncs.setParams)(fe->bData_0xd9, 
+		 fe->Data_0xc8 & 0xff,
+		 fe->Data_0xc4 & 0xff, 0, 
+		 fe->hI2c,
+		 fe->resetGpio,
+		 fe->Data_0xa4,
+		 fe->Data_0xa8,
+		 fe->Data_0xb0,
+		 fe->Data_0xac);
 
-	(r4->Data_0x30.Data_0x10)(&r4->bData_0x9d);
-	(r4->Data_0x30.Data_0x14)(&r4->bData_0x9e);
-	(r4->Data_0x30.Data_0x18)(&r4->Data_0x94);
+	(fe->cableFuncs.getSignalStrength)(&fe->measurementData.bStrength);
+	(fe->cableFuncs.getSNR)(&fe->measurementData.bSNR);
+	(fe->cableFuncs.getBER)(&fe->measurementData.dwBER);
 
-	if (r4->Data_0x5c != 0)
+	if (fe->measurementCallback != 0)
 	{
-		(r4->Data_0x5c)(&r4->Data_0x94);
+		(fe->measurementCallback)(&fe->measurementData);
 	}
 
 #if 0
@@ -115,7 +105,7 @@ sub_2347192c (todo.c): TODO
 
 
 /* 2340de08 - todo */
-int frontend_cable_thread_func(Struct_2354dd70* r4)
+static int frontend_cable_thread_func(Frontend* r4)
 {
 #if 0
 	console_send_string("frontend_cable_thread_func: TODO\r\n");
@@ -123,7 +113,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 
 	if (r4->bState != 5)
 	{
-		(r4->Data_0x30.Data_4)(r4->bData_0xd9, r4->Data_0xc8 & 0xff, r4->Data_0xc4 & 0xff, 0,
+		(r4->cableFuncs.setParams)(r4->bData_0xd9, 
+				r4->Data_0xc8 & 0xff, 
+				r4->Data_0xc4 & 0xff, 0,
 				r4->hI2c, r4->resetGpio,
 				r4->Data_0xa4, r4->Data_0xa8,
 				r4->Data_0xb0, r4->Data_0xac);
@@ -137,13 +129,13 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 		}
 #endif
 
-		if (r4->bState == 4)
+		if (r4->bState == 4) //Go to Sleep
 		{
-			r4->bState = 5; //r5
+			r4->bState = 5; //Sleeping
 
-			memcpy(&r4->Data_0x64, &r4->Data_0x7c, 24);
+			r4->Data_0x64 = r4->Data_0x7c;
 
-			(r4->Data_0x30.Data_0x1c)(r4->Data_0x64.Data_0.frequency);
+			(r4->cableFuncs.sleep)(r4->Data_0x64.Data_0.frequency);
 
 			if (r4->stateChangeCallback != 0)
 			{
@@ -155,22 +147,20 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 		//loc_2340deb4
 		if (r4->bState == 1) //Start Tune
 		{
-			void* sb;
+			r4->Data_0x64 = r4->Data_0x7c;
 
-			memcpy(&r4->Data_0x64, &r4->Data_0x7c, 24);
-
-			sb = &r4->Data_0x64;
+			Transponder* pTransponder = &r4->Data_0x64;
 
 			if (Data_23492084[r4->bData_0xd9] != 0)
 			{
-				(r4->Data_0x30.Data_0)();
+				(r4->cableFuncs.init)();
 
 				Data_23492084[r4->bData_0xd9] = 0; //r7
 			}
 			//loc_2340def8
-			if (0 == (r4->Data_0x30.Data_8)(sb))
+			if (0 == (r4->cableFuncs.tune)(pTransponder))
 			{
-				r4->bData_0x9c = 0; //r7
+				r4->measurementData.bLock = 0; //r7
 				r4->bState = 2;
 				r4->wData_0xd4 = 5; //r5
 				//->loc_2340df28
@@ -181,11 +171,11 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 		if (r4->bState == 2) //Check Lock
 		{
 			//loc_2340df28
-			uint8_t r8 = r4->bData_0x9c;
+			uint8_t oldLock = r4->measurementData.bLock;
 
-			if (0 != (r4->Data_0x30.Data_0x0c)(&r4->bData_0x9c))
+			if (0 != (r4->cableFuncs.getLock)(&r4->measurementData.bLock))
 			{
-				r4->bData_0x9c = 0; //r7
+				r4->measurementData.bLock = 0; //r7
 				//->loc_2340dfb0
 			}
 			else
@@ -194,15 +184,15 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 #if 0
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "frontend_cable_thread_func: r8=%d, r4->bData_0x9c=%d\r\n", 
-							r8, r4->bData_0x9c);
+					sprintf(debug_string, "frontend_cable_thread_func: oldLock=%d, r4->measurementData.bLock=%d\r\n", 
+							oldLock, r4->measurementData.bLock);
 					console_send_string(debug_string);
 				}
 #endif
 
-				if (r8 != r4->bData_0x9c)
+				if (oldLock != r4->measurementData.bLock)
 				{
-					if (r4->bData_0x9c == 0)
+					if (r4->measurementData.bLock == 0)
 					{
 						//0x2340df58
 						if (r4->stateChangeCallback != 0)
@@ -224,9 +214,9 @@ int frontend_cable_thread_func(Struct_2354dd70* r4)
 						}
 						//loc_2340dfb0
 					}
-				} //if (r8 != r4->bData_0x9c)
+				} //if (oldLock != r4->measurementData.bLock)
 				//loc_2340df8c
-				if (r4->bData_0x9c == 0)
+				if (r4->measurementData.bLock == 0)
 				{
 					//loc_2340df98: Fall back to tune state after configured number of cycles
 					r4->wData_0xd4--;
@@ -281,31 +271,31 @@ void sub_2340e274()
 /* 2340e604 - todo */
 void frontend_thread()
 {
-	uint8_t sp;
-	Struct_2354dd70* r4;
+	uint8_t err;
+	Frontend* fe;
 	int r5 = 0;
 
 	while (1)
 	{
 		//loc_2340e61c
-		OSSemPend(fe_manager_pSema, 0, &sp);
+		OSSemPend(fe_manager_pSema, 0, &err);
 
 #if 0
     	console_send_string("frontend_thread (fe_manager.c): TODO\r\n");
 #endif
 
-		r4 = &Data_2354dd70[r5];
+		fe = &Data_2354dd70[r5];
 
-		if (r4->threadFunc != 0)
+		if (fe->threadFunc != 0)
 		{
-			(r4->threadFunc)(r4);
+			(fe->threadFunc)(fe);
 		}
 
-		if (r4->Data_0x5c != 0)
+		if (fe->measurementCallback != 0)
 		{
-			if (r4->Data_0x58 != 0)
+			if (fe->measurementFunc != 0)
 			{
-				(r4->Data_0x58)(r4);
+				(fe->measurementFunc)(fe);
 			}
 		}
 
@@ -374,12 +364,12 @@ int fe_manager_init(fe_manager_Params* pParams)
 
 
 /* 2340e754 - todo */
-Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
+Frontend* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 {
 	uint8_t sp_0x28;
 	Struct_20401328 sp_0x1c;
 	uint8_t i;
-	Struct_2354dd70* r4 = 0;
+	Frontend* r4 = 0;
 
 #if 0
 	{
@@ -545,7 +535,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 				if (sp_0x28 == 0)
 				{
 					r4->threadFunc = sub_2340e274;
-					r4->Data_0x58 = sub_2340e23c;
+					r4->measurementFunc = sub_2340e23c;
 					//->loc_2340e9b0
 				}
 				else
@@ -574,7 +564,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 				if (sp_0x28 == 0)
 				{
 					r4->threadFunc = sub_2340e054;
-					r4->Data_0x58 = sub_2340dfbc;
+					r4->measurementFunc = sub_2340dfbc;
 					//->loc_2340eb04
 				}
 				else
@@ -587,55 +577,20 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 #endif
                 if (r5->Data_4 == 3)
 			{
-#if 0
-				{
-					uint8_t rxData[1];
-					uint8_t* pRxData = &rxData[0];
-					int numRxBytes = sizeof(rxData);
-					uint16_t wTxData = 0;
-
-					for (uint8_t addr = 0x30; addr < 0x31; addr++)
-					{
-						int res = i2c_master_read_reg(main_hI2c0, addr, wTxData, pRxData, numRxBytes);
-
-						extern char debug_string[];
-						sprintf(debug_string, "main_frontend_i2c_init: addr=0x%x, res=%d\r\n", addr, res);
-						console_send_string(debug_string);
-					}
-				}
-#endif
-
 				if (r4->resetGpio != 0)
 				{
 					frontend_reset_by_gpio(r4);
 				}
 
-#if 0
-				{
-					uint8_t rxData[1];
-					uint8_t* pRxData = &rxData[0];
-					int numRxBytes = sizeof(rxData);
-					uint16_t wTxData = 0;
-
-					for (uint8_t addr = 0x30; addr < 0x31; addr++)
-					{
-						int res = i2c_master_read_reg(main_hI2c0, addr, wTxData, pRxData, numRxBytes);
-
-						extern char debug_string[];
-						sprintf(debug_string, "main_frontend_i2c_init: addr=0x%x, res=%d\r\n", addr, res);
-						console_send_string(debug_string);
-					}
-				}
-#endif
-
-				//Set Addresses
-				(r8->Data_4)(bData_23492080, r5->bData_9, r5->bData_8, 0,
+				(((Frontend_Cable_Funcs*)r8)->setParams)(bData_23492080, 
+						r5->bData_9, 
+						r5->bData_8, 0,
 						r5->hI2c, r4->resetGpio,
-						r4->Data_0xa4, r4->Data_0xa8, r4->Data_0xb0, r4->Data_0xac);
+						r4->Data_0xa4, r4->Data_0xa8, 
+						r4->Data_0xb0, r4->Data_0xac);
 
-				//Init
-				sp_0x28 = 0xff & (r8->Data_0)();
-#if 1
+				sp_0x28 = 0xff & (((Frontend_Cable_Funcs*)r8)->init)();
+#if 0
 				{
 					char str[40];
 					sprintf(str, "fe_manager_detect: (3): sp_0x28=%d\r\n", sp_0x28);
@@ -646,10 +601,10 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 				if (sp_0x28 == 0)
 				{
 					//0x2340ea1c
-					memcpy(&r4->Data_0x30, r8, 8*4);
+					memcpy(&r4->cableFuncs, r8, sizeof(Frontend_Cable_Funcs));
 
 					r4->threadFunc = frontend_cable_thread_func;
-					r4->Data_0x58 = sub_2340dd74;
+					r4->measurementFunc = frontend_cable_measurement_func;
 
 #if 0
 					if (sp_0x28 != 0)
@@ -675,7 +630,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 			else if (r5->Data_4 == 5)
 			{
 				r4->threadFunc = sub_2340dce8;
-				r4->Data_0x58 = sub_2340dc9c;
+				r4->measurementFunc = sub_2340dc9c;
 			}
 		} //if (r5->Data_4 != 0)
 
@@ -730,7 +685,7 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 			r4->Data_0xd0 = r5->Data_4;
 			r4->bState = 0; //sl;
 			r4->bData_0xda = 0xff;
-			r4->Data_0x98 = r4->bData_0xd9 = bData_23492080++;
+			r4->measurementData.Data_4 = r4->bData_0xd9 = bData_23492080++;
 
 			if (bData_23492080 == 2)
 			{
@@ -771,13 +726,13 @@ Struct_2354dd70* fe_manager_detect(Struct_2340e754* r5, sub_2340e754_1* r8)
 
 
 /* 2340eb74 / 23415a90 - todo */
-int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFunc/*r6*/)(), uint16_t r7)
+int fe_manager_tune(Frontend* r4, Transponder transponder, void (*callbackFunc/*r6*/)(), uint16_t r7)
 {
-//	int sp_0x24;
+//	int transponder;
 	uint8_t err; //sp
 
-//	void* r6 = sp_0x24.Data_0;
-//	int r7 = sp_0x24.Data_4;
+//	void* r6 = transponder.Data_0;
+//	int r7 = transponder.Data_4;
 
 #if 0
 	console_send_string("fe_manager_tune (todo.c): TODO\r\n");
@@ -797,7 +752,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFun
 
 	if (r4->Data_0x60 != 0)
 	{
-		if (0 != (r4->Data_0x60)(&sp_0x24))
+		if (0 != (r4->Data_0x60)(&transponder))
 		{
 			OSSemPost(fe_manager_pSema);
 
@@ -807,9 +762,9 @@ int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFun
 	//loc_2340ebe4
 	r4->bState = 1; //sb
 
-	if (0 == memcmp(&r4->Data_0x7c, &sp_0x24, sizeof(Transponder)))
+	if (0 == memcmp(&r4->Data_0x7c, &transponder, sizeof(Transponder)))
 	{
-		r4->bData_0x9c = 0; //r8
+		r4->measurementData.bLock = 0; //r8
 		r4->wData_0xd4 = 5;
 		//->loc_2340ec28
 	}
@@ -818,7 +773,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFun
 		//0x2340ec14
 		r4->bState = 1; //sb
 
-		memcpy(&r4->Data_0x7c, &sp_0x24, sizeof(Transponder));
+		memcpy(&r4->Data_0x7c, &transponder, sizeof(Transponder));
 	}
 	//loc_2340ec28
 	Data_2354dd70[0].stateChangeCallback = 0; //r8
@@ -838,7 +793,7 @@ int fe_manager_tune(Struct_2354dd70* r4, Transponder sp_0x24, void (*callbackFun
 
 
 /* 2340ec54 - complete */
-int sub_2340ec54(Struct_2354dd70* r4, void (*func)())
+int sub_2340ec54(Frontend* r4, void (*func)())
 {
 	uint8_t err;
 
@@ -860,18 +815,18 @@ int sub_2340ec54(Struct_2354dd70* r4, void (*func)())
 
 
 /* 2340ec8c / 23415ba8 - complete */
-int sub_2340ec8c(void* h, void (*r6)())
+int fe_manager_register_measurement_callback(void* h, int (*cbk)(Frontend_Measurement*))
 {
 #if 0
-	console_send_string("sub_2340ec8c (todo.c): TODO\r\n");
+	console_send_string("fe_manager_register_measurement_callback (todo.c): TODO\r\n");
 #endif
 
-	Struct_2354dd70* r4 = h;
+	Frontend* r4 = h;
 	uint8_t err;
 
 	OSSemPend(fe_manager_pSema, 0, &err);
 
-	r4->Data_0x5c = r6;
+	r4->measurementCallback = cbk;
 
 	OSSemPost(fe_manager_pSema);
 
@@ -880,7 +835,7 @@ int sub_2340ec8c(void* h, void (*r6)())
 
 
 /* 2340ecc0 - complete */
-int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
+int sub_2340ecc0(Frontend* r4, uint8_t* b, uint8_t* r5)
 {
 	int r0;
 
@@ -922,7 +877,7 @@ int sub_2340ecc0(Struct_2354dd70* r4, uint8_t* b, uint8_t* r5)
 	//loc_2340ed0c
 	*r5 = r0;
 
-	return r4->bData_0x9c;
+	return r4->measurementData.bLock;
 }
 
 
@@ -981,7 +936,7 @@ int fe_manager_get_transponder_type(Transponder* r0)
 
 
 /* 2340ed98 - complete */
-int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
+int fe_manager_shutdown(Frontend* r4, int b, void (*func)())
 {
 	uint8_t err;
 
@@ -1013,7 +968,7 @@ int fe_manager_shutdown(Struct_2354dd70* r4, int b, void (*func)())
 
 
 /* 2340ee34 - complete */
-int sub_2340ee34(Struct_2354dd70* p)
+int sub_2340ee34(Frontend* p)
 {
 	if (p != 0)
 	{
@@ -1045,7 +1000,7 @@ void sub_2340ee78(int r6, int r5)
 
 		if (r5 != 0)
 		{
-			Data_2354dd70[1].bData_0x9c = 0;
+			Data_2354dd70[1].measurementData.bLock = 0;
 			Data_2354dd70[1].bState = 1;
 		}
 	}

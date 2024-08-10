@@ -1516,7 +1516,7 @@ void menu_root_start_event_display()
 /* 2346f7e0 - todo */
 int sub_2346f7e0()
 {
-	Struct_2354dd70* r0;
+	Frontend* r0;
 	int r4;
 	int sp4 = 0;
 	int sp = 0;

@@ -2011,7 +2011,7 @@ int sub_2340b55c()
 	console_send_string("sub_2340b55c (todo.c): TODO\r\n");
 #endif
 
-	Struct_2354dd70* r4 = 0;
+	Frontend* r4 = 0;
 
 	if (Data_23492024 != 0)
 	{

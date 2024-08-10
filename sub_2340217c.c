@@ -3,6 +3,7 @@
 #include "data.h"
 #include "i2c.h"
 #include "sub_2340a6a0.h"
+#include "mt_fe_tn_tc3800.h"
 #include "Struct_23443080.h"
 #include "m88dc2800.h"
 #include "sub_2340217c.h"
