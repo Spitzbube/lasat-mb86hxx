@@ -206,9 +206,10 @@ int sub_23459440(int r5)
 	return 0;
 }
 
+#endif
 
 /* 23459628 - todo */
-void web_interface_send_channel_list(int s, int r7)
+void web_interface_send_channel_list(int s, int iList)
 {
 #if 0
 	console_send_string("web_interface_send_channel_list (todo.c): TODO\r\n");
@@ -217,29 +218,29 @@ void web_interface_send_channel_list(int s, int r7)
 	uint8_t strId[10]; //size???
 	Struct_2340bf0c sp4;
 	uint32_t i;
-	int r6 = 0;
-	struct Struct_234fd8f0_Inner0* r4 = sub_2344f770();
+	int idx = 0;
+	Channel* pChannel = &sub_2344f770()->arChannels[0];
 
 	sub_2340bf0c(&sp4);
 
 	int r8 = 0xffff;
-	for (i = 0; i < 6000; i++, r4++)
+	for (i = 0; i < 6000; i++, pChannel++)
 	{
 		//loc_23459654
-		if (r4->Data_0.wData_2 == r8)
+		if (pChannel->wFlags_2 == r8)
 		{
 			//->loc_2345970c
 			break;
 		}
 		//0x23459660
-		if (((r4->Data_0.wData_2 & 8) >> 3) == r7)
+		if (((pChannel->wFlags_2 & (1 << 3)) >> 3) == iList)
 		{
 			//0x2345966c
 			lwip_write(s, "<option value=\"", 0x0f);
-			sprintf(strId, "%d", r6);
+			sprintf(strId, "%d", idx);
 			lwip_write(s, strId, strlen(strId));
 
-			if ((sp4.wData_0x2a == r6) && (sp4.bData_0x30 == r7))
+			if ((sp4.wCurrentChannel == idx) && (sp4.bCurrentChList == iList))
 			{
 				lwip_write(s, "\" selected >", 0x0c);
 			}
@@ -248,17 +249,16 @@ void web_interface_send_channel_list(int s, int r7)
 				lwip_write(s, "\">", 0x02);
 			}
 
-			lwip_write(s, r4->Data_0x10.service_name, strlen(r4->Data_0x10.service_name));
+			lwip_write(s, pChannel->service_name, strlen(pChannel->service_name));
 			lwip_write(s, "</option>\r\n", 0x0b);
 
-			r6++;
+			idx++;
 		}
 		//loc_234596f8
-	} //for (uint32_t i = 0; i < 6000; i++, r4++)
+	} //for (uint32_t i = 0; i < 6000; i++, pChannel++)
 	//loc_2345970c
 }
 
-#endif
 
 /* 23459714 - todo */
 void sub_23459714(int s)
@@ -419,9 +419,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	lwip_write(s, "<form action=\"list\">\r\n", 0x16);
 	//->loc_23459e80
 	lwip_write(s, "<select name=\"program\" title=\"TV-List\">\r\n", 0x29);
-#if 0
 	web_interface_send_channel_list(s, 1);
-#endif
 	lwip_write(s, "</select><br>\r\n", 0x0f);
 	lwip_write(s, "<input type=submit value=\"Start\">\r\n", 0x23);
 	lwip_write(s, "</form>\r\n", 0x09);
@@ -431,9 +429,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	lwip_write(s, "<legend>RADIO-Liste</legend>\r\n", 0x1e);
 	lwip_write(s, "<form action=\"list_radio\">\r\n", 0x1c);
 	lwip_write(s, "<select name=\"program\" title=\"RADIO-List\">\r\n", 0x2c);
-#if 0
 	web_interface_send_channel_list(s, 0);
-#endif
 	lwip_write(s, "</select><br>\r\n", 0x0f);
 	lwip_write(s, "<input type=submit value=\"Start\">\r\n", 0x23);
 	lwip_write(s, "</form>\r\n", 0x09);

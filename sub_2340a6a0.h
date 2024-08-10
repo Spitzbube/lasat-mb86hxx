@@ -99,7 +99,6 @@ typedef struct
 	uint16_t wFlags_2; //2
 	uint16_t wTransponderIndex; //4
 	uint16_t wData_6; //6
-//			int Data_8; //8
 	uint16_t wPcrPID; //8
 	uint16_t wVideoPID; //10
 	uint16_t wAc3PID; //12
@@ -223,5 +222,6 @@ extern void sub_2340bf0c(Struct_2340bf0c*);
 extern void sub_23409770(void);
 extern void sub_23409788(void);
 extern void channel_write_lastmode(void);
+extern Channel_Database* sub_2344f770(void);
  
 #endif //SUB_2340a6a0

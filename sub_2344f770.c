@@ -8,7 +8,7 @@ extern Channel_Database channel_database;
 
 
 /* 2344f770 - complete */
-struct Channel_Database* sub_2344f770()
+Channel_Database* sub_2344f770(void)
 {
 	uint8_t err;
 	struct Channel_Database* r4;
