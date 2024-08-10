@@ -116,6 +116,36 @@ void  *OSMemGet (OS_MEM *pmem, uint8_t *err)
 }
 
 
+/* 23463b0c - complete */
+INT8U  OSMemPut (OS_MEM *pmem, void *pblk)
+{
+#if OS_CRITICAL_METHOD == 3                      /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0;
+#endif
+
+
+
+#if OS_ARG_CHK_EN > 0
+    if (pmem == (OS_MEM *)0) {                   /* Must point to a valid memory partition             */
+        return (OS_MEM_INVALID_PMEM);
+    }
+    if (pblk == (void *)0) {                     /* Must release a valid block                         */
+        return (OS_MEM_INVALID_PBLK);
+    }
+#endif
+    OS_ENTER_CRITICAL();
+    if (pmem->OSMemNFree >= pmem->OSMemNBlks) {  /* Make sure all blocks not already returned          */
+        OS_EXIT_CRITICAL();
+        return (OS_MEM_FULL);
+    }
+    *(void **)pblk      = pmem->OSMemFreeList;   /* Insert released block into free block list         */
+    pmem->OSMemFreeList = pblk;
+    pmem->OSMemNFree++;                          /* One more memory block in this partition            */
+    OS_EXIT_CRITICAL();
+    return (OS_ERR_NONE);                          /* Notify caller that memory block was released       */
+}
+
+
 /* 23463bd4 - complete */
 void  OS_MemInit (void)
 {

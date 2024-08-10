@@ -512,10 +512,8 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	console_send_string("web_interface_decode_request (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	Struct_2340bf0c sp_0x28;
-	struct Struct_234fd8f0_Inner0 sp;
-#endif
+    Channel sp;
 
 	int r4;
 	int r5;
@@ -600,28 +598,29 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 		r4 = 0;
 		//->loc_2345a418
 	}
+#endif
 	//loc_2345a2f4
 	//r7, #0xa
 	else if (0 == strncmp(sb, "GET /list_radio", 15))
 	{
 		//0x2345a310
-		uint8_t* r0 = sb + 18;
-		r4 = 0;
-		while (*r0 != ' ')
+		uint8_t* digit = sb + sizeof("GET /list_radio?program=") - 1;
+		int channelNr = 0;
+		while (*digit != ' ')
 		{
 			//loc_2345a318
-			r4 = (r4 * 10 + *r0++) - '0';
+			channelNr = (channelNr * 10 + *digit++) - '0';
 		}
 		//0x2345a330
 		sub_2340bf0c(&sp_0x28);
 
-		if (sp_0x28.bData_0x30 != 0)
+		if (sp_0x28.bCurrentChList != 0)
 		{
-			//->loc_2345a344
-			sub_2340caf0();
+			//->loc_2345a344: TV=1 -> Radio=0
+			channel_switch_lists();
 		}
 		//loc_2345a398
-		channel_start_number(&sp, (uint16_t) r4, 0);
+		channel_start_number(&sp, (uint16_t)channelNr, 0);
 		//->loc_2345a228
 		r5 = 0;
 		//->loc_2345a2ec
@@ -632,23 +631,23 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	else if (0 == strncmp(sb, "GET /list", 9))
 	{
 		//0x2345a364
-		uint8_t* r0 = sb + 18;
-		r4 = 0;
-		while (*r0 != ' ')
+		uint8_t* digit = sb + sizeof("GET /list?program=") - 1;
+		int channelNr = 0;
+		while (*digit != ' ')
 		{
 			//loc_2345a36c
-			r4 = (r4 * 10 + *r0++) - '0';
+			channelNr = (channelNr * 10 + *digit++) - '0';
 		}
 		//0x2345a384
 		sub_2340bf0c(&sp_0x28);
 
-		if (sp_0x28.bData_0x30 != 1)
+		if (sp_0x28.bCurrentChList != 1)
 		{
-			//->loc_2345a344
-			sub_2340caf0();
+			//->loc_2345a344: Radio=0 -> TV=1
+			channel_switch_lists();
 		}
 		//loc_2345a398
-		channel_start_number(&sp, (uint16_t) r4, 0);
+		channel_start_number(&sp, (uint16_t)channelNr, 0);
 		//->loc_2345a228
 		r5 = 0;
 		//->loc_2345a2ec
@@ -657,7 +656,6 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	}
 	//loc_2345a3ac
 	//TODO!!!
-#endif
 
 	//loc_2345a418
 	web_interface_send_response(r8, r4, r5, r6);

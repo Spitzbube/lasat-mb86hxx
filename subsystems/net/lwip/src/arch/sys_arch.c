@@ -501,7 +501,7 @@ void sys_mbox_free(sys_mbox_t *mbox)
 
 	OSQDel(r4->pQueue, 0, &sp);
 
-	sp = sub_23463b0c(Data_234943a8, *mbox);
+	sp = OSMemPut(Data_234943a8, *mbox);
 }
 
 
