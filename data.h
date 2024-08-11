@@ -17,6 +17,7 @@
 #include "tsd.h"
 #include "psi.h"
 
+#define NULL ((void*)0)
 
 extern void* Data_23491d94; //23491d94 +8
 extern void* main_hI2c0; //23491d98 +12 = 0xc

@@ -41,7 +41,6 @@ set(SRCS
    sub_23418e1c.c
    psi.c
    sub_2344ed20.c
-   sub_23458874.c
    sub_23411b0c.c
    channel_list_update.c    #0x2343dcfc
    audec.c
@@ -62,6 +61,8 @@ set(SRCS
    menu_information.c
    menu_guided_install.c    #?
    ttx.c
+   ts_play.c                #?              #?              #0x235afe88
+   ts_record.c              #?              #?              #0x237bf890
    web_interface.c
    hexdump.c
    todo.c
@@ -103,6 +104,7 @@ add_definitions(
 )
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
+    VDR110
     USB_HUB
     USB_ASIX
 #    PSI_PMT_FILTER_DEBUG

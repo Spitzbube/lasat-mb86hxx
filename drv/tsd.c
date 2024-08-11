@@ -35,6 +35,7 @@ int Data_234ac8d0 = 0; //234ac8d0 +4
 void* tsd_sema/*sema*/ = 0; //234923AC / 234ac8d4 +8
 int Data_234ac8d8 = 0; //234923B0 / 234ac8d8 +0xc
 int Data_234ac8dc = 0; //234923B4 / 234AC8DC +0x10
+void* Data_234923b8 = 0; //234923B8 / ??? +0x14
 
 //bm.c
 extern int Data_236e0b14[]; //236e0b14 / 235b1cec
@@ -793,6 +794,22 @@ int sub_2342a788(int a)
 	}
 
 	return 0;
+}
+
+
+/* 2341e974 /  / 2342ac58 - complete */
+int sub_2341e974(BM_Handle* a)
+{
+#if 0
+	console_send_string("sub_2341e974 (todo.c): TODO\r\n");
+#endif
+
+	if (a == 0)
+	{
+		return 0;
+	}
+
+	return a->channelId;
 }
 
 
@@ -1832,6 +1849,84 @@ int sub_2342c4f8(Struct_2342c4f8* r4)
 }
 
 
+/* 234210ec /  / 2342d3d0 - todo */
+int sub_234210ec(void** pHandle, TSD_PesParserParams* b, int c)
+{
+	uint8_t err;
+	Struct_235f048c* h = 0;
+
+#if 0
+	console_send_string("sub_234210ec (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(tsd_sema, 0, &err);
+	if (err != 0)
+	{
+		return err;
+	}
+
+	for (uint32_t i = 0; i < 22; i++)
+	{
+		if (Data_235f048c[i].bData_0 == 0)
+		{
+			Data_235f048c[i].bData_0 = 1;
+			h = &Data_235f048c[i];
+			break;
+		}
+	}
+
+	if (h == 0)
+	{
+		OSSemPost(tsd_sema);
+
+		return 5;
+	}
+
+	if (c != 0)
+	{
+		Data_234923b8 = bm_open(&b->Data_4);
+	}
+
+	if (Data_234923b8 == 0)
+	{
+		OSSemPost(tsd_sema);
+
+		return 0xff;
+	}
+
+	tsd_SetPidConfig_1_BufferIndex(b->bData_0, b->Data_4.pidChannel, 
+		sub_2341e974(Data_234923b8));
+		
+	if (0 != tsd_SetPidFilter(b->bData_0, b->Data_4.pidChannel & 0xff, b->pid))
+	{
+		h->bData_0 = 0;
+
+		OSSemPost(tsd_sema);
+
+		return 1;
+	}
+
+	tsd_SetPidConfig_2_StoreCompletePacket(b->bData_0, b->Data_4.pidChannel, 1);
+
+	*pHandle = h;
+
+	h->bData_0x28 = b->bData_1;
+	h->bmHandle = Data_234923b8;
+	h->Data_0x24 = b->Data_0x38;
+	h->Data_4 = b->bData_0;
+	h->Data_4 |= (b->Data_4.pidChannel << 16);
+	h->Data_0x18 = 0; //r8
+	h->Data_8 = 0; //r8
+	h->Data_12 = b->Data_4.bufferAddress;
+	h->Data_0x10 = b->Data_4.bufferAddress + b->Data_4.bufferSize;
+	h->Data_0x14 = b->Data_4.bufferSize;
+
+	OSSemPost(tsd_sema);
+
+	return 0;
+}
+
+
 /* 2342125c / 2342c73c - todo */
 int tsd_open_pes_parser(void** pHandle, TSD_PesParserParams* r4)
 {
@@ -2737,6 +2832,22 @@ uint32_t tsd_get_pts(void* a)
 	r1 *= 300; //TSD_EXTENSION_RESOLUTION
 
 	return r1 / 2;
+}
+
+
+/* 23421e48 - todo */
+void sub_23421e48()
+{
+	console_send_string("sub_23421e48 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23421eec - todo */
+void sub_23421eec()
+{
+	console_send_string("sub_23421eec (todo.c): TODO\r\n");
+
 }
 
 

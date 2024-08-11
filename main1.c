@@ -23,6 +23,8 @@
 #include "radiotext.h"
 #include "channel_list_update.h"
 #include "scan.h"
+#include "ts_play.h"
+#include "ts_record.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -113,6 +115,17 @@ void sub_2340052c()
 #endif
 
 	/* empty */
+}
+
+
+/* 23400530 - complete */
+int sub_23400530(void)
+{
+#if 0
+	console_send_string("sub_23400530 (todo.c): TODO\r\n");
+#endif
+
+	return 0;
 }
 
 
@@ -1107,6 +1120,44 @@ void main_channel_init()
 	channel_init(bVolume);
 
 	channel_load_lists();
+}
+
+
+/* 23401280 /  / 234024ec - complete */
+void main_ts_play_init(void)
+{
+#ifndef VDR110
+	Struct_23418b54 sp4;
+	TS_Record_Params  sp_0x14;
+
+	sp_0x14.threadPrio = THREAD_PRIO_TS_RECORD;
+	sp_0x14.bufferAddress = 0x3000000;
+	sp_0x14.bufferSize = 0x1ffc00;
+	sp_0x14.Data_0xc = 0x20000000;
+	sp_0x14.Data_8 = 0x21958000;
+
+	ts_record_init(&sp_0x14);
+
+	sp4.threadPrio = THREAD_PRIO_TS_PLAY;
+
+	sp4.Data_4 = 0x231ffc00; //sub_234019e0(0x24c00);
+	extern void sub_2344c7f4();
+	sp4.Data_0 = sub_2344c7f4;
+	sp4.Data_8 = 0x20000000;
+
+	ts_play_init(&sp4);
+
+	sub_23426678();
+#else
+	Struct_23418b54 sp;
+
+	sp.threadPrio = THREAD_PRIO_TS_PLAY;
+	sp.Data_4 = sub_234019e0(0x24c00);
+	sp.Data_0 = 0;
+	sp.Data_8 = 0;
+
+	ts_play_init(&sp);
+#endif
 }
 
 

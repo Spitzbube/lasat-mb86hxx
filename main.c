@@ -56,6 +56,7 @@ void startup_thread()
 	sub_234014dc();
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
+	main_ts_play_init();
 	sub_234018c8();
 	main_set_power_mode();
 	main_inputhandler_init();

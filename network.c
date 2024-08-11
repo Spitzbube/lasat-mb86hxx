@@ -264,8 +264,9 @@ int network_init(uint32_t r4)
 	Data_234920f0 = r4;
 
 	if (r0 == 0)
+#endif
 	{
-		sub_2345b270();
+		sub_2345b270(); //-> web_interface.c
 
 		sys_thread_new("\n HTTP", web_interface_http_thread, 0, 0, THREAD_PRIO_NETWORK_HTTP);
 		//->loc_234191b8
@@ -274,6 +275,7 @@ int network_init(uint32_t r4)
 		return 0;
 	}
 	//loc_23419178
+#if 0
 	if (r0 == 2)
 	{
 		//->loc_23419190
@@ -287,9 +289,6 @@ int network_init(uint32_t r4)
 
 		return 0;
 	}
-#else
-	sys_thread_new("\n HTTP", web_interface_http_thread, 0, 0, THREAD_PRIO_NETWORK_HTTP);
-//	sys_thread_new("\n streaming", web_interface_streaming_thread, 0, 0, THREAD_PRIO_NETWORK_STREAMING);
 #endif
 	//loc_234191c0
 	return 0xff;

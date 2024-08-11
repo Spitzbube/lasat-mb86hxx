@@ -2,8 +2,8 @@
 #include "data.h"
 #include "ucos_ii.h"
 #include "lwip/sockets.h"
+#include "psi.h"
 
-#if 0
 
 typedef struct
 {
@@ -11,18 +11,17 @@ typedef struct
 	uint16_t fill_12; //12 = 0x0c
 	struct Struct_2345b028_1_Inner14
 	{
-		uint16_t wData_0; //0
+		uint16_t wPid; //0
 		uint8_t bData_2; //2
 		uint8_t fill_3; //3
 		//4
-	} Data_14[10]; //14 = 0x0e
+	} arPackets[10]; //14 = 0x0e
 	uint16_t fill_0x36; //0x36
 	uint16_t wData_0x38; //0x38
 	uint16_t fill_0x3a; //0x3a
 	//0x3c
 } Struct_2345b028_1;
 
-#endif
 
 uint8_t Data_237bfd6c[4000]; //237bfd6c +0xfa0 = 237C0D0C
 
@@ -31,38 +30,35 @@ uint8_t Data_237bfd6c[4000]; //237bfd6c +0xfa0 = 237C0D0C
 struct
 {
 	int Data_0; //0
-#if 0
 	int Data_237c0d10; //0x237c0d10 +4
 	uint16_t wData_237c0d14; //237c0d14 +8
 	int fill_12[3]; //12
 	void* (*Data_237c0d24)(); //237c0d24 +0x18 = 24
-#endif
 	void (*Data_0x1c)(); //237C0D28 +0x1c = 28
-#if 0
-	TSD_Handle** Data_0x20; //237C0D2C +0x20
+	TSD_Handle** arhTsd; //237C0D2C +0x20
 	int fill_0x24; //0x24
 	Struct_2345b028_1 Data_237c0d34; //237c0d34 +0x28
 	struct sockaddr_in Data_237c0d70; //237c0d70 +0x64
-#endif
 
 } Data_237c0d0c; //237c0d0c
 
 #if 0
 
 uint8_t bData_23493e7c; //23493e7c
+#endif
 int Data_23494094; //23494094
 
 
-void sub_2345ac74();
-int sub_2345b29c();
-int sub_2345b2b8();
+static void sub_2345ac74();
+int sub_2345b29c(void);
+int sub_2345b2b8(void);
 
 
 /* 23459440 - todo */
-int sub_23459440(int r5)
+int web_interface_start_streamout(int r5)
 {
 #if 0
-	console_send_string("sub_23459440 (todo.c): TODO\r\n");
+	console_send_string("web_interface_start_streamout (todo.c): TODO\r\n");
 #endif
 
 #if 0
@@ -71,7 +67,7 @@ int sub_23459440(int r5)
 	struct sockaddr_in sockaddr; //sp_0x4c0;
 #endif
 	Struct_2345b028_1 sp_0x484;
-	struct Struct_234a73e8_Inner_0x248 sp_0xec; //r7
+	PSI_Program sp_0xec; //r7
 	socklen_t socklen; //sp_0xe8;
 	struct
 	{
@@ -109,65 +105,65 @@ int sub_23459440(int r5)
 	{
 		int r0 = 1;
 
-		sp_0x484.Data_14[0].bData_2/*bData_0x10*/ = 1;
-		sp_0x484.Data_14[0].wData_0/*wData_0xe*/ = 0;
+		sp_0x484.arPackets[0].bData_2/*bData_0x10*/ = 1;
+		sp_0x484.arPackets[0].wPid/*wData_0xe*/ = 0x00; //PAT
 
 		if (sp_0xec.bData_0 & 0x10)
 		{
 			//0x234594fc
-			if (sp_0xec.wData_0x336/*r1*/ != 0)
+			if (sp_0xec.wVideoPID/*r1*/ != 0)
 			{
 				//0x23459504
 				//r0 = 7;
 				//->loc_23459518
 				r0 = 2;
-				sp_0x484.Data_14[1].bData_2/*bData_0x14*/ = 7;
-				sp_0x484.Data_14[1].wData_0/*wData_0x12*/ = sp_0xec.wData_0x336;
+				sp_0x484.arPackets[1].bData_2/*bData_0x14*/ = 7;
+				sp_0x484.arPackets[1].wPid/*wData_0x12*/ = sp_0xec.wVideoPID;
 			}
 			//loc_23459528
 		}
 		else
 		{
 			//loc_2345950c
-			if (sp_0xec.wData_0x336/*r1*/ != 0)
+			if (sp_0xec.wVideoPID/*r1*/ != 0)
 			{
 				//0x23459514
 				//r0 = 3;
 				//loc_23459518
 				r0 = 2;
-				sp_0x484.Data_14[1].bData_2/*bData_0x14*/ = 3;
-				sp_0x484.Data_14[1].wData_0/*wData_0x12*/ = sp_0xec.wData_0x336;
+				sp_0x484.arPackets[1].bData_2/*bData_0x14*/ = 3;
+				sp_0x484.arPackets[1].wPid/*wData_0x12*/ = sp_0xec.wVideoPID;
 			}
 			//loc_23459528
 		}
 		//loc_23459528
-		if (sp_0xec.wData_0x33c != 0)
+		if (sp_0xec.wAudioPID != 0)
 		{
-			sp_0x484.Data_14[r0].bData_2/*bData_0x10*/ = 4;
-			sp_0x484.Data_14[r0].wData_0/*wData_0xe*/ = sp_0xec.wData_0x33c;
+			sp_0x484.arPackets[r0].bData_2/*bData_0x10*/ = 4;
+			sp_0x484.arPackets[r0].wPid/*wData_0xe*/ = sp_0xec.wAudioPID;
 			r0++;
 		}
 
 		if (sp_0xec.wData_0x338 != 0)
 		{
-			sp_0x484.Data_14[r0].bData_2/*bData_0x10*/ = 5;
-			sp_0x484.Data_14[r0].wData_0/*wData_0xe*/ = sp_0xec.wData_0x338;
+			sp_0x484.arPackets[r0].bData_2/*bData_0x10*/ = 5;
+			sp_0x484.arPackets[r0].wPid/*wData_0xe*/ = sp_0xec.wData_0x338;
 			r0++;
 		}
 		//0x23459564
 		if (sp_0xec.pmt_pid != 0)
 		{
-			sp_0x484.Data_14[r0].bData_2/*bData_0x10*/ = 6;
-			sp_0x484.Data_14[r0].wData_0/*wData_0xe*/ = sp_0xec.pmt_pid;
+			sp_0x484.arPackets[r0].bData_2/*bData_0x10*/ = 6;
+			sp_0x484.arPackets[r0].wPid/*wData_0xe*/ = sp_0xec.pmt_pid;
 			r0++;
 		}
 		//0x23459580
-		if ((sp_0xec.wData_0x334 != sp_0xec.wData_0x336) &&
-				(sp_0xec.wData_0x334 != sp_0xec.wData_0x33c) &&
-				(sp_0xec.wData_0x334 != sp_0xec.wData_0x338))
+		if ((sp_0xec.wPcrPID != sp_0xec.wVideoPID) &&
+				(sp_0xec.wPcrPID != sp_0xec.wAudioPID) &&
+				(sp_0xec.wPcrPID != sp_0xec.wData_0x338))
 		{
-			sp_0x484.Data_14[r0].bData_2/*bData_0x10*/ = 8;
-			sp_0x484.Data_14[r0].wData_0/*wData_0xe*/ = sp_0xec.wData_0x334;
+			sp_0x484.arPackets[r0].bData_2/*bData_0x10*/ = 8;
+			sp_0x484.arPackets[r0].wPid/*wData_0xe*/ = sp_0xec.wPcrPID;
 		}
 		//0x234595ac
 		socklen = 0x10;
@@ -201,12 +197,11 @@ int sub_23459440(int r5)
 		sp_0x484.wData_0x38 = r0;
 
 		sub_2345b028(&sp_0x484/*r4*/, sockaddr);
-	}
+	} //if (sp_0xec.pat_program_number != 0xffff)
 	//loc_2345961c
 	return 0;
 }
 
-#endif
 
 /* 23459628 - todo */
 void web_interface_send_channel_list(int s, int iList)
@@ -347,20 +342,18 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	console_send_string("web_interface_send_response (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	Struct_2340bf0c sp_0x50;
-	struct Struct_234fd8f0_Inner0 sp_0x28;
-	Struct_235fdfac sp_0x10;
+	Channel sp_0x28;
+	Transponder sp_0x10;
 
 	sub_2340bf0c(&sp_0x50);
 
 	uint8_t sp4[] = " disabled>";
 
-	sub_2340bf94(sp_0x50.wData_0x2a, &sp_0x28, &sp_0x10);
+	sub_2340bf94(sp_0x50.wCurrentChannel, &sp_0x28, &sp_0x10);
 	//0x23459a78
 
 	//TODO!!!
-#endif
 
 	//loc_23459b1c
 	lwip_write(s, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n", 0x2c);
@@ -449,16 +442,15 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	//0x2345a010
 	lwip_write(s, "</div>\r\n", 0x08);
 
-#if 0
 	lwip_write(s, "<div class=\"middle cont\">\r\n", 0x1b);
 
 	lwip_write(s, "<fieldset>\r\n", 0x0c);
 	lwip_write(s, "<legend>Status</legend>\r\n", 0x19);
 	lwip_write(s, "<p><b style=\"text-transform: uppercase;\">", 0x29);
-	lwip_write(s, sp_0x28.Data_0x10.service_name,
-			strlen(sp_0x28.Data_0x10.service_name));
+	lwip_write(s, sp_0x28.service_name, strlen(sp_0x28.service_name));
 	lwip_write(s, "</b></p>\n", 0x09);
 	//0x2345a08c
+#if 0
 	if (0 != sub_2343a150(0))
 	{
 		sub_23487af0(s, "<p>Speichermedium erkannt</p>", 0x1d);
@@ -475,6 +467,7 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 		lwip_write(s, "</span></p>\r\n", 0x0d);
 	}
 	//loc_2345a114
+#endif
 	if (sb != 0)
 	{
 		lwip_write(s, "<p>Streaming Receiver->PC aktiv</p>", 0x23);
@@ -499,7 +492,6 @@ void web_interface_send_response(int s, int sb, int sl, int fp)
 	//loc_2345a178
 	lwip_write(s, "</fieldset>\r\n", 0x0d);
 	lwip_write(s, "</div>\r\n", 0x08);
-#endif
 	//0x2345a198
 	sub_23459714(s);
 }
@@ -515,8 +507,8 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	Struct_2340bf0c sp_0x28;
     Channel sp;
 
-	int r4;
-	int r5;
+	int r4; //bStreamingReceiver_PC
+	int r5; //bStreamingPC_Receiver
 	int r6 = 0;
 
 	hex_dump("web_interface_decode_request", sb, r2);
@@ -574,6 +566,7 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 		r5 = 0;
 		//->loc_2345a418
 	}
+#endif
 	//loc_2345a298
 	else if (0 == strncmp(sb, "GET /StreamOut", 14))
 	{
@@ -581,7 +574,7 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 		if (0 == sub_23458874())
 		{
 			//0x2345a2bc
-			r6 = sub_23459440(r8);
+			r6 = web_interface_start_streamout(r8);
 			if (r6 == 0)
 			{
 				r4 = 1;
@@ -593,12 +586,11 @@ void web_interface_decode_request(int r8, uint8_t sb[], int r2)
 	else if (0 == strncmp(sb, "GET /StopStreamOut", 18))
 	{
 		//0x2345a2e8
-		sub_2345ac28();
+		web_interface_stop_streamout();
 		//loc_2345a2ec
 		r4 = 0;
 		//->loc_2345a418
 	}
-#endif
 	//loc_2345a2f4
 	//r7, #0xa
 	else if (0 == strncmp(sb, "GET /list_radio", 15))
@@ -806,6 +798,7 @@ void sub_2345a740()
 
 }
 
+#endif
 
 /* 2345aa18 - todo */
 int sub_2345aa18()
@@ -819,7 +812,7 @@ int sub_2345aa18()
 	uint32_t sp_0xc;
 	uint32_t sp8;
 
-	void* sb = Data_237c0d0c.Data_0x20[0];
+	void* sb = Data_237c0d0c.arhTsd[0];
 
 	uint32_t r0 = tsd_get_write_pointer(sb);
 
@@ -843,13 +836,13 @@ int sub_2345aa18()
 
 
 /* 2345ab60 - complete */
-int sub_2345ab60()
+static int web_interface_stop_streamout_tsd_pids(void)
 {
 #if 0
-	console_send_string("sub_2345ab60 (todo.c): TODO\r\n");
+	console_send_string("web_interface_stop_streamout_tsd_pids (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.Data_14;
+	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
 
 	for (uint32_t i = 0; i < 10; i++)
 	{
@@ -858,7 +851,7 @@ int sub_2345ab60()
 			break;
 		}
 
-		tsd_deactivate_pid_channel( Data_237c0d0c.Data_0x20[i] );
+		tsd_deactivate_pid_channel( Data_237c0d0c.arhTsd[i] );
 	}
 
 	Data_237c0d0c.Data_0x1c = 0;
@@ -875,13 +868,13 @@ int sub_2345aba4()
 #endif
 
 	void* r0;
-	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.Data_14;
+	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
 
 	sub_23421a30(2, Data_237c0d0c.Data_237c0d34.wData_0x38);
 
 	if (Data_237c0d0c.Data_237c0d34.wData_0x38 == 0)
 	{
-		r0 = Data_23491db4;
+		r0 = main_hFrontend1;
 	}
 	else
 	{
@@ -899,8 +892,8 @@ int sub_2345aba4()
 			break;
 		}
 
-		tsd_set_pes_pid_filter(Data_237c0d0c.Data_0x20[i], r5[i].wData_0 & 0x1fff);
-		tsd_activate_pid_channel(Data_237c0d0c.Data_0x20[i]);
+		tsd_set_pes_pid_filter(Data_237c0d0c.arhTsd[i], r5[i].wPid & 0x1fff);
+		tsd_activate_pid_channel(Data_237c0d0c.arhTsd[i]);
 	}
 	//loc_2345ac18
 	Data_237c0d0c.Data_0x1c = sub_2345aa18;
@@ -910,25 +903,29 @@ int sub_2345aba4()
 
 
 /* 2345ac28 - complete */
-int sub_2345ac28()
+int web_interface_stop_streamout(void)
 {
 #if 0
-	console_send_string("sub_2345ac28 (todo.c): TODO\r\n");
+	console_send_string("web_interface_stop_streamout (todo.c): TODO\r\n");
 #endif
 
-	uint32_t r0 = FAMOS_EnterCriticalSection();
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+	OS_ENTER_CRITICAL();
 
 	if (Data_237c0d0c.Data_0x1c == 0)
 	{
-		FAMOS_LeaveCriticalSection(r0);
+		OS_EXIT_CRITICAL();
 		//->loc_2345ac6c
 	}
 	else
 	{
 		//loc_2345ac48
-		Data_237c0d0c.Data_237c0d24 = sub_2345ab60;
+		Data_237c0d0c.Data_237c0d24 = web_interface_stop_streamout_tsd_pids;
 
-		FAMOS_LeaveCriticalSection(r0);
+		OS_EXIT_CRITICAL();
 		//->loc_2345ac60
 		while (Data_237c0d0c.Data_0x1c != 0)
 		{
@@ -972,6 +969,7 @@ void web_interface_streaming_thread()
 	}
 }
 
+#if 0
 
 /* 2345ace8 - todo */
 void sub_2345ace8() //Firsttime init thread
@@ -980,17 +978,20 @@ void sub_2345ace8() //Firsttime init thread
 
 }
 
+#endif
 
 /* 2345b028 - complete */
 int sub_2345b028(Struct_2345b028_1* r4, struct sockaddr_in b)
 {
-	uint32_t cpu_sr;
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
 
 #if 0
 	console_send_string("sub_2345b028 (todo.c): TODO\r\n");
 #endif
 
-	cpu_sr = FAMOS_EnterCriticalSection();
+	OS_ENTER_CRITICAL();
 
 	Data_237c0d0c.Data_237c0d34 = *r4;
 	Data_237c0d0c.Data_237c0d24 = sub_2345aba4;
@@ -998,16 +999,16 @@ int sub_2345b028(Struct_2345b028_1* r4, struct sockaddr_in b)
 	Data_237c0d0c.Data_237c0d10 = 0;
 	Data_237c0d0c.wData_237c0d14 = 0;
 
-	FAMOS_LeaveCriticalSection(cpu_sr);
+	OS_EXIT_CRITICAL();
 
 	return 0;
 }
 
 
 /* 2345b08c - todo */
-void sub_2345b08c(struct Struct_234a73e8_Inner_0x248* r4)
+void sub_2345b08c(PSI_Program* r4)
 {
-	struct Struct_234fd8f0_Inner_489DC sp_0x54;
+	Struct_234fd8f0_Inner_489DC sp_0x54;
 	struct sockaddr_in sp_0x44;
 	Struct_2345b028_1 sp8;
 
@@ -1034,67 +1035,67 @@ void sub_2345b08c(struct Struct_234a73e8_Inner_0x248* r4)
 
 	uint32_t r0 = 0;
 
-	sp8.Data_14[r0].bData_2 = 1;
-	sp8.Data_14[r0].wData_0 = 0; //r2
+	sp8.arPackets[r0].bData_2 = 1;
+	sp8.arPackets[r0].wPid = 0x00; //PAT
 
 	r0++;
 
-	sp8.Data_14[r0].bData_2 = 2; //r5
-	sp8.Data_14[r0].wData_0 = 17; //r0
+	sp8.arPackets[r0].bData_2 = 2; //r5
+	sp8.arPackets[r0].wPid = 0x11; //SDT/BAT
 
 //	int r0 = 2; //r5
 	r0++;
 
-	//r3 = r4->wData_0x336;
-	if ((r4->bData_0 & 0x10) && (r4->wData_0x336 != 0))
+	//r3 = r4->wVideoPID;
+	if ((r4->bData_0 & 0x10) && (r4->wVideoPID != 0))
 	{
 		//0x2345b110
 		//r0, #0x7
 		//->loc_2345b124
-		sp8.Data_14[r0].bData_2 = 7;
-		sp8.Data_14[r0].wData_0 = r4->wData_0x336; //r3
+		sp8.arPackets[r0].bData_2 = 7;
+		sp8.arPackets[r0].wPid = r4->wVideoPID; //r3
 		//r0 = 3;
 		r0++;
 		//loc_2345b130
 	}
-	else if (r4->wData_0x336 != 0)
+	else if (r4->wVideoPID != 0)
 	{
 		//0x2345b120
 		//r0, #0x3
-		sp8.Data_14[r0].bData_2 = 3;
-		sp8.Data_14[r0].wData_0 = r4->wData_0x336; //r3
+		sp8.arPackets[r0].bData_2 = 3;
+		sp8.arPackets[r0].wPid = r4->wVideoPID; //r3
 		//r0 = 3;
 		r0++;
 	}
 	//loc_2345b130
-	if (r4->wData_0x33c != 0)
+	if (r4->wAudioPID != 0)
 	{
-		sp8.Data_14[r0].bData_2 = 4;
-		sp8.Data_14[r0].wData_0 = r4->wData_0x33c;
+		sp8.arPackets[r0].bData_2 = 4;
+		sp8.arPackets[r0].wPid = r4->wAudioPID;
 		r0++;
 	}
 
 	if (r4->wData_0x338 != 0)
 	{
-		sp8.Data_14[r0].bData_2 = 5;
-		sp8.Data_14[r0].wData_0 = r4->wData_0x338;
+		sp8.arPackets[r0].bData_2 = 5;
+		sp8.arPackets[r0].wPid = r4->wData_0x338;
 		r0++;
 	}
 
 	for (uint32_t r2 = 0; r2 < 50; r2++)
 	{
 		//loc_2345b174
-		if ((r4->wData_6[r2] != 0) && (r2 >= 10))
+		if ((r4->arAudioPids[r2] != 0) && (r2 >= 10))
 		{
 			//->loc_2345b1c0
 			break;
 		}
 		//0x2345b188
-		if ((r4->wData_6[r2] != r4->wData_0x33c) &&
-				(r4->wData_6[r2] != r4->wData_0x338))
+		if ((r4->arAudioPids[r2] != r4->wAudioPID) &&
+				(r4->arAudioPids[r2] != r4->wData_0x338))
 		{
-			sp8.Data_14[r0].bData_2 = r0 + 8;
-			sp8.Data_14[r0].wData_0 = r4->wData_6[r2];
+			sp8.arPackets[r0].bData_2 = r0 + 8;
+			sp8.arPackets[r0].wPid = r4->arAudioPids[r2];
 			r0++;
 		}
 		//loc_2345b1b4
@@ -1102,17 +1103,17 @@ void sub_2345b08c(struct Struct_234a73e8_Inner_0x248* r4)
 	//loc_2345b1c0
 	if (r4->pmt_pid != 0)
 	{
-		sp8.Data_14[r0].bData_2 = 6;
-		sp8.Data_14[r0].wData_0 = r4->pmt_pid;
+		sp8.arPackets[r0].bData_2 = 6;
+		sp8.arPackets[r0].wPid = r4->pmt_pid;
 		r0++;
 	}
 
-	if ((r4->wData_0x334 != r4->wData_0x336) &&
-			(r4->wData_0x334 != r4->wData_0x33c) &&
-			(r4->wData_0x334 != r4->wData_0x338))
+	if ((r4->wPcrPID != r4->wVideoPID) &&
+			(r4->wPcrPID != r4->wAudioPID) &&
+			(r4->wPcrPID != r4->wData_0x338))
 	{
-		sp8.Data_14[r0].bData_2 = 8;
-		sp8.Data_14[r0].wData_0 = r4->wData_0x334;
+		sp8.arPackets[r0].bData_2 = 8;
+		sp8.arPackets[r0].wPid = r4->wPcrPID;
 	}
 	//loc_2345b214
 	sp_0x44.sin_family = 2; //r5
@@ -1143,20 +1144,19 @@ void sub_2345b08c(struct Struct_234a73e8_Inner_0x248* r4)
 
 
 /* 2345b270 - complete */
-int sub_2345b270()
+int sub_2345b270(void)
 {
 #if 0
 	console_send_string("sub_2345b270 (todo.c): TODO\r\n");
 #endif
 
-	sub_2345897c(&Data_237c0d0c.Data_0x20);
+	sub_2345897c(&Data_237c0d0c.arhTsd);
 
 	Data_23494094 = lwip_socket(2, SOCK_DGRAM, 0);
 
 	return 0;
 }
 
-#endif
 
 /* 2345b29c - complete */
 int sub_2345b29c(void)

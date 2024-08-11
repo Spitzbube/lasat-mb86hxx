@@ -2,6 +2,7 @@
 #ifndef DRV_BM_H
 #define DRV_BM_H
 
+
 typedef struct
 {
 	int Data_0; //0
@@ -19,6 +20,19 @@ typedef struct
 	uint32_t Data_0x30; //48 = 0x30
 	//0x34 = 52
 } BM_OpenParams;
+
+
+typedef struct
+{
+	int Data_0; //0
+	int Data_4; //4
+	int Data_8; //8
+	BM_OpenParams openParams; //12 = 0x0c +0x34
+	uint32_t channelId; //0x40
+	int Data_0x44; //0x44
+	int Data_0x48; //0x48
+	//0x4c = 76
+} BM_Handle;
 
 
 extern void* bm_open(BM_OpenParams* pOpenParams);

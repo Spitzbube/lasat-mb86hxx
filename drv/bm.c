@@ -70,18 +70,6 @@ int bm_channelInUse[4][32]; //236e0c64 -> 236E0E64
 
 int Data_236e0e64[8]; //236e0e64 -> 236E0E84
 
-typedef struct
-{
-	int Data_0; //0
-	int Data_4; //4
-	int Data_8; //8
-	BM_OpenParams openParams; //12 = 0x0c +0x34
-	uint32_t channelId; //0x40
-	int Data_0x44; //0x44
-	int Data_0x48; //0x48
-	//0x4c = 76
-} BM_Handle;
-
 BM_Handle bm_handleArray[0x80]; //236e0e84 -> 236E3484
 
 BM_Handle* bm_allocate_handle(int);

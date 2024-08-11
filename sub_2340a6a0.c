@@ -3012,9 +3012,10 @@ int sub_2340c9b0(int get, struct Struct_23546128* r4)
 	return 0;
 }
 
-^
+#endif
+
 /* 2340ca1c - complete */
-int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
+int sub_2340ca1c(int r4, Struct_234fd8f0_Inner_489DC* r6)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;
@@ -3028,11 +3029,11 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 
 	if (r4 != 0)
 	{
-		memcpy(r6, &channel_database.Data_235462cc, 20);
+		*r6 = channel_database.Data_235462cc;
 	}
 	else
 	{
-		memcpy(&channel_database.Data_235462cc, r6, 20);
+		channel_database.Data_235462cc = *r6;
 	}
 
 	OS_EXIT_CRITICAL();
@@ -3040,7 +3041,6 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 	return 0;
 }
 
-#endif
 
 /* 2340ca5c - todo */
 int sub_2340ca5c(int get, void* r6)
