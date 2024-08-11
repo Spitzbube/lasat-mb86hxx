@@ -18,6 +18,7 @@ set (
    dpll.c
    hdmi.c
    viout.c
+   dma.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

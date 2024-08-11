@@ -42,11 +42,14 @@ struct
 
 } Data_237c0d0c; //237c0d0c
 
+uint8_t Data_237c0d80[100][1316]; //237c0d80 -> 237E0F90?
+
 #if 0
 
 uint8_t bData_23493e7c; //23493e7c
 #endif
-int Data_23494094; //23494094
+int Data_23494094; //23494094 +0
+volatile int Data_23494098; //23494098 +4
 
 
 static void sub_2345ac74();
@@ -800,6 +803,18 @@ void sub_2345a740()
 
 #endif
 
+
+/* 2345aa08 - complete */
+static void sub_2345aa08(void)
+{
+#if 0
+	console_send_string("sub_2345aa08 (todo.c): TODO\r\n");
+#endif
+
+	Data_23494098 = 0;
+}
+
+
 /* 2345aa18 - todo */
 int sub_2345aa18()
 {
@@ -828,10 +843,46 @@ int sub_2345aa18()
 		return 0;
 	}
 	//loc_2345aa4c
-	sub_23421eec(sb, r0);
+	sub_23421eec(sb, r0, 0x20210/*131600*/);
 	sub_23421e48(sb, 0x24b80, &sp_0x14, &sp_0x10, &sp_0xc, &sp8);
 
-	//TODO!!!
+	Data_23494098 = 1; //r8
+
+	sub_23436900(Data_237c0d80, sp_0x14, sp_0x10, sub_2345aa08, 0);
+
+	sys_invalidate_data_cache(Data_237c0d80, sp_0x10);
+
+	while (Data_23494098 != 0)
+	{
+		//wait
+	}
+	//0x2345aab8
+	if (sp8 != 0)
+	{
+		//0x2345aac8
+		Data_23494098 = 1; //r8
+
+		sub_23436900(&Data_237c0d80[0][sp_0x10 & ~3], 
+			sp_0xc, sp8, sub_2345aa08, 0);
+
+		sys_invalidate_data_cache(&Data_237c0d80[0][sp_0x10 & ~3], sp8);
+
+		while (Data_23494098 != 0)
+		{
+			//wait
+		}
+	}
+	//loc_2345ab10
+	for (uint8_t i = 0; i < 100; i++)
+	{
+		//loc_2345ab1c
+		lwip_sendto(Data_23494094, &Data_237c0d80[i][0], 1316, 
+			0, &Data_237c0d0c.Data_237c0d70, sizeof(struct sockaddr_in));
+	}
+	//0x2345ab50
+	sub_23421f88(sb, 1);
+	//->loc_2345aa40
+	return 0;
 }
 
 

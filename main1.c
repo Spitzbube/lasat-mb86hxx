@@ -759,6 +759,13 @@ int main_pes_init(void)
 }
 
 
+/* 23400f9c - complete */
+void main_dma_init(void)
+{
+	dma_init();
+}
+
+
 #if 1
 extern int sub_23401e92(uint8_t, uint8_t);
 extern int sub_23401ea4(Struct_2340e754*, int);

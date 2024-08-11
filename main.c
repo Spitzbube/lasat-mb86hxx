@@ -36,6 +36,7 @@ void startup_thread()
 	main_frontend_i2c_init();
 	main_tsd_bm_init();
 	main_psi_init();
+	main_dma_init();
 	main_flash_init();
 #if 1 //Only v241!!!
 	main_vdec_init();

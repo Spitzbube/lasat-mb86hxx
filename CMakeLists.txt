@@ -11,7 +11,6 @@ set(SRCS
    sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    console.c                #0x2341af84?
    memblk.c
-   dma.c
    usb.c
    sub_23467de0.c
    network.c

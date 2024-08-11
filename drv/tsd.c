@@ -2835,18 +2835,114 @@ uint32_t tsd_get_pts(void* a)
 }
 
 
-/* 23421e48 - todo */
-void sub_23421e48()
+/* 2341e48c - complete */
+int sub_2341e48c(int a)
 {
-	console_send_string("sub_23421e48 (todo.c): TODO\r\n");
+#if 0
+	console_send_string("sub_2341e48c (todo.c): TODO\r\n");
+#endif
 
+	if ((a == 0) || (a == 1) || (a == 2) ||  (a == 3))
+	{
+		return bm_get_global_offset();
+	}
+
+	return 0;
+}
+
+
+/* 23421e48 - todo */
+int sub_23421e48(Struct_235f048c* h, uint32_t b, int* c, int* d, int* e, int* f)
+{
+	struct
+	{
+		uint32_t Data_0; //0
+		uint32_t Data_4; //4
+		uint32_t Data_8; //8
+
+	}* r5 = (void*) &h->Data_8;
+	uint32_t r4 = b;
+	int r6 = 0;
+	uint8_t sp;
+	int fp;
+
+#if 0
+	console_send_string("sub_23421e48 (todo.c): TODO\r\n");
+#endif
+
+	fp = h->Data_4 >> 16;
+
+	OSSemPend(tsd_sema, 0, &sp);
+	if (sp != 0)
+	{
+		return sp;
+	}
+
+	uint32_t r0 = sub_2341e48c(fp);
+	uint32_t r1 = r5->Data_8;
+	uint32_t r2 = r5->Data_4;
+
+	r1 += r0;
+	r2 += r0;
+
+	r0 = r5->Data_0;
+	r0 += r2;
+	uint32_t r3 = r0 + r4;
+	if (r3 > r1)
+	{
+		r3 = r4;
+		r4 = r1 - r0;
+		r6 = r3 - r4;
+	}
+
+	*c = 0x20000000 | r0;
+	*e = 0x20000000 | r2;
+	*d = r4;
+	*f = r6;
+
+	OSSemPost(tsd_sema);
+
+	return 0;
 }
 
 
 /* 23421eec - todo */
-void sub_23421eec()
+int sub_23421eec(void* a, uint32_t b, uint32_t c)
 {
+	Struct_235f048c* h = a;
+	uint8_t sp;
+
+#if 0
 	console_send_string("sub_23421eec (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(tsd_sema, 0, &sp);
+	if (sp != 0)
+	{
+		return sp;
+	}
+
+	h->Data_0x18 -= (b - c);
+	if (h->Data_0x18 < 0)
+	{
+		h->Data_0x18 += h->Data_0x14;
+	}
+
+	OSSemPost(tsd_sema);
+
+	return 0;
+}
+
+
+/* 23421f88 - todo */
+void sub_23421f88(void* a, int b)
+{
+	Struct_235f048c* h = a;
+
+#if 1
+	console_send_string("sub_23421f88 (todo.c): TODO\r\n");
+#endif
+
 
 }
 
