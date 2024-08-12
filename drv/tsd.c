@@ -2575,9 +2575,9 @@ int tsd_SetPidConfig_2_NewPcrIrqEn(void* h, int r4)
 
 
 /* 23421a30 / 2342cf10 - todo */
-int sub_23421a30(int r4, int r6)
+int tsd_configure_input_gpios(int r4, int r6)
 {
-	uint8_t sp_0x28;
+	uint8_t err;
 	Struct_20401328 sp_0x1c;
 	uint8_t r8;
 	uint8_t sb;
@@ -2592,13 +2592,13 @@ int sub_23421a30(int r4, int r6)
 	uint8_t sp;
 
 #if 0
-	console_send_string("sub_23421a30 (todo.c): TODO\r\n");
+	console_send_string("tsd_configure_input_gpios (todo.c): TODO\r\n");
 #endif
 
-	OSSemPend(tsd_sema, 0, &sp_0x28);
-	if (sp_0x28 != 0)
+	OSSemPend(tsd_sema, 0, &err);
+	if (err != 0)
 	{
-		return sp_0x28;
+		return err;
 	}
 
 	if (r4 == 0)
@@ -2606,17 +2606,17 @@ int sub_23421a30(int r4, int r6)
 		if (Data_234ac8dc != r6)
 		{
 			//0x2342cf54
-			r8 = 0x2d;
-			sb = 0x2e;
-			sl = 0x2f;
-			fp = 0x30;
-			sp_0x18 = 0x31;
-			sp_0x14 = 0x32;
-			sp_0x10 = 0x33;
-			sp_0xc = 0x34;
-			sp8 = 0x35;
-			sp4 = 0x36;
-			sp = 0x37;
+			r8 = 45; //GPIO_IN_TS_A_CLK
+			sb = 46; //GPIO_IN_TS_A_PSTART
+			sl = 47; //GPIO_IN_TS_A_EN
+			fp = 48; //GPIO_IN_TS_A_DATA_0
+			sp_0x18 = 49; //GPIO_IN_TS_A_DATA_1
+			sp_0x14 = 50; //GPIO_IN_TS_A_DATA_2
+			sp_0x10 = 51; //GPIO_IN_TS_A_DATA_3
+			sp_0xc = 52; //GPIO_IN_TS_A_DATA_4
+			sp8 = 53; //GPIO_IN_TS_A_DATA_5
+			sp4 = 54; //GPIO_IN_TS_A_DATA_6
+			sp = 55; //GPIO_IN_TS_A_DATA_7
 
 			Data_234ac8dc = r6;
 			//->loc_2342cff4
@@ -2633,17 +2633,17 @@ int sub_23421a30(int r4, int r6)
 	else if (r4 == 2)
 	{
 		//0x2342cfac
-		r8 = 0x22;
-		sb = 0x23;
-		sl = 0x24;
-		fp = 0x25;
-		sp_0x18 = 0x26;
-		sp_0x14 = 0x27;
-		sp_0x10 = 0x28;
-		sp_0xc = 0x29;
-		sp8 = 0x2a;
-		sp4 = 0x2b;
-		sp = 0x2c;
+		r8 = 34; //GPIO_IN_TS_B_CLK
+		sb = 35; //GPIO_IN_TS_B_PSTART
+		sl = 36; //GPIO_IN_TS_B_EN
+		fp = 37; //GPIO_IN_TS_B_DATA_0
+		sp_0x18 = 38; //GPIO_IN_TS_B_DATA_1
+		sp_0x14 = 39; //GPIO_IN_TS_B_DATA_2
+		sp_0x10 = 40; //GPIO_IN_TS_B_DATA_3
+		sp_0xc = 41; //GPIO_IN_TS_B_DATA_4
+		sp8 = 42; //GPIO_IN_TS_B_DATA_5
+		sp4 = 43; //GPIO_IN_TS_B_DATA_6
+		sp = 44; //GPIO_IN_TS_B_DATA_7
 		//loc_2342cff4
 	}
 	else

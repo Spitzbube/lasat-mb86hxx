@@ -3,19 +3,23 @@
 #include "ucos_ii.h"
 #include "lwip/sockets.h"
 #include "psi.h"
+#include "dma.h"
+#include "ts_record.h"
 
+
+typedef struct
+{
+	uint16_t wPid; //0
+	uint8_t bData_2; //2
+	uint8_t fill_3; //3
+	//4
+} Streaming_Packet_Filter;
 
 typedef struct
 {
 	int fill_0[3]; //0
 	uint16_t fill_12; //12 = 0x0c
-	struct Struct_2345b028_1_Inner14
-	{
-		uint16_t wPid; //0
-		uint8_t bData_2; //2
-		uint8_t fill_3; //3
-		//4
-	} arPackets[10]; //14 = 0x0e
+	Streaming_Packet_Filter arPackets[10]; //14 = 0x0e
 	uint16_t fill_0x36; //0x36
 	uint16_t wData_0x38; //0x38
 	uint16_t fill_0x3a; //0x3a
@@ -35,8 +39,12 @@ struct
 	int fill_12[3]; //12
 	void* (*Data_237c0d24)(); //237c0d24 +0x18 = 24
 	void (*Data_0x1c)(); //237C0D28 +0x1c = 28
+#if 1
+	TS_Record_Handles handles; //237C0D2C +0x20
+#else
 	TSD_Handle** arhTsd; //237C0D2C +0x20
 	int fill_0x24; //0x24
+#endif
 	Struct_2345b028_1 Data_237c0d34; //237c0d34 +0x28
 	struct sockaddr_in Data_237c0d70; //237c0d70 +0x64
 
@@ -52,7 +60,7 @@ int Data_23494094; //23494094 +0
 volatile int Data_23494098; //23494098 +4
 
 
-static void sub_2345ac74();
+static int web_interface_on_fe_state_change(int);
 int sub_2345b29c(void);
 int sub_2345b2b8(void);
 
@@ -805,7 +813,7 @@ void sub_2345a740()
 
 
 /* 2345aa08 - complete */
-static void sub_2345aa08(void)
+static void sub_2345aa08(uint32_t a, uint32_t b)
 {
 #if 0
 	console_send_string("sub_2345aa08 (todo.c): TODO\r\n");
@@ -827,11 +835,11 @@ int sub_2345aa18()
 	uint32_t sp_0xc;
 	uint32_t sp8;
 
-	void* sb = Data_237c0d0c.arhTsd[0];
+	void* sb = Data_237c0d0c.handles.arhTsd[0];
 
 	uint32_t r0 = tsd_get_write_pointer(sb);
 
-	if (r0 < 0x20210/*131600*/)
+	if (r0 < (1316 * 100))
 	{
 #if 0
 		{
@@ -843,7 +851,7 @@ int sub_2345aa18()
 		return 0;
 	}
 	//loc_2345aa4c
-	sub_23421eec(sb, r0, 0x20210/*131600*/);
+	sub_23421eec(sb, r0, 1316 * 100);
 	sub_23421e48(sb, 0x24b80, &sp_0x14, &sp_0x10, &sp_0xc, &sp8);
 
 	Data_23494098 = 1; //r8
@@ -893,7 +901,7 @@ static int web_interface_stop_streamout_tsd_pids(void)
 	console_send_string("web_interface_stop_streamout_tsd_pids (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
+	Streaming_Packet_Filter* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
 
 	for (uint32_t i = 0; i < 10; i++)
 	{
@@ -902,7 +910,7 @@ static int web_interface_stop_streamout_tsd_pids(void)
 			break;
 		}
 
-		tsd_deactivate_pid_channel( Data_237c0d0c.arhTsd[i] );
+		tsd_deactivate_pid_channel( Data_237c0d0c.handles.arhTsd[i] );
 	}
 
 	Data_237c0d0c.Data_0x1c = 0;
@@ -918,35 +926,34 @@ int sub_2345aba4()
 	console_send_string("sub_2345aba4 (todo.c): TODO\r\n");
 #endif
 
-	void* r0;
-	struct Struct_2345b028_1_Inner14* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
+	void* hFrontend;
+	Streaming_Packet_Filter* r5 = Data_237c0d0c.Data_237c0d34.arPackets;
 
-	sub_23421a30(2, Data_237c0d0c.Data_237c0d34.wData_0x38);
+	tsd_configure_input_gpios(2, Data_237c0d0c.Data_237c0d34.wData_0x38);
 
 	if (Data_237c0d0c.Data_237c0d34.wData_0x38 == 0)
 	{
-		r0 = main_hFrontend1;
+		hFrontend = main_hFrontend1;
 	}
 	else
 	{
-		r0 = Data_23491db8;
+		hFrontend = Data_23491db8;
 	}
 
-	sub_2340ec54(r0, sub_2345ac74);
+	fe_manager_register_state_change_callback(hFrontend, 
+		web_interface_on_fe_state_change);
 
 	for (uint32_t i = 0; i < 10; i++)
 	{
-		//loc_2345abdc
 		if (r5[i].bData_2 == 0)
 		{
-			//->loc_2345ac18
 			break;
 		}
 
-		tsd_set_pes_pid_filter(Data_237c0d0c.arhTsd[i], r5[i].wPid & 0x1fff);
-		tsd_activate_pid_channel(Data_237c0d0c.arhTsd[i]);
+		tsd_set_pes_pid_filter(Data_237c0d0c.handles.arhTsd[i], r5[i].wPid & 0x1fff);
+		tsd_activate_pid_channel(Data_237c0d0c.handles.arhTsd[i]);
 	}
-	//loc_2345ac18
+
 	Data_237c0d0c.Data_0x1c = sub_2345aa18;
 
 	return 0;
@@ -989,11 +996,33 @@ int web_interface_stop_streamout(void)
 }
 
 
-/* 2345ac74 - todo */
-void sub_2345ac74()
+/* 2345ac74 - complete */
+int web_interface_on_fe_state_change(int r4)
 {
-	console_send_string("sub_2345ac74 (todo.c): TODO\r\n");
+#if 0
+	console_send_string("web_interface_on_fe_state_change (todo.c): TODO\r\n");
+#endif
 
+	if (r4 != 0)
+	{
+		web_interface_stop_streamout();
+		sub_2340b22c(r4);
+	}
+	else
+	{
+		sub_2340b22c(r4);
+
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+	    OS_CPU_SR  cpu_sr = 0u;
+#endif
+		OS_ENTER_CRITICAL();
+
+		Data_237c0d0c.Data_237c0d24 = sub_2345aba4;
+
+		OS_EXIT_CRITICAL();
+	}
+
+	return 0;
 }
 
 
@@ -1201,7 +1230,7 @@ int sub_2345b270(void)
 	console_send_string("sub_2345b270 (todo.c): TODO\r\n");
 #endif
 
-	sub_2345897c(&Data_237c0d0c.arhTsd);
+	ts_record_get_tsd_handles(&Data_237c0d0c.handles);
 
 	Data_23494094 = lwip_socket(2, SOCK_DGRAM, 0);
 

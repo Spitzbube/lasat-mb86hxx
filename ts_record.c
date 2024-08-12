@@ -14,8 +14,8 @@ struct
 	void (*Data_0xbc)(void*); //0xbc
 	void (*Data_0xc0)(void*); //0xc0
 	int Data_0xc4; //0xc4
-	void* Data_237bf958[10]; //0xc8 = 237bf958
-	void* Data_237bf980; //0xf0 = 237BF980
+	void* arhTsd[10]; //0xc8 = 237bf958
+	void* hBm; //0xf0 = 237BF980
 	int Data_0xf4; //0xf4 = 237BF984
 	int threadPrio; //0xf8
 	void* hTimer; //0xfc = 237BF98C
@@ -35,7 +35,7 @@ static void sub_23457c58(void)
 	console_send_string("sub_23457c58 (todo.c): TODO\r\n");
 #endif
 
-	sub_234216fc(Data_237bf890.Data_237bf958[0]);
+	sub_234216fc(Data_237bf890.arhTsd[0]);
 }
 
 
@@ -110,36 +110,36 @@ static void ts_record_task()
 /* 23458640 /  / 23421d50 - todo */
 int ts_record_init(TS_Record_Params* r5)
 {
-	TSD_PesParserParams sp_0x20;
+	TSD_PesParserParams tsdParams;
 	Timer_Params timerParams; //sp_0x14
 
 #if 0
 	console_send_string("ts_record_init (todo.c): TODO\r\n");
 #endif
 
-	sp_0x20.bData_0 = 2;
-	sp_0x20.bData_1 = 1; //r1
-	sp_0x20.Data_4.Data_4 = 2;
-	sp_0x20.pid = 0; //r4
-	sp_0x20.Data_4.pidChannel = 8;
-	sp_0x20.Data_4.Data_0 = 0x10000;
-	sp_0x20.Data_0x38 = 0; //r4
-	sp_0x20.Data_4.bufferAddress = r5->bufferAddress;
-	sp_0x20.Data_4.bufferSize = r5->bufferSize;
-	sp_0x20.Data_4.Data_0x14 = 1; //r1
-	sp_0x20.Data_4.Data_0x18 = 0; //r4
-	sp_0x20.Data_4.Data_0x2c = 0; //r6 
-	sp_0x20.Data_4.Data_0x1c = 0; //r4
-	sp_0x20.Data_4.handleOverflow = sub_23457c58;
+	tsdParams.bData_0 = 2;
+	tsdParams.bData_1 = 1; //r1
+	tsdParams.Data_4.Data_4 = 2;
+	tsdParams.pid = 0; //r4
+	tsdParams.Data_4.pidChannel = 8;
+	tsdParams.Data_4.Data_0 = 0x10000;
+	tsdParams.Data_0x38 = 0; //r4
+	tsdParams.Data_4.bufferAddress = r5->bufferAddress;
+	tsdParams.Data_4.bufferSize = r5->bufferSize;
+	tsdParams.Data_4.Data_0x14 = 1; //r1
+	tsdParams.Data_4.Data_0x18 = 0; //r4
+	tsdParams.Data_4.Data_0x2c = 0; //r6 
+	tsdParams.Data_4.Data_0x1c = 0; //r4
+	tsdParams.Data_4.handleOverflow = sub_23457c58;
 
 	timerParams.Data_0 = 100;
 
-	sp_0x20.Data_4.Data_0x30 = 0; //r6 
-	sp_0x20.Data_4.Data_0x24 = 0; //r6 
+	tsdParams.Data_4.Data_0x30 = 0; //r6 
+	tsdParams.Data_4.Data_0x24 = 0; //r6 
 
 	timerParams.Data_8 = sub_23457c64;
 
-	sp_0x20.Data_4.Data_0x28 = 0; //r6 
+	tsdParams.Data_4.Data_0x28 = 0; //r6 
 
 	timerParams.Data_4 = &Data_237bf890; //r7
 
@@ -154,12 +154,12 @@ int ts_record_init(TS_Record_Params* r5)
 	for (uint8_t i = 0; i < 10; i++)
 	{
 		//loc_234586f4
-		sub_234210ec(&Data_237bf890.Data_237bf958[i], &sp_0x20, (i == 0));
+		sub_234210ec(&Data_237bf890.arhTsd[i], &tsdParams, (i == 0));
 
-		sp_0x20.Data_4.pidChannel++;
+		tsdParams.Data_4.pidChannel++;
 	}
 
-	Data_237bf890.Data_237bf980 = tsd_get_bm_handle(Data_237bf890.Data_237bf958[0]);
+	Data_237bf890.hBm = tsd_get_bm_handle(Data_237bf890.arhTsd[0]);
 
 	Data_237bf890.threadPrio = r5->threadPrio;
 
@@ -195,23 +195,15 @@ int sub_23458874(void)
 }
 
 
-typedef struct
-{
-	void** Data_0; //0
-	int Data_4; //4
-
-} Struct_2345897c;
-
-
 /* 2345897c - todo */
-void sub_2345897c(Struct_2345897c* a)
+void ts_record_get_tsd_handles(TS_Record_Handles* a)
 {
 #if 0
-	console_send_string("sub_2345897c (todo.c): TODO\r\n");
+	console_send_string("ts_record_get_tsd_handles (todo.c): TODO\r\n");
 #endif
 
-	a->Data_0 = &Data_237bf890.Data_237bf958[0];
-	a->Data_4 = Data_237bf890.Data_237bf980;
+	a->arhTsd = &Data_237bf890.arhTsd[0];
+	a->phBm = &Data_237bf890.hBm;
 }
 
 
