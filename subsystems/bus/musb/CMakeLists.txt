@@ -16,6 +16,7 @@ set (
    src/lib/mu_strng.c
    src/systems/FAPI4/mu_mem.c
    src/systems/FAPI4/mu_reg.c
+   src/msc/usb_msd.c 
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

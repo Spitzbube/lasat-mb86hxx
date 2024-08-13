@@ -63,6 +63,9 @@ set(SRCS
    ts_play.c                #?              #?              #0x235afe88
    ts_record.c              #?              #?              #0x237bf890
    web_interface.c
+   sub_2345609c.c
+   sub_2345c09c.c
+   sub_23415f44.c
    hexdump.c
    todo.c
 )
@@ -104,6 +107,7 @@ add_definitions(
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
     VDR110
+#    DVBC_RADIO
     USB_HUB
     USB_ASIX
 #    PSI_PMT_FILTER_DEBUG

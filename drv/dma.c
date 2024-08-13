@@ -59,7 +59,7 @@ Struct_234928d8 Data_234928d8 = //234928d8
 /* 234365c8 - todo */
 int dma_isr(void)
 {
-#if 0
+#if 1
 	console_send_string("dma_isr (todo.c): TODO\r\n");
 #endif
 
@@ -127,7 +127,7 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
 	console_send_string("sub_23436900 (todo.c): TODO\r\n");
 #endif
 
-#if 0
+#if 1
     {
         extern char debug_string[];
         sprintf(debug_string, "sub_23436900: writeAddr=%p, readAddr=%p, length=%d\r\n", 

@@ -1130,10 +1130,20 @@ void main_channel_init()
 }
 
 
+/* 2344c7f4 - todo */
+void sub_2344c7f4()
+{
+#if 1
+	console_send_string("sub_2344c7f4 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 23401280 /  / 234024ec - complete */
 void main_ts_play_init(void)
 {
-#ifndef VDR110
+#if 1 //ndef VDR110
 	Struct_23418b54 sp4;
 	TS_Record_Params  sp_0x14;
 
@@ -1447,7 +1457,7 @@ void main_set_power_mode()
 }
 
 
-/* 234017f0 / 234023e8 - todo */
+/* 234017f0 / 234023e8 / 2340247c - todo */
 void main_usb_init()
 {
 	Struct_20401328 sp_0x10;
@@ -1465,9 +1475,9 @@ void main_usb_init()
 	main_hMemBlk2 = memblk_open(&sp);
 	if (main_hMemBlk2 != 0)
 	{
-#if 0
-		sub_2343a162(sub_23400120);
-#endif
+		extern void sub_23400120(void);
+
+		sub_2343a162(sub_23400120); //->usb_msd.c
 		usb_init();
 		MGC_usbInitController();
 		usb_msd_init();

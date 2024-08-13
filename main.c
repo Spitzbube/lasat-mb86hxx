@@ -2,6 +2,76 @@
 #include "data.h"
 #include "ucos_ii.h"
 #include "startup.h"
+#include "sub_2345609c.h"
+
+
+void* (*Data_23491d88)(void); //23491d88
+
+
+extern void sub_23439f6a();
+extern void sub_23439fc4();
+extern void sub_2343a02e();
+extern void sub_2343a11c();
+extern void sub_2343a136();
+extern void sub_23412da8();
+
+
+/* 234000a0 /  / 234000e0 - todo */
+void* sub_234000a0(void)
+{
+	Struct_23415f44 sp;
+
+#if 0
+	console_send_string("sub_234000a0 (todo.c): TODO\r\n");
+#endif
+
+	usb_lock();
+
+	int r0 = sub_2343a150(0); //-> usb_nsd.c
+	if (r0 != 0)
+	{
+		sp.Data_0x18 = r0;
+		sp.Data_0 = sub_23439f6a;
+		sp.Data_4 = sub_23439fc4;
+		sp.Data_8 = sub_2343a02e;
+		sp.Data_12 = sub_2343a11c;
+		sp.Data_16 = sub_2343a136;
+		sp.Data_20 = sub_23412da8;
+
+#ifndef DVBC_RADIO
+		sub_2345609c/*sub_2341f814*/(sp);
+#endif
+
+		sub_23415f44(&sp);
+
+		if (0 != sub_23415fb4(0))
+		{
+			//loc_23400108
+			sub_23415ff8(0);
+		}
+		//loc_23400110
+	}
+	else
+	{
+		//loc_23400108
+		sub_23415ff8();
+	}
+
+	usb_unlock();
+
+	return 0;
+}
+
+
+/* 23400120 /  / 234001dc - todo */
+void sub_23400120(void)
+{
+#if 1
+	console_send_string("sub_23400120 (main.c)\r\n");
+#endif
+
+	Data_23491d88 = sub_234000a0;
+}
 
 
 /* 23400158 - todo */
