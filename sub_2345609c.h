@@ -7,6 +7,6 @@ typedef struct
 	void (*Data_12)(); //12
 	void (*Data_16)(); //16
 	void (*Data_20)(); //20
-	int Data_0x18; //24
+	USB_MSD_Device* Data_0x18; //24
 } Struct_23415f44;
 

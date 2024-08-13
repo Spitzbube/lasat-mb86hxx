@@ -1,5 +1,6 @@
 
 #include "data.h"
+#include "usb_msd.h"
 #include "sub_2345609c.h"
 
 
@@ -294,16 +295,23 @@ int sub_23415fb4(void)
 	}
 }
 
-#if 0
 
-/* 23415ff8 - todo */
-void sub_23415ff8()
+/* 23415ff8 /  / 2341da0c - complete */
+int sub_23415ff8(int r4)
 {
+#if 0
 	console_send_string("sub_23415ff8 (todo.c): TODO\r\n");
+#endif
 
+	sub_23416a38();
+
+	Data_235af5d0[r4].Data_0x4c = 0;
+
+	OSSemPost(Data_234920d4);
+
+	return 0;
 }
 
-#endif
 
 /* 234168d0 - todo */
 int/*MUSB_HfiDevice*/ sub_234168d0(int a)

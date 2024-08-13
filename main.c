@@ -2,10 +2,11 @@
 #include "data.h"
 #include "ucos_ii.h"
 #include "startup.h"
+#include "usb_msd.h"
 #include "sub_2345609c.h"
 
 
-void* (*Data_23491d88)(void); //23491d88
+void* (*main_pfHandleUsbStorage)(void); //23491d88 +0 /  / 234c0188 +0x10
 
 
 extern void sub_23439f6a();
@@ -17,17 +18,17 @@ extern void sub_23412da8();
 
 
 /* 234000a0 /  / 234000e0 - todo */
-void* sub_234000a0(void)
+void* main_handle_usb_storage(void)
 {
 	Struct_23415f44 sp;
 
-#if 0
-	console_send_string("sub_234000a0 (todo.c): TODO\r\n");
+#if 1
+	console_send_string("main_handle_usb_storage (todo.c): TODO\r\n");
 #endif
 
 	usb_lock();
 
-	int r0 = sub_2343a150(0); //-> usb_nsd.c
+	USB_MSD_Device* r0 = musb_msd_get_device(0);
 	if (r0 != 0)
 	{
 		sp.Data_0x18 = r0;
@@ -38,6 +39,8 @@ void* sub_234000a0(void)
 		sp.Data_16 = sub_2343a136;
 		sp.Data_20 = sub_23412da8;
 
+#if 0
+
 #ifndef DVBC_RADIO
 		sub_2345609c/*sub_2341f814*/(sp);
 #endif
@@ -47,14 +50,15 @@ void* sub_234000a0(void)
 		if (0 != sub_23415fb4(0))
 		{
 			//loc_23400108
-			sub_23415ff8(0);
+			sub_23415ff8/*2341da0c*/(0);
 		}
 		//loc_23400110
+#endif
 	}
 	else
 	{
 		//loc_23400108
-		sub_23415ff8();
+		sub_23415ff8/*2341da0c*/(0);
 	}
 
 	usb_unlock();
@@ -64,13 +68,13 @@ void* sub_234000a0(void)
 
 
 /* 23400120 /  / 234001dc - todo */
-void sub_23400120(void)
+void main_on_usb_storage(void)
 {
 #if 1
-	console_send_string("sub_23400120 (main.c)\r\n");
+	console_send_string("main_on_usb_storage (main.c)\r\n");
 #endif
 
-	Data_23491d88 = sub_234000a0;
+	main_pfHandleUsbStorage = main_handle_usb_storage;
 }
 
 
@@ -134,17 +138,12 @@ void startup_thread()
 
 	while (1)
 	{
-#if 0
-		console_send_string("startup_thread\r\n");
-#endif
 		//loc_23400498
-#if 0
-		if (Data_23491d88 != 0)
+		if (main_pfHandleUsbStorage != 0)
 		{
-			void* p = (Data_23491d88)();
-			Data_23491d88 = p;
+			void* p = (main_pfHandleUsbStorage)();
+			main_pfHandleUsbStorage = p;
 		}
-#endif
 		//loc_234004ac
 		rtos_task_wait(10);
 	}

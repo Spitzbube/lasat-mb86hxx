@@ -75,18 +75,8 @@ static uint8_t MediaIsOk = FALSE;
 FUNCPTR trx_callback_ptr = NULL;
 #endif
 
-typedef struct
-{
-	MUSB_HfiVolumeHandle Data_0; //0
-	const MUSB_HfiDeviceInfo* Data_4; //4
-	MUSB_HfiDevice* Data_8; //8
-	void* Data_0xc; //12
-	void* Data_0x10; //16
-	uint16_t wData_0x14; //20
-	//0x18 = 24
-} Struct_235faa2c;
 
-Struct_235faa2c Data_235faa2c[4]; //235faa2c /  / 237943e4
+USB_MSD_Device Data_235faa2c[4]; //235faa2c /  / 237943e4
 
 //234c1174
 void (*Data_234c1174)() = 0; //234c1174 +0
@@ -168,7 +158,7 @@ static void MGC_MsdOtgError(void *hClient, MUSB_BusHandle hBus,
 /* 23439e84 - todo */
 void sub_23439e84(int a, int b)
 {
-	Struct_235faa2c* r4 = 0;
+	USB_MSD_Device* r4 = 0;
 
 	for (uint8_t i = 0; i < 4; i++)
 	{
@@ -204,7 +194,7 @@ MUSB_HfiStatus MUSB_HfiAddDevice(MUSB_HfiVolumeHandle *phVolume/*r6*/,
     MediaIsOk = TRUE;
 #endif
 
-#if 0
+#if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MUSB_HfiAddDevice\r\n");
@@ -222,7 +212,7 @@ MUSB_HfiStatus MUSB_HfiAddDevice(MUSB_HfiVolumeHandle *phVolume/*r6*/,
 		if (Data_235faa2c[i].Data_0 == 0)
 		{
 			Data_235faa2c[i].Data_0 = *phVolume;
-			Data_235faa2c[i].Data_8 = pDevice;
+			Data_235faa2c[i].pHfiDevice = pDevice;
 			Data_235faa2c[i].Data_4 = pInfo;
 			Data_235faa2c[i].Data_0xc = OSSemCreate(1);
 			Data_235faa2c[i].Data_0x10 = OSSemCreate(0);
@@ -242,7 +232,7 @@ MUSB_HfiStatus MUSB_HfiAddDevice(MUSB_HfiVolumeHandle *phVolume/*r6*/,
 }
 
 
-/* 23439f66 - todo */
+/* 23439f66 - complete */
 void MUSB_HfiMediumInserted(MUSB_HfiVolumeHandle 	 hVolume,
                             const MUSB_HfiMediumInfo *pMediumInfo)
 {
@@ -250,7 +240,7 @@ void MUSB_HfiMediumInserted(MUSB_HfiVolumeHandle 	 hVolume,
     MGC_pHfiMediumInfo = pMediumInfo;
 #endif
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "MUSB_HfiMediumInserted\r\n");
@@ -259,7 +249,7 @@ void MUSB_HfiMediumInserted(MUSB_HfiVolumeHandle 	 hVolume,
 #endif
 }
 
-/* 23439f68 - todo */
+/* 23439f68 - complete */
 void MUSB_HfiMediumRemoved(MUSB_HfiVolumeHandle hVolume)
 {
 #if 0
@@ -269,10 +259,18 @@ void MUSB_HfiMediumRemoved(MUSB_HfiVolumeHandle hVolume)
 }
 
 
-/* 23439f1a - todo */
+/* 23439f1a - complete */
 void MUSB_HfiDeviceRemoved(MUSB_HfiVolumeHandle hVolume)
 {
 	uint8_t err;
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "MUSB_HfiDeviceRemoved\r\n");
+		console_send_string(debug_string);
+	}
+#endif
 
 	for (uint32_t i = 0; i < 4; i++)
 	{
@@ -280,7 +278,7 @@ void MUSB_HfiDeviceRemoved(MUSB_HfiVolumeHandle hVolume)
 		if (Data_235faa2c[i].Data_0 == hVolume)
 		{
 			Data_235faa2c[i].Data_0 = 0;
-			Data_235faa2c[i].Data_8 = 0;
+			Data_235faa2c[i].pHfiDevice = 0;
 			Data_235faa2c[i].Data_0xc = (void*) OSSemDel(Data_235faa2c[i].Data_0xc, 1, &err);
 			Data_235faa2c[i].Data_0x10 = (void*) OSSemDel(Data_235faa2c[i].Data_0x10, 1, &err);
 
@@ -609,13 +607,13 @@ int usb_sw_uninit(void)
 
 
 /* 2343a150 /  / 2344afe8 - todo */
-Struct_235faa2c* sub_2343a150(int a)
+USB_MSD_Device* musb_msd_get_device(int a)
 {
 #if 0
-	console_send_string("sub_2343a150 (todo.c): TODO\r\n");
+	console_send_string("musb_msd_get_device (todo.c): TODO\r\n");
 #endif
 
-	if (Data_235faa2c[a].Data_8 == 0)
+	if (Data_235faa2c[a].pHfiDevice == 0)
 	{
 		return 0;
 	}

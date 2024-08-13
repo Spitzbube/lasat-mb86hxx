@@ -63,34 +63,6 @@ void MUSB_CancelControlTransfer ()
 }
 
 
-void MUSB_HfiAddDevice()
-{
-	console_send_string("MUSB_HfiAddDevice (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiDeviceRemoved()
-{
-	console_send_string("MUSB_HfiDeviceRemoved (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiMediumInserted()
-{
-	console_send_string("MUSB_HfiMediumInserted (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiMediumRemoved()
-{
-	console_send_string("MUSB_HfiMediumRemoved (todo.c): TODO\r\n");
-
-}
-
-
 void MGC_StartupAppEvent()
 {
 	console_send_string("MGC_StartupAppEvent (todo.c): TODO\r\n");
@@ -872,14 +844,6 @@ int sub_23436688()
 void sub_23412da8()
 {
 	console_send_string("sub_23412da8 (todo.c): TODO\r\n");
-
-}
-
-
-/* 23415ff8 - todo */
-void sub_23415ff8()
-{
-	console_send_string("sub_23415ff8 (todo.c): TODO\r\n");
 
 }
 

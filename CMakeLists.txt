@@ -96,6 +96,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${psi_si_SOURCE_DIR}
     ${musb_SOURCE_DIR}/include
     ${musb_SOURCE_DIR}/src/systems/FAPI4
+    ${musb_SOURCE_DIR}/src/msc
     ${lwIP_SOURCE_DIR}/src/include
 )
 

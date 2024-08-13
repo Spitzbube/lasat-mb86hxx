@@ -1,5 +1,6 @@
 
 #include "data.h"
+#include "usb_msd.h"
 #include "sub_2345609c.h"
 
 

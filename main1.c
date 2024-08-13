@@ -1475,9 +1475,9 @@ void main_usb_init()
 	main_hMemBlk2 = memblk_open(&sp);
 	if (main_hMemBlk2 != 0)
 	{
-		extern void sub_23400120(void);
+		extern void main_on_usb_storage(void);
 
-		sub_2343a162(sub_23400120); //->usb_msd.c
+		sub_2343a162(main_on_usb_storage); //->usb_msd.c
 		usb_init();
 		MGC_usbInitController();
 		usb_msd_init();
