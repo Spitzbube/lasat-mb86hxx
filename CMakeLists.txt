@@ -11,7 +11,6 @@ set(SRCS
    sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    console.c                #0x2341af84?
    memblk.c
-   dma.c
    usb.c
    sub_23467de0.c
    network.c
@@ -41,7 +40,6 @@ set(SRCS
    sub_23418e1c.c
    psi.c
    sub_2344ed20.c
-   sub_23458874.c
    sub_23411b0c.c
    channel_list_update.c    #0x2343dcfc
    audec.c
@@ -62,6 +60,12 @@ set(SRCS
    menu_information.c
    menu_guided_install.c    #?
    ttx.c
+   ts_play.c                #?              #?              #0x235afe88
+   ts_record.c              #?              #?              #0x237bf890
+   web_interface.c
+   sub_2345609c.c
+   sub_2345c09c.c
+   fatfs.c
    hexdump.c
    todo.c
 )
@@ -92,6 +96,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${psi_si_SOURCE_DIR}
     ${musb_SOURCE_DIR}/include
     ${musb_SOURCE_DIR}/src/systems/FAPI4
+    ${musb_SOURCE_DIR}/src/msc
     ${lwIP_SOURCE_DIR}/src/include
 )
 
@@ -102,6 +107,8 @@ add_definitions(
 )
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC
+    VDR110
+#    DVBC_RADIO
     USB_HUB
     USB_ASIX
 #    PSI_PMT_FILTER_DEBUG

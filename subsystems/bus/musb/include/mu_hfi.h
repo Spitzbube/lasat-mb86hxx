@@ -118,8 +118,8 @@ typedef enum
 typedef struct
 {
     MUSB_HfiAccessType AccessType;
-    uint32_t dwBlockSize;
-    uint32_t dwBlockCountLo;
+    uint32_t dwBlockSize; //4
+    uint32_t dwBlockCountLo; //8
     uint32_t dwBlockCountHi;
     uint16_t awSerialNumber[MUSB_HFI_MAX_VOLUME_SERIAL+1];
 } MUSB_HfiMediumInfo;
@@ -388,8 +388,8 @@ typedef struct
     void* pPrivateData;
     MUSB_pfHfiMountVolume pfMountVolume;
     MUSB_pfHfiGetMediumInfo pfGetMediumInfo;
-    MUSB_pfHfiReadDevice pfReadDevice;
-    MUSB_pfHfiWriteDevice pfWriteDevice;
+    MUSB_pfHfiReadDevice pfReadDevice; //0x0c
+    MUSB_pfHfiWriteDevice pfWriteDevice; //0x10
     MUSB_pfHfiFlushDevice pfFlushDevice;
     MUSB_pfHfiFormatMedium pfFormatMedium;
     MUSB_pfHfiGetFormatProgress pfGetFormatProgress;

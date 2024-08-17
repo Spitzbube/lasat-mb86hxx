@@ -827,3 +827,32 @@ void usb_set_gpio(int state)
 }
 
 
+/* 23439e1e - todo */
+int usb_lock(void)
+{
+#if 0
+	console_send_string("usb_lock (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err;
+
+	OSSemPend(usb_sema, 0, &err);
+
+	return err;
+}
+
+
+/* 23439e32 - todo */
+int usb_unlock(void)
+{
+#if 0
+	console_send_string("usb_unlock (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err;
+
+	OSSemPost(usb_sema);
+
+	return err;
+}
+

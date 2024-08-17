@@ -778,7 +778,7 @@ void scan_thread()
 						r4 = r8[scanData.pList[scanData.currentItem].bData_0x16];
 					}
 
-					sub_2340ec54(r4, 0);
+					fe_manager_register_state_change_callback(r4, 0);
 					//->loc_2340fe00
 					(scanData.pfNext)(0xff);
 					//loc_2340fee0

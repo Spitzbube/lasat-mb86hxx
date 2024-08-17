@@ -103,6 +103,34 @@ int sub_23411d74(Struct_2358be5c_Inner0* a)
 }
 
 
+/* 23412da8 - todo */
+int sub_23412da8(void)
+{
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+    OS_CPU_SR  cpu_sr = 0u;
+#endif
+	uint16_t r4 = (0x16 << 11) | (0x16 << 5); //0xB2C0;
+
+#if 0
+	console_send_string("sub_23412da8 (todo.c): TODO\r\n");
+#endif
+
+	OS_ENTER_CRITICAL();
+
+	if (Data_2358be5c.Data_0.bData_4 != 0)
+	{
+		uint8_t* r1 = &Data_2358be5c.Data_0.bData_1;
+		r4 = *(r1+0);
+		r4 |= (*(r1+1) << 5);
+		r4 |= (*(r1+2) << 11);
+	}
+
+	OS_EXIT_CRITICAL();
+
+	return r4;
+}
+
+
 /* 23412e4c - todo */
 uint8_t sub_23412e4c(uint8_t a)
 {

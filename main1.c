@@ -23,6 +23,8 @@
 #include "radiotext.h"
 #include "channel_list_update.h"
 #include "scan.h"
+#include "ts_play.h"
+#include "ts_record.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -53,6 +55,7 @@ void* main_hAudec0 = 0; //23491de0 +0x54
 void* main_hAudec4 = 0; //23491de4 +0x58
 void* main_hAudec5 = 0; //23491de8 +0x5c
 void* main_hAudecRadioText = 0; //23491dec +0x60
+uint32_t Data_23491df0 = 0; //23491df0 +0x64
 void* main_hCurrentPCR_TSD_Handle = 0; //23491e08
 void* main_hPESParserVideo = 0; //23491e0c +0x80 / 234ac510
 
@@ -112,6 +115,17 @@ void sub_2340052c()
 #endif
 
 	/* empty */
+}
+
+
+/* 23400530 - complete */
+int sub_23400530(void)
+{
+#if 0
+	console_send_string("sub_23400530 (todo.c): TODO\r\n");
+#endif
+
+	return 0;
 }
 
 
@@ -745,6 +759,13 @@ int main_pes_init(void)
 }
 
 
+/* 23400f9c - complete */
+void main_dma_init(void)
+{
+	dma_init();
+}
+
+
 #if 1
 extern int sub_23401e92(uint8_t, uint8_t);
 extern int sub_23401ea4(Struct_2340e754*, int);
@@ -1109,6 +1130,62 @@ void main_channel_init()
 }
 
 
+/* 2344c7f4 - todo */
+void sub_2344c7f4()
+{
+#if 1
+	console_send_string("sub_2344c7f4 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23401280 /  / 234024ec - complete */
+void main_ts_play_init(void)
+{
+#if 1 //ndef VDR110
+	Struct_23418b54 sp4;
+	TS_Record_Params  sp_0x14;
+
+	sp_0x14.threadPrio = THREAD_PRIO_TS_RECORD;
+	sp_0x14.bufferAddress = 0x3000000;
+	sp_0x14.bufferSize = 0x1ffc00;
+	sp_0x14.Data_0xc = 0x20000000;
+	sp_0x14.Data_8 = 0x21958000;
+
+	ts_record_init(&sp_0x14);
+
+	sp4.threadPrio = THREAD_PRIO_TS_PLAY;
+
+	sp4.Data_4 = 0x231ffc00; //sub_234019e0(0x24c00);
+	extern void sub_2344c7f4();
+	sp4.Data_0 = sub_2344c7f4;
+	sp4.Data_8 = 0x20000000;
+
+	ts_play_init(&sp4);
+
+	sub_23426678();
+#else
+	Struct_23418b54 sp;
+
+	sp.threadPrio = THREAD_PRIO_TS_PLAY;
+	sp.Data_4 = sub_234019e0(0x24c00);
+	sp.Data_0 = 0;
+	sp.Data_8 = 0;
+
+	ts_play_init(&sp);
+#endif
+}
+
+
+/* 234012b0 - todo */
+void sub_234012b0()
+{
+	console_send_string("sub_234012b0 (todo.c): TODO\r\n");
+
+}
+
+
 /* 2340146c / 2340195c - complete */
 void main_graphic_init()
 {
@@ -1136,25 +1213,23 @@ void main_network_init()
 	console_send_string("main_network_init (todo.c): TODO\r\n");
 #endif
 
-#if 0
 	sub_23419454(sub_234012b0);
 
+#if 0
 	eth_set_buffer( sub_234019e0(0x10000) );
 #endif
 
 	uint32_t r4 = sub_234019e0(0x150000);
 
-#if 0
 	Data_23491df0 = sub_234019e0(0x10000);
-#endif
 
 	if (0 == network_init(r4))
 	{
 #if 0
 		ftpd_init();
+#endif
 
 		tcp_console_init(main_process_uart_command);
-#endif
 	}
 #if 1 //TODO!!! Until network_init is fixed
 	else
@@ -1382,7 +1457,7 @@ void main_set_power_mode()
 }
 
 
-/* 234017f0 / 234023e8 - todo */
+/* 234017f0 / 234023e8 / 2340247c - todo */
 void main_usb_init()
 {
 	Struct_20401328 sp_0x10;
@@ -1400,9 +1475,9 @@ void main_usb_init()
 	main_hMemBlk2 = memblk_open(&sp);
 	if (main_hMemBlk2 != 0)
 	{
-#if 0
-		sub_2343a162(sub_23400120);
-#endif
+		extern void main_on_usb_storage(void);
+
+		sub_2343a162(main_on_usb_storage); //->usb_msd.c
 		usb_init();
 		MGC_usbInitController();
 		usb_msd_init();

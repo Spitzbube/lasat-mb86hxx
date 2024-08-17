@@ -35,6 +35,7 @@ int Data_234ac8d0 = 0; //234ac8d0 +4
 void* tsd_sema/*sema*/ = 0; //234923AC / 234ac8d4 +8
 int Data_234ac8d8 = 0; //234923B0 / 234ac8d8 +0xc
 int Data_234ac8dc = 0; //234923B4 / 234AC8DC +0x10
+void* Data_234923b8 = 0; //234923B8 / ??? +0x14
 
 //bm.c
 extern int Data_236e0b14[]; //236e0b14 / 235b1cec
@@ -793,6 +794,22 @@ int sub_2342a788(int a)
 	}
 
 	return 0;
+}
+
+
+/* 2341e974 /  / 2342ac58 - complete */
+int sub_2341e974(BM_Handle* a)
+{
+#if 0
+	console_send_string("sub_2341e974 (todo.c): TODO\r\n");
+#endif
+
+	if (a == 0)
+	{
+		return 0;
+	}
+
+	return a->channelId;
 }
 
 
@@ -1832,6 +1849,84 @@ int sub_2342c4f8(Struct_2342c4f8* r4)
 }
 
 
+/* 234210ec /  / 2342d3d0 - todo */
+int sub_234210ec(void** pHandle, TSD_PesParserParams* b, int c)
+{
+	uint8_t err;
+	Struct_235f048c* h = 0;
+
+#if 0
+	console_send_string("sub_234210ec (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(tsd_sema, 0, &err);
+	if (err != 0)
+	{
+		return err;
+	}
+
+	for (uint32_t i = 0; i < 22; i++)
+	{
+		if (Data_235f048c[i].bData_0 == 0)
+		{
+			Data_235f048c[i].bData_0 = 1;
+			h = &Data_235f048c[i];
+			break;
+		}
+	}
+
+	if (h == 0)
+	{
+		OSSemPost(tsd_sema);
+
+		return 5;
+	}
+
+	if (c != 0)
+	{
+		Data_234923b8 = bm_open(&b->Data_4);
+	}
+
+	if (Data_234923b8 == 0)
+	{
+		OSSemPost(tsd_sema);
+
+		return 0xff;
+	}
+
+	tsd_SetPidConfig_1_BufferIndex(b->bData_0, b->Data_4.pidChannel, 
+		sub_2341e974(Data_234923b8));
+		
+	if (0 != tsd_SetPidFilter(b->bData_0, b->Data_4.pidChannel & 0xff, b->pid))
+	{
+		h->bData_0 = 0;
+
+		OSSemPost(tsd_sema);
+
+		return 1;
+	}
+
+	tsd_SetPidConfig_2_StoreCompletePacket(b->bData_0, b->Data_4.pidChannel, 1);
+
+	*pHandle = h;
+
+	h->bData_0x28 = b->bData_1;
+	h->bmHandle = Data_234923b8;
+	h->Data_0x24 = b->Data_0x38;
+	h->Data_4 = b->bData_0;
+	h->Data_4 |= (b->Data_4.pidChannel << 16);
+	h->Data_0x18 = 0; //r8
+	h->Data_8 = 0; //r8
+	h->Data_12 = b->Data_4.bufferAddress;
+	h->Data_0x10 = b->Data_4.bufferAddress + b->Data_4.bufferSize;
+	h->Data_0x14 = b->Data_4.bufferSize;
+
+	OSSemPost(tsd_sema);
+
+	return 0;
+}
+
+
 /* 2342125c / 2342c73c - todo */
 int tsd_open_pes_parser(void** pHandle, TSD_PesParserParams* r4)
 {
@@ -2480,9 +2575,9 @@ int tsd_SetPidConfig_2_NewPcrIrqEn(void* h, int r4)
 
 
 /* 23421a30 / 2342cf10 - todo */
-int sub_23421a30(int r4, int r6)
+int tsd_configure_input_gpios(int r4, int r6)
 {
-	uint8_t sp_0x28;
+	uint8_t err;
 	Struct_20401328 sp_0x1c;
 	uint8_t r8;
 	uint8_t sb;
@@ -2497,13 +2592,13 @@ int sub_23421a30(int r4, int r6)
 	uint8_t sp;
 
 #if 0
-	console_send_string("sub_23421a30 (todo.c): TODO\r\n");
+	console_send_string("tsd_configure_input_gpios (todo.c): TODO\r\n");
 #endif
 
-	OSSemPend(tsd_sema, 0, &sp_0x28);
-	if (sp_0x28 != 0)
+	OSSemPend(tsd_sema, 0, &err);
+	if (err != 0)
 	{
-		return sp_0x28;
+		return err;
 	}
 
 	if (r4 == 0)
@@ -2511,17 +2606,17 @@ int sub_23421a30(int r4, int r6)
 		if (Data_234ac8dc != r6)
 		{
 			//0x2342cf54
-			r8 = 0x2d;
-			sb = 0x2e;
-			sl = 0x2f;
-			fp = 0x30;
-			sp_0x18 = 0x31;
-			sp_0x14 = 0x32;
-			sp_0x10 = 0x33;
-			sp_0xc = 0x34;
-			sp8 = 0x35;
-			sp4 = 0x36;
-			sp = 0x37;
+			r8 = 45; //GPIO_IN_TS_A_CLK
+			sb = 46; //GPIO_IN_TS_A_PSTART
+			sl = 47; //GPIO_IN_TS_A_EN
+			fp = 48; //GPIO_IN_TS_A_DATA_0
+			sp_0x18 = 49; //GPIO_IN_TS_A_DATA_1
+			sp_0x14 = 50; //GPIO_IN_TS_A_DATA_2
+			sp_0x10 = 51; //GPIO_IN_TS_A_DATA_3
+			sp_0xc = 52; //GPIO_IN_TS_A_DATA_4
+			sp8 = 53; //GPIO_IN_TS_A_DATA_5
+			sp4 = 54; //GPIO_IN_TS_A_DATA_6
+			sp = 55; //GPIO_IN_TS_A_DATA_7
 
 			Data_234ac8dc = r6;
 			//->loc_2342cff4
@@ -2538,17 +2633,17 @@ int sub_23421a30(int r4, int r6)
 	else if (r4 == 2)
 	{
 		//0x2342cfac
-		r8 = 0x22;
-		sb = 0x23;
-		sl = 0x24;
-		fp = 0x25;
-		sp_0x18 = 0x26;
-		sp_0x14 = 0x27;
-		sp_0x10 = 0x28;
-		sp_0xc = 0x29;
-		sp8 = 0x2a;
-		sp4 = 0x2b;
-		sp = 0x2c;
+		r8 = 34; //GPIO_IN_TS_B_CLK
+		sb = 35; //GPIO_IN_TS_B_PSTART
+		sl = 36; //GPIO_IN_TS_B_EN
+		fp = 37; //GPIO_IN_TS_B_DATA_0
+		sp_0x18 = 38; //GPIO_IN_TS_B_DATA_1
+		sp_0x14 = 39; //GPIO_IN_TS_B_DATA_2
+		sp_0x10 = 40; //GPIO_IN_TS_B_DATA_3
+		sp_0xc = 41; //GPIO_IN_TS_B_DATA_4
+		sp8 = 42; //GPIO_IN_TS_B_DATA_5
+		sp4 = 43; //GPIO_IN_TS_B_DATA_6
+		sp = 44; //GPIO_IN_TS_B_DATA_7
 		//loc_2342cff4
 	}
 	else
@@ -2737,6 +2832,118 @@ uint32_t tsd_get_pts(void* a)
 	r1 *= 300; //TSD_EXTENSION_RESOLUTION
 
 	return r1 / 2;
+}
+
+
+/* 2341e48c - complete */
+int sub_2341e48c(int a)
+{
+#if 0
+	console_send_string("sub_2341e48c (todo.c): TODO\r\n");
+#endif
+
+	if ((a == 0) || (a == 1) || (a == 2) ||  (a == 3))
+	{
+		return bm_get_global_offset();
+	}
+
+	return 0;
+}
+
+
+/* 23421e48 - todo */
+int sub_23421e48(Struct_235f048c* h, uint32_t b, int* c, int* d, int* e, int* f)
+{
+	struct
+	{
+		uint32_t Data_0; //0
+		uint32_t Data_4; //4
+		uint32_t Data_8; //8
+
+	}* r5 = (void*) &h->Data_8;
+	uint32_t r4 = b;
+	int r6 = 0;
+	uint8_t sp;
+	int fp;
+
+#if 0
+	console_send_string("sub_23421e48 (todo.c): TODO\r\n");
+#endif
+
+	fp = h->Data_4 >> 16;
+
+	OSSemPend(tsd_sema, 0, &sp);
+	if (sp != 0)
+	{
+		return sp;
+	}
+
+	uint32_t r0 = sub_2341e48c(fp);
+	uint32_t r1 = r5->Data_8;
+	uint32_t r2 = r5->Data_4;
+
+	r1 += r0;
+	r2 += r0;
+
+	r0 = r5->Data_0;
+	r0 += r2;
+	uint32_t r3 = r0 + r4;
+	if (r3 > r1)
+	{
+		r3 = r4;
+		r4 = r1 - r0;
+		r6 = r3 - r4;
+	}
+
+	*c = 0x20000000 | r0;
+	*e = 0x20000000 | r2;
+	*d = r4;
+	*f = r6;
+
+	OSSemPost(tsd_sema);
+
+	return 0;
+}
+
+
+/* 23421eec - todo */
+int sub_23421eec(void* a, uint32_t b, uint32_t c)
+{
+	Struct_235f048c* h = a;
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_23421eec (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(tsd_sema, 0, &sp);
+	if (sp != 0)
+	{
+		return sp;
+	}
+
+	h->Data_0x18 -= (b - c);
+	if (h->Data_0x18 < 0)
+	{
+		h->Data_0x18 += h->Data_0x14;
+	}
+
+	OSSemPost(tsd_sema);
+
+	return 0;
+}
+
+
+/* 23421f88 - todo */
+void sub_23421f88(void* a, int b)
+{
+	Struct_235f048c* h = a;
+
+#if 1
+	console_send_string("sub_23421f88 (todo.c): TODO\r\n");
+#endif
+
+
 }
 
 

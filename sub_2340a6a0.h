@@ -99,7 +99,6 @@ typedef struct
 	uint16_t wFlags_2; //2
 	uint16_t wTransponderIndex; //4
 	uint16_t wData_6; //6
-//			int Data_8; //8
 	uint16_t wPcrPID; //8
 	uint16_t wVideoPID; //10
 	uint16_t wAc3PID; //12
@@ -116,6 +115,17 @@ typedef struct
 	char Data_8[24]; //8, size?
 	//0x20 = 32
 } Struct_23543df0;
+
+
+typedef struct Struct_234fd8f0_Inner_489DC
+{
+	int Data_0; //0
+	uint32_t Data_4; //4
+	int Data_8; //8
+	uint16_t wData_12; //12
+	int Data_16; //16
+	//20 = 0x14
+} Struct_234fd8f0_Inner_489DC;
 
 
 typedef struct
@@ -177,15 +187,7 @@ typedef struct
 	uint8_t bData_235462c9; //235462C9, 489D9
 	uint8_t bData_235462ca; //235462ca, 489DA
 	uint8_t bData_235462cb; //235462cb, 489DB
-	struct Struct_234fd8f0_Inner_489DC
-	{
-		int Data_0; //0
-		uint32_t Data_4; //4
-		int Data_8; //8
-		uint16_t wData_12; //12
-		int Data_16; //16
-		//20 = 0x14
-	} Data_235462cc; //235462cc, 489DC
+	Struct_234fd8f0_Inner_489DC Data_235462cc; //235462cc, 489DC
 	int Data_235462e0; //235462E0, 489F0
 	//0x489f4???? -> 235462E4
 } Channel_Database;
@@ -219,9 +221,11 @@ typedef struct
 
 
 extern int channel_handle_user_settings(int get, User_Settings*);
+extern void sub_2340bf94(int, Channel*, Transponder*);
 extern void sub_2340bf0c(Struct_2340bf0c*);
 extern void sub_23409770(void);
 extern void sub_23409788(void);
 extern void channel_write_lastmode(void);
+extern Channel_Database* sub_2344f770(void);
  
 #endif //SUB_2340a6a0

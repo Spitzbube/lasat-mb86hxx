@@ -2,6 +2,73 @@
 #include "data.h"
 #include "ucos_ii.h"
 #include "startup.h"
+#include "usb_msd.h"
+#include "sub_2345609c.h"
+
+
+void* (*main_pfHandleUsbStorage)(void); //23491d88 +0 /  / 234c0188 +0x10
+
+
+extern void sub_2343a02e();
+extern void sub_23412da8();
+
+
+/* 234000a0 /  / 234000e0 - todo */
+void* main_handle_usb_storage(void)
+{
+	Struct_23415f44 sp;
+
+#if 1
+	console_send_string("main_handle_usb_storage (todo.c): TODO\r\n");
+#endif
+
+	usb_lock();
+
+	USB_MSD_Device* r0 = musb_msd_get_device(0);
+	if (r0 != 0)
+	{
+		sp.Data_0x18 = r0;
+		sp.read = MUSB_HfiRead;
+		sp.write = MUSB_HfiWrite;
+		sp.Data_8 = sub_2343a02e;
+		sp.Data_12 = MUSB_HfiGetMediumBlockCount;
+		sp.Data_16 = MUSB_HfiGetMediumBlockSize;
+		sp.Data_20 = sub_23412da8;
+
+#ifndef DVBC_RADIO
+		sub_2345609c/*sub_2341f814*/(sp);
+#endif
+
+		fatfs_volume_add_usb_device(&sp);
+
+		if (0 != fatfs_init(0))
+		{
+			//loc_23400108
+			fatfs_volume_remove_usb_device(0);
+		}
+		//loc_23400110
+	}
+	else
+	{
+		//loc_23400108
+		fatfs_volume_remove_usb_device(0);
+	}
+
+	usb_unlock();
+
+	return 0;
+}
+
+
+/* 23400120 /  / 234001dc - todo */
+void main_on_usb_storage(void)
+{
+#if 1
+	console_send_string("main_on_usb_storage (main.c)\r\n");
+#endif
+
+	main_pfHandleUsbStorage = main_handle_usb_storage;
+}
 
 
 /* 23400158 - todo */
@@ -36,6 +103,7 @@ void startup_thread()
 	main_frontend_i2c_init();
 	main_tsd_bm_init();
 	main_psi_init();
+	main_dma_init();
 	main_flash_init();
 #if 1 //Only v241!!!
 	main_vdec_init();
@@ -56,23 +124,19 @@ void startup_thread()
 	sub_234014dc();
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
+	main_ts_play_init();
 	sub_234018c8();
 	main_set_power_mode();
 	main_inputhandler_init();
 
 	while (1)
 	{
-#if 0
-		console_send_string("startup_thread\r\n");
-#endif
 		//loc_23400498
-#if 0
-		if (Data_23491d88 != 0)
+		if (main_pfHandleUsbStorage != 0)
 		{
-			void* p = (Data_23491d88)();
-			Data_23491d88 = p;
+			void* p = (main_pfHandleUsbStorage)();
+			main_pfHandleUsbStorage = p;
 		}
-#endif
 		//loc_234004ac
 		rtos_task_wait(10);
 	}

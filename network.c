@@ -5,10 +5,10 @@
 #include "lwip/netif.h"
 #include "lwip/dhcp.h"
 
-#if 0
 
 extern void web_interface_http_thread();
 extern void web_interface_streaming_thread();
+#if 0
 extern void sub_2345ace8();
 
 
@@ -53,7 +53,6 @@ int network_lwip_init()
 
 	sys_sem_t tcpip_init_sema; //sp_0x54
 
-#if 0
 	struct
 	{
 		int fill_0; //0
@@ -78,7 +77,6 @@ int network_lwip_init()
 	struct Struct_234fd8f0_Inner_489DC sp_0x14;
 
 	struct Struct_234fd8f0_Inner_489DC sp;
-#endif
 
 	int sl = 0;
 
@@ -104,12 +102,12 @@ int network_lwip_init()
 		IP4_ADDR(&network_netmask, 0,0,0,0);
 		IP4_ADDR(&network_gw, 0,0,0,0);
 	}
+#endif
 
 	if (Data_234920ec != 0)
 	{
 		(Data_234920ec)(&sp_0x3c, &sp_0x34);
 	}
-#endif
 
 	sys_sem_new(&tcpip_init_sema, 0);
 
@@ -266,8 +264,9 @@ int network_init(uint32_t r4)
 	Data_234920f0 = r4;
 
 	if (r0 == 0)
+#endif
 	{
-		sub_2345b270();
+		sub_2345b270(); //-> web_interface.c
 
 		sys_thread_new("\n HTTP", web_interface_http_thread, 0, 0, THREAD_PRIO_NETWORK_HTTP);
 		//->loc_234191b8
@@ -276,6 +275,7 @@ int network_init(uint32_t r4)
 		return 0;
 	}
 	//loc_23419178
+#if 0
 	if (r0 == 2)
 	{
 		//->loc_23419190
@@ -289,9 +289,6 @@ int network_init(uint32_t r4)
 
 		return 0;
 	}
-//#else
-	sys_thread_new("\n HTTP", web_interface_http_thread, 0, 0, THREAD_PRIO_NETWORK_HTTP);
-	sys_thread_new("\n streaming", web_interface_streaming_thread, 0, 0, THREAD_PRIO_NETWORK_STREAMING);
 #endif
 	//loc_234191c0
 	return 0xff;
@@ -405,6 +402,7 @@ uint32_t network_get_ipaddr()
 	return Data_235b0c60.ip_addr.addr;
 }
 
+#endif
 
 /* 23419454 - todo */
 void sub_23419454(void (*a)())
@@ -417,6 +415,7 @@ void sub_23419454(void (*a)())
 
 }
 
+#if 0
 
 /* 23419520 - todo */
 void sub_23419520 ()

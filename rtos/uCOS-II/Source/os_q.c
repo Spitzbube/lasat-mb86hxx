@@ -7,14 +7,6 @@ extern OS_Q OSQTbl[];
 #endif
 
 
-/* 23463b0c - todo */
-void sub_23463b0c()
-{
-	console_send_string("sub_23463b0c (todo.c): TODO\r\n");
-
-}
-
-
 /* 23463c3c - todo */
 void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 {
@@ -37,7 +29,7 @@ void* OSQAccept (OS_EVENT* pevent/*, uint8_t *err*/)
 //        *err = OS_ERR_PEVENT_NULL;
         return ((void *)0);
     }
-    if (pevent->OSEventType != 2/*OS_EVENT_TYPE_Q*/) {/* Validate event block type                          */
+    if (pevent->OSEventType != OS_EVENT_TYPE_Q) {/* Validate event block type                          */
 //        *err = 1; //OS_ERR_EVENT_TYPE;
         return ((void *)0);
     }
@@ -108,7 +100,7 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 			pq->OSQSize            = size;
 			pq->OSQEntries         = 0;
 
-			pevent->OSEventType = 2; //OS_EVENT_TYPE_Q
+			pevent->OSEventType = OS_EVENT_TYPE_Q;
 			pevent->OSEventCnt = 0;
 			pevent->OSEventPtr     = pq;
 
@@ -134,9 +126,10 @@ OS_EVENT* OSQCreate(void **start, uint16_t size)
 /* 23463d68 - todo */
 OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
 {
-#if 1
+#if 0
 	console_send_string("OSQDel (todo.c): TODO\r\n");
-#else
+#endif
+
     BOOLEAN    tasks_waiting;
     OS_EVENT  *pevent_return;
     OS_Q      *pq;
@@ -144,26 +137,32 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
     OS_CPU_SR  cpu_sr = 0;
 #endif
 
-    uint32_t cpu_sr;
-
+    if (OSIntNesting > 0) {                                /* See if called from ISR ...               */
+        *err = OS_ERR_DEL_ISR;                             /* ... can't DELETE from an ISR             */
+        return 0; //(pevent);
+    }
 
 #if OS_ARG_CHK_EN > 0
+#if 0
     if (err == (uint8_t *)0) {                               /* Validate 'err'                           */
         return (pevent);
     }
+#endif
     if (pevent == (OS_EVENT *)0) {                         /* Validate 'pevent'                        */
         *err = OS_ERR_PEVENT_NULL;
         return (pevent);
     }
 #endif
-    if (pevent->OSEventType != 2/*OS_EVENT_TYPE_Q*/) {          /* Validate event block type                */
+    if (pevent->OSEventType != OS_EVENT_TYPE_Q) {          /* Validate event block type                */
         *err = OS_ERR_EVENT_TYPE;
         return (pevent);
     }
+#if 0
     if (OSIntNesting > 0) {                                /* See if called from ISR ...               */
         *err = OS_ERR_DEL_ISR;                             /* ... can't DELETE from an ISR             */
         return (pevent);
     }
+#endif
     OS_ENTER_CRITICAL();
     if (pevent->OSEventGrp != 0) {                         /* See if any tasks waiting on queue        */
         tasks_waiting = OS_TRUE;                              /* Yes                                      */
@@ -182,10 +181,12 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
                  OSQFreeList            = pq;
                  pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
                  pevent->OSEventPtr     = OSEventFreeList; /* Return Event Control Block to free list  */
+#if 0        
                  pevent->OSEventCnt     = 0;
+#endif
                  OSEventFreeList        = pevent;          /* Get next free event control block        */
                  OS_EXIT_CRITICAL();
-                 *err                   = OS_NO_ERR;
+                 *err                   = OS_ERR_NONE;
                  pevent_return          = (OS_EVENT *)0;   /* Queue has been deleted                   */
              } else {
                  OS_EXIT_CRITICAL();
@@ -207,13 +208,15 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
              OSQFreeList            = pq;
              pevent->OSEventType    = OS_EVENT_TYPE_UNUSED;
              pevent->OSEventPtr     = OSEventFreeList;     /* Return Event Control Block to free list  */
+#if 0
              pevent->OSEventCnt     = 0;
+#endif
              OSEventFreeList        = pevent;              /* Get next free event control block        */
              OS_EXIT_CRITICAL();
              if (tasks_waiting == OS_TRUE) {                  /* Reschedule only if task(s) were waiting  */
                  OS_Sched();                               /* Find highest priority task ready to run  */
              }
-             *err                   = OS_NO_ERR;
+             *err                   = OS_ERR_NONE;
              pevent_return          = (OS_EVENT *)0;       /* Queue has been deleted                   */
              break;
 
@@ -224,7 +227,6 @@ OS_EVENT  *OSQDel (OS_EVENT *pevent, uint8_t opt, uint8_t *err)
              break;
     }
     return (pevent_return);
-#endif
 }
 
 
@@ -241,7 +243,7 @@ uint8_t  OSQFlush (OS_EVENT *pevent)
     if (pevent == (OS_EVENT *)0) {                    /* Validate 'pevent'                             */
         return 4; //(OS_ERR_PEVENT_NULL);
     }
-    if (pevent->OSEventType != 2/*OS_EVENT_TYPE_Q*/) {     /* Validate event block type                     */
+    if (pevent->OSEventType != OS_EVENT_TYPE_Q) {     /* Validate event block type                     */
         return 1; //(OS_ERR_EVENT_TYPE);
     }
 #endif

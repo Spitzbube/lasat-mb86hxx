@@ -782,7 +782,7 @@ int fe_manager_tune(Frontend* r4, Transponder transponder, void (*callbackFunc/*
 	r4->stateChangeCallback = callbackFunc;
 	r4->wData_0xd4 = r7;
 
-	sub_23421a30(0, r4->Data_0x7c.bData_0x16);
+	tsd_configure_input_gpios(0, r4->Data_0x7c.bData_0x16);
 
 	OSTimeDlyResume(fe_manager_threadPrio);
 	//->loc_2340ebd0
@@ -793,12 +793,12 @@ int fe_manager_tune(Frontend* r4, Transponder transponder, void (*callbackFunc/*
 
 
 /* 2340ec54 - complete */
-int sub_2340ec54(Frontend* r4, void (*func)())
+int fe_manager_register_state_change_callback(Frontend* r4, void (*func)())
 {
 	uint8_t err;
 
 #if 0
-	console_send_string("sub_2340ec54 (todo.c): TODO\r\n");
+	console_send_string("fe_manager_register_state_change_callback (todo.c): TODO\r\n");
 #endif
 
 	if (r4 != 0)

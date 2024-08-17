@@ -105,9 +105,7 @@ typedef uint32_t INT32U;
 #define  OS_STAT_RDY               0x00u    /* Ready to run                                            */
 #define  OS_STAT_SEM               0x01u    /* Pending on semaphore                                    */
 #define  OS_STAT_MBOX              0x02u    /* Pending on mailbox                                      */
-#if 0
 #define  OS_STAT_Q                 0x04u    /* Pending on queue                                        */
-#endif
 #define  OS_STAT_SUSPEND           0x08u    /* Task is suspended                                       */
 #if 0
 #define  OS_STAT_MUTEX             0x10u    /* Pending on mutual exclusion semaphore                   */
@@ -123,9 +121,7 @@ typedef uint32_t INT32U;
 #endif
 #define  OS_EVENT_TYPE_UNUSED         0u
 #define  OS_EVENT_TYPE_MBOX           1u
-#if 0
 #define  OS_EVENT_TYPE_Q              2u
-#endif
 #define  OS_EVENT_TYPE_SEM            3u
 #if 0
 #define  OS_EVENT_TYPE_MUTEX          4u
@@ -306,9 +302,11 @@ typedef uint32_t INT32U;
 #define OS_MEM_INVALID_BLKS         111u
 #define OS_MEM_INVALID_SIZE         112u
 #define OS_MEM_NO_FREE_BLKS         113u
+#endif
 #define OS_MEM_FULL                 114u
 #define OS_MEM_INVALID_PBLK         115u
 #define OS_MEM_INVALID_PMEM         116u
+#if 0
 #define OS_MEM_INVALID_PDATA        117u
 #define OS_MEM_INVALID_ADDR         118u
 #define OS_MEM_NAME_TOO_LONG        119u

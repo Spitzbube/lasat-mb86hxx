@@ -63,34 +63,6 @@ void MUSB_CancelControlTransfer ()
 }
 
 
-void MUSB_HfiAddDevice()
-{
-	console_send_string("MUSB_HfiAddDevice (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiDeviceRemoved()
-{
-	console_send_string("MUSB_HfiDeviceRemoved (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiMediumInserted()
-{
-	console_send_string("MUSB_HfiMediumInserted (todo.c): TODO\r\n");
-
-}
-
-
-void MUSB_HfiMediumRemoved()
-{
-	console_send_string("MUSB_HfiMediumRemoved (todo.c): TODO\r\n");
-
-}
-
-
 void MGC_StartupAppEvent()
 {
 	console_send_string("MGC_StartupAppEvent (todo.c): TODO\r\n");
@@ -563,16 +535,6 @@ void sub_234093d4()
 }
 
 
-/* 2345b08c - todo */
-void sub_2345b08c()
-{
-#if 1
-	console_send_string("sub_2345b08c (todo.c): TODO\r\n");
-#endif 
-
-}
-
-
 /* 2340d2cc - todo */
 void sub_2340d2cc()
 {
@@ -796,5 +758,101 @@ void sub_2340929c()
 
 }
 
+
+void raw_bind()
+{
+	console_send_string("raw_bind (todo.c): TODO\r\n");
+
+}
+
+
+void raw_send ()
+{
+	console_send_string("raw_send (todo.c): TODO\r\n");
+
+}
+
+
+void raw_sendto ()
+{
+	console_send_string("raw_sendto (todo.c): TODO\r\n");
+
+}
+
+
+void udp_send ()
+{
+	console_send_string("udp_send (todo.c): TODO\r\n");
+
+}
+
+
+void raw_remove ()
+{
+	console_send_string("raw_remove (todo.c): TODO\r\n");
+
+}
+
+
+void raw_new ()
+{
+	console_send_string("raw_new (todo.c): TODO\r\n");
+
+}
+
+
+void raw_recv ()
+{
+	console_send_string("raw_recv (todo.c): TODO\r\n");
+
+}
+
+
+/* 23459168 - todo */
+int sub_23459168()
+{
+	console_send_string("sub_23459168 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23422334 - todo */
+int sub_23422334()
+{
+	console_send_string("sub_23422334 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2345d594 - todo */
+int sub_2345d594()
+{
+	console_send_string("sub_2345d594 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23436688 - todo */
+int sub_23436688()
+{
+	console_send_string("sub_23436688 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23457bf0 - todo */
+int sub_23457bf0()
+{
+	console_send_string("sub_23457bf0 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234147d8 - todo */
+int sub_234147d8()
+{
+	console_send_string("sub_234147d8 (todo.c): TODO\r\n");
+
+}
 
 

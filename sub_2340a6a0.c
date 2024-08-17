@@ -1903,8 +1903,8 @@ int sub_2340b22c(int r4)
 
 	if (r4 == 0xff)
 	{
-		sub_2340ec54(Data_23491db8, 0);
-		sub_2340ec54(main_hFrontend1, 0);
+		fe_manager_register_state_change_callback(Data_23491db8, 0);
+		fe_manager_register_state_change_callback(main_hFrontend1, 0);
 	}
 	//loc_2340b260
 	OSSemPend(channel_sema, 0, &err);
@@ -2038,8 +2038,8 @@ int sub_2340b55c()
 	if (channel.wTransponderIndex == 0xffff)
 	{
 		//0x2340b604
-		sub_2340ec54(Data_23491db8, 0);
-		sub_2340ec54(main_hFrontend1, 0);
+		fe_manager_register_state_change_callback(Data_23491db8, 0);
+		fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 		sub_2345d710(((channel.wPcrPID << 16) | (channel.wVideoPID << 0)) & 0xffff);
 
@@ -2184,8 +2184,8 @@ int channel_next()
 	console_send_string("channel_next (todo.c): TODO\r\n");
 #endif
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2248,8 +2248,8 @@ int channel_prev()
 	console_send_string("channel_prev (todo.c): TODO\r\n");
 #endif
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2307,8 +2307,8 @@ uint16_t channel_swap()
 	console_send_string("channel_swap (todo.c): TODO\r\n");
 #endif
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 5, &sp);
 
@@ -2333,8 +2333,8 @@ void channel_start_number(Channel* r8, uint32_t channelNr)
 	console_send_string("channel_start_number (todo.c): TODO\r\n");
 #endif
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &sp);
 
@@ -3012,9 +3012,10 @@ int sub_2340c9b0(int get, struct Struct_23546128* r4)
 	return 0;
 }
 
-^
+#endif
+
 /* 2340ca1c - complete */
-int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
+int sub_2340ca1c(int r4, Struct_234fd8f0_Inner_489DC* r6)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;
@@ -3028,11 +3029,11 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 
 	if (r4 != 0)
 	{
-		memcpy(r6, &channel_database.Data_235462cc, 20);
+		*r6 = channel_database.Data_235462cc;
 	}
 	else
 	{
-		memcpy(&channel_database.Data_235462cc, r6, 20);
+		channel_database.Data_235462cc = *r6;
 	}
 
 	OS_EXIT_CRITICAL();
@@ -3040,7 +3041,6 @@ int sub_2340ca1c(int r4, struct Struct_234fd8f0_Inner_489DC* r6)
 	return 0;
 }
 
-#endif
 
 /* 2340ca5c - todo */
 int sub_2340ca5c(int get, void* r6)
@@ -3079,8 +3079,8 @@ int channel_switch_lists(void)
 
 	uint8_t err;
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &err);
 
@@ -3174,8 +3174,8 @@ int sub_2340ce30(Transponder* r4, uint16_t* r5)
 	void* r6 = 0;
 	uint8_t sp_0x18;
 
-	sub_2340ec54(Data_23491db8, 0);
-	sub_2340ec54(main_hFrontend1, 0);
+	fe_manager_register_state_change_callback(Data_23491db8, 0);
+	fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 	OSSemPend(channel_sema, 0, &sp_0x18);
 
@@ -3321,8 +3321,8 @@ void sub_2340d300()
 
 		if (audec_get_status(main_hAudec2) == -1)
 		{
-			sub_2340ec54(Data_23491db8, 0);
-			sub_2340ec54(main_hFrontend1, 0);
+			fe_manager_register_state_change_callback(Data_23491db8, 0);
+			fe_manager_register_state_change_callback(main_hFrontend1, 0);
 
 			OSSemPend(channel_sema, 0, &err);
 

@@ -122,25 +122,9 @@ typedef struct
 	uint8_t bData_0; //0
 	uint8_t bData_1; //1
 	uint16_t pid; //2
-#if 0
-	int Data_4; //4
-	int Data_8; //8
-	int Data_0xc; //12 = 0xc
-	int Data_0x10; //0x10
-	int Data_0x14; //0x14
-	int Data_0x18; //0x18
-	int Data_0x1c; //0x1c
-	int Data_0x20; //0x20 = 32
-	int Data_0x24; //0x24 = 36
-	int Data_0x28; //0x28 = 40
-	int Data_0x2c; //0x2c
-	int Data_0x30; //0x30
-	int Data_0x34; //0x34
-#else
 	BM_OpenParams Data_4; //4
-#endif
 	int Data_0x38; //0x38
-	//0x3c
+	//0x3c = 60
 } TSD_PesParserParams;
 
 
@@ -189,6 +173,7 @@ typedef struct
 int sub_23421780(TSD_Handle*, uint16_t pid, Struct_23421780*);
 uint32_t sub_234225f4();
 void* tsd_get_bm_handle(void*);
+int sub_234210ec(void** a, TSD_PesParserParams* b, int c);
 
 
 

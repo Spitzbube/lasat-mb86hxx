@@ -87,14 +87,14 @@ set(lwipcore6_SRCS
 
 # APIFILES: The files which implement the sequential and socket APIs.
 set(lwipapi_SRCS
-#    ${LWIP_DIR}/src/api/api_lib.c
-#    ${LWIP_DIR}/src/api/api_msg.c
+    ${LWIP_DIR}/src/api/api_lib.c
+    ${LWIP_DIR}/src/api/api_msg.c
 #    ${LWIP_DIR}/src/api/err.c
 #    ${LWIP_DIR}/src/api/if_api.c
-#    ${LWIP_DIR}/src/api/netbuf.c
+    ${LWIP_DIR}/src/api/netbuf.c
 #    ${LWIP_DIR}/src/api/netdb.c
 #    ${LWIP_DIR}/src/api/netifapi.c
-#    ${LWIP_DIR}/src/api/sockets.c
+    ${LWIP_DIR}/src/api/sockets.c
     ${LWIP_DIR}/src/api/tcpip.c
 )
 
