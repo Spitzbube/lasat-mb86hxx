@@ -237,6 +237,100 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
 }
 
 
+/* 23436a6c - todo */
+int sub_23436a6c(void* fp, /*sub_23467c62*/void* c, int d, 
+        /*pBuffer*/void* r8, uint32_t r7 /*dwLength*/, 
+		uint16_t sp_0x3c/*r1*/ /*r0->wData_0x18*/, 
+        uint8_t sp_0x40/*r6*/ /*r0->bData_0x1b*/, 
+        uint8_t sp_0x44/*sl*/ /*r0->bData_0x1c*/)
+{
+#if 0
+	console_send_string("sub_23436a6c (todo.c): TODO\r\n");
+#endif
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_23436a6c: r8=%p, dwLength=%d, sp_0x3c=%d, sp_0x40=%d, sp_0x44=%d\r\n", 
+            r8, r7, sp_0x3c, sp_0x40, sp_0x44);
+        console_send_string(debug_string);
+    }
+#endif
+
+    uint32_t sb = r7 / sp_0x3c;
+
+    DMA_Channel* r5 = &Data_234927c0[3 + d];
+    volatile uint32_t* r4 = (void*) r5->Data_0;
+
+    int sl = r7 - 0x1FFFFF; //+ 0xffe00001/*r1*/;
+    uint32_t r6 = 0x880 + (sp_0x40 << 4);
+    if (sp_0x44 == 0)
+    {
+        //0x23436ac8
+        r5->readAddr = r6; //0x880 + (sp_0x40 << 4); //r6
+        r5->writeAddr = (uint32_t) r8;
+        r5->totalLength = r7;
+        r5->Data_0x1c = c;
+        r5->Data_0x20 = 0;
+        r5->bData_4 = 1;
+        r5->Data_0x24 = (uint32_t) fp;
+        r5->Data_0x18 = 0x704;
+
+        if (sl < 0)
+        {
+            //0x23436b00
+            r4[1] = r7;
+            r4[2] = 0;
+            r4[3] = r6;
+            r4[4] = 0; 
+            r4[5] = 4;
+            r4[6] = r6;
+            r4[7] = (uint32_t) r8;
+            r4[8] = sb;
+            r4[9] = sp_0x3c;
+            r4[10] = 0;
+            //->loc_23436bac
+            r4[0] = r5->Data_0x18;
+        }
+        //loc_23436bb4
+    }
+    else
+    {
+        //loc_23436b34
+        sys_invalidate_data_cache(r8, r7);
+
+        r5->writeAddr = r6;
+        r5->totalLength = r7;
+        r5->readAddr = (uint32_t) r8;
+        r5->Data_0x1c = c;
+        r5->Data_0x20 = 0;
+        r5->bData_4 = 0;
+        r5->Data_0x24 = (uint32_t) fp;
+        r5->Data_0x18 = (((d * 7) + 7) << 16) | 0x04;
+
+        if (sl < 0)
+        {
+            //0x23436b80
+            r4[1] = r7;
+            r4[2] = 0;
+            r4[3] = (uint32_t) r8;
+            r4[4] = sb;
+            r4[5] = sp_0x3c;
+            r4[6] = 0;
+            r4[7] = r6;
+            r4[8] = 0;
+            r4[9] = 4;
+            r4[10] = r6;
+            //loc_23436bac
+            r4[0] = r5->Data_0x18;
+        }
+        //loc_23436bb4
+    }
+    //loc_23436bb4
+    return 0;
+}
+
+
 /* 23436bc0 - todo */
 int dma_init(void)
 {

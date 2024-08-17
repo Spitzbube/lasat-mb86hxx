@@ -35,13 +35,6 @@ void MGC_FunctionSetInterface()
 }
 
 
-void MGC_HdrcDmaChannelStatusChanged ()
-{
-	console_send_string("MGC_HdrcDmaChannelStatusChanged (todo.c): TODO\r\n");
-
-}
-
-
 void MGC_HdrcSetPortTestMode ()
 {
 	console_send_string("MGC_HdrcSetPortTestMode (todo.c): TODO\r\n");
@@ -848,11 +841,21 @@ int sub_23457bf0()
 }
 
 
-/* 234147d8 - todo */
-int sub_234147d8()
+/* 234145d0 - todo */
+int sub_234145d0()
 {
-	console_send_string("sub_234147d8 (todo.c): TODO\r\n");
+	console_send_string("sub_234145d0 (todo.c): TODO\r\n");
 
 }
+
+
+/* 23416a68 - todo */
+int sub_23416a68()
+{
+	console_send_string("sub_23416a68 (todo.c): TODO\r\n");
+
+}
+
+
 
 

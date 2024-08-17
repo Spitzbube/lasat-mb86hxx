@@ -230,10 +230,10 @@ int usb_init()
 }
 
 
-/* 234398c8 - todo */
+/* 234398c8 - complete */
 void* usbServiceSystemToBusAddress(void* privateDataPtr, const void* sysAddress)
 {
-#if 1
+#if 0
 	console_send_string("usbServiceSystemToBusAddress (todo.c): TODO\r\n");
 #endif
 

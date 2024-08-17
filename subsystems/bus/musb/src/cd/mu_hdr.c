@@ -2167,10 +2167,7 @@ uint8_t MGC_HdrcWriteUlpiReg(MGC_Port *pPort, uint8_t bAddr, uint8_t bData)
     return TRUE;
 }
 
-#if 0
-
-#if 0
-
+/* 23467804 - todo */
 uint8_t MGC_HdrcDmaChannelStatusChanged(
     void *pPrivateData, uint8_t bLocalEnd, uint8_t bTransmit)
 {
@@ -2275,6 +2272,10 @@ uint8_t MGC_HdrcDmaChannelStatusChanged(
 
 #endif
 }
+
+#if 0
+
+#if 0
 
 #if MUSB_DIAG > 0
 

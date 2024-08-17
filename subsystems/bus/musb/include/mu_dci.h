@@ -81,11 +81,12 @@ typedef enum _MUSB_DmaChannelStatus
  */
 typedef struct
 {
-    void* pPrivateData;
-    uint32_t dwMaxLength;
-    uint32_t dwActualLength;
-    MUSB_DmaChannelStatus bStatus;
-    uint8_t bDesiredMode;
+    void* pPrivateData; //0
+    uint32_t dwMaxLength; //4
+    uint32_t dwActualLength; //8
+    MUSB_DmaChannelStatus bStatus; //12
+    uint8_t bDesiredMode; //16
+    //20 = 0x14
 } MUSB_DmaChannel;
 
 /**

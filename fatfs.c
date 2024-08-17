@@ -44,7 +44,7 @@ typedef struct
 {
 	uint8_t bIsFAT32; //0
 	uint8_t fill_1; //1
-	uint16_t wData_2; //2
+	uint16_t wSectorsPerCluster; //2
 	uint16_t fill_4; //4
 	uint16_t wBytsPerSec; //6
 	int Data_8; //8
@@ -102,6 +102,70 @@ static uint32_t get_dword(int offset)
 }
 
 
+/* 234147d8 - todo */
+int sub_234147d8(Struct_235af5d0* r5, uint32_t r4)
+{
+#if 0
+	console_send_string("sub_234147d8 (todo.c): TODO\r\n");
+#endif
+
+	if (r4 == 0)
+	{
+		r4 = 2;
+	}
+
+	uint32_t r6 = r4 >> 7;
+	Data_234920dc = r5->Data_0x10 + r6;	
+
+	(r5->read)(r5->Data_0x4c, Data_234920dc, Data_234920d8, 1);
+
+#if 1
+	{
+		hex_dump("sub_234147d8", Data_234920d8, 512);		
+	}
+#endif
+
+	r6 = 0 - r6;
+
+	uint32_t r0_;
+	uint32_t r0 = r4 + (r6 << 7);
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234147d8: r0=0x%x\r\n", r0);
+        console_send_string(debug_string);
+    }
+#endif
+
+	if (r5->bIsFAT32)
+	{
+		r0_ = get_dword((r0 & 0x3fff) * 4);
+	}
+	else
+	{
+		r0_ = get_word((r0 & 0x7fff) * 2);
+	}
+
+	r0_ &= 0xfffffff;
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234147d8: r0_=0x%x\r\n", r0_);
+        console_send_string(debug_string);
+    }
+#endif
+
+	if (r0_ == 0xfffffff) //-0xf0000001)
+	{
+		return -1;
+	}
+
+	return r0_;
+}
+
+
 /* 234148c4 - todo */
 int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 {
@@ -109,7 +173,16 @@ int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 	console_send_string("sub_234148c4 (todo.c): TODO\r\n");
 #endif
 
-	uint16_t r5 = r8->wData_2;
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234148c4: r7=%d, sb=%d, r6=%p\r\n", 
+            r7, sb, r6);
+        console_send_string(debug_string);
+    }
+#endif
+
+	uint16_t r5 = r8->wSectorsPerCluster;
 	uint32_t r4 = sb / r5;
 	int r0 = (r5 * r4);
 	sb -= r0;
@@ -150,9 +223,17 @@ int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 		}
 	}
 	//loc_23414960
-	if (r7 != 1)
+	if (r7 != -1)
 	{
 		//0x23414968
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234148c4: r7=%d, TODO!!!\r\n", 
+            r7);
+        console_send_string(debug_string);
+    }
+#endif
 
 		//TODO
 	}
@@ -198,7 +279,21 @@ int fatfs_volume_init(int a)
 
 	Data_234920dc = 0; //r6
 
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "fatfs_volume_init: a=%d\r\n", a);
+        console_send_string(debug_string);
+    }
+#endif
+
 	(r4->read)(r4->Data_0x4c, 0, Data_234920d8, 1);
+
+#if 1
+    {
+		hex_dump("fatfs_volume_init (1)", Data_234920d8, 512);
+    }
+#endif
 
 	int sb = 510; //0x1fe; //BS_55AA
 	int r0 = get_word(sb/*0x1fe*/);
@@ -206,6 +301,14 @@ int fatfs_volume_init(int a)
 	if (r0 != /*0xaa55*/r8)
 	{
 		//loc_23415024
+#if 0
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "fatfs_volume_init: r0=0x%x, r8=0x%x\r\n", r0, r8);
+			console_send_string(debug_string);
+		}
+#endif
+
 		return 3;
 	}
 	//0x23414d48
@@ -262,7 +365,21 @@ int fatfs_volume_init(int a)
 	//loc_23414e2c
 	Data_234920dc = r6;
 
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "fatfs_volume_init: Data_234920dc=%d\r\n", Data_234920dc);
+        console_send_string(debug_string);
+    }
+#endif
+
 	(r4->read)(r4->Data_0x4c, r6, Data_234920d8, 1);
+
+#if 1
+    {
+		hex_dump("fatfs_volume_init (2)", Data_234920d8, 512);
+    }
+#endif
 
 	if (get_word(sb/*0x1fe*/) != /*0xaa55*/r8)
 	{
@@ -313,7 +430,7 @@ int fatfs_volume_init(int a)
 	get_bytes(0x52, &BS_FilSysType[0], 8);
 
 	BS_FilSysType[8] = 0;
-	r4->wData_2 = BPB_SecPerClus;
+	r4->wSectorsPerCluster = BPB_SecPerClus;
 
 	int BPB_FATSz = BPB_FATSz16;
 	/* Number of sectors occupied by a FAT. 
@@ -373,6 +490,12 @@ int fatfs_volume_init(int a)
 		// Read the FSInfo Sector
 		(r4->read)(r4->Data_0x4c, Data_234920dc, 
 			Data_234920d8, 1);
+
+#if 1
+		{
+			hex_dump("fatfs_volume_init (3)", Data_234920d8, 512);
+		}
+#endif
 
 		if (get_word(sb/*0x1fe*/) != /*0xaa55*/r8)
 		{
@@ -526,7 +649,7 @@ void sub_23415178(uint16_t offset)
 /* 23415488 - todo */
 void sub_23415488(Struct_235af5d0* a)
 {
-#if 0
+#if 1
 	console_send_string("sub_23415488 (todo.c): TODO\r\n");
 #endif
 
@@ -775,8 +898,8 @@ uint16_t get_word(int offset)
 
 	uint8_t* addr = (uint8_t*)Data_234920d8;
 
-	uint16_t w = *(addr + offset + 1);
-	w += (*(addr + offset) << 8);
+	uint16_t w = *(addr + offset + 1) << 8;
+	w += (*(addr + offset) << 0);
 
 	return w;
 }

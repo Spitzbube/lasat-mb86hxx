@@ -39,6 +39,7 @@ add_definitions(
     --gnu
     --c99
 #    -O2
+    --enum_is_int
 )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
