@@ -13,7 +13,7 @@ extern int sub_23471600(UI_Thread_Params*);
 extern int menu_network_on_entry(UI_Thread_Params*);
 extern int sub_2343d1ca(UI_Thread_Params*);
 extern int menu_information_entry(UI_Thread_Params*);
-extern int sub_2347004a(UI_Thread_Params*);
+extern int menu_sw_update_entry(UI_Thread_Params*);
 
 extern int menu_main_on_enter(int);
 extern int menu_main_on_exit(UI_Thread_Params*);
@@ -101,7 +101,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0xffff,
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
-		sub_2347004a,
+		menu_sw_update_entry,
 		menu_event_thread,
 		0,
 		0
@@ -596,6 +596,16 @@ UI_Thread_Params* sub_2343d572(void)
 #endif
 
 	return Data_235fdf70;
+}
+
+
+/* 2343d580 - todo */
+int sub_2343d580()
+{
+#if 1
+	console_send_string("sub_2343d580 (todo.c): TODO\r\n");
+#endif
+
 }
 
 

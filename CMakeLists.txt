@@ -65,6 +65,8 @@ set(SRCS
    sub_2345609c.c
    sub_2345c09c.c
    fatfs.c
+   menu_sw_update.c
+   main2.c
    hexdump.c
    todo.c
 )
