@@ -12,7 +12,6 @@ set(SRCS
    console.c                #0x2341af84?
    memblk.c
    usb.c
-   sub_23467de0.c
    network.c
    tcp_console.c
    ir_user.c                #0x2340d3ec     0x23492068      0x235491e4

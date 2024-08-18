@@ -10,7 +10,7 @@
 
 extern int Data_234927c4; //234927c4
 extern int Data_234927c8; //234927c8
-extern int Data_234927cc; //234927cc
+extern int dma_dwUsbMode; //234927cc
 
 
 static uint8_t MUSB_BoardMessageString(char*, uint16_t, const char*);
@@ -495,8 +495,8 @@ void sub_23439a5c()
 		Data_234927c4 = 0x7f;
 		FREG(0xC70000F0)[0] = Data_234927c4; //DMA_USB_INT_MASK
 
-		Data_234927cc &= ~0x80;
-		FREG(0xC7000014)[0] = Data_234927cc; //DMA_USB_MODE
+		dma_dwUsbMode &= ~0x80;
+		FREG(0xC7000014)[0] = dma_dwUsbMode; //DMA_USB_MODE
 
 		MGC_usbSystem.controllerPtr = NULL;
 
@@ -736,7 +736,7 @@ int MGC_usbInitController()
 			Data_234927c4 = 0x7e;
 			FREG(0xC70000F0)[0] = 0x7e; //DMA_USB_INT_MASK
 
-			Data_234927cc = 0;
+			dma_dwUsbMode = 0;
 			FREG(0xC7000014)[0] = 0; //DMA_USB_MODE
 
 			if (0 == MUSB_StartController(ctrl_ptr, /*service_ptr*/&MGC_usbSystem.Services))

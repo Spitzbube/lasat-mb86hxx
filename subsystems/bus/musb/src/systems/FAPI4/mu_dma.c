@@ -1,10 +1,10 @@
 
-#include "data.h"
 #include "mu_dsi.h"
 #include "mu_dci.h"
 
 #pragma thumb
 
+extern void* main_hMemBlk2; //23491dc0 +0x34
 
 static MUSB_DmaController* sub_23467d5a(MUSB_pfDmaChannelStatusChanged pfDmaChannelStatusChanged,
 	    void* pDmaPrivate,
@@ -14,7 +14,7 @@ static MUSB_DmaController* sub_23467d5a(MUSB_pfDmaChannelStatusChanged pfDmaChan
 	    uint8_t* pCoreBaseBsr);
 static void sub_23467dba(void);
 
-extern int Data_234927cc; //234927cc
+extern int dma_dwUsbMode; //234927cc
 
 MUSB_DmaControllerFactory Data_23494338 = //23494338
 {
@@ -44,8 +44,8 @@ typedef struct Struct_238ce0fc
 		int Data_0x14; //20
 		uint16_t wData_0x18; //0x18
 		uint8_t bData_0x1a; //0x1a
-		uint8_t bData_0x1b; //0x1b
-		uint8_t bData_0x1c; //0x1c
+		uint8_t bEndpoint; //0x1b
+		uint8_t bWrite; //0x1c
 		uint8_t bData_0x1d; //0x1d
 		MUSB_DmaChannel Data_0x20; //0x20
 		//52 = 0x34
@@ -113,7 +113,7 @@ uint8_t sub_23467c54(MUSB_DmaChannel* pChannel, uint8_t* pBuffer)
 
 
 /* 23467c62 - complete */
-void sub_23467c62(int status, struct Struct_238ce0fc_Inner_0x44* r4)
+static void sub_23467c62(int status, struct Struct_238ce0fc_Inner_0x44* r4)
 {
 #if 0
 	console_send_string("sub_23467c62 (todo.c): TODO\r\n");
@@ -123,9 +123,9 @@ void sub_23467c62(int status, struct Struct_238ce0fc_Inner_0x44* r4)
 
 	uint8_t r6 = MGC_FAPI_ReadReg8(r4->Data_0, 0x0e);
 
-	MGC_FAPI_WriteReg8(r4->Data_0, 0x0e, r4->bData_0x1b);
+	MGC_FAPI_WriteReg8(r4->Data_0, 0x0e, r4->bEndpoint);
 
-	if (r4->bData_0x1c != 0)
+	if (r4->bWrite != 0)
 	{
 		while (1)
 		{
@@ -149,7 +149,7 @@ void sub_23467c62(int status, struct Struct_238ce0fc_Inner_0x44* r4)
 	r4->Data_0x20.dwActualLength += r4->Data_8;
 	r4->Data_0x34 = 1;
 
-	(r5->Data_0x30)(r5->Data_4, r4->bData_0x1b, r4->bData_0x1c);
+	(r5->Data_0x30)(r5->Data_4, r4->bEndpoint, r4->bWrite);
 
 	MGC_FAPI_WriteReg8(r4->Data_0, 0x0e, r6);
 }
@@ -166,29 +166,32 @@ uint8_t sub_23467cb0(MUSB_DmaChannel* pChannel,
 
 	struct Struct_238ce0fc_Inner_0x44* r0 = pChannel->pPrivateData;
 
-	pChannel->bDesiredMode = (r0->bData_0x1c != 0);
+	pChannel->bDesiredMode = (r0->bWrite != 0);
 	r0->Data_8 = dwLength;
 
-	uint32_t r2 = Data_234927cc;
-	uint32_t r7 = r0->bData_0x1b;
+	uint32_t r2 = dma_dwUsbMode;
+	uint32_t r7 = r0->bEndpoint;
 
-	if (r0->bData_0x1c != 0)
+	if (r0->bWrite != 0)
 	{
+		//Paced EP Write Channel
 		r7 <<= 3;
 		r7 &= (3 << 3);
 		r2 = r2 & ~(3 << 3);
-		((volatile uint32_t*)0xC7000014)[0] = Data_234927cc = r2 | r7;
+		((volatile uint32_t*)0xC7000014)[0] = dma_dwUsbMode = r2 | r7;
 	}
 	else
 	{
+		//Paced EP Read Channel
 		r7 <<= 5;
 		r7 &= (3 << 5);
 		r2 = r2 & ~(3 << 5);
-		((volatile uint32_t*)0xC7000014)[0] = Data_234927cc = r2 | r7;
+		((volatile uint32_t*)0xC7000014)[0] = dma_dwUsbMode = r2 | r7;
 	}
 
-	sub_23436a6c(pChannel->pPrivateData, sub_23467c62, 0, pBuffer, dwLength, 
-		r0->wData_0x18, r0->bData_0x1b, r0->bData_0x1c);
+	dma_start_usb_transfer(pChannel->pPrivateData, 
+		sub_23467c62, 0, pBuffer, dwLength, 
+		r0->wData_0x18, r0->bEndpoint, r0->bWrite);
 	
 	return 1;
 }
@@ -247,8 +250,8 @@ MUSB_DmaChannel* sub_23467d12(void* pPrivateData, uint8_t bLocalEnd,
 	r3->bData_0x1a = 0; ///r4
 	r3->Data_4 = 0;
 	r3->Data_8 = 0;
-	r3->bData_0x1b = bLocalEnd;
-	r3->bData_0x1c = bTransmit;
+	r3->bEndpoint = bLocalEnd;
+	r3->bWrite = bTransmit;
 	r3->wData_0x18 = wMaxPacketSize;
 	r3->bData_0x1d = 0;
 	r3->Data_0xc = 0;

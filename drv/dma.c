@@ -11,7 +11,6 @@ typedef struct
 
 } Struct_234928d8;
 
-
 typedef struct 
 {
     uint32_t Data_0; //0
@@ -20,10 +19,10 @@ typedef struct
     uint32_t writeAddr; //0xc = 12
     int totalLength; //0x10 = 16
     int numLinkedTransfers; //0x14 = 20
-    int Data_0x18; //0x18 = 24
-    void (*Data_0x1c)(uint32_t, uint32_t); //0x1c = 28
+    uint32_t dwConfig; //0x18 = 24
+    DMA_Channel_Callback pfCompleteCallback; //0x1c = 28
     void (*Data_0x20)(int); //0x20 = 32
-    int Data_0x24; //0x24 = 36
+    void* Data_0x24; //0x24 = 36
     void* sema; //0x28 = 40
     //0x2c
 } DMA_Channel;
@@ -88,9 +87,9 @@ int dma_isr(void)
                         sys_invalidate_data_cache(pChannel->writeAddr, pChannel->totalLength);
                     }
 
-                    if (pChannel->Data_0x1c != 0)
+                    if (pChannel->pfCompleteCallback != 0)
                     {
-                        (pChannel->Data_0x1c)(int_status, pChannel->Data_0x24);
+                        (pChannel->pfCompleteCallback)(int_status, pChannel->Data_0x24);
                     }
 
                     if (pChannel->Data_0x20 != 0)
@@ -119,7 +118,7 @@ int dma_isr(void)
 
 /* 23436900 - todo */
 int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/, 
-                uint32_t length, void (*r8)(uint32_t, uint32_t), int fp)
+                uint32_t length, DMA_Channel_Callback r8, int fp)
 {
     uint8_t err;
 
@@ -144,12 +143,12 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
     sys_invalidate_data_cache(readAddr, length);
 
 #if 1
-    pChannel->Data_0x1c = r8;
+    pChannel->pfCompleteCallback = r8;
     pChannel->writeAddr = writeAddr;
     pChannel->totalLength = length;
     pChannel->readAddr = readAddr;
     pChannel->Data_0x20 = 0; //r8
-    pChannel->Data_0x18 = (fp << Data_234927bc->Data_0) | (1 << 2)/*Enable*/;
+    pChannel->dwConfig = (fp << Data_234927bc->Data_0) | (1 << 2)/*Enable*/;
     pChannel->bData_4 = 0; //r8
     pChannel->numLinkedTransfers = 0;
     pChannel->Data_0x24 = 0;
@@ -157,9 +156,9 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
     pChannel->writeAddr = writeAddr;
     pChannel->readAddr = readAddr;
     pChannel->totalLength = length;
-    pChannel->Data_0x1c = r8;
+    pChannel->pfCompleteCallback = r8;
     pChannel->Data_0x20 = 0; //r8
-    pChannel->Data_0x18 = (fp << Data_234927bc->Data_0) | (1 << 2)/*Enable*/;
+    pChannel->dwConfig = (fp << Data_234927bc->Data_0) | (1 << 2)/*Enable*/;
     pChannel->bData_4 = 0; //r8
     pChannel->numLinkedTransfers = 0;
     pChannel->Data_0x24 = 0;
@@ -184,7 +183,7 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
     {
         r5[1] = TRANSFER_LENGTH_MAX; //DMA_CH_LENGTH
         r5[2] = sp[0]; //DMA_CH_LLADDR
-        pChannel->Data_0x18 |= (1 << 3); //Linked List Enable
+        pChannel->dwConfig |= (1 << 3); //Linked List Enable
     }
 
     r5[3] = readAddr; //DMA_CH_RDADDR
@@ -204,7 +203,7 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
 
         readAddr += 0x1ffffc;
         writeAddr += 0x1ffffc;
-        r0[0] = pChannel->Data_0x18;
+        r0[0] = pChannel->dwConfig;
 
         if (r2 < 0)
         {
@@ -231,98 +230,100 @@ int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
         transferLength = r2;
     }
     //0x23436a58
-    r5[0] = pChannel->Data_0x18;
+    r5[0] = pChannel->dwConfig;
 
     return 0;
 }
 
 
 /* 23436a6c - todo */
-int sub_23436a6c(void* fp, /*sub_23467c62*/void* c, int d, 
-        /*pBuffer*/void* r8, uint32_t r7 /*dwLength*/, 
+int dma_start_usb_transfer(void* fp, DMA_Channel_Callback complete, int d, 
+        void* pBuffer/*r8*/, uint32_t dwLength/*r7*/, 
 		uint16_t sp_0x3c/*r1*/ /*r0->wData_0x18*/, 
-        uint8_t sp_0x40/*r6*/ /*r0->bData_0x1b*/, 
-        uint8_t sp_0x44/*sl*/ /*r0->bData_0x1c*/)
+        uint8_t bEndpoint/*r6*/ /*r0->bData_0x1b*/, 
+        uint8_t bWrite/*sl*/ /*r0->bData_0x1c*/)
 {
 #if 0
-	console_send_string("sub_23436a6c (todo.c): TODO\r\n");
+	console_send_string("dma_start_usb_transfer (todo.c): TODO\r\n");
 #endif
 
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_23436a6c: r8=%p, dwLength=%d, sp_0x3c=%d, sp_0x40=%d, sp_0x44=%d\r\n", 
-            r8, r7, sp_0x3c, sp_0x40, sp_0x44);
+        sprintf(debug_string, "dma_start_usb_transfer: pBuffer=%p, dwLength=%d, sp_0x3c=%d, bEndpoint=%d, bWrite=%d\r\n", 
+            pBuffer, dwLength, sp_0x3c, bEndpoint, bWrite);
         console_send_string(debug_string);
     }
 #endif
 
-    uint32_t sb = r7 / sp_0x3c;
+    uint32_t sb = dwLength / sp_0x3c;
 
     DMA_Channel* r5 = &Data_234927c0[3 + d];
     volatile uint32_t* r4 = (void*) r5->Data_0;
 
-    int sl = r7 - 0x1FFFFF; //+ 0xffe00001/*r1*/;
-    uint32_t r6 = 0x880 + (sp_0x40 << 4);
-    if (sp_0x44 == 0)
+    int sl = dwLength - 0x1FFFFF; //+ 0xffe00001/*r1*/;
+    uint32_t r6 = 0x880 + (bEndpoint << 4);
+    if (bWrite == 0)
     {
         //0x23436ac8
-        r5->readAddr = r6; //0x880 + (sp_0x40 << 4); //r6
-        r5->writeAddr = (uint32_t) r8;
-        r5->totalLength = r7;
-        r5->Data_0x1c = c;
+        r5->readAddr = r6; //0x880 + (bEndpoint << 4);
+        r5->writeAddr = (uint32_t) pBuffer;
+        r5->totalLength = dwLength;
+        r5->pfCompleteCallback = complete;
         r5->Data_0x20 = 0;
         r5->bData_4 = 1;
-        r5->Data_0x24 = (uint32_t) fp;
-        r5->Data_0x18 = 0x704;
+        r5->Data_0x24 = fp;
+        //Peripheral Address Read: 0x7 = USB DMA Channel
+        r5->dwConfig = (0x07 << 8) | (1 << 2);
 
         if (sl < 0)
         {
             //0x23436b00
-            r4[1] = r7;
-            r4[2] = 0;
-            r4[3] = r6;
-            r4[4] = 0; 
-            r4[5] = 4;
-            r4[6] = r6;
-            r4[7] = (uint32_t) r8;
-            r4[8] = sb;
-            r4[9] = sp_0x3c;
-            r4[10] = 0;
+            r4[1] = dwLength; //DMA_CH_LENGTH
+            r4[2] = 0; //DMA_CH_LLADDR
+            r4[3] = r6; //DMA_CH_RDADDR
+            r4[4] = 0; //DMA_CH_RDLINE
+            r4[5] = 4; //DMA_CH_RDINC
+            r4[6] = r6; //DMA_CH_RDLPADDR
+            r4[7] = (uint32_t) pBuffer; //DMA_CH_WRADDR
+            r4[8] = sb; //DMA_CH_WRLINE
+            r4[9] = sp_0x3c; //DMA_CH_WRINC
+            r4[10] = 0; //DMA_CH_WRLPADDR
             //->loc_23436bac
-            r4[0] = r5->Data_0x18;
+            r4[0] = r5->dwConfig;
         }
         //loc_23436bb4
     }
     else
     {
         //loc_23436b34
-        sys_invalidate_data_cache(r8, r7);
+        sys_invalidate_data_cache(pBuffer, dwLength);
 
         r5->writeAddr = r6;
-        r5->totalLength = r7;
-        r5->readAddr = (uint32_t) r8;
-        r5->Data_0x1c = c;
+        r5->totalLength = dwLength;
+        r5->readAddr = (uint32_t) pBuffer;
+        r5->pfCompleteCallback = complete;
         r5->Data_0x20 = 0;
         r5->bData_4 = 0;
-        r5->Data_0x24 = (uint32_t) fp;
-        r5->Data_0x18 = (((d * 7) + 7) << 16) | 0x04;
+        r5->Data_0x24 = fp;
+        //Peripheral Address Write: 0x7 = USB DMA Channel
+        r5->dwConfig = (((d * 7) + 7) << 16) | (1 << 2);
 
         if (sl < 0)
         {
             //0x23436b80
-            r4[1] = r7;
-            r4[2] = 0;
-            r4[3] = (uint32_t) r8;
-            r4[4] = sb;
-            r4[5] = sp_0x3c;
-            r4[6] = 0;
-            r4[7] = r6;
-            r4[8] = 0;
-            r4[9] = 4;
-            r4[10] = r6;
+            r4[1] = dwLength; //DMA_CH_LENGTH
+            r4[2] = 0; //DMA_CH_LLADDR
+            r4[3] = (uint32_t) pBuffer; //DMA_CH_RDADDR
+            r4[4] = sb; //DMA_CH_RDLINE
+            r4[5] = sp_0x3c; //DMA_CH_RDINC
+            r4[6] = 0; //DMA_CH_RDLPADDR
+            r4[7] = r6; //DMA_CH_WRADDR
+            r4[8] = 0; //DMA_CH_WRLINE
+            r4[9] = 4; //DMA_CH_WRINC
+            r4[10] = r6; //DMA_CH_WRLPADDR
             //loc_23436bac
-            r4[0] = r5->Data_0x18;
+            r4[0] = r5->dwConfig;
         }
         //loc_23436bb4
     }

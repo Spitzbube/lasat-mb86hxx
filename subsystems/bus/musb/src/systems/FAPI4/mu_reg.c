@@ -9,7 +9,7 @@
 void dma_SetUsbMode_LengthInput(int);
 
 
-int Data_234927cc/*dma_UsbModeMirror*/; //234927cc
+int dma_dwUsbMode; //234927cc
 
 
 /* 23467b64 - complete */
@@ -197,7 +197,7 @@ void dma_SetUsbMode_LengthInput(int a)
 	int mask = 0x06;
 	a = (a << 1) & mask;
 
-	Data_234927cc = (Data_234927cc & ~mask) | a;
+	dma_dwUsbMode = (dma_dwUsbMode & ~mask) | a;
 
-	((volatile uint32_t*)(0xc7000014))[0] = Data_234927cc;
+	((volatile uint32_t*)(0xc7000014))[0] = dma_dwUsbMode;
 }
