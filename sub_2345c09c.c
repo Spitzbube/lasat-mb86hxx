@@ -52,7 +52,7 @@ void sub_2345c030(int r5, int r6, int r7, int r4)
 	console_send_string("sub_2345c030 (todo.c): TODO\r\n");
 #endif
 
-    r0 = sub_234579c8/*23421140*/();
+    r0 = lafat_get_semaphore();
     OSSemPend(r0, 0, &err);
 
     Data_23876bf0.Data_0x10 = r4;
@@ -62,7 +62,7 @@ void sub_2345c030(int r5, int r6, int r7, int r4)
 
     OSSemPend(Data_234940a0, 0, &err);
 
-    r0 = sub_234579c8/*23421140*/();
+    r0 = lafat_get_semaphore();
     OSSemPost(r0);
 }
 

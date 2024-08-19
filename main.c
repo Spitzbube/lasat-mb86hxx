@@ -3,7 +3,8 @@
 #include "ucos_ii.h"
 #include "startup.h"
 #include "usb_msd.h"
-#include "sub_2345609c.h"
+#include "fatfs.h"
+#include "lafat.h"
 
 
 void* (*main_pfHandleUsbStorage)(void); //23491d88 +0 /  / 234c0188 +0x10
@@ -16,7 +17,7 @@ extern void sub_23412da8();
 /* 234000a0 /  / 234000e0 - todo */
 void* main_handle_usb_storage(void)
 {
-	Struct_23415f44 sp;
+	USB_MSD_Interface usbMsd;
 
 #if 1
 	console_send_string("main_handle_usb_storage (todo.c): TODO\r\n");
@@ -24,22 +25,41 @@ void* main_handle_usb_storage(void)
 
 	usb_lock();
 
-	USB_MSD_Device* r0 = musb_msd_get_device(0);
-	if (r0 != 0)
+	USB_MSD_Device* pDev = musb_msd_get_device(0);
+	if (pDev != 0)
 	{
-		sp.Data_0x18 = r0;
-		sp.read = MUSB_HfiRead;
-		sp.write = MUSB_HfiWrite;
-		sp.Data_8 = sub_2343a02e;
-		sp.Data_12 = MUSB_HfiGetMediumBlockCount;
-		sp.Data_16 = MUSB_HfiGetMediumBlockSize;
-		sp.Data_20 = sub_23412da8;
+		usbMsd.pDevice = pDev;
+		usbMsd.read = MUSB_HfiRead;
+		usbMsd.write = MUSB_HfiWrite;
+		usbMsd.Data_8 = sub_2343a02e;
+		usbMsd.Data_12 = MUSB_HfiGetMediumBlockCount;
+		usbMsd.Data_16 = MUSB_HfiGetMediumBlockSize;
+		usbMsd.Data_20 = sub_23412da8;
 
 #ifndef DVBC_RADIO
-		sub_2345609c/*sub_2341f814*/(sp);
-#endif
+		lafat_add_usb_device(usbMsd);
 
-		fatfs_volume_add_usb_device(&sp);
+		if (0 != sub_23455ee8/*sub_2341f660*/(0))
+		{
+			lafat_disable(0);
+
+			fatfs_volume_add_usb_device(&usbMsd);
+
+			if (0 != fatfs_init(0))
+			{
+				//loc_2340017c
+				fatfs_volume_remove_usb_device(0);
+				//->loc_2340018c
+			}
+			else
+			{
+				//loc_23400188
+				sub_2345c8da();
+			}
+		}
+		//loc_2340018c
+#else
+		fatfs_volume_add_usb_device(&usbMsd);
 
 		if (0 != fatfs_init(0))
 		{
@@ -47,6 +67,7 @@ void* main_handle_usb_storage(void)
 			fatfs_volume_remove_usb_device(0);
 		}
 		//loc_23400110
+#endif
 	}
 	else
 	{

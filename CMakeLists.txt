@@ -61,9 +61,7 @@ set(SRCS
    ts_play.c                #?              #?              #0x235afe88
    ts_record.c              #?              #?              #0x237bf890
    web_interface.c
-   sub_2345609c.c
    sub_2345c09c.c
-   fatfs.c
    menu_sw_update.c
    main2.c
    hexdump.c
@@ -77,6 +75,8 @@ add_subdirectory(rtos/uCOS-II)
 add_subdirectory(drv)
 add_subdirectory(subsystems/psi_si)
 add_subdirectory(subsystems/bus/musb)
+add_subdirectory(subsystems/fs/fatfs)
+add_subdirectory(subsystems/fs/lafat)
 add_subdirectory(subsystems/net/lwip)
 
 target_link_libraries(${PROJECT_NAME}
@@ -88,6 +88,8 @@ target_link_libraries(${PROJECT_NAME}
     musb_hub
     musb_msd
     musb_asix
+    fatfs
+    lafat
     lwipcore
 )
 
@@ -98,6 +100,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${musb_SOURCE_DIR}/src/systems/FAPI4
     ${musb_SOURCE_DIR}/src/msc
     ${lwIP_SOURCE_DIR}/src/include
+    ${fatfs_SOURCE_DIR}
+    ${lafat_SOURCE_DIR}
 )
 
 add_definitions(

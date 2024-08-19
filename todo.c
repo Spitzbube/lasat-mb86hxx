@@ -834,4 +834,13 @@ int sub_2346fda2()
 }
 
 
+#ifndef DVBC_RADIO
 
+/*   /  / 2345c8da - todo */
+void sub_2345c8da()
+{
+	console_send_string("sub_2345c8da (todo.c): TODO\r\n");
+
+}
+
+#endif

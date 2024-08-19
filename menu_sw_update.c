@@ -2,14 +2,15 @@
 #include <string.h>
 #include "data.h"
 #include "frontdisplay.h"
+#include "usb_msd.h"
 #include "fatfs.h"
 
 #pragma thumb
 
 
-static int sub_2346fce2(int*);
-static int sub_2346fd66(int);
-static int sub_2346fd78(UI_Thread_Params*);
+static int menu_sw_update_filelist_on_navigate(int*);
+static int menu_sw_update_filelist_on_enter(int);
+static int menu_sw_update_filelist_on_exit(UI_Thread_Params*);
 static int sub_2346fe1c(int);
 static int sub_2346ffda(int); 
 static int sub_2346ffe6(UI_Thread_Params*);
@@ -17,7 +18,7 @@ static int sub_2346ffea(int);
 static Menu_Item Data_23495e1c[]; //23495e1c
 static Menu_Item Data_23495e74[]; //23495e74
 
-static Menu Data_23495dac = //23495dac
+static Menu menu_sw_update_filelist = //23495dac
 {
     0x015b,
     &Data_23495e1c[0],
@@ -25,9 +26,9 @@ static Menu Data_23495dac = //23495dac
     0, 0, 0,
     1, 0,
     0,
-    sub_2346fce2, //int (*onNavigate)(int*)
-    sub_2346fd66, //int (*onEnter)(int);
-    sub_2346fd78, //int (*onExit)(UI_Thread_Params*);
+    menu_sw_update_filelist_on_navigate,
+    menu_sw_update_filelist_on_enter,
+    menu_sw_update_filelist_on_exit,
     0xff,
     10,
     0
@@ -224,7 +225,7 @@ static void* sub_2346fc8c(FrontDisplay_Job a[])
 
     a[0].bData_8[0] = 0x22;
 
-    text_table_get_string(Data_23495dac.stringId, &a[0].bData_8[1], 12);
+    text_table_get_string(menu_sw_update_filelist.stringId, &a[0].bData_8[1], 12);
 
     uint8_t len = strlen(&a[0].bData_8[0]);
 
@@ -248,10 +249,10 @@ static void* sub_2346fc8c(FrontDisplay_Job a[])
 
 
 /* 2346fce2 - todo */
-int sub_2346fce2(int* a)
+int menu_sw_update_filelist_on_navigate(int* a)
 {
 #if 0
-	console_send_string("sub_2346fce2 (todo.c): TODO\r\n");
+	console_send_string("menu_sw_update_filelist_on_navigate (todo.c): TODO\r\n");
 #endif
 
     int r2 = *a;
@@ -328,10 +329,10 @@ int sub_2346fd0c(int a)
 
 
 /* 2346fd66 - complete */
-int sub_2346fd66(int a)
+int menu_sw_update_filelist_on_enter(int a)
 {
 #if 0
-	console_send_string("sub_2346fd66 (todo.c): TODO\r\n");
+	console_send_string("menu_sw_update_filelist_on_enter (todo.c): TODO\r\n");
 #endif
 
     sub_2346fd0c(2);
@@ -341,12 +342,28 @@ int sub_2346fd66(int a)
 }
 
 
-/* 2346fd78 - todo */
-int sub_2346fd78(UI_Thread_Params* a)
+/* 2346fd78 - complete */
+int menu_sw_update_filelist_on_exit(UI_Thread_Params* a)
 {
-#if 1
-	console_send_string("sub_2346fd78 (todo.c): TODO\r\n");
+    Struct_2340bf0c sp_0x28;
+    Channel sp;
+
+#if 0
+	console_send_string("menu_sw_update_filelist_on_exit (todo.c): TODO\r\n");
 #endif
+
+    sub_2340bf0c(&sp_0x28);
+
+    if (sp_0x28.wNumChannels != 0)
+    {
+        channel_start_number(&sp, sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
+    }
+    else
+    {
+        sub_2340b22c(0xff);
+    }
+
+    return 0;
 }
 
 
@@ -407,7 +424,7 @@ int sub_2346fe1c(int r4)
             sub_2346fd0c(Data_238ddce0.Data_8.Data_4);
         }
         //->loc_2346fee8
-    }
+    } //if (r4 != 0)
     else
     {
         //loc_2346fea2
@@ -423,9 +440,9 @@ int sub_2346fe1c(int r4)
                 return 0xff;
             }
             //0x2346feb8
-            if (Data_23495dac.onExit != 0)
+            if (menu_sw_update_filelist.onExit != 0)
             {
-                (Data_23495dac.onExit)(0);
+                (menu_sw_update_filelist.onExit)(0);
             }
             //loc_2346fec4
             sub_2343d482(0);
@@ -522,9 +539,9 @@ int sub_2346ffea(int r4)
             }
 
             sub_2343d482(0);
-            sub_2343d482(&Data_23495dac);
-            sub_2343d3ac(&Data_23495dac);
-            sub_2343d51e(&Data_23495dac, sub_2343d572());
+            sub_2343d482(&menu_sw_update_filelist);
+            sub_2343d3ac(&menu_sw_update_filelist);
+            sub_2343d51e(&menu_sw_update_filelist, sub_2343d572());
         }
     }
 
@@ -551,7 +568,7 @@ int menu_sw_update_entry(UI_Thread_Params* p)
     }
     else
     {
-        pMenu = &Data_23495dac;
+        pMenu = &menu_sw_update_filelist;
     }
 
     usb_unlock();

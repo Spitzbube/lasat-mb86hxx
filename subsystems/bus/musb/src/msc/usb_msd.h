@@ -17,6 +17,18 @@ typedef struct
 } USB_MSD_Device;
 
 
+typedef struct
+{
+	int (*read)(void* h, uint32_t dwStartBlockLo, void* pBuffer, uint16_t wBlockCount); //0
+	int (*write)(void* h, uint32_t dwStartBlockLo, void* pBuffer, uint16_t wBlockCount); //4
+	void (*Data_8)(); //8
+	void (*Data_12)(); //12
+	void (*Data_16)(); //16
+	void (*Data_20)(); //20
+	USB_MSD_Device* pDevice; //24
+} USB_MSD_Interface;
+
+
 /*******************************************************************************
 * Function Declarations
 *******************************************************************************/
