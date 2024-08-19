@@ -202,7 +202,7 @@ void usb_RunBackground()
 
 
 /* 2343987e - todo */
-int usb_init()
+int usb_init(void)
 {
 #if 0
 	console_send_string("usb_init (todo.c): TODO\r\n");
@@ -215,7 +215,7 @@ int usb_init()
 
 		memset(&MGC_usbSystem, 0, sizeof(MGC_usbSystem));
 
-		if (0 != sub_23467de0(Data_23492c3c[0]))
+		if (0 != mu_dma_init(Data_23492c3c[0]))
 		{
 			intr_set_isr(usb_isr, 0, 21); //FAPI_INTR_USB
 

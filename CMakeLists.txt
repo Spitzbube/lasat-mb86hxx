@@ -54,7 +54,6 @@ set(SRCS
    graphic.c
    sub_23419cd0.c
    sub_23454df4.c
-   sub_2345ac28.c
    sub_2345bc50.c
    menu_information.c
    menu_guided_install.c    #?

@@ -189,7 +189,7 @@ int channel_stop_video()
 
 
 /* 23409628 / 2340b98c - todo */
-void channel_stop_pes()
+void channel_stop_pes(void)
 {
 #if 0
 	console_send_string("channel_stop_pes (todo.c): TODO\r\n");
@@ -255,7 +255,7 @@ void channel_stop_pes()
 		sync_SetStcRegulation(r0, 0);
 	}
 	//loc_234096e0
-	sub_2345ac28();
+	web_interface_stop_streamout();
 
 	channel_pfCheckStreaming = 0; //r4
 }
