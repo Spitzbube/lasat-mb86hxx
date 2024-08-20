@@ -25,7 +25,7 @@ int Data_234920dc = 0; //234920dc +8
 
 typedef struct
 {
-	uint8_t bData_0; //0
+	uint8_t bAttr; //0
 	uint8_t bData_1; //1
 	int Data_4; //4
 	int Data_8; //8
@@ -38,7 +38,7 @@ typedef struct
 	uint8_t bData_0x34; //0x34
 	uint8_t bData_235af1a9; //0x35 = 235af1a9
 	uint8_t fill_0x36[255]; //0x36
-	uint8_t arData_235af2a9[11]; //0x135 235af2a9
+	uint8_t shortFileName[11]; //0x135 235af2a9
 	uint8_t bData_0x140; //0x140
 	int Data_235af2b8; //0x144 235af2b8
 	uint32_t Data_235af2bc; //0x148 235af2bc
@@ -57,14 +57,14 @@ struct
 
 typedef struct 
 {
-	uint8_t bData_0; //0
-	uint8_t bData_1; //1
-	uint8_t bData_2; //2
-	uint8_t arData_3[0x100]; //size????
+	uint8_t valid; //0
+	uint8_t offset; //1
+	uint8_t entries; //2
+	uint8_t bytes[0x100]; //size????
 
-} Struct_235af4cc;
+} FATFS_LFN;
 
-Struct_235af4cc Data_235af4cc; //235af4cc
+FATFS_LFN fatfs_lfn; //235af4cc
 
 typedef struct
 {
@@ -105,9 +105,9 @@ struct
 static void get_bytes(int offset, uint8_t* pbBuffer, uint16_t numBytes);
 static uint16_t get_word(int offset);
 static uint8_t get_byte(uint16_t offset);
-int sub_23416ae0(uint32_t offset);
-int sub_23416b08(uint16_t offset);
-int sub_23416b28(uint32_t offset);
+int fatfs_is_lfn(uint32_t offset);
+int fatfs_is_archive(uint16_t offset);
+int fatfs_is_directory(uint32_t offset);
 static int sub_234150c8(uint32_t offset);
 
 
@@ -554,8 +554,8 @@ int sub_23415074(uint16_t offset)
 
 	if ((get_byte(offset) != 0x00) &&
 		(get_byte(offset) != 0xe5) &&
-		(get_byte(offset + 11) != 0x08) &&
-		((get_byte(offset + 11) & 0x06) == 0))
+		(get_byte(offset + 11) != 0x08/*ATTR_VOLUME_ID*/) &&
+		((get_byte(offset + 11) & 0x06/*ATTR_HIDDEN | ATTR_SYSTEM*/) == 0))
 	{
 		return 0;
 	}
@@ -574,8 +574,8 @@ int sub_234150c8(uint32_t offset)
 	if ((get_byte(offset + 11) != 0x0f) &&
 		(get_byte(offset) != 0x00) &&
 		(get_byte(offset) != 0xe5) &&
-		(get_byte(offset + 11) != 0x08) &&
-		((get_byte(offset + 11) & 0x06) == 0))
+		(get_byte(offset + 11) != 0x08/*ATTR_VOLUME_ID*/) &&
+		((get_byte(offset + 11) & 0x06/*ATTR_HIDDEN | ATTR_SYSTEM*/) == 0))
 	{
 		return 1;
 	}
@@ -608,10 +608,10 @@ int sub_23415130(int a)
 
 
 /* 23415178 - complete */
-void sub_23415178(uint16_t offset)
+void fatfs_handle_long_file_name(uint16_t offset)
 {
 #if 0
-	console_send_string("sub_23415178 (todo.c): TODO\r\n");
+	console_send_string("fatfs_handle_long_file_name (todo.c): TODO\r\n");
 #endif
 
 	uint16_t r0;
@@ -622,84 +622,87 @@ void sub_23415178(uint16_t offset)
 		return;
 	}
 
-	offset = offset + 1;
+	offset += 1;
 
-	if ((r5 & 0x040) != 0)
+	if ((r5 & 0x040/*LAST_LONG_ENTRY*/) != 0)
 	{
-		memset(&Data_235af4cc.arData_3[0], 0, 0x100);
+		memset(&fatfs_lfn.bytes[0], 0, 0x100);
 
-		Data_235af4cc.bData_0 = 1;
-		Data_235af4cc.bData_2 = r5;
+		fatfs_lfn.valid = 1;
+		fatfs_lfn.entries = r5;
 	}
 	//loc_234151bc
-	Data_235af4cc.bData_1 = ((r5 & 0x0f) - 1) * 13;
-	if (Data_235af4cc.bData_1 >= 0xf3)
+	fatfs_lfn.offset = ((r5 & 0x0f) - 1) * 13;
+	if (fatfs_lfn.offset >= 0xf3)
 	{
 		return;
 	}
 
+	//LDIR_Name1
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 0], 1);
-
-	offset = offset + 2;
-
-	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 1], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 0], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 2], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 1], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 3], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 2], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 4], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 3], 1);
+
+	offset += 2;
+
+	r0 = get_word(offset);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 4], 1);
 
 	offset += 5;
 
+	//LDIR_Name2
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 5], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 5], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 6], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 6], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 7], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 7], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 8], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 8], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 9], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 9], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 10], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 10], 1);
 
 	offset += 4;
 
+	//LDIR_Name3
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 11], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 11], 1);
 
 	offset += 2;
 
 	r0 = get_word(offset);
-	sub_23457bf0(r0, &Data_235af4cc.arData_3[Data_235af4cc.bData_1 + 12], 1);
+	sub_23457bf0(r0, &fatfs_lfn.bytes[fatfs_lfn.offset + 12], 1);
 }
 
 
@@ -716,7 +719,7 @@ void sub_23415488(Struct_235af5d0* a)
 	int sb = 0;
 	int r6 = 0; 
 
-	Data_235af4cc.bData_0 = 0;
+	fatfs_lfn.valid = 0;
 
 	do
 	{
@@ -731,10 +734,10 @@ void sub_23415488(Struct_235af5d0* a)
 		for (uint8_t r7 = 0; r7 <= 15; r5 += 32, r7++)
 		{
 			//loc_234154d0
-			int r0 = sub_23416ae0(r5);
+			int r0 = fatfs_is_lfn(r5);
 			if (r0 != 0)
 			{
-				sub_23415178(r5);
+				fatfs_handle_long_file_name(r5);
 				//->loc_234155fc
 				//continue;
 			}
@@ -744,7 +747,7 @@ void sub_23415488(Struct_235af5d0* a)
 				r0 = sub_23415074(r5);
 				if (r0 != 0)
 				{
-					Data_235af4cc.bData_0 = 0;
+					fatfs_lfn.valid = 0;
 					//->loc_23415580
 					r6 = 0;
 					//->loc_234155fc
@@ -767,11 +770,11 @@ void sub_23415488(Struct_235af5d0* a)
 #endif
 					{
 						//0x23415560
-						r0 = sub_23416b28(r5);
+						r0 = fatfs_is_directory(r5);
 						if (r0 == 0)
 						{
 							//0x23415570
-							r0 = sub_23416b08(r5);
+							r0 = fatfs_is_archive(r5);
 							if (r0 == 0)
 							{
 								//->loc_2341561c
@@ -794,11 +797,11 @@ void sub_23415488(Struct_235af5d0* a)
 					//0x23415598
 					r6 = 0;
 					
-					r0 = sub_23416b28(r5);
+					r0 = fatfs_is_directory(r5);
 					if (r0 == 0)
 					{
 						//0x234155ac
-						r0 = sub_23416b08(r5);
+						r0 = fatfs_is_archive(r5);
 						if (r0 == 0)
 						{
 							//->loc_2341561c
@@ -814,9 +817,9 @@ void sub_23415488(Struct_235af5d0* a)
 						sp4[r4] = get_byte(r4 + r5);
 					}
 					//0x234155ec
-					if (Data_235af4cc.bData_0 != 0)
+					if (fatfs_lfn.valid != 0)
 					{
-						Data_235af4cc.bData_0 = 0;
+						fatfs_lfn.valid = 0;
 					}
 					//loc_234155fc
 				}
@@ -849,21 +852,21 @@ int sub_23415740(Struct_235af174* r4)
 		return 6;
 	}
 
-	//r5 = &Data_235af4cc;
+	//r5 = &fatfs_lfn;
 	if ((get_byte(r6) == 0) || (get_byte(r6) == 0xe5))
 	{
 		//loc_234157a4
 		r4->bData_235af1a9 = 0xe5;
 		r4->bData_0x140 = 0; //r7
-		Data_235af4cc.bData_0 = 0;
+		fatfs_lfn.valid = 0;
 
 		//->loc_23415864
 	}
 	//loc_234157b8
-	else if (0 != sub_23416ae0(r6))
+	else if (0 != fatfs_is_lfn(r6))
 	{
 		//0x234157c8
-		sub_23415178(r6);
+		fatfs_handle_long_file_name(r6);
 		r4->bData_235af1a9 = get_byte(r6);
 		r4->bData_0x140 = get_byte(r6 + 11);
 		//->loc_23415864
@@ -876,29 +879,29 @@ int sub_23415740(Struct_235af174* r4)
 	}
 	else
 	{
-		if (Data_235af4cc.bData_0 != 0)
+		if (fatfs_lfn.valid != 0)
 		{
 			//0x23415814
 			r4->bData_235af1a9 = 0;
 
-			strncpy(&r4->bData_235af1a9, &Data_235af4cc.arData_3[0], 0x100);
+			strncpy(&r4->bData_235af1a9, &fatfs_lfn.bytes[0], 0x100);
 
-			r4->bData_0x34 = Data_235af4cc.bData_2;
-			Data_235af4cc.bData_0 = 0;
+			r4->bData_0x34 = fatfs_lfn.entries;
+			fatfs_lfn.valid = 0;
 		}
 		//loc_23415834
-		uint8_t r5;
-		for (r5 = 0; r5 < 11; r5++)
+		uint8_t i;
+		for (i = 0; i < 11; i++)
 		{
 			//loc_23415838
-			r4->arData_235af2a9[r5] = get_byte(r5 + r6);
+			r4->shortFileName[i] = get_byte(i + r6);
 		}
 		//0x2341585c
-		r4->arData_235af2a9[r5] = 0;
+		r4->shortFileName[i] = 0;
 	}
 	//loc_23415864
-	r4->bData_1 = (sub_23416b28(r6) != 0);
-	r4->bData_0 = get_byte(r6 + 11);
+	r4->bData_1 = (fatfs_is_directory(r6) != 0);
+	r4->bAttr = get_byte(r6 + 11);
 	r4->Data_8 = sub_23415130(r6);
 	r4->Data_4 = sub_23416b48(r6);
 	r4->Data_0xc = 0;
@@ -981,6 +984,26 @@ int fatfs_volume_remove_usb_device(int r4)
 }
 
 
+/* 234160e8 - todo */
+int sub_234160e8()
+{
+#if 1
+	console_send_string("sub_234160e8 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23416460 - todo */
+int sub_23416460()
+{
+#if 1
+	console_send_string("sub_23416460 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 234168d0 /  / 2341e2e4 - complete */
 void* fatfs_volume_get_usb_device(int a)
 {
@@ -1015,23 +1038,23 @@ int sub_234168fc(int a, Struct_234168fc* r4)
 	Data_235af174.Data_235af2bc = r4->Data_0;
 	Data_235af174.Data_235af2b8 = r4->Data_4;
 	Data_235af174.bData_235af1a9 = 0;
-	Data_235af174.arData_235af2a9[0] = 0;
+	Data_235af174.shortFileName[0] = 0;
 
-	r4->arData_0x11[0] = 0;
+	r4->arFileName[0] = 0;
 
 	int r6_ = sub_23415740(&Data_235af174);
 
-	if ((Data_235af174.arData_235af2a9[0] != 0) &&
-		(Data_235af174.arData_235af2a9[0] != 0xe5))
+	if ((Data_235af174.shortFileName[0] != 0) &&
+		(Data_235af174.shortFileName[0] != 0xe5))
 	{
 		//0x23416958
 		if (Data_235af174.bData_235af1a9 != 0)
 		{
-			strncpy(&r4->arData_0x11[0], &Data_235af174.bData_235af1a9, 0x100);
+			strncpy(&r4->arFileName[0], &Data_235af174.bData_235af1a9, 0x100);
 		}
 		else
 		{
-			strncpy(&r4->arData_0x11[0], &Data_235af174.arData_235af2a9[0], 12);
+			strncpy(&r4->arFileName[0], &Data_235af174.shortFileName[0], 12);
 		}
 
 		r4->bData_0x10 = Data_235af174.bData_1;
@@ -1042,6 +1065,16 @@ int sub_234168fc(int a, Struct_234168fc* r4)
 	OSSemPost(Data_234920d4);
 
 	return r6_;
+}
+
+
+/* 234169c0 - todo */
+int sub_234169c0()
+{
+#if 1
+	console_send_string("sub_234169c0 (todo.c): TODO\r\n");
+#endif
+
 }
 
 
@@ -1111,10 +1144,10 @@ void get_bytes(int offset, uint8_t* pbBuffer, uint16_t numBytes)
 
 
 /* 23416ae0 - complete */
-int sub_23416ae0(uint32_t offset)
+int fatfs_is_lfn(uint32_t offset)
 {
 #if 0
-	console_send_string("sub_23416ae0 (todo.c): TODO\r\n");
+	console_send_string("fatfs_is_lfn (todo.c): TODO\r\n");
 #endif
 
 	uint8_t* addr = (uint8_t*)Data_234920d8;
@@ -1127,10 +1160,10 @@ int sub_23416ae0(uint32_t offset)
 
 
 /* 23416b08 - todo */
-int sub_23416b08(uint16_t offset)
+int fatfs_is_archive(uint16_t offset)
 {
 #if 0
-	console_send_string("sub_23416b08 (todo.c): TODO\r\n");
+	console_send_string("fatfs_is_archive (todo.c): TODO\r\n");
 #endif
 
 	uint8_t* addr = (uint8_t*)Data_234920d8;
@@ -1147,17 +1180,17 @@ int sub_23416b08(uint16_t offset)
 
 
 /* 23416b28 - complete */
-int sub_23416b28(uint32_t offset)
+int fatfs_is_directory(uint32_t offset)
 {
 #if 0
-	console_send_string("sub_23416b28 (todo.c): TODO\r\n");
+	console_send_string("fatfs_is_directory (todo.c): TODO\r\n");
 #endif
 
 	uint8_t* addr = (uint8_t*)Data_234920d8;
 
-	offset += 11;
+	uint16_t attr_offset = offset + 11;
 
-	if (0x10 & *(addr + offset))
+	if (0x10 & *(addr + attr_offset))
 	{
 		return 1;
 	}

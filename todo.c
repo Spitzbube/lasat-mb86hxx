@@ -826,10 +826,18 @@ int sub_23436688()
 }
 
 
-/* 2346fda2 - todo */
-int sub_2346fda2()
+/* 234018e0 - todo */
+int sub_234018e0()
 {
-	console_send_string("sub_2346fda2 (todo.c): TODO\r\n");
+	console_send_string("sub_234018e0 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23438990 - todo */
+int sub_23438990()
+{
+	console_send_string("sub_23438990 (todo.c): TODO\r\n");
 
 }
 

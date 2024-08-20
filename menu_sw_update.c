@@ -101,6 +101,15 @@ struct menu_sw_update
 } Data_238ddce0; //238ddce0
 
 
+/* 2346fb48 - todo */
+static void* sub_2346fb48(FrontDisplay_Job* a)
+{
+#if 1
+	console_send_string("sub_2346fb48 (todo.c): TODO\r\n");
+#endif
+}
+
+
 /* 2346fb82 - todo */
 static void* sub_2346fb82(FrontDisplay_Job* r4)
 {
@@ -152,12 +161,12 @@ static void* sub_2346fb82(FrontDisplay_Job* r4)
         if (Data_238ddce0.Data_8.bData_0x10 == 0)
         {
             //0x2346fbe6
-            strncpy(/*sp[2]*/&r4->bData_8[0], &Data_238ddce0.Data_8.arData_0x11[0], 0xff);
+            strncpy(/*sp[2]*/&r4->bData_8[0], &Data_238ddce0.Data_8.arFileName[0], 0xff);
             //->loc_2346fc3e
             //->loc_2346fc50
         }
         //loc_2346fbee
-        else if (0 == strncmp(&Data_238ddce0.Data_8.arData_0x11[0], "..", 2))
+        else if (0 == strncmp(&Data_238ddce0.Data_8.arFileName[0], "..", 2))
         {
             //0x2346fbfc
             text_table_get_string(0x1C7, /*sp[2]*/&r4->bData_8[0], 0xff);
@@ -182,7 +191,7 @@ static void* sub_2346fb82(FrontDisplay_Job* r4)
             r6++;
             r4++;
 
-            strncpy(&r4->bData_8[0], &Data_238ddce0.Data_8.arData_0x11[0], 0xff);
+            strncpy(&r4->bData_8[0], &Data_238ddce0.Data_8.arFileName[0], 0xff);
             //->loc_2346fc50
         }        
     } //if (r0 == 0)
@@ -308,10 +317,10 @@ int sub_2346fd0c(int a)
             break;
         }
         //0x2346fd3a
-        if (Data_238ddce0.Data_8.arData_0x11[0] != 0)
+        if (Data_238ddce0.Data_8.arFileName[0] != 0)
         {
             //0x2346fd40
-            if ((Data_238ddce0.Data_8.arData_0x11[0] != 0x2e) || (r4 != 0))
+            if ((Data_238ddce0.Data_8.arFileName[0] != 0x2e) || (r4 != 0))
             {
                 //loc_2346fd48
                 *r5 = r4;
@@ -367,6 +376,63 @@ int menu_sw_update_filelist_on_exit(UI_Thread_Params* a)
 }
 
 
+/* 2346fda2 - todo */
+int sub_2346fda2(char* a, int b)
+{
+#if 0
+	console_send_string("sub_2346fda2 (todo.c): TODO\r\n");
+#endif
+
+    int sp4 = 0; //r5
+    int sp;
+
+    int r0 = sub_234160e8(&sp4, a, 0x100, b);
+
+    if (r0 == 0)
+    {
+        frontdisplay_start_text(sub_2346fb48);
+
+        sub_2340b22c(0xff);
+
+        volatile uint32_t* r4 = (void*) 0x40000000;
+        r4[0] = 0x01234567;
+        uint32_t r0 = r4[0] - 0x01234567; 
+        if (r0 != 0)
+        {
+            r4 = (void*) 0x20000000;
+        }
+        //loc_2346fdda
+        int r7 = sub_234169c0(sp4);
+
+        int r0_ = sub_23416460(&sp4, r4, r7, &sp);
+
+        if (r7 == r0_)
+        {
+#if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
+            OS_CPU_SR  cpu_sr = 0u;
+#endif
+
+            OS_ENTER_CRITICAL();
+
+            ((volatile uint32_t*)0xCA00003C)[0] = 0;
+
+            sub_234018e0(r4, r7);
+
+            OS_EXIT_CRITICAL();
+
+            sub_23438990();
+
+            ((volatile uint32_t*)0xCA00003C)[0] = 0xffff000;
+
+            while (1) {}
+        }
+        //loc_2346fe18
+    }
+    //loc_2346fe18
+    return 0;
+}
+
+
 /* 2346fe1c - todo */
 int sub_2346fe1c(int r4)
 {
@@ -409,7 +475,7 @@ int sub_2346fe1c(int r4)
         if (Data_238ddce0.Data_8.bData_0x10 == 0)
         {
             //0x2346fe70
-            char* r4 = &Data_238ddce0.Data_8.arData_0x11[0];
+            char* r4 = &Data_238ddce0.Data_8.arFileName[0];
             if (0 == strncmp(r4, "DECODER APP", 11) ||
                 (0 == strncmp(r4, "decoder.app", 11)))
             {
