@@ -842,6 +842,22 @@ int sub_23438990()
 }
 
 
+/* 23454f54 - todo */
+int sub_23454f54()
+{
+	console_send_string("sub_23454f54 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23457ab8 - todo */
+int sub_23457ab8()
+{
+	console_send_string("sub_23457ab8 (todo.c): TODO\r\n");
+
+}
+
+
 #ifndef DVBC_RADIO
 
 /*   /  / 2345c8da - todo */
