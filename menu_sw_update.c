@@ -34,13 +34,13 @@ static Menu menu_sw_update_filelist = //23495dac
     0
 };
 
-static Menu Data_23495de4 = //23495de4
+static Menu menu_sw_update_no_media = //23495de4
 {
-    0x01cb,
+    0x01cb, //"USB-Stick?"
     &Data_23495e74[0],
     &Data_23495e74[0],
     0, 0, 0,
-    1, 0,
+    0, 0,
     0,
     0, //int (*onNavigate)(int*)
     sub_2346ffda, //int (*onEnter)(int);
@@ -512,9 +512,9 @@ int sub_2346fe1c(int r4)
             }
             //loc_2346fec4
             sub_2343d482(0);
-            sub_2343d482(&Data_23495de4);
-            sub_2343d3ac(&Data_23495de4);
-            sub_2343d51e(&Data_23495de4, sub_2343d572());
+            sub_2343d482(&menu_sw_update_no_media);
+            sub_2343d3ac(&menu_sw_update_no_media);
+            sub_2343d51e(&menu_sw_update_no_media, sub_2343d572());
         }
         //loc_2346fee8
     }
@@ -532,7 +532,7 @@ static void* sub_2346ff46(FrontDisplay_Job a[])
 	console_send_string("sub_2346ff46 (todo.c): TODO\r\n");
 #endif
 
-    text_table_get_string(Data_23495de4.stringId, &a[0].bData_8[0], 12);
+    text_table_get_string(menu_sw_update_no_media.stringId, &a[0].bData_8[0], 12);
 
     uint8_t len = strlen(&a[0].bData_8[0]);
     len++;
@@ -599,9 +599,9 @@ int sub_2346ffea(int r4)
     {
         if (0 != fatfs_volume_get_usb_device(0))
         {
-            if (Data_23495de4.onExit != 0)
+            if (menu_sw_update_no_media.onExit != 0)
             {
-                (Data_23495de4.onExit)(0);
+                (menu_sw_update_no_media.onExit)(0);
             }
 
             sub_2343d482(0);
@@ -630,7 +630,7 @@ int menu_sw_update_entry(UI_Thread_Params* p)
 
     if (fatfs_volume_get_usb_device(0) == 0)
     {
-        pMenu = &Data_23495de4;   
+        pMenu = &menu_sw_update_no_media;   
     }
     else
     {

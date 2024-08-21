@@ -99,8 +99,11 @@ struct
 {
 	int fill_0[430]; //0
 	//0x6b8
-} Data_235af620; //235af620 /  / 2361ebf8
+} Data_235af620; //235af620 -> 235AFCD8 /  / 2361ebf8
 
+char Data_235afcd8[52]; //235AFCD8 
+char Data_235afd0c[100]; //235afd0c +0x64
+char Data_235afd70[0x100]; //235AFD70, size???
 
 static void get_bytes(int offset, uint8_t* pbBuffer, uint16_t numBytes);
 static uint16_t get_word(int offset);
@@ -199,7 +202,7 @@ int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 	console_send_string("sub_234148c4 (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "sub_234148c4: r7=%d, sb=%d, r6=%p\r\n", 
@@ -255,18 +258,18 @@ int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 		uint32_t r1 = r8->Data_0x24;
 		r1 += sb + (r7 - 2) * r8->wSectorsPerCluster;
 
-#if 1
-    {
-        extern char debug_string[];
-        sprintf(debug_string, "sub_234148c4: r7=%d, Data_234920dc=%d, r1=%d\r\n", 
-            r7, Data_234920dc, r1);
-        console_send_string(debug_string);
-    }
-#endif
-
 		if (Data_234920dc != r1)
 		{
 			Data_234920dc = r1;
+
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_234148c4: r7=%d, Data_234920dc=%d\r\n", 
+					r7, Data_234920dc);
+				console_send_string(debug_string);
+			}
+#endif
 
 			(r8->read)(r8->pDev, Data_234920dc, Data_234920d8, 1);
 		}
@@ -985,12 +988,150 @@ int fatfs_volume_remove_usb_device(int r4)
 
 
 /* 234160e8 - todo */
-int sub_234160e8()
+int sub_234160e8(void* r8, char* r5, int c, int r4_)
 {
-#if 1
+#if 0
 	console_send_string("sub_234160e8 (todo.c): TODO\r\n");
 #endif
 
+	int r7 = 2;
+	int sb = 4;
+	uint32_t sp8;
+	int sp4 = 0;
+
+	if ((r5 == 0) || (strlen(r5) > 100))
+	{
+		return 1;
+	}
+
+	if (r5[0] == 0x2f)
+	{
+		r5++;
+	}
+
+	if (r4_ != 0)
+	{
+		r7 = r4_;
+	}
+
+	fatfs_wait_semaphore();
+
+	char* r0 = &Data_235afd0c[0];
+	char* r1 = &Data_235afd70[0];
+	char* r4 = r5;
+	while (1)
+	{
+		//loc_23416150
+		if (*r4 == 0)
+		{
+			//->loc_23416170
+			break;
+		}
+		r4++;
+	}
+	//loc_23416170
+	while (r4 != r5)
+	{
+		//loc_23416164
+		r4--;
+		if (*r4 != 0x2f)
+		{
+			//->loc_23416188
+			break;
+		}
+	}
+	//0x23416178
+	if (*r4 == 0x2f)
+	{
+		//loc_23416184
+		r4++;
+	}
+	//loc_23416188
+	char* r3 = r4;
+	while (1)
+	{
+		//loc_2341618c
+		char r2 = *r4++;
+		char* ip = r1;
+		r1++;
+		*ip = r2;
+		if (r2 == 0)
+		{
+			break;
+		}
+	}
+	//0x234161a4
+	r1 = r5;
+	while (r1 < r3)
+	{
+		//loc_234161a8
+		char ip = *r1++;
+		char* r2 = r0 + 1;
+		*r0 = ip;
+		r0 = r2;
+	}
+	//0x234161c0
+	if (r3 > (r5 + 1))
+	{
+		if (r0[-1] == 0x2f)
+		{
+			r0--;
+		}
+	}
+	//loc_234161d8
+	*r0 = 0;
+
+	r1 = &Data_235afd0c[0];
+
+	//->loc_23416200
+	uint8_t r0_;
+	for (r0_ = 0; *r1 != 0; )
+	{
+		//loc_234161ec
+		if (*r1++ == 0x2f)
+		{
+			r0_++;
+		}
+	}
+	//0x2341620c
+	sp8 = r0_;
+	int fp = c & 0x300;
+	//->loc_234162e4
+	for (uint8_t sl = 0; sl < sp8; sl++)
+	{
+		//loc_23416220
+		uint8_t r6 = 0;
+		int r4 = 0;
+
+		char* r5 = &Data_235afd0c[0];
+		uint16_t r2 = strlen(r5);
+		//r3 = 235AFCD8
+		//->loc_23416274
+		for (uint8_t r0 = 0; r0 < r2; r0++, r5++)
+		{
+			//loc_23416244
+			char r1 = *r5;
+			if (r1 == 0x2f)
+			{
+				r6++;
+			}
+
+			if (r6 == sl)
+			{
+				//0x2341625c
+				if (r1 != 0x2f)
+				{
+					Data_235afcd8[r4] = r1;
+					r4++;
+				}
+			}
+			//loc_23416268
+		} //for (uint8_t r0 = 0; r0 < r2; r0++, r5++)
+		//0x2341627c
+
+		//loc_234162dc
+	} //for (uint8_t sl = 0; sl < sp8; sl++)
+	//0x234162f0
 }
 
 
