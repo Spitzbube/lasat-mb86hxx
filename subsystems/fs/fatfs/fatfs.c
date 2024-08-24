@@ -23,6 +23,15 @@ void* Data_234920d4 = 0; //234920d4 +0 /  / 234c0530
 void* Data_234920d8 = 0; //234920d8 +4 /  / 234c0534
 int Data_234920dc = 0; //234920dc +8
 
+
+uint8_t Data_235ae7bc[0x100]; //235ae7bc, size???
+uint8_t Data_235ae8bc[0x100]; //235ae8bc, size???
+uint8_t Data_235ae9bc[0x100]; //235ae9bc, size???
+
+Struct_235af620 Data_235aeabc; //235aeabc
+Struct_235af620 Data_235aec14; //235aec14
+Struct_235af620 Data_235aed6c; //235aed6c
+
 typedef struct
 {
 	uint8_t bAttr; //0
@@ -60,13 +69,13 @@ typedef struct
 	uint8_t valid; //0
 	uint8_t offset; //1
 	uint8_t entries; //2
-	uint8_t bytes[0x100]; //size????
+	uint8_t bytes[0x100]; //3, size????
 
 } FATFS_LFN;
 
 FATFS_LFN fatfs_lfn; //235af4cc
 
-typedef struct
+typedef struct Struct_235af5d0
 {
 	uint8_t bIsFAT32; //0
 	uint8_t fill_1; //1
@@ -93,13 +102,9 @@ typedef struct
 	//0x50 = 80
 } Struct_235af5d0;
 
-Struct_235af5d0 Data_235af5d0[1]; //235af5d0 /  / 2361eba8
+Struct_235af5d0 Data_235af5d0[1]; //235af5d0 -> 235af620 /  / 2361eba8
 
-struct
-{
-	int fill_0[430]; //0
-	//0x6b8
-} Data_235af620; //235af620 -> 235AFCD8 /  / 2361ebf8
+Struct_235af620 Data_235af620[5]; //235af620 -> 235AFCD8 /  / 2361ebf8
 
 char Data_235afcd8[52]; //235AFCD8 
 char Data_235afd0c[100]; //235afd0c +0x64
@@ -109,7 +114,7 @@ static void get_bytes(int offset, uint8_t* pbBuffer, uint16_t numBytes);
 static uint16_t get_word(int offset);
 static uint8_t get_byte(uint16_t offset);
 int fatfs_is_lfn(uint32_t offset);
-int fatfs_is_archive(uint16_t offset);
+int fatfs_is_archive(uint32_t offset);
 int fatfs_is_directory(uint32_t offset);
 static int sub_234150c8(uint32_t offset);
 
@@ -549,11 +554,13 @@ int fatfs_volume_init(int a)
 
 
 /* 23415074 - todo */
-int sub_23415074(uint16_t offset)
+int sub_23415074(uint32_t a)
 {
 #if 0
 	console_send_string("sub_23415074 (todo.c): TODO\r\n");
 #endif
+
+	uint16_t offset = a;
 
 	if ((get_byte(offset) != 0x00) &&
 		(get_byte(offset) != 0xe5) &&
@@ -709,6 +716,69 @@ void fatfs_handle_long_file_name(uint16_t offset)
 }
 
 
+/* 234153a8 - todo */
+void fatfs_string_copy(char* r4, char* r5, int r7)
+{
+#if 0
+	console_send_string("fatfs_string_copy (todo.c): TODO\r\n");
+#endif
+
+	int16_t r6 = 0;
+
+	uint32_t r0 = (int16_t) strlen(r4);
+	while (r0 != 0)
+	{
+		r0--;
+		if (r4[r0] != ' ')
+		{
+			break;
+		}
+	}
+
+	r0++;
+
+	int16_t r2 = r0;
+//	r0 = r2;
+	while (r0 != 0)
+	{
+		r0--;
+		if (r4[r0] == '.')
+		{
+			break;
+		}
+	}
+
+	int16_t r1 = r0 + 1;
+	if (r7 != 0)
+	{
+		for (uint32_t r0 = 0; r0 < (r1 - 1); r0++)
+		{
+			if (r4[r0] != ' ')
+			{
+				r6 = r0 + 1;
+			}
+		}
+	}
+	else
+	{
+		r6 = r1 - 1;
+	}
+
+	uint32_t i;
+	for (i = 0; i < r6; i++)
+	{
+		r5[i] = r4[i];
+	}
+
+	for (uint32_t k = r1 - 1; k < r2; k++, i++)
+	{
+		r5[i] = r4[k];
+	}
+
+	r5[i] = 0;
+}
+
+
 /* 23415488 - todo */
 void sub_23415488(Struct_235af5d0* a)
 {
@@ -834,6 +904,93 @@ void sub_23415488(Struct_235af5d0* a)
 }
 
 
+/* 23415624 - todo */
+int sub_23415624(Struct_235af5d0* a, int b, char* c)
+{
+#if 0
+	console_send_string("sub_23415624 (todo.c): TODO\r\n");
+#endif
+
+	int r5 = 0;
+	int r8 = 0;
+	int fp = 0;
+
+	while (1)
+	{
+		//loc_23415638
+		int sb = sub_234148c4(a, b, r8++, 0);
+		if (sb == -1)
+		{
+			//->loc_23415738
+			break;
+		}
+		//0x23415658
+		for (uint8_t r6 = 0; r6 < 15; r6++)
+		{
+			//loc_2341565c
+			int r7 = r6 << 5;
+
+			if (0 != fatfs_is_lfn(r7))
+			{
+				fatfs_handle_long_file_name(r7);
+				//->loc_23415720
+			}
+			//loc_2341567c
+			else if (0 != sub_23415074(r7))
+			{
+				fatfs_lfn.valid = 0; //fp;
+				//->loc_23415720
+			}
+			else if (0 != sub_234150c8(r7))
+			{
+				//0x234156a4
+				if (fatfs_lfn.valid != 0)
+				{
+					if (0 != (fatfs_string_compare(&fatfs_lfn.bytes[0], c)))
+					{
+						//0x234156cc
+						//->loc_23415710
+						return sub_23415130(r7);
+					}
+
+					fatfs_lfn.valid = 0; //fp;
+					//->loc_23415720
+				}
+				else
+				{
+					//loc_234156d0
+					for (uint8_t r4 = 0; r4 < 11; r4++)
+					{
+						//loc_234156d4
+						/*sl*/Data_235ae9bc[r5] = get_byte(r7 + r4);
+
+						r5++;
+					}
+					//0x234156f8
+					/*sl*/Data_235ae9bc[r5] = 0; //fp
+
+					if (0 != fatfs_string_compare(&Data_235ae9bc[0], c))
+					{
+						//loc_23415710
+						return sub_23415130(r7);
+					}
+					//loc_2341571c
+					r5 = 0;
+				}
+			}
+			//loc_23415720
+		} //for (uint8_t r6 = 0; r6 < 15; r6++)
+		//0x23415730
+		if (sb == -1)
+		{
+			break;
+		}
+	}
+	//loc_23415738
+	return 0;
+}
+
+
 /* 23415740 - todo */
 int sub_23415740(Struct_235af174* r4)
 {
@@ -916,6 +1073,342 @@ int sub_23415740(Struct_235af174* r4)
 }
 
 
+/* 234158b8 - todo */
+int sub_234158b8(Struct_235af5d0* a, int b, char* c, Struct_235af620** d)
+{
+#if 0
+	console_send_string("sub_234158b8 (todo.c): TODO\r\n");
+#endif
+
+	int r7;
+	int sb = 0;
+//	int sl = 0;
+	//fp, =0x235af4cc
+	Struct_235af620* r4 = *d;
+	uint8_t r6;
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_234158b8: b=%d, c='%s'\r\n", 
+			b, c);
+		console_send_string(debug_string);
+	}
+#endif
+
+	while (1)
+	{
+		//loc_234158cc
+		int r8 = sub_234148c4(a, b, sb++, 0);
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_234158b8: r8=%d, sb=%d\r\n", 
+				r8, sb);
+			console_send_string(debug_string);
+		}
+#endif
+		if (r8 == -1)
+		{
+			//->loc_23415a2c
+			return 1;
+		}
+
+		for (r6 = 0; r6 < 16; r6++, r4->Data_0x148++)
+		{
+			//loc_234158f0
+			r7 = r6 << 5;
+
+			if (0 != fatfs_is_lfn(r7))
+			{
+				//0x23415904
+				fatfs_handle_long_file_name(r7);
+				//->loc_23415a08
+			}
+			//loc_23415910
+			else if (0 != sub_23415074(r7))
+			{
+				fatfs_lfn.valid = 0; //sl
+				//->loc_23415a08
+			}
+			//0x23415924
+			else if (0 != sub_234150c8(r7))
+			{
+				//0x23415934
+				if (fatfs_lfn.valid != 0)
+				{
+					//0x23415940
+					memcpy(&r4->arData_0x35[0], &fatfs_lfn.bytes[0], 0x100);
+
+					r4->bData_0x34 = fatfs_lfn.entries;
+					fatfs_lfn.valid = 0; //sl
+					//->loc_23415990
+				}
+				else
+				{
+					//loc_23415960
+					uint8_t r5;
+					for (r5 = 0; r5 < 11; r5++)
+					{
+						//loc_23415964
+						r4->arData_0x35[r5] = get_byte(r5 + r7);
+					}
+					r4->arData_0x35[r5] = 0;
+				}
+				//loc_23415990
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "sub_234158b8: r4->arData_0x35='%s'\r\n", 
+						&r4->arData_0x35[0]);
+					console_send_string(debug_string);
+				}
+#endif
+				if (0 != fatfs_string_compare(&r4->arData_0x35[0], c))
+				{
+					//0x234159a4
+					if (0 != fatfs_is_archive(r7))
+					{
+						//0x234159b4
+						r4->bData_0 = get_byte(r7 + 11);
+						r4->Data_8 = sub_23415130(r7);
+						r4->Data_4 = sub_23416b48(r7);
+						r4->Data_0xc = 0;
+						r4->Data_0x10 = 0;
+						r4->Data_0x20 = 0;
+						r4->Data_0x24 = 0;
+						r4->Data_0x30 = 0;
+						r4->Data_0x154 = a;
+						r4->Data_0x144 = r8;
+
+#if 1
+						{
+							extern char debug_string[];
+							sprintf(debug_string, "sub_234158b8: r4->Data_8=%d, r4->Data_4=%d\r\n", 
+								r4->Data_8, r4->Data_4, r4->Data_0x154);
+							console_send_string(debug_string);
+						}
+#endif
+
+						return 0;
+					}
+					else
+					{
+						//loc_23415a2c
+						return 1;
+					}
+				}
+				//loc_23415a08
+			}
+			//loc_23415a08
+		} //for (uint8_t r6 = 0; r6 < 16; r6++)
+		//0x23415a24
+		if (r8 == -1)
+		{
+			//loc_23415a2c
+			return 1;
+			//break;
+		}
+		//->loc_234158cc
+	}
+//	return 0;
+}
+
+
+/* 23415c0c - todo */
+int sub_23415c0c(Struct_235af5d0* r8, int r6, char* fp, Struct_235af620** d, uint8_t e)
+{
+#if 0
+	console_send_string("sub_23415c0c (todo.c): TODO\r\n");
+#endif
+
+	Struct_235af620* r4 = *d;
+
+	Struct_235af620* sp_0x30;
+	char sp_0x24[12] = {0};
+	int sp4[8] = {0};
+	
+	memset(&Data_235aeabc, 0, sizeof(Data_235aeabc));
+	memset(&Data_235aec14, 0, sizeof(Data_235aec14));
+
+	uint8_t r7 = strlen(fp);
+
+	if (fp[0] != '.')
+	{
+		//0x23415c88
+		sprintf(&sp_0x24[0], "%0x", crc32(fp, strlen(fp)));
+
+		uint8_t r5;
+
+		//TODO!!!
+		r5 = r7 / 13;
+		if ((r7 % 13) != 0)
+		{
+			r5++;
+		}
+		r7 = r5 + 1;
+
+		if (r7 > 8)
+		{
+			return 5;
+		}
+		//0x23415ce8
+		Data_235aec14.Data_0x144 = r6;
+		Data_235aec14.Data_0x148 = 0; //sb
+		Data_235aec14.Data_0x154 = r8;
+		r5 = 0;
+		//->loc_23415da8
+		while (r5 != r7)
+		{
+			//loc_23415cfc
+			Data_235aec14.arData_0x35[0] = 0; //sb
+
+			if (0 != sub_23415740(&Data_235aec14))
+			{
+				//0x23415d10
+				sp_0x30 = &Data_235aeabc;
+
+				if (r6 == 0)
+				{
+					r6 = 2;
+				}
+
+				Data_235aeabc.Data_0x154 = r8;
+				Data_235aeabc.Data_0x30 = 0; //sb
+				Data_235aeabc.Data_8 = r6;
+
+				sub_23414b5c(&sp_0x30, 1);
+
+				sub_23414c70(r8, sp_0x30->Data_0x30);
+				//->loc_23415da8
+			}
+			else
+			{
+				//loc_23415d4c
+				int r1 = Data_235aec14.Data_0x140;
+				int r0 = 0xf;
+				r0 = r0 & ~r1;
+				if (r0 == 0)
+				{
+					Data_235aec14.Data_0x148 += (Data_235aec14.arData_0x35[0] & 0x0f);
+					//->loc_23415da4
+				}
+				//0x23415d6c
+				else 
+				{
+					if (Data_235aec14.arData_0x35[0] == 0xe5)
+					{
+						//0x23415d7c
+						uint8_t r0 = r5 + 1;
+						sp4[r5] = Data_235aec14.Data_0x148;
+						r5 = r0;
+						if (r5 == r7)
+						{
+							//->loc_23415db0
+							break;
+						}
+						//loc_23415d9c
+					}
+					else
+					{
+						r5 = 0;
+					}
+					//->loc_23415d9c
+					Data_235aec14.Data_0x148++;
+				}
+			}
+			//loc_23415da8
+		} //while (r5 != r7)
+		//loc_23415db0
+		r7 = r5 - 1;
+		//->loc_23415e08
+		for (r5 = 0; r5 < r7; r5++)
+		{
+			//loc_23415dc0
+			Data_235aec14.Data_0x148 = sp4[r5];
+
+			if (r5 == 0)
+			{
+				//0x23415dd8
+				int r0 = sub_23416b54(&sp_0x24[0]);
+				//->loc_23415df0
+				sub_23415a34(&Data_235aec14, fp, r7 | 0x40, r0);
+			}
+			else
+			{
+				//loc_23415de4
+				int r0 = sub_23416b54(&sp_0x24[0]);
+				//->loc_23415df0
+				sub_23415a34(&Data_235aec14, fp, (r7 - r5) & 0xff, r0);
+			}
+		}
+		//0x23415e10
+		Data_235aec14.Data_0x154 = r8;
+		Data_235aec14.Data_0x148 = sp4[r7];
+		Data_235aec14.Data_0x144 = r6;
+
+		*r4 = Data_235aec14;
+
+		r4->wData_2 = 0x600;
+		r4->Data_4 = 0; //sb
+		r4->bData_0 = e;
+		r4->Data_8 = 0; //sb
+		r4->Data_0x30 = 0; //sb
+
+		for (uint8_t r0 = 0; r0 < 11; r0++)
+		{
+			//loc_23415e58
+			r4->arData_0x35[r0] = sp_0x24[r0];
+		}
+		//0x23415e74
+		sub_234149a8(r4);
+		//->loc_23415f24
+	} //if (fp[0] != '.')
+	else
+	{
+		Data_235aec14.Data_0x144 = r6;
+		Data_235aec14.Data_0x148 = 0; //sb
+		Data_235aec14.Data_0x154 = r8;
+		//->loc_23415f14
+		while (0 == sub_23415740(&Data_235aec14))
+		{
+			//loc_23415e80
+			if (Data_235aec14.arData_0x35[0] == 0xe5)
+			{
+				//0x23415e8c
+				*r4 = Data_235aec14;
+
+				r4->wData_2 = 0x600;
+				r4->Data_4 = 0; //sb
+				r4->bData_0 = e;
+				r4->Data_8 = 0; //sb
+				r4->Data_0x30 = 0; //sb
+
+				memset(&r4->arData_0x35[0], ' ', 0x100);
+
+				uint8_t r1 = strlen(fp);
+
+				for (uint8_t r0 = 0; r0 < r1; r0++)
+				{
+					//loc_23415ed8
+					r4->arData_0x35[r0] = fp[r0];
+				}
+				//0x23415ef4
+				sub_234149a8(r4);
+
+				return 0;
+			}
+			//loc_23415f08
+			Data_235aec14.Data_0x148++;
+			//loc_23415f14
+		} ///while (0 == sub_23415740(&Data_235aec14))
+		//loc_23415f24
+	}
+	//loc_23415f24
+	return 1;
+}
+
+
 /* 23415f44 /  / 2341d958 - complete */
 int fatfs_volume_add_usb_device(USB_MSD_Interface* r4)
 {
@@ -937,7 +1430,7 @@ int fatfs_volume_add_usb_device(USB_MSD_Interface* r4)
 		Data_234920d4 = OSSemCreate(1);
 	}
 
-	memset(&Data_235af620, 0, sizeof(Data_235af620));
+	memset(&Data_235af620[0], 0, sizeof(Data_235af620));
 
     return 0;
 }
@@ -988,16 +1481,27 @@ int fatfs_volume_remove_usb_device(int r4)
 
 
 /* 234160e8 - todo */
-int sub_234160e8(void* r8, char* r5, int c, int r4_)
+int sub_234160e8(void** a, char* r5, int c, int r4_)
 {
 #if 0
 	console_send_string("sub_234160e8 (todo.c): TODO\r\n");
 #endif
 
+	Struct_235af620** r8 = a;
+	uint8_t sp8; // = 0;
+	int sp4 = 0;
 	int r7 = 2;
 	int sb = 4;
-	uint32_t sp8;
-	int sp4 = 0;
+	uint8_t sl;
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234160e8: r5='%s', c=0x%x, r4_=%d\r\n", 
+			r5, c, r4_);
+        console_send_string(debug_string);
+    }
+#endif
 
 	if ((r5 == 0) || (strlen(r5) > 100))
 	{
@@ -1009,12 +1513,12 @@ int sub_234160e8(void* r8, char* r5, int c, int r4_)
 		r5++;
 	}
 
+	fatfs_wait_semaphore();
+
 	if (r4_ != 0)
 	{
 		r7 = r4_;
 	}
-
-	fatfs_wait_semaphore();
 
 	char* r0 = &Data_235afd0c[0];
 	char* r1 = &Data_235afd70[0];
@@ -1034,7 +1538,7 @@ int sub_234160e8(void* r8, char* r5, int c, int r4_)
 	{
 		//loc_23416164
 		r4--;
-		if (*r4 != 0x2f)
+		if (*r4 == 0x2f)
 		{
 			//->loc_23416188
 			break;
@@ -1052,8 +1556,7 @@ int sub_234160e8(void* r8, char* r5, int c, int r4_)
 	{
 		//loc_2341618c
 		char r2 = *r4++;
-		char* ip = r1;
-		r1++;
+		char* ip = r1++;
 		*ip = r2;
 		if (r2 == 0)
 		{
@@ -1071,43 +1574,48 @@ int sub_234160e8(void* r8, char* r5, int c, int r4_)
 		r0 = r2;
 	}
 	//0x234161c0
-	if (r3 > (r5 + 1))
+	if ((r3 > (r5 + 1)) && (r0[-1] == 0x2f))
 	{
-		if (r0[-1] == 0x2f)
-		{
-			r0--;
-		}
+		r0--;
 	}
 	//loc_234161d8
 	*r0 = 0;
 
 	r1 = &Data_235afd0c[0];
-
+	uint8_t r0_; // = 0;
 	//->loc_23416200
-	uint8_t r0_;
-	for (r0_ = 0; *r1 != 0; )
+	for (r0_ = 0; *r1 != 0; r0_++)
 	{
 		//loc_234161ec
-		if (*r1++ == 0x2f)
-		{
-			r0_++;
-		}
+		while (*r1++ != 0x2f) {}
+
+		r0_++;
 	}
 	//0x2341620c
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_234160e8: Data_235afd0c='%s', r0_=%d\r\n", 
+			&Data_235afd0c[0], r0_);
+        console_send_string(debug_string);
+    }
+#endif
+
 	sp8 = r0_;
 	int fp = c & 0x300;
 	//->loc_234162e4
-	for (uint8_t sl = 0; sl < sp8; sl++)
+	for (sl = 0; sl < sp8; sl++)
 	{
 		//loc_23416220
+		char* r5 = &Data_235afd0c[0];
 		uint8_t r6 = 0;
 		int r4 = 0;
 
-		char* r5 = &Data_235afd0c[0];
 		uint16_t r2 = strlen(r5);
 		//r3 = 235AFCD8
 		//->loc_23416274
-		for (uint8_t r0 = 0; r0 < r2; r0++, r5++)
+		for (uint8_t r0 = 0; r0 < r2; r0++)
 		{
 			//loc_23416244
 			char r1 = *r5;
@@ -1126,22 +1634,285 @@ int sub_234160e8(void* r8, char* r5, int c, int r4_)
 				}
 			}
 			//loc_23416268
+			r5++;
 		} //for (uint8_t r0 = 0; r0 < r2; r0++, r5++)
 		//0x2341627c
+		Data_235afcd8[r4] = 0;
 
+		int r5_ = r7;
+
+		Struct_235af5d0* r4_ = &Data_235af5d0[sp4];
+
+		r7 = sub_23415624(r4_, r7, &Data_235afcd8[0]);
+
+		if (r7 == 0)
+		{
+			if (fp == 0x200)
+			{
+				//0x234162b8
+				sub_23416bc8(r4_, r5_, &Data_235afcd8[0]);
+
+				r7 = sub_23415624(r4_, r5_, &Data_235afcd8[0]);
+			}
+			else
+			{
+				//->loc_23416300
+				int r4 = 5;
+				OSSemPost(Data_234920d4);
+				//->loc_23416124
+				return r4;
+			}
+		}
 		//loc_234162dc
 	} //for (uint8_t sl = 0; sl < sp8; sl++)
 	//0x234162f0
+	//r6, =0x235af620
+	//r4 = 0;
+	//r5, #0x2b
+	//->loc_23416318
+	for (uint8_t r4 = 0; r4 < 5; r4++)
+	{
+		//loc_23416318
+		if (Data_235af620[r4].wData_2 == 0)
+		{
+			//0x2341632c
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_234160e8: r4=%d, sp4=%d\r\n", 
+					r4, sp4);
+				console_send_string(debug_string);
+			}
+#endif
+
+			sb = 0;
+			*r8 = &Data_235af620[r4];
+			r4 = 0;
+
+			(*r8)->wData_2 = 0;
+
+			if (0 != sub_234158b8(&Data_235af5d0[sp4], r7, &Data_235afd70[0], r8))
+			{
+				//0x23416370
+				if (fp == 0x100)
+				{
+					sb = 5;
+				}
+				//0x2341637c
+				else if (fp == 0x200)
+				{
+					//0x23416384
+					int r3 = 0x20;
+					if ((/*sp_0x14*/c & 3) == 0)
+					{
+						r3 = 0x21;
+					}
+					sub_23415c0c(&Data_235af5d0[sp4], r7, &Data_235afd70[0], r8, r3);
+
+					(*r8)->wData_2 |= 0x100;
+				}
+				//->loc_2341644c
+//				break;
+			}
+			//loc_234163c0
+			else if (fp == 0x100)
+			{
+				//0x234163c8
+				(*r8)->wData_2 |= 0x100;
+				(*r8)->Data_0x18 = r4;
+				(*r8)->Data_0x1c = r4;
+				//->loc_2341644c
+//				break;
+			}
+			//loc_234163ec
+			else if (fp == 0x200)
+			{
+				//0x234163f4
+				uint8_t* r1 = &((*r8)->bData_0);
+				sb = 4;
+				int i = 0x158;
+				while (i != -1)
+				{
+					//loc_23416400
+					i--;
+					if (i != -1)
+					{
+						r1[0] = r4;
+					}
+				}
+				//0x23416410
+				//->loc_2341644c
+			}
+			//loc_2341644c
+			break;
+		}
+		//loc_23416414
+		if (Data_235af620[r4].Data_0x144 == r7)
+		{
+			//0x23416420
+			if (0 == memcmp(&Data_235afd70[0], &Data_235af620[r4].arData_0x35[0], 11))
+			{
+				sb = 4;
+				//->loc_2341644c
+				break;
+			}
+		}
+		//loc_2341643c
+	} //for (uint8_t r4 = 0; r4 < 5; r4++)
+	//loc_2341644c
+	OSSemPost(Data_234920d4);
+	return sb;
 }
 
 
 /* 23416460 - todo */
-int sub_23416460()
+int sub_23416460(void** a, uint8_t* sb, int32_t r5, int* r8)
 {
-#if 1
+#if 0
 	console_send_string("sub_23416460 (todo.c): TODO\r\n");
 #endif
 
+	Struct_235af620* r4 = *a;
+
+	uint32_t sp4 = r5;
+	int sp;
+	Struct_235af5d0* r7 = r4->Data_0x154;
+
+	if (r4 == 0)
+	{
+		*r8 = 3;
+
+		return 0;
+	}
+	//0x23416490
+	fatfs_wait_semaphore();
+
+	*r8 = 0; //r6
+
+	uint32_t r3 = (r4->Data_0x154->wBytsPerSec * r4->Data_0xc + r4->Data_0x10);
+	uint32_t lr = r3 + r5;
+
+	if (lr > r4->Data_4)
+	{
+		r5 = r4->Data_4 - r3;
+		sp4 = r5;
+	}
+
+	if (r4->Data_0x10 != 0)
+	{
+		//0x234164cc
+		sub_234148c4(r4->Data_0x154, r4->Data_8, r4->Data_0xc, &r4->Data_0x18);
+		//->loc_234164f4
+		while ((r4->Data_0x10 < r4->Data_0x154->wBytsPerSec) || (r5 == 0))
+		{
+			//loc_234164dc
+			*sb++ = get_byte(r4->Data_0x10++);
+			r5--;
+		}
+		//0x23416510
+		if (r4->Data_0x10 == r4->Data_0x154->wBytsPerSec)
+		{
+			//0x23416524
+			r4->Data_0x10 = 0; //r6;
+			r4->Data_0xc++;
+			//->loc_23416658
+		}
+		else
+		{
+			//loc_23416660
+			OSSemPost(Data_234920d4);
+
+			return sp4;
+		}
+	}
+	//loc_23416658
+	while (r5 > 0)
+	{
+		//loc_23416538
+		uint32_t r6 = r7->wSectorsPerCluster;
+		uint32_t fp = r4->Data_0xc;
+		int r8 = r4->Data_8;
+		uint32_t sl = fp / r6;
+		uint32_t r0 = r6 * sl;
+		r6 = 0;
+		r0 = fp -r0;
+		sp = r0;
+
+		if ((r4->Data_0x18 != 0) &&
+			//0x23416570
+			(r4->Data_0x18 <= sl))
+		{
+			r8 = r4->Data_0x1c;
+			r6 = r4->Data_0x18 - 1;
+		}
+		//->loc_2341659c
+		while (r6 < sl)
+		{
+			//loc_23416580
+			r4->Data_0x1c = r8;
+			r4->Data_0x18 = sl;
+
+			r8 = sub_234147d8(r7, r8);
+
+			r6++;
+		}
+		//0x234165a4
+		if (r8 == -1)
+		{
+			sp4 = 0;
+			//->loc_23416660
+			break;
+		}
+		//0x234165b4
+		r6 = r5 / r7->wBytsPerSec;
+
+		if (r7->wBytsPerSec > r5)
+		{
+			r4->Data_0x10 = r5;
+			r6++;
+		}
+
+		sl = r7->wSectorsPerCluster;
+		fp = r4->Data_0xc;
+		
+		r0 = fp / sl;
+		r0 = r0 + 1;
+		uint32_t r1 = fp + r6;
+		r0 = sl * r0;
+		int r2 = r8 - 2;
+
+		if (r1 > r0)
+		{
+			r6 = r0 - fp;
+		}
+
+		r1 = r2 * sl + sp;
+		Data_234920dc = r1 + r7->Data_0x24;
+
+		(r7->read)(r7->pDev, Data_234920dc, sb, r6);
+
+		if (r4->Data_0x10 == 0)
+		{
+			r4->Data_0xc += r6;
+		}
+
+		int r0_ = r7->wBytsPerSec;
+		sb += r6 * r0_;
+
+		if (r0_ >= r5)
+		{
+			//->loc_23416660
+			break;
+		}
+		//0x23416650
+		r0_ = r0_ * r6;
+		r5 = r5 - r0_;
+		//loc_23416658
+	} //while (r5 > 0)
+	//loc_23416660
+	OSSemPost(Data_234920d4);
+
+	return sp4;
 }
 
 
@@ -1209,13 +1980,16 @@ int sub_234168fc(int a, Struct_234168fc* r4)
 }
 
 
-/* 234169c0 - todo */
-int sub_234169c0()
+/* 234169c0 - complete */
+int sub_234169c0(void* a)
 {
-#if 1
+#if 0
 	console_send_string("sub_234169c0 (todo.c): TODO\r\n");
 #endif
 
+	Struct_235af620* r0 = a;
+
+	return r0->Data_4;
 }
 
 
@@ -1301,7 +2075,7 @@ int fatfs_is_lfn(uint32_t offset)
 
 
 /* 23416b08 - todo */
-int fatfs_is_archive(uint16_t offset)
+int fatfs_is_archive(uint32_t a)
 {
 #if 0
 	console_send_string("fatfs_is_archive (todo.c): TODO\r\n");
@@ -1309,7 +2083,7 @@ int fatfs_is_archive(uint16_t offset)
 
 	uint8_t* addr = (uint8_t*)Data_234920d8;
 
-	offset += 11;
+	uint16_t offset = a + 11;
 
 	if (0x20 & *(addr + offset))
 	{
@@ -1348,6 +2122,72 @@ int sub_23416b48(int a)
 #endif
 
 	return get_dword(a + 0x1c);
+}
+
+
+/* 23416b8c - complete */
+int fatfs_string_compare(char* a, char* b)
+{
+#if 0
+	console_send_string("fatfs_string_compare (todo.c): TODO\r\n");
+#endif
+
+	fatfs_string_copy(a, &Data_235ae7bc[0], 0);
+	fatfs_string_copy(b, &Data_235ae8bc[0], 0);
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "fatfs_string_compare: Data_235ae7bc='%s', Data_235ae8bc='%s'\r\n", 
+			&Data_235ae7bc[0], &Data_235ae8bc[0]);
+		console_send_string(debug_string);
+	}
+#endif
+
+	return strcmp(&Data_235ae7bc[0], &Data_235ae8bc[0]) == 0;
+}
+
+
+/* 23416bc8 - todo */
+int sub_23416bc8(Struct_235af5d0* r6, int r5, char* r2)
+{
+#if 0
+	console_send_string("sub_23416bc8 (todo.c): TODO\r\n");
+#endif
+
+	/*Struct_235aed6c*/Struct_235af620* sp4;
+
+	Data_235aed6c.Data_0x154 = r6;
+	Data_235aed6c.Data_0x144 = r5;
+	Data_235aed6c.Data_0x148 = 0; //r7
+
+	sp4 = &Data_235aed6c;
+
+	sub_23415c0c(r6, r5, r2, &sp4, 0x10);
+
+	Data_235aed6c.Data_8 = 0; 
+
+	sub_23414b5c(&sp4, 1);
+
+	int r4 = sp4->Data_8;
+
+	sub_234146b4(r6, r4, -1);
+
+	sub_23414c70(r6, r4);
+
+	sub_23415c0c(r6, r4, ".", &sp4, 0x10);
+
+	sp4->Data_8 = r4;
+
+	sub_234149a8();
+
+	sub_23415c0c(r6, r4, "..", &sp4, 0x10);
+
+	sp4->Data_8 = r5;
+
+	sub_234149a8();
+
+	return 0;
 }
 
 

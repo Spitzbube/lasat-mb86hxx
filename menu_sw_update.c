@@ -104,9 +104,23 @@ struct menu_sw_update
 /* 2346fb48 - todo */
 static void* sub_2346fb48(FrontDisplay_Job* a)
 {
-#if 1
+#if 0
 	console_send_string("sub_2346fb48 (todo.c): TODO\r\n");
 #endif
+
+    text_table_get_string(0x1C8, &a->bData_8[0], 0xff);
+
+    a->bNumTextChars = strlen(&a->bData_8[0]);
+    a->bDisplayOffset = 0;
+    a->bNumDisplayChars = 12;
+    a->bData_0x10b = 0;
+    a->bData_0x10c = 1;
+    a->holdTime = 0;
+    a->Data_0 = frontdisplay_draw_text;
+    a->Data_4 = 0;
+    a->bData_0x10f = 0;
+
+    return 0;
 }
 
 
@@ -379,7 +393,7 @@ int menu_sw_update_filelist_on_exit(UI_Thread_Params* a)
 /* 2346fda2 - todo */
 int sub_2346fda2(char* a, int b)
 {
-#if 0
+#if 1
 	console_send_string("sub_2346fda2 (todo.c): TODO\r\n");
 #endif
 
@@ -406,6 +420,11 @@ int sub_2346fda2(char* a, int b)
 
         int r0_ = sub_23416460(&sp4, r4, r7, &sp);
 
+#if 1
+        hex_dump("sub_2346fda2", r4, r7);
+#endif
+
+#if 0
         if (r7 == r0_)
         {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
@@ -427,6 +446,7 @@ int sub_2346fda2(char* a, int b)
             while (1) {}
         }
         //loc_2346fe18
+#endif
     }
     //loc_2346fe18
     return 0;
@@ -476,8 +496,10 @@ int sub_2346fe1c(int r4)
         {
             //0x2346fe70
             char* r4 = &Data_238ddce0.Data_8.arFileName[0];
+#if 0
             if (0 == strncmp(r4, "DECODER APP", 11) ||
                 (0 == strncmp(r4, "decoder.app", 11)))
+#endif
             {
                 //loc_2346fe90
                 sub_2346fda2(r4, Data_238ddce0.Data_0x11c);

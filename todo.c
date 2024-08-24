@@ -858,6 +858,55 @@ int sub_23457ab8()
 }
 
 
+/* 23414b5c - todo */
+void sub_23414b5c()
+{
+	console_send_string("sub_23414b5c (todo.c): TODO\r\n");
+
+}
+
+
+/* 234146b4 - todo */
+void sub_234146b4()
+{
+	console_send_string("sub_234146b4 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23414c70 - tod*/
+void sub_23414c70()
+{
+	console_send_string("sub_23414c70 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234149a8 - todo */
+void sub_234149a8()
+{
+	console_send_string("sub_234149a8 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23416b54 - todo */
+void sub_23416b54()
+{
+	console_send_string("sub_23416b54 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23415a34 - todo */
+void sub_23415a34()
+{
+	console_send_string("sub_23415a34 (todo.c): TODO\r\n");
+
+}
+
+
+
 #ifndef DVBC_RADIO
 
 /*   /  / 2345c8da - todo */
