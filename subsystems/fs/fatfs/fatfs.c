@@ -153,7 +153,7 @@ int sub_234147d8(Struct_235af5d0* r5, uint32_t r4)
 
 	(r5->read)(r5->pDev, Data_234920dc, Data_234920d8, 1);
 
-#if 1
+#if 0
 	{
 		hex_dump("sub_234147d8", Data_234920d8, 512);		
 	}
@@ -164,7 +164,7 @@ int sub_234147d8(Struct_235af5d0* r5, uint32_t r4)
 	uint32_t r0_;
 	uint32_t r0 = r4 + (r6 << 7);
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "sub_234147d8: r0=0x%x\r\n", r0);
@@ -183,7 +183,7 @@ int sub_234147d8(Struct_235af5d0* r5, uint32_t r4)
 
 	r0_ &= 0xfffffff;
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "sub_234147d8: r0_=0x%x\r\n", r0_);
@@ -267,7 +267,7 @@ int sub_234148c4(Struct_235af5d0* r8, int r7, uint32_t sb, int* r6)
 		{
 			Data_234920dc = r1;
 
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "sub_234148c4: r7=%d, Data_234920dc=%d\r\n", 
@@ -594,11 +594,11 @@ int sub_234150c8(uint32_t offset)
 }
 
 
-/* 23415130 - todo */
-int sub_23415130(int a)
+/* 23415130 /  / 2341cb44 - todo */
+int get_first_cluster(int a)
 {
 #if 0
-	console_send_string("sub_23415130 (todo.c): TODO\r\n");
+	console_send_string("get_first_cluster (todo.c): TODO\r\n");
 #endif
 
 	uint16_t x = a + 0x1b;
@@ -950,7 +950,7 @@ int sub_23415624(Struct_235af5d0* a, int b, char* c)
 					{
 						//0x234156cc
 						//->loc_23415710
-						return sub_23415130(r7);
+						return get_first_cluster(r7);
 					}
 
 					fatfs_lfn.valid = 0; //fp;
@@ -972,7 +972,7 @@ int sub_23415624(Struct_235af5d0* a, int b, char* c)
 					if (0 != fatfs_string_compare(&Data_235ae9bc[0], c))
 					{
 						//loc_23415710
-						return sub_23415130(r7);
+						return get_first_cluster(r7);
 					}
 					//loc_2341571c
 					r5 = 0;
@@ -1062,8 +1062,8 @@ int sub_23415740(Struct_235af174* r4)
 	//loc_23415864
 	r4->bData_1 = (fatfs_is_directory(r6) != 0);
 	r4->bAttr = get_byte(r6 + 11);
-	r4->Data_8 = sub_23415130(r6);
-	r4->Data_4 = sub_23416b48(r6);
+	r4->Data_8 = get_first_cluster(r6);
+	r4->Data_4 = get_filesize(r6);
 	r4->Data_0xc = 0;
 	r4->Data_0x10 = 0;
 	r4->Data_0x20 = 0;
@@ -1171,8 +1171,8 @@ int sub_234158b8(Struct_235af5d0* a, int b, char* c, Struct_235af620** d)
 					{
 						//0x234159b4
 						r4->bData_0 = get_byte(r7 + 11);
-						r4->Data_8 = sub_23415130(r7);
-						r4->Data_4 = sub_23416b48(r7);
+						r4->Data_8 = get_first_cluster(r7);
+						r4->dwSize = get_filesize(r7);
 						r4->Data_0xc = 0;
 						r4->Data_0x10 = 0;
 						r4->Data_0x20 = 0;
@@ -1184,8 +1184,8 @@ int sub_234158b8(Struct_235af5d0* a, int b, char* c, Struct_235af620** d)
 #if 1
 						{
 							extern char debug_string[];
-							sprintf(debug_string, "sub_234158b8: r4->Data_8=%d, r4->Data_4=%d\r\n", 
-								r4->Data_8, r4->Data_4, r4->Data_0x154);
+							sprintf(debug_string, "sub_234158b8: r4->Data_8=%d, r4->dwSize=%d\r\n", 
+								r4->Data_8, r4->dwSize, r4->Data_0x154);
 							console_send_string(debug_string);
 						}
 #endif
@@ -1350,7 +1350,7 @@ int sub_23415c0c(Struct_235af5d0* r8, int r6, char* fp, Struct_235af620** d, uin
 		*r4 = Data_235aec14;
 
 		r4->wData_2 = 0x600;
-		r4->Data_4 = 0; //sb
+		r4->dwSize = 0; //sb
 		r4->bData_0 = e;
 		r4->Data_8 = 0; //sb
 		r4->Data_0x30 = 0; //sb
@@ -1379,7 +1379,7 @@ int sub_23415c0c(Struct_235af5d0* r8, int r6, char* fp, Struct_235af620** d, uin
 				*r4 = Data_235aec14;
 
 				r4->wData_2 = 0x600;
-				r4->Data_4 = 0; //sb
+				r4->dwSize = 0; //sb
 				r4->bData_0 = e;
 				r4->Data_8 = 0; //sb
 				r4->Data_0x30 = 0; //sb
@@ -1481,10 +1481,10 @@ int fatfs_volume_remove_usb_device(int r4)
 
 
 /* 234160e8 - todo */
-int sub_234160e8(void** a, char* r5, int c, int r4_)
+int fatfs_open_file(void** a, char* r5, int c, int r4_)
 {
 #if 0
-	console_send_string("sub_234160e8 (todo.c): TODO\r\n");
+	console_send_string("fatfs_open_file (todo.c): TODO\r\n");
 #endif
 
 	Struct_235af620** r8 = a;
@@ -1497,7 +1497,7 @@ int sub_234160e8(void** a, char* r5, int c, int r4_)
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_234160e8: r5='%s', c=0x%x, r4_=%d\r\n", 
+        sprintf(debug_string, "fatfs_open_file: r5='%s', c=0x%x, r4_=%d\r\n", 
 			r5, c, r4_);
         console_send_string(debug_string);
     }
@@ -1596,7 +1596,7 @@ int sub_234160e8(void** a, char* r5, int c, int r4_)
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_234160e8: Data_235afd0c='%s', r0_=%d\r\n", 
+        sprintf(debug_string, "fatfs_open_file: Data_235afd0c='%s', r0_=%d\r\n", 
 			&Data_235afd0c[0], r0_);
         console_send_string(debug_string);
     }
@@ -1679,7 +1679,7 @@ int sub_234160e8(void** a, char* r5, int c, int r4_)
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_234160e8: r4=%d, sp4=%d\r\n", 
+				sprintf(debug_string, "fatfs_open_file: r4=%d, sp4=%d\r\n", 
 					r4, sp4);
 				console_send_string(debug_string);
 			}
@@ -1765,11 +1765,11 @@ int sub_234160e8(void** a, char* r5, int c, int r4_)
 }
 
 
-/* 23416460 - todo */
-int sub_23416460(void** a, uint8_t* sb, int32_t r5, int* r8)
+/* 23416460 /  / 2341de74 - todo */
+int fatfs_read_file(void** a, uint8_t* sb, int32_t r5, int* r8)
 {
 #if 0
-	console_send_string("sub_23416460 (todo.c): TODO\r\n");
+	console_send_string("fatfs_read_file (todo.c): TODO\r\n");
 #endif
 
 	Struct_235af620* r4 = *a;
@@ -1792,9 +1792,9 @@ int sub_23416460(void** a, uint8_t* sb, int32_t r5, int* r8)
 	uint32_t r3 = (r4->Data_0x154->wBytsPerSec * r4->Data_0xc + r4->Data_0x10);
 	uint32_t lr = r3 + r5;
 
-	if (lr > r4->Data_4)
+	if (lr > r4->dwSize)
 	{
-		r5 = r4->Data_4 - r3;
+		r5 = r4->dwSize - r3;
 		sp4 = r5;
 	}
 
@@ -1980,16 +1980,16 @@ int sub_234168fc(int a, Struct_234168fc* r4)
 }
 
 
-/* 234169c0 - complete */
-int sub_234169c0(void* a)
+/* 234169c0 /  / 2341e3d4 - complete */
+int fatfs_get_file_size(void* a)
 {
 #if 0
-	console_send_string("sub_234169c0 (todo.c): TODO\r\n");
+	console_send_string("fatfs_get_file_size (todo.c): TODO\r\n");
 #endif
 
 	Struct_235af620* r0 = a;
 
-	return r0->Data_4;
+	return r0->dwSize;
 }
 
 
@@ -2115,10 +2115,10 @@ int fatfs_is_directory(uint32_t offset)
 
 
 /* 23416b48 - complete */
-int sub_23416b48(int a)
+int get_filesize(int a)
 {
 #if 0
-	console_send_string("sub_23416b48 (todo.c): TODO\r\n");
+	console_send_string("get_filesize (todo.c): TODO\r\n");
 #endif
 
 	return get_dword(a + 0x1c);

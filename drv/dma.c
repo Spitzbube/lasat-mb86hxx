@@ -58,7 +58,7 @@ Struct_234928d8 Data_234928d8 = //234928d8
 /* 234365c8 - todo */
 int dma_isr(void)
 {
-#if 1
+#if 0
 	console_send_string("dma_isr (todo.c): TODO\r\n");
 #endif
 
@@ -247,7 +247,7 @@ int dma_start_usb_transfer(void* fp, DMA_Channel_Callback complete, int d,
 	console_send_string("dma_start_usb_transfer (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "dma_start_usb_transfer: pBuffer=%p, dwLength=%d, sp_0x3c=%d, bEndpoint=%d, bWrite=%d\r\n", 

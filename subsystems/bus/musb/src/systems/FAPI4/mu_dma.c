@@ -133,7 +133,7 @@ static void mu_dma_transfer_complete(int status, struct MU_DMA_Channel* pDmaChan
 		}
 	}
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "mu_dma_transfer_complete: pDmaChannel->dwLength=%d\r\n", 

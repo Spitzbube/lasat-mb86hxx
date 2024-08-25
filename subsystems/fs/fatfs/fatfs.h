@@ -15,8 +15,8 @@ typedef struct
 {
 	uint8_t bData_0; //0
 	uint16_t wData_2; //2
-	int Data_4; //4
-	int Data_8; //8
+	uint32_t dwSize; //4
+	uint32_t Data_8; //8
 	int Data_0xc; //12
 	uint32_t Data_0x10; //16
 	int fill_0x14; //20

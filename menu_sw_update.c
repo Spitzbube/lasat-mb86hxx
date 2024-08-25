@@ -400,7 +400,16 @@ int sub_2346fda2(char* a, int b)
     int sp4 = 0; //r5
     int sp;
 
-    int r0 = sub_234160e8(&sp4, a, 0x100, b);
+    int r0 = fatfs_open_file(&sp4, a, 0x100, b);
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_2346fda2: r0=%d\r\n", 
+            r0);
+        console_send_string(debug_string);
+    }
+#endif
 
     if (r0 == 0)
     {
@@ -416,12 +425,21 @@ int sub_2346fda2(char* a, int b)
             r4 = (void*) 0x20000000;
         }
         //loc_2346fdda
-        int r7 = sub_234169c0(sp4);
+        int r7 = fatfs_get_file_size(sp4);
 
-        int r0_ = sub_23416460(&sp4, r4, r7, &sp);
+        int r0_ = fatfs_read_file(&sp4, r4, r7, &sp);
+
+#if 0
+        hex_dump("sub_2346fda2", r4, r7);
+#endif
 
 #if 1
-        hex_dump("sub_2346fda2", r4, r7);
+        {
+            extern char debug_string[];
+            sprintf(debug_string, "sub_2346fda2: r7=%d, r0_=%d\r\n", 
+                r7, r0_);
+            console_send_string(debug_string);
+        }
 #endif
 
 #if 0

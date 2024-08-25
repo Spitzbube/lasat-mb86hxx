@@ -315,6 +315,14 @@ int MUSB_HfiRead(void* h, uint32_t dwStartBlockLo, void* pBuffer, uint16_t wBloc
         wBlockCount, pBuffer, 
         transfer_complete, 1/*bAllowDma*/);
 
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "MUSB_HfiRead: %d\r\n", res);
+        console_send_string(debug_string);
+    }
+#endif
+
     if (res == 0)
     {
         OSSemPend(pDev->responseSema, 1000, &err);
@@ -325,6 +333,14 @@ int MUSB_HfiRead(void* h, uint32_t dwStartBlockLo, void* pBuffer, uint16_t wBloc
     }
     else
     {
+#if 1
+        {
+            extern char debug_string[];
+            sprintf(debug_string, "MUSB_HfiRead: res=%d\r\n", res);
+            console_send_string(debug_string);
+        }
+#endif
+
         OSSemPost(pDev->requestSema);
 
         return 0xff;

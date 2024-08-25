@@ -84,7 +84,7 @@ void ir_user_in_thread()
 			//2340d5c8
 			if ((sp_0x10 == r5) && (r4 != 0))
 			{
-#if 1
+#if 0
 				console_send_string("r4 != 0\r\n");
 #endif
 				r4--;
@@ -102,7 +102,7 @@ void ir_user_in_thread()
 					sp_0x18.bData_1 = sp_0x10;
 					sp_0x18.bData_2 = sp_0x14;
 
-#if 1
+#if 0
                     {
                         extern char debug_string[];
                         sprintf(debug_string, "ir_user_in_thread: OSMboxPost with sp_0xc=0x%x, sp_0x10=0x%x, sp_0x14=0x%x\r\n", 
