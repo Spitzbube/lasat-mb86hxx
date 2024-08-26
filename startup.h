@@ -25,3 +25,5 @@ void sub_234018c8(void);
 void main_scan_init(void);
 void main_ts_play_init(void);
 void main_dma_init(void);
+void main_uart1_init(void);
+void main_bt_init(void);

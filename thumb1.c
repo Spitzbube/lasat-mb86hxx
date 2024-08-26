@@ -1068,9 +1068,11 @@ int menu_root_on_event(void* r0)
 			sub_2346ff0e();
 			//->loc_2346f6f0
 		}
+	#endif
 		//loc_2346f492
 		else if (r7->keyCode == 69/*0x45*/) //Radio
 		{
+#ifdef VDR110
 			//r0 = 0;
 			//->loc_2346f4b0: TODO
 			if (0 == sub_2348112c(0))
@@ -1082,8 +1084,15 @@ int menu_root_on_event(void* r0)
 				//->loc_2346f6f0
 			}
 			//->loc_2346f6f0
+#else
+			if (0 == channel_switch_lists())
+			{
+				channel_switch_lists();
+			}
+#endif
 		}
 		//loc_2346f4a0
+#if 0
 		else if (r7->keyCode == 54/*0x36*/) //EQ
 		{
 			//loc_2346f4a4

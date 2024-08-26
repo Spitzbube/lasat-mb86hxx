@@ -12,7 +12,7 @@ set (
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${mb86h60_hello_world_SOURCE_DIR}
+    ${mb86h60_SOURCE_DIR}
     ${drv_SOURCE_DIR}
     ${ucos_ii_SOURCE_DIR}/Source
     ${ucos_ii_SOURCE_DIR}/Cfg

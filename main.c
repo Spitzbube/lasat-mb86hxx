@@ -141,8 +141,9 @@ void startup_thread()
 	main_frontpanel_init();
 	main_graphic_init();
 	main_network_init();
-	sub_23401504();
+	main_uart1_init();
 	sub_234014dc();
+	main_bt_init();
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
 	main_ts_play_init();

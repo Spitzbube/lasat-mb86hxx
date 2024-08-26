@@ -4,12 +4,14 @@
 #include "ir.h"
 
 
-#if 0 //VDR110
+#ifdef VDR110
 uint16_t wData_23493628; //23493628
-#else //V241
+#else
 uint16_t wData_23493628 = 0x3c0;
 #endif
 
+
+#ifdef VDR110
 
 /* 23453d80 - todo */
 void sub_23453d80()
@@ -17,6 +19,7 @@ void sub_23453d80()
 	wData_23493628 = 0x580;
 }
 
+#endif
 
 /* 23453d90 / 2346a944 - todo */
 int sub_23453d90(int a, int b, uint8_t* c, uint8_t* sl, uint8_t* fp/*, uint8_t* sp8*/)

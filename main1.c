@@ -8,13 +8,12 @@
 #include "flash.h"
 #include "i2c.h"
 #include "lastmode.h"
-#include "thumb2.h"
+#include "amplifier.h"
 #include "sub_2340a6a0.h"
 #include "frontend.h"
 #include "fe_manager.h"
 #include "audec.h"
 #include "auout.h"
-#include "thumb2.h"
 #include "hdmi.h"
 #include "clkpwr.h"
 #include "videc.h"
@@ -32,7 +31,7 @@ extern int main_process_uart_command(uint8_t*);
 
 uint8_t main_bNeedSetup = 0; //23491d8c +0
 Uart_Module* main_hUart0 = 0; //23491d90 +4
-void* Data_23491d94 = 0; //23491d94 +8
+void* main_hUart1 = 0; //23491d94 +8
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
 Struct_234a73e8* main_hPSIDecoder1 = 0; //23491d9c / 234ac4d0 +16 = 0x10
 Struct_234a73e8* main_hPSIDecoder2 = 0; //23491da0 +20 = 0x14
@@ -389,7 +388,7 @@ int main_clkpwr_init()
 }
 
 
-/* 23400978 / 23402150 - todo */
+/* 23400978 / 23402150 / 234021f0 - todo */
 void main_inputhandler_init()
 {
 	void* pMBox; //r4;
@@ -666,7 +665,7 @@ int main_pes_init(void)
 	console_send_string("main_pes_init (todo.c): TODO\r\n");
 #endif
 
-#if 0 //V241
+#ifndef DVBC_RADIO
 	sp_0x58.Data_4.pidChannel = 9;
 	sp_0x58.Data_0x38 = 0; //r4
 	sp_0x58.bData_0 = 0; //r4
@@ -687,7 +686,6 @@ int main_pes_init(void)
 	tsd_open_pes_parser(&main_hPESParserVideo, &sp_0x58);
 #endif
 
-#if 1
 	sp_0x58.bData_0 = 0; //r4
 	sp_0x58.bData_1 = 0xff; //r6
 	sp_0x58.Data_4.pidChannel = 8;
@@ -708,7 +706,6 @@ int main_pes_init(void)
 	sp_0x58.Data_4.Data_0x30 = 0; //r4
 
 	tsd_open_pes_parser(&main_hPESParserAudio, &sp_0x58);
-#endif
 
 	if (main_hPESParserAudio != 0)
 	{
@@ -1269,11 +1266,11 @@ void sub_234014dc()
 }
 
 
-/* 23401504 - todo */
-void sub_23401504()
+/* 23401504 /  / 23402790 - todo */
+void main_uart1_init(void)
 {
 #if 0
-	console_send_string("sub_23401504 (todo.c): TODO\r\n");
+	console_send_string("main_uart1_init (todo.c): TODO\r\n");
 #endif
 
 	Struct_20611068* sp_0x2c;
@@ -1321,7 +1318,7 @@ void sub_23401504()
 			sp4.txPin.bPin = 0x15; //r8
 			sp4.txPin.dwInFunction = 0xff; //r6
 
-			uart_init(&sp4, &Data_23491d94);
+			uart_init(&sp4, &main_hUart1);
 			//->loc_23401584
 		}
 		else
@@ -1333,6 +1330,30 @@ void sub_23401504()
 	}
 	//loc_23401584
 	return;
+}
+
+
+/* 234015c4 / 23402850 - todo */
+void main_bt_init(void)
+{
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "main_bt_init: main_hUart1=0x%x\r\n", main_hUart1);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (main_hUart1 == 0)
+	{
+		return;
+	}
+
+	if (0 == bt_init())
+	{
+		//->loc_23487a98
+		sub_2343bcf2();
+	}
 }
 
 

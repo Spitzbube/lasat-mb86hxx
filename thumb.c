@@ -3,7 +3,7 @@
 #include "frontdisplay.h"
 #include "texttable.h"
 #include "menu.h"
-#include "thumb2.h"
+#include "amplifier.h"
 
 
 #pragma thumb

@@ -1,0 +1,3 @@
+
+set (TARGET_VDR110 vdr110 PARENT_SCOPE)
+

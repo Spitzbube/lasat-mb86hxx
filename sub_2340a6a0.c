@@ -3070,7 +3070,7 @@ int sub_2340ca5c(int get, void* r6)
 }
 
 
-/* 2340caf0 - complete */
+/* 2340caf0 /  / 2340f5cc - complete */
 int channel_switch_lists(void)
 {
 #if 0
@@ -3299,6 +3299,14 @@ int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 	OS_EXIT_CRITICAL();
 
 	return res;
+}
+
+
+/* 2340d2cc - todo */
+void sub_2340d2cc()
+{
+	console_send_string("sub_2340d2cc (todo.c): TODO\r\n");
+
 }
 
 

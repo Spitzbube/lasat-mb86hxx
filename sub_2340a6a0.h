@@ -174,7 +174,13 @@ typedef struct
 	int Data_2354615c; //2354615C
 	struct Struct_2340d1f4_Inner_4
 	{
-		int fill_0[5]; //0
+		int fill_0[3]; //0
+		uint8_t bData_0xc; //0xc
+		uint8_t fill_0xd; //0xd
+		uint8_t bData_0xe; //0xe
+		uint8_t fill_0xf; //0xf
+		uint8_t bData_0x10; //0x10
+		uint8_t bData_0x11; //0x11
 		//0x14 = 20
 	} Data_23546160[9]; //23546160, 48870
 	struct Struct_2340d1f4_Inner_0xb8

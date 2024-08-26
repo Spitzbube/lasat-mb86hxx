@@ -269,7 +269,7 @@ void* ir_user_init(Struct_2340d784* r5)
 	Data_23492068 = (void*) OSMboxCreate(0);
 	Data_2349206c = (void*) OSMboxCreate(0);
 
-#if 1 //VDR110
+#ifdef VDR110
 	if (Data_2354bda4.bData_20 != 0)
 	{
 		Data_23492074 = sub_2340d3ec;

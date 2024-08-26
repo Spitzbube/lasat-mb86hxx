@@ -19,7 +19,7 @@
 
 #define NULL ((void*)0)
 
-extern void* Data_23491d94; //23491d94 +8
+extern void* main_hUart1; //23491d94 +8
 extern void* main_hI2c0; //23491d98 +12 = 0xc
 extern Struct_234a73e8* main_hPSIDecoder1; //23491d9c / 234ac4d0 +16 = 0x10
 extern Struct_234a73e8* main_hPSIDecoder2; //23491da0 +20 = 0x14

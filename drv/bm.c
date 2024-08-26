@@ -428,7 +428,7 @@ int bm_isr_01()
 		r6 = FREG(0xc8300204)[0]; //FREG_BM0_IRQREG
 	}
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "bm_isr_01: r7=%d, r5=0x%08x, r6=0x%08x\r\n", r7, r5, r6);
@@ -441,7 +441,7 @@ int bm_isr_01()
 	{
 		uint32_t sb = (r1 >> 19);
 
-#if 1
+#if 0
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "bm_isr_01: sb=0x%x\r\n", sb);

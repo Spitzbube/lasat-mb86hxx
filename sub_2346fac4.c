@@ -1,6 +1,6 @@
 
 #include "data.h"
-#include "thumb2.h"
+#include "amplifier.h"
 #include "sub_2346fac4.h"
 
 #pragma thumb

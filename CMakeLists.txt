@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
-project (mb86h60_hello_world)
+add_subdirectory(applications/v290)
+add_subdirectory(applications/vdr110)
+
+project (mb86h60)
 
 set(SRCS
    main.c                   #?                              0x2349c5a0? -> 2349D220?
@@ -18,7 +21,7 @@ set(SRCS
    ir_decode.c              #0x23453d34     0x23493628?
    thumb.c                  #0x2343d104?    ?               0x235fdf28?
    thumb1.c                 #0x2346ec9c     0x2349596c?
-   thumb2.c
+   amplifier.c
    menu_general_settings.c
    vfd.c
    fpc.c
@@ -63,12 +66,14 @@ set(SRCS
    web_interface.c
    sub_2345c09c.c
    menu_sw_update.c
+   bluetooth.c
    main2.c
    hexdump.c
    todo.c
 )
 
-add_executable(${PROJECT_NAME} ${SRCS})
+add_executable(${TARGET_V290} ${SRCS})
+add_executable(${TARGET_VDR110} ${SRCS})
 
 add_subdirectory(boot/startup)
 add_subdirectory(rtos/uCOS-II)
@@ -79,7 +84,7 @@ add_subdirectory(subsystems/fs/fatfs)
 add_subdirectory(subsystems/fs/lafat)
 add_subdirectory(subsystems/net/lwip)
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${TARGET_V290}
 #    startup
     drv
 #    ucos_ii
@@ -93,7 +98,32 @@ target_link_libraries(${PROJECT_NAME}
     lwipcore
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_link_libraries(${TARGET_VDR110}
+#    startup
+    drv
+#    ucos_ii
+    psi_si
+    musb
+    musb_hub
+    musb_msd
+    musb_asix
+    fatfs
+    lafat
+    lwipcore
+)
+
+target_include_directories(${TARGET_V290} PUBLIC
+    drv
+    ${psi_si_SOURCE_DIR}
+    ${musb_SOURCE_DIR}/include
+    ${musb_SOURCE_DIR}/src/systems/FAPI4
+    ${musb_SOURCE_DIR}/src/msc
+    ${lwIP_SOURCE_DIR}/src/include
+    ${fatfs_SOURCE_DIR}
+    ${lafat_SOURCE_DIR}
+)
+
+target_include_directories(${TARGET_VDR110} PUBLIC
     drv
     ${psi_si_SOURCE_DIR}
     ${musb_SOURCE_DIR}/include
@@ -111,9 +141,17 @@ add_definitions(
     --enum_is_int
 )
 
-target_compile_definitions(${PROJECT_NAME} PUBLIC
-    VDR110
+target_compile_definitions(${TARGET_V290} PUBLIC
+#    VDR110
 #    DVBC_RADIO
+#    USB_HUB
+#    USB_ASIX
+#    PSI_PMT_FILTER_DEBUG
+)
+
+target_compile_definitions(${TARGET_VDR110} PUBLIC
+    VDR110
+    DVBC_RADIO
     USB_HUB
     USB_ASIX
 #    PSI_PMT_FILTER_DEBUG
@@ -123,7 +161,15 @@ set(ENTRY_FUNC ARM1176_Start)
 set(PROGRAM_LOAD_ADDRESS 0x23400000)
 
 #SHELL is needed to avoid de-duplication
-target_link_options(${PROJECT_NAME} PRIVATE 
+target_link_options(${TARGET_V290} PRIVATE 
+    --ro-base ${PROGRAM_LOAD_ADDRESS}
+    "SHELL:--entry ${ENTRY_FUNC}"
+    "SHELL:--first ${ENTRY_FUNC}"
+    "SHELL:--startup ${ENTRY_FUNC}"
+)
+
+#SHELL is needed to avoid de-duplication
+target_link_options(${TARGET_VDR110} PRIVATE 
     --ro-base ${PROGRAM_LOAD_ADDRESS}
     "SHELL:--entry ${ENTRY_FUNC}"
     "SHELL:--first ${ENTRY_FUNC}"
@@ -131,6 +177,7 @@ target_link_options(${PROJECT_NAME} PRIVATE
 )
 
 # For the moment this is RVCT-specific
-add_custom_command(TARGET ${PROJECT_NAME}
-    COMMAND ${TOOLCHAIN_PATH_BIN}/fromelf ${PROJECT_NAME}.elf --text -v -c -d -e -g -r -s -t -y -z -o ${PROJECT_NAME}.txt
+add_custom_command(TARGET ${TARGET_V290}
+    COMMAND ${TOOLCHAIN_PATH_BIN}/fromelf ${TARGET_V290}.elf --text -v -c -d -e -g -r -s -t -y -z -o ${TARGET_V290}.txt
 )
+
