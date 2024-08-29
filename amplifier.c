@@ -5,7 +5,10 @@
 #pragma thumb
 
 #define CS4525_I2C_ADDRESS	0x96
-#define CS4525_REG_DEVICE	0x63
+#define CS4524_REG_INPUT_CONFIGURATION		0x02
+#define CS4524_REG_MASTER_VOLUME_CONTROL	0x57
+#define CS4524_REG_POWER_CONTROL			0x5f
+#define CS4525_REG_DEVICE					0x63
 
 
 Struct_20611068* Data_23492d60 = 0; //23492d60
@@ -43,15 +46,19 @@ struct
 #endif
 	Struct_2340d1f4 Data_235fc298; //235fc298 -> 235FC408
 
-	struct
+	struct Struct_235fc408
 	{
 		uint8_t bData_235fc408; //235FC408
 		uint8_t bData_235fc409; //235FC409
-		int fill_235FC40c[6]; //235FC40c
+		uint8_t bData_235fc40a; //235fc40a
+		uint8_t bData_235fc40b; //235FC40b
+		uint8_t bData_235fc40c; //235fc40c
+		uint8_t bData_235fc40d; //235FC40d
+		int fill_235FC410[5]; //235FC410
 		uint16_t wData_235fc424; //235FC424
 		uint8_t bData_235fc426; //235FC426
 		uint8_t bData_235fc427; //235fc427
-		uint8_t fill_235fc428; //235fc428
+		uint8_t bData_235fc428; //235fc428
 		uint8_t bData_235fc429; //235fc429
 
 	} Data_235fc408;
@@ -62,26 +69,158 @@ Struct_235fc42c Data_235fc42c; //235fc42c Addr??? -> 235FC468
 
 
 /* 2343b174 - todo */
-void sub_2343b174()
+int sub_2343b174(uint8_t r5)
 {
+#if 0
 	console_send_string("sub_2343b174 (todo.c): TODO\r\n");
+#endif
 
+	uint16_t r0 = 32;
+
+	if (r5 == 0xff)
+	{
+		r5 = Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0xc;
+	}
+	else
+	{
+		Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0xc = r5;
+	}
+
+	int r2 = Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0x11;
+	if (r2 == 3)
+	{
+		r0 = (((uint32_t)(Data_235fc28c.Data_235fc408.wData_235fc424 * Data_235fc28c.Data_235fc408.wData_235fc424)) << 11) >> 16;
+		//->loc_2343b1d6
+	}
+	//loc_2343b1ae
+	else if (r2 == 2)
+	{
+		//0x2343b1b2
+		int x = Data_235fc28c.Data_235fc408.wData_235fc424 * Data_235fc28c.Data_235fc408.wData_235fc424;
+		r0 = (x >> 4) / 3 + 10;
+	}
+	//loc_2343b1c2
+	else if (r2 == 1)
+	{
+		int x = Data_235fc28c.Data_235fc408.wData_235fc424 * Data_235fc28c.Data_235fc408.wData_235fc424;
+		r0 = (x >> 5) / 3 + 21;
+	}
+	//loc_2343b1d6
+	Data_235fc28c.Data_235fc408.bData_235fc409 = r0 + 0x10;
+	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x5a;
+
+	int res = i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	r5 *= 2;
+	if (r5)
+	{
+		//0x2343b1fa
+		r5--;
+	}
+	//loc_2343b1fe: Read Tone Control
+	res |= i2c_master_read_reg(main_hI2c0, CS4525_I2C_ADDRESS, 0x08,
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 1);
+
+	Data_235fc28c.Data_235fc408.bData_235fc409 = 
+		(Data_235fc28c.Data_235fc408.bData_235fc408 & 0xf0) | (0x0f - r5);
+	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x08;
+
+	res |= i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	return res;
 }
 
 
 /* 2343b232 - todo */
-void sub_2343b232()
+int sub_2343b232(uint8_t r0)
 {
+#if 0
 	console_send_string("sub_2343b232 (todo.c): TODO\r\n");
+#endif
 
+	Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0xe = r0;
+
+	uint8_t r4 = r0 * 2;
+	if (r4)
+	{
+		r4--;
+	}
+
+	int res = i2c_master_read_reg(main_hI2c0, CS4525_I2C_ADDRESS, 0x08,
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 1);
+
+	Data_235fc28c.Data_235fc408.bData_235fc409 = 
+		(Data_235fc28c.Data_235fc408.bData_235fc408 & 0x0f) | ((0x0f - r4) << 4);
+	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x08;
+
+	res |= i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	return res;
 }
 
 
 /* 2343b28c - todo */
-void sub_2343b28c()
+int sub_2343b28c(uint8_t a)
 {
-	console_send_string("sub_2343b28c (todo.c): TODO\r\n");
+	Struct_2340bf0c sp;
+	uint8_t r0;
 
+#if 0
+	console_send_string("sub_2343b28c (todo.c): TODO\r\n");
+#endif
+
+	/*235FC405*/Data_235fc28c.Data_235fc298.bData_16d = a;
+
+	if (Data_235fc28c.Data_235fc298.bData_16d < 2)
+	{
+		/*235FC428*/Data_235fc28c.Data_235fc408.bData_235fc428 = Data_235fc28c.Data_235fc298.bData_16d;
+
+		if (Data_235fc28c.Data_235fc408.bData_235fc428 != 0)
+		{
+			//->loc_2343b2da
+			r0 = 0xe0;
+			//->loc_2343b2bc
+			//Data_235fc28c.Data_235fc408.bData_235fc409 = 0xe0;
+		}
+		else
+		{
+			//loc_2343b2ba
+			r0 = 0xff;
+			//Data_235fc28c.Data_235fc408.bData_235fc409 = 0xff;
+		}
+	}
+	else
+	{
+		//loc_2343b2a8
+		sub_2340bf0c(&sp);
+
+		if (sp.bCurrentChList == 1)
+		{
+			//0x2343b2b6
+			Data_235fc28c.Data_235fc408.bData_235fc428 = 0;
+			//loc_2343b2ba
+			r0 = 0xff;
+			//Data_235fc28c.Data_235fc408.bData_235fc409 = 0xff;
+		}
+		else
+		{
+			//loc_2343b2d6
+			Data_235fc28c.Data_235fc408.bData_235fc428 = 1;
+			//loc_2343b2da
+			r0 = 0xe0;
+			//->loc_2343b2bc
+			//Data_235fc28c.Data_235fc408.bData_235fc409 = 0xe0;
+		}
+	}
+
+	Data_235fc28c.Data_235fc408.bData_235fc409 = r0;
+	Data_235fc28c.Data_235fc408.bData_235fc408 = CS4524_REG_POWER_CONTROL;
+
+	return i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+			&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
 }
 
 
@@ -102,27 +241,211 @@ void sub_2343b32a()
 
 
 /* 2343b364 - tood */
-void sub_2343b364()
+int sub_2343b364(uint8_t a)
 {
+#if 0
 	console_send_string("sub_2343b364 (todo.c): TODO\r\n");
+#endif
 
+	uint8_t r1;
+	uint32_t r0;
+
+	Data_235fc28c.Data_235fc408.wData_235fc424 = r0 = a;
+
+	if ((Data_235fc28c.Data_235fc408.bData_235fc427 < 3) ||
+		(Data_235fc28c.Data_235fc298.Data_0xb8[Data_235fc28c.Data_235fc408.bData_235fc427].bData_0x12 & 1))
+	{
+		//loc_2343b388
+		r1 = 0x3a;
+	}
+	else
+	{
+		//loc_2343b38c
+		r0 <<= 2;
+		r1 = 0x85;
+	}
+
+	Data_235fc28c.Data_235fc408.bData_235fc409 = r1 - r0;
+	Data_235fc28c.Data_235fc408.bData_235fc408 = CS4524_REG_MASTER_VOLUME_CONTROL;
+
+	int res = i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	if (Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0x11 != 0)
+	{
+		sub_2343b174(0xff);
+	}
+
+	return res;
 }
 
 
 /* 2343b3c4 - todo */
-void sub_2343b3c4()
+int sub_2343b3c4(uint8_t a)
 {
-	console_send_string("sub_2343b3c4 (todo.c): TODO\r\n");
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2343b3c4: a=%d\r\n",
+				a);
+		console_send_string(debug_string);
+	}
+#endif
 
+	Data_235fc28c.Data_235fc408.bData_235fc427 = a;
+
+	uint32_t r1 = Data_235fc28c.Data_235fc298.Data_0xb8[a].bData_0x12;
+	if (r1 & (1 << 0))
+	{
+		a = 0;
+	}
+	//loc_2343b3de
+	Data_235fc28c.Data_235fc408.bData_235fc409 = 0x41;
+	Data_235fc28c.Data_235fc408.bData_235fc40b = 0xff;
+	Data_235fc28c.Data_235fc408.bData_235fc40d = 0xff;
+
+	if (a == 0)
+	{
+		//r1 = 0;
+		//->loc_2343b42a
+		gpio_set(Data_23492d68, 0);
+		//->loc_2343b452
+	}
+	//loc_2343b3f4
+	else if (a == 3)
+	{
+		//0x2343b3f8
+		Data_235fc28c.Data_235fc408.bData_235fc409 = 0x41 |
+			(1 << 7)/*Analog input from the internal ADC*/;
+		//->loc_2343b452
+	}
+	//loc_2343b3fe
+	//r7 = 0x0c;
+	else if (a == 4)
+	{
+		//0x2343b404
+		if (0 != strcmp(/*235FC3A0*/&Data_235fc28c.Data_235fc298.Data_0xb8[4], "BLUETOOTH"))
+		{
+			//r0 = 0x80;
+			//->loc_2343b44e
+			Data_235fc28c.Data_235fc408.bData_235fc40b = 0x80;
+			Data_235fc28c.Data_235fc408.bData_235fc40d = 0x0c;
+			//loc_2343b452
+		}
+		else
+		{
+			//loc_2343b428
+			//r1, #0x1
+			//loc_2343b42a
+			gpio_set(Data_23492d68, 1);
+			//->loc_2343b452
+		}
+	}
+	//loc_2343b416
+	else if (a == 5)
+	{
+		//0x2343b41a
+		if (0 == strcmp(/*235FC3B4*/&Data_235fc28c.Data_235fc298.Data_0xb8[5], "BLUETOOTH"))
+		{
+			//loc_2343b428
+			gpio_set(Data_23492d68, 1);
+			//->loc_2343b452
+		}
+		else
+		{
+			//loc_2343b432
+			//r0, #0x89 
+			//->loc_2343b44e
+			Data_235fc28c.Data_235fc408.bData_235fc40b = 0x89;
+			Data_235fc28c.Data_235fc408.bData_235fc40d = 0x0c;
+			//loc_2343b452
+		}
+	}
+	//loc_2343b436
+	else if (a == 6)
+	{
+		//0x2343b43a
+		Data_235fc28c.Data_235fc408.bData_235fc40d = 0x00;
+		//->loc_2343b452
+	}
+	//loc_2343b440
+	else if (a == 7)
+	{
+		//0x2343b444
+		//r0, #0x92
+		//->loc_2343b44e
+		Data_235fc28c.Data_235fc408.bData_235fc40b = 0x92;
+		Data_235fc28c.Data_235fc408.bData_235fc40d = 0x0c;
+	}
+	//loc_2343b448
+	else if (a == 8)
+	{
+		//0x2343b44c
+		//r0, #0x9b
+		//->loc_2343b44e
+		Data_235fc28c.Data_235fc408.bData_235fc40b = 0x9b;
+		Data_235fc28c.Data_235fc408.bData_235fc40d = 0x0c;
+	}
+	//loc_2343b452
+	Data_235fc28c.Data_235fc408.bData_235fc408 = CS4524_REG_INPUT_CONFIGURATION;
+
+	int r7 = i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	if (Data_235fc28c.Data_235fc408.bData_235fc426 != 0)
+	{
+		//0x2343b46e
+		if (Data_235fc28c.Data_235fc408.bData_235fc40d != 0xff)
+		{
+			//0x2343b474
+			int r6 = gpio_set(Data_23492d68, 1);
+
+			Data_235fc28c.Data_235fc408.bData_235fc40c = 0x02;
+
+			int r0 = i2c_master_send(main_hI2c0, Data_235fc28c.Data_235fc408.bData_235fc426, 
+						&Data_235fc28c.Data_235fc408.bData_235fc40c, 2);
+			r0 |= r6;
+			r7 = r0;
+		}
+		//loc_2343b494
+		if (Data_235fc28c.Data_235fc408.bData_235fc40b != 0xff)
+		{
+			Data_235fc28c.Data_235fc408.bData_235fc40a = 0x04;
+
+			r7 |= i2c_master_send(main_hI2c0, Data_235fc28c.Data_235fc408.bData_235fc426, 
+						&Data_235fc28c.Data_235fc408.bData_235fc40a, 2);
+		}
+		//loc_2343b4b0
+	}
+	//loc_2343b4b0
+	sub_2343b364(Data_235fc28c.Data_235fc408.wData_235fc424);
+
+	return r7;
 }
 
 
-/* 2343b4bc - todo */
-void sub_2343b4bc()
+/* 2343b4bc - complete */
+void sub_2343b4bc(uint8_t a)
 {
+#if 0
 	console_send_string("sub_2343b4bc (todo.c): TODO\r\n");
+#endif
 
+	uint32_t r5 = a << 3;
+
+	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x59;
+	Data_235fc28c.Data_235fc408.bData_235fc409 = r5 + 0x29;
+
+	i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
+
+	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x58;
+	Data_235fc28c.Data_235fc408.bData_235fc409 = 0x59 - r5;
+
+	i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
+				&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
 }
+
 
 const uint8_t arData_23489e40[5][15] = //23489e40
 {
@@ -498,12 +821,17 @@ void sub_2343b9ae(void (*p)())
 
 
 /* 2343b9b6 - todo */
-void sub_2343b9b6()
+int sub_2343b9b6(uint8_t a)
 {
-#if 1
+#if 0
 	console_send_string("sub_2343b9b6 (todo.c): TODO\r\n");
 #endif
 
+	Data_235fc28c.Data_235fc298.Data_4[Data_235fc28c.Data_235fc408.bData_235fc429].bData_0x11 = a;
+
+	sub_2343b174(0xff);
+
+	return 0;
 }
 
 

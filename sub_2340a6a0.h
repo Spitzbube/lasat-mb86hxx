@@ -187,6 +187,8 @@ typedef struct
 	{
 		int fill_0[4]; //0
 		uint8_t bData_16; //16 = 0x10
+		uint8_t fill_0x11; //17 
+		uint8_t bData_0x12; //0x12
 		//0x14 = 20
 	} Data_23546214[9]; //23546214, 48924
 	uint8_t bData_235462c8; //235462C8, 489D8
