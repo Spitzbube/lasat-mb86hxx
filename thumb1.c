@@ -1092,7 +1092,6 @@ int menu_root_on_event(void* r0)
 #endif
 		}
 		//loc_2346f4a0
-#if 0
 		else if (r7->keyCode == 54/*0x36*/) //EQ
 		{
 			//loc_2346f4a4
@@ -1100,6 +1099,7 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ac
+#if 0
 		else if (r7->keyCode == 52/*0x34*/) //BT
 		{
 			//loc_2346f4b0

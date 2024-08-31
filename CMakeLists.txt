@@ -37,7 +37,7 @@ set(SRCS
    texttable.c
    lastmode.c
    crc.c
-   sub_2346fac4.c
+   menu_equalizer.c
    sub_2345d710.c
    sub_23418e1c.c
    psi.c

@@ -4,10 +4,10 @@
 
 typedef struct
 {
-	void (*Data_235fc42c)(); //235FC42C  0x235fc3ec + 0x40
+	void (*shutdown)(); //235FC42C  0x235fc3ec + 0x40
 	void (*Data_235fc430)(); //235fc430 = 4
 	void (*Data_235fc434)(); //235fc434 = 8
-	int Data_235fc438; //235fc438 = 12
+	void (*Data_235fc438)(); //235fc438 = 12
 	void (*Data_235fc43c)(); //235fc43c = 0x10
 	void (*Data_235fc440)(); //235fc440 = 0x14
 	void (*Data_235fc444)(); //235fc444 = 0x18
@@ -20,7 +20,7 @@ typedef struct
 	void (*Data_235fc460)(); //235fc460 = 0x34
 	void (*Data_235fc464)(); //235FC464 = 0x38
 	//0x3c
-} Struct_235fc42c;
+} Amplifier_Interface_Functions;
 
 
 typedef struct
@@ -29,9 +29,10 @@ typedef struct
 	uint32_t Data_4; //4
 	uint32_t Data_8; //8
 	//12
-} Struct_2343b8e6;
+} Amplifier_Gpio_Params;
 
 
-extern int sub_2343b946(Struct_235fc42c* r0, void* r6, uint8_t* r4, uint8_t* r5);
+extern int amplifier_get_data(Amplifier_Interface_Functions*, Amplifier_Settings*, uint8_t* r4, uint8_t* r5);
+extern int amplifier_switch_powermode(int);
 
 #endif //AMPLIFIER_H

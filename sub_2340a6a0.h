@@ -130,6 +130,30 @@ typedef struct Struct_234fd8f0_Inner_489DC
 
 typedef struct
 {
+	uint8_t strName[12]; //0
+	uint8_t bBass; //0xc
+	uint8_t fill_0xd; //0xd
+	uint8_t bTreble; //0xe
+	uint8_t bData_0xf; //0xf
+	uint8_t bData_0x10; //0x10
+	uint8_t bData_0x11; //0x11
+	uint16_t fill_0x12; //0x12
+	//0x14 = 20
+} Equalizer_Settings;
+
+typedef struct Struct_2340d1f4_Inner_0xb8
+{
+	uint8_t arData_0[16]; //0
+	uint8_t bData_16; //16 = 0x10
+	uint8_t bData_0x11; //17 
+	uint8_t bData_0x12; //0x12
+	uint8_t fill_0x13; //19
+	//0x14 = 20
+} Struct_2340d1f4_Inner_0xb8;
+
+
+typedef struct
+{
 	Channel arChannels[CHANNELS_MAX_NUM]; //0 234fd8f0 +0x3a980 -> 23538270
 	Transponder arTransponders[TRANSPONDERS_MAX_NUM]; //23538270 +0xbb80 -> 23543DF0
 	Struct_23543df0 Data_23543df0[30]; //23543df0 -> 235441B0
@@ -172,25 +196,8 @@ typedef struct
 	int fill_23546134[2]; //23546134
 	Struct_2354613c Data_2354613c; //2354613c +0x20 = 2354615C
 	int Data_2354615c; //2354615C
-	struct Struct_2340d1f4_Inner_4
-	{
-		int fill_0[3]; //0
-		uint8_t bData_0xc; //0xc
-		uint8_t fill_0xd; //0xd
-		uint8_t bData_0xe; //0xe
-		uint8_t fill_0xf; //0xf
-		uint8_t bData_0x10; //0x10
-		uint8_t bData_0x11; //0x11
-		//0x14 = 20
-	} Data_23546160[9]; //23546160, 48870
-	struct Struct_2340d1f4_Inner_0xb8
-	{
-		int fill_0[4]; //0
-		uint8_t bData_16; //16 = 0x10
-		uint8_t fill_0x11; //17 
-		uint8_t bData_0x12; //0x12
-		//0x14 = 20
-	} Data_23546214[9]; //23546214, 48924
+	Equalizer_Settings arEqualizerSettings[9]; //23546160, 48870
+	Struct_2340d1f4_Inner_0xb8 Data_23546214[9]; //23546214, 48924
 	uint8_t bData_235462c8; //235462C8, 489D8
 	uint8_t bData_235462c9; //235462C9, 489D9
 	uint8_t bData_235462ca; //235462ca, 489DA
@@ -200,18 +207,17 @@ typedef struct
 	//0x489f4???? -> 235462E4
 } Channel_Database;
 
-
 typedef struct
 {
 	int Data_0; //0
-	struct Struct_2340d1f4_Inner_4 Data_4[9]; //4
-	struct Struct_2340d1f4_Inner_0xb8 Data_0xb8[9]; //0xb8
+	Equalizer_Settings arEqualizerSettings[9]; //4
+	Struct_2340d1f4_Inner_0xb8 Data_0xb8[9]; //0xb8
 	uint8_t bData_16c; //0x16c
 	uint8_t bData_16d; //0x16d
 	uint8_t bData_16e; //0x16e
 	uint8_t bData_16f; //0x16f
 	//0x170
-} Struct_2340d1f4;
+} Amplifier_Settings;
 
 
 typedef struct
@@ -235,5 +241,6 @@ extern void sub_23409770(void);
 extern void sub_23409788(void);
 extern void channel_write_lastmode(void);
 extern Channel_Database* sub_2344f770(void);
- 
+void sub_2340d2cc(void (*set_volume)(uint8_t), void (*r5)(int));
+
 #endif //SUB_2340a6a0

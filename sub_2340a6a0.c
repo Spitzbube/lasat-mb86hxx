@@ -52,8 +52,8 @@ void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
 void (*Data_23492028)() = 0; //23492028 +0x2c
 void (*channel_pfCheckStreaming)() = 0; //2349202c +0x30
-void (*Data_23492030)() = 0; //23492030 +0x34
-void (*Data_23492034)() = 0; //23492034 +0x38
+void (*channel_pfChangeAmplifierVolume)(uint8_t) = 0; //23492030 +0x34
+void (*Data_23492034)(int) = 0; //23492034 +0x38
 void (*channel_pfPSIDataCallback)(int) = 0; //23492038 +0x3c
 Struct_2349203c* Data_2349203c = 0; //2349203c +0x40
 Struct_23492040* Data_23492040 = 0; //23492040 +0x44
@@ -2491,9 +2491,9 @@ int channel_change_volume(int r5, int r7)
 		auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 
 			Data_23488068[Data_235462e4.bVolume]);
 
-		if (Data_23492030 != 0)
+		if (channel_pfChangeAmplifierVolume != 0)
 		{
-			(Data_23492030)(Data_235462e4.bVolume);
+			(channel_pfChangeAmplifierVolume)(Data_235462e4.bVolume);
 		}
 	}
 	//loc_2340c0c8
@@ -3250,7 +3250,7 @@ void channel_set_psi_data_callback(void (*r5)())
 
 
 /* 2340d1f4 - complete */
-int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
+int channel_handle_amplifier_settings(int get, Amplifier_Settings* r4)
 {
 	int res = 0;
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
@@ -3258,17 +3258,17 @@ int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 #endif
 
 #if 0
-	console_send_string("sub_2340d1f4 (todo.c): TODO\r\n");
+	console_send_string("channel_handle_amplifier_settings (todo.c): TODO\r\n");
 #endif
 
 	OS_ENTER_CRITICAL();
 
-	if (r7 != 0)
+	if (get != 0)
 	{
 		//0x2340d230
 		r4->Data_0 = channel_database.Data_2354615c;
 
-		memcpy(&r4->Data_4[0], &channel_database.Data_23546160[0], 9 * sizeof(struct Struct_2340d1f4_Inner_4));
+		memcpy(&r4->arEqualizerSettings[0], &channel_database.arEqualizerSettings[0], 9 * sizeof(Equalizer_Settings));
 		memcpy(&r4->Data_0xb8[0], &channel_database.Data_23546214[0], 9 * sizeof(struct Struct_2340d1f4_Inner_0xb8));
 
 		r4->bData_16c = channel_database.bData_235462c8;
@@ -3276,14 +3276,14 @@ int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 		r4->bData_16e = 0; //r8
 		r4->bData_16f = 0; //r8
 		//->loc_2340d2bc
-	} //if (r7 != 0)
+	} //if (get != 0)
 	else
 	{
 		//loc_2340d274
 		if (r4 != 0)
 		{
 			//0x2340d27c
-			memcpy(&channel_database.Data_23546160[0], &r4->Data_4[0], 9 * sizeof(struct Struct_2340d1f4_Inner_4));
+			memcpy(&channel_database.arEqualizerSettings[0], &r4->arEqualizerSettings[0], 9 * sizeof(Equalizer_Settings));
 			memcpy(&channel_database.Data_23546214[0], &r4->Data_0xb8[0], 9 * sizeof(struct Struct_2340d1f4_Inner_0xb8));
 
 			channel_database.bData_235462c8 = r4->bData_16c;
@@ -3303,10 +3303,20 @@ int sub_2340d1f4(int r7, Struct_2340d1f4* r4)
 
 
 /* 2340d2cc - todo */
-void sub_2340d2cc()
+void sub_2340d2cc(void (*set_volume)(uint8_t), void (*r5)(int))
 {
-	console_send_string("sub_2340d2cc (todo.c): TODO\r\n");
+	uint8_t err;
 
+#if 0
+	console_send_string("sub_2340d2cc (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	Data_23492034 = r5;
+	channel_pfChangeAmplifierVolume = set_volume;
+
+	OSSemPost(channel_sema);
 }
 
 

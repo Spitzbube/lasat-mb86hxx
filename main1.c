@@ -348,7 +348,6 @@ int sub_23400798()
 /* 2340088c / 23402068 - todo */
 void main_powermode_init()
 {
-	extern void sub_2343b992();
 	extern void sub_2343cc34();
 
 	Powermode_Init_Params params;
@@ -358,7 +357,7 @@ void main_powermode_init()
 	params.pfOnSwitchOff = 0;
 	params.pfOnSwitchOn = 0;
 	params.Data_16 = sub_2343cc34;
-	params.Data_20 = sub_2343b992;
+	params.Data_20 = amplifier_switch_powermode;
 
 	powermode_init(&params);
 }
@@ -399,7 +398,7 @@ void main_inputhandler_init()
 
 	ir_init(ir_user_send_data, 0x3b);
 
-	menu_main_adapt_items(sub_2343b946/*thumbb2.c*/);
+	menu_main_adapt_items(amplifier_get_data);
 	
 	memset(&sp_0x5c, 0, sizeof(Struct_2340d784));
 
@@ -1256,13 +1255,13 @@ void sub_234014dc()
 	console_send_string("sub_234014dc (todo.c): TODO\r\n");
 #endif
 
-	Struct_2343b8e6 sp;
+	Amplifier_Gpio_Params sp;
 
 	sp.Data_0 = 0x13;
 	sp.Data_4 = 0xff;
 	sp.Data_8 = 0x12;
 
-	sub_2343b8e6(&sp);
+	amplifier_gpio_init(&sp);
 }
 
 

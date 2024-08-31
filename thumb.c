@@ -263,9 +263,9 @@ int menu_main_start()
 
 
 /* 2343d1f6 - todo */
-void menu_main_adapt_items(int (*p)(Struct_235fc42c*, int, int, int))
+void menu_main_adapt_items(int (*p)(Amplifier_Interface_Functions*, int, int, int))
 {
-	Struct_235fc42c sp;
+	Amplifier_Interface_Functions sp;
 	uint8_t r5 = 0;
 	uint8_t r4;
 
@@ -277,11 +277,12 @@ void menu_main_adapt_items(int (*p)(Struct_235fc42c*, int, int, int))
 
 	if (p != 0)
 	{
+		//Check Amplifier
 		if (0 == (p)(&sp, 0, 0, 0))
 		{
-#if 0	
 			sub_2346fa58(p);
 
+#if 0	
 			sub_23471658(p);
 
 			sub_234709f2(sp.Data_235fc458);
