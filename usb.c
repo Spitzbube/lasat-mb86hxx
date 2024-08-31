@@ -810,6 +810,14 @@ int sub_23439d06(int r5)
 }
 
 
+/* 23439d92 - todo */
+void sub_23439d92()
+{
+	console_send_string("sub_23439d92 (todo.c): TODO\r\n");
+
+}
+
+
 /* 23439e04 / 23449b38 - complete */
 void usb_set_gpio(int state)
 {

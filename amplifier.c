@@ -285,7 +285,7 @@ int sub_2343b364(uint8_t a)
 	Data_235fc28c.Data_235fc408.wData_235fc424 = r0 = a;
 
 	if ((Data_235fc28c.Data_235fc408.bData_235fc427 < 3) ||
-		(Data_235fc28c.Data_235fc298.Data_0xb8[Data_235fc28c.Data_235fc408.bData_235fc427].bData_0x12 & 1))
+		(Data_235fc28c.Data_235fc298.arInputs[Data_235fc28c.Data_235fc408.bData_235fc427].bData_0x12 & 1))
 	{
 		//loc_2343b388
 		r1 = 0x3a;
@@ -313,12 +313,12 @@ int sub_2343b364(uint8_t a)
 
 
 /* 2343b3c4 - todo */
-int sub_2343b3c4(uint8_t a)
+int amplifier_input_configuration(uint8_t a)
 {
 #if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2343b3c4: a=%d\r\n",
+		sprintf(debug_string, "amplifier_input_configuration: a=%d\r\n",
 				a);
 		console_send_string(debug_string);
 	}
@@ -326,7 +326,7 @@ int sub_2343b3c4(uint8_t a)
 
 	Data_235fc28c.Data_235fc408.bData_235fc427 = a;
 
-	uint32_t r1 = Data_235fc28c.Data_235fc298.Data_0xb8[a].bData_0x12;
+	uint32_t r1 = Data_235fc28c.Data_235fc298.arInputs[a].bData_0x12;
 	if (r1 & (1 << 0))
 	{
 		a = 0;
@@ -356,7 +356,7 @@ int sub_2343b3c4(uint8_t a)
 	else if (a == 4)
 	{
 		//0x2343b404
-		if (0 != strcmp(/*235FC3A0*/&Data_235fc28c.Data_235fc298.Data_0xb8[4], "BLUETOOTH"))
+		if (0 != strcmp(/*235FC3A0*/&Data_235fc28c.Data_235fc298.arInputs[4], "BLUETOOTH"))
 		{
 			//r0 = 0x80;
 			//->loc_2343b44e
@@ -377,7 +377,7 @@ int sub_2343b3c4(uint8_t a)
 	else if (a == 5)
 	{
 		//0x2343b41a
-		if (0 == strcmp(/*235FC3B4*/&Data_235fc28c.Data_235fc298.Data_0xb8[5], "BLUETOOTH"))
+		if (0 == strcmp(/*235FC3B4*/&Data_235fc28c.Data_235fc298.arInputs[5], "BLUETOOTH"))
 		{
 			//loc_2343b428
 			gpio_set(Data_23492d68, 1);
@@ -526,14 +526,14 @@ int sub_2343b4f4(void)
 	i2c_master_send(main_hI2c0, CS4525_I2C_ADDRESS, 
 		&Data_235fc28c.Data_235fc408.bData_235fc408, 2);
 
-	int r0 = Data_235fc28c.Data_235fc298.Data_0xb8[Data_235fc28c.Data_235fc298.bData_16c].bData_16;
+	int r0 = Data_235fc28c.Data_235fc298.arInputs[Data_235fc28c.Data_235fc298.bData_16c].bData_16;
 
 //	Equalizer_Settings* r6 = &Data_235fc28c.Data_235fc298.Data_4[r0];
 	//->loc_2343b58c
 	amplifier_set_bass(/*r6->*/Data_235fc28c.Data_235fc298.arEqualizerSettings[r0].bBass);
 	amplifier_set_treble(/*r6->*/Data_235fc28c.Data_235fc298.arEqualizerSettings[r0].bTreble);
 	sub_2343b4bc(/*r6->*/Data_235fc28c.Data_235fc298.arEqualizerSettings[r0].bData_0x10);
-	sub_2343b3c4(Data_235fc28c.Data_235fc298.bData_16c);
+	amplifier_input_configuration(Data_235fc28c.Data_235fc298.bData_16c);
 	sub_2343b9b6(/*r6->*/Data_235fc28c.Data_235fc298.arEqualizerSettings[r0].bData_0x11);
 
 	Data_235fc28c.Data_235fc408.bData_235fc408 = 0x04;
@@ -648,10 +648,10 @@ int sub_2343b7fe(int a)
 	Data_235fc28c.Data_235fc408.bData_235fc429 = a;
 
 #if 1
-	Data_235fc28c.Data_235fc298.Data_0xb8[ Data_235fc28c.Data_235fc408.bData_235fc427 ].bData_16 = 
+	Data_235fc28c.Data_235fc298.arInputs[ Data_235fc28c.Data_235fc408.bData_235fc427 ].bData_16 = 
 		Data_235fc28c.Data_235fc408.bData_235fc429;
 #else
-	struct Struct_2340d1f4_Inner_0xb8* p = &Data_235fc28c.Data_235fc298.Data_0xb8[ Data_235fc28c.Data_235fc408.bData_235fc427 ];
+	Amplifier_Inputs* p = &Data_235fc28c.Data_235fc298.arInputs[ Data_235fc28c.Data_235fc408.bData_235fc427 ];
 	p->bData_16 = Data_235fc28c.Data_235fc408.bData_235fc429;
 #endif
 
@@ -711,7 +711,7 @@ int sub_2343b822(void)
 		Data_235fc28c.Data_235fc408.bData_235fc427 = Data_235fc28c.Data_235fc298.bData_16c;
 
 		Data_235fc28c.Data_235fc408.bData_235fc429 =
-				Data_235fc28c.Data_235fc298.Data_0xb8[ Data_235fc28c.Data_235fc408.bData_235fc427 ].bData_16;
+				Data_235fc28c.Data_235fc298.arInputs[ Data_235fc28c.Data_235fc408.bData_235fc427 ].bData_16;
 
 		if ((Data_235fc28c.Data_235fc408.bData_235fc427 > 9) ||
 				(Data_235fc28c.Data_235fc408.bData_235fc429 > 9))
@@ -895,7 +895,7 @@ void amplifier_set_interface_functions(int r4)
 		amplifier_interface_fn.Data_235fc440 = amplifier_set_treble;
 		amplifier_interface_fn.Data_235fc444 = sub_2343b28c;
 		amplifier_interface_fn.Data_235fc448 = amplifier_power_control;
-		amplifier_interface_fn.Data_235fc44c = sub_2343b3c4;
+		amplifier_interface_fn.input_configuration = amplifier_input_configuration;
 		amplifier_interface_fn.Data_235fc450 = sub_2343b9b6;
 		amplifier_interface_fn.Data_235fc454 = sub_2343b364;
 		amplifier_interface_fn.Data_235fc458 = sub_2343b6b2;

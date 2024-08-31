@@ -565,6 +565,14 @@ int sub_2346fe1c(int r4)
 }
 
 
+/* 2346ff0e - todo */
+void sub_2346ff0e()
+{
+	console_send_string("sub_2346ff0e (todo.c): TODO\r\n");
+
+}
+
+
 /* 2346ff46 - todo */
 static void* sub_2346ff46(FrontDisplay_Job a[])
 {

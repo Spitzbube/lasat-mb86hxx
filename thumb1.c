@@ -1056,13 +1056,13 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f3b6 -> loc_2346f6f0
 		}
 		//loc_2346f47e
-#if 0
 		else if (r7->keyCode == 78/*0x4e*/) //Mode
 		{
-			sub_234810f6();
+			menu_amplifier_inputs_enter();
 			//->loc_2346f6f0
 		}
 		//loc_2346f488
+#if 0
 		else if (r7->keyCode == 70/*0x46*/) //USB
 		{
 			sub_2346ff0e();
@@ -1095,7 +1095,7 @@ int menu_root_on_event(void* r0)
 		else if (r7->keyCode == 54/*0x36*/) //EQ
 		{
 			//loc_2346f4a4
-			sub_2346fac4(0);
+			menu_equalizer_entry(0);
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ac
@@ -1120,15 +1120,15 @@ int menu_root_on_event(void* r0)
 
 			//TODO
 		}
+#endif		
 		//loc_2346f550
 		else if (r7->keyCode == 234/*0xea*/)
 		{
 			//->loc_2346f4a4
-			sub_2346fac4(0);
+			menu_equalizer_entry(0);
 			//->loc_2346f6f0
 		}
 		//0x2346f554
-#endif		
 		else if (r7->keyCode == 82/*0x52*/) //Menu
 		{
 			menu_main_start();

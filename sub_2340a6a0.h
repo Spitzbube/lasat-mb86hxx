@@ -141,15 +141,15 @@ typedef struct
 	//0x14 = 20
 } Equalizer_Settings;
 
-typedef struct Struct_2340d1f4_Inner_0xb8
+typedef struct
 {
-	uint8_t arData_0[16]; //0
+	uint8_t strName[16]; //0
 	uint8_t bData_16; //16 = 0x10
 	uint8_t bData_0x11; //17 
 	uint8_t bData_0x12; //0x12
 	uint8_t fill_0x13; //19
 	//0x14 = 20
-} Struct_2340d1f4_Inner_0xb8;
+} Amplifier_Inputs;
 
 
 typedef struct
@@ -197,7 +197,7 @@ typedef struct
 	Struct_2354613c Data_2354613c; //2354613c +0x20 = 2354615C
 	int Data_2354615c; //2354615C
 	Equalizer_Settings arEqualizerSettings[9]; //23546160, 48870
-	Struct_2340d1f4_Inner_0xb8 Data_23546214[9]; //23546214, 48924
+	Amplifier_Inputs Data_23546214[9]; //23546214, 48924
 	uint8_t bData_235462c8; //235462C8, 489D8
 	uint8_t bData_235462c9; //235462C9, 489D9
 	uint8_t bData_235462ca; //235462ca, 489DA
@@ -211,7 +211,7 @@ typedef struct
 {
 	int Data_0; //0
 	Equalizer_Settings arEqualizerSettings[9]; //4
-	Struct_2340d1f4_Inner_0xb8 Data_0xb8[9]; //0xb8
+	Amplifier_Inputs arInputs[9]; //0xb8
 	uint8_t bData_16c; //0x16c
 	uint8_t bData_16d; //0x16d
 	uint8_t bData_16e; //0x16e

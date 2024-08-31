@@ -67,6 +67,7 @@ set(SRCS
    sub_2345c09c.c
    menu_sw_update.c
    bluetooth.c
+   menu_amplifier_inputs.c
    main2.c
    hexdump.c
    todo.c

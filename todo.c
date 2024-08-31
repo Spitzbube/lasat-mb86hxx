@@ -866,6 +866,21 @@ void sub_23415a34()
 }
 
 
+/* 234837cc - todo */
+void sub_234837cc()
+{
+	console_send_string("sub_234837cc (todo.c): TODO\r\n");
+
+}
+
+
+/* 234818a8 - todo */
+void sub_234818a8()
+{
+	console_send_string("sub_234818a8 (todo.c): TODO\r\n");
+
+}
+
 
 #ifndef DVBC_RADIO
 

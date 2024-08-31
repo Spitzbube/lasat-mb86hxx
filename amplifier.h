@@ -12,7 +12,7 @@ typedef struct
 	void (*Data_235fc440)(); //235fc440 = 0x14
 	void (*Data_235fc444)(); //235fc444 = 0x18
 	void (*Data_235fc448)(); //235FC448 = 0x1c
-	void (*Data_235fc44c)(); //235fc44c = 0x20
+	void (*input_configuration)(); //235fc44c = 0x20
 	void (*Data_235fc450)(); //235fc450 = 0x24
 	void (*Data_235fc454)(); //235FC454 = 0x28
 	void (*Data_235fc458)(); //235fc458 = 0x2c
