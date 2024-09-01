@@ -5,13 +5,6 @@
 
 #define FREG(reg) ((volatile uint32_t*)(reg))
 
-typedef struct
-{
-	uint8_t bData[13]; //0
-
-} Struct_234012b0_a;
-
-
 //234c0da4
 int ethInitialized = 0; //234c0da4 +0
 uint32_t eth_max_devices = 1; //234c0da8 +4
@@ -1789,7 +1782,7 @@ void fm3HandleIntTx(uint32_t a/*sb*/)
 /* 2347cf1c - complete */
 int fm3StartDevice(int a, int rw)
 {
-#if 1
+#if 0
 	console_send_string("fm3StartDevice (todo.c): TODO\r\n");
 #endif
 

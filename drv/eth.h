@@ -2,6 +2,20 @@
 
 typedef struct
 {
+	uint8_t bData[13]; //0
+
+} Struct_234012b0_a;
+
+typedef struct
+{
+	uint32_t Data_0; //0
+	uint32_t Data_4; //4
+	//8
+} Struct_234012b0_b;
+
+
+typedef struct
+{
 	int Data_0; //0
 	int Data_4; //4
 	int speed; //8

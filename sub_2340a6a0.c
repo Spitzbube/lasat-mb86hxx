@@ -3269,7 +3269,7 @@ int channel_handle_amplifier_settings(int get, Amplifier_Settings* r4)
 		r4->Data_0 = channel_database.Data_2354615c;
 
 		memcpy(&r4->arEqualizerSettings[0], &channel_database.arEqualizerSettings[0], 9 * sizeof(Equalizer_Settings));
-		memcpy(&r4->arInputs[0], &channel_database.Data_23546214[0], 9 * sizeof(Amplifier_Inputs));
+		memcpy(&r4->arInputs[0], &channel_database.arAmplifierInputs[0], 9 * sizeof(Amplifier_Inputs));
 
 		r4->bData_16c = channel_database.bData_235462c8;
 		r4->bData_16d = channel_database.bData_235462c9;
@@ -3284,7 +3284,7 @@ int channel_handle_amplifier_settings(int get, Amplifier_Settings* r4)
 		{
 			//0x2340d27c
 			memcpy(&channel_database.arEqualizerSettings[0], &r4->arEqualizerSettings[0], 9 * sizeof(Equalizer_Settings));
-			memcpy(&channel_database.Data_23546214[0], &r4->arInputs[0], 9 * sizeof(Amplifier_Inputs));
+			memcpy(&channel_database.arAmplifierInputs[0], &r4->arInputs[0], 9 * sizeof(Amplifier_Inputs));
 
 			channel_database.bData_235462c8 = r4->bData_16c;
 			channel_database.bData_235462c9 = r4->bData_16d;

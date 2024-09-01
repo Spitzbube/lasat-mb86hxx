@@ -1270,6 +1270,24 @@ int av_get_language()
 }
 
 
+/* 234114e4 - complete */
+void sub_234114e4(void)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_234114e4 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &err);
+
+	sub_2343655c(0x85916331);
+	sub_2341a290("Start DHCP..", 0);;
+
+	OSSemPost(Data_23492098);
+}
+
+
 /* 2341151c - complete */
 void sub_2341151c(uint8_t* r5)
 {

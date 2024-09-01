@@ -1390,6 +1390,25 @@ tcp_poll(struct tcp_pcb *pcb, tcp_poll_fn poll, u8_t interval)
   pcb->pollinterval = interval;
 }
 
+/* 23469970 - todo */
+void sub_23469970(int a)
+{
+#if 0
+	console_send_string("sub_23469970 (todo.c): TODO\r\n");
+#endif
+
+  if (a != 0)
+  {
+    sys_sem_t sem;
+    if (0  == sys_sem_new(&sem, 0))
+    {
+      sys_arch_sem_wait(&sem, a);
+
+      sys_sem_free(&sem);
+    }
+  }
+}
+
 /**
  * Purges a TCP PCB. Removes any buffered data and frees the buffer memory
  * (pcb->ooseq, pcb->unsent and pcb->unacked are freed).

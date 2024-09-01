@@ -197,7 +197,7 @@ typedef struct
 	Struct_2354613c Data_2354613c; //2354613c +0x20 = 2354615C
 	int Data_2354615c; //2354615C
 	Equalizer_Settings arEqualizerSettings[9]; //23546160, 48870
-	Amplifier_Inputs Data_23546214[9]; //23546214, 48924
+	Amplifier_Inputs arAmplifierInputs[9]; //23546214, 48924
 	uint8_t bData_235462c8; //235462C8, 489D8
 	uint8_t bData_235462c9; //235462C9, 489D9
 	uint8_t bData_235462ca; //235462ca, 489DA

@@ -1,6 +1,7 @@
 
 
 #include "data.h"
+#include "eth.h"
 #include "lwip/tcpip.h"
 #include "lwip/netif.h"
 #include "lwip/dhcp.h"
@@ -51,18 +52,8 @@ int network_lwip_init()
 
 	sys_sem_t tcpip_init_sema; //sp_0x54
 
-	struct
-	{
-		int fill_0; //0
-
-	} sp_0x3c;
-
-	struct
-	{
-		int Data_0; //0
-		int Data_4; //4
-		//8?
-	} sp_0x34;
+	Struct_234012b0_a sp_0x3c;
+	Struct_234012b0_b sp_0x34;
 
 	struct
 	{
@@ -97,12 +88,12 @@ int network_lwip_init()
 		ip_addr_copy(network_gw, sp_0x28.Data_8);
 	}
 	else
+#endif
 	{
 		IP4_ADDR(&network_ipaddr, 0,0,0,0);
 		IP4_ADDR(&network_netmask, 0,0,0,0);
 		IP4_ADDR(&network_gw, 0,0,0,0);
 	}
-#endif
 
 	if (network_pfGetMac != 0)
 	{
@@ -113,15 +104,18 @@ int network_lwip_init()
 
 	tcpip_init(on_tcpip_init_done, &tcpip_init_sema);
 
-#if 0
-	sys_mutex_lock(&tcpip_init_sema, 0);
-#else
 	sys_sem_wait(&tcpip_init_sema);
-#endif
-
 	sys_sem_free(&tcpip_init_sema);
 
-#ifdef ETH_DEVICE
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "network_lwip_init: sp_0x34.Data_0=0x%x, sp_0x34.Data_4=0x%x\r\n",
+				sp_0x34.Data_0, sp_0x34.Data_4);
+		console_send_string(debug_string);
+	}
+#endif
+
 	if ((sp_0x34.Data_0 == 11) &&
 			(sp_0x34.Data_4 == 0x12345678))
 	{
@@ -133,6 +127,7 @@ int network_lwip_init()
 		network_gw.addr = ipaddr_addr("000.000.000.0");
 	}
 	//loc_23418f94
+#ifdef ETH_DEVICE
 	if (0 != eth_set_mac_address(0, &sp_0x3c))
 	{
 		//loc_23419118
@@ -174,7 +169,6 @@ int network_lwip_init()
 		igmp_start(&Data_235b0c60);
 	}
 	//loc_23418ffc
-#if 0
 	netif_set_default(&Data_235b0c60);
 
 	if (Data_235b0c60.ip_addr.addr != 0)
@@ -200,6 +194,7 @@ int network_lwip_init()
 		{
 			//loc_23419048
 			sub_23469970(500);
+
 			dhcp_fine_tmr();
 
 			r4 += 500;
@@ -218,6 +213,14 @@ int network_lwip_init()
 		//loc_23419078
 		dhcp_stop(&Data_235b0c60);
 
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "network_lwip_init: addr=0x%x\r\n",
+				Data_235b0c60.ip_addr.addr);
+		console_send_string(debug_string);
+	}
+#endif
 		if (Data_235b0c60.ip_addr.addr != 0)
 		{
 			//2341908c
@@ -253,7 +256,6 @@ int network_lwip_init()
 		}
 		//loc_2341910c
 	}
-#endif
 	//loc_2341910c
 	return sl;
 }
@@ -427,10 +429,10 @@ uint32_t network_get_ipaddr()
 #endif
 
 /* 23419454 - todo */
-void sub_23419454(void (*a)())
+void network_register_get_mac_func(void (*a)())
 {
 #if 0
-	console_send_string("sub_23419454 (todo.c): TODO\r\n");
+	console_send_string("network_register_get_mac_func (todo.c): TODO\r\n");
 #endif
 
 	network_pfGetMac = a;

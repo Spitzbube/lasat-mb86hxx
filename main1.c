@@ -24,6 +24,7 @@
 #include "scan.h"
 #include "ts_play.h"
 #include "ts_record.h"
+#include "eth.h"
 
 
 extern int main_process_uart_command(uint8_t*);
@@ -1175,10 +1176,146 @@ void main_ts_play_init(void)
 
 
 /* 234012b0 - todo */
-void sub_234012b0()
+void main_get_mac_address(Struct_234012b0_a* r4, Struct_234012b0_b* r5)
 {
-	console_send_string("sub_234012b0 (todo.c): TODO\r\n");
+#if 0
+	console_send_string("main_get_mac_address (todo.c): TODO\r\n");
+#endif
 
+	uint8_t digit;
+
+	flash_read(main_hFlash, 0x40000410, 8, r5);
+
+	digit = (r5->Data_0 >> 12) & 0x0f;
+	if (((r5->Data_0 >> 12) & 0x0f) > 9) //(x << 16) >> 28
+	{
+		r4->bData[0] = digit + '7'; //((r5->Data_0 >> 12) & 0x0f);
+	}
+	else
+	{
+		r4->bData[0] = digit + '0'; //((r5->Data_0 >> 12) & 0x0f);
+	}
+
+	digit = (r5->Data_0 >> 8) & 0x0f;
+	if (((r5->Data_0 >> 8) & 0x0f) > 9) //(x << 20) >> 28
+	{
+		r4->bData[1] = digit + '7'; //((r5->Data_0 >> 8) & 0x0f);
+	}
+	else
+	{
+		r4->bData[1] = digit + '0'; //((r5->Data_0 >> 8) & 0x0f);
+	}
+
+	digit = (r5->Data_0 >> 4) & 0x0f;
+	if (((r5->Data_0 >> 4) & 0x0f) > 9) //(x << 24) >> 28
+	{
+		r4->bData[2] = digit + '7'; //((r5->Data_0 >> 4) & 0x0f);
+	}
+	else
+	{
+		r4->bData[2] = digit + '0'; //((r5->Data_0 >> 4) & 0x0f);
+	}
+
+	digit = (r5->Data_0 >> 0) & 0x0f;
+	if (/*((r5->Data_0 >> 0) & 0x0f)*/digit > 9)
+	{
+		r4->bData[3] = digit + '7'; //((r5->Data_0 >> 0) & 0x0f);
+	}
+	else
+	{
+		r4->bData[3] = digit + '0'; //((r5->Data_0 >> 0) & 0x0f);
+	}
+
+	digit = (r5->Data_4 >> 28) & 0x0f;
+	if (((r5->Data_4 >> 28) & 0x0f) > 9)
+	{
+		r4->bData[4] = digit + '7'; //((r5->Data_4 >> 28) & 0x0f);
+	}
+	else
+	{
+		r4->bData[4] = digit + '0'; //((r5->Data_4 >> 28) & 0x0f);
+	}
+
+	digit = (r5->Data_4 >> 24) & 0x0f;
+	if (((r5->Data_4 >> 24) & 0x0f) > 9) //(x << 4) >> 28
+	{
+		r4->bData[5] = digit + '7'; //((r5->Data_4 >> 24) & 0x0f);
+	}
+	else
+	{
+		r4->bData[5] = digit + '0'; //((r5->Data_4 >> 24) & 0x0f);
+	}
+
+	digit = (r5->Data_4 >> 20) & 0x0f;
+	if (((r5->Data_4 >> 20) & 0x0f) > 9) //(x << 8) >> 28
+	{
+		r4->bData[6] = digit + '7'; //((r5->Data_4 >> 20) & 0x0f);
+	}
+	else
+	{
+		r4->bData[6] = digit + '0'; //((r5->Data_4 >> 20) & 0x0f);
+	}
+
+	digit = (r5->Data_4 >> 16) & 0x0f;
+	if (((r5->Data_4 >> 16) & 0x0f) > 9) //(x << 12) >> 28
+	{
+		r4->bData[7] = digit + '7'; //((r5->Data_4 >> 16) & 0x0f) + '7';
+	}
+	else
+	{
+		r4->bData[7] = digit + '0'; //((r5->Data_4 >> 16) & 0x0f) + '0';
+	}
+
+	digit = (r5->Data_4 >> 12) & 0x0f;
+	if (((r5->Data_4 >> 12) & 0x0f) > 9) //(x << 16) >> 28
+	{
+		r4->bData[8] = digit + '7'; //((r5->Data_4 >> 12) & 0x0f) + '7';
+	}
+	else
+	{
+		r4->bData[8] = digit + '0'; //((r5->Data_4 >> 12) & 0x0f) + '0';
+	}
+
+	digit = (r5->Data_4 >> 8) & 0x0f;
+	if (((r5->Data_4 >> 8) & 0x0f) > 9) //(x << 20) >> 28
+	{
+		r4->bData[9] = digit + '7'; //((r5->Data_4 >> 8) & 0x0f) + '7';
+	}
+	else
+	{
+		r4->bData[9] = digit + '0'; //((r5->Data_4 >> 8) & 0x0f) + '0';
+	}
+
+	digit = (r5->Data_4 >> 4) & 0x0f;
+	if (((r5->Data_4 >> 4) & 0x0f) > 9) //(x << 24) >> 28
+	{
+		r4->bData[10] = digit + '7'; //((r5->Data_4 >> 4) & 0x0f) + '7';
+	}
+	else
+	{
+		r4->bData[10] = digit + '0'; //((r5->Data_4 >> 4) & 0x0f)+ '0';
+	}
+
+	digit = (r5->Data_4 >> 0) & 0x0f;
+	if (/*((r5->Data_4 >> 0) & 0x0f)*/digit > 9)
+	{
+		r4->bData[11] = digit + '7'; //((r5->Data_4 >> 0) & 0x0f) + '7';
+	}
+	else
+	{
+		r4->bData[11] = digit + '0'; //((r5->Data_4 >> 0) & 0x0f) + '0';
+	}
+
+	r4->bData[12] = 0;
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "main_get_mac_address: r4->bData='%s''\r\n",
+				&r4->bData[0]);
+		console_send_string(debug_string);
+	}
+#endif
 }
 
 
@@ -1209,9 +1346,9 @@ void main_network_init()
 	console_send_string("main_network_init (todo.c): TODO\r\n");
 #endif
 
-	sub_23419454(sub_234012b0);
+	network_register_get_mac_func(main_get_mac_address);
 
-#if 0
+#ifdef ETH_DEVICE
 	eth_set_buffer( sub_234019e0(0x10000) );
 #endif
 
