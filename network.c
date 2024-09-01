@@ -26,10 +26,10 @@ ip_addr_t network_ipaddr; //23492100
 ip_addr_t network_netmask; //23492104
 ip_addr_t network_gw; //23492108
 ip_addr_t network_dns; //2349210c
+#endif
 
 struct netif Data_235b0c60; //235b0c60
 
-#endif
 
 
 /* 23418eac - todo */
@@ -379,6 +379,19 @@ int network_set_defaults(struct Struct_23546128* r5, struct Struct_234fd8f0_Inne
 }
 
 #endif
+
+/* 23419428 - todo */
+int sub_23419428()
+{
+#if 0
+	console_send_string("sub_23419428 (todo.c): TODO\r\n");
+#endif
+
+	//&Data_235b0c60
+	//->loc_23487ac0
+	return sub_2346c10c(&Data_235b0c60);
+}
+
 
 /* 23419430 - todo */
 struct netif* network_get_device()

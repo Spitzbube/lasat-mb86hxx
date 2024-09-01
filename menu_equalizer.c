@@ -138,6 +138,7 @@ Menu_Item menu_equalizer_items[] = //23495c4c
 }; 
 
 Menu_Amplifier_Data menu_amplifier_data; //238ddb2c address???
+Amplifier_Interface_Functions menu_amplifier_interface_fn; //238ddca4
 
 
 /* 2346f90c - todo */
@@ -208,40 +209,38 @@ int menu_equalizer_on_event(int a)
 	{
 		menu_amplifier_data.bEqualizer = menu_equalizer.currentItem;
 
-		Amplifier_Interface_Functions* r6 = &menu_amplifier_data.amplifier_interface_fn;
-
-		if (r6->Data_235fc430 != 0)
+		if (menu_amplifier_interface_fn.Data_235fc430 != 0)
 		{
-			(r6->Data_235fc430)(menu_amplifier_data.bEqualizer);
+			(menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
 		}
 		//loc_2346f9c2
-		if (r6->Data_235fc434 != 0)
+		if (menu_amplifier_interface_fn.Data_235fc434 != 0)
 		{
-			(r6->Data_235fc434)(
+			(menu_amplifier_interface_fn.Data_235fc434)(
 				menu_amplifier_data.amplifierSettings.arEqualizerSettings[menu_amplifier_data.bEqualizer].bBass);
 		}
 		//loc_2346f9d6
-		if (r6->Data_235fc440 != 0)
+		if (menu_amplifier_interface_fn.Data_235fc440 != 0)
 		{
-			(r6->Data_235fc440)(
+			(menu_amplifier_interface_fn.Data_235fc440)(
 				menu_amplifier_data.amplifierSettings.arEqualizerSettings[menu_amplifier_data.bEqualizer].bTreble);
 		}
 		//loc_2346f9e8
-		if (r6->Data_235fc43c != 0)
+		if (menu_amplifier_interface_fn.Data_235fc43c != 0)
 		{
-			(r6->Data_235fc43c)(
+			(menu_amplifier_interface_fn.Data_235fc43c)(
 				menu_amplifier_data.amplifierSettings.arEqualizerSettings[menu_amplifier_data.bEqualizer].bData_0x10);
 		}
 		//loc_2346f9fa
-		if (r6->Data_235fc450 != 0)
+		if (menu_amplifier_interface_fn.Data_235fc450 != 0)
 		{
-			(r6->Data_235fc450)(
+			(menu_amplifier_interface_fn.Data_235fc450)(
 				menu_amplifier_data.amplifierSettings.arEqualizerSettings[menu_amplifier_data.bEqualizer].bData_0x11);
 		}
 		//loc_2346fa0c
-		if (r6->Data_235fc438 != 0)
+		if (menu_amplifier_interface_fn.Data_235fc438 != 0)
 		{
-			(r6->Data_235fc438)(
+			(menu_amplifier_interface_fn.Data_235fc438)(
 				menu_amplifier_data.amplifierSettings.arEqualizerSettings[menu_amplifier_data.bEqualizer].bData_0xf);
 		}
 		//->loc_2346fa2a
@@ -313,7 +312,7 @@ void sub_2346fa58(int (*r5)(Amplifier_Interface_Functions*, int, int, int))
 		return;
 	}
 
-	if (0 != (menu_amplifier_data.amplifier_get_data)(&menu_amplifier_data.amplifier_interface_fn,
+	if (0 != (menu_amplifier_data.amplifier_get_data)(&menu_amplifier_interface_fn,
 			&menu_amplifier_data.amplifierSettings,
 			&menu_amplifier_data.bInput,
 			&menu_amplifier_data.bEqualizer))

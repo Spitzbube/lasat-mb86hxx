@@ -874,10 +874,10 @@ void sub_234837cc()
 }
 
 
-/* 234818a8 - todo */
-void sub_234818a8()
+/* 2346c10c - todo */
+void sub_2346c10c()
 {
-	console_send_string("sub_234818a8 (todo.c): TODO\r\n");
+	console_send_string("sub_2346c10c (todo.c): TODO\r\n");
 
 }
 
@@ -888,18 +888,6 @@ void sub_234818a8()
 void sub_2345c8da()
 {
 	console_send_string("sub_2345c8da (todo.c): TODO\r\n");
-
-}
-
-#endif
-
-
-#ifdef VDR110
-
-/* 2348112c - todo */
-void sub_2348112c()
-{
-	console_send_string("sub_2348112c (todo.c): TODO\r\n");
 
 }
 

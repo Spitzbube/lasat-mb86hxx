@@ -565,11 +565,30 @@ int sub_2346fe1c(int r4)
 }
 
 
-/* 2346ff0e - todo */
-void sub_2346ff0e()
+/* 2346ff0e - complete */
+int sub_2346ff0e(void)
 {
+#if 0
 	console_send_string("sub_2346ff0e (todo.c): TODO\r\n");
+#endif
 
+    usb_lock();
+
+    if (0 == fatfs_volume_get_usb_device(0))
+    {
+        usb_unlock();
+
+        return 0xff;
+    }
+
+    usb_unlock();
+
+    sub_2343d482(&menu_sw_update_filelist);
+    sub_2343d3ac(&menu_sw_update_filelist);
+    void* r1 = sub_2343d572();
+    sub_2343d51e(&menu_sw_update_filelist, r1);
+
+    return 0;
 }
 
 

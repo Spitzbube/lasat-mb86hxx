@@ -233,8 +233,6 @@ int menu_amplifier_input_on_event(int a)
     if (a != 0)
     {
         //0x2348101a
-        Amplifier_Interface_Functions* r6 = &menu_amplifier_data.amplifier_interface_fn;
-
         menu_amplifier_data.bInput = menu_amplifier_inputs.currentItem;
         menu_amplifier_data.bEqualizer = 
             menu_amplifier_data.amplifierSettings.arInputs[menu_amplifier_data.bInput].bData_16;
@@ -263,8 +261,8 @@ int menu_amplifier_input_on_event(int a)
                     return 0;
                 }
                 //0x2348104e
-                (r6->input_configuration)(0);
-                (r6->Data_235fc430)(menu_amplifier_data.bEqualizer);
+                (menu_amplifier_interface_fn.input_configuration)(0);
+                (menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
                 
                 if (menu_amplifier_inputs.onExit != 0)
                 {
@@ -290,8 +288,8 @@ int menu_amplifier_input_on_event(int a)
                     menu_amplifier_data.bInput = 0;
                     menu_amplifier_data.bEqualizer = menu_amplifier_data.amplifierSettings.arInputs[menu_amplifier_data.bInput/*0*/].bData_16;
 
-                    (r6->input_configuration)(menu_amplifier_data.bInput/*0*/);
-                    (r6->Data_235fc430)(menu_amplifier_data.bEqualizer);
+                    (menu_amplifier_interface_fn.input_configuration)(menu_amplifier_data.bInput/*0*/);
+                    (menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
 
                     if (menu_amplifier_inputs.onExit != 0)
                     {
@@ -299,7 +297,7 @@ int menu_amplifier_input_on_event(int a)
                     }
                     //loc_234810a2
                     sub_2343d482(0);
-                    if (0 != sub_234818a8())
+                    if (0 != menu_net_radio_entry())
                     {
                         //->loc_2348106e
                         sub_2343d482(&menu_amplifier_inputs);
@@ -312,11 +310,11 @@ int menu_amplifier_input_on_event(int a)
                 break;
         }
         //loc_234810b2
-        if (r6->input_configuration != 0)
+        if (menu_amplifier_interface_fn.input_configuration != 0)
         {
             //0x234810b8
-            (r6->input_configuration)(menu_amplifier_data.bInput);
-            (r6->Data_235fc430)(menu_amplifier_data.bEqualizer);
+            (menu_amplifier_interface_fn.input_configuration)(menu_amplifier_data.bInput);
+            (menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
         }
         //loc_234810cc
         return 0xff;
@@ -385,6 +383,60 @@ int menu_amplifier_inputs_enter(void)
 
 	return 0;
 }
+
+
+#if 1 //def VDR110
+
+/* 2348112c - todo */
+int menu_amplifier_inputs_select_bluetooth(int key)
+{
+#if 0
+	console_send_string("menu_amplifier_inputs_select_bluetooth (todo.c): TODO\r\n");
+#endif
+
+	if (menu_amplifier_data.amplifier_get_data == 0)
+	{
+		return 8;
+	}
+
+	if (key == 0)
+	{
+		if (menu_amplifier_data.bInput != 0)
+		{
+			menu_amplifier_data.bInput = 0;
+			menu_amplifier_data.bEqualizer = 
+				menu_amplifier_data.amplifierSettings.arInputs[menu_amplifier_data.bInput].bData_16;
+
+			if (menu_amplifier_interface_fn.input_configuration != 0)
+			{
+				(menu_amplifier_interface_fn.input_configuration)(menu_amplifier_data.bInput);
+				(menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
+			}
+		}
+	}
+	else if (key == 52) //BT
+	{
+		for (uint8_t i = 0; i < 9; i++)
+		{
+			if (0 == strcmp(&menu_amplifier_data.amplifierSettings.arInputs[i].strName[0], "BLUETOOTH"))
+			{
+				menu_amplifier_data.bInput = i;
+				menu_amplifier_data.bEqualizer = 
+					menu_amplifier_data.amplifierSettings.arInputs[i].bData_16;
+
+				if (menu_amplifier_interface_fn.input_configuration != 0)
+				{
+					(menu_amplifier_interface_fn.input_configuration)(menu_amplifier_data.bInput);
+					(menu_amplifier_interface_fn.Data_235fc430)(menu_amplifier_data.bEqualizer);
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+#endif
 
 
 

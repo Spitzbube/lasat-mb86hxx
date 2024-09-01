@@ -1062,20 +1062,18 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f488
-#if 0
 		else if (r7->keyCode == 70/*0x46*/) //USB
 		{
 			sub_2346ff0e();
 			//->loc_2346f6f0
 		}
-	#endif
 		//loc_2346f492
 		else if (r7->keyCode == 69/*0x45*/) //Radio
 		{
 #ifdef VDR110
 			//r0 = 0;
 			//->loc_2346f4b0: TODO
-			if (0 == sub_2348112c(0))
+			if (0 == menu_amplifier_inputs_select_bluetooth(0))
 			{
 				//->loc_2346f49a
 				sub_2346f77e();
@@ -1092,18 +1090,17 @@ int menu_root_on_event(void* r0)
 #endif
 		}
 		//loc_2346f4a0
-		else if (r7->keyCode == 54/*0x36*/) //EQ
+		else if (r7->keyCode == 54/*0x36*/) //EQ (VT8500: Green)
 		{
 			//loc_2346f4a4
 			menu_equalizer_entry(0);
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ac
-#if 0
-		else if (r7->keyCode == 52/*0x34*/) //BT
+		else if (r7->keyCode == 52/*0x34*/) //BT (VT8500: Blue)
 		{
 			//loc_2346f4b0
-			if (0 == sub_2348112c(52))
+			if (0 == menu_amplifier_inputs_select_bluetooth(52))
 			{
 				//->loc_2346f49a
 				sub_2346f77e();
@@ -1114,7 +1111,8 @@ int menu_root_on_event(void* r0)
 			//->loc_2346f6f0
 		}
 		//loc_2346f4ba
-		if (r7->keyCode == 55/*0x37*/) // X
+#if 0
+		if (r7->keyCode == 55/*0x37*/) // X (VT8500: Red)
 		{
 			//0x2346f4be
 
@@ -1485,7 +1483,7 @@ int sub_2346f76c()
 
 
 /* 2346f77e - complete */
-void sub_2346f77e()
+void sub_2346f77e(void)
 {
 #if 0
 	console_send_string("sub_2346f77e (todo.c): TODO\r\n");
