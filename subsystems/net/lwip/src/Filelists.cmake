@@ -105,6 +105,7 @@ set(lwipnetif_SRCS
 #    ${LWIP_DIR}/src/netif/bridgeif_fdb.c
     ${LWIP_DIR}/src/netif/etharp.c
     ${LWIP_DIR}/src/netif/ethif_asixusb.c
+    ${LWIP_DIR}/src/netif/ethif_fapi.c
 )
 
 if (NOT ${LWIP_EXCLUDE_SLIPIF})

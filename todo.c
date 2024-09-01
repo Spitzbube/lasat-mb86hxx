@@ -4,6 +4,9 @@
 int Data_234911e0; //234911e0
 int Data_23492240; //23492240
 
+int Data_234df19c = 0; //234df19c
+int Data_234df1a0 = 0; //234df1a0
+
 
 void MGC_HdrcDestroy ()
 {
@@ -881,6 +884,60 @@ void sub_2346c10c()
 
 }
 
+
+void fm3DiscardWFrame(uint32_t a)
+{
+	console_send_string("fm3DiscardWFrame (todo.c): TODO\r\n");
+
+}
+
+
+/* 2347cec8 - todo */
+int fm3StopDevice(int a, int b)
+{
+	console_send_string("fm3StopDevice (todo.c): TODO\r\n");
+
+}
+
+
+/* 2347cb18 - todo */
+void fm3SWError()
+{
+	console_send_string("fm3SWError (todo.c): TODO\r\n");
+
+}
+
+
+/* 2347d590 - todo */
+void fm3HandleRxErr()
+{
+	console_send_string("fm3HandleRxErr (todo.c): TODO\r\n");
+
+}
+
+
+/* 2347d548 - todo */
+int sub_2347d548(int a)
+{
+	console_send_string("sub_2347d548 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23446a20 - todo */
+void sub_23446a20()
+{
+	console_send_string("sub_23446a20 (todo.c): TODO\r\n");
+
+}
+
+
+/* 23447310 - todo */
+void sub_23447310()
+{
+	console_send_string("sub_23447310 (todo.c): TODO\r\n");
+
+}
 
 #ifndef DVBC_RADIO
 

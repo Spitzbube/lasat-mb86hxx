@@ -800,16 +800,19 @@ void web_interface_http_thread()
 	FD_CLR(socket, sp8);
 }
 
-#if 0
-
 /* 2345a740 - todo */
-void sub_2345a740()
+int sub_23479b98(struct pbuf *p, struct netif *inp)
 {
-	console_send_string("sub_2345a740 (todo.c): TODO\r\n");
-
-}
-
+#if 0
+	console_send_string("sub_23479b98 (todo.c): TODO\r\n");
 #endif
+
+#if 0
+	hex_dump("sub_23479b98", p->payload, p->len);
+#endif
+
+	return 0;
+}
 
 
 /* 2345aa08 - complete */

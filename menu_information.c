@@ -602,11 +602,11 @@ static int menu_information_on_enter(int a)
 	if (0 != network_get_device())
 	{
 		//0x23471cf6
-		extern void (*Data_234920ec)();
+		extern void (*network_pfGetMac)();
 
-		if (Data_234920ec != 0)
+		if (network_pfGetMac != 0)
 		{
-			(Data_234920ec)(&Data_238e09d8.Data_238e0aa4[0], &sp4);
+			(network_pfGetMac)(&Data_238e09d8.Data_238e0aa4[0], &sp4);
 		}
 		//->loc_23471d0e
 	}

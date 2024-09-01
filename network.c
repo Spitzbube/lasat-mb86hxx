@@ -15,18 +15,16 @@ extern void sub_2345ace8();
 //0x234920e8
 int Data_234920e8 = 0; //234920e8 +0
 #endif
-void (*Data_234920ec)() = 0; //234920ec +4
+void (*network_pfGetMac)() = 0; //234920ec +4
 #if 0
 int Data_234920f0 = 0; //234920f0 +8
 #endif
 struct netif* network_pNetIF = 0; //234920f4 +0xc
-#if 0
 int Data_234920f8; //234920f8 +0x10
 ip_addr_t network_ipaddr; //23492100
 ip_addr_t network_netmask; //23492104
 ip_addr_t network_gw; //23492108
 ip_addr_t network_dns; //2349210c
-#endif
 
 struct netif Data_235b0c60; //235b0c60
 
@@ -80,13 +78,15 @@ int network_lwip_init()
 
 	int sl = 0;
 
-#if 0
-	if (0 != sub_23437044())
+#ifdef ETH_DEVICE
+	if (0 != eth_init())
 	{
 		//loc_23419118
 		return 0xff;
 	}
+#endif
 	//23418ec8
+#if 0
 	sub_2340c9b0(1, &sp_0x28);
 	sub_2340ca1c(1, &sp_0x14);
 
@@ -104,9 +104,9 @@ int network_lwip_init()
 	}
 #endif
 
-	if (Data_234920ec != 0)
+	if (network_pfGetMac != 0)
 	{
-		(Data_234920ec)(&sp_0x3c, &sp_0x34);
+		(network_pfGetMac)(&sp_0x3c, &sp_0x34);
 	}
 
 	sys_sem_new(&tcpip_init_sema, 0);
@@ -121,19 +121,19 @@ int network_lwip_init()
 
 	sys_sem_free(&tcpip_init_sema);
 
-#if 0 //Don't start the FAPI based Ethernet Interface
+#ifdef ETH_DEVICE
 	if ((sp_0x34.Data_0 == 11) &&
 			(sp_0x34.Data_4 == 0x12345678))
 	{
 		//23418f6c
 		sl = 2;
 
-		network_ipaddr = ipaddr_addr("192.168.0.5");
-		network_netmask = ipaddr_addr("255.255.255.0");
-		network_gw = ipaddr_addr("000.000.000.0");
+		network_ipaddr.addr = ipaddr_addr("192.168.0.5");
+		network_netmask.addr = ipaddr_addr("255.255.255.0");
+		network_gw.addr = ipaddr_addr("000.000.000.0");
 	}
 	//loc_23418f94
-	if (0 != sub_23436e68(0, &sp_0x3c))
+	if (0 != eth_set_mac_address(0, &sp_0x3c))
 	{
 		//loc_23419118
 		return 0xff;
@@ -150,7 +150,15 @@ int network_lwip_init()
 			tcpip_input);
 #endif
 
-#if 0
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "network_lwip_init: network_pNetIF=%p\r\n",
+				network_pNetIF);
+		console_send_string(debug_string);
+	}
+#endif
+
 	if (network_pNetIF == NULL)
 	{
 		//->loc_23419118
@@ -166,6 +174,7 @@ int network_lwip_init()
 		igmp_start(&Data_235b0c60);
 	}
 	//loc_23418ffc
+#if 0
 	netif_set_default(&Data_235b0c60);
 
 	if (Data_235b0c60.ip_addr.addr != 0)
@@ -424,7 +433,7 @@ void sub_23419454(void (*a)())
 	console_send_string("sub_23419454 (todo.c): TODO\r\n");
 #endif
 
-	Data_234920ec = a;
+	network_pfGetMac = a;
 
 }
 

@@ -149,6 +149,7 @@ target_compile_definitions(${TARGET_V290} PUBLIC
 #    USB_HUB
 #    USB_ASIX
 #    PSI_PMT_FILTER_DEBUG
+    ETH_DEVICE
 )
 
 target_compile_definitions(${TARGET_VDR110} PUBLIC
