@@ -443,6 +443,8 @@ dns_local_addhost(const char *hostname, const ip_addr_t *addr)
 #endif /* DNS_LOCAL_HOSTLIST_IS_DYNAMIC*/
 #endif /* DNS_LOCAL_HOSTLIST */
 
+#endif
+
 /**
  * Look up a hostname in the array of known hostnames.
  *
@@ -487,8 +489,6 @@ dns_lookup(const char *name)
 
   return IPADDR_NONE;
 }
-
-#endif
 
 #if DNS_DOES_NAME_CHECK
 /**
@@ -867,8 +867,6 @@ memerr:
   return;
 }
 
-#if 0
-
 /**
  * Queues a new hostname to resolve and sends out a DNS query for that hostname
  *
@@ -987,7 +985,5 @@ dns_gethostbyname(const char *hostname, ip_addr_t *addr, dns_found_callback foun
   /* queue query with specified callback */
   return dns_enqueue(hostname, found, callback_arg);
 }
-
-#endif
 
 #endif /* LWIP_DNS */

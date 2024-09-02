@@ -809,7 +809,7 @@ int eth_read(void* h, uint8_t* bufPtr, int32_t size, int* frame)
 }
 
 
-/* 2344714c - complete */
+/* 23437378 /  / 2344714c - complete */
 int eth_get_stat(ethHandleT* r5, eth_stat_params* statParamsPtr)
 {
 #if 0

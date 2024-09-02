@@ -5,6 +5,7 @@
 #include "lwip/tcpip.h"
 #include "lwip/netif.h"
 #include "lwip/dhcp.h"
+#include "network.h"
 
 
 extern void web_interface_http_thread();
@@ -16,7 +17,7 @@ extern void sub_2345ace8();
 //0x234920e8
 int Data_234920e8 = 0; //234920e8 +0
 #endif
-void (*network_pfGetMac)() = 0; //234920ec +4
+void (*network_pfGetMac)(Struct_234012b0_a*, Struct_234012b0_b*) = 0; //234920ec +4
 #if 0
 int Data_234920f0 = 0; //234920f0 +8
 #endif
@@ -290,7 +291,7 @@ int network_init(uint32_t r4)
 	if (r0 == 2)
 	{
 		//->loc_23419190
-		while (0 == sub_2346c10c(&Data_235b0c60))
+		while (0 == ethif_fapi_is_link_up(&Data_235b0c60))
 		{
 			//loc_23419188
 			rtos_task_wait(5);
@@ -316,7 +317,7 @@ int network_set_defaults(struct Struct_23546128* r5, struct Struct_234fd8f0_Inne
 
 	if (network_ipaddr.addr == 0)
 	{
-		sub_23487ab8(&Data_235b0c60);
+		dhcp_stop(&Data_235b0c60);
 	}
 
 	if ((r8->Data_4 & 1) == 0)
@@ -392,15 +393,15 @@ int network_set_defaults(struct Struct_23546128* r5, struct Struct_234fd8f0_Inne
 #endif
 
 /* 23419428 - todo */
-int sub_23419428()
+int network_is_link_up(void)
 {
 #if 0
-	console_send_string("sub_23419428 (todo.c): TODO\r\n");
+	console_send_string("network_is_link_up (todo.c): TODO\r\n");
 #endif
 
 	//&Data_235b0c60
 	//->loc_23487ac0
-	return sub_2346c10c(&Data_235b0c60);
+	return ethif_fapi_is_link_up(&Data_235b0c60);
 }
 
 

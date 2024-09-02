@@ -877,14 +877,6 @@ void sub_234837cc()
 }
 
 
-/* 2346c10c - todo */
-void sub_2346c10c()
-{
-	console_send_string("sub_2346c10c (todo.c): TODO\r\n");
-
-}
-
-
 void fm3DiscardWFrame(uint32_t a)
 {
 	console_send_string("fm3DiscardWFrame (todo.c): TODO\r\n");

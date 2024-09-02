@@ -1339,6 +1339,13 @@ void main_graphic_init()
 }
 
 
+/* 2340147c - todo */
+int sub_2340147c()
+{
+	return Data_23491df0;
+}
+
+
 /* 23401488 - todo */
 void main_network_init()
 {

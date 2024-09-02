@@ -231,6 +231,24 @@ static void poll_phylink_thread(void *arg);
 
 #endif
 
+
+/* 2346c10c /  / 2348bfd8 - todo */
+int ethif_fapi_is_link_up(struct netif *netif)
+{
+  eth_stat_params stat;
+
+  ethif_fapi_state* r0 = netif->state;
+  eth_get_stat(r0->Data_0, &stat);
+
+  if (stat.linkup != 1)
+  {
+    return 0;
+  }
+
+  return 1;
+}
+
+
 /*
 ********************************************************************************
 ** \brief Initializes the ethernet network interface
@@ -251,7 +269,7 @@ static void poll_phylink_thread(void *arg);
 **      - any other err_t on error
 ********************************************************************************
 */
-/* 2348bef2 - todo */
+/* 2346c026 /   / 2348bef2 - todo */
 err_t ethif_fapi_init(struct netif *netif)
 {
   err_t result;

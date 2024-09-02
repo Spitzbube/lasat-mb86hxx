@@ -13,6 +13,7 @@ set (LWIP_DEFINITIONS
 
 set (LWIP_COMPILER_FLAGS
   --c99
+  --thumb
 )
 
 set (LWIP_INCLUDE_DIRS 

@@ -2001,6 +2001,14 @@ void sub_2340b3cc()
 }
 
 
+/* 2340b4e8 - todo */
+void sub_2340b4e8()
+{
+	console_send_string("sub_2340b4e8 (todo.c): TODO\r\n");
+
+}
+
+
 /* 2340b55c - todo */
 int sub_2340b55c()
 {
