@@ -144,6 +144,14 @@ int graphic_init(Struct_234539f0* r4)
 }
 
 
+/* 23453af8 /  / 23414b38 - todo */
+void sub_23414b38()
+{
+	console_send_string("sub_23414b38 (graphic.c): TODO\r\n");
+
+}
+
+
 /* 23453c5c - complete */
 int graphics_configure_osd_layer(int r0)
 {

@@ -71,6 +71,7 @@ set(SRCS
    menu_net_radio.c
    sub_23476ed4.c
    menu_main.c
+   menu_settings.c
    main2.c
    hexdump.c
    todo.c

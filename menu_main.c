@@ -6,6 +6,10 @@
 
 static Menu menu_main; //234c2044
 
+static void sub_2344d060(int);
+static int sub_2344cf8c(void*);
+
+
 //0x234c1230
 uint8_t bData_234c1230 = 0; //234c1230 +0
 Menu* Data_234c1240 = &menu_main; //234C1240 +0x10
@@ -13,7 +17,7 @@ Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 
 uint8_t Data_234c1564[40] = "Head"; //234c1564 +0x28 = 234C158C
-Struct_235fdf74_Inner12_Inner0x20 Data_234c158c = //234c158c
+static Struct_235fdf74_Inner12_Inner0x20 Data_234c158c = //234c158c
 {
 	{0, 0, 0, 0},
 	&Data_234c1564[0], //Data_0x10
@@ -31,8 +35,9 @@ Struct_235fdf74_Inner12_Inner0x20 Data_234c158c = //234c158c
 };
 
 static uint8_t Data_234c16b4[40] = "1"; //234c16b4
+static uint8_t Data_234c16f4[40] = "2"; //234c16f4
 
-Menu_Item_Inner4_Data_0_Data_0x20 Data_234c16dc = //234c16dc
+static Menu_Item_Inner4_Data_0_Data_0x20 Data_234c16dc = //234c16dc
 {
 	{0, 0, 0, 0},
 	&Data_234c16b4[0], //Data_0x10
@@ -46,6 +51,23 @@ Menu_Item_Inner4_Data_0_Data_0x20 Data_234c16dc = //234c16dc
 	0x234c16e8 0901                   lsls       r1, r1, #0x4
 	0x234c16ea 0000                   movs       r0, r0
 	0x234c16ec                        dd         0x234c16b4
+#endif
+};
+
+static Menu_Item_Inner4_Data_0_Data_0x20 Data_234c171c = //234c171c
+{
+	{0, 0, 0, 0},
+	&Data_234c16f4[0], //Data_0x10
+#if 0
+	0x234c171c 0000                   movs       r0, r0                             ; DATA XREF=0x234c19d4
+	0x234c171e 5100                   lsls       r1, r2, #0x1
+	0x234c1720 8400                   lsls       r4, r0, #0x2
+	0x234c1722 3701                   lsls       r7, r6, #0x4
+	0x234c1724 A000                   lsls       r0, r4, #0x2
+	0x234c1726 0104                   lsls       r1, r0, #0x10
+	0x234c1728 0901                   lsls       r1, r1, #0x4
+	0x234c172a 0000                   movs       r0, r0
+	0x234c172c                        dd         0x234c16f4
 #endif
 };
 
@@ -97,6 +119,31 @@ static Menu_Item_Inner4_Data_0 Data_234c1974 = //234c1974
 #endif
 };
 
+static Menu_Item_Inner4_Data_0 Data_234c19b4 = //234c19b4
+{
+	1,
+	{0, 0, 0, 0, 0, 0}, //TODO
+	0,
+	&Data_234c171c, //Data_0x20
+#if 0
+	0x234c19b4 0100                   movs       r1, r0                             ; DATA XREF=0x234c1f6c
+	0x234c19b6 0000                   movs       r0, r0
+	0x234c19b8                        dd         0x234c1548
+	0x234c19bc 0000                   movs       r0, r0
+	0x234c19be 0000                   movs       r0, r0
+	0x234c19c0 3D00                   movs       r5, r7
+	0x234c19c2 8000                   lsls       r0, r0, #0x2
+	0x234c19c4 FA00                   lsls       r2, r7, #0x3
+	0x234c19c6 2000                   movs       r0, r4
+	0x234c19c8 0000                   movs       r0, r0
+	0x234c19ca 0000                   movs       r0, r0
+	0x234c19cc                        dd         0x234c12d4
+	0x234c19d0 0900                   movs       r1, r1
+	0x234c19d2 0000                   movs       r0, r0
+	0x234c19d4                        dd         0x234c171c
+#endif
+};
+
 static Struct_235fdf74_Inner20 Data_234c1ef4 = //234c1ef4
 {
 	0, //uint16_t fill_0; //0
@@ -137,8 +184,8 @@ static Menu_Item menu_main_items[] = //234c1f3c
 				0
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2344cf8c, //void* Data_0x1c; //0x1c = 28
-		0, //sub_2344e2a6, //void* Data_0x20; //0x20 = 32
+		sub_2344cf8c, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 0x23492fc4
@@ -157,7 +204,6 @@ static Menu_Item menu_main_items[] = //234c1f3c
 	0x234c1f60                        dd         0x00000000
 	0x234c1f64                        dd         0x00000000
 #endif
-#if 0
 	//[1]
 	{
 		0x79, //"Installation"
@@ -170,8 +216,8 @@ static Menu_Item menu_main_items[] = //234c1f3c
 				0
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_2344cf8c, //void* Data_0x1c; //0x1c = 28
-		sub_2344e2a6, //void* Data_0x20; //0x20 = 32
+		sub_2344cf8c, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 0x23492fc4
@@ -190,7 +236,6 @@ static Menu_Item menu_main_items[] = //234c1f3c
 	0x234c1f8c                        dd         0x00000000
 	0x234c1f90                        dd         0x00000000
 #endif
-#endif
 	//TODO!!!: Increase also menu_main.maxItem!
 };
 
@@ -205,8 +250,8 @@ static Menu menu_main = //234c2044
     1, //5, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
     0, //sub_23414b38, //void (*Data_0x1c)(); //0x1c
-    0, //sub_2344dbb8, //void (*Data_0x20)(); //0x20
-    0, //sub_2344d060, //void (*onEnter)(); //36 = 0x24
+	menu_items_navigate, //void (*onNavigate)(); //0x20
+    sub_2344d060, //void (*onEnter)(); //36 = 0x24
     0, //sub_2344d0cc, //int (*Data_0x28)(); //0x28
     0, //int Data_0x2c; //44 = 0x2c
     0, //int Data_0x30; //48
@@ -237,6 +282,95 @@ static Menu menu_main = //234c2044
 #endif
 };
 
+
+
+/*  /  / 2344cf8c - todo */
+int sub_2344cf8c(void* r0)
+{
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2344cf8c: r0=%p\r\n", r0);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (r0 != 0)
+	{
+		//0x2344cf96
+		if (Data_234c1240->currentItem == 0)
+		{
+			//0x2344cfa0: Einstellungen
+			menu_settings_entry(r0);
+			//->loc_2344d05a
+		}
+		//loc_2344cfa6
+		else if (Data_234c1240->currentItem == 1)
+		{
+			//0x2344cfaa: Installation
+#if 0
+			sub_234523c8();
+#endif
+			//->loc_2344d05a
+		}
+		//loc_2344cfb0
+		else if (Data_234c1240->currentItem == 2)
+		{
+			//0x2344cfb4: Senderliste
+#if 0
+			sub_23490bd0();
+#endif
+			//->loc_2344d05a
+		}
+		//loc_2344cfba
+		else if (Data_234c1240->currentItem == 3)
+		{
+			//0x2344cfbe: Timer
+#if 0
+			sub_23492b34();
+#endif
+			//->loc_2344d05a
+		}
+		//loc_2344cfc4
+		else if (Data_234c1240->currentItem == 4)
+		{
+			//0x2344cfc8: Information
+#if 0
+			sub_23456220();
+#endif
+			//->loc_2344d05a
+		}
+		//loc_2344cfce
+		else if (Data_234c1240->currentItem == 5)
+		{
+			//0x2344cfc8: Aufnahmespeicher
+#if 0
+			sub_23497aa0();
+#endif
+			//->loc_2344d05a
+		}
+		//loc_2344d05a
+	}
+	else
+	{
+		//loc_2344cfd8
+		console_send_string("sub_2344cf8c: loc_2344cfd8: TODO\r\n");
+
+		//TODO!!!
+	}
+	//loc_2344d05a
+	return 0;
+}
+
+
+/*  /  / 2344d060 - todo */
+void sub_2344d060(int a)
+{
+#if 1
+	console_send_string("sub_2344d060 (todo.c): TODO\r\n");
+#endif
+
+}
 
 
 /*  /  / 2344d0d0 - todo */
@@ -270,7 +404,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 #endif
 	Menu* r6 = r0->menu_stack[r0->menu_stack_level];
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_2344d0d0: r0->menu_stack_level=%d, r6=%p\r\n",
@@ -466,30 +600,27 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 			else
 			{
 				//loc_2344d2c4: Handle (current) Menu Item
-#if 0
-    			console_send_string("sub_2344d0d0: loc_2344d2c4: TODO!!!\r\n");
-#endif
-				Menu_Item* r7 = r6->Data_4;
+				Menu_Item* pMenuItem = r6->Data_4;
 
-				if (r7 == 0)
+				if (pMenuItem == 0)
 				{
 					//->loc_2344d2d0
 					return 0;
 				}
 
-				Menu_Item_Inner4_Data_0* r0_ = r7->Data_4[0];
+				Menu_Item_Inner4_Data_0* r0_ = pMenuItem->Data_4[0];
 				if (r0_ == 0)
 				{
-					//->loc_2344d2d0
+					//->loc_2344d2d0: No Columns
 					return 0;
 				}
-				//loc_2344d2d4
+				//loc_2344d2d4: Column 1
 				Menu_Item_Inner4_Data_0_Data_0x20* r0 = r0_->Data_0x20;
 
 				if (r0 != 0)
 				{
 					//0x2344d2da
-#if 1
+#if 0
 					{
 						extern char debug_string[];
 						sprintf(debug_string, "sub_2344d0d0: r0->Data_0x10='%s'\r\n",
@@ -527,14 +658,10 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					r4 = sp_0x3c;
 				} //if (r0 != 0)
 				//loc_2344d328
-				r0_ = r7->Data_4[1];
+				r0_ = pMenuItem->Data_4[1];
 				if (r0_ != 0)
 				{
-					//0x2344d32e
-#if 1
-					console_send_string("sub_2344d0d0: 0x2344d32e TODO!!!\r\n");
-#endif
-#if 0 //TODO!!!
+					//0x2344d32e: Column 2
 					if (r0_->Data_0x20 != 0)
 					{
 						//0x2344d334
@@ -579,7 +706,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 							r4->bData_0x10c = 1;
 						}
 						//loc_2344d3c6
-						if (Data_234c1254 != r7)
+						if (Data_234c1254 != pMenuItem)
 						{
 							//0x2344d3ce
 							r4->bData_0x10f = 1;
@@ -599,12 +726,11 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 						}
 						//loc_2344d3e4
 						bData_234c1230 = r4->bNumTextChars;
-					}
-#endif //TODO
+					} //if (r0_->Data_0x20 != 0)
 					//loc_2344d3e8
 				} //if (r0_ != 0)
 				//loc_2344d3e8
-				Data_234c1254 = r7;
+				Data_234c1254 = pMenuItem;
 				Data_234c1250 = r6;
 				//->loc_2344d2be
 				return sub_2344d0d0;

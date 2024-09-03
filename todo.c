@@ -187,7 +187,7 @@ void sub_23468e7c()
 }
 
 
-/* 234089e8 - todo */
+/* 234089e8 /  / 2340b4c4 - todo */
 void sub_234089e8()
 {
 	console_send_string("sub_234089e8 (todo.c): TODO\r\n");
@@ -955,6 +955,15 @@ void sub_2344db36(void* a)
 	console_send_string("sub_2344db36 (todo.c): TODO\r\n");
 
 }
+
+
+/*  /  / 23451f66 */
+int sub_23451f66()
+{
+	console_send_string("sub_23451f66 (todo.c): TODO\r\n");
+
+}
+
 
 #endif //!VDR110
 
