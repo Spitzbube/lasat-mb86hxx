@@ -9,7 +9,7 @@ uint8_t bData_234920e4 = 0; //234920e4 +0
 Struct_23434e00 Data_235b0c4c; //235b0c4c
 
 
-/* 23418db0 - complete */
+/* 23418db0 /  / 234242f4 - complete */
 int sub_23418db0()
 {
 	int r4;
@@ -51,7 +51,7 @@ int sub_23418db0()
 }
 
 
-/* 23418e1c - complete */
+/* 23418e1c /  / 23424360 - complete */
 int sub_23418e1c(uint8_t* r4)
 {
 #if 0
@@ -71,7 +71,7 @@ int sub_23418e1c(uint8_t* r4)
 }
 
 
-/* 23418e54 - todo */
+/* 23418e54 /  / 23424398 - todo */
 void sub_23418e54()
 {
 	console_send_string("sub_23418e54 (todo.c): TODO\r\n");
@@ -79,8 +79,8 @@ void sub_23418e54()
 }
 
 
-/* 23418e98 / 23423734 - complete */
-int sub_23418e98()
+/* 23418e98 / 23423734 / 234243dc - complete */
+int sub_23418e98(void)
 {
 #if 0
 	console_send_string("sub_23418e98 (todo.c): TODO\r\n");
