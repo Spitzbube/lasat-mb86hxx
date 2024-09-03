@@ -133,12 +133,22 @@ void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
 
 UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 -0x70
 UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 - 0x18
-UI_Thread_Params Data_235fdf58; //235fdf58 235fdf98 -0x40
-UI_Thread_Params* Data_235fdf70; //235fdf70 / 2378336C -0x40 + 0x18
-Menu* menu_stack[13]; //235fdf74 -0x40 + 0x1c, size???
-uint8_t menu_stack_level; //235fdfa8 235fdf98 + 0x10
-uint8_t bData_235fdfa9; //235fdfa9
 
+#if 0
+UI_Thread_Params Data_235fdf58; //0 235fdf58 235fdf98 -0x40
+UI_Thread_Params* Data_235fdf70; //24 235fdf70 / 2378336C -0x40 + 0x18
+Menu* menu_stack[13]; //28 235fdf74 -0x40 + 0x1c, size???
+uint8_t menu_stack_level; //80 235fdfa8 235fdf98 + 0x10
+uint8_t bData_235fdfa9; //81 235fdfa9
+#else
+struct Menu_Data Menu_Data; //235fdf58 / 23796784 -0x40
+#endif
+
+
+#ifndef VDR110
+//0x234c21c4
+void (*Data_234c21c8)(); //234c21c8 +4
+#endif
 
 
 /* 2343d104 - complete */
@@ -244,7 +254,7 @@ int menu_main_on_exit(UI_Thread_Params* a)
 
 
 /* 2343d1d6 - todo */
-int menu_main_start()
+int menu_main_start(void)
 {
 	UI_Thread_Params* r4;
 
@@ -325,8 +335,37 @@ void menu_main_adapt_items(int (*p)(Amplifier_Interface_Functions*, int, int, in
 }
 
 
+/*  /  / 2344d850 - complete */
+void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
+{
+#if 1
+	console_send_string("sub_2344d850 (todo.c): TODO\r\n");
+#endif
+
+#if 0 //TODO!!!
+	Menu_Item_Inner4_Data_0* r4;
+
+	do
+	{
+		r4 = pMenuItem->Data_4[index];
+		if (r4 == 0)
+		{
+			break;
+		}
+		index++;
+
+		r4->wData_0x1c = r1;
+		r4->bData_0x3c = r2;
+
+		r4 = pMenuItem->Data_4[index];
+	}
+	while (r4 != 0);
+#endif
+}
+
+
 /* Menu Initialize */
-/* 2343d3ac - complete */
+/* 2343d3ac /  / 2344da42 - complete */
 void sub_2343d3ac(Menu* pMenu)
 {
 	struct
@@ -359,7 +398,8 @@ void sub_2343d3ac(Menu* pMenu)
 		text_table_get_string(pMenu->stringId, pMenu->Data_0xc->Data_0x20->Data_0x10, 36);
 	}
 	//loc_2343d3d8
-	if (pMenu->Data_8 != 0)
+	pMenuItem = pMenu->Data_8;
+	if (/*pMenu->Data_8*/pMenuItem != 0)
 	{
 		if (pMenu->Data_0x34 != 0)
 		{
@@ -368,6 +408,35 @@ void sub_2343d3ac(Menu* pMenu)
 		}
 		else
 		{
+#ifndef VDR110
+			//loc_2344da82
+			Data_234c21c8 = sub_2344d850;
+
+			uint8_t r6 = pMenu->maxItem;
+			do
+			{
+				//loc_2344da8a
+				sub_2344d850(pMenuItem, 9, 1, 0);
+
+				if ((pMenuItem->Data_4[0] != 0) &&
+						(pMenuItem->Data_4[0]->Data_0x20 != 0) &&
+						(pMenuItem->wData_0 != 0xffff))
+				{
+					//0x2344daa8
+					text_table_get_string(pMenuItem->wData_0,
+							pMenuItem->Data_4[0]->Data_0x20->Data_0x10, 36);
+				}
+				//loc_2344dab0
+				if (pMenuItem->Data_0x18 != 0)
+				{
+					(pMenuItem->Data_0x18)(pMenuItem);
+				}
+				//loc_2344daba
+				pMenuItem++;
+			}
+			while (r6--);
+			//0x2344dac6
+#endif
 			//loc_2343d3ec
 			if (pMenu->Data_0x2c == 0)
 			{
@@ -378,11 +447,15 @@ void sub_2343d3ac(Menu* pMenu)
 
 			pMenu->Data_4 = pMenuItem;
 
+#ifdef VDR110
 			if (pMenuItem->Data_0x18 != 0)
 			{
 				(pMenuItem->Data_0x18)(pMenuItem);
 			}
 			//loc_2343d40a
+#else
+			sub_2344d850(pMenuItem, 10, 1, 0);
+#endif
 		}
 		//loc_2343d40a
 		if ((pMenu->Data_0x10 != 0) && (pMenu->Data_0x10->Data_0x20 != 0))
@@ -420,25 +493,25 @@ void sub_2343d3ac(Menu* pMenu)
 /* 2343d458 - todo */
 void sub_2343d458(UI_Thread_Params* a)
 {
-	memcpy(&Data_235fdf58, a, sizeof(UI_Thread_Params));
+	memcpy(&Menu_Data.Data_235fdf58, a, sizeof(UI_Thread_Params));
 }
 
 
 //MenuStack Add or Remove
-/* 2343d482 - todo */
+/* 2343d482 /  / 2344db72 - todo */
 Menu* sub_2343d482(Menu* r4)
 {
 	Menu* r0_;
-	Menu** r0 = &menu_stack[menu_stack_level];
+	Menu** r0 = &Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 
 	if (r4 != 0)
 	{
 		r0_ = *r0;
 
-		menu_stack_level++;
-		if (menu_stack_level < 13)
+		Menu_Data.menu_stack_level++;
+		if (Menu_Data.menu_stack_level < 13)
 		{
-			menu_stack[menu_stack_level] = r4;
+			Menu_Data.menu_stack[Menu_Data.menu_stack_level] = r4;
 			return r0_;
 		}
 		else
@@ -452,12 +525,12 @@ Menu* sub_2343d482(Menu* r4)
 		//loc_2343d4b0
 		*r0 = 0;
 
-		if (menu_stack_level != 0)
+		if (Menu_Data.menu_stack_level != 0)
 		{
-			menu_stack_level--;
+			Menu_Data.menu_stack_level--;
 		}
 		//loc_2343d4be
-		return menu_stack[menu_stack_level];
+		return Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 	}
 }
 
@@ -476,7 +549,7 @@ int menu_items_navigate(int* a)
     }
 #endif
 
-	r1 = menu_stack[menu_stack_level];
+	r1 = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 
 	if (*a == 2) //Down
 	{
@@ -523,7 +596,7 @@ int menu_items_navigate(int* a)
 }
 
 
-/* 2343d51e - todo */
+/* 2343d51e /  / 2344de56 - todo */
 int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 {
 	UI_Thread_Params sp4;
@@ -546,7 +619,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 		else if (pMenuItem->inputThreadFunc == 0)
 		{
 			//loc_2343d53c
-			r0 = &Data_235fdf58;
+			r0 = &Menu_Data.Data_235fdf58;
 			//->loc_2343d550
 		}
 		else
@@ -565,7 +638,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 	else
 	{
 		//loc_2343d53c
-		r0 = &Data_235fdf58;
+		r0 = &Menu_Data.Data_235fdf58;
 		//->loc_2343d550
 	}
 	//loc_2343d550
@@ -582,9 +655,9 @@ void sub_2343d556(void* pMsg)
 	console_send_string("sub_2343d556 (todo.c): TODO\r\n");
 #endif
 
-	OSMboxAccept(Data_235fdf70->pMBox);
+	OSMboxAccept(Menu_Data.Data_235fdf70->pMBox);
 
-	OSMboxPost(Data_235fdf70->pMBox, pMsg);
+	OSMboxPost(Menu_Data.Data_235fdf70->pMBox, pMsg);
 }
 
 
@@ -596,7 +669,18 @@ UI_Thread_Params* sub_2343d572(void)
 	console_send_string("sub_2343d572 (todo.c): TODO\r\n");
 #endif
 
-	return Data_235fdf70;
+	return Menu_Data.Data_235fdf70;
+}
+
+
+/* 2343d57a /  / 2344de8e - todo */
+struct Menu_Data* sub_2344de8e(void)
+{
+#if 0
+	console_send_string("sub_2344de8e (todo.c): TODO\r\n");
+#endif
+
+	return &Menu_Data;
 }
 
 
@@ -610,14 +694,14 @@ int sub_2343d580()
 }
 
 
-/* 2343d610 - todo */
+/* 2343d610 / 2344e6a2 - todo */
 void mainfunction_thread(UI_Thread_Params* a)
 {
     int timeout;
 	uint8_t err; //sp_0xc;
 	Menu_Event sp;
-	int r7;
-	Menu* r4;
+	uint8_t ir_key;
+	Menu* pMenu; //r4
 	struct
 	{
 		uint8_t bData_0; //0
@@ -626,7 +710,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 	}* pMsg;
 
-	Menu_Item* r0;
+	Menu_Item* pMenuItem; //r0 / r6
 
 	void (*r4_)(int);
 	void (*r5)(int);
@@ -637,23 +721,25 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 	memcpy(&Data_235fdf28, a, sizeof(UI_Thread_Params));
 
-	Data_235fdf70 = &Data_235fdf28/*r4*/;
+	Menu_Data.Data_235fdf70 = &Data_235fdf28/*r4*/;
 
 	OSSemPost(Data_235fdf28.pSema);
 	OSMboxAccept(Data_235fdf28.pMBox);
 
-	if (menu_stack_level == 0)
+#ifdef VDR110
+	if (Menu_Data.menu_stack_level == 0)
 	{
 		menu_root_start();
 	}
+#endif
 
 	while (1)
 	{
-		//loc_2343d642
-		r4 = menu_stack[menu_stack_level];
-		if (r4 != 0)
+		//loc_2343d642 / 2344e6d6
+		pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
+		if (pMenu != 0)
 		{
-			timeout = r4->timeout;
+			timeout = pMenu->timeout;
 		}
 		else
 		{
@@ -673,46 +759,308 @@ void mainfunction_thread(UI_Thread_Params* a)
         }
 #endif
 
-		r7 = pMsg->bData_0;
+		ir_key = pMsg->bData_0;
 
-		if (r4 != 0)
+		if (pMenu != 0)
 		{
-			r0 = r4->Data_4;
-			r4_ = r0->Data_0x24;
-			r5 = r0->Data_0x28;
-			//->loc_2343d682
+			pMenuItem = pMenu->Data_4;
+			r4_ = pMenuItem->Data_0x24;
+			r5 = pMenuItem->Data_0x28;
+			//->loc_2343d682 / 0x2344e72e
 		}
 		else
 		{
 			//loc_2343d67c
-			r0 = 0;
+			pMenuItem = 0;
 			r4_ = 0;
 			r5 = 0;
 		}
-		//loc_2343d682
+		//loc_2343d682 / 0x2344e72e
 		if (err != 10)
 		{
-			//0x2343d68a
-			void* r0_;
-			void (*r7_)(void*);
+			//0x2343d68a / 0x2344e736
 #if 1
 			{
                 extern char debug_string[];
-				sprintf(debug_string, "mainfunction_thread: ir key=%d\r\n", r7);
+				sprintf(debug_string, "mainfunction_thread: ir key=%d\r\n", ir_key);
 				console_send_string(debug_string);
 			}
 #endif
-			if (menu_stack_level == 0)
+
+#ifndef VDR110
+#if 0 //TODO!!!
+			sp_0x70 = 1;
+
+			if (0 != sub_2345a4e6(1))
+			{
+				//0x2344e742
+				switch (ir_key)
+				{
+				case 12:
+					//0x2344e770
+					onoff_set_state(6, &Menu_Data_Threads.Data_235fdf28, standby_thread);
+					//->0x2344ee44
+					break;
+
+				case 16:
+				case 17:
+				case 32:
+				case 33:
+				case 48:
+				case 49:
+				case 53:
+				case 87:
+					//0x2344e76c
+					//r1 = 0x13
+					//->0x2344edb6
+					sub_234546b8(&Menu_Data_Threads.Data_235fdf28, 0x13);
+					//->0x2344ee44
+					break;
+
+				default:
+					//0x2344e77c -> 0x2344ee44
+					break;
+				}
+			}
+			else
+#endif //TODO
+			{
+				//0x2344e77e
+				switch (ir_key)
+				{
+#if 0 //TODO!!!
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+					//2344E8F8???
+					//TODO!!!
+					break;
+
+				case 10:
+				case 11:
+					//2344E7FC??? -> 0x2344ee44
+					break;
+
+				case 12:
+					//2344E97A??? -> 2344eb94
+					if (0 != sub_2345a4e6(0))
+					{
+						//0x2344eb9e
+						//TODO!!!
+					}
+					//loc_2344ebd4
+					//TODO!!!
+					break;
+
+				case 13:
+					//2344E978???
+					//TODO!!!
+					break;
+
+				case 16:
+					//2344E878???
+					//break;
+				case 17:
+					//0x2344e878 -> 0x2344ea6e
+				case 65: //VOL-
+					//2344E788 -> 2344E878
+					{
+						int r0 = sub_23451f66();
+						//TODO!!!
+					}
+					break;
+
+				case 32: //0x20
+					//2344E99C???
+					{
+						int r0 = sub_23451f66();
+						//TODO!!!
+					}
+					break;
+
+				case 33:
+					//2344E98C??? -> 2344e9e4
+					{
+						int r0 = sub_23451f66();
+						//TODO
+					}
+					break;
+
+				case 34:
+					//2344E98A??? -> 2344ea20
+					sub_2340e8c8();
+					//->0x2344e990
+					break;
+
+				case 35:
+					//2344E988??? -> 0x2344ed36
+					//TODO!!!
+					break;
+
+				case 36:
+					//2344E7FC??? -> 0x2344ee44
+					break;
+
+				case 42:
+					//2344E986??? -> 0x2344ea4a
+					//TODO!!!
+					break;
+
+				case 44:
+				case 47:
+					//2344E984??? -> 0x2344eb84
+					//TODO!!!
+					break;
+
+				case 45:
+					//2344E91A???
+					//TODO!!!
+					break;
+
+				case 48: //CH+
+					//2344E982??? -> 0x2344e9de
+					channel_next();
+					//->0x2344e990
+					//TODO!!!
+					break;
+
+				case 49: //CH-
+					//2344E980??? -> 0x2344ea1a
+					channel_prev();
+					//->0x2344e990
+					//TODO!!!
+					break;
+
+				case 50:
+					//2344E97E??? -> 2344ead6
+					//TODO!!!
+					break;
+
+				case 52:
+					//2344E97C??? -> 2344eb5a
+					//TODO!!!
+					break;
+
+				case 53: //0x35
+					//0x2344e876 -> 0x2344ed86
+					sub_23451e6a(1);
+					//->0x2344ed94
+					//TODO!!!
+					break;
+#endif //TODO
+
+				case 82: //Menu
+					//0x2344e806
+					sub_2344d414(&Data_235fdf28);
+					//->0x2344ee44
+					break;
+
+#if 0 //TOOD
+				case 83:
+					//0x2344e8bc -> 0x2344edce
+					//TODO!!!
+					break;
+#endif //TODO
+				}
+			}
+#endif
+
+#ifdef VDR110
+			if (Menu_Data.menu_stack_level == 0)
 			{
 				menu_root_start();
 
-				r0 = menu_stack[menu_stack_level]->Data_4;
+				pMenuItem = Menu_Data.menu_stack[Menu_Data.menu_stack_level]->Data_4;
 			}
 			//loc_2343d6a0
-			r0_ = r0->onEvent;
-			sp.keyCode = r7;
-			r7_ = r0_;
+			void* r0_;
+			void (*r7_)(void*);
 
+			r0_ = pMenuItem->onEvent;
+			sp.keyCode = ir_key;
+			r7_ = r0_;
+#endif
+
+#ifndef VDR110
+			//0x2344ee44
+#if 0 //TODO!!!
+			if (sp8 != 0)
+			{
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "mainfunction_thread: sp8=0x%x\r\n", sp8);
+					console_send_string(debug_string);
+				}
+#endif
+				(sp8)();
+			}
+			//0x2344ee4e
+			if (r7 != 0)
+			{
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "mainfunction_thread: r7=0x%x\r\n", r7);
+					console_send_string(debug_string);
+				}
+#endif
+				(r7)(&sp_0x5c);
+
+				r7 = 0;
+			}
+			//0x2344ee58
+			if (sp_0x10 != 0)
+			{
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "mainfunction_thread: sp_0x10=0x%x\r\n", sp_0x10);
+					console_send_string(debug_string);
+				}
+#endif
+				(sp_0x10)(sp_0x48);
+
+				sp_0x10 = 0;
+			}
+			//0x2344ee68
+			if (sp_0xc != 0)
+			{
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "mainfunction_thread: sp_0xc=0x%x\r\n", sp_0xc);
+					console_send_string(debug_string);
+				}
+#endif
+				(sp_0xc)(&sp_0x4c/*, r4->Data_0x14*/);
+			}
+			//0x2344ee7a
+			if (sp4 != 0)
+			{
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "mainfunction_thread: sp4=0x%x\r\n", sp4);
+					console_send_string(debug_string);
+				}
+#endif
+				(sp4)();
+
+				err = 0;
+			}
+			//->0x2344ef02
+#endif //TODO
+#endif
+
+#ifdef VDR110
 			if (r4_ != 0)
 			{
 				(r4_)(0);
@@ -728,23 +1076,26 @@ void mainfunction_thread(UI_Thread_Params* a)
 				(r5)(0);
 			}
 			//->loc_2343d6d0
+#endif
 		} //if (err != 10)
 		else
 		{
-			//->loc_2343d6c2
+			//->loc_2343d6c2 / 0x2344e834 -> 0x2344eece
 #if 0
 			console_send_string("mainfunction_thread (thumb.c): timeout\r\n");
 #endif
-			if (r0 != 0)
+			if (pMenuItem != 0)
 			{
-				void (*r1)(int) = r0->onEvent;
+				// / 0x2344eed2
+				void (*r1)(int) = pMenuItem->onEvent;
 				if (r1 != 0)
 				{
 					(r1)(0);
 				}
+				//  / 0x2344eeea
 			}
 		}
-		//loc_2343d6d0
+		//loc_2343d6d0 / 0x2344ef02
 		if (62 == OSTaskDelReq(0xff))
 		{
 			OSTaskDel(0xff);
@@ -782,7 +1133,7 @@ void menu_event_thread(UI_Thread_Params* p)
 
 	sp8 = *p;
 
-	Data_235fdf70 = &sp8;
+	Menu_Data.Data_235fdf70 = &sp8;
 
 	err = OSSemPost(sp8.pSema);
 	OSMboxAccept(sp8.pMBox);
@@ -793,10 +1144,10 @@ void menu_event_thread(UI_Thread_Params* p)
 	{
 		//loc_2343d70e
 		int timeout;
-		if (menu_stack[ /*sp_0x28->bData_0x10*/menu_stack_level ] != 0)
+		if (Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ] != 0)
 		{
 			//0x2343d71e
-			timeout = menu_stack[ /*sp_0x28->bData_0x10*/menu_stack_level ]->timeout;
+			timeout = Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ]->timeout;
 		}
 		else
 		{
@@ -807,7 +1158,7 @@ void menu_event_thread(UI_Thread_Params* p)
 
 		r0 = pMsg->bData_0;
 
-		pMenu = menu_stack[ /*sp_0x28->bData_0x10*/menu_stack_level ];
+		pMenu = Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ];
 		pMenuItem = pMenu->Data_4;
 		sp4 = pMenuItem->Data_0x24;
 		r6 = pMenuItem->Data_0x28;
@@ -1075,7 +1426,7 @@ void standby_thread(UI_Thread_Params* a)
 
 	memcpy(&Data_235fdf40, a, sizeof(UI_Thread_Params));
 
-	Data_235fdf70 = &Data_235fdf40;
+	Menu_Data.Data_235fdf70 = &Data_235fdf40;
 
 	err = OSSemPost(Data_235fdf40.pSema);
 
@@ -1184,11 +1535,11 @@ void sub_2343d98e(UI_Thread_Params* r1)
 
 	memcpy(&sp4, r1, sizeof(UI_Thread_Params));
 
-	Data_235fdf70 = &sp4;
+	Menu_Data.Data_235fdf70 = &sp4;
 
 	sp_0x20 = OSSemPost(sp4.pSema);
 
-	bData_235fdfa9 = 0; //TODO!!!
+	Menu_Data.bData_235fdfa9 = 0; //TODO!!!
 
 	OSMboxAccept(sp4.pMBox);
 
@@ -1201,7 +1552,7 @@ void sub_2343d98e(UI_Thread_Params* r1)
 
 		pMsg = (void*) OSMboxPend(sp4.pMBox, 0, &sp_0x20);
 
-		r2 = menu_stack[menu_stack_level];
+		r2 = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 		r1 = r2->Data_4;
 
 		switch (pMsg->bData_0)
@@ -1303,7 +1654,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 
 	sp4 = *p;
 
-	Data_235fdf70 = &sp4;
+	Menu_Data.Data_235fdf70 = &sp4;
 
 	//r5, =0x235fdf58
 
@@ -1316,10 +1667,10 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	{
 		//loc_2343da7a
 		int timeout;
-		if (menu_stack[ menu_stack_level ] != 0)
+		if (Menu_Data.menu_stack[ Menu_Data.menu_stack_level ] != 0)
 		{
 			//0x2343da88
-			timeout = menu_stack[ menu_stack_level ]->timeout;
+			timeout = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ]->timeout;
 		}
 		else
 		{
@@ -1330,7 +1681,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 
 		r0 = pMsg->bData_0;
 		//loc_2343daa4
-		r5 = menu_stack[ menu_stack_level ];
+		r5 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 		r1 = r5->Data_4;
 
 		if (err != 10)

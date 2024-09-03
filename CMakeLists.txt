@@ -70,6 +70,7 @@ set(SRCS
    menu_amplifier_inputs.c
    menu_net_radio.c
    sub_23476ed4.c
+   menu_main.c
    main2.c
    hexdump.c
    todo.c
@@ -145,7 +146,6 @@ add_definitions(
 )
 
 target_compile_definitions(${TARGET_V290} PUBLIC
-#    VDR110
 #    DVBC_RADIO
 #    USB_HUB
 #    USB_ASIX

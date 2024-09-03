@@ -437,6 +437,9 @@ void main_inputhandler_init()
 			if (state == 1)
 			{
 				//0x23400a3c
+#if 0 //V290
+				sub_2344db36(&sp_0x74);
+#endif
 				ui_thread_create(&sp_0x74);
 
 				sub_2340bf0c(&sp_0x28);
@@ -449,6 +452,9 @@ void main_inputhandler_init()
 			else if (state == 2)
 			{
 				//0x23400a68
+#if 0 //V290
+				sub_2344db36(&sp_0x74);
+#endif
 				sp_0x74.Data_20 = 0;
 				sp_0x74.pMBox = pMBox;
 				sp_0x74.threadFunc = standby_thread;

@@ -13,7 +13,7 @@ static Menu_Item menu_net_radio_items[]; //2349c4d8
 static int sub_234813ac(uint8_t*);
 static int sub_234813f4(int*);
 static int menu_net_radio_on_enter();
-static void sub_23481742();
+static int sub_23481742(void);
 static int sub_234817b2(int);
 
 char Data_2349c374[300] = " Start Stream "; //2349c374
@@ -322,7 +322,7 @@ void sub_23481454(char* a, int b)
 	console_send_string("sub_23481454 (todo.c): TODO\r\n");
 #endif
 
-#if 0
+#if 1
     if ((a != 0) && (b != 0))
     {
         hex_dump("sub_23481454", a, b);
@@ -457,11 +457,62 @@ int menu_net_radio_on_enter(void)
 
 
 /* 23481742 - todo */
-void sub_23481742(void)
+int sub_23481742(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_23481742 (todo.c): TODO\r\n");
 #endif
+
+    if (Data_2399be28.Data_2399c2a8 == 0)
+    {
+        //0x23481750
+        int r4 = 200;
+
+        if (Data_2399be28.Data_2399c2a4 != 0)
+        {
+            sub_23477120(Data_2399be28.Data_2399c2a4);
+        }
+        //loc_2348175e
+        sub_23481492("senderliste/mylogin.php?mac=!", 0);
+        //->loc_23481774
+        while (r4--)
+        {
+            //loc_23481768
+            if (Data_2399be28.Data_2399c2a4 == 0)
+            {
+                //loc_23481782
+                break;
+            }
+
+            rtos_task_wait(1);
+        }
+        //0x23481778
+        if (Data_2399be28.Data_2399c2a4 != 0)
+        {
+            sub_23477120(Data_2399be28.Data_2399c2a4);
+        }
+        //loc_23481782
+        if (Data_2399be28.Data_2399c2ac != 0)
+        {
+            //0x23481788
+            Struct_2340bf0c sp_0x2c;
+            Channel sp4;
+
+            sub_2340bf0c(&sp_0x2c);
+            channel_start_number(&sp4, sp_0x2c.wCurrentChannel, sp_0x2c.wCurrentChannel);
+        }
+        //loc_2348179a
+        return 0;
+    }
+    else
+    {
+        //loc_234817a0
+        Data_2399be28.Data_2399c2a8--;
+
+        sub_23481492("senderliste/top.php", sub_23481592);
+
+        return 1;
+    }
 }
 
 

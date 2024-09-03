@@ -85,11 +85,32 @@ extern void menu_event_thread(UI_Thread_Params*);
 extern void menu_item_event_thread(UI_Thread_Params*);
 
 
+typedef struct
+{
+	int fill_0[4]; //0
+	void* Data_0x10; //16 = 0x10
+	uint16_t fill_0x14; //20 = 0x14
+	uint8_t fill_0x16; //22 = 0x16
+	uint8_t bData_0x17; //23 = 0x17
+	//???
+} Menu_Item_Inner4_Data_0_Data_0x20;
+
+typedef struct
+{
+	uint8_t bData_0; //0
+	int fill_4[6]; //4
+	uint16_t wData_0x1c; //28 = 0x1c
+	Menu_Item_Inner4_Data_0_Data_0x20* Data_0x20; //32 = 0x20
+	int fill_0x24[6]; //36 = 0x24
+	uint8_t bData_0x3c;
+	//???
+} Menu_Item_Inner4_Data_0;
+
 typedef struct Menu_Item
 {
 	uint16_t wData_0; //0
 	uint16_t wData_2; //2
-	int fill_4[5]; //4
+	Menu_Item_Inner4_Data_0* Data_4[5]; //4
 	void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 	void* onEvent; //0x1c = 28
 	void* inputThreadFunc; //0x20 = 32
@@ -134,6 +155,41 @@ typedef struct
 
 } Struct_235fdf74_Inner16;
 
+typedef struct
+{
+	int fill_0[4]; //0
+	void* Data_0x10; //0x10
+
+} Struct_235fdf74_Inner20_Inner8_Inner0x20;
+
+typedef struct
+{
+	int fill_0[144]; //0
+	struct
+	{
+		int fill_0[8]; //0
+		Struct_235fdf74_Inner20_Inner8_Inner0x20* Data_0x20; //0x20 = 32
+		//0x24???
+	} Data_576; //0x240 = 576
+	int fill_0x264[38]; //0x264
+	uint8_t bData_0x2fc; //0x2fc
+} Struct_235fdf74_Inner20_Inner8;
+
+typedef struct
+{
+	uint16_t fill_0; //0
+	uint16_t wData_2; //2
+	struct
+	{
+		int fill_0; //0
+		Struct_235fdf74_Inner20_Inner8* Data_4; //4
+		int fill_8[4]; //8
+	} Data_4;
+	void (*Data_0x1c)(); //28 = 0x1c
+	void (*Data_0x20)(); //32 = 0x20
+	//???
+} Struct_235fdf74_Inner20;
+
 typedef struct Menu
 {
 	uint16_t stringId; //0
@@ -141,7 +197,7 @@ typedef struct Menu
 	Menu_Item* Data_8; //8
 	Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
 	Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
-	int Data_0x14; //20 = 0x14
+	Struct_235fdf74_Inner20* Data_0x14; //20 = 0x14
 	uint8_t maxItem; //0x18 = 24
 	int8_t currentItem; //0x19
 	void (*Data_0x1c)(); //0x1c
@@ -151,7 +207,12 @@ typedef struct Menu
 	int Data_0x2c; //44 = 0x2c
 	int timeout; //48 = 0x30
 	Menu_Item* (*Data_0x34)(struct Menu*); //52
+#ifdef VDR110
 	//0x38 = 56?
+#else
+	void* (*Data_0x38)(struct FrontDisplay_Job*); //56
+	//0x3c = 60?
+#endif
 }
 Menu;
 
@@ -166,6 +227,16 @@ typedef struct
 extern int menu_items_navigate(int*);
 extern int menu_general_settings_entry(UI_Thread_Params*);
 
+
+struct Menu_Data
+{
+	UI_Thread_Params Data_235fdf58; //0 235fdf58 235fdf98 -0x40 23796784
+	UI_Thread_Params* Data_235fdf70; //24 = 0x18 235fdf70 / 2378336C -0x40 + 0x18 2379679C
+	Menu* menu_stack[13]; //28 = 0x1c 235fdf74 -0x40, size??? 237967A0
+	uint8_t menu_stack_level; //80 = 0x50 235fdfa8 235fdf98 + 0x10 237967D4
+	uint8_t bData_235fdfa9;
+
+};
 
 
 typedef struct

@@ -931,6 +931,34 @@ void sub_23447310()
 
 }
 
+
+/* 23477120 - todo */
+void sub_23477120()
+{
+	console_send_string("sub_23477120 (todo.c): TODO\r\n");
+
+}
+
+#ifndef VDR110
+
+/* 23457a3e - todo */
+void sub_23457a3e()
+{
+	console_send_string("sub_23457a3e (todo.c): TODO\r\n");
+
+}
+
+
+/* / / 2344db36 */
+void sub_2344db36(void* a)
+{
+	console_send_string("sub_2344db36 (todo.c): TODO\r\n");
+
+}
+
+#endif //!VDR110
+
+
 #ifndef DVBC_RADIO
 
 /*   /  / 2345c8da - todo */
