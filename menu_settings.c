@@ -5,10 +5,13 @@
 
 #ifndef VDR110
 
-extern uint8_t Data_2396b4c0[]; //2396b4c0
-
 extern void sub_23414b38(); //->graphic.c
-extern int menu_general_settings_entry(UI_Thread_Params* p);
+
+static uint8_t Data_2396b4c0[]; //2396b4c0
+static uint8_t Data_2396b4e8[]; //2396b4e8
+
+extern int menu_general_settings_entry(UI_Thread_Params*);
+extern int menu_picture_entry(UI_Thread_Params*);
 
 static Menu_Item menu_settings_items[]; //234dfb30
 
@@ -25,7 +28,7 @@ static Menu menu_settings =  //234df1cc
 		&Data_234df3a8, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
 		/*&Data_234df428*/0, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
 		&Data_234dfae8, //int Data_0x14; //20 = 0x14
-		0, //6, //uint8_t maxItem; //0x18 = 24
+		1, //6, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
 		sub_23414b38, //void (*Data_0x1c)(); //0x1c
 		menu_items_navigate, //void (*onNavigate)(); //0x20
@@ -53,7 +56,7 @@ static Menu menu_settings =  //234df1cc
 #endif
 };
 
-extern uint8_t Data_2396b3a0[]; //2396b3a0, size???
+static uint8_t Data_2396b3a0[]; //2396b3a0, size???
 
 Struct_235fdf74_Inner12_Inner0x20 Data_234df260 = //234df260
 {
@@ -72,7 +75,7 @@ Struct_235fdf74_Inner12_Inner0x20 Data_234df260 = //234df260
 #endif
 };
 
-Menu_Item_Inner4_Data_0_Data_0x20 Data_234df290 = //234df290
+static Menu_Item_Inner4_Data_0_Data_0x20 Data_234df290 = //234df290
 {
 	{0, 0, 0, 0}, //TODO
 	&Data_2396b4c0[0], //Data_0x10
@@ -86,6 +89,23 @@ Menu_Item_Inner4_Data_0_Data_0x20 Data_234df290 = //234df290
 	0x234df29c 0901                   lsls       r1, r1, #0x4
 	0x234df29e 0000                   movs       r0, r0
 	0x234df2a0                        dd         0x2396b4c0
+#endif
+};
+
+static Menu_Item_Inner4_Data_0_Data_0x20 Data_234df2a8 = //234df2a8
+{
+	{0, 0, 0, 0}, //TODO
+	&Data_2396b4e8[0], //Data_0x10
+#if 0
+	0x234df2a8 0000                   movs       r0, r0                             ; DATA XREF=0x234df508
+	0x234df2aa 5100                   lsls       r1, r2, #0x1
+	0x234df2ac 8400                   lsls       r4, r0, #0x2
+	0x234df2ae 3601                   lsls       r6, r6, #0x4
+	0x234df2b0 A000                   lsls       r0, r4, #0x2
+	0x234df2b2 0104                   lsls       r1, r0, #0x10
+	0x234df2b4 0901                   lsls       r1, r1, #0x4
+	0x234df2b6 0000                   movs       r0, r0
+	0x234df2b8                        dd         0x2396b4e8
 #endif
 };
 
@@ -150,6 +170,32 @@ static Menu_Item_Inner4_Data_0 Data_234df4a8 = //234df4a8
 #endif
 };
 
+static Menu_Item_Inner4_Data_0 Data_234df4e8 = //234df4e8
+{
+	1,
+	{0, 0, 0, 0, 0, 0}, //TODO
+	0,
+	&Data_234df2a8, //Data_0x20
+#if 0
+	0x234df4e8                        db         0x01                               ; DATA XREF=0x234dfb60
+	0x234df4e9                        db  0x00 ; '.'
+	0x234df4ea 0000                   movs       r0, r0
+	0x234df4ec                        dd         0x234df250
+	0x234df4f0 0000                   movs       r0, r0
+	0x234df4f2 0000                   movs       r0, r0
+	0x234df4f4 3D00                   movs       r5, r7
+	0x234df4f6 8000                   lsls       r0, r0, #0x2
+	0x234df4f8 F900                   lsls       r1, r7, #0x3
+	0x234df4fa 2000                   movs       r0, r4
+	0x234df4fc 0000                   movs       r0, r0
+	0x234df4fe 0000                   movs       r0, r0
+	0x234df500                        dd         0x234c12d4
+	0x234df504 0900                   movs       r1, r1
+	0x234df506 0000                   movs       r0, r0
+	0x234df508                        dd         0x234df2a8
+#endif
+};
+
 static Struct_235fdf74_Inner20 Data_234dfae8 = //234dfae8
 {
 	0, //uint16_t fill_0; //0
@@ -207,7 +253,6 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfb58                        dd         0x00000000
 #endif
 	},
-#if 0
 	//[1]
 	{
 		16, //0x10 = "Bild",
@@ -218,7 +263,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_picture_entry, //sub_23470548, //void* Data_0x1c; //0x1c = 28
-		sub_2344e2a6, //void* Data_0x20; //0x20 = 32
+		menu_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
 		//0x2c = 234DFB88
@@ -237,6 +282,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfb84                        dd         0x00000000
 #endif
 	},
+#if 0
 	//[2]
 	{
 		137, //0x89 = "Ton",

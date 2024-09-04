@@ -40,7 +40,7 @@ struct
 	uint8_t currentLanguage; //0x40
 	uint8_t numLanguages; //0x41
 	//0x44
-} Data_234fd8ac; //234fd8ac
+} text_table_languages; //234fd8ac /  / 2356c670
 
 
 
@@ -142,9 +142,9 @@ int text_table_init(Struct_235f2e2c* pFlash, int r8)
 					sp += 32;
 				}
 				//0x2340825c
-				memset(&Data_234fd8ac, 0, 44);
+				memset(&text_table_languages, 0, 44);
 				//r5 = 234fd8ac
-				Data_234fd8ac.numLanguages = Data_234fc814.bData_2;
+				text_table_languages.numLanguages = Data_234fc814.bData_2;
 
 				sp = r8 + 16; //401b0010
 
@@ -161,24 +161,24 @@ int text_table_init(Struct_235f2e2c* pFlash, int r8)
 #if 0
 				{
 					extern char debug_string[];
-					sprintf(debug_string, "text_table_init: sp=0x%x, Data_234fd8ac.numLanguages=%d\r\n",
-							sp, Data_234fd8ac.numLanguages);
+					sprintf(debug_string, "text_table_init: sp=0x%x, text_table_languages.numLanguages=%d\r\n",
+							sp, text_table_languages.numLanguages);
 					console_send_string(debug_string);
 				}
 #endif
 
 				//->loc_234082b8
-				for (r4 = 0; r4 < Data_234fd8ac.numLanguages; r4++) //15
+				for (r4 = 0; r4 < text_table_languages.numLanguages; r4++) //15
 				{
 					//loc_2340829c
-					flash_read(pFlash, sp + r4 * 4, 4, &Data_234fd8ac.language[r4]);
+					flash_read(pFlash, sp + r4 * 4, 4, &text_table_languages.language[r4]);
 				}
 				//0x234082c4
-				Data_234fd8ac.currentLanguage = av_get_language();
+				text_table_languages.currentLanguage = av_get_language();
 
-				if (Data_234fd8ac.currentLanguage > Data_234fd8ac.numLanguages)
+				if (text_table_languages.currentLanguage > text_table_languages.numLanguages)
 				{
-					Data_234fd8ac.currentLanguage = 0;
+					text_table_languages.currentLanguage = 0;
 				}
 
 #if 0
@@ -201,12 +201,37 @@ int text_table_init(Struct_235f2e2c* pFlash, int r8)
 }
 
 
+/* 234082e8 /  / 2340adc4 - todo */
+uint32_t text_table_get_num_languages(void)
+{
+	return text_table_languages.numLanguages;
+}
+
+
+/* 234082f4 /  / 2340add0 - todo */
+void sub_234082f4(void)
+{
+	text_table_languages.currentLanguage = av_get_language();
+
+#if 0
+	if (text_table_languages.currentLanguage >
+			text_table_languages.numLanguages)
+	{
+		text_table_languages.currentLanguage = 0;
+	}
+#else
+	text_table_languages.currentLanguage = (text_table_languages.currentLanguage >
+			text_table_languages.numLanguages)? 0: text_table_languages.currentLanguage;
+#endif
+}
+
+
 /* 23408d28 - complete */
 int text_table_get_string(int idx, void* buf, int len)
 {
 	int addr;
 
-	addr = Data_234fd8ac.language[Data_234fd8ac.currentLanguage] + idx * 4;
+	addr = text_table_languages.language[text_table_languages.currentLanguage] + idx * 4;
 
 	flash_read(Data_23491ff8, addr, 4, &addr);
 

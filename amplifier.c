@@ -706,7 +706,7 @@ int sub_2343b822(void)
 	if (r0 == 0)
 	{
 		//0x2343b884
-		Data_235fc28c.Data_235fc408.wData_235fc424 = sub_2340a650(sp4.bData_8);
+		Data_235fc28c.Data_235fc408.wData_235fc424 = sub_2340a650(sp4.initialVolume);
 
 		Data_235fc28c.Data_235fc408.bData_235fc427 = Data_235fc28c.Data_235fc298.bData_16c;
 

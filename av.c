@@ -104,9 +104,9 @@ int sub_23410398(uint8_t* r4)
 				Data_2358bda4.Data_0x28 = 0; //r7
 				*r4 = 1; //r6
 
-				if (Data_2358bda4.Data_0x5c->bData_0x17/*r1*/ != 0)
+				if (Data_2358bda4.Data_0x5c->displayFormat/*r1*/ != 0)
 				{
-					if (Data_2358bda4.Data_0x5c->bData_0x15/*r0*/ != 0)
+					if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ != 0)
 					{
 						//0x23410430
 						sub_23428184(3);
@@ -153,7 +153,7 @@ int sub_23410398(uint8_t* r4)
 							//->loc_23410614
 							break;
 						} //switch (sp4.Data_8.Data_0)
-					} //if (Data_2358bda4.Data_0x5c->bData_0x15/*r0*/ != 0)
+					} //if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ != 0)
 					else
 					{
 						//loc_23410468
@@ -224,7 +224,7 @@ int sub_23410398(uint8_t* r4)
 				else
 				{
 					//loc_234104a0
-					if (Data_2358bda4.Data_0x5c->bData_0x15/*r0*/ == 0)
+					if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ == 0)
 					{
 						//0x234104a8
 						sub_23428184(2);
@@ -279,7 +279,7 @@ int sub_23410398(uint8_t* r4)
 							//->loc_23410614
 							break;
 						}
-					} //if (Data_2358bda4.Data_0x5c->bData_0x15/*r0*/ == 0)
+					} //if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ == 0)
 					else
 					{
 						//loc_234104fc
@@ -355,13 +355,13 @@ int sub_23410398(uint8_t* r4)
 
 				*r4 = 1;
 
-				if (Data_2358bda4.Data_0x5c->bData_0x17 == 0)
+				if (Data_2358bda4.Data_0x5c->displayFormat == 0)
 				{
 					//0x2341056c
 					gpio_set(Data_2358bda4.Data_4, 0);
 
 					if ((Data_2358bda4.Data_0x28 > 2) &&
-							(Data_2358bda4.Data_0x5c->bData_0x15 == 0))
+							(Data_2358bda4.Data_0x5c->bDisplayAdjustment == 0))
 					{
 						//0x23410594
 						sub_2343471c(2);
@@ -399,7 +399,7 @@ int sub_23410398(uint8_t* r4)
 					else
 					{
 						//loc_234105dc
-						if (Data_2358bda4.Data_0x5c->bData_0x15 != 0)
+						if (Data_2358bda4.Data_0x5c->bDisplayAdjustment != 0)
 						{
 							//0x234105e8
 							sub_2343471c(3);
@@ -753,13 +753,13 @@ void sub_234109d4()
 
 	int r2 = Data_2358bda4.Data_0x64;
 
-	if (Data_2358bda4.Data_0x5c->bData_0x16 != r2)
+	if (Data_2358bda4.Data_0x5c->bVideoSignalAnalog != r2)
 	{
-		Data_2358bda4.Data_0x64 = Data_2358bda4.Data_0x5c->bData_0x16;
+		Data_2358bda4.Data_0x64 = Data_2358bda4.Data_0x5c->bVideoSignalAnalog;
 
-		int r1 = Data_2358bda4.Data_0x5c->bData_0x16;
+		int r1 = Data_2358bda4.Data_0x5c->bVideoSignalAnalog;
 
-		if ((r1 == 0) || (r1 == 1))
+		if ((r1 == 0/*FBAS*/) || (r1 == 1/*RGB*/))
 		{
 			gpio_set(Data_2358bda4.Data_8, r1);
 			//r0, #0x6
@@ -768,7 +768,7 @@ void sub_234109d4()
 			//->loc_23410a48
 		}
 		//loc_23410a1c
-		else if (r1 == 2)
+		else if (r1 == 2/*YUV*/)
 		{
 			//0x23410a24
 			gpio_set(Data_2358bda4.Data_8, 0);
@@ -784,7 +784,7 @@ void sub_234109d4()
 	}
 	//loc_23410a48
 	//r5 = 0;
-	if (Data_2358bda4.Data_0x5c->bData_0x15 != Data_2358bda4.Data_0x6c)
+	if (Data_2358bda4.Data_0x5c->bDisplayAdjustment != Data_2358bda4.Data_0x6c)
 	{
 		Data_2358bda4.Data_0x28 = 0; //r5
 
@@ -796,10 +796,10 @@ void sub_234109d4()
 			sub_2345f8f8();
 		}
 
-		Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x5c->bData_0x15;
+		Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x5c->bDisplayAdjustment;
 	}
 	//loc_23410a90
-	if (Data_2358bda4.Data_0x5c->bData_0x17 != Data_2358bda4.Data_0x70)
+	if (Data_2358bda4.Data_0x5c->displayFormat != Data_2358bda4.Data_0x70)
 	{
 		Data_2358bda4.Data_0x28 = 0; //r5
 
@@ -809,7 +809,7 @@ void sub_234109d4()
 			sub_2345f8f8();
 		}
 
-		Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x5c->bData_0x17;
+		Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x5c->displayFormat;
 	}
 	//loc_23410ac4
 }
@@ -1035,8 +1035,8 @@ void av_thread()
 	Data_2358bda4.Data_24 = 0;
 	Data_2358bda4.Data_28 = 0;
 	Data_2358bda4.Data_32 = 0;
-	Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x40.bData_0x15;
-	Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x40.bData_0x17;
+	Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x40.bDisplayAdjustment;
+	Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x40.displayFormat;
 	Data_2358bda4.Data_0x64 = -1;
 	Data_2358bda4.Data_0x60 = 3; /* HDMI: 20 1920x1080i @ 50Hz */
 	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x40.Data_4 & 3) / 2;
@@ -1189,6 +1189,32 @@ void sub_23410fe4()
 	Data_2358bda4.Data_32 = 3;
 
 	OSTimeDlyResume(Data_2358bda4.Data_0x34.threadPrio & 0xff);
+
+	OSSemPost(Data_23492098);
+}
+
+
+/* 23411050 /  / 23418a50 - todo */
+void sub_23418a50(User_Settings* r6, int r7)
+{
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_23418a20 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(Data_23492098, 0, &sp);
+
+	if (r7 != 0)
+	{
+		Data_2358bda4.Data_0x5c = r6;
+	}
+	else
+	{
+		channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
+
+		Data_2358bda4.Data_0x5c = &Data_2358bda4.Data_0x40;
+	}
 
 	OSSemPost(Data_23492098);
 }

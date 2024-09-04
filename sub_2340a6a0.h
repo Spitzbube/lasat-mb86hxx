@@ -9,21 +9,26 @@ typedef struct
 {
 	uint16_t fill_0; //0 235441b0
 	uint16_t wData_2; //2
+	/*
+		Bit 1: Video signal digital: 0 = YCbCr, 1 = RGB
+		Bit 23:2: Channel list sorting (automatic / manual)
+	*/
 	uint32_t Data_4; //4
-	uint8_t bData_8; //8 235441b8 //initialVolume
-	uint16_t fill_0x0a; //10
+	uint8_t initialVolume; //8 235441b8
+	uint16_t timeDiff; //10
 	uint8_t fill_0x0c; //12 235441bc
 	uint8_t menuLanguage; //13 = 0x0d
 	/*
 		Bit 6: Deep standby
 		Bit 7: Channel list update
+		Bit 11: Timer storage
 		Bit 15: Auto standby
 	 */
 	uint32_t Data_0x10; //16 235441c0
 	uint8_t fill_0x14; //20 = 0x14
-	uint8_t bData_0x15; //21 = 0x15
-	uint8_t bData_0x16; //22 = 0x16
-	uint8_t bData_0x17; //23 = 0x17 //displayFormat
+	uint8_t bDisplayAdjustment; //21 = 0x15 // 0 = Letterbox, 
+	uint8_t bVideoSignalAnalog; //22 = 0x16
+	uint8_t displayFormat; //23 = 0x17 // 0 = 4:3, 1 = 16:9
 	int fill_0x18; //24 235441c8
 	//28 = 0x1c
 } User_Settings;

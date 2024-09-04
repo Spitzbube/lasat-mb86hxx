@@ -1386,7 +1386,7 @@ int sub_2340a59c(int pid)
 }
 
 
-/* 2340a650 - complete */
+/* 2340a650 /  / 2340d12c - complete */
 int sub_2340a650(uint8_t r0)
 {
 	uint8_t i;
@@ -1448,7 +1448,7 @@ int channel_init(int bVolume)
 	else
 	{
 		//0x2340a6e8
-		Data_235462e4.bVolume = sub_2340a650(channel_database.Data_235441b0.bData_8/*235441b8*/);
+		Data_235462e4.bVolume = sub_2340a650(channel_database.Data_235441b0.initialVolume);
 	}
 	//loc_2340a6f8
 	auout_set_volume(main_hAuOut, AUOUT_SPEAKER_ALL, 0);
@@ -2437,7 +2437,7 @@ void sub_2340bf94(int r7, Channel* pChannel, Transponder* pTransponder)
 }
 
 
-/* 2340c01c / 2340e43c - todo */
+/* 2340c01c / 2340e43c / 2340eaf8 - todo */
 int channel_change_volume(int r5, int r7)
 {
 	uint8_t err; //sp
@@ -3133,6 +3133,14 @@ int channel_switch_lists(void)
 	return Data_235462e4.numChannels;
 }
 
+
+/* 2340cbbc /  / 2340f698 - todo */
+uint8_t* channel_get_volume_table(void)
+{
+	return &Data_23488068[0];
+}
+
+ 
 #if 0
 
 /* 2340cbc4 - complete */

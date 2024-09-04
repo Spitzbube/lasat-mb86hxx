@@ -605,7 +605,7 @@ int menu_items_navigate(int* a)
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2344dbb8: r5=%d\r\n", r5);
+		sprintf(debug_string, "menu_items_navigate: r5=%d\r\n", r5);
 		console_send_string(debug_string);
 	}
 #endif
@@ -1971,7 +1971,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2344f8b6: sp8=0x%x\r\n", sp8);
+				sprintf(debug_string, "menu_item_event_thread: sp8=0x%x\r\n", sp8);
 				console_send_string(debug_string);
 			}
 #endif
@@ -2041,7 +2041,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2344f8b6: r6=0x%x\r\n", r6);
+				sprintf(debug_string, "menu_item_event_thread: r6=0x%x\r\n", r6);
 				console_send_string(debug_string);
 			}
 #endif
@@ -2055,7 +2055,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "sub_2344f8b6: sp4=0x%x\r\n", sp4);
+				sprintf(debug_string, "menu_item_event_thread: sp4=0x%x\r\n", sp4);
 				console_send_string(debug_string);
 			}
 #endif
