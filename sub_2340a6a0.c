@@ -618,7 +618,7 @@ void sub_23409c1c(PSI_Program* r7)
 	console_send_string("sub_23409c1c (todo.c): TODO\r\n");
 #endif
 
-	if ((channel_database.Data_235441b0.Data_4 & 0xfc) == 0)
+	if ((channel_database.Data_235441b0.Data_4.dwData & 0xfc) == 0)
 	{
 		//loc_23409da4
 		return;

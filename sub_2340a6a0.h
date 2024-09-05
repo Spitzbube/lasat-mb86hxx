@@ -8,12 +8,20 @@
 typedef struct
 {
 	uint16_t fill_0; //0 235441b0
-	uint16_t wData_2; //2
+	uint16_t wPictureScaling; //2
+	union
+	{
 	/*
 		Bit 1: Video signal digital: 0 = YCbCr, 1 = RGB
 		Bit 23:2: Channel list sorting (automatic / manual)
 	*/
-	uint32_t Data_4; //4
+		uint32_t dwData; //4
+		struct
+		{
+			uint32_t fill_bit0: 27; //bit 0
+			uint32_t video_system: 4; //bit27
+		} bitData;
+	} Data_4; //4
 	uint8_t initialVolume; //8 235441b8
 	uint16_t timeDiff; //10
 	uint8_t fill_0x0c; //12 235441bc

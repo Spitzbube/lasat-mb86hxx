@@ -370,7 +370,7 @@ void sub_2343df02(Struct_2343df02* r4)
 	r4->pList = &Data_235fdfac[0];
 	r4->bData_0x10 = 1;
 	r4->bData_0x11 = 1;
-	r4->bData_0x12 = (sp.Data_4 >> 23) & 0x03; //Channel list sorting
+	r4->bData_0x12 = (sp.Data_4.dwData >> 23) & 0x03; //Channel list sorting
 
 	sub_2340ca5c(1, &sp_0x1c);
 

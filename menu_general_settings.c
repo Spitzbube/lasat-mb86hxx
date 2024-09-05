@@ -1751,7 +1751,7 @@ void get_channel_list_sorting_value_string(Menu_Item* pItem)
 
 	r0->bData_0x17 = 1;
 
-	if ((menu_general_settings_backup.Data_4 & (0x03 << 23)))
+	if ((menu_general_settings_backup.Data_4.dwData & (0x03 << 23)))
 	{
 		text_table_get_string(0xc0/*Automatisch*/, str, 38);
 	}

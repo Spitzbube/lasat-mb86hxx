@@ -457,7 +457,7 @@ void sub_23410620(int r0)
 	sp_0x18.Data_0 = 3; //r2
 	sp_0x18.Data_8 = 0;
 
-	if ((Data_2358bda4.Data_0x5c->Data_4 & 2) == 0)
+	if ((Data_2358bda4.Data_0x5c->Data_4.dwData & 2) == 0)
 	{
 		sp_0x18.Data_12 = 4; //r1
 	}
@@ -587,24 +587,24 @@ int sub_23410804()
 
 	if (sp_0x14.Data_0 <= 576)
 	{
-		r4 = Data_2358bda4.Data_0x5c->wData_2 & 0x0f;
+		r4 = Data_2358bda4.Data_0x5c->wPictureScaling & 0x0f;
 		//->loc_234108a0
 	}
 	else if (sp_0x14.Data_0 == 720)
 	{
-		r4 = (Data_2358bda4.Data_0x5c->wData_2 >> 4) & 0x0f;
+		r4 = (Data_2358bda4.Data_0x5c->wPictureScaling >> 4) & 0x0f;
 		//loc_234108a0
 	}
 	else if (sp_0x14.Data_0 >= 1080)
 	{
-		r4 = (Data_2358bda4.Data_0x5c->wData_2 >> 8) & 0x0f;
+		r4 = (Data_2358bda4.Data_0x5c->wPictureScaling >> 8) & 0x0f;
 		//loc_234108a0
 	}
 
 	if (r4 == 0)
 	{
 		//loc_234108a8
-		int r0 = Data_2358bda4.Data_0x5c->Data_4;
+		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			//0x234108bc
@@ -649,7 +649,7 @@ int sub_23410804()
 	else if (r4 == 1)
 	{
 		//0x23410910
-		int r0 = Data_2358bda4.Data_0x5c->Data_4;
+		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			r4 = 2;
@@ -683,7 +683,7 @@ int sub_23410804()
 	else if (r4 == 2)
 	{
 		//0x23410958
-		int r0 = Data_2358bda4.Data_0x5c->Data_4;
+		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			r4 = 3;
@@ -718,7 +718,7 @@ int sub_23410804()
 	//loc_23410990
 	if (Data_2358bda4.Data_0x60 == r4)
 	{
-		if (Data_2358bda4.Data_0x68 == ((Data_2358bda4.Data_0x5c->Data_4 >> 1) & 1))
+		if (Data_2358bda4.Data_0x68 == ((Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1))
 		{
 			//r0 = 0;
 			//->loc_23410844
@@ -736,7 +736,7 @@ int sub_23410804()
 #endif
 
 	Data_2358bda4.Data_0x60 = r4;
-	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4 >> 1) & 1;
+	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1;
 
 	sub_2341159c();
 
@@ -973,9 +973,9 @@ void sub_23410be8(int* pChannelNr, int* pChannelList)
 	else
 	{
 		//loc_23410cbc
-		if (((Data_2358bda4.Data_0x5c->Data_4 >> 1) & 1) != Data_2358bda4.Data_0x68)
+		if (((Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1) != Data_2358bda4.Data_0x68)
 		{
-			Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4 >> 1) & 1;
+			Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1;
 
 			sub_2341159c();
 		}
@@ -1039,7 +1039,7 @@ void av_thread()
 	Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x40.displayFormat;
 	Data_2358bda4.Data_0x64 = -1;
 	Data_2358bda4.Data_0x60 = 3; /* HDMI: 20 1920x1080i @ 50Hz */
-	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x40.Data_4 & 3) / 2;
+	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x40.Data_4.dwData & 3) / 2;
 	Data_2358bda4.Data_0x78 = 0;
 	Data_2358bda4.pfPeriodicCheck = 0;
 

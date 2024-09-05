@@ -400,7 +400,7 @@ int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
 
 	channel_handle_user_settings(1, &sp_0x24);
 
-	sp_0x40.bData_0x12 = (sp_0x24.Data_4 >> 23) & 0x03; //Channel list sorting
+	sp_0x40.bData_0x12 = (sp_0x24.Data_4.dwData >> 23) & 0x03; //Channel list sorting
 
 	sub_2340ca5c(1, &sp4);
 
