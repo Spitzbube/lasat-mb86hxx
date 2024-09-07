@@ -7,6 +7,7 @@
 #include "nit.h"
 #include "channel_list_update.h"
 #include "frontdisplay.h"
+#include "menu.h"
 
 #pragma thumb
 
@@ -560,7 +561,7 @@ int sub_2347038c()
 	console_send_string("sub_2347038c (todo.c): TODO\r\n");
 #endif
 
-	sub_2343d482(0);
+	MENU_STACK_POP();
 
 	sub_2340add4(0x40300000);
 
@@ -697,9 +698,9 @@ int sub_2347045a(UI_Thread_Params* r0_, void (*r5)(void*))
 
 	scan_start(&sp4);
 
-	sub_2343d482(&menu_channel_search);
+	menu_stack_operate(&menu_channel_search);
 
-	sub_2343d3ac(&menu_channel_search);
+	menu_initialize(&menu_channel_search);
 
 	sub_2343d51e(&menu_channel_search, r0_);
 
@@ -774,9 +775,9 @@ int sub_23470680(UI_Thread_Params* r4, uint16_t stringId, void* r2, void* r3)
 	Data_23495f0c = r2;
 	Data_23495f18.stringId = stringId;
 
-	sub_2343d482(&Data_23495f18);
+	menu_stack_operate(&Data_23495f18);
 
-	sub_2343d3ac(&Data_23495f18);
+	menu_initialize(&Data_23495f18);
 
 	sub_2343d51e(&Data_23495f18, r4);
 
@@ -809,7 +810,7 @@ static int sub_2347075c(void)
 
 	sub_2340add4(0x40300000);
 
-	sub_2343d482(0);
+	MENU_STACK_POP();
 
 	sub_2343dcce();
 
@@ -836,7 +837,7 @@ static int sub_23470772(void)
 
 	sub_23470a02();
 
-	sub_2343d482(0);
+	MENU_STACK_POP();
 
 	sub_2343dcce();
 
@@ -862,7 +863,7 @@ int sub_234707ec()
 	sub_2340ca1c(0, &sp4);
 	network_set_defaults(&sp_0x18, &sp4);
 	channel_write_database();
-	sub_2343d482(0);
+	MENU_STACK_POP();
 #endif
 
 	return 0;
@@ -876,7 +877,7 @@ static int sub_23470862(void)
 	console_send_string("sub_23470862 (todo.c): TODO\r\n");
 #endif
 
-	sub_2343d482(0);
+	MENU_STACK_POP();
 
 	return 0;
 }
@@ -897,7 +898,7 @@ static int sub_2347086e(void)
 
 	channel_write_database();
 
-	sub_2343d482(0);
+	MENU_STACK_POP();
 
 	return 0;
 }
@@ -966,8 +967,8 @@ int sub_23470890(UI_Thread_Params* r5, int r1)
 		return 9;
 	}
 	//->loc_23470914
-	sub_2343d482(r4);
-	sub_2343d3ac(r4);
+	menu_stack_operate(r4);
+	menu_initialize(r4);
 	sub_2343d51e(r4, r5);
 
 	return 0;
@@ -998,7 +999,7 @@ int sub_2347092c(void* a)
 		}
 		//loc_23470944
 		r5 = sub_2343d572();
-		pMenu = sub_2343d482(0);
+		pMenu = MENU_STACK_POP();
 
 		if (pMenu != 0)
 		{

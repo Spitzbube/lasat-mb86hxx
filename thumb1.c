@@ -1444,8 +1444,8 @@ int menu_root_start()
 		sub_2346f76c();
 	}
 	//loc_2346f748
-	sub_2343d482(&Data_23495bac); //Add to the menu stack
-	sub_2343d3ac(&Data_23495bac); //Initialize the menu
+	menu_stack_operate(&Data_23495bac); //Add to the menu stack
+	menu_initialize(&Data_23495bac); //Initialize the menu
 
 	return 0;
 }

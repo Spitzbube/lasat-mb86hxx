@@ -265,7 +265,7 @@ err_t sys_mbox_new(sys_mbox_t *mbox, int size)
 #endif
   if (sp == 0)
   {
-	  r4->pQueue = (void*) OSQCreate(&r4->Data_4, 10);
+	  r4->pQueue = OSQCreate((void**)&r4->Data_4, 10);
 #if 0
 	{
 		extern char debug_string[];

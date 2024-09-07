@@ -457,9 +457,9 @@ int menu_settings_entry(UI_Thread_Params* r4)
 	console_send_string("menu_settings_entry (todo.c): TODO\r\n");
 #endif
 
-	sub_2343d482(menu_settings_p);
+	menu_stack_operate(menu_settings_p);
 
-	sub_2343d3ac(menu_settings_p);
+	menu_initialize(menu_settings_p);
 
 	sub_2343d51e(menu_settings_p, r4);
 

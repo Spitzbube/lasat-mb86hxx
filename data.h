@@ -109,9 +109,9 @@ typedef struct
 typedef struct Menu_Item
 {
 	uint16_t wData_0; //0
-	uint16_t wData_2; //2
+	uint16_t helpStringId; //2
 	Menu_Item_Inner4_Data_0* Data_4[5]; //4
-	void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+	void (*initValueString)(struct Menu_Item*); //0x18 = 24
 	void* onEvent; //0x1c = 28
 	void* inputThreadFunc; //0x20 = 32
 	void* Data_0x24; //0x24 = 36
@@ -144,7 +144,7 @@ typedef struct
 	int fill_8; //8
 	uint8_t fill_0xc; //0xc
 	uint8_t bData_0xd; //0xd
-	void* Data_0x10; //0x10
+	void* str; //0x10
 	uint16_t fill_0x14; //0x14
 	uint8_t fill_0x16; //0x16
 	uint8_t bData_0x17; //0x17
@@ -167,7 +167,44 @@ typedef struct
 
 typedef struct
 {
-	int fill_0[144]; //0
+	int Data_0; //0
+	uint16_t wData_4; //4
+	uint16_t wData_6; //6
+	void (*Data_8)(void*, uint8_t); //8
+	//???
+} Struct_2377ded0_Inner_0x1c_Inner_8;
+
+typedef struct
+{
+	int fill_0[3]; //0
+	uint8_t bData_0xc; //12
+	uint8_t* Data_0x10; //16
+	uint16_t fill_0x14; //20 = 0x14
+	uint8_t fill_0x16; //22 = 0x16
+	uint8_t bData_0x17; //23 = 0x17
+	//0x18???
+} Struct_2377ded0_Inner_0x1c_Inner_0x20;
+
+typedef struct
+{
+	uint8_t bData_0; //0
+	uint8_t bData_1; //1
+	int fill_4; //4
+	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
+	int fill_0xc[4]; //0xc
+	uint16_t wData_0x1c; //0x1c
+	Struct_2377ded0_Inner_0x1c_Inner_0x20* Data_0x20; //0x20
+	int Data_0x24; //0x24
+	int fill_0x28[3]; //0x28
+	int Data_0x34; //0x34
+	int fill_0x38; //0x38
+	uint8_t bData_0x3c; //0x3c
+	//0x40
+} Struct_2377ded0_Inner_0x1c;
+
+typedef struct
+{
+	Struct_2377ded0_Inner_0x1c Data_0[9]; //0
 	struct
 	{
 		int fill_0[8]; //0

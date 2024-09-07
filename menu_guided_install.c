@@ -215,9 +215,9 @@ int menu_guided_install_entry(UI_Thread_Params* r4)
 #endif
 
 #if 0
-	sub_2343d482(&Data_2349313c);
+	menu_stack_operate(&Data_2349313c);
 
-	sub_2343d3ac(&Data_2349313c);
+	menu_initialize(&Data_2349313c);
 
 	sub_2343d51e(&Data_2349313c, r4);
 #endif

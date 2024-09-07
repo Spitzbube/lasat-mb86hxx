@@ -630,8 +630,8 @@ int menu_net_radio_entry(void)
         return 0xff;
     }
 
-    sub_2343d482(&menu_net_radio);
-    sub_2343d3ac(&menu_net_radio);
+    menu_stack_operate(&menu_net_radio);
+    menu_initialize(&menu_net_radio);
     void* r1 = sub_2343d572();
     sub_2343d51e(&menu_net_radio, r1);
 

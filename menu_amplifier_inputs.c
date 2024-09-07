@@ -3,6 +3,7 @@
 #include "data.h"
 #include "amplifier.h"
 #include "frontdisplay.h"
+#include "menu.h"
 #include "menu_equalizer.h"
 
 #pragma thumb
@@ -269,11 +270,11 @@ int menu_amplifier_input_on_event(int a)
                     (menu_amplifier_inputs.onExit)(0);
                 }
                 //loc_23481062
-                sub_2343d482(0);
+                MENU_STACK_POP();
                 if (0 != sub_2346ff0e())
                 {
                     //loc_2348106e
-                    sub_2343d482(&menu_amplifier_inputs);
+                    menu_stack_operate(&menu_amplifier_inputs);
                     //->loc_234810d4
                 }
                 //->loc_234810d4
@@ -296,11 +297,11 @@ int menu_amplifier_input_on_event(int a)
                         (menu_amplifier_inputs.onExit)(0);
                     }
                     //loc_234810a2
-                    sub_2343d482(0);
+                    MENU_STACK_POP();
                     if (0 != menu_net_radio_entry())
                     {
                         //->loc_2348106e
-                        sub_2343d482(&menu_amplifier_inputs);
+                        menu_stack_operate(&menu_amplifier_inputs);
                         //->loc_234810d4
                     }
                     //->loc_234810d4
@@ -376,8 +377,8 @@ int menu_amplifier_inputs_enter(void)
 	//loc_23481108
 	menu_amplifier_inputs.currentItem = menu_amplifier_data.bInput;
 
-	sub_2343d482(&menu_amplifier_inputs);
-	sub_2343d3ac(&menu_amplifier_inputs);
+	menu_stack_operate(&menu_amplifier_inputs);
+	menu_initialize(&menu_amplifier_inputs);
 	void* r1 = sub_2343d572();
 	sub_2343d51e(&menu_amplifier_inputs, r1);
 

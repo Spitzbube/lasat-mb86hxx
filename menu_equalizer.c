@@ -394,8 +394,8 @@ int menu_equalizer_entry(int a)
 	//loc_2346fad2
 	menu_equalizer.currentItem = menu_amplifier_data.bEqualizer;
 
-	sub_2343d482(&menu_equalizer);
-	sub_2343d3ac(&menu_equalizer);
+	menu_stack_operate(&menu_equalizer);
+	menu_initialize(&menu_equalizer);
 	void* r1 = sub_2343d572();
 	sub_2343d51e(&menu_equalizer, r1);
 

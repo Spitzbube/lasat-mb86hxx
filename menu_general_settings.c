@@ -1837,12 +1837,12 @@ int menu_general_settings_entry(UI_Thread_Params* p)
 #endif
 
 #ifdef VDR110
-	sub_2343d482(&menu_general_settings);
-	sub_2343d3ac(&menu_general_settings);
+	menu_stack_operate(&menu_general_settings);
+	menu_initialize(&menu_general_settings);
 	sub_2343d51e(&menu_general_settings, p);
 #else
-	sub_2343d482(menu_general_settings_p);
-	sub_2343d3ac(menu_general_settings_p);
+	menu_stack_operate(menu_general_settings_p);
+	menu_initialize(menu_general_settings_p);
 	sub_2343d51e(menu_general_settings_p, p);
 #endif
 

@@ -4,6 +4,7 @@
 #include "texttable.h"
 #include "menu.h"
 #include "amplifier.h"
+#include "graphic.h"
 
 
 #pragma thumb
@@ -28,7 +29,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		80, //"Allgemein"
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
 		menu_general_settings_entry, //void* onEvent; //0x1c = 28
 		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -40,7 +41,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		11, //"Sendersuche"
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
 		menu_channel_search_entry, //void* Data_0x1c; //0x1c = 28
 		menu_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -264,8 +265,8 @@ int menu_main_start(void)
 
 	r4 = sub_2343d572(); //Get the current UI thread params
 
-	sub_2343d482(&menuMain); //Add to the menu stack
-	sub_2343d3ac(&menuMain); //Initialize the menu
+	menu_stack_operate(&menuMain); //Add to the menu stack
+	menu_initialize(&menuMain); //Initialize the menu
 	sub_2343d51e(&menuMain, r4); //Backup UI thread params?
 
 	return 0;
@@ -364,16 +365,11 @@ void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 
 #endif //VDR110
 
-/* Menu Initialize */
-/* 2343d3ac /  / 2344da42 - complete */
-void sub_2343d3ac(Menu* pMenu)
-{
-	struct
-	{
-		int fill_0[4]; //0
-		//???
-	} sp_0x40;
 
+/* 2343d3ac /  / 2344da42 - complete */
+void menu_initialize(Menu* pMenu)
+{
+	Graphic_Queue_Item sp_0x40; //sp_0x40
 	struct
 	{
 		int fill[13]; //0
@@ -383,14 +379,14 @@ void sub_2343d3ac(Menu* pMenu)
 	Menu_Item* pMenuItem;
 
 #if 0
-	console_send_string("sub_2343d3ac (todo.c): TODO\r\n");
+	console_send_string("menu_initialize (todo.c): TODO\r\n");
 #endif
 
 	if (pMenu->onEnter != 0)
 	{
 		(pMenu->onEnter)(0);
 	}
-	//loc_2343d3bc
+	//loc_2343d3bc: Get the string of the menu caption, if available
 	//r6 = 0xffff;
 	if ((pMenu->Data_0xc != 0) && (pMenu->Data_0xc->Data_0x20 != 0)
 			&& (pMenu->stringId != 0xffff/*r6*/))
@@ -418,6 +414,7 @@ void sub_2343d3ac(Menu* pMenu)
 				//loc_2344da8a
 				sub_2344d850(pMenuItem, 9, 1, 0);
 
+				// Get the string of the menu item caption (column 1), if available
 				if ((pMenuItem->Data_4[0] != 0) &&
 						(pMenuItem->Data_4[0]->Data_0x20 != 0) &&
 						(pMenuItem->wData_0 != 0xffff))
@@ -426,10 +423,10 @@ void sub_2343d3ac(Menu* pMenu)
 					text_table_get_string(pMenuItem->wData_0,
 							pMenuItem->Data_4[0]->Data_0x20->Data_0x10, 36);
 				}
-				//loc_2344dab0
-				if (pMenuItem->Data_0x18 != 0)
+				//loc_2344dab0: Get the string of the menu item value (column 2), if available
+				if (pMenuItem->initValueString != 0)
 				{
-					(pMenuItem->Data_0x18)(pMenuItem);
+					(pMenuItem->initValueString)(pMenuItem);
 				}
 				//loc_2344daba
 				pMenuItem++;
@@ -448,35 +445,33 @@ void sub_2343d3ac(Menu* pMenu)
 			pMenu->Data_4 = pMenuItem;
 
 #ifdef VDR110
-			if (pMenuItem->Data_0x18 != 0)
+			if (pMenuItem->initValueString != 0)
 			{
-				(pMenuItem->Data_0x18)(pMenuItem);
+				(pMenuItem->initValueString)(pMenuItem);
 			}
 			//loc_2343d40a
 #else
 			sub_2344d850(pMenuItem, 10, 1, 0);
 #endif
 		}
-		//loc_2343d40a
+		//loc_2343d40a: Initialize the help for this menu based on the current menu item
 		if ((pMenu->Data_0x10 != 0) && (pMenu->Data_0x10->Data_0x20 != 0))
 		{
-			if (pMenuItem->wData_2 != 0xffff/*r6*/)
+			if (pMenuItem->helpStringId != 0xffff/*r6*/)
 			{
 				//0x2343d41c
-				Struct_235fdf74_Inner16_Inner0x20* r5_;
+				text_table_get_string(pMenuItem->helpStringId, pMenu->Data_0x10->Data_0x20->str, 244);
 
-				text_table_get_string(pMenuItem->wData_2, pMenu->Data_0x10->Data_0x20->Data_0x10, 244);
+				Struct_235fdf74_Inner16_Inner0x20* r5_ = pMenu->Data_0x10->Data_0x20;
 
-				r5_ = pMenu->Data_0x10->Data_0x20;
-
-				sub_234089e8(&sp_0xc, r5_->Data_0x10, r5_->bData_0xd,
+				sub_234089e8(&sp_0xc, r5_->str, r5_->bData_0xd,
 						r5_->wData_2, r5_->wData_4, r5_->wData_6, 4);
 				//->loc_2343d448
 			}
 			else
 			{
-				//loc_2343d440
-				memset(pMenu->Data_0x10->Data_0x20->Data_0x10, 0, 243);
+				//loc_2343d440: No help available
+				memset(pMenu->Data_0x10->Data_0x20->str, 0, 243);
 			}
 		}
 		//loc_2343d448
@@ -497,9 +492,8 @@ void sub_2343d458(UI_Thread_Params* a)
 }
 
 
-//MenuStack Add or Remove
 /* 2343d482 /  / 2344db72 - todo */
-Menu* sub_2343d482(Menu* r4)
+Menu* menu_stack_operate(Menu* r4)
 {
 	Menu* r0_;
 	Menu** r0 = &Menu_Data.menu_stack[Menu_Data.menu_stack_level];
@@ -587,9 +581,9 @@ int menu_items_navigate(int* a)
 
 		pMenu->Data_4 = &pMenu->Data_8[pMenu->currentItem];
 
-		if (pMenu->Data_4->Data_0x18 != 0)
+		if (pMenu->Data_4->initValueString != 0)
 		{
-			(pMenu->Data_4->Data_0x18)(pMenu->Data_4);
+			(pMenu->Data_4->initValueString)(pMenu->Data_4);
 		}
 	}
 	//loc_2343d51a
@@ -665,15 +659,15 @@ int menu_items_navigate(int* a)
 	if (pMenu->Data_0x10 != 0)
 	{
 		//0x2344dc48
-		if (pMenuItem->wData_2 != 0xffff)
+		if (pMenuItem->helpStringId != 0xffff)
 		{
 			//0x2344dc50
-			text_table_get_string(pMenuItem->wData_2, pMenu->Data_0x10->Data_0x20->Data_0x10, 244);
+			text_table_get_string(pMenuItem->helpStringId, pMenu->Data_0x10->Data_0x20->str, 244);
 
 			Struct_235fdf74_Inner16_Inner0x20* r5__ = pMenu->Data_0x10->Data_0x20;
 
 			sub_234089e8(&sp_0x10,
-					r5__->Data_0x10,
+					r5__->str,
 					r5__->bData_0xd,
 					r5__->wData_2,
 					r5__->wData_4,
@@ -684,7 +678,7 @@ int menu_items_navigate(int* a)
 		else
 		{
 			//loc_2344dc9a
-			memset(pMenu->Data_0x10->Data_0x20->Data_0x10, 0, 248);
+			memset(pMenu->Data_0x10->Data_0x20->str, 0, 248);
 		}
 		//loc_2344dca4
 		pMenu->Data_0x10->Data_0x20->bData_0x17 = 1;
@@ -1338,7 +1332,7 @@ void menu_event_thread(UI_Thread_Params* p)
 				else
 				{
 					//loc_2343d79c
-					pMenu = sub_2343d482(0);
+					pMenu = MENU_STACK_POP();
 
 					if (pMenu != 0)
 					{
@@ -1437,7 +1431,7 @@ void menu_event_thread(UI_Thread_Params* p)
 						return;
 					}
 					//loc_2343d7fc
-					pMenu = sub_2343d482(0);
+					pMenu = MENU_STACK_POP();
 
 					if (pMenu != 0)
 					{
@@ -1494,7 +1488,7 @@ void menu_event_thread(UI_Thread_Params* p)
 							return;
 						}
 						//loc_2343d874
-						pMenu = sub_2343d482(0);
+						pMenu = MENU_STACK_POP();
 
 						if (pMenu != 0)
 						{
@@ -1703,7 +1697,7 @@ void sub_2343d98e(UI_Thread_Params* r1)
 				(r2->onExit)(0);
 			}
 			//loc_2343da06
-			r7 = sub_2343d482(0);
+			r7 = MENU_STACK_POP();
 			if (r7 != 0)
 			{
 				//0x2343da10
@@ -1766,7 +1760,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	Menu_Item* pMenuItem; //r1 / r7
 	uint8_t (*pfMenuItemOnEvent)() = 0; //r4 / r5
 #ifndef VDR110
-	void (*r6)(); // / r6
+	void (*pfGraphicHandler)(); // / r6
 #endif
 	struct
 	{
@@ -1779,11 +1773,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	uint8_t err; //sp_0x20 / sp_0x3c
 	int cursor; //sp_0x1c / sp_0x38
 #ifndef VDR110
-	struct
-	{
-		int fill_0[4]; //0
-		//16 = 0x10?
-	} sp_0x28;
+	Graphic_Queue_Item sp_0x28; //sp_0x28
 #endif
 	UI_Thread_Params threadParams; //sp4 / sp_0x10
 #ifndef VDR110
@@ -1805,7 +1795,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	err = OSSemPost(threadParams.pSema);
 
 #ifndef VDR110
-	r6 = 0;
+	pfGraphicHandler = 0;
 #endif
 
 	OSMboxAccept(threadParams.pMBox);
@@ -1847,7 +1837,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				cursor = 1;
 				//->loc_2343db16
 #ifndef VDR110
-				r6 = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->Data_0x1c;
 #endif
 				pfOnMenuNavigate = pMenu->onNavigate;
 				//->loc_2343db20
@@ -1858,7 +1848,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				cursor = 2;
 				//->loc_2343db16
 #ifndef VDR110
-				r6 = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->Data_0x1c;
 #endif
 				pfOnMenuNavigate = pMenu->onNavigate;
 				//->loc_2343db20
@@ -1868,7 +1858,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				//0x2343dac4
 				cursor = 4;
 #ifndef VDR110
-				r6 = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->Data_0x1c;
 #endif
 				pfMenuItemOnEvent = pMenuItem->onEvent;
 				//->loc_2343db20
@@ -1878,7 +1868,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				//loc_2343db1c
 				cursor = 8;
 #ifndef VDR110
-				r6 = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->Data_0x1c;
 #endif
 				pfMenuItemOnEvent = pMenuItem->onEvent;
 				//->loc_2343db20
@@ -1893,7 +1883,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 							(0 == (pMenu->onExit)(&threadParams)))
 					{
 						//loc_2343dae6
-						pMenu = sub_2343d482(0);
+						pMenu = MENU_STACK_POP();
 
 						if (pMenu != 0)
 						{
@@ -1927,7 +1917,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 						(0 == (pMenu->onExit)(&threadParams)))
 				{
 					//loc_2344f96c
-					pMenu = sub_2343d482(0);
+					pMenu = MENU_STACK_POP();
 
 					if (pMenu != 0)
 					{
@@ -1936,7 +1926,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 						sp4 = pMenu->Data_0x14->Data_0x1c;
 
 						pMenuItem = pMenu->Data_4;
-						r6 = pMenu->Data_0x1c;
+						pfGraphicHandler = pMenu->Data_0x1c;
 
 						sub_2343d51e(pMenu, &threadParams);
 						//->loc_2344f9c0
@@ -1945,9 +1935,8 @@ void menu_item_event_thread(UI_Thread_Params* p)
 					{
 						//loc_2344f98e
 						sp4 = 0;
-						sp8 = 0; //???
 
-						sub_23414b38(&sp_0x28, 0);
+						sub_23414b38(&sp_0x28, 0);  //->graphic.c
 
 						sub_2343d51e(0, &threadParams);
 						//->loc_2344f9ca
@@ -1988,7 +1977,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				if (err == 0xff)
 				{
 					//0x2344f9dc
-					r6 = 0;
+					pfGraphicHandler = 0;
 					//->loc_2344fa02
 				}
 				//loc_2344f9e0
@@ -2000,9 +1989,9 @@ void menu_item_event_thread(UI_Thread_Params* p)
 					//->loc_2344f9ee
 					(Data_234c21c8)(pMenuItem, 10, 1, 1);
 
-					if (pMenuItem->Data_0x18 != 0)
+					if (pMenuItem->initValueString != 0)
 					{
-						(pMenuItem->Data_0x18)(pMenuItem);
+						(pMenuItem->initValueString)(pMenuItem);
 					}
 					//loc_2344fa02
 				}
@@ -2014,9 +2003,9 @@ void menu_item_event_thread(UI_Thread_Params* p)
 					//loc_2344f9ee
 					(Data_234c21c8)(pMenuItem, 8, 1, 1);
 
-					if (pMenuItem->Data_0x18 != 0)
+					if (pMenuItem->initValueString != 0)
 					{
-						(pMenuItem->Data_0x18)(pMenuItem);
+						(pMenuItem->initValueString)(pMenuItem);
 					}
 					//loc_2344fa02
 				}
@@ -2041,15 +2030,15 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "menu_item_event_thread: r6=0x%x\r\n", r6);
+				sprintf(debug_string, "menu_item_event_thread: pfGraphicHandler=%p\r\n", pfGraphicHandler);
 				console_send_string(debug_string);
 			}
 #endif
-			if (r6 != 0)
+			if (pfGraphicHandler != 0)
 			{
-				(r6)(&sp_0x28, pMenu->Data_0x14);
+				(pfGraphicHandler)(&sp_0x28, pMenu->Data_0x14);
 
-				r6 = 0;
+				pfGraphicHandler = 0;
 			}
 			//loc_2344fa2e
 #if 1

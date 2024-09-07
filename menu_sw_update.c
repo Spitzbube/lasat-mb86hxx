@@ -4,6 +4,7 @@
 #include "frontdisplay.h"
 #include "usb_msd.h"
 #include "fatfs.h"
+#include "menu.h"
 
 #pragma thumb
 
@@ -551,9 +552,9 @@ int sub_2346fe1c(int r4)
                 (menu_sw_update_filelist.onExit)(0);
             }
             //loc_2346fec4
-            sub_2343d482(0);
-            sub_2343d482(&menu_sw_update_no_media);
-            sub_2343d3ac(&menu_sw_update_no_media);
+            MENU_STACK_POP();
+            menu_stack_operate(&menu_sw_update_no_media);
+            menu_initialize(&menu_sw_update_no_media);
             sub_2343d51e(&menu_sw_update_no_media, sub_2343d572());
         }
         //loc_2346fee8
@@ -583,8 +584,8 @@ int sub_2346ff0e(void)
 
     usb_unlock();
 
-    sub_2343d482(&menu_sw_update_filelist);
-    sub_2343d3ac(&menu_sw_update_filelist);
+    menu_stack_operate(&menu_sw_update_filelist);
+    menu_initialize(&menu_sw_update_filelist);
     void* r1 = sub_2343d572();
     sub_2343d51e(&menu_sw_update_filelist, r1);
 
@@ -671,9 +672,9 @@ int sub_2346ffea(int r4)
                 (menu_sw_update_no_media.onExit)(0);
             }
 
-            sub_2343d482(0);
-            sub_2343d482(&menu_sw_update_filelist);
-            sub_2343d3ac(&menu_sw_update_filelist);
+            MENU_STACK_POP();
+            menu_stack_operate(&menu_sw_update_filelist);
+            menu_initialize(&menu_sw_update_filelist);
             sub_2343d51e(&menu_sw_update_filelist, sub_2343d572());
         }
     }
@@ -706,8 +707,8 @@ int menu_sw_update_entry(UI_Thread_Params* p)
 
     usb_unlock();
 
-    sub_2343d482(pMenu);
-    sub_2343d3ac(pMenu);
+    menu_stack_operate(pMenu);
+    menu_initialize(pMenu);
     sub_2343d51e(pMenu, sub_2343d572());
 
     return 0;

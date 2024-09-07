@@ -1026,6 +1026,8 @@ INT8U         OSMutexQuery          (OS_EVENT        *pevent,
 
 #endif
 
+#endif
+
 /*$PAGE*/
 /*
 *********************************************************************************************************
@@ -1033,7 +1035,7 @@ INT8U         OSMutexQuery          (OS_EVENT        *pevent,
 *********************************************************************************************************
 */
 
-#if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
+#if 1 //(OS_Q_EN > 0) && (OS_MAX_QS > 0)
 
 #if OS_Q_ACCEPT_EN > 0
 void         *OSQAccept             (OS_EVENT        *pevent,
@@ -1057,7 +1059,7 @@ void         *OSQPend               (OS_EVENT        *pevent,
                                      INT16U           timeout,
                                      INT8U           *err);
 
-#if OS_Q_POST_EN > 0
+#if 1 //OS_Q_POST_EN > 0
 INT8U         OSQPost               (OS_EVENT        *pevent,
                                      void            *msg);
 #endif
@@ -1076,8 +1078,6 @@ INT8U         OSQPostOpt            (OS_EVENT        *pevent,
 #if OS_Q_QUERY_EN > 0
 INT8U         OSQQuery              (OS_EVENT        *pevent,
                                      OS_Q_DATA       *p_q_data);
-#endif
-
 #endif
 
 #endif

@@ -642,9 +642,9 @@ int menu_information_entry(UI_Thread_Params* r4)
 	console_send_string("menu_information_entry (todo.c): TODO\r\n");
 #endif
 
-	sub_2343d482(&menu_information);
+	menu_stack_operate(&menu_information);
 
-	sub_2343d3ac(&menu_information);
+	menu_initialize(&menu_information);
 
 	sub_2343d51e(&menu_information, r4);
 
