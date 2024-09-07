@@ -8,22 +8,6 @@ int Data_234df19c = 0; //234df19c
 int Data_234df1a0 = 0; //234df1a0
 
 
-/* 23407f24 - todo */
-void sub_23407f24(int a, int r6)
-{
-	console_send_string("sub_23407f24 (todo.c): TODO\r\n");
-
-}
-
-
-/* 23409424 - todo */
-void sub_23409424()
-{
-	console_send_string("sub_23409424 (todo.c): TODO\r\n");
-
-}
-
-
 /* 2342ce1c  todo */
 void sub_2342ce1c()
 {
@@ -60,6 +44,22 @@ void sub_2342cf84()
 void sub_2342d42c()
 {
 	console_send_string("sub_2342d42c (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342d494 - todo */
+void sub_2342d494()
+{
+	console_send_string("sub_2342d494 (todo.c): TODO\r\n");
+
+}
+
+
+/* 2342d4a8 - todo */
+void sub_2342d4a8()
+{
+	console_send_string("sub_2342d4a8 (todo.c): TODO\r\n");
 
 }
 

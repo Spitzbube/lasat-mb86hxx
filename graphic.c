@@ -307,17 +307,9 @@ void graphic_thread()
 										{
 											//0x23453748
 											Struct_2377ded0_Inner_0x1c_Inner_0x20* fp = r4->Data_0x20;
-											struct
-											{
-												uint8_t bData_0; //0
-												uint16_t wData_2; //2
-												uint16_t wData_4; //4
-												uint16_t wData_6; //6
-												uint16_t wData_8; //8
-												//10???
-											}* r6 = &r4->Data_0x24;
+											Struct_2377ded0_Inner_0x1c_Inner_0x20* r6 = &r4->Data_0x24;
 
-											if (r4->Data_0x34 != 0)
+											if (r4->Data_0x24.Data_0x10 != 0)
 											{
 												//0x2345375c
 												sub_2342d42c(r6->bData_0,

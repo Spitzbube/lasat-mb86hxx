@@ -419,20 +419,25 @@ static Menu_Item_Inner4_Data_0 Data_234eeff8 = //234eeff8
 #endif
 };
 
-Struct_235fdf74_Inner20_Inner8_Inner0x20 Data_234eedd8 = //234eedd8
+Struct_2377ded0_Inner_0x1c_Inner_0x20 Data_234eedd8 = //234eedd8
 {
-	{0, 0, 0, 0},
-	&Data_23972de0[0], //Data_0x10
+	0, 0x0051, 0x0104, 0x012a, 0x0120, 1, 4, 9, 1, &Data_23972de0[0], 0, 0, 0
 #if 0
-	0x234eedd8 0000                   movs       r0, r0                             ; DATA XREF=0x234ef158
-	0x234eedda 5100                   lsls       r1, r2, #0x1
-	0x234eeddc 0401                   lsls       r4, r0, #0x4
-	0x234eedde 2A01                   lsls       r2, r5, #0x4
-	0x234eede0 2001                   lsls       r0, r4, #0x4
-	0x234eede2 0104                   lsls       r1, r0, #0x10
-	0x234eede4 0901                   lsls       r1, r1, #0x4
-	0x234eede6 0000                   movs       r0, r0
-	0x234eede8                        dd         0x23972de0                         ; DATA XREF=dword_234ee734+1488
+0x234eedd8                        db         0x00                               ; DATA XREF=0x234ef158
+0x234eedd9                        db  0x00 ; '.'
+0x234eedda                        dw         0x0051
+0x234eeddc                        dw         0x0104
+0x234eedde                        dw         0x012a
+0x234eede0                        dw         0x0120
+0x234eede2                        db         0x01
+0x234eede3                        db         0x04
+0x234eede4                        db         0x09
+0x234eede5                        db         0x01
+0x234eede6 0000                   movs       r0, r0
+0x234eede8                        dd         0x23972de0                         ; DATA XREF=dword_234ee734+1488
+0x234eedec                        dw         0x0000
+0x234eedee                        db         0x00
+0x234eedef                        db         0x00
 #endif
 };
 
@@ -447,7 +452,7 @@ static Struct_2377ded0_Inner_0x1c Data_234eeef8__[25] = //234eeef8
 	{0}, //[6] = 234EF078
 	{0}, //[7] = 234EF0B8 = Item 3 (Bildanpassung) = Caption
 	{0}, //[8] = 234EF0F8
-	{1, 0, 0, 0, {0, 0, 0, 0}, 9, &Data_234eedd8, 0, {0, 0, 0}, 0, 0, 0}, //[9] = 234EF138 = Item ? (Bildskalierung:)
+	{1, 0, 0, 0, {0, 0, 0, 0}, 9, &Data_234eedd8, {0}, 0}, //[9] = 234EF138 = Item ? (Bildskalierung:)
 	{0}, //[10] = 234EF178 = Item 5 ( >Eingang 720x576) = Caption
 	{0}, //[11] = 234EF1B8
 	{0}, //[12] = 234EF1F8 = Item 7 ( >Eingang 720x576) = Caption

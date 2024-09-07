@@ -176,13 +176,20 @@ typedef struct
 
 typedef struct
 {
-	int fill_0[3]; //0
+	uint8_t bData_0; //0
+	uint16_t wData_2; //2
+	uint16_t wData_4; //4
+	uint16_t wData_6; //6
+	uint16_t wData_8; //8
+	uint8_t fill_0xa; //10
+	uint8_t bData_0xb; //11
 	uint8_t bData_0xc; //12
+	uint8_t bData_0xd; //13
 	uint8_t* Data_0x10; //16
-	uint16_t fill_0x14; //20 = 0x14
-	uint8_t fill_0x16; //22 = 0x16
+	uint16_t wData_0x14; //20 = 0x14
+	uint8_t bData_0x16; //22 = 0x16
 	uint8_t bData_0x17; //23 = 0x17
-	//0x18???
+	//0x18
 } Struct_2377ded0_Inner_0x1c_Inner_0x20;
 
 typedef struct
@@ -194,10 +201,7 @@ typedef struct
 	int fill_0xc[4]; //0xc
 	uint16_t wData_0x1c; //0x1c
 	Struct_2377ded0_Inner_0x1c_Inner_0x20* Data_0x20; //0x20
-	int Data_0x24; //0x24
-	int fill_0x28[3]; //0x28
-	int Data_0x34; //0x34
-	int fill_0x38; //0x38
+	Struct_2377ded0_Inner_0x1c_Inner_0x20 Data_0x24; //0x24 +0x18
 	uint8_t bData_0x3c; //0x3c
 	//0x40
 } Struct_2377ded0_Inner_0x1c;
