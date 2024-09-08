@@ -87,118 +87,109 @@ int sub_23407de8(uint16_t a, void* b, int c)
 
 
 /* 23407f24 - todo */
-int sub_23407f24(int a/*sp_0x14*/, char* r6, int c, int d, int e/*sp_0x40???*/, int f/*sp44*/, int g/*sp48*/)
+int sub_23407f24(int a/*sp_0xc*/, char* b, 
+	int c/*sp_0x14*/, int d/*sp_0x18*/, int e/*sp_0x40*/, 
+	int sp_0x44, uint32_t sp_0x48)
 {
 #if 0
 	console_send_string("sub_23407f24 (todo.c): TODO\r\n");
 #endif
 
-#if 0
+#if 1
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23407f24: r6[0]='%c'\r\n", r6[0]);
+		sprintf(debug_string, "sub_23407f24: b[0]='%c'\r\n", b[0]);
 		console_send_string(debug_string);
 	}
 #endif
 
-//	int sp_0x40;
-	int sp_0x18;
-//	int sp_0x14;
-	int sp8;
-	int sp4;
+	uint32_t sp8;
+	uint32_t* sp4;
 
-	int r5 = 0;
-	int r4 = 0; 
-	int r7 = g;
-	int r8 = f;
+	uint8_t row = 0; //r5
+	uint8_t col = 0; //r4
+//	int r7 = g;
+//	int r8 = f;
 
 	sp4 = sub_2342d4a8(0);
-	uint32_t r0 = sub_2342d494(0);
+	sp8 = (uint32_t) sub_2342d494(0) >> 3;
 
-	sp8 = r0 >> 3;
+	sub_23407e40(b, sp_0x44/*r8*/, &Data_234f9814[0], 0x44);
 
-	sub_23407e40(r6, r8, &Data_234f9814[0], 0x44);
+	uint16_t* r6 = &Data_234f9814[0];
 
-	uint16_t* r6 = &Data_234f9814[2];
-	uint32_t r1_ = ((uint16_t*)&Data_234f9814[0])[0];
-	r0 = (r1_ & 0x1f);
-	uint32_t r2_ = r1_ << 21;
-	int sb = r1_ >> 11;
-	uint32_t r1 = r2_ >> 26;
+	uint32_t bitfield = *r6++;
+	uint32_t width = (bitfield & 0x1f) + 1; //r0 = 5 bits
+	uint8_t height = (bitfield >> 5) & 0x3f; //r1 = 6 bits
+	int sb = (bitfield >> 11);
 
-	uint32_t r2; //= sp_0x34;
-	r0 = r0 + 1;
-	r2 = r2 + r0;
-	if (r2 > r7)
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_23407f24: width=%d, height=%d, sb=%d\r\n", 
+			width, height, sb);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if ((c/*sp_0x14*/ + width) > sp_0x48/*r7*/)
 	{
 		return 0;
 	}
 	//->loc_23408058
-	while (r1 != 0)
+	while (height != 0)
 	{
 		//loc_23407fa8
-		int r8 = *r6++;
-		uint16_t r2 = 16;
-		uint32_t r3 = 0x8000;
+		uint16_t wData = *r6++;
+		uint16_t bits = 16;
+		uint32_t bitmask = 0x8000;
 		//->loc_23408048
-		int ip;
-		while ((ip = r2--) != 0)
+		while ((bits--) != 0)
 		{
 			//loc_23407fb8
-			if (r8 & r3)
+			if (wData & bitmask)
 			{
 				//0x23407fc0
-				int ip = a; //sp_0x14; ????
-				int r7 = sp8;
-				int sl = sp4;
-
-				ip = ip + r4;
-				uint32_t lr = (uint16_t)ip;
-				ip = sp_0x18;
-				ip = ip + sb;
-				ip = ip + r5;
-				ip = (uint16_t)ip;
-				ip = ip * r7;
-				r7 = lr >> 3;
-				lr = lr & 0x07;
-				ip = sl + ip * 4;
-				ip = ip + r7 * 4;
-				lr = 28 - lr * 4;
-				sl = ((int*)ip)[0];
-				r7 = -(0x0f << lr);
-
+				uint16_t lr = c/*sp_0x14*/ + col;
+				uint32_t ip = (uint16_t)(d/*sp_0x18*/ + sb + row);
+				ip = ip * sp8/*r7*/;
+				uint32_t* ip_ = sp4 + ip;
+				ip_ += (lr >> 3);
+				lr = 28 - 4 * (lr & 0x07);
+				uint32_t sl = ip_[0];
+#if 1
+				int r7 = ~(0x0f << lr);
 				int fp = e; //sp_0x40;
-
 				r7 = r7 & sl;
+//				sl = sl & r7;
 				fp = fp & 0x0f;
-				lr = r7 | (fp << lr);
-				((int*)ip)[0] = lr;
+				ip_[0] = r7/*sl*/ | (fp << lr);
+#else
+				sl &= ~(0x0f << lr);
+				((int*)ip)[0] = /*(sl & ~(0x0f << lr))*/sl | 
+					((e/*sp_0x40*/ & 0x0f) << lr);
+#endif
 			}
 			//loc_23408020
-			int ip = r4 + 1;
-			r4 = ip & 0xff;
-
-			r3 >>= 1;
-
-			if (r4 > r0)
+			bitmask >>= 1;
+			col++;
+			if (col >= width)
 			{
-				ip = r5 + 1;
-				r1 = r1 - 1;
-				r1 = r1 & 0xff;
-				r4 = 0;
-				r5 = ip & 0xff;
-				if (r1 == 0)
+				col = 0;
+				row++;
+				height--;
+				if (height == 0)
 				{
 					//->loc_23408060
-					return r0;
+					return width;
 				}
 			}
 			//loc_23408048
-		}
+		} //while ((bits--) != 0)
 		//loc_23408058
-	}
+	} //while (height != 0)
 	//loc_23408060
-	return r0;
+	return width;
 }
 
 

@@ -1,6 +1,7 @@
 
 #include "data.h"
 #include "ucos_ii.h"
+#include "viscale_osd.h"
 #include "graphic.h"
 
 
@@ -18,12 +19,12 @@ struct
 	uint8_t bData_5; //5
 	uint8_t bData_6; //6
 	uint8_t bData_7; //7
-	int Data_8; //8
+	void* Data_8; //8
 	uint8_t bData_0xc; //12
 	uint8_t bData_0xd; //13
 	uint8_t bData_0xe; //14
 	uint8_t bData_0xf; //15
-	int Data_0x10; //0x10
+	void* Data_0x10; //0x10
 	uint16_t wData_0x14; //20 = 0x14
 	uint16_t wData_0x16; //22 = 0x16
 	uint16_t wData_0x18; //24 = 0x18
@@ -107,13 +108,13 @@ void graphic_thread()
 						void* r5 = sp_0x10.Data_4[0];
 						sb = 0;
 
-						sub_2342d570(Data_2377ded0.bData_0xc);
+						viscale_osd_layer_clear(Data_2377ded0.bData_0xc);
 
 						if (sp_0x10.bData_2 & 8)
 						{
 							Data_2377ded0.bData_5 = 1;
 
-							sub_2342d570(Data_2377ded0.bData_4);
+							viscale_osd_layer_clear(Data_2377ded0.bData_4);
 						}
 						//0x234534f8
 						//int r0 = 0;
@@ -176,14 +177,14 @@ void graphic_thread()
 						if (r5->bData_0x19 == 1)
 						{
 							//0x23453538
-							sub_2342d570(Data_2377ded0.bData_0xc);
+							viscale_osd_layer_clear(Data_2377ded0.bData_0xc);
 
 							if (r5->bData_4 & 8)
 							{
 								//0x2345354c
 								Data_2377ded0.bData_5 = 1;
 
-								sub_2342d570(Data_2377ded0.bData_4);
+								viscale_osd_layer_clear(Data_2377ded0.bData_4);
 								//->loc_23453580
 							}
 							else
@@ -192,7 +193,7 @@ void graphic_thread()
 								if ((Data_2377ded0.bData_6 & 1) == 0)
 								{
 									//0x2345356c
-									sub_2342ce40(Data_2377ded0.Data_8);
+									viscale_osd_layer_disable(Data_2377ded0.Data_8);
 
 									Data_2377ded0.bData_6 |= 1;
 								}
@@ -380,7 +381,7 @@ void graphic_thread()
 						if (Data_2377ded0.bData_0xe & 1)
 						{
 							//0x2345387c
-							sub_2342ce1c(Data_2377ded0.Data_0x10);
+							viscale_osd_layer_enable(Data_2377ded0.Data_0x10);
 
 							Data_2377ded0.bData_0xe &= ~1;
 						}
@@ -389,7 +390,7 @@ void graphic_thread()
 					//loc_23453890
 					if ((r5->bData_4 & 8) && (Data_2377ded0.bData_6 & 1))
 					{
-						sub_2342ce1c(Data_2377ded0.Data_8);
+						viscale_osd_layer_enable(Data_2377ded0.Data_8);
 
 						Data_2377ded0.bData_6 &= ~1;
 						Data_2377ded0.bData_6 &= ~2;
@@ -420,13 +421,13 @@ void graphic_thread()
 
 
 /* 234539f0 / 2341406c - complete */
-int graphic_init(Struct_234539f0* r4)
+int graphic_init(Graphic_Params* r4)
 {
 #if 0
 	console_send_string("graphic_init (todo.c): TODO\r\n");
 #endif
 
-	Struct_2342e0cc sp_0x18;
+	Viscale_Osd_Params sp_0x18;
 
 	if (graphics_queue != 0)
 	{
@@ -449,7 +450,7 @@ int graphic_init(Struct_234539f0* r4)
 		Data_2377ded0.bData_0xf = 0; //r6
 		Data_2377ded0.bData_0xe = 1; //r7
 
-		Data_2377ded0.Data_0x10 = sub_2342e0cc(&sp_0x18);
+		Data_2377ded0.Data_0x10 = viscale_osd_open(&sp_0x18);
 	}
 	//loc_23453a7c
 	if (r4->Data_8 == 0)
@@ -467,7 +468,7 @@ int graphic_init(Struct_234539f0* r4)
 		Data_2377ded0.bData_7 = 0; //r6
 		Data_2377ded0.bData_6 = 1; //r7
 
-		Data_2377ded0.Data_8 = sub_2342e0cc(&sp_0x18);
+		Data_2377ded0.Data_8 = viscale_osd_open(&sp_0x18);
 	}
 	//loc_23453ab8
 	int res = OSTaskCreateExt(graphic_thread, 0, &graphic_thread_stack[THREAD_STACK_SIZE_GRAPHIC-1]/*2377decc*/,
@@ -618,6 +619,4 @@ void sub_23453d60(uint8_t* a)
 		sub_2342d5ac(a[0]);
 	}
 }
-
-
 

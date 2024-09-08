@@ -1326,10 +1326,10 @@ void main_get_mac_address(Struct_234012b0_a* r4, Struct_234012b0_b* r5)
 
 
 /* 2340146c / 2340195c - complete */
-void main_graphic_init()
+void main_graphic_init(void)
 {
 #if 1 //Only v241!!!
-	Struct_234539f0 sp4;
+	Graphic_Params sp4;
 
 	sp4.Data_0 = 0x22000000;
 	sp4.Data_4 = 0x22048000;

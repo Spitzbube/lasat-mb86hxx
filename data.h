@@ -283,22 +283,11 @@ struct Menu_Data
 };
 
 
-typedef struct
-{
-	int globalOffset; //0
-	int Data_4; //4
-	int Data_8; //8
-	int fill_12[2]; //12
-
-} Struct_2342e0cc;
-
-
 extern void sub_2342d6ec();
 extern void sub_2342d878();
 extern void sub_2342d9e0();
 extern void sub_2342db04();
 extern void sub_2342dc7c();
-extern void sub_2342dde4();
 extern void sub_2342df40(); 
 
 extern void sub_234256fc();

@@ -9,7 +9,7 @@ typedef struct
 	void (*Data_16)(); //16
 	uint16_t threadPrio; //20
 
-} Struct_234539f0;
+} Graphic_Params;
 
 typedef struct
 {
@@ -45,5 +45,6 @@ typedef struct
 } Graphic_Queue_Item;
 
 
+extern int graphic_init(Graphic_Params*);
 extern int sub_23414b38(Graphic_Queue_Item*, Struct_23414b38_b*);
 
