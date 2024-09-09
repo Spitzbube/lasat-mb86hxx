@@ -24,14 +24,6 @@ int sub_23411190()
 }
 
 
-/* 23452e88 - todo */
-int sub_23452e88()
-{
-	console_send_string("sub_23452e88 (todo.c): TODO\r\n");
-
-}
-
-
 void MGC_HdrcDestroy ()
 {
 	console_send_string("MGC_HdrcDestroy (todo.c): TODO\r\n");

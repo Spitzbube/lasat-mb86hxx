@@ -34,6 +34,147 @@ struct
 } Data_2377ded0; //2377ded0
 
 
+typedef struct 
+{
+	uint16_t wData_0; //0
+	uint16_t wData_2; //2
+	uint16_t wData_4; //4
+	uint16_t wData_6; //6
+	//8
+} Struct_23452584_b;
+
+
+/* 234521d4 - todo */
+int sub_234521d4(Struct_2377ded0_Inner_0x1c* r4)
+{
+#if 1
+	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
+#endif
+}
+
+
+/* 23452584 - todo */
+int sub_23452584(uint8_t a, Struct_23452584_b* b, Struct_2377ded0_Inner_0x1c* c)
+{
+#if 1
+	console_send_string("sub_23452584 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23452e88 - todo */
+int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
+{
+#if 0
+	console_send_string("sub_23452e88 (todo.c): TODO\r\n");
+#endif
+
+	Struct_2377ded0_Inner_0x1c sp_0x34;
+	Struct_23452584_b sp_0xc[5];
+
+	struct 
+	{
+		int fill_0; //0
+		int Data_4; //4
+		uint8_t bData_8; //8
+
+	}* r6 = r4->Data_0x18;
+
+	sp_0x34 = *r4;
+
+	memset(&sp_0xc[0], 0, 5 * sizeof(Struct_23452584_b));
+
+	int r0 = 1;
+
+	switch (r6->Data_4)
+	{
+		case 0:
+		default:
+			//loc_23452f98
+			break;
+
+		case 1:
+			//0x23452ee0
+			//ldrh       r1, [r4, #0xc]
+			//->0x23452ef4
+			sp_0xc[0].wData_0 = r4->wData_0xc;
+			sp_0xc[0].wData_2 = 1; //r0; 
+			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
+			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+			//->0x23452fa4
+			break;
+
+		case 2:
+			//0x23452ee8
+			sp_0xc[0].wData_0 = r4->wData_0xc + r4->wData_0x10;
+			sp_0xc[0].wData_2 = 1; //r0; 
+			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
+			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+			//->0x23452fa4
+			break;
+		
+		case 3:
+			//0x23452f1c
+			sp_0xc[0].wData_0 = r4->wData_0xc;
+			sp_0xc[0].wData_2 = 1; //r0; 
+			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
+			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+
+			sp_0xc[1].wData_0 = r4->wData_0xc + r4->wData_0x10;
+			sp_0xc[1].wData_2 = 1; //r0; 
+			sp_0xc[1].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
+			sp_0xc[1].wData_6 = r4->wData_0x12 / 2;
+			//->0x23452fa4
+			break;
+
+		case 4:
+			//0x23452f78
+			sub_23452584(r6->bData_8, &sp_0xc[0], &sp_0x34);
+			//->0x23452fa4
+			break;
+
+		case 5:
+			//0x23452f8c
+			sub_234521d4(r4);
+			//->0x23452fa4
+			break;
+	}
+	//0x23452fa4
+	if (r6->Data_4 != 0)
+	{
+		//0x23452fb0
+		//r5, #0x0
+		//r7, sp, #0xc
+		for (uint8_t r5 = 0; r5 < 5; r5++)
+		{
+			//loc_23452fb8
+			if ((sp_0xc[r5].wData_2 == 0) || 
+				(sp_0xc[r5].wData_0 == 0))
+			{
+				//->loc_23453000
+				break;
+			}
+
+			sub_2342d080(r4->bData_1, 
+				sp_0xc[r5].wData_0,
+				sp_0xc[r5].wData_4,
+				sp_0xc[r5].wData_6,
+				1, r4->wData_0x1c);
+		}
+		//loc_23453000
+		if ((r6->Data_4 == 5) ||
+			(r6->Data_4 == 12) ||
+			(r6->Data_4 == 13))
+		{
+			//->loc_2345309c
+			return r6->Data_4;
+		}
+		//loc_23453014
+	}
+	//loc_23453014
+}
+
 
 /* 2345310c / 2341378c - todo */
 void graphic_thread()
