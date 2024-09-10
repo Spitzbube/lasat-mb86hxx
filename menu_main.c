@@ -1,6 +1,7 @@
 
 #include "data.h"
 #include "frontdisplay.h"
+#include "graphic.h"
 
 #ifndef VDR110
 
@@ -71,6 +72,24 @@ static Menu_Item_Inner4_Data_0_Data_0x20 Data_234c171c = //234c171c
 	0x234c172a 0000                   movs       r0, r0
 	0x234c172c                        dd         0x234c16f4
 #endif
+};
+
+static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
+{
+	{0}, //[0] = 234c1834
+	{0}, //[1] = 234C1874
+	{0}, //[2] = 234C18B4
+	{0}, //[3] = 234C18F4
+	{0}, //[4] = 234C1934 
+	{0}, //[5] = 234C1974
+	{0}, //[6] = 234C19B4
+	{0}, //[7] = 234C19F4 
+	{0}, //[8] = 234C1A34
+	{0}, //[9] = 234C1A74 
+	{0}, //[10] = 234C1AB4 
+	{0}, //[11] = 234C1AF4
+	{0}, //[12] = 234C1B34 
+	{0}, //[13] = 234C1B74
 };
 
 static Struct_235fdf74_Inner12 Data_234c1874 = //234c1874
@@ -146,6 +165,25 @@ static Menu_Item_Inner4_Data_0 Data_234c19b4 = //234c19b4
 #endif
 };
 
+#if 1
+static Struct_23414b38_b Data_234c1ef4 = //234c1ef4
+{
+	0, //uint8_t bData_0; //0
+	0xfa, //uint8_t bData_1; //1
+	0x0004, //uint16_t wData_2; //2
+	0x04, //uint8_t bData_4; //4
+	&Data_234c1834[0], //int Data_8; //8
+	0, //Struct_23414b38_b_Inner_0xc* Data_0xc; //12
+	0x0f, //uint8_t bData_0x10; //0x10 = 16
+	0, //int fill_0x14; //0x14 = 20
+	14, //uint8_t bData_0x18; //0x18 = 24
+	0x01, //uint8_t bData_0x19; //0x19 = 25
+	0, //0x1c
+	0, //0x20
+#if 0
+#endif
+};
+#else
 static Struct_235fdf74_Inner20 Data_234c1ef4 = //234c1ef4
 {
 	0, //uint16_t fill_0; //0
@@ -171,6 +209,7 @@ static Struct_235fdf74_Inner20 Data_234c1ef4 = //234c1ef4
 	0x234c1f14                        dd         0x00000000
 #endif
 };
+#endif
 
 static Menu_Item menu_main_items[] = //234c1f3c
 {
