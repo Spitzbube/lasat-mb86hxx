@@ -3,18 +3,10 @@
 
 int Data_234911e0; //234911e0
 int Data_23492240; //23492240
+int Data_234924c4; //234924c4
 
 int Data_234df19c = 0; //234df19c
 int Data_234df1a0 = 0; //234df1a0
-
-
-/* 234521d4 - todo */
-int sub_234521d4(/*Struct_2377ded0_Inner_0x1c*/void* r4)
-{
-#if 1
-	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
-#endif
-}
 
 
 /* 23452584 - todo */
@@ -31,14 +23,6 @@ int sub_23452584(uint8_t a, /*Struct_23452584_b*/void* b, /*Struct_2377ded0_Inne
 void sub_2342cf84()
 {
 	console_send_string("sub_2342cf84 (todo.c): TODO\r\n");
-
-}
-
-
-/* 23411190 /  / 23418b90  - todo */
-int sub_23411190()
-{
-	console_send_string("sub_23411190 (todo.c): TODO\r\n");
 
 }
 
@@ -567,14 +551,6 @@ void sub_234512d8()
 }
 
 
-/* 234344d0 - todo */
-void sub_234344d0(int a, int b, int c)
-{
-	console_send_string("sub_234344d0 (todo.c): TODO\r\n");
-
-}
-
-
 /* 234340e8 - todo */
 void sub_234340e8()
 {
@@ -675,14 +651,6 @@ void sub_234256fc()
 void sub_2345bd40()
 {
 	console_send_string("sub_2345bd40 (todo.c): TODO\r\n");
-
-}
-
-
-/* 23453b88 - todo  */
-void sub_23453b88()
-{
-	console_send_string("sub_23453b88 (todo.c): TODO\r\n");
 
 }
 

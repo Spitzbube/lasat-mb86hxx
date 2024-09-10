@@ -49,6 +49,7 @@ Data_23489b3c/*hfilter675*/[/*size???*/] = //23489b3c
 	{0x00887f8b, 0x0000a305},
 };
 
+extern uint32_t Data_234924c4; //234924c4
 
 //234926a4
 uint8_t bData_234926a4 = 0; //234926a4 +0
@@ -2225,6 +2226,37 @@ void viout_configure_sd(int r0)
 	}
 
 	return;
+}
+
+
+/* 234344d0 - todo */
+void vo_set_background(uint32_t a, uint32_t b, uint32_t c)
+{
+#if 0
+	console_send_string("vo_set_background (todo.c): TODO\r\n");
+#endif
+
+	uint32_t mask;
+	uint32_t val;
+	uint32_t r3 = 0xff0000 & (a << 16);
+
+	FREG(0xCB010080)[0] = (FREG(0xCB010080)[0] & ~0xff0000) | r3; //BACKGROUND_Y
+
+	val = ((b << 8) & 0xff00);
+	FREG(0xCB010080)[0] = (FREG(0xCB010080)[0] & ~0xff00) | val;
+
+	FREG(0xCB010080)[0] = (FREG(0xCB010080)[0] & ~0xff) | (c << 0);
+
+	Data_234924c4 = (Data_234924c4 & ~0xff0000) | r3; //BACK_GROUND_Y
+	FREG(0xCB01101C)[0] = Data_234924c4; //VO_SD_Background
+
+	Data_234924c4 = (Data_234924c4 & ~0xff) | b; //BACK_GROUND_Cr
+	FREG(0xCB01101C)[0] = Data_234924c4; //VO_SD_Background
+
+	mask = 0xff00;
+	val = ((c << 8) & mask);
+	Data_234924c4 = (Data_234924c4 & ~mask) | val; //BACK_GROUND_Cb
+	FREG(0xCB01101C)[0] = Data_234924c4; //VO_SD_Background
 }
 
 

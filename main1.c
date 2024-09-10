@@ -1564,11 +1564,11 @@ void main_video_hdmi_init()
 
 	sub_23434718(0);
 
-	sub_234345a4(4);
+	sub_234345a4(4); //->viout.c
 
-	r0 = sub_2342d668(0, 0, 0, 0xff);
+	r0 = viscale_osd_get_background(0, 0, 0, 0xff);
 
-	sub_234344d0((r0 >> 16) & 0xff, (r0 >> 24) & 0xff, (r0 >> 8) & 0xff);
+	vo_set_background((r0 >> 16) & 0xff, (r0 >> 24) & 0xff, (r0 >> 8) & 0xff);
 
 	hdmi_init();
 

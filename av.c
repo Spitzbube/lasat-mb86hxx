@@ -1280,6 +1280,22 @@ void av_switch_powermode(int powerdown)
 }
 
 
+/* 23411190 /  / 23418b90  - complete */
+int sub_23411190(void)
+{
+#if 0
+	console_send_string("sub_23411190 (todo.c): TODO\r\n");
+#endif
+
+	if (Data_2358bda4.Data_0x5c != 0)
+	{
+		return Data_2358bda4.Data_0x5c->bData_0xe;
+	}
+
+	return 0xff;
+}
+
+
 /* 234111a8 - complete */
 int av_get_language()
 {

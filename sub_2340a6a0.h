@@ -26,6 +26,7 @@ typedef struct
 	uint16_t timeDiff; //10
 	uint8_t fill_0x0c; //12 235441bc
 	uint8_t menuLanguage; //13 = 0x0d
+	uint8_t bData_0xe; //14 = 0x0e
 	/*
 		Bit 6: Deep standby
 		Bit 7: Channel list update

@@ -13,7 +13,7 @@ typedef struct
 
 typedef struct
 {
-	int Data_0; //0
+	void* Data_0; //0
 
 } Struct_23414b38_b_Inner_0xc;
 
@@ -31,13 +31,20 @@ typedef struct
 	uint8_t bData_0x19; //0x19 = 25
 	int fill_0x1c; //0x1c
 	int fill_0x20; //0x20
-
+	//???
 } Struct_23414b38_b;
+
+typedef struct
+{
+	uint8_t fill_0; //0
+	uint8_t bData_1; //1
+	//???
+} Struct_23414c24;
 
 
 typedef struct
 {
-	Struct_23414b38_b* pPayload; //0
+	void* pPayload; //0
 	int command; //4
 	int Data_8; //8
 	int Data_0xc; //12
@@ -47,4 +54,5 @@ typedef struct
 
 extern int graphic_init(Graphic_Params*);
 extern int sub_23414b38(Graphic_Queue_Item*, Struct_23414b38_b*);
+extern int sub_23414c24(Graphic_Queue_Item*, Struct_23414c24*);
 

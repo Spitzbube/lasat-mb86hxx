@@ -5,6 +5,48 @@
 #include "graphic.h"
 
 
+static const uint8_t Data_2348fbac[] = //2348fbac
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2348fc7c[] = //2348fc7c
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2348fd4c[] = //2348fd4c
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2348fe1c[] = //2348fe1c
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2348feec[] = //2348feec
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2348ffbc[] = //2348ffbc
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2349008c[] = //2349008c
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+static const uint8_t Data_2349015c[] = //2349015c
+{
+	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
+};
+
+
+
 //23493618
 OS_EVENT* graphics_queue = 0; //23493618 +0 /  / 234c04b4
 void (*Data_2349361c)() = 0; //2349361c +4
@@ -44,6 +86,70 @@ typedef struct
 } Struct_23452584_b;
 
 
+/* 234521d4 - todo */
+int sub_234521d4(Struct_2377ded0_Inner_0x1c* r4)
+{
+#if 0
+	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t r5 = r4->Data_0x18->bData_8;
+
+	sub_2342ce8c(r4->bData_1, r4->wData_0xc, r4->wData_0xe, 
+		(r5 & 2)? Data_2348feec: Data_2348fbac);
+
+	sub_2342ce8c(r4->bData_1, 
+		r4->wData_0xc + r4->wData_0x10 - 20, r4->wData_0xe, 
+		(r5 & 1)? Data_2349008c: Data_2348fc7c);
+
+	sub_2342ce8c(r4->bData_1, 
+		r4->wData_0xc + r4->wData_0x10 - 20, 
+		r4->wData_0xe + r4->wData_0x12 - 20, 
+		(r5 & 4)? Data_2349015c: Data_2348fd4c);
+
+	sub_2342ce8c(r4->bData_1, 
+		r4->wData_0xc, 
+		r4->wData_0xe + r4->wData_0x12 - 20, 
+		(r5 & 8)? Data_2348ffbc: Data_2348fe1c);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe, 
+		r4->wData_0x10 - 40, 2, 15);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe + 2, 
+		r4->wData_0x10 - 40, 2, 13);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe + 4, 
+		r4->wData_0x10 - 40, 1, 12);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe + r4->wData_0x12 - 6, 
+		r4->wData_0x10 - 40, 2, 15);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe + r4->wData_0x12 - 4, 
+		r4->wData_0x10 - 40, 2, 13);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 20, r4->wData_0xe + r4->wData_0x12 - 2, 
+		r4->wData_0x10 - 40, 1, 12);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc, r4->wData_0xe + 20, 
+		2, r4->wData_0x12 - 40, 15);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 2, r4->wData_0xe + 20, 
+		2, r4->wData_0x12 - 40, 13);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + 4, r4->wData_0xe + 20, 
+		1, r4->wData_0x12 - 40, 12);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + r4->wData_0x10 - 6, r4->wData_0xe + 20, 
+		2, r4->wData_0x12 - 40, 15);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + r4->wData_0x10 - 4, r4->wData_0xe + 20, 
+		2, r4->wData_0x12 - 40, 13);
+
+	sub_2342d42c(r4->bData_1, r4->wData_0xc + r4->wData_0x10 - 2, r4->wData_0xe + 20, 
+		1, r4->wData_0x12 - 40, 12);
+}
+
+
 /* 23452e88 - todo */
 void sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 {
@@ -54,13 +160,7 @@ void sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 	Struct_2377ded0_Inner_0x1c sp_0x34;
 	Struct_23452584_b sp_0xc[5];
 
-	struct 
-	{
-		int fill_0; //0
-		int Data_4; //4
-		uint8_t bData_8; //8
-
-	}* r6 = r4->Data_0x18;
+	Struct_2377ded0_Inner_0x1c_Inner_0x18* r6 = r4->Data_0x18;
 
 	sp_0x34 = *r4;
 
@@ -373,8 +473,8 @@ void graphic_thread()
 						sprintf(debug_string, "loc_23453500: r5->wData_2=0x%x, bData_0=%d, bData_0x19=%d, bData_4=%d\r\n",
 								r5->wData_2, r5->bData_0, r5->bData_0x19, r5->bData_4);
 						console_send_string(debug_string);
-						sprintf(debug_string, "loc_23453500: r5->bData_18=%d\r\n",
-								r5->bData_0x18);
+						sprintf(debug_string, "loc_23453500: r5->bData_18=%d, bData_1=%d\r\n",
+								r5->bData_0x18, r5->bData_1);
 						console_send_string(debug_string);
 					}
 #endif
@@ -409,7 +509,7 @@ void graphic_thread()
 									Data_2377ded0.bData_6 |= 1;
 								}
 							}
-							//loc_23453580
+							//loc_23453580: Change the colour scheme?
 							if ((r5->Data_0xc->Data_0 != sp_0xc) ||
 								(r5->bData_1 != sp_0x3c))
 							{
@@ -504,7 +604,7 @@ void graphic_thread()
 													Data_2377ded0.bData_5 = 1;
 												}
 											}
-										}
+										} //if (r4->Data_8 != 0)
 										//loc_23453710
 									}
 									//loc_23453710
@@ -617,17 +717,42 @@ void graphic_thread()
 					r7->Data_0xc = 0; //r8
 					//loc_23453984
 				} //if (r7->command == 2)
-			}
+			} //else if (r7->command == ....
 
-			//loc_23453980
-			r7->Data_0xc = 0; //r8
 			//loc_23453984
+			if (Data_2377ded0.wData_0x18 != 0)
+			{
+				//0x23453994
+				Data_2377ded0.wData_0x18--;
 
+				if (Data_2377ded0.wData_0x18 == 0)
+				{
+					//0x234539a8
+					sub_2342ce64();
 
-			//TODO!!!
+					if ((Data_2377ded0.bData_0xe & 1) == 0)
+					{
+						//0x234539b8
+						viscale_osd_layer_disable(Data_2377ded0.Data_0x10);
+
+						Data_2377ded0.bData_0xe |= 1;
+					}
+					//loc_234539cc
+					if ((Data_2377ded0.bData_6 & 1) == 0)
+					{
+						//0x234539d8
+						viscale_osd_layer_disable(Data_2377ded0.Data_8);
+
+						Data_2377ded0.bData_6 |= 1;
+					}
+					//->loc_23453128
+				}
+				//->loc_23453128
+			} //if (Data_2377ded0.wData_0x18 != 0)
+			//->loc_23453128
 		} //if (err == 0)
 		//->loc_23453128
-	}
+	} //while (1)
 }
 
 
@@ -724,6 +849,70 @@ int sub_23414b38(Graphic_Queue_Item* pQueueItem, Struct_23414b38_b* r5)
 		pQueueItem->command = 3;
 	}
 
+	pQueueItem->Data_8 = 0;
+	pQueueItem->Data_0xc = 1;
+	pQueueItem->pPayload = r5;
+
+	int res = OSQPost(graphics_queue, pQueueItem);
+	if (res == 0)
+	{
+		while (pQueueItem->Data_0xc != 0)
+		{
+			rtos_task_wait(1);
+		}
+	}
+
+	return res;
+}
+
+
+/* 23453b88 /  / 23414bc8 - complete */
+int sub_23453b88(int a, Graphic_Queue_Item* b)
+{
+#if 0
+	console_send_string("sub_23453b88 (todo.c): TODO\r\n");
+#endif
+
+	if (a != 0)
+	{
+		b->command = 4;
+	}
+	else
+	{
+		b->command = 6;
+	}
+
+	b->Data_0xc = 1;
+	b->pPayload = a;
+
+	int res = OSQPost(graphics_queue, b);
+	if (res == 0)
+	{
+		while (b->Data_0xc != 0)
+		{
+			rtos_task_wait(1);
+		}
+	}
+
+	return 0;
+}
+
+
+/* 23453be4 /  / 23414c24 - complete */
+int sub_23414c24(Graphic_Queue_Item* pQueueItem, Struct_23414c24* r5)
+{
+#if 0
+	console_send_string("sub_23414b38 (graphic.c): TODO\r\n");
+#endif
+
+	if (graphics_queue == 0)
+	{
+		return 3;
+	}
+
+	r5->bData_1 = sub_23411190();
+
+	pQueueItem->command = 7;
 	pQueueItem->Data_8 = 0;
 	pQueueItem->Data_0xc = 1;
 	pQueueItem->pPayload = r5;

@@ -13,8 +13,13 @@ const int Data_23489b1c[] = //23489b1c
 
 //23492654
 OS_EVENT* Data_23492654/*sema*/ = 0; //23492654 +0
-int Data_23492658 = 0; //23492658 +4
-
+uint32_t Data_23492658[] = //23492658 +4
+{
+	0x00000000, 0x6f6bb8ff, 0x6f6bb8ff, 0x101f3fff,
+	0xe0e0e0ff, 0x909090ff, 0x101010ff, 0xd0a820ff,
+	0x4169e1ff, 0x102f4fff, 0x901500ff, 0x228b22ff,
+	0xa0c0f0ff, 0x8171c1ff, 0x8141a1ff, 0x505050ff
+};
 
 typedef struct
 {
@@ -195,6 +200,16 @@ void sub_2342ce64(void)
 }
 
 
+/* 2342ce8c - todo */
+void sub_2342ce8c(uint8_t a, uint16_t b, uint16_t c, void* d)
+{
+#if 1
+	console_send_string("sub_2342ce8c (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 2342d080 - todo */
 void sub_2342d080(void)
 {
@@ -343,10 +358,24 @@ void sub_2342d5e4(int a, uint32_t* b, uint8_t c, int d)
 
 
 /* 2342d668 - todo */
-void sub_2342d668(int a, int b, int c, int d)
+uint32_t viscale_osd_get_background(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
 {
-	console_send_string("sub_2342d668 (todo.c): TODO\r\n");
+#if 0
+	console_send_string("viscale_osd_get_background (todo.c): TODO\r\n");
+#endif
 
+	union
+	{
+		uint32_t dwData;
+		uint8_t bData[4];		
+	} sp;
+
+	sp.bData[2] = 16 + ((a * 66) + (b * 129) + (c * 25) >> 8);
+	sp.bData[1] = 128 + ((a * 112 - b * 94 - c * 18) >> 8);
+	sp.bData[3] = 128 + ((-(a * 38) - (b * 74) + (c * 112)) >> 8);
+	sp.bData[0] = d;
+
+	return sp.dwData;
 }
 
 
@@ -512,7 +541,7 @@ void* viscale_osd_open(Viscale_Osd_Params* r5)
 		r4->wData_24 = 768; //0x300;
 		r4->wData_26 = 576; //0x240; //r7
 
-		sub_2342e2d8(0xcb007000/*VO_OSD1CLUT*/ + r4->Data_4.Data_8, &Data_23492658, 0x0f, 0xff);
+		sub_2342e2d8(0xcb007000/*VO_OSD1CLUT*/ + r4->Data_4.Data_8, &Data_23492658[0], 0x0f, 0xff);
 
 		FREG(0xCB004044 + r4->Data_4.Data_8)[0] = 0x2a; //VO_OSDMODE
 		FREG(0xcb004010 + r4->Data_4.Data_8)[0] = 0x02; //VO_OSDHSIZE
