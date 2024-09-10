@@ -44,27 +44,8 @@ typedef struct
 } Struct_23452584_b;
 
 
-/* 234521d4 - todo */
-int sub_234521d4(Struct_2377ded0_Inner_0x1c* r4)
-{
-#if 1
-	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
-#endif
-}
-
-
-/* 23452584 - todo */
-int sub_23452584(uint8_t a, Struct_23452584_b* b, Struct_2377ded0_Inner_0x1c* c)
-{
-#if 1
-	console_send_string("sub_23452584 (todo.c): TODO\r\n");
-#endif
-
-}
-
-
 /* 23452e88 - todo */
-int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
+void sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 {
 #if 0
 	console_send_string("sub_23452e88 (todo.c): TODO\r\n");
@@ -89,42 +70,37 @@ int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 
 	switch (r6->Data_4)
 	{
-		case 0:
-		default:
-			//loc_23452f98
-			break;
-
 		case 1:
 			//0x23452ee0
 			//ldrh       r1, [r4, #0xc]
 			//->0x23452ef4
 			sp_0xc[0].wData_0 = r4->wData_0xc;
-			sp_0xc[0].wData_2 = 1; //r0; 
 			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
 			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+			sp_0xc[0].wData_2 = 1; //r0; 
 			//->0x23452fa4
 			break;
 
 		case 2:
 			//0x23452ee8
 			sp_0xc[0].wData_0 = r4->wData_0xc + r4->wData_0x10;
-			sp_0xc[0].wData_2 = 1; //r0; 
 			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
 			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+			sp_0xc[0].wData_2 = 1; //r0; 
 			//->0x23452fa4
 			break;
 		
 		case 3:
 			//0x23452f1c
 			sp_0xc[0].wData_0 = r4->wData_0xc;
-			sp_0xc[0].wData_2 = 1; //r0; 
 			sp_0xc[0].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
 			sp_0xc[0].wData_6 = r4->wData_0x12 / 2;
+			sp_0xc[0].wData_2 = 1; //r0; 
 
 			sp_0xc[1].wData_0 = r4->wData_0xc + r4->wData_0x10;
-			sp_0xc[1].wData_2 = 1; //r0; 
 			sp_0xc[1].wData_4 = r4->wData_0x12 / 2 + r4->wData_0xe;
 			sp_0xc[1].wData_6 = r4->wData_0x12 / 2;
+			sp_0xc[1].wData_2 = 1; //r0; 
 			//->0x23452fa4
 			break;
 
@@ -138,6 +114,13 @@ int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 			//0x23452f8c
 			sub_234521d4(r4);
 			//->0x23452fa4
+			break;
+
+		default:
+			//loc_23452f98
+			sp_0xc[0].wData_2 = 0;
+			sp_0xc[0].wData_0 = 0;
+			//0x23452fa4
 			break;
 	}
 	//0x23452fa4
@@ -157,9 +140,9 @@ int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 			}
 
 			sub_2342d080(r4->bData_1, 
-				sp_0xc[r5].wData_0,
-				sp_0xc[r5].wData_4,
-				sp_0xc[r5].wData_6,
+				(int16_t) sp_0xc[r5].wData_0,
+				(int16_t) sp_0xc[r5].wData_4,
+				(int16_t) sp_0xc[r5].wData_6,
 				1, r4->wData_0x1c);
 		}
 		//loc_23453000
@@ -168,11 +151,98 @@ int sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
 			(r6->Data_4 == 13))
 		{
 			//->loc_2345309c
-			return r6->Data_4;
+			return;
 		}
 		//loc_23453014
 	}
 	//loc_23453014
+	sub_2342d42c(sp_0x34.bData_1,
+		sp_0x34.wData_0xc,
+		sp_0x34.wData_0xe,
+		sp_0x34.wData_0x10,
+		sp_0x34.wData_0x12,
+		sp_0x34.wData_0x1c);
+
+	if ((sp_0x34.wData_0x1c == 0) || (r6->Data_4 == 0))
+	{
+		return;
+	}
+
+	if (r6->Data_4 == 6)
+	{
+		//0x23453050
+		sub_2342d42c(sp_0x34.bData_1,
+			sp_0x34.wData_0xc,
+			sp_0x34.wData_0xe,
+			sp_0x34.wData_0x10,
+			2,
+			sp_0x34.wData_0x1e);
+		//->loc_23453084
+		sub_2342d42c(sp_0x34.bData_1,
+			sp_0x34.wData_0xc,
+			sp_0x34.wData_0xe,
+			2,
+			sp_0x34.wData_0x12,
+			sp_0x34.wData_0x1e);
+		//->loc_234530d4
+		//->loc_23453098
+	}
+	//loc_23453074
+	else if (r6->Data_4 == 7)
+	{
+		//loc_234530ec
+		sub_2342d42c(sp_0x34.bData_1,
+			sp_0x34.wData_0xc,
+			sp_0x34.wData_0xe,
+			sp_0x34.wData_0x10,
+			2,
+			sp_0x34.wData_0x1e);
+		//->loc_23453098
+	}
+	else if (r6->Data_4 == 8)
+	{
+		//loc_23453084
+		sub_2342d42c(sp_0x34.bData_1,
+			sp_0x34.wData_0xc,
+			sp_0x34.wData_0xe,
+			2,
+			sp_0x34.wData_0x12,
+			sp_0x34.wData_0x1e);
+		//->loc_23453098
+	}
+	else if (r6->Data_4 == 9)
+	{
+		//0x234530ac
+		if (sp_0x34.wData_0x12 > 5)
+		{
+			//0x234530b8
+			sub_2342d42c(sp_0x34.bData_1,
+				sp_0x34.wData_0xc,
+				sp_0x34.wData_0xe + 5,
+				2,
+				sp_0x34.wData_0x12 - 5,
+				sp_0x34.wData_0x1e);
+		}
+#if 0
+		else
+		{
+			//loc_2345309c
+		}
+#endif
+	}
+	//loc_234530e4
+	else if (r6->Data_4 == 10)
+	{
+		//loc_234530ec
+		sub_2342d42c(sp_0x34.bData_1,
+			sp_0x34.wData_0xc,
+			sp_0x34.wData_0xe,
+			sp_0x34.wData_0x10,
+			2,
+			sp_0x34.wData_0x1e);
+		//->loc_23453098
+	}
+	//loc_2345309c
 }
 
 

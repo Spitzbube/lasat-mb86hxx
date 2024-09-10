@@ -452,7 +452,7 @@ static Struct_2377ded0_Inner_0x1c Data_234eeef8__[25] = //234eeef8
 	{0}, //[6] = 234EF078
 	{0}, //[7] = 234EF0B8 = Item 3 (Bildanpassung) = Caption
 	{0}, //[8] = 234EF0F8
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, &Data_234eedd8, {0}, 0}, //[9] = 234EF138 = Item ? (Bildskalierung:)
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x100, 0xed, 0x20, 0, 0/*Data_0x18*/, 9, 0, &Data_234eedd8, {0}, 0}, //[9] = 234EF138 = Item ? (Bildskalierung:)
 	{0}, //[10] = 234EF178 = Item 5 ( >Eingang 720x576) = Caption
 	{0}, //[11] = 234EF1B8
 	{0}, //[12] = 234EF1F8 = Item 7 ( >Eingang 720x576) = Caption

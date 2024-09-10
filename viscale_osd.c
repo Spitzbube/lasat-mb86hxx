@@ -206,7 +206,7 @@ void sub_2342d080(void)
 
 
 /* 2342d42c - complete */
-int sub_2342d42c(uint8_t a, int16_t r1, int16_t r2, int16_t r3, int16_t arg_0, uint8_t arg_4)
+int sub_2342d42c(uint8_t a, int16_t r1, int16_t r2, int16_t r3, int16_t arg_0, int arg_4)
 {
 #if 0
 	console_send_string("sub_2342d42c (todo.c): TODO\r\n");
