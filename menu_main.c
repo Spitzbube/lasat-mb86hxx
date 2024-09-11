@@ -48,7 +48,18 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
+{
+	0, 4, 0x0b, //...
+#if 0
+0x234c12a4 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+244, 0x234e9aec, 0x234eaf94, 0x234ef4d0, 0x234efb10, 0x234f5b54
+0x234c12a6 0000                   movs       r0, r0
+0x234c12a8                        dd         0x00000004                         ; DATA XREF=sub_2344d444+246
+0x234c12ac                        db         0x0b
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 {
 	0, 0, 0x06, //...
 #if 0
@@ -59,7 +70,18 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8 = //234c12f8
+{
+	0, 4, 0x03, //...
+#if 0
+0x234c12f8 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+286, sub_2345afa4+186, dword_2345b328, 0x234df4c0
+0x234c12fa 0000                   movs       r0, r0
+0x234c12fc                        dd         0x00000004                         ; DATA XREF=sub_2344d444+288
+0x234c1300                        db         0x03
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
 {
 	0, 4, 0x0f, //...
 #if 0
@@ -504,7 +526,7 @@ static Menu menu_main = //234c2044
     &menu_main_items[0], //Menu_Item* Data_4; //4
     &menu_main_items[0], //Menu_Item* Data_8; //8
     &menu_main_graphic_items[1], /*234c1874*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
-    &menu_main_graphic_items[3], /*234C18F4*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
+    0, //&menu_main_graphic_items[3], /*234C18F4*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
     &menu_main_graphic_data, //Graphic_Job_2_5* graphicData; //20 = 0x14
     1, //5, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
