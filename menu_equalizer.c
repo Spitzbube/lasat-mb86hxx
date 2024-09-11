@@ -3,6 +3,8 @@
 #include "data.h"
 #include "amplifier.h"
 #include "frontdisplay.h"
+#include "graphic.h"
+#include "menu.h"
 #include "menu_equalizer.h"
 
 #pragma thumb

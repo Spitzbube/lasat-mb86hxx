@@ -2,9 +2,9 @@
 #include "data.h"
 #include "frontdisplay.h"
 #include "texttable.h"
+#include "graphic.h"
 #include "menu.h"
 #include "amplifier.h"
-#include "graphic.h"
 
 
 #pragma thumb
@@ -369,7 +369,7 @@ void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 /* 2343d3ac /  / 2344da42 - complete */
 void menu_initialize(Menu* pMenu)
 {
-	Graphic_Queue_Item sp_0x40; //sp_0x40
+	Graphic_Queue_Item graphicQueueItem; //sp_0x40
 	struct
 	{
 		int fill[13]; //0
@@ -386,12 +386,12 @@ void menu_initialize(Menu* pMenu)
 	{
 		(pMenu->onEnter)(0);
 	}
-	//loc_2343d3bc: Get the string of the menu caption, if available
+	//loc_2343d3bc: Get the string of the menu header, if available
 	//r6 = 0xffff;
-	if ((pMenu->Data_0xc != 0) && (pMenu->Data_0xc->Data_0x20 != 0)
+	if ((pMenu->header != 0) && (pMenu->header->Data_0x20 != 0)
 			&& (pMenu->stringId != 0xffff/*r6*/))
 	{
-		text_table_get_string(pMenu->stringId, pMenu->Data_0xc->Data_0x20->Data_0x10, 36);
+		text_table_get_string(pMenu->stringId, pMenu->header->Data_0x20->pString, 36);
 	}
 	//loc_2343d3d8
 	pMenuItem = pMenu->Data_8;
@@ -455,29 +455,29 @@ void menu_initialize(Menu* pMenu)
 #endif
 		}
 		//loc_2343d40a: Initialize the help for this menu based on the current menu item
-		if ((pMenu->Data_0x10 != 0) && (pMenu->Data_0x10->Data_0x20 != 0))
+		if ((pMenu->help != 0) && (pMenu->help->Data_0x20 != 0))
 		{
 			if (pMenuItem->helpStringId != 0xffff/*r6*/)
 			{
 				//0x2343d41c
-				text_table_get_string(pMenuItem->helpStringId, pMenu->Data_0x10->Data_0x20->str, 244);
+				text_table_get_string(pMenuItem->helpStringId, pMenu->help->Data_0x20->pString, 244);
 
-				Struct_235fdf74_Inner16_Inner0x20* r5_ = pMenu->Data_0x10->Data_0x20;
+				Graphic_Job_2_5_Item_Text* r5_ = pMenu->help->Data_0x20;
 
-				sub_234089e8(&sp_0xc, r5_->str, r5_->bData_0xd,
-						r5_->wData_2, r5_->wData_4, r5_->wData_6, 4);
+				sub_234089e8(&sp_0xc, r5_->pString, r5_->bData_0xd,
+						r5_->x1, r5_->y1, r5_->x2, 4);
 				//->loc_2343d448
 			}
 			else
 			{
 				//loc_2343d440: No help available
-				memset(pMenu->Data_0x10->Data_0x20->str, 0, 243);
+				memset(pMenu->help->Data_0x20->pString, 0, 243);
 			}
 		}
 		//loc_2343d448
-		if (pMenu->Data_0x1c != 0)
+		if (pMenu->graphicHandler != 0)
 		{
-			(pMenu->Data_0x1c)(&sp_0x40, pMenu->Data_0x14);
+			(pMenu->graphicHandler)(&graphicQueueItem, pMenu->graphicData);
 		}
 	} //if (pMenu->Data_8 != 0)
 	//loc_2343d454
@@ -656,32 +656,32 @@ int menu_items_navigate(int* a)
 
 	sub_2344d850(pMenuItem, 10, 1, 0);
 
-	if (pMenu->Data_0x10 != 0)
+	if (pMenu->help != 0)
 	{
 		//0x2344dc48
 		if (pMenuItem->helpStringId != 0xffff)
 		{
 			//0x2344dc50
-			text_table_get_string(pMenuItem->helpStringId, pMenu->Data_0x10->Data_0x20->str, 244);
+			text_table_get_string(pMenuItem->helpStringId, pMenu->help->Data_0x20->pString, 244);
 
-			Struct_235fdf74_Inner16_Inner0x20* r5__ = pMenu->Data_0x10->Data_0x20;
+			Graphic_Job_2_5_Item_Text* r5__ = pMenu->help->Data_0x20;
 
 			sub_234089e8(&sp_0x10,
-					r5__->str,
+					r5__->pString,
 					r5__->bData_0xd,
-					r5__->wData_2,
-					r5__->wData_4,
-					r5__->wData_6,
+					r5__->x1,
+					r5__->y1,
+					r5__->x2,
 					4);
 			//->loc_2344dca4
 		}
 		else
 		{
 			//loc_2344dc9a
-			memset(pMenu->Data_0x10->Data_0x20->str, 0, 248);
+			memset(pMenu->help->Data_0x20->pString, 0, 248);
 		}
 		//loc_2344dca4
-		pMenu->Data_0x10->Data_0x20->bData_0x17 = 1;
+		pMenu->help->Data_0x20->bData_0x17 = 1;
 	}
 	//loc_2344dcac
 #endif
@@ -867,17 +867,9 @@ void mainfunction_thread(UI_Thread_Params* a)
 			r4_ = pMenuItem->Data_0x24;
 			r5 = pMenuItem->Data_0x28;
 #else
-			struct
-			{
-				int fill[7]; //0
-				void (*Data_0x1c); //28 = 0x1c
-				void (*Data_0x20); //32 = 0x20
-
-			}* r0 = (void*) pMenu->Data_0x14;
-
 			pMenuItem = pMenu->Data_4;
-			sp8 = r0->Data_0x20;
-			sp4 = r0->Data_0x1c;
+			sp8 = pMenu->graphicData->Data_0x20;
+			sp4 = pMenu->graphicData->Data_0x1c;
 #endif
 			//->loc_2343d682 / 0x2344e72e
 		}
@@ -1773,7 +1765,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	uint8_t err; //sp_0x20 / sp_0x3c
 	int cursor; //sp_0x1c / sp_0x38
 #ifndef VDR110
-	Graphic_Queue_Item sp_0x28; //sp_0x28
+	Graphic_Queue_Item graphicQueueItem; //sp_0x28
 #endif
 	UI_Thread_Params threadParams; //sp4 / sp_0x10
 #ifndef VDR110
@@ -1823,8 +1815,8 @@ void menu_item_event_thread(UI_Thread_Params* p)
 		pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 		pMenuItem = pMenu->Data_4;
 #ifndef VDR110
-		sp8 = pMenu->Data_0x14->Data_0x20;
-		sp4 = pMenu->Data_0x14->Data_0x1c;
+		sp8 = pMenu->graphicData->Data_0x20;
+		sp4 = pMenu->graphicData->Data_0x1c;
 #endif
 
 		if (err != 10)
@@ -1837,7 +1829,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				cursor = 1;
 				//->loc_2343db16
 #ifndef VDR110
-				pfGraphicHandler = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->graphicHandler;
 #endif
 				pfOnMenuNavigate = pMenu->onNavigate;
 				//->loc_2343db20
@@ -1848,7 +1840,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				cursor = 2;
 				//->loc_2343db16
 #ifndef VDR110
-				pfGraphicHandler = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->graphicHandler;
 #endif
 				pfOnMenuNavigate = pMenu->onNavigate;
 				//->loc_2343db20
@@ -1858,7 +1850,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				//0x2343dac4
 				cursor = 4;
 #ifndef VDR110
-				pfGraphicHandler = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->graphicHandler;
 #endif
 				pfMenuItemOnEvent = pMenuItem->onEvent;
 				//->loc_2343db20
@@ -1868,7 +1860,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				//loc_2343db1c
 				cursor = 8;
 #ifndef VDR110
-				pfGraphicHandler = pMenu->Data_0x1c;
+				pfGraphicHandler = pMenu->graphicHandler;
 #endif
 				pfMenuItemOnEvent = pMenuItem->onEvent;
 				//->loc_2343db20
@@ -1922,11 +1914,11 @@ void menu_item_event_thread(UI_Thread_Params* p)
 					if (pMenu != 0)
 					{
 						//0x2344f976
-						sp8 = pMenu->Data_0x14->Data_0x20;
-						sp4 = pMenu->Data_0x14->Data_0x1c;
+						sp8 = pMenu->graphicData->Data_0x20;
+						sp4 = pMenu->graphicData->Data_0x1c;
 
 						pMenuItem = pMenu->Data_4;
-						pfGraphicHandler = pMenu->Data_0x1c;
+						pfGraphicHandler = pMenu->graphicHandler;
 
 						sub_2343d51e(pMenu, &threadParams);
 						//->loc_2344f9c0
@@ -1936,7 +1928,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 						//loc_2344f98e
 						sp4 = 0;
 
-						sub_23414b38(&sp_0x28, 0);  //->graphic.c
+						graphic_start_job_2_5(&graphicQueueItem, 0);
 
 						sub_2343d51e(0, &threadParams);
 						//->loc_2344f9ca
@@ -2036,7 +2028,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #endif
 			if (pfGraphicHandler != 0)
 			{
-				(pfGraphicHandler)(&sp_0x28, pMenu->Data_0x14);
+				(pfGraphicHandler)(&graphicQueueItem, pMenu->graphicData);
 
 				pfGraphicHandler = 0;
 			}

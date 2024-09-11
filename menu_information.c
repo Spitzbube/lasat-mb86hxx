@@ -2,6 +2,8 @@
 #include <string.h>
 #include "data.h"
 #include "frontdisplay.h"
+#include "graphic.h"
+#include "menu.h"
 #include "frontend.h"
 #include "fe_manager.h"
 

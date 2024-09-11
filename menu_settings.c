@@ -1,11 +1,11 @@
 
 #include "data.h"
+#include "graphic.h"
+#include "menu.h"
 
 #pragma thumb
 
 #ifndef VDR110
-
-extern void sub_23414b38(); //->graphic.c
 
 static uint8_t Data_2396b4c0[]; //2396b4c0
 static uint8_t Data_2396b4e8[]; //2396b4e8
@@ -16,8 +16,8 @@ extern int menu_picture_entry(UI_Thread_Params*);
 static Menu_Item menu_settings_items[]; //234dfb30
 
 static Menu menu_settings;
-static Struct_235fdf74_Inner12 Data_234df3a8;
-static Struct_235fdf74_Inner20 Data_234dfae8;
+//static Struct_235fdf74_Inner12 Data_234df3a8;
+static Graphic_Job_2_5 Data_234dfae8;
 
 static Menu* menu_settings_p = &menu_settings; //234df1c0
 static Menu menu_settings =  //234df1cc
@@ -25,12 +25,12 @@ static Menu menu_settings =  //234df1cc
 		0x004a, //""
 		&menu_settings_items[0], //Menu_Item* Data_4; //4
 		&menu_settings_items[0], //Menu_Item* Data_8; //8
-		&Data_234df3a8, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
+		0, //&Data_234df3a8, //Struct_235fdf74_Inner12* header; //12 = 0xc
 		/*&Data_234df428*/0, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
 		&Data_234dfae8, //int Data_0x14; //20 = 0x14
 		1, //6, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
-		sub_23414b38, //void (*Data_0x1c)(); //0x1c
+		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
 		menu_items_navigate, //void (*onNavigate)(); //0x20
 		//TODO!!!
 #if 0
@@ -45,7 +45,7 @@ static Menu menu_settings =  //234df1cc
 		0x234df1e4                        db         0x06                               ; DATA XREF=sub_2348c74a+10, sub_2348c74a+14, sub_2348c7aa+34, sub_2348c7aa+56
 		0x234df1e5                        db  0x00 ; '.'
 		0x234df1e6 0000                   movs       r0, r0
-		0x234df1e8                        dd         sub_23414b38
+		0x234df1e8                        dd         graphic_start_job_2_5
 		0x234df1ec                        dd         sub_2344dbb8+1
 		0x234df1f0                        dd         0x00000000
 		0x234df1f4                        dd         0x00000000
@@ -58,6 +58,7 @@ static Menu menu_settings =  //234df1cc
 
 static uint8_t Data_2396b3a0[]; //2396b3a0, size???
 
+#if 0
 Struct_235fdf74_Inner12_Inner0x20 Data_234df260 = //234df260
 {
 	{0, 0, 0, 0},
@@ -74,6 +75,7 @@ Struct_235fdf74_Inner12_Inner0x20 Data_234df260 = //234df260
 	0x234df270                        dd         0x2396b3a0                         ; CODE XREF=dword_234ded68+244
 #endif
 };
+#endif
 
 static Menu_Item_Inner4_Data_0_Data_0x20 Data_234df290 = //234df290
 {
@@ -109,6 +111,7 @@ static Menu_Item_Inner4_Data_0_Data_0x20 Data_234df2a8 = //234df2a8
 #endif
 };
 
+#if 0
 Struct_235fdf74_Inner12 Data_234df3a8 = //234df3a8
 {
 	{0, 0, 0, 0, 0, 0, 0, 0}, //TODO
@@ -143,6 +146,7 @@ Struct_235fdf74_Inner12 Data_234df3a8 = //234df3a8
 0x234df3c8                        dd         0x234df260
 #endif
 };
+#endif
 
 static Menu_Item_Inner4_Data_0 Data_234df4a8 = //234df4a8
 {
@@ -196,13 +200,9 @@ static Menu_Item_Inner4_Data_0 Data_234df4e8 = //234df4e8
 #endif
 };
 
-static Struct_235fdf74_Inner20 Data_234dfae8 = //234dfae8
+static Graphic_Job_2_5 Data_234dfae8 = //234dfae8
 {
-	0, //uint16_t fill_0; //0
-	0, //uint16_t wData_2; //2
-	{0, 0, 0, 0, 0, 0}, //int fill_4[6]; //4
-	0, //void (*Data_0x1c)(); //28 = 0x1c
-	0, //void (*Data_0x20)(); //32 = 0x20
+	0,
 #if 0
 	0x234dfae8                        db  0x00 ; '.'                                ; DATA XREF=sub_2348c74a+16, sub_2348c74a+42, sub_2348c7aa+10, sub_2348c7aa+60, sub_2348c844+40, dword_234df1e0
 	0x234dfae9                        db  0xfa ; '.'

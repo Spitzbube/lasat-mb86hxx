@@ -1,6 +1,7 @@
 
 #include "data.h"
 #include "graphic.h"
+#include "menu.h"
 
 #pragma thumb
 
@@ -52,6 +53,7 @@ static uint8_t Data_23972f98[];
 
 static Menu* menu_picture_p = &menu_picture; //234eed24
 
+#if 0
 static Struct_235fdf74_Inner12_Inner0x20 Data_234eed30 = //234eed30
 {
 	{0, 0, 0, 0},
@@ -95,6 +97,7 @@ static Struct_235fdf74_Inner16_Inner0x20 Data_234eed48 = //234eed48
 0x234eed58                        dd         0x23972c20
 #endif
 };
+#endif
 
 static Menu_Item_Inner4_Data_0_Data_0x20 Data_234eed60 = //234eed60
 {
@@ -368,6 +371,7 @@ static Menu_Item_Inner4_Data_0_Data_0x20 Data_234eeee0 = //234eeee0
 #endif
 };
 
+#if 0
 static Struct_235fdf74_Inner16 Data_234eef78 = //234eef78
 {
 	{0},
@@ -391,6 +395,7 @@ static Struct_235fdf74_Inner16 Data_234eef78 = //234eef78
 0x234eef98                        dd         0x234eed48
 #endif
 };
+#endif
 
 static Menu_Item_Inner4_Data_0 Data_234eeff8 = //234eeff8
 {
@@ -419,7 +424,7 @@ static Menu_Item_Inner4_Data_0 Data_234eeff8 = //234eeff8
 #endif
 };
 
-Struct_2377ded0_Inner_0x1c_Inner_0x20 Data_234eedd8 = //234eedd8
+Graphic_Job_2_5_Item_Text Data_234eedd8 = //234eedd8
 {
 	0, 0x0051, 0x0104, 0x012a, 0x0120, 1, 4, 9, 1, &Data_23972de0[0], 0, 0, 0
 #if 0
@@ -441,7 +446,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x20 Data_234eedd8 = //234eedd8
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c Data_234eeef8__[25] = //234eeef8
+static Graphic_Job_2_5_Item Data_234eeef8__[25] = //234eeef8
 {
 	{0}, //[0] = 234eeef8
 	{0}, //[1] = 234EEF38
@@ -470,6 +475,7 @@ static Struct_2377ded0_Inner_0x1c Data_234eeef8__[25] = //234eeef8
 	{0}, //[24] = 234EF4F8
 };
 
+#if 0
 static Struct_235fdf74_Inner20_Inner8 Data_234eeef8 = //234eeef8
 {
 	//Struct_2377ded0_Inner_0x1c[9]
@@ -481,7 +487,7 @@ static Struct_235fdf74_Inner20_Inner8 Data_234eeef8 = //234eeef8
 			0, //Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
 			{0}, //int fill_0xc[4]; //0xc
 			2, //uint16_t wData_0x1c; //0x1c
-			0, //Struct_2377ded0_Inner_0x1c_Inner_0x20* Data_0x20; //0x20
+			0, //Graphic_Job_2_5_Item_Text* Data_0x20; //0x20
 			0, //int Data_0x24; //0x24
 			{0}, //int fill_0x28[3]; //0x28
 			0, //int Data_0x34; //0x34
@@ -545,6 +551,7 @@ static Struct_235fdf74_Inner20_Inner8 Data_234eeef8 = //234eeef8
 #endif
 	}
 };
+#endif
 
 static Menu_Item_Inner4_Data_0 Data_234ef038 = //234ef038
 {
@@ -943,6 +950,7 @@ static Menu_Item_Inner4_Data_0 Data_234ef478 = //234ef478
 #endif
 };
 
+#if 0
 static Struct_235fdf74_Inner12 Data_234ef4b8 = //234ef4b8
 {
 	{0, 0, 0, 0, 0, 0, 0, 0}, //TODO
@@ -967,9 +975,10 @@ static Struct_235fdf74_Inner12 Data_234ef4b8 = //234ef4b8
 	0x234ef4d8                        dd         0x234eed30
 #endif
 };
+#endif
 
 #if 1
-static Struct_23414b38_b Data_234efb78 = //234efb78
+static Graphic_Job_2_5 Data_234efb78 = //234efb78
 {
 	0, //uint8_t bData_0; //0
 	0xfa, //uint8_t bData_1; //1
@@ -1320,12 +1329,12 @@ static Menu menu_picture = //234efe80
 	16, //"Bild"
 	&menu_picture_items[0], //Menu_Item* Data_4; //4
 	&menu_picture_items[0], //Menu_Item* Data_8; //8
-	&Data_234ef4b8, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
-	&Data_234eef78, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
+	0, //&Data_234ef4b8, //Struct_235fdf74_Inner12* header; //12 = 0xc
+	0, //&Data_234eef78, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
 	&Data_234efb78, //Struct_235fdf74_Inner20* Data_0x14; //20 = 0x14
 	7, //uint8_t maxItem; //0x18 = 24
 	0, //int8_t currentItem; //0x19
-	sub_23414b38, //void (*Data_0x1c)(); //0x1c
+	graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
 	menu_items_navigate, //void (*onNavigate)(); //0x20
 	menu_picture_on_enter, //void (*onEnter)(); //36 = 0x24
 	menu_picture_on_exit, //int (*onExit)(); //0x28
@@ -1344,7 +1353,7 @@ static Menu menu_picture = //234efe80
 0x234efe94                        dd         0x234efb78                         ; DATA XREF=menu_picture_on_enter+12
 0x234efe98 0700                   movs       r7, r0
 0x234efe9a 0000                   movs       r0, r0
-0x234efe9c                        dd         sub_23414b38
+0x234efe9c                        dd         graphic_start_job_2_5
 0x234efea0                        dd         menu_items_navigate+1
 0x234efea4                        dd         menu_picture_on_enter+1
 0x234efea8                        dd         menu_picture_on_exit+1
@@ -1687,8 +1696,8 @@ int menu_picture_on_enter(void)
 	console_send_string("menu_picture_on_enter (menu_picture.c): TODO\r\n");
 #endif
 
-	Struct_23414b38_b* r0 = menu_picture_p->Data_0x14;
-	uint8_t* str = r0->Data_8[9].Data_0x20->Data_0x10;
+	Graphic_Job_2_5* r0 = menu_picture_p->graphicData;
+	uint8_t* str = r0->pItems[9].Data_0x20->pString;
 
 	text_table_get_string(0x14e/*Bildskalierung:*/, str, 38);
 

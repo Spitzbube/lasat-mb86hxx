@@ -70,7 +70,7 @@ struct
 	uint16_t wData_0x14; //20 = 0x14
 	uint16_t wData_0x16; //22 = 0x16
 	uint16_t wData_0x18; //24 = 0x18
-	Struct_2377ded0_Inner_0x1c* arData_0x1c[100]; //0x1c = 28
+	Graphic_Job_2_5_Item* arData_0x1c[100]; //0x1c = 28
 	int fill_0x1ac[2]; //0x1AC = 428
 	//0x1b4
 } Data_2377ded0; //2377ded0
@@ -87,7 +87,7 @@ typedef struct
 
 
 /* 234521d4 - todo */
-int sub_234521d4(Struct_2377ded0_Inner_0x1c* r4)
+int sub_234521d4(Graphic_Job_2_5_Item* r4)
 {
 #if 0
 	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
@@ -151,13 +151,13 @@ int sub_234521d4(Struct_2377ded0_Inner_0x1c* r4)
 
 
 /* 23452e88 - todo */
-void sub_23452e88(Struct_2377ded0_Inner_0x1c* r4)
+void sub_23452e88(Graphic_Job_2_5_Item* r4)
 {
 #if 0
 	console_send_string("sub_23452e88 (todo.c): TODO\r\n");
 #endif
 
-	Struct_2377ded0_Inner_0x1c sp_0x34;
+	Graphic_Job_2_5_Item sp_0x34;
 	Struct_23452584_b sp_0xc[5];
 
 	Struct_2377ded0_Inner_0x1c_Inner_0x18* r6 = r4->Data_0x18;
@@ -465,7 +465,7 @@ void graphic_thread()
 					//loc_23453500
 					sp_0x10.bData_0 = 0; //r8
 
-					Struct_23414b38_b* r5 = r7->pPayload;
+					Graphic_Job_2_5* r5 = r7->pPayload;
 
 #if 1
 					{
@@ -473,8 +473,8 @@ void graphic_thread()
 						sprintf(debug_string, "loc_23453500: r5->wData_2=0x%x, bData_0=%d, bData_0x19=%d, bData_4=%d\r\n",
 								r5->wData_2, r5->bData_0, r5->bData_0x19, r5->bData_4);
 						console_send_string(debug_string);
-						sprintf(debug_string, "loc_23453500: r5->bData_18=%d, bData_1=%d\r\n",
-								r5->bData_0x18, r5->bData_1);
+						sprintf(debug_string, "loc_23453500: r5->bNumItems=%d, r5->pItems=%p, bData_1=%d\r\n",
+								r5->bNumItems, r5->pItems, r5->bData_1);
 						console_send_string(debug_string);
 					}
 #endif
@@ -510,14 +510,14 @@ void graphic_thread()
 								}
 							}
 							//loc_23453580: Change the colour scheme?
-							if ((r5->Data_0xc->Data_0 != sp_0xc) ||
+							if ((r5->pColorData->pClut != sp_0xc) ||
 								(r5->bData_1 != sp_0x3c))
 							{
 								//0x234535a0
 								sub_2342d5e4(Data_2377ded0.bData_0xc, 
-									r5->Data_0xc->Data_0, r5->bData_0x10, r5->bData_1);
+									r5->pColorData->pClut, r5->bData_0x10, r5->bData_1);
 
-								sp_0xc = r5->Data_0xc->Data_0;
+								sp_0xc = r5->pColorData->pClut;
 								sp_0x3c = r5->bData_1;
 							}
 							//loc_234535c4
@@ -552,100 +552,100 @@ void graphic_thread()
 						if (r5 != 0)
 						{
 							//0x23453650
-							Struct_2377ded0_Inner_0x1c* r4 =  r5->Data_8;
+							Graphic_Job_2_5_Item* pItem/*r4*/ = r5->pItems;
 
 							Data_2377ded0.wData_0x16 = r5->wData_2;
 							Data_2377ded0.wData_0x18 = r5->bData_0;
-							uint32_t sl = 0;
+							uint32_t i = 0; //sl
 							//->loc_234537dc
-							while (sl < r5->bData_0x18)
+							while (i < r5->bNumItems)
 							{
 								//loc_23453670
 
 #if 1
 								{
 									extern char debug_string[];
-									sprintf(debug_string, "loc_23453670: sl=%d, r4=%p\r\n", sl, r4);
+									sprintf(debug_string, "loc_23453670: i=%d, pItem=%p\r\n", i, pItem);
 									console_send_string(debug_string);
-									hex_dump("r4", r4, 0x40);
+									hex_dump("pItem", pItem, 0x40);
 								}
 #endif
-								if (r4->bData_0 == 1)
+								if (pItem->bData_0 == 1)
 								{
 									//0x2345367c
-									if ((Data_2377ded0.arData_0x1c[sl] != r4) ||
-										(r4->bData_0x3c != 0))
+									if ((Data_2377ded0.arData_0x1c[i] != pItem) ||
+										(pItem->bData_0x3c != 0))
 									{
 										//0x23453698
-										sub_23452e88(r4);
+										sub_23452e88(pItem);
 
-										if (r4->Data_8 != 0)
+										if (pItem->Data_8 != 0)
 										{
 											//0x234536ac
-											if (r4->Data_8->Data_8 != 0)
+											if (pItem->Data_8->Data_8 != 0)
 											{
 												//0x234536b8
-												(r4->Data_8->Data_8)(r4, r5->bData_1);
+												(pItem->Data_8->Data_8)(pItem, r5->bData_1);
 												//->loc_23453710
 											}
 											else
 											{
 												//loc_234536c8
-												sp8 = sub_23408d10((uint16_t)(r4->Data_8->Data_0));
+												sp8 = sub_23408d10((uint16_t)(pItem->Data_8->Data_0));
 
-												sub_2342cf84(r4->bData_1, 
-													r4->Data_8->wData_4, 
-													r4->Data_8->wData_6,
+												sub_2342cf84(pItem->bData_1, 
+													pItem->Data_8->wData_4, 
+													pItem->Data_8->wData_6,
 													sp8,
-													r4->wData_0x1c & 0xff);
+													pItem->wData_0x1c & 0xff);
 
 												if (((uint8_t*)sp8)[7] == 0)
 												{
 													Data_2377ded0.bData_5 = 1;
 												}
 											}
-										} //if (r4->Data_8 != 0)
+										} //if (pItem->Data_8 != 0)
 										//loc_23453710
 									}
-									//loc_23453710
-									if (r4->Data_0x20 != 0)
+									//loc_23453710: Text handling?
+									if (pItem->Data_0x20 != 0)
 									{
 										//0x2345371c
-										r4->Data_0x20->bData_0xc = r4->wData_0x1c & 0xff;
+										pItem->Data_0x20->bData_0xc = pItem->wData_0x1c & 0xff;
 
-										if ((Data_2377ded0.arData_0x1c[sl] != r4) ||
-											(r4->bData_0x3c != 0) ||
-											(r4->Data_0x20->bData_0x17 != 0))
+										if ((Data_2377ded0.arData_0x1c[i] != pItem) ||
+											(pItem->bData_0x3c != 0) ||
+											(pItem->Data_0x20->bData_0x17 != 0))
 										{
 											//0x23453748
-											Struct_2377ded0_Inner_0x1c_Inner_0x20* fp = r4->Data_0x20;
-											Struct_2377ded0_Inner_0x1c_Inner_0x20* r6 = &r4->Data_0x24;
+											Graphic_Job_2_5_Item_Text* fp = pItem->Data_0x20;
+											Graphic_Job_2_5_Item_Text* r6 = &pItem->Data_0x24;
 
-											if (r4->Data_0x24.Data_0x10 != 0)
+											if (pItem->Data_0x24.pString != 0)
 											{
 												//0x2345375c
 												sub_2342d42c(r6->bData_0,
-													(int16_t) r6->wData_2,
-													(int16_t) r6->wData_4,
-													(int16_t)(r6->wData_6 - r6->wData_2),
-													(int16_t)(r6->wData_8 - r6->wData_4),
-													r4->Data_0x20->bData_0xc);
+													(int16_t) r6->x1,
+													(int16_t) r6->y1,
+													(int16_t)(r6->x2 - r6->x1),
+													(int16_t)(r6->y2 - r6->y1),
+													pItem->Data_0x20->bData_0xc);
 											}
 											//loc_23453790 -> loc_234537a8
 											//sp8 = r6;
 											sub_23408604(*fp, r6);
 										}
 										//loc_234537bc
-										r4->Data_0x20->bData_0x17 = 0; //r8
-									} //if (r4->Data_0x20 != 0)
+										pItem->Data_0x20->bData_0x17 = 0; //r8
+									} //if (pItem->Data_0x20 != 0)
 									//loc_234537c4
-									r4->bData_0x3c = 0; //r8
-								} //if (r4->bData_0 == 1)
+									pItem->bData_0x3c = 0; //r8
+								} //if (pItem->bData_0 == 1)
 								//loc_234537c8
-								Data_2377ded0.arData_0x1c[sl] = r4;
-								sl++;
-								r4++;
-							} //while (sl < r5->bData_0x18)
+								Data_2377ded0.arData_0x1c[i] = pItem;
+								i++;
+								pItem++;
+							} //while (i < r5->bData_0x18)
 							//loc_234537e8
 						} //if (r5 != 0)
 						//loc_234537e8
@@ -820,10 +820,10 @@ int graphic_init(Graphic_Params* r4)
 
 
 /* 23453af8 /  / 23414b38 - todo */
-int sub_23414b38(Graphic_Queue_Item* pQueueItem, Struct_23414b38_b* r5)
+int graphic_start_job_2_5(Graphic_Queue_Item* pQueueItem, Graphic_Job_2_5* r5)
 {
 #if 0
-	console_send_string("sub_23414b38 (graphic.c): TODO\r\n");
+	console_send_string("graphic_start_job_2_5 (graphic.c): TODO\r\n");
 #endif
 
 	if (graphics_queue == 0)
@@ -902,7 +902,7 @@ int sub_23453b88(int a, Graphic_Queue_Item* b)
 int sub_23414c24(Graphic_Queue_Item* pQueueItem, Struct_23414c24* r5)
 {
 #if 0
-	console_send_string("sub_23414b38 (graphic.c): TODO\r\n");
+	console_send_string("sub_23414c24 (graphic.c): TODO\r\n");
 #endif
 
 	if (graphics_queue == 0)

@@ -120,21 +120,25 @@ typedef struct Menu_Item
 } Menu_Item;
 
 
+#if 0
 typedef struct
 {
 	int fill_0[4]; //0
 	void* Data_0x10; //0x10
 
 } Struct_235fdf74_Inner12_Inner0x20;
+#endif
 
-
+#if 0
 typedef struct
 {
 	int fill_0[8]; //0
 	Struct_235fdf74_Inner12_Inner0x20* Data_0x20; //0x20 = 32
 
 } Struct_235fdf74_Inner12;
+#endif //->Graphic_Job_2_5_Item
 
+#if 0
 typedef struct
 {
 	uint16_t fill_0; //0
@@ -157,72 +161,21 @@ typedef struct
 	Struct_235fdf74_Inner16_Inner0x20* Data_0x20; //0x20 = 32
 
 } Struct_235fdf74_Inner16;
+#endif
 
+#if 0
 typedef struct
 {
 	int fill_0[4]; //0
 	void* Data_0x10; //0x10
 
 } Struct_235fdf74_Inner20_Inner8_Inner0x20;
+#endif
 
+#if 0
 typedef struct
 {
-	int Data_0; //0
-	uint16_t wData_4; //4
-	uint16_t wData_6; //6
-	void (*Data_8)(void*, uint8_t); //8
-	//???
-} Struct_2377ded0_Inner_0x1c_Inner_8;
-
-typedef struct
-{
-	int fill_0; //0
-	int Data_4; //4
-	uint8_t bData_8; //8
-	//???
-} Struct_2377ded0_Inner_0x1c_Inner_0x18;
-
-typedef struct
-{
-	uint8_t bData_0; //0
-	uint16_t wData_2; //2
-	uint16_t wData_4; //4
-	uint16_t wData_6; //6
-	uint16_t wData_8; //8
-	uint8_t fill_0xa; //10
-	uint8_t bData_0xb; //11
-	uint8_t bData_0xc; //12
-	uint8_t bData_0xd; //13
-	uint8_t* Data_0x10; //16
-	uint16_t wData_0x14; //20 = 0x14
-	uint8_t bData_0x16; //22 = 0x16
-	uint8_t bData_0x17; //23 = 0x17
-	//0x18
-} Struct_2377ded0_Inner_0x1c_Inner_0x20;
-
-typedef struct
-{
-	uint8_t bData_0; //0
-	uint8_t bData_1; //1
-	int fill_4; //4
-	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
-	uint16_t wData_0xc; //0xc = 12
-	uint16_t wData_0xe; //0xe = 14
-	uint16_t wData_0x10; //0x10 = 16
-	uint16_t wData_0x12; //0x12 = 18
-	int fill_0x14; //0x14
-	Struct_2377ded0_Inner_0x1c_Inner_0x18* Data_0x18; //0x18
-	uint16_t wData_0x1c; //0x1c
-	uint16_t wData_0x1e; //0x1e
-	Struct_2377ded0_Inner_0x1c_Inner_0x20* Data_0x20; //0x20
-	Struct_2377ded0_Inner_0x1c_Inner_0x20 Data_0x24; //0x24 +0x18
-	uint8_t bData_0x3c; //0x3c
-	//0x40
-} Struct_2377ded0_Inner_0x1c;
-
-typedef struct
-{
-	Struct_2377ded0_Inner_0x1c Data_0[9]; //0
+	Graphic_Job_2_5_Item Data_0[9]; //0
 	struct
 	{
 		int fill_0[8]; //0
@@ -232,47 +185,7 @@ typedef struct
 	int fill_0x264[38]; //0x264
 	uint8_t bData_0x2fc; //0x2fc
 } Struct_235fdf74_Inner20_Inner8;
-
-typedef struct
-{
-	uint16_t fill_0; //0
-	uint16_t wData_2; //2
-	struct
-	{
-		int fill_0; //0
-		Struct_235fdf74_Inner20_Inner8* Data_4; //4
-		int fill_8[4]; //8
-	} Data_4;
-	void (*Data_0x1c)(); //28 = 0x1c
-	void (*Data_0x20)(); //32 = 0x20
-	//???
-} Struct_235fdf74_Inner20;
-
-typedef struct Menu
-{
-	uint16_t stringId; //0
-	Menu_Item* Data_4; //4
-	Menu_Item* Data_8; //8
-	Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
-	Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
-	Struct_235fdf74_Inner20* Data_0x14; //20 = 0x14
-	uint8_t maxItem; //0x18 = 24
-	int8_t currentItem; //0x19
-	void (*Data_0x1c)(); //0x1c
-	int (*onNavigate)(int*); //0x20
-	int (*onEnter)(int); //36 = 0x24
-	int (*onExit)(UI_Thread_Params*); //0x28
-	int Data_0x2c; //44 = 0x2c
-	int timeout; //48 = 0x30
-	Menu_Item* (*Data_0x34)(struct Menu*); //52
-#ifdef VDR110
-	//0x38 = 56?
-#else
-	void* (*Data_0x38)(struct FrontDisplay_Job*); //56
-	//0x3c = 60?
 #endif
-}
-Menu;
 
 typedef struct
 {
@@ -284,17 +197,6 @@ typedef struct
 
 extern int menu_items_navigate(int*);
 extern int menu_general_settings_entry(UI_Thread_Params*);
-
-
-struct Menu_Data
-{
-	UI_Thread_Params Data_235fdf58; //0 235fdf58 235fdf98 -0x40 23796784
-	UI_Thread_Params* Data_235fdf70; //24 = 0x18 235fdf70 / 2378336C -0x40 + 0x18 2379679C
-	Menu* menu_stack[13]; //28 = 0x1c 235fdf74 -0x40, size??? 237967A0
-	uint8_t menu_stack_level; //80 = 0x50 235fdfa8 235fdf98 + 0x10 237967D4
-	uint8_t bData_235fdfa9;
-
-};
 
 
 extern void sub_2342d6ec();
