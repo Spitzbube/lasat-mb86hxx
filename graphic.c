@@ -61,12 +61,12 @@ struct
 	uint8_t bData_5; //5
 	uint8_t bData_6; //6
 	uint8_t bData_7; //7
-	void* Data_8; //8
+	void* hViscaleOsd1; //8
 	uint8_t bData_0xc; //12
 	uint8_t bData_0xd; //13
 	uint8_t bData_0xe; //14
 	uint8_t bData_0xf; //15
-	void* Data_0x10; //0x10
+	void* hViscaleOsd2; //0x10
 	uint16_t wData_0x14; //20 = 0x14
 	uint16_t wData_0x16; //22 = 0x16
 	uint16_t wData_0x18; //24 = 0x18
@@ -147,6 +147,114 @@ int sub_234521d4(Graphic_Job_2_5_Item* r4)
 
 	sub_2342d42c(r4->bData_1, r4->wData_0xc + r4->wData_0x10 - 2, r4->wData_0xe + 20, 
 		1, r4->wData_0x12 - 40, 12);
+}
+
+
+/* 23452584 - todo */
+int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
+{
+#if 0
+	console_send_string("sub_23452584 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t r0 = 0;
+	uint8_t r6 = 0;
+//	int r2 = 1;
+
+	if (r5 & 2)
+	{
+		//0x234525a4
+		r6 = 1;
+		b->wData_0 = r4->Data_0x18->wData_0 + r4->wData_0xc;
+		b->wData_4 = r4->Data_0x18->wData_0 + r4->wData_0xe;
+		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_2 = 1; //r2
+		b++;
+	}
+	//loc_234525e8
+	if (r5 & 8)
+	{
+		//0x234525f0
+		b->wData_0 = r4->Data_0x18->wData_0 + r4->wData_0xc;
+		b->wData_4 = (r4->wData_0xe + r4->wData_0x12) - r4->Data_0x18->wData_0;
+		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_2 = 1; //r2
+		r6++;
+		b++;
+	}
+	//loc_23452640
+	if (r5 & 1)
+	{
+		//0x23452648
+		b->wData_0 = r4->wData_0x10 - r4->Data_0x18->wData_0 + r4->wData_0xc;
+		b->wData_4 = r4->Data_0x18->wData_0 + r4->wData_0xe;
+		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_2 = 1; //r2
+		b++;
+		r0 = 1;
+	}
+	//loc_23452694
+	if (r5 & 4)
+	{
+		//0x2345269c
+		r0++;
+		b->wData_0 = r4->wData_0x10 - r4->Data_0x18->wData_0 + r4->wData_0xc;
+		b->wData_4 = r4->wData_0xe + r4->wData_0x12 - r4->Data_0x18->wData_0;
+		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_2 = 1; //r2
+	}
+	//loc_234526ec
+	if (r0 != 0)
+	{
+		//0x234526f4
+		if (r5 & 1)
+		{
+			sub_2342d42c(r4->bData_1,
+				r4->wData_0x10 - r4->Data_0x18->wData_0 + r4->wData_0xc,
+				r4->wData_0xe + r4->Data_0x18->wData_0,
+				r4->Data_0x18->wData_0,
+				r4->wData_0x12 - r4->Data_0x18->wData_0 * r0,
+				r4->wData_0x1c);
+		}
+		else
+		{
+			sub_2342d42c(r4->bData_1,
+				r4->wData_0x10 - r4->Data_0x18->wData_0 + r4->wData_0xc,
+				r4->wData_0xe,
+				r4->Data_0x18->wData_0,
+				r4->wData_0x12 - r4->Data_0x18->wData_0 * r0,
+				r4->wData_0x1c);
+		}
+		
+		r4->wData_0x10 -= r4->Data_0x18->wData_0;
+	}
+	//loc_23452768
+	if (r6 != 0)
+	{
+		//0x23452770
+		if (r5 & 2)
+		{
+			sub_2342d42c(r4->bData_1,
+				r4->wData_0xc,
+				r4->wData_0xe + r4->Data_0x18->wData_0,
+				r4->Data_0x18->wData_0,
+				r4->wData_0x12 - r4->Data_0x18->wData_0 * r6,
+				r4->wData_0x1c);
+		}
+		else
+		{
+			sub_2342d42c(r4->bData_1,
+				r4->wData_0xc,
+				r4->wData_0xe,
+				r4->Data_0x18->wData_0,
+				r4->wData_0x12 - r4->Data_0x18->wData_0 * r6,
+				r4->wData_0x1c);
+		}
+
+		r4->wData_0x10 -= r4->Data_0x18->wData_0;
+		r4->wData_0xc += r4->Data_0x18->wData_0;
+	}
+	//loc_234527e4
 }
 
 
@@ -504,7 +612,7 @@ void graphic_thread()
 								if ((Data_2377ded0.bData_6 & 1) == 0)
 								{
 									//0x2345356c
-									viscale_osd_layer_disable(Data_2377ded0.Data_8);
+									viscale_osd_layer_disable(Data_2377ded0.hViscaleOsd1);
 
 									Data_2377ded0.bData_6 |= 1;
 								}
@@ -514,8 +622,8 @@ void graphic_thread()
 								(r5->bData_1 != sp_0x3c))
 							{
 								//0x234535a0
-								sub_2342d5e4(Data_2377ded0.bData_0xc, 
-									r5->pColorData->pClut, r5->bData_0x10, r5->bData_1);
+								viscale_osd_update_clut(Data_2377ded0.bData_0xc, 
+									r5->pColorData->pClut, r5->numColors, r5->bData_1);
 
 								sp_0xc = r5->pColorData->pClut;
 								sp_0x3c = r5->bData_1;
@@ -531,7 +639,7 @@ void graphic_thread()
 						//->loc_234535f4
 					} //if (Data_2377ded0.wData_0x16 != Data_2377ded0.wData_0x14)
 					//loc_234535f4
-					sub_23453d60(&Data_2377ded0.bData_0xc);
+					graphic_swap_buffer(&Data_2377ded0.bData_0xc);
 
 					Data_2377ded0.bData_0xd = 1;
 
@@ -540,10 +648,10 @@ void graphic_thread()
 						//0x23453614
 						if (0 == sub_2342e27c(1, 736, 576))
 						{
-							(Data_2349361c)(Data_2377ded0.Data_8, 720, 576);
+							(Data_2349361c)(Data_2377ded0.hViscaleOsd1, 720, 576);
 						}
 
-						sub_23453d60(&Data_2377ded0.bData_4);
+						graphic_swap_buffer(&Data_2377ded0.bData_4);
 					} //if (r5->bData_4 & 8)
 
 					while (1)
@@ -675,11 +783,11 @@ void graphic_thread()
 						//->loc_23453648
 					} //while (1)
 					//loc_2345383c
-					sub_23453d60(&Data_2377ded0.bData_0xc);
+					graphic_swap_buffer(&Data_2377ded0.bData_0xc);
 
 					if (r5->bData_4 & 8)
 					{
-						sub_23453d60(&Data_2377ded0.bData_4);
+						graphic_swap_buffer(&Data_2377ded0.bData_4);
 					}
 
 					Data_2377ded0.wData_0x14 = Data_2377ded0.wData_0x16;
@@ -692,7 +800,7 @@ void graphic_thread()
 						if (Data_2377ded0.bData_0xe & 1)
 						{
 							//0x2345387c
-							viscale_osd_layer_enable(Data_2377ded0.Data_0x10);
+							viscale_osd_layer_enable(Data_2377ded0.hViscaleOsd2);
 
 							Data_2377ded0.bData_0xe &= ~1;
 						}
@@ -701,17 +809,17 @@ void graphic_thread()
 					//loc_23453890
 					if ((r5->bData_4 & 8) && (Data_2377ded0.bData_6 & 1))
 					{
-						viscale_osd_layer_enable(Data_2377ded0.Data_8);
+						viscale_osd_layer_enable(Data_2377ded0.hViscaleOsd1);
 
 						Data_2377ded0.bData_6 &= ~1;
 						Data_2377ded0.bData_6 &= ~2;
 					}
 					//loc_234538bc
-					sub_23453d34(&Data_2377ded0.bData_0xc);
+					graphic_copy_buffer(&Data_2377ded0.bData_0xc);
 
 					if (r5->bData_4 & 8)
 					{
-						sub_23453d34(&Data_2377ded0.bData_4);
+						graphic_copy_buffer(&Data_2377ded0.bData_4);
 					}
 					//->loc_23453980
 					r7->Data_0xc = 0; //r8
@@ -733,7 +841,7 @@ void graphic_thread()
 					if ((Data_2377ded0.bData_0xe & 1) == 0)
 					{
 						//0x234539b8
-						viscale_osd_layer_disable(Data_2377ded0.Data_0x10);
+						viscale_osd_layer_disable(Data_2377ded0.hViscaleOsd2);
 
 						Data_2377ded0.bData_0xe |= 1;
 					}
@@ -741,7 +849,7 @@ void graphic_thread()
 					if ((Data_2377ded0.bData_6 & 1) == 0)
 					{
 						//0x234539d8
-						viscale_osd_layer_disable(Data_2377ded0.Data_8);
+						viscale_osd_layer_disable(Data_2377ded0.hViscaleOsd1);
 
 						Data_2377ded0.bData_6 |= 1;
 					}
@@ -763,7 +871,7 @@ int graphic_init(Graphic_Params* r4)
 	console_send_string("graphic_init (todo.c): TODO\r\n");
 #endif
 
-	Viscale_Osd_Params sp_0x18;
+	Viscale_Osd_Params viscaleParams;
 
 	if (graphics_queue != 0)
 	{
@@ -778,33 +886,35 @@ int graphic_init(Graphic_Params* r4)
 
 	if (r4->Data_0 != 0)
 	{
-		sp_0x18.globalOffset = r4->Data_4;
-		sp_0x18.Data_4 = r4->Data_0;
-		sp_0x18.Data_8 = 0x4000;
+		//OSD2
+		viscaleParams.globalOffset = r4->osd2globalOffset;
+		viscaleParams.Data_4 = r4->Data_0;
+		viscaleParams.registerOffset = 0x4000; //OSD2 has same registers with an offset of 0x00004000
 
 		Data_2377ded0.bData_0xc = 0; //r6
 		Data_2377ded0.bData_0xf = 0; //r6
 		Data_2377ded0.bData_0xe = 1; //r7
 
-		Data_2377ded0.Data_0x10 = viscale_osd_open(&sp_0x18);
+		Data_2377ded0.hViscaleOsd2 = viscale_osd_open(&viscaleParams);
 	}
 	//loc_23453a7c
 	if (r4->Data_8 == 0)
 	{
-		Data_2377ded0.Data_8 = 0;
+		Data_2377ded0.hViscaleOsd1 = 0;
 		//->loc_23453ab8
 	}
 	else
 	{
-		sp_0x18.globalOffset = r4->Data_12;
-		sp_0x18.Data_4 = r4->Data_8;
-		sp_0x18.Data_8 = 0;
+		//OSD1
+		viscaleParams.globalOffset = r4->osd1globalOffset;
+		viscaleParams.Data_4 = r4->Data_8;
+		viscaleParams.registerOffset = 0;
 
 		Data_2377ded0.bData_4 = 1; //r7
 		Data_2377ded0.bData_7 = 0; //r6
 		Data_2377ded0.bData_6 = 1; //r7
 
-		Data_2377ded0.Data_8 = viscale_osd_open(&sp_0x18);
+		Data_2377ded0.hViscaleOsd1 = viscale_osd_open(&viscaleParams);
 	}
 	//loc_23453ab8
 	int res = OSTaskCreateExt(graphic_thread, 0, &graphic_thread_stack[THREAD_STACK_SIZE_GRAPHIC-1]/*2377decc*/,
@@ -970,11 +1080,11 @@ int graphics_configure_osd_layer(int r0)
 		return 0xff;
 	}
 
-	(Data_2349361c)(Data_2377ded0.Data_0x10, 720, 576);
+	(Data_2349361c)(Data_2377ded0.hViscaleOsd2, 720, 576);
 
-	if (Data_2377ded0.Data_8 != 0)
+	if (Data_2377ded0.hViscaleOsd1 != 0)
 	{
-		(Data_2349361c)(Data_2377ded0.Data_8, 720, 576);
+		(Data_2349361c)(Data_2377ded0.hViscaleOsd1, 720, 576);
 	}
 
 	return 0;
@@ -982,10 +1092,10 @@ int graphics_configure_osd_layer(int r0)
 
 
 /* 23453d34 - complete */
-void sub_23453d34(uint8_t* a)
+void graphic_copy_buffer(uint8_t* a)
 {
 #if 0
-	console_send_string("sub_23453d34 (todo.c): TODO\r\n");
+	console_send_string("graphic_copy_buffer (todo.c): TODO\r\n");
 #endif
 
 	if (a[1] == 0)
@@ -995,17 +1105,17 @@ void sub_23453d34(uint8_t* a)
 
 	a[1] = 0;
 
-	sub_2342d51c(a[0]);
+	viscale_osd_memcpy(a[0]);
 
 	rtos_task_wait(1);
 }
 
 
 /* 23453d60 - complete */
-void sub_23453d60(uint8_t* a)
+void graphic_swap_buffer(uint8_t* a)
 {
 #if 0
-	console_send_string("sub_23453d60 (todo.c): TODO\r\n");
+	console_send_string("graphic_swap_buffer (todo.c): TODO\r\n");
 #endif
 
 	if (a[3] == 0)
@@ -1016,7 +1126,7 @@ void sub_23453d60(uint8_t* a)
 	{
 		a[3] = 0;
 
-		sub_2342d5ac(a[0]);
+		viscale_osd_swap_buffer(a[0]);
 	}
 }
 

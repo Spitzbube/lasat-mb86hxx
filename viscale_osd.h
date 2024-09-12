@@ -4,7 +4,7 @@ typedef struct
 {
 	int globalOffset; //0
 	int Data_4; //4
-	int Data_8; //8
+	int registerOffset; //8
 	int fill_12[2]; //12
 
 } Viscale_Osd_Params;

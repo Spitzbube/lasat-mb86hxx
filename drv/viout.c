@@ -128,7 +128,7 @@ void sub_23434784(int a, int b);
 void sub_234347a4(int a, int b);
 void sub_234347cc(int a, int b);
 void sub_23434818(int a, int b);
-
+void VO_SetSdvsyncoffset_Sdvsyncoffset(int a);
 
 /* 2342e4cc - todo */
 int sub_2342e4cc(uint32_t r0, uint32_t r1, uint32_t r2)
@@ -926,7 +926,7 @@ void sub_2342efac(uint32_t r4, uint32_t r5, int r2, int sb, int* r6, int sl, int
 	if (r4 >= r5)
 	{
 		//0x2342f040
-		(*r6) += (1 << 4);
+		(*r6) += (1 << 4); //VERFILTERON
 
 //		uint32_t fp = Data_23492718;
 
@@ -1038,7 +1038,7 @@ void sub_2342efac(uint32_t r4, uint32_t r5, int r2, int sb, int* r6, int sl, int
 		break;
 
 	case 2:
-		//->loc_2342f198
+		//->loc_2342f198: OSD1
 		FREG(0xcb004024)[0] = Data_23492714; //VO_OSDVERNUM
 		FREG(0xcb004028)[0] = Data_23492718; //VO_OSDVERDENUM
 
@@ -1046,6 +1046,7 @@ void sub_2342efac(uint32_t r4, uint32_t r5, int r2, int sb, int* r6, int sl, int
 		break;
 
 	default:
+		//OSD2
 		FREG(0xcb008024)[0] = Data_23492714;
 		FREG(0xcb008028)[0] = Data_23492718;
 
@@ -1164,7 +1165,7 @@ void sub_2342f28c(uint32_t r4, uint32_t r6, int* r7, int r8, uint32_t sb)
 		break;
 
 	case 2:
-		//
+		//OSD1
 		FREG(0xcb00401c)[0] = Data_234926b0; //VO_OSDHORNUM
 		FREG(0xcb004020)[0] = 0x10000; //sl //VO_OSDHORDENUM
 
@@ -1175,7 +1176,8 @@ void sub_2342f28c(uint32_t r4, uint32_t r6, int* r7, int r8, uint32_t sb)
 		break;
 
 	default:
-		FREG(0xcb00801c)[0] = Data_234926b0; //???
+		//OSD2
+		FREG(0xcb00801c)[0] = Data_234926b0; //VO_OSDHORNUM
 		FREG(0xcb008020)[0] = 0x10000; //sl //???
 
 		Data_234926b8 = 0xcb00a100;
@@ -1955,6 +1957,293 @@ void sub_2342fa6c(int a)
 	VO_Osd2hfltMirror[0] = 0xFF00FF;
 	FREG(0xcb00a000)[0] = VO_Osd2hfltMirror[0]; //VO_OSD2HFLT
 	//0x23431e00
+#if 1
+	VO_Osd2hfltMirror[1] = 0xff00ff;
+	FREG(0xcb00a004)[0] = VO_Osd2hfltMirror[1]; 
+	VO_Osd2hfltMirror[2] = 0xff00ff;
+	FREG(0xcb00a008)[0] = VO_Osd2hfltMirror[2]; 
+	VO_Osd2hfltMirror[3] = 0xff00ff;
+	FREG(0xcb00a00c)[0] = VO_Osd2hfltMirror[3];
+
+	VO_Osd2hfltMirror[4] = 0xf010f010;
+	FREG(0xcb00a010)[0] = VO_Osd2hfltMirror[4]; 
+	VO_Osd2hfltMirror[5] = 0xf010f010;
+	FREG(0xcb00a014)[0] = VO_Osd2hfltMirror[5]; 
+	VO_Osd2hfltMirror[6] = 0xf010f010;
+	FREG(0xcb00a018)[0] = VO_Osd2hfltMirror[6]; 
+	VO_Osd2hfltMirror[7] = 0xf010f010;
+	FREG(0xcb00a01c)[0] = VO_Osd2hfltMirror[7]; 
+
+	VO_Osd2hfltMirror[8] = 0xe020e020;
+	FREG(0xcb00a020)[0] = VO_Osd2hfltMirror[8]; 
+	VO_Osd2hfltMirror[9] = 0xe020e020;
+	FREG(0xcb00a024)[0] = VO_Osd2hfltMirror[9]; 
+	VO_Osd2hfltMirror[10] = 0xe020e020;
+	FREG(0xcb00a028)[0] = VO_Osd2hfltMirror[10]; 
+	VO_Osd2hfltMirror[11] = 0xe020e020;
+	FREG(0xcb00a02c)[0] = VO_Osd2hfltMirror[11]; 
+
+	VO_Osd2hfltMirror[12] = 0xd030d030;
+	FREG(0xcb00a030)[0] = VO_Osd2hfltMirror[12]; 
+	VO_Osd2hfltMirror[13] = 0xd030d030;
+	FREG(0xcb00a034)[0] = VO_Osd2hfltMirror[13]; 
+	VO_Osd2hfltMirror[14] = 0xd030d030;
+	FREG(0xcb00a038)[0] = VO_Osd2hfltMirror[14]; 
+	VO_Osd2hfltMirror[15] = 0xd030d030;
+	FREG(0xcb00a03c)[0] = VO_Osd2hfltMirror[15]; 
+
+	VO_Osd2hfltMirror[16] = 0xc040c040;
+	FREG(0xcb00a040)[0] = VO_Osd2hfltMirror[16]; 
+	VO_Osd2hfltMirror[17] = 0xc040c040;
+	FREG(0xcb00a044)[0] = VO_Osd2hfltMirror[17]; 
+	VO_Osd2hfltMirror[18] = 0xc040c040;
+	FREG(0xcb00a048)[0] = VO_Osd2hfltMirror[18]; 
+	VO_Osd2hfltMirror[19] = 0xc040c040;
+	FREG(0xcb00a04c)[0] = VO_Osd2hfltMirror[19]; 
+
+	VO_Osd2hfltMirror[20] = 0xb050b050;
+	FREG(0xcb00a050)[0] = VO_Osd2hfltMirror[20]; 
+	VO_Osd2hfltMirror[21] = 0xb050b050;
+	FREG(0xcb00a054)[0] = VO_Osd2hfltMirror[21]; 
+	VO_Osd2hfltMirror[22] = 0xb050b050;
+	FREG(0xcb00a058)[0] = VO_Osd2hfltMirror[22]; 
+	VO_Osd2hfltMirror[23] = 0xb050b050;
+	FREG(0xcb00a05c)[0] = VO_Osd2hfltMirror[23]; 
+
+	VO_Osd2hfltMirror[24] = 0xa060a060;
+	FREG(0xcb00a060)[0] = VO_Osd2hfltMirror[24]; 
+	VO_Osd2hfltMirror[25] = 0xa060a060;
+	FREG(0xcb00a064)[0] = VO_Osd2hfltMirror[25]; 
+	VO_Osd2hfltMirror[26] = 0xa060a060;
+	FREG(0xcb00a068)[0] = VO_Osd2hfltMirror[26]; 
+	VO_Osd2hfltMirror[27] = 0xa060a060;
+	FREG(0xcb00a06c)[0] = VO_Osd2hfltMirror[27]; 
+
+	VO_Osd2hfltMirror[28] = 0x90709070;
+	FREG(0xcb00a070)[0] = VO_Osd2hfltMirror[28]; 
+	VO_Osd2hfltMirror[29] = 0x90709070;
+	FREG(0xcb00a074)[0] = VO_Osd2hfltMirror[29]; 
+	VO_Osd2hfltMirror[30] = 0x90709070;
+	FREG(0xcb00a078)[0] = VO_Osd2hfltMirror[30]; 
+	VO_Osd2hfltMirror[31] = 0x90709070;
+	FREG(0xcb00a07c)[0] = VO_Osd2hfltMirror[31]; 
+
+	VO_Osd2hfltMirror[32] = 0x80808080;
+	FREG(0xcb00a080)[0] = VO_Osd2hfltMirror[32]; 
+	VO_Osd2hfltMirror[33] = 0x80808080;
+	FREG(0xcb00a084)[0] = VO_Osd2hfltMirror[33]; 
+	VO_Osd2hfltMirror[34] = 0x80808080;
+	FREG(0xcb00a088)[0] = VO_Osd2hfltMirror[34]; 
+	VO_Osd2hfltMirror[35] = 0x80808080;
+	FREG(0xcb00a08c)[0] = VO_Osd2hfltMirror[35]; 
+
+	VO_Osd2hfltMirror[36] = 0x70907090;
+	FREG(0xcb00a090)[0] = VO_Osd2hfltMirror[36]; 
+	VO_Osd2hfltMirror[37] = 0x70907090;
+	FREG(0xcb00a094)[0] = VO_Osd2hfltMirror[37]; 
+	VO_Osd2hfltMirror[38] = 0x70907090;
+	FREG(0xcb00a098)[0] = VO_Osd2hfltMirror[38]; 
+	VO_Osd2hfltMirror[39] = 0x70907090;
+	FREG(0xcb00a09c)[0] = VO_Osd2hfltMirror[39]; 
+
+	VO_Osd2hfltMirror[40] = 0x60a060a0;
+	FREG(0xcb00a0a0)[0] = VO_Osd2hfltMirror[40]; 
+	VO_Osd2hfltMirror[41] = 0x60a060a0;
+	FREG(0xcb00a0a4)[0] = VO_Osd2hfltMirror[41]; 
+	VO_Osd2hfltMirror[42] = 0x60a060a0;
+	FREG(0xcb00a0a8)[0] = VO_Osd2hfltMirror[42]; 
+	VO_Osd2hfltMirror[43] = 0x60a060a0;
+	FREG(0xcb00a0ac)[0] = VO_Osd2hfltMirror[43]; 
+
+	VO_Osd2hfltMirror[44] = 0x50b050b0;
+	FREG(0xcb00a0b0)[0] = VO_Osd2hfltMirror[44]; 
+	VO_Osd2hfltMirror[45] = 0x50b050b0;
+	FREG(0xcb00a0b4)[0] = VO_Osd2hfltMirror[45]; 
+	VO_Osd2hfltMirror[46] = 0x50b050b0;
+	FREG(0xcb00a0b8)[0] = VO_Osd2hfltMirror[46]; 
+	VO_Osd2hfltMirror[47] = 0x50b050b0;
+	FREG(0xcb00a0bc)[0] = VO_Osd2hfltMirror[47]; 
+
+	VO_Osd2hfltMirror[48] = 0x40c040c0;
+	FREG(0xcb00a0c0)[0] = VO_Osd2hfltMirror[48]; 
+	VO_Osd2hfltMirror[49] = 0x40c040c0;
+	FREG(0xcb00a0c4)[0] = VO_Osd2hfltMirror[49]; 
+	VO_Osd2hfltMirror[50] = 0x40c040c0;
+	FREG(0xcb00a0c8)[0] = VO_Osd2hfltMirror[50]; 
+	VO_Osd2hfltMirror[51] = 0x40c040c0;
+	FREG(0xcb00a0cc)[0] = VO_Osd2hfltMirror[51]; 
+
+	VO_Osd2hfltMirror[52] = 0x30d030d0;
+	FREG(0xcb00a0d0)[0] = VO_Osd2hfltMirror[52]; 
+	VO_Osd2hfltMirror[53] = 0x30d030d0;
+	FREG(0xcb00a0d4)[0] = VO_Osd2hfltMirror[53]; 
+	VO_Osd2hfltMirror[54] = 0x30d030d0;
+	FREG(0xcb00a0d8)[0] = VO_Osd2hfltMirror[54]; 
+	VO_Osd2hfltMirror[55] = 0x30d030d0;
+	FREG(0xcb00a0dc)[0] = VO_Osd2hfltMirror[55]; 
+
+	VO_Osd2hfltMirror[56] = 0x20e020e0;
+	FREG(0xcb00a0e0)[0] = VO_Osd2hfltMirror[56]; 
+	VO_Osd2hfltMirror[57] = 0x20e020e0;
+	FREG(0xcb00a0e4)[0] = VO_Osd2hfltMirror[57]; 
+	VO_Osd2hfltMirror[58] = 0x20e020e0;
+	FREG(0xcb00a0e8)[0] = VO_Osd2hfltMirror[58]; 
+	VO_Osd2hfltMirror[59] = 0x20e020e0;
+	FREG(0xcb00a0ec)[0] = VO_Osd2hfltMirror[59]; 
+
+	VO_Osd2hfltMirror[60] = 0x10f010f0;
+	FREG(0xcb00a0f0)[0] = VO_Osd2hfltMirror[60]; 
+	VO_Osd2hfltMirror[61] = 0x10f010f0;
+	FREG(0xcb00a0f4)[0] = VO_Osd2hfltMirror[61]; 
+	VO_Osd2hfltMirror[62] = 0x10f010f0;
+	FREG(0xcb00a0f8)[0] = VO_Osd2hfltMirror[62]; 
+	VO_Osd2hfltMirror[63] = 0x10f010f0;
+	FREG(0xcb00a0fc)[0] = VO_Osd2hfltMirror[63]; 
+
+	VO_Osd2hfltMirror[64] = 0xff000000;
+	FREG(0xcb00a100)[0] = VO_Osd2hfltMirror[64]; 
+	VO_Osd2hfltMirror[65] = 0x00000000;
+	FREG(0xcb00a104)[0] = VO_Osd2hfltMirror[65]; 
+	VO_Osd2hfltMirror[66] = 0xff000000;
+	FREG(0xcb00a108)[0] = VO_Osd2hfltMirror[66]; 
+	VO_Osd2hfltMirror[67] = 0x00000000;
+	FREG(0xcb00a10c)[0] = VO_Osd2hfltMirror[67]; 
+
+	VO_Osd2hfltMirror[68] = 0xef100000;
+	FREG(0xcb00a110)[0] = VO_Osd2hfltMirror[68]; 
+	VO_Osd2hfltMirror[69] = 0x00000000;
+	FREG(0xcb00a114)[0] = VO_Osd2hfltMirror[69]; 
+	VO_Osd2hfltMirror[70] = 0xef100000;
+	FREG(0xcb00a118)[0] = VO_Osd2hfltMirror[70]; 
+	VO_Osd2hfltMirror[71] = 0x00000000;
+	FREG(0xcb00a11c)[0] = VO_Osd2hfltMirror[71]; 
+
+	VO_Osd2hfltMirror[72] = 0xdf200000;
+	FREG(0xcb00a120)[0] = VO_Osd2hfltMirror[72]; 
+	VO_Osd2hfltMirror[73] = 0x00000000;
+	FREG(0xcb00a124)[0] = VO_Osd2hfltMirror[73]; 
+	VO_Osd2hfltMirror[74] = 0xdf200000;
+	FREG(0xcb00a128)[0] = VO_Osd2hfltMirror[74]; 
+	VO_Osd2hfltMirror[75] = 0x00000000;
+	FREG(0xcb00a12c)[0] = VO_Osd2hfltMirror[75]; 
+
+	VO_Osd2hfltMirror[76] = 0xcf300000;
+	FREG(0xcb00a130)[0] = VO_Osd2hfltMirror[76]; 
+	VO_Osd2hfltMirror[77] = 0x00000000;
+	FREG(0xcb00a134)[0] = VO_Osd2hfltMirror[77]; 
+	VO_Osd2hfltMirror[78] = 0xcf300000;
+	FREG(0xcb00a138)[0] = VO_Osd2hfltMirror[78]; 
+	VO_Osd2hfltMirror[79] = 0x00000000;
+	FREG(0xcb00a13c)[0] = VO_Osd2hfltMirror[79]; 
+
+	VO_Osd2hfltMirror[80] = 0xbf400000;
+	FREG(0xcb00a140)[0] = VO_Osd2hfltMirror[80]; 
+	VO_Osd2hfltMirror[81] = 0x00000000;
+	FREG(0xcb00a144)[0] = VO_Osd2hfltMirror[81]; 
+	VO_Osd2hfltMirror[82] = 0xbf400000;
+	FREG(0xcb00a148)[0] = VO_Osd2hfltMirror[82]; 
+	VO_Osd2hfltMirror[83] = 0x00000000;
+	FREG(0xcb00a14c)[0] = VO_Osd2hfltMirror[83]; 
+
+	VO_Osd2hfltMirror[84] = 0xaf500000;
+	FREG(0xcb00a150)[0] = VO_Osd2hfltMirror[84]; 
+	VO_Osd2hfltMirror[85] = 0x00000000;
+	FREG(0xcb00a154)[0] = VO_Osd2hfltMirror[85]; 
+	VO_Osd2hfltMirror[86] = 0xaf500000;
+	FREG(0xcb00a158)[0] = VO_Osd2hfltMirror[86]; 
+	VO_Osd2hfltMirror[87] = 0x00000000;
+	FREG(0xcb00a15c)[0] = VO_Osd2hfltMirror[87]; 
+
+	VO_Osd2hfltMirror[88] = 0x9f600000;
+	FREG(0xcb00a160)[0] = VO_Osd2hfltMirror[88]; 
+	VO_Osd2hfltMirror[89] = 0x00000000;
+	FREG(0xcb00a164)[0] = VO_Osd2hfltMirror[89]; 
+	VO_Osd2hfltMirror[90] = 0x9f600000;
+	FREG(0xcb00a168)[0] = VO_Osd2hfltMirror[90]; 
+	VO_Osd2hfltMirror[91] = 0x00000000;
+	FREG(0xcb00a16c)[0] = VO_Osd2hfltMirror[91]; 
+
+	VO_Osd2hfltMirror[92] = 0x8f700000;
+	FREG(0xcb00a170)[0] = VO_Osd2hfltMirror[92]; 
+	VO_Osd2hfltMirror[93] = 0x00000000;
+	FREG(0xcb00a174)[0] = VO_Osd2hfltMirror[93]; 
+	VO_Osd2hfltMirror[94] = 0x8f700000;
+	FREG(0xcb00a178)[0] = VO_Osd2hfltMirror[94]; 
+	VO_Osd2hfltMirror[95] = 0x00000000;
+	FREG(0xcb00a17c)[0] = VO_Osd2hfltMirror[95]; 
+
+	VO_Osd2hfltMirror[96] = 0x7f800000;
+	FREG(0xcb00a180)[0] = VO_Osd2hfltMirror[96]; 
+	VO_Osd2hfltMirror[97] = 0x00000000;
+	FREG(0xcb00a184)[0] = VO_Osd2hfltMirror[97]; 
+	VO_Osd2hfltMirror[98] = 0x7f800000;
+	FREG(0xcb00a188)[0] = VO_Osd2hfltMirror[98]; 
+	VO_Osd2hfltMirror[99] = 0x00000000;
+	FREG(0xcb00a18c)[0] = VO_Osd2hfltMirror[99]; 
+
+	VO_Osd2hfltMirror[100] = 0x6f900000;
+	FREG(0xcb00a190)[0] = VO_Osd2hfltMirror[100]; 
+	VO_Osd2hfltMirror[101] = 0x00000000;
+	FREG(0xcb00a194)[0] = VO_Osd2hfltMirror[101]; 
+	VO_Osd2hfltMirror[102] = 0x6f900000;
+	FREG(0xcb00a198)[0] = VO_Osd2hfltMirror[102]; 
+	VO_Osd2hfltMirror[103] = 0x00000000;
+	FREG(0xcb00a19c)[0] = VO_Osd2hfltMirror[103]; 
+
+	VO_Osd2hfltMirror[104] = 0x5fa00000;
+	FREG(0xcb00a1a0)[0] = VO_Osd2hfltMirror[104]; 
+	VO_Osd2hfltMirror[105] = 0x00000000;
+	FREG(0xcb00a1a4)[0] = VO_Osd2hfltMirror[105]; 
+	VO_Osd2hfltMirror[106] = 0x5fa00000;
+	FREG(0xcb00a1a8)[0] = VO_Osd2hfltMirror[106]; 
+	VO_Osd2hfltMirror[107] = 0x00000000;
+	FREG(0xcb00a1ac)[0] = VO_Osd2hfltMirror[107]; 
+
+	VO_Osd2hfltMirror[108] = 0x4fb00000;
+	FREG(0xcb00a1b0)[0] = VO_Osd2hfltMirror[108]; 
+	VO_Osd2hfltMirror[109] = 0x00000000;
+	FREG(0xcb00a1b4)[0] = VO_Osd2hfltMirror[109]; 
+	VO_Osd2hfltMirror[110] = 0x4fb00000;
+	FREG(0xcb00a1b8)[0] = VO_Osd2hfltMirror[110]; 
+	VO_Osd2hfltMirror[111] = 0x00000000;
+	FREG(0xcb00a1bc)[0] = VO_Osd2hfltMirror[111]; 
+
+	VO_Osd2hfltMirror[112] = 0x3fc00000;
+	FREG(0xcb00a1c0)[0] = VO_Osd2hfltMirror[112]; 
+	VO_Osd2hfltMirror[113] = 0x00000000;
+	FREG(0xcb00a1c4)[0] = VO_Osd2hfltMirror[113]; 
+	VO_Osd2hfltMirror[114] = 0x3fc00000;
+	FREG(0xcb00a1c8)[0] = VO_Osd2hfltMirror[114]; 
+	VO_Osd2hfltMirror[115] = 0x00000000;
+	FREG(0xcb00a1cc)[0] = VO_Osd2hfltMirror[115]; 
+
+	VO_Osd2hfltMirror[116] = 0x2fd00000;
+	FREG(0xcb00a1d0)[0] = VO_Osd2hfltMirror[116]; 
+	VO_Osd2hfltMirror[117] = 0x00000000;
+	FREG(0xcb00a1d4)[0] = VO_Osd2hfltMirror[117]; 
+	VO_Osd2hfltMirror[118] = 0x2fd00000;
+	FREG(0xcb00a1d8)[0] = VO_Osd2hfltMirror[118]; 
+	VO_Osd2hfltMirror[119] = 0x00000000;
+	FREG(0xcb00a1dc)[0] = VO_Osd2hfltMirror[119]; 
+
+	VO_Osd2hfltMirror[120] = 0x1fe00000;
+	FREG(0xcb00a1e0)[0] = VO_Osd2hfltMirror[120]; 
+	VO_Osd2hfltMirror[121] = 0x00000000;
+	FREG(0xcb00a1e4)[0] = VO_Osd2hfltMirror[121]; 
+	VO_Osd2hfltMirror[122] = 0x1fe00000;
+	FREG(0xcb00a1e8)[0] = VO_Osd2hfltMirror[122]; 
+	VO_Osd2hfltMirror[123] = 0x00000000;
+	FREG(0xcb00a1ec)[0] = VO_Osd2hfltMirror[123]; 
+
+	VO_Osd2hfltMirror[124] = 0xff00000;
+	FREG(0xcb00a1f0)[0] = VO_Osd2hfltMirror[124]; 
+	VO_Osd2hfltMirror[125] = 0x00000000;
+	FREG(0xcb00a1f4)[0] = VO_Osd2hfltMirror[125]; 
+	VO_Osd2hfltMirror[126] = 0xff00000;
+	FREG(0xcb00a1f8)[0] = VO_Osd2hfltMirror[126]; 
+	VO_Osd2hfltMirror[127] = 0x00000000;
+	FREG(0xcb00a1fc)[0] = VO_Osd2hfltMirror[127]; 
+#endif
 
 	//TODO
 
@@ -2290,7 +2579,7 @@ void viout_configure_video_layer(int a)
 }
 
 
-/* 234345a4 - todo */
+/* 234345a4 /  / 23443490 - todo */
 void sub_234345a4(int r6)
 {
 #if 0
@@ -2312,12 +2601,12 @@ void sub_234345a4(int r6)
 	Data_23492450 |= 0x20;
 	FREG(0xCB011140)[0] = Data_23492450; //VO_SDHVSYNCCFG
 
-	sub_23434870(0x30);
+	VO_SetSdvsyncoffset_Sdvsyncoffset(0x30);
 
 	Data_23492454 |= 0x400;
 	FREG(0xCB01114c)[0] = Data_23492454; //VO_SDVSYNCOFFSET
 
-	sub_23434870(0x135);
+	VO_SetSdvsyncoffset_Sdvsyncoffset(0x135);
 
 	FREG(0xCB010040)[0] = 0x2007a0; //VO_DISPCVBSHORSTARTSTOP
 
@@ -2512,4 +2801,17 @@ void VO_SetSdvflt_Sdvflt(int a, int b)
 	VO_SdvfltMirror[a] = b;
 	FREG(0xcb012800 + a * 8)[0] = b; //VO_SDVFLT
 }
+
+
+/* 23434870 /  / 2344375c - complete */
+void VO_SetSdvsyncoffset_Sdvsyncoffset(int a)
+{
+#if 0
+	console_send_string("VO_SetSdvsyncoffset_Sdvsyncoffset (todo.c): TODO\r\n");
+#endif
+
+	Data_23492454 = (Data_23492454 & ~0x3ff) | (a & 0x3ff); //SDVSYNCOFFSET
+	FREG(0xcb01114c)[0] = Data_23492454; //VO_SDVSYNCOFFSET
+}
+
 

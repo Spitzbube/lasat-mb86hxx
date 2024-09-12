@@ -1332,9 +1332,9 @@ void main_graphic_init(void)
 	Graphic_Params sp4;
 
 	sp4.Data_0 = 0x22000000;
-	sp4.Data_4 = 0x22048000;
+	sp4.osd2globalOffset = 0x22048000;
 	sp4.Data_8 = 0x22090000;
-	sp4.Data_12 = 0x22240000;
+	sp4.osd1globalOffset = 0x22240000;
 	sp4.threadPrio = THREAD_PRIO_GRAPHIC;
 	sp4.Data_16 = sub_234256fc;
 

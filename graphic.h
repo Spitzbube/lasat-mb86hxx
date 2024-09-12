@@ -3,9 +3,9 @@
 typedef struct
 {
 	int Data_0; //0
-	int Data_4; //4
+	int osd2globalOffset; //4
 	int Data_8; //8
-	int Data_12; //12
+	int osd1globalOffset; //12
 	void (*Data_16)(); //16
 	uint16_t threadPrio; //20
 
@@ -28,7 +28,7 @@ typedef struct
 
 typedef struct
 {
-	int fill_0; //0
+	uint16_t wData_0; //0
 	int Data_4; //4
 	uint8_t bData_8; //8
 	//???
@@ -96,7 +96,7 @@ typedef struct
 	uint8_t bData_4; //4
 	Graphic_Job_2_5_Item* pItems; //8
 	Graphic_Color_Data* pColorData; //12
-	uint8_t bData_0x10; //0x10 = 16
+	uint8_t numColors; //0x10 = 16
 	int fill_0x14; //0x14 = 20
 	uint8_t bNumItems; //0x18 = 24
 	uint8_t bData_0x19; //0x19 = 25

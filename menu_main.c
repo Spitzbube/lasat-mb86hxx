@@ -7,10 +7,12 @@
 
 #ifndef VDR110
 
+#pragma thumb
+
 static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
 
-static void menu_main_on_enter(int);
+static int menu_main_on_enter(int);
 static int menu_main_on_exit(void);
 static int menu_main_items_on_event(void*);
 
@@ -21,25 +23,26 @@ Graphic_Color_Data menu_main_graphic_color_data = //234c123c
 	&menu_main_clut[0],
 };
 Menu* Data_234c1240 = &menu_main; //234C1240 +0x10
+int Data_234c1244; //234c1244 +0x14
+int Data_234c1248; //234c1248 +0x18
 int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
-	0, 5, 0x0f, //...
+	14, 5, 0x0f, //...
 #if 0
-0x234c128c 0E00                   movs       r6, r1                             ; DATA XREF=sub_2344d444+18, sub_2344d444+232, sub_2348c844+46, 0x234c184c, dword_234eb848, 0x234eef50, dword_234f4b30
+0x234c128c                        dw         0x000e                             ; DATA XREF=sub_2344d444+18, sub_2344d444+232, sub_2348c844+46, 0x234c184c, dword_234eb848, 0x234eef50, dword_234f4b30
 0x234c128e 0000                   movs       r0, r0
 0x234c1290                        dd         0x00000005
-0x234c1294                        db         0x0f                               ; DATA XREF=sub_2344d444+236
-0x234c1295                        db  0x00 ; '.'
+0x234c1294                        db         0x0f
 #endif
 };
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 {
-	0, 4, 0x03, //...
+	9, 4, 0x03, //...
 #if 0
 0x234c1298 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+238, 0x234c198c
 0x234c129a 0000                   movs       r0, r0
@@ -50,7 +53,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
 {
-	0, 4, 0x0b, //...
+	9, 4, 0x0b, //...
 #if 0
 0x234c12a4 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+244, 0x234e9aec, 0x234eaf94, 0x234ef4d0, 0x234efb10, 0x234f5b54
 0x234c12a6 0000                   movs       r0, r0
@@ -61,7 +64,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 {
-	0, 0, 0x06, //...
+	14, 0, 0x06, //...
 #if 0
 0x234c12d4 0E00                   movs       r6, r1                             ; DATA XREF=sub_2344d444+268, sub_234533bc+118, sub_234533bc+872, dword_234537d4, sub_234538b0+112, dword_23453c9c, sub_23459656+196, sub_2345afa4+190, dword_2345b32c, sub_2349511c+192, dword_23495360
 0x234c12d6 0000                   movs       r0, r0
@@ -72,7 +75,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8 = //234c12f8
 {
-	0, 4, 0x03, //...
+	9, 4, 0x03, //...
 #if 0
 0x234c12f8 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+286, sub_2345afa4+186, dword_2345b328, 0x234df4c0
 0x234c12fa 0000                   movs       r0, r0
@@ -83,7 +86,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8 = //234c12f8
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
 {
-	0, 4, 0x0f, //...
+	9, 4, 0x0f, //...
 #if 0
 0x234c134c 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+328, sub_23452a3e+24, dword_23452a9c, sub_2345afa4+260, dword_2345b334, 0x234c188c, 0x234c190c, 0x234df3c0, 0x234eef90, dword_234f7dd0
 0x234c134e 0000                   movs       r0, r0
@@ -645,12 +648,37 @@ int menu_main_items_on_event(void* r0)
 
 
 /*  /  / 2344d060 - todo */
-void menu_main_on_enter(int a)
+int menu_main_on_enter(int a)
 {
-#if 1
+#if 0
 	console_send_string("menu_main_on_enter (todo.c): TODO\r\n");
 #endif
 
+	Graphic_Job_2_5* r4 = Data_234c1240->graphicData;
+
+	Data_234c1248 = Data_234c1244 = musb_msd_get_device(0);
+
+	r4->pItems[10].bData_0 = 0;
+
+	if (Data_234c1244 != 0)
+	{
+		r4->wData_2 = 5;
+
+		r4->pItems[4].wData_0x12 = 0xcc;
+		r4->pItems[11].bData_0 = 1;
+		r4->pItems[9].Data_0x18 = r4->pItems[7].Data_0x18;
+	}
+	else
+	{
+		//loc_2344d0aa
+		r4->wData_2 = 4;
+
+		r4->pItems[4].wData_0x12 = 0xac;
+		r4->pItems[11].bData_0 = 0;
+		r4->pItems[9].Data_0x18 = r4->pItems[11].Data_0x18;
+	}
+
+	return 0;
 }
 
 

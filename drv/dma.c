@@ -116,20 +116,20 @@ int dma_isr(void)
 }
 
 
-/* 23436900 - todo */
-int sub_23436900(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/, 
+/* 23436900 /  / 234466d4 - todo */
+int dma_start_memcpy(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/, 
                 uint32_t length, DMA_Channel_Callback r8, int fp)
 {
     uint8_t err;
 
 #if 0
-	console_send_string("sub_23436900 (todo.c): TODO\r\n");
+	console_send_string("dma_start_memcpy (todo.c): TODO\r\n");
 #endif
 
 #if 1
     {
         extern char debug_string[];
-        sprintf(debug_string, "sub_23436900: writeAddr=%p, readAddr=%p, length=%d\r\n", 
+        sprintf(debug_string, "dma_start_memcpy: writeAddr=%p, readAddr=%p, length=%d\r\n", 
             writeAddr, readAddr, length);
         console_send_string(debug_string);
     }
