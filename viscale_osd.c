@@ -31,19 +31,22 @@ typedef struct
 	//28
 } Struct_235f3094;
 
-Struct_235f3094 Data_235f3094[2];
+Struct_235f3094 Data_235f3094[2]; //235f3094
+uint32_t Data_235f30cc[1000]; //235f30cc, size???
 
 static void sub_2342e2d8(void* a, uint32_t* b, uint8_t c, int d);
 
 typedef struct 
 {
-	int fill_0[2]; //0
+	void* Data_0; //0
+	int fill_4; //4
 	uint16_t wData_8; //8
 	uint16_t wData_0xa; //10
-	int fill_0xc; //12
+	uint16_t fill_0xc; //12
+	uint16_t wData_0xe; //14
 	uint16_t wData_0x10; //16
 	uint16_t wData_0x12; //18
-	int fill_0x14; //20
+	uint16_t wData_0x14; //20
 	int Data_0x18; //24
 	int fill_0x1c[4]; //28
 	void* pBuffer; //44
@@ -52,6 +55,318 @@ typedef struct
 	int fill_0x34; //52
 	//0x38
 } Struct_2342cd1c;
+
+
+/* 2342c934 - todo */
+void sub_2342c934(uint32_t a, uint32_t* b)
+{
+#if 0
+	console_send_string("sub_2342c934 (todo.c): TODO\r\n");
+#endif
+
+	union 
+	{
+		uint32_t dwData;
+		uint8_t bData[4];
+	} sp4;
+
+	union 
+	{
+		uint32_t dwData;
+		uint8_t bData[4];
+	} sp0;
+
+	sp4.dwData = a;
+	sp0.dwData = *b;
+
+	if ((sp0.bData[3] & 0xf0) == 0)
+	{
+		sp0.bData[3] |= sp4.bData[3] & 0xf0;
+	}
+
+	if ((sp0.bData[3] & 0x0f) == 0)
+	{
+		sp0.bData[3] |= sp4.bData[3] & 0x0f;
+	}
+	
+	if ((sp0.bData[2] & 0xf0) == 0)
+	{
+		sp0.bData[2] |= sp4.bData[2] & 0xf0;
+	}
+
+	if ((sp0.bData[2] & 0x0f) == 0)
+	{
+		sp0.bData[2] |= sp4.bData[2] & 0x0f;
+	}
+	
+	if ((sp0.bData[1] & 0xf0) == 0)
+	{
+		sp0.bData[1] |= sp4.bData[1] & 0xf0;
+	}
+
+	if ((sp0.bData[1] & 0x0f) == 0)
+	{
+		sp0.bData[1] |= sp4.bData[1] & 0x0f;
+	}
+	
+	if ((sp0.bData[0] & 0xf0) == 0)
+	{
+		sp0.bData[0] |= sp4.bData[0] & 0xf0;
+	}
+
+	if ((sp0.bData[0] & 0x0f) == 0)
+	{
+		sp0.bData[0] |= sp4.bData[0] & 0x0f;
+	}
+	
+	*b = sp0.dwData;
+}
+
+
+/* 2342ca10 - todo */
+void sub_2342ca10(Struct_2342cd1c* a)
+{
+#if 0
+	console_send_string("sub_2342ca10 (todo.c): TODO\r\n");
+#endif
+
+	int sp_0x14;
+	uint32_t sp_0x10;
+	int sp_0xc;
+	uint32_t* sp8;
+	int sp4;
+	int sp;
+
+	sp_0x10 = a->wData_8;
+	sp_0xc = a->wData_0xa;
+	sp8 = a->Data_0;
+	sp_0x14 = a->wData_0x30;
+	sp4 = a->wData_0x10;
+	sp = a->wData_0x12;
+	//->loc_2342cb10
+	for (uint32_t r3 = 0; r3 < sp_0xc; r3++)
+	{
+		//loc_2342ca50
+		uint32_t* pFb = (uint32_t*) (a->pBuffer);
+		pFb += sp4;
+		int r5 = sp * sp_0x14;
+		int r4 = r3 * sp_0x14;
+		pFb += r5;
+		int sl = sp_0x10 & 0x07;
+		int ip = r3 * sp_0x10;
+		int fp = sp_0x10 >> 3;
+		uint32_t* r1 = sp8 + ip;
+		pFb += r4;
+		//->loc_2342cae4
+		while (fp--)
+		{
+			//loc_2342ca90
+			uint32_t sb = r1[0];
+			uint32_t ip = r1[1];
+			uint32_t lr = r1[2];
+			uint32_t r4 = r1[3];
+			uint32_t r5 = r1[4];
+			uint32_t r6 = r1[5];
+			uint32_t r7 = r1[6];
+			uint32_t r8 = r1[7];
+			if (sb != 0)
+			{
+				pFb[0] = sb;
+			}
+			if (ip != 0)
+			{
+				pFb[1] = ip;
+			}
+			if (lr != 0)
+			{
+				pFb[2] = lr;
+			}
+			if (r4 != 0)
+			{
+				pFb[3] = r4;
+			}
+			if (r5 != 0)
+			{
+				pFb[4] = r5;
+			}
+			if (r6 != 0)
+			{
+				pFb[5] = r6;
+			}
+			if (r7 != 0)
+			{
+				pFb[6] = r7;
+			}
+			if (r8 != 0)
+			{
+				pFb[7] = r8;
+			}
+
+			r1 += 8;
+			pFb += 8;
+		}
+		//->loc_2342cb04
+		while (sl--)
+		{
+			//loc_2342caf0
+			if (r1[0] != 0)
+			{
+				pFb[0] = r1[0];				
+			}
+
+			r1++;
+			pFb++;
+		}
+	}
+}
+
+
+/* 2342cb24 - tood */
+void sub_2342cb24(Struct_2342cd1c* r7)
+{
+#if 0
+	console_send_string("sub_2342cb24 (todo.c): TODO\r\n");
+#endif
+
+	int sp_0x10;
+	int sp_0xc;
+	int sp8;
+	uint32_t sp4;
+	union 
+	{
+		uint32_t dwData;
+		uint8_t bData[4];
+	} sp;
+
+	sp8 = r7->wData_0xa;
+	uint32_t r2 = r7->wData_0x10;
+	int r1 = r7->wData_8;
+	uint8_t* sb = r7->Data_0;
+	int r8 = r2 & 0x07;
+	int r0 = r1 + r8;
+	int r3 = r0 + 7;
+	sp_0xc = r3 >> 3;
+	r3 = r7->wData_0x30;
+	int ip = r7->wData_0x12;
+	r1 = r2 >> 3;
+	int r6 = r0 & 0x07;
+	uint32_t* r0_ = r7->pBuffer;
+	r2 = r3 * ip;
+	int fp = r8 * 4;
+	r0_ += r2;
+	uint32_t* sl = r0_ + r1;
+	sp_0x10 = 0;
+
+	if (/*r1*/r7->wData_8 & 1)
+	{
+		r6--;
+		sp_0x10 = 32 - fp;
+	}
+	//->loc_2342cd04
+	while (sp8--)
+	{
+		//loc_2342cb98
+		uint32_t* r0 = &Data_235f30cc[0];
+		int r1 = sp_0xc;
+		uint32_t* r5 = sb;
+		uint32_t r3 = 0;
+		//->loc_2342cc04
+		while (r1--)
+		{
+			//loc_2342cbac
+			uint8_t* r2 = r5++;
+
+			sp.bData[3] = r2[0];
+			sp.bData[2] = r2[1];
+			sp.bData[1] = r2[2];
+			sp.bData[0] = r2[3];
+
+			r3 = r3 << sp_0x10;
+			
+			sp4 = sp.dwData;
+			sp.dwData = (sp.dwData >> fp) | (r3 & Data_23489b1c[r8]);
+			*r0++ = sp.dwData;
+			r3 = sp4;
+		}
+		//0x2342cc0c
+		r5 = &Data_235f30cc[0];
+		int r4 = sp_0xc;
+		uint32_t* ip = sl;
+		sb += r7->wData_0xe;
+
+		if (r8 != 0)
+		{
+			//0x2342cc28
+			r4--;
+			uint32_t r0 = Data_23489b1c[r8];
+			
+			if (r4 == 0)
+			{
+				//0x2342cc38
+				if (r6 != 0)
+				{
+					uint32_t r1 = Data_23489b1c[r6];
+					r6 = 0;
+					r0 |= ~r1;
+				}
+			}
+			//loc_2342cc4c
+			uint32_t r1 = *ip;
+			r1 = r1 & r0;
+			sp4 = r1;
+			uint32_t r2 = *r5++;
+			r0 = r2 & ~r0;
+			r0 = r0 | r1;
+			sp4 = r0;
+
+			sub_2342c934(*ip, &sp4);
+
+			*ip++ = sp4;
+		} //if (r8 != 0)
+		//loc_2342cc7c
+		if (r4 != 0)
+		{
+			//0x2342cc84
+			if (r6 != 0)
+			{
+				r4--;
+				//->loc_2342ccb0
+			}
+
+			while (r4 != 0)
+			{
+				//loc_2342cc90
+				sp4 = *r5++;
+				r4--;
+
+				sub_2342c934(*ip, &sp4);
+
+				*ip++ = sp4;
+			}
+			//loc_2342ccb8
+		}
+		//loc_2342ccb8
+		if (r6 != 0)
+		{
+			//0x2342ccc0
+			uint32_t r1 = *ip;
+			uint32_t r0 = ~Data_23489b1c[r6];
+			r1 = r1 & r0;
+			sp4 = r1;
+			uint32_t r2 = *r5;
+			r0 = r2 & ~r0;
+			r0 = r0 | r1;
+			sp4 = r0;
+
+			sub_2342c934(*ip, &sp4);
+
+			*ip++ = sp4;
+		}
+		//loc_2342ccfc
+		sl += r7->wData_0x30;
+		//loc_2342cd04
+	} //while (sp8--)
+}
 
 
 /* 2342cd1c - todo */
@@ -206,12 +521,50 @@ void sub_2342ce64(void)
 
 
 /* 2342ce8c - todo */
-void sub_2342ce8c(uint8_t a, uint16_t b, uint16_t c, void* d)
+int sub_2342ce8c(uint8_t a, uint16_t b, uint16_t c, uint8_t* d)
 {
-#if 1
+#if 0
 	console_send_string("sub_2342ce8c (todo.c): TODO\r\n");
 #endif
 
+	Struct_2342cd1c sp;
+
+	if (d[7] == 0x10)
+	{
+		sp.wData_0x30 = 0x60;
+		sp.wData_0x10 = b;
+		sp.bData_0x32 = a;
+		sp.wData_0x12 = c;
+		sp.wData_8 = (d[0] << 8) + d[1];
+		if (sp.wData_8 & 1)
+		{
+			sp.wData_8--;
+		}
+		sp.wData_0xa = (d[2] << 8) + d[3];
+		sp.Data_0 = &d[8];
+		sp.wData_0xe = sp.wData_8 / 2;
+		sp.wData_0x14 = 0;
+		sp.pBuffer = Data_235f3094[0].Data_4.Data_4 & ~0x3ff;
+
+		sub_2342cb24(&sp);
+
+		return 0;
+	}
+	else
+	{
+		sp.wData_0x30 = 0x2e0;
+		sp.wData_0x10 = b;
+		sp.wData_0x12 = c;
+		sp.wData_8 = (d[0] << 8) + d[1];
+		sp.wData_0xa = (d[2] << 8) + d[3];
+		sp.Data_0 = &d[8];
+		sp.wData_0xe = sp.wData_8 * 4;
+		sp.pBuffer = Data_235f3094[1].Data_4.Data_4 & ~0x3ff;
+
+		sub_2342ca10(&sp);
+
+		return 0;
+	}
 }
 
 

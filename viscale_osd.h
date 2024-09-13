@@ -16,4 +16,4 @@ extern int viscale_osd_layer_enable(void*);
 extern int viscale_osd_layer_disable(void*);
 extern int sub_2342dde4(void*, uint32_t, uint32_t);
 extern int sub_2342d42c(uint8_t, int16_t, int16_t, int16_t, int16_t, int);
-extern void sub_2342ce8c(uint8_t, uint16_t, uint16_t, void*);
+extern int sub_2342ce8c(uint8_t, uint16_t, uint16_t, uint8_t*);
