@@ -670,7 +670,7 @@ void graphic_thread()
 							{
 								//loc_23453670
 
-#if 1
+#if 0
 								{
 									extern char debug_string[];
 									sprintf(debug_string, "loc_23453670: i=%d, pItem=%p\r\n", i, pItem);

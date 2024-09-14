@@ -485,7 +485,7 @@ void menu_initialize(Menu* pMenu)
 }
 
 
-/* 2343d458 - todo */
+/* 2343d458 /  / 2344db36 - todo */
 void sub_2343d458(UI_Thread_Params* a)
 {
 	memcpy(&Menu_Data.Data_235fdf58, a, sizeof(UI_Thread_Params));
@@ -974,12 +974,23 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//2344E978???
 					//TODO!!!
 					break;
+#endif //TODO
 
 				case 16:
 					//2344E878???
+#if 1 //Until v290 implementation
+					channel_change_volume(1, 1);
+					break;
+#endif
 					//break;
 				case 17:
 					//0x2344e878 -> 0x2344ea6e
+#if 1 //Until v290 implementation
+					channel_change_volume(1, -1);
+					break;
+#endif
+
+#if 0 //TODO
 				case 65: //VOL-
 					//2344E788 -> 2344E878
 					{
@@ -994,6 +1005,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					{
 						int r0 = sub_23451f66();
 						//TODO!!!
+						channel_next();
 					}
 					break;
 
@@ -1002,6 +1014,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					{
 						int r0 = sub_23451f66();
 						//TODO
+						channel_prev();
 					}
 					break;
 
@@ -1081,6 +1094,16 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//TODO!!!
 					break;
 #endif //TODO
+
+				case 69: //0x45
+					//0x2344e7f0
+					if (0 == channel_switch_lists())
+					{
+						channel_switch_lists();
+						//2344ee44
+					}
+					//2344e8f0 -> 2344e990
+					//TODO
 				}
 			}
 #endif
@@ -1222,8 +1245,11 @@ void mainfunction_thread(UI_Thread_Params* a)
 void menu_event_thread(UI_Thread_Params* p)
 {
 //	Struct_235fdf98* sp_0x28;
-	uint8_t err; //sp_0x24
-	int navigateVal; //sp_0x20
+	uint8_t err; //sp_0x24 / / sp_0x34
+	int navigateVal; //sp_0x20 /  / sp_0x30
+#ifndef VDR110
+	Graphic_Queue_Item graphicQueueItem; //sp_0x20;
+#endif
 	UI_Thread_Params sp8; //->sp0x20
 	void (*sp4)();
 	struct
@@ -1236,7 +1262,7 @@ void menu_event_thread(UI_Thread_Params* p)
 	int r0;
 	Menu* pMenu; //r4
 	Menu_Item* pMenuItem; //r1
-	int (*navigateFunc)(int*) = 0; //r7
+	int (*navigateFunc)(int*) = 0; //r7 /  / sp4
 	void (*r6)();
 	int (*eventHandler)() = 0; //r5
 
@@ -1249,13 +1275,18 @@ void menu_event_thread(UI_Thread_Params* p)
 	Menu_Data.Data_235fdf70 = &sp8;
 
 	err = OSSemPost(sp8.pSema);
+
+#ifndef VDR110
+	int (*pfGraphicHandler)(Graphic_Queue_Item *, void *) = 0; //r6
+#endif
+
 	OSMboxAccept(sp8.pMBox);
 
 //	sp_0x28 = &Data_235fdf98;
 
 	while (1)
 	{
-		//loc_2343d70e
+		//loc_2343d70e /  / loc_2344e2d6
 		int timeout;
 		if (Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ] != 0)
 		{
@@ -1273,45 +1304,152 @@ void menu_event_thread(UI_Thread_Params* p)
 
 		pMenu = Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ];
 		pMenuItem = pMenu->Data_4;
+#ifndef VDR110
+		Graphic_Job_2_5* r2_ = pMenu->graphicData;
+		int (*sp)() = r2_->Data_0x20;
+		int (*r7)() = r2_->Data_0x1c;
+#else
 		sp4 = pMenuItem->Data_0x24;
 		r6 = pMenuItem->Data_0x28;
+#endif
 
 		if (err == 0)
 		{
-			//0x2343d746
+			//0x2343d746 /  / 0x2344e310
 			switch (r0)
 			{
 			case 0x21: //Down
 			case 0x83:
-				//loc_2343d77c
+				//loc_2343d77c /  / loc_2344e398
 				navigateVal = 2;
 				//loc_2343d77e
 				navigateFunc = pMenu->onNavigate;
+#ifndef VDR110
+				pfGraphicHandler = pMenu->graphicHandler;
+				//loc_2344e3a2
+				if (sp != 0)
+				{
+					/*sp_0x34*/err = (sp)();
+				}
+				//loc_2344e3ac
+#else
 				//->loc_2343d7d6
 				if (sp4 != 0)
 				{
 					(sp4)(0);
 				}
 				//loc_2343d7e2
+#endif
 				break;
 
 			case 0x20: //Up
 			case 0x82:
-				//0x2343d75e -> loc_2343d7d0
+				//0x2343d75e -> loc_2343d7d0 /  / loc_2344e38e -> loc_2344e39a
 				navigateVal = 1;
 				//loc_2343d77e
 				navigateFunc = pMenu->onNavigate;
+#ifndef VDR110
+				pfGraphicHandler = pMenu->graphicHandler;
+				//loc_2344e3a2
+				if (sp != 0)
+				{
+					/*sp_0x34*/err = (sp)();
+				}
+				//loc_2344e3ac
+#else
 				//->loc_2343d7d6
 				if (sp4 != 0)
 				{
 					(sp4)(0);
 				}
 				//loc_2343d7e2
+#endif
 				break;
 
 			case 0x2d: //EXIT
 			case 0xe0:
-				//loc_2343d78e
+				//loc_2343d78e /  / loc_2344e338
+#ifndef VDR110
+				if (r2_->wData_2 != 0x2e)
+				{
+					//0x2344e340
+					if ((pMenu->onExit != 0) && ((pMenu->onExit)(0) != 0))
+					{
+						//->loc_2344e3a2
+						if (sp != 0)
+						{
+							/*sp_0x34*/err = (sp)();
+						}
+						//loc_2344e3ac
+					}
+					else
+					{
+						//loc_2344e356
+						pMenu = MENU_STACK_POP();
+						if (pMenu != 0)
+						{
+							//0x2344e360
+							sp = pMenu->graphicData->Data_0x20;
+							r7 = pMenu->graphicData->Data_0x1c;
+							pfGraphicHandler = pMenu->graphicHandler;
+
+							sub_2343d51e(pMenu, &sp8);
+							//->loc_2344e3a2
+							if (sp != 0)
+							{
+								/*sp_0x34*/err = (sp)();
+							}
+							//loc_2344e3ac
+						}
+						else
+						{
+							//loc_2344e374
+							graphic_start_job_2_5(&graphicQueueItem, 0);
+
+							sub_2343d51e(0, &sp8);
+							//loc_2344e384
+							r7 = 0;
+							//->loc_2344e3ac
+						}
+					}
+				} //if (r2_->wData_2 != 0x2e)
+				else
+				{
+					//loc_2344e34e
+					if (pMenu->onExit != 0)
+					{
+						//0x2344e352
+						(pMenu->onExit)(0);
+					}
+					//loc_2344e356
+					pMenu = MENU_STACK_POP();
+					if (pMenu != 0)
+					{
+						//0x2344e360
+						sp = pMenu->graphicData->Data_0x20;
+						r7 = pMenu->graphicData->Data_0x1c;
+						pfGraphicHandler = pMenu->graphicHandler;
+
+						sub_2343d51e(pMenu, &sp8);
+						//->loc_2344e3a2
+						if (sp != 0)
+						{
+							/*sp_0x34*/err = (sp)();
+						}
+						//loc_2344e3ac
+					}
+					else
+					{
+						//loc_2344e374
+						graphic_start_job_2_5(&graphicQueueItem, 0);
+
+						sub_2343d51e(0, &sp8);
+						//loc_2344e384
+						r7 = 0;
+						//->loc_2344e3ac
+					}
+				}
+#else
 				if ((pMenu->onExit != 0) && ((pMenu->onExit)(0) != 0))
 				{
 					//->loc_2343d7d6
@@ -1353,23 +1491,47 @@ void menu_event_thread(UI_Thread_Params* p)
 						//->loc_2343d7e2
 					}
 				}
+#endif
 				break;
 
 			case 0x57: //OK
 			case 0xea:
-				//0x2343d768 -> loc_2343d7d4
+				//0x2343d768 -> loc_2343d7d4 /  / loc_2344e334
 				eventHandler = pMenuItem->onEvent;
+#ifndef VDR110
+				//loc_2344e384
+				r7 = 0;
+				//->loc_2344e3ac
+#else
 				//loc_2343d7d6
 				if (sp4 != 0)
 				{
 					(sp4)(0);
 				}
 				//loc_2343d7e2
+#endif
 				break;
 
 			case 0x11: //Left
 			case 0x81:
-				//loc_2343d820
+				//loc_2343d820 /  / loc_2344e388
+#ifndef VDR110
+				if (r2_->wData_2 == 0x51)
+				{
+					//loc_2344e38e
+					//r0 = 1;
+					//->loc_2344e39a
+					navigateVal = 1;
+					navigateFunc = pMenu->onNavigate;
+					pfGraphicHandler = pMenu->graphicHandler;
+				}
+				//loc_2344e3a2
+				if (sp != 0)
+				{
+					/*sp_0x34*/err = (sp)();
+				}
+				//loc_2344e3ac
+#else
 				navigateVal = 4;
 				//loc_2343d77e
 				navigateFunc = pMenu->onNavigate;
@@ -1379,11 +1541,29 @@ void menu_event_thread(UI_Thread_Params* p)
 					(sp4)(0);
 				}
 				//loc_2343d7e2
+#endif
 				break;
 
 			case 0x10: //Right
 			case 0x80:
-				//loc_2343d824
+				//loc_2343d824 /  / loc_2344e392
+#ifndef VDR110
+				if (r2_->wData_2 == 0x51)
+				{
+					//loc_2344e398
+					//r0 = 2;
+					//loc_2344e39a
+					navigateVal = 2;
+					navigateFunc = pMenu->onNavigate;
+					pfGraphicHandler = pMenu->graphicHandler;
+				}
+				//loc_2344e3a2
+				if (sp != 0)
+				{
+					/*sp_0x34*/err = (sp)();
+				}
+				//loc_2344e3ac
+#else
 				navigateVal = 8;
 				//loc_2343d77e
 				navigateFunc = pMenu->onNavigate;
@@ -1393,6 +1573,7 @@ void menu_event_thread(UI_Thread_Params* p)
 					(sp4)(0);
 				}
 				//loc_2343d7e2
+#endif
 				break;
 
 			case 0xff:
@@ -1410,6 +1591,15 @@ void menu_event_thread(UI_Thread_Params* p)
 				//->loc_2343d7e2
 				break;
 			} //switch (r0)
+#ifndef VDR110
+			//loc_2344e3ac
+			if (eventHandler != 0)
+			{
+				(eventHandler)(&sp8);
+				eventHandler = 0;
+			}
+			//loc_2344e3b6
+#else
 			//loc_2343d7e2
 			if (eventHandler != 0)
 			{
@@ -1449,6 +1639,7 @@ void menu_event_thread(UI_Thread_Params* p)
 				eventHandler = 0;
 			} //if (eventHandler != 0)
 			//loc_2343d836
+#endif
 			if (navigateFunc != 0)
 			{
 				(navigateFunc)(&navigateVal);
@@ -1457,16 +1648,33 @@ void menu_event_thread(UI_Thread_Params* p)
 
 				navigateFunc = 0;
 			} //if (navigateFunc != 0)
-			//loc_2343d84a
+			//loc_2343d84a /  / loc_2344e3d0
+#ifndef VDR110
+			if (pfGraphicHandler != 0)
+			{
+				//0x2344e3d4
+				(pfGraphicHandler)(&graphicQueueItem, pMenu->graphicData);
+
+				pfGraphicHandler = 0;
+			}
+			//loc_2344e3dc
+			if (r7 != 0)
+			{
+				//0x2344e3e0
+				err = (r7)();
+			}
+			//->loc_2344e3f6
+#else
 			if (r6 != 0)
 			{
 				(r6)(0);
 			}
 			//->loc_2343d89c
+#endif
 		} //if (err == 0)
 		else
 		{
-			//->loc_2343d828 -> loc_2343d854
+			//->loc_2343d828 -> loc_2343d854 /  / loc_2344e3e6
 			if (pMenuItem != 0)
 			{
 				eventHandler = pMenuItem->onEvent;

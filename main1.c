@@ -419,7 +419,9 @@ void main_inputhandler_init()
 		sp_0x74.threadName = "MainInputHandler";
 		sp_0x74.pMBox = pMBox;
 
+#ifdef VDR110
 		sub_2343d458(&sp_0x74);
+#endif
 
 #if 1
 		if (main_bNeedSetup != 0)
@@ -437,8 +439,8 @@ void main_inputhandler_init()
 			if (state == 1)
 			{
 				//0x23400a3c
-#if 0 //V290
-				sub_2344db36(&sp_0x74);
+#ifndef VDR110
+				sub_2343d458(&sp_0x74);
 #endif
 				ui_thread_create(&sp_0x74);
 
@@ -452,8 +454,8 @@ void main_inputhandler_init()
 			else if (state == 2)
 			{
 				//0x23400a68
-#if 0 //V290
-				sub_2344db36(&sp_0x74);
+#ifndef VDR110
+				sub_2343d458(&sp_0x74);
 #endif
 				sp_0x74.Data_20 = 0;
 				sp_0x74.pMBox = pMBox;

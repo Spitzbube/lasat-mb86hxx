@@ -100,7 +100,7 @@ static uint32_t menu_main_clut[] = //234c1388
 0x6b6fb800, 0x6b6fb800, 0x1f103f00, 0xe0e0e000,
 0x90909000, 0x10101000, 0xa8d02000, 0x6941e100,
 0x2f104f00, 0x15900000, 0x8b222200, 0xc0a0f000,
-0x7181c100, 0x4181a100, 0x50505000,
+0x7181c100, 0x4181a100, 0x50505000, 0x6b6fb800
 };
 
 static uint8_t menu_main_header_text_buffer[40] = "Head"; //234c1564 +0x28 = 234C158C
@@ -1088,7 +1088,7 @@ int sub_2344d414(UI_Thread_Params* r4)
 	console_send_string("sub_2344d414 (todo.c): TODO\r\n");
 #endif
 
-	sub_2344db36(r4);
+	sub_2343d458(r4);
 
 	channel_handle_user_settings(1, &sp4);
 

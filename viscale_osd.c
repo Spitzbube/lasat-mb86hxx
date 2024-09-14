@@ -470,7 +470,7 @@ void sub_2342cd1c(Struct_2342cd1c* a)
 /* 2342ce1c /  / - complete */
 int viscale_osd_layer_enable(void* h)
 {
-#if 1
+#if 0
 	console_send_string("viscale_osd_layer_enable (todo.c): TODO\r\n");
 #endif
 
@@ -489,7 +489,7 @@ int viscale_osd_layer_enable(void* h)
 /* 2342ce40 /  /  - complete */
 int viscale_osd_layer_disable(void* h)
 {
-#if 1
+#if 0
 	console_send_string("viscale_osd_layer_disable (todo.c): TODO\r\n");
 #endif
 
@@ -956,6 +956,67 @@ uint32_t viscale_osd_get_background(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
 	sp.bData[0] = d;
 
 	return sp.dwData;
+}
+
+
+/* 2342d6ec - todo */
+int sub_2342d6ec(void* a, uint32_t r0, uint32_t r5)
+{
+#if 0
+	console_send_string("sub_2342d6ec (todo.c): TODO\r\n");
+#endif
+
+	Struct_235f3094* r3 = a;
+	int sp_0xc = 0;
+
+	FREG(0xCB004044 + r3->Data_4.registerOffset)[0] |= (1 << 16); //VO_OSDMODE:OSDFIELDMODE
+	FREG(0xCB004034 + r3->Data_4.registerOffset)[0] = 4; //VO_OSDINITIALSHIFT
+	FREG(0xCB00402c + r3->Data_4.registerOffset)[0] = 720; //VO_OSDHORDISPPIXEL
+
+	if (r3->Data_4.registerOffset == 0x4000)
+	{
+		//0x2342d75c: OSD2
+		FREG(0xcb010024)[0] = 0x840354; //VO_DISPOSD2HORSTARTSTOP
+		FREG(0xcb010028)[0] = 0x2c0266; //VO_DISPOSD2VERSTARTSTOP
+
+		sub_2342f28c(r0, 720, &sp_0xc, 3, 1);
+
+		sub_2342efac(r5, 576, 576, 1, &sp_0xc, 3, 0);
+
+		FREG(0xcb008038)[0] = sp_0xc;
+		//->loc_2342d86c
+	}
+	//loc_2342d7b0
+	else if (r3->Data_4.registerOffset == 0)
+	{
+		//0x2342d7b8: OSD1
+		FREG(0xcb01001c)[0] = 0x840354; //VO_DISPOSD1HORSTARTSTOP
+		FREG(0xcb010020)[0] = 0x2c0266; //VO_DISPOSD1VERSTARTSTOP
+		FREG(0xcb004030)[0] = r0 - 1; //VO_OSDHORREADPIXEL
+
+		if (r0 > 720)
+		{
+			//0x2342d7e0
+			FREG(0xcb004044)[0] = FREG(0xcb004044 + r3->Data_4.registerOffset)[0] & ~(1 << 16); //interlaced
+
+			sub_2342f28c(r0, 720, &sp_0xc, 2, 1);
+
+			sub_2342efac(r5 / 2, 576, 576, 0, &sp_0xc, 2, 0);
+		}
+		else
+		{
+			//loc_2342d820
+			FREG(0xcb004044)[0] = FREG(0xcb004044 + r3->Data_4.registerOffset)[0] | (1 << 16); //progressive
+
+			sub_2342f28c(r0, 720, &sp_0xc, 2, 1);
+
+			sub_2342efac(r5, 576, 576, 2, &sp_0xc, 2, 0);
+		}
+
+		FREG(0xcb004038)[0] = sp_0xc;
+	}
+	//loc_2342d86c
+	return 0;
 }
 
 

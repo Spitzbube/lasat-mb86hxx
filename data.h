@@ -199,7 +199,6 @@ extern int menu_items_navigate(int*);
 extern int menu_general_settings_entry(UI_Thread_Params*);
 
 
-extern void sub_2342d6ec();
 extern void sub_2342d878();
 extern void sub_2342d9e0();
 extern void sub_2342db04();

@@ -2030,6 +2030,45 @@ int hdmi_audio_stop()
 }
 
 
+/* 234251f4 - complete */
+int sub_234251f4(void* h)
+{
+	uint8_t err;
+	hdmiHandleT* r4 = h;
+
+#if 0
+	console_send_string("sub_234251f4 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(hdmi_sema, 0, &err);
+	if (err != 0)
+	{
+		return err;
+	}
+
+	if (r4->wData_2 != 0)
+	{
+		OSSemPost(hdmi_sema);
+
+		return 1;
+	}
+
+	for (uint16_t i = 0; i < 23; i++)
+	{
+		if (r4->wData_0x1a0[i] == 0x16)
+		{
+			OSSemPost(hdmi_sema);
+
+			return 1;
+		}
+	}
+
+	OSSemPost(hdmi_sema);
+
+	return 0;
+}
+
+
 /* 23425270 / 23430684 - todo */
 void sub_23425270(int a)
 {

@@ -96,7 +96,7 @@ int sub_23407f24(int a/*sp_0xc*/, char* b,
 	console_send_string("sub_23407f24 (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23407f24: b[0]='%c'\r\n", b[0]);
@@ -124,7 +124,7 @@ int sub_23407f24(int a/*sp_0xc*/, char* b,
 	uint8_t height = (bitfield >> 5) & 0x3f; //r1 = 6 bits
 	int sb = (bitfield >> 11);
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23407f24: width=%d, height=%d, sb=%d\r\n", 
