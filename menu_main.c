@@ -1,126 +1,205 @@
 
+#include <string.h>
 #include "data.h"
 #include "frontdisplay.h"
 #include "graphic.h"
+#include "menu.h"
 
 #ifndef VDR110
 
-static uint32_t Data_234c1388[]; //234c1388
+#pragma thumb
+
+static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
 
-static void menu_main_on_enter(int);
+static int menu_main_on_enter(int);
 static int menu_main_on_exit(void);
 static int menu_main_items_on_event(void*);
 
 //0x234c1230
 uint8_t bData_234c1230 = 0; //234c1230 +0
-Struct_23414b38_b_Inner_0xc Data_234c123c = //234c123c
+Graphic_Color_Data menu_main_graphic_color_data = //234c123c
 {
-	&Data_234c1388[0],
+	&menu_main_clut[0],
 };
 Menu* Data_234c1240 = &menu_main; //234C1240 +0x10
+int Data_234c1244; //234c1244 +0x14
+int Data_234c1248; //234c1248 +0x18
 int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
-	0, 5, 0x0f, //...
+	14, 5, 0x0f, //...
 #if 0
-0x234c128c 0E00                   movs       r6, r1                             ; DATA XREF=sub_2344d444+18, sub_2344d444+232, sub_2348c844+46, 0x234c184c, dword_234eb848, 0x234eef50, dword_234f4b30
+0x234c128c                        dw         0x000e                             ; DATA XREF=sub_2344d444+18, sub_2344d444+232, sub_2348c844+46, 0x234c184c, dword_234eb848, 0x234eef50, dword_234f4b30
 0x234c128e 0000                   movs       r0, r0
 0x234c1290                        dd         0x00000005
-0x234c1294                        db         0x0f                               ; DATA XREF=sub_2344d444+236
-0x234c1295                        db  0x00 ; '.'
+0x234c1294                        db         0x0f
 #endif
 };
 
-static uint32_t Data_234c1388[] = //234c1388
+static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
+{
+	9, 4, 0x03, //...
+#if 0
+0x234c1298 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+238, 0x234c198c
+0x234c129a 0000                   movs       r0, r0
+0x234c129c                        dd         0x00000004                         ; DATA XREF=sub_2344d444+240
+0x234c12a0                        db         0x03
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
+{
+	9, 4, 0x0b, //...
+#if 0
+0x234c12a4 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+244, 0x234e9aec, 0x234eaf94, 0x234ef4d0, 0x234efb10, 0x234f5b54
+0x234c12a6 0000                   movs       r0, r0
+0x234c12a8                        dd         0x00000004                         ; DATA XREF=sub_2344d444+246
+0x234c12ac                        db         0x0b
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
+{
+	14, 0, 0x06, //...
+#if 0
+0x234c12d4 0E00                   movs       r6, r1                             ; DATA XREF=sub_2344d444+268, sub_234533bc+118, sub_234533bc+872, dword_234537d4, sub_234538b0+112, dword_23453c9c, sub_23459656+196, sub_2345afa4+190, dword_2345b32c, sub_2349511c+192, dword_23495360
+0x234c12d6 0000                   movs       r0, r0
+0x234c12d8                        dd         0x00000000                         ; DATA XREF=sub_2344d444+270
+0x234c12dc                        db         0x06
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8 = //234c12f8
+{
+	9, 4, 0x03, //...
+#if 0
+0x234c12f8 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+286, sub_2345afa4+186, dword_2345b328, 0x234df4c0
+0x234c12fa 0000                   movs       r0, r0
+0x234c12fc                        dd         0x00000004                         ; DATA XREF=sub_2344d444+288
+0x234c1300                        db         0x03
+#endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
+{
+	9, 4, 0x0f, //...
+#if 0
+0x234c134c 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+328, sub_23452a3e+24, dword_23452a9c, sub_2345afa4+260, dword_2345b334, 0x234c188c, 0x234c190c, 0x234df3c0, 0x234eef90, dword_234f7dd0
+0x234c134e 0000                   movs       r0, r0
+0x234c1350                        dd         0x00000004                         ; DATA XREF=sub_2344d444+330
+0x234c1354                        db         0x0f
+#endif	
+};
+
+static uint32_t menu_main_clut[] = //234c1388
 {
 0x6b6fb800, 0x6b6fb800, 0x1f103f00, 0xe0e0e000,
 0x90909000, 0x10101000, 0xa8d02000, 0x6941e100,
 0x2f104f00, 0x15900000, 0x8b222200, 0xc0a0f000,
-0x7181c100, 0x4181a100, 0x50505000,
+0x7181c100, 0x4181a100, 0x50505000, 0x6b6fb800
 };
 
-static uint8_t Data_234c1564[40] = "Head"; //234c1564 +0x28 = 234C158C
-static Struct_235fdf74_Inner12_Inner0x20 Data_234c158c = //234c158c
+static uint8_t menu_main_header_text_buffer[40] = "Head"; //234c1564 +0x28 = 234C158C
+static Graphic_Job_2_5_Item_Text menu_main_graphic_header_text_item = //234c158c
 {
-	{0, 0, 0, 0},
-	&Data_234c1564[0], //Data_0x10
+	0, 0x0051, 0x002c, 0x0137, 0x004f, 0x01, 0x06, 0x02, 0x00, &menu_main_header_text_buffer[0], 0, 0, 0
 #if 0
-	0x234c158c 0000                   movs       r0, r0                             ; DATA XREF=0x234c1894
-	0x234c158e 5100                   lsls       r1, r2, #0x1
-	0x234c1590 2C00                   movs       r4, r5
-	0x234c1592 3701                   lsls       r7, r6, #0x4
-	0x234c1594 4F00                   lsls       r7, r1, #0x1
-	0x234c1596 0106                   lsls       r1, r0, #0x18                      ; CODE XREF=dword_234c13ac+38
-	0x234c1598 0200                   movs       r2, r0
-	0x234c159a 0000                   movs       r0, r0
-	0x234c159c                        dd         0x234c1564                         ; "Head"
+0x234c158c                        db         0x00                               ; DATA XREF=0x234c1894
+0x234c158d                        db  0x00 ; '.'
+0x234c158e                        dw         0x0051
+0x234c1590                        dw         0x002c
+0x234c1592                        dw         0x0137
+0x234c1594                        dw         0x004f
+0x234c1596                        db         0x01                               ; CODE XREF=menu_main_clut+74
+0x234c1597                        db         0x06
+0x234c1598                        db         0x02
+0x234c1599                        db         0x00
+0x234c159a 0000                   movs       r0, r0
+0x234c159c                        dd         0x234c1564                         ; "Head"
+0x234c15a0                        dw         0x0000
+0x234c15a2                        db         0x00
+0x234c15a3                        db         0x00
 #endif
 };
 
-static uint8_t Data_234c15a4[40] = "Help"; //234c15a4
+static uint8_t menu_main_help_text_buffer[40] = "Help"; //234c15a4
 
-static Struct_235fdf74_Inner12_Inner0x20 Data_234c169c = //234c169c
+static Graphic_Job_2_5_Item_Text menu_main_graphic_help_text_item = //234c169c
 {
-	{0, 0, 0, 0},
-	&Data_234c15a4[0], //Data_0x10
+	0, 0x0047, 0x01c7, 0x0257, 0x01fd, 0x01, 0x05, 0x03, 0x01, &menu_main_help_text_buffer[0], 0, 0, 0
 #if 0
-0x234c169c 0000                   movs       r0, r0                             ; DATA XREF=0x234c1914
-0x234c169e 4700                   lsls       r7, r0, #0x1
-0x234c16a0 C701                   lsls       r7, r0, #0x7
-0x234c16a2 5702                   lsls       r7, r2, #0x9
-0x234c16a4 FD01                   lsls       r5, r7, #0x7
-0x234c16a6 0105                   lsls       r1, r0, #0x14
-0x234c16a8 0301                   lsls       r3, r0, #0x4                       ; CODE XREF=dword_234c1258+588
+0x234c169c                        db         0x00                               ; DATA XREF=0x234c1914
+0x234c169d                        db  0x00 ; '.'
+0x234c169e                        dw         0x0047
+0x234c16a0                        dw         0x01c7
+0x234c16a2                        dw         0x0257
+0x234c16a4                        dw         0x01fd
+0x234c16a6                        db         0x01
+0x234c16a7                        db         0x05
+0x234c16a8                        db         0x03                               ; CODE XREF=menu_main_clut+284
+0x234c16a9                        db         0x01
 0x234c16aa 0000                   movs       r0, r0
-0x234c16ac                        dd         0x234c15a4
+0x234c16ac                        dd         aHelp_234c15a4                     ; "Help", DATA XREF=menu_main_clut+214
+0x234c16b0                        dw         0x0000
+0x234c16b2                        db         0x00
+0x234c16b3                        db         0x00
 #endif
 };
 
 
-static uint8_t Data_234c16b4[40] = "1"; //234c16b4
-static uint8_t Data_234c16f4[40] = "2"; //234c16f4
-
-static Menu_Item_Inner4_Data_0_Data_0x20 Data_234c16dc = //234c16dc
+static uint8_t menu_main_graphic_item_1_text_buffer[40] = "1"; //234c16b4
+static Graphic_Job_2_5_Item_Text menu_main_graphic_text_item_1 = //234c16dc
 {
-	{0, 0, 0, 0},
-	&Data_234c16b4[0], //Data_0x10
+	0, 0x0051, 0x0064, 0x0137, 0x0080, 0x01, 0x04, 0x09, 0x01, &menu_main_graphic_item_1_text_buffer[0], 0, 0, 0
 #if 0
-	0x234c16dc 0000                   movs       r0, r0                             ; DATA XREF=0x234c1994
-	0x234c16de 5100                   lsls       r1, r2, #0x1
-	0x234c16e0 6400                   lsls       r4, r4, #0x1
-	0x234c16e2 3701                   lsls       r7, r6, #0x4
-	0x234c16e4 8000                   lsls       r0, r0, #0x2
-	0x234c16e6 0104                   lsls       r1, r0, #0x10
-	0x234c16e8 0901                   lsls       r1, r1, #0x4
-	0x234c16ea 0000                   movs       r0, r0
-	0x234c16ec                        dd         0x234c16b4
+0x234c16dc                        db         0x00                               ; DATA XREF=0x234c1994
+0x234c16dd                        db  0x00 ; '.'
+0x234c16de                        dw         0x0051
+0x234c16e0                        dw         0x0064
+0x234c16e2                        dw         0x0137
+0x234c16e4                        dw         0x0080
+0x234c16e6                        db         0x01
+0x234c16e7                        db         0x04
+0x234c16e8                        db         0x09
+0x234c16e9                        db         0x01
+0x234c16ea 0000                   movs       r0, r0
+0x234c16ec                        dd         a1                                 ; "1"
+0x234c16f0                        dw         0x0000
+0x234c16f2                        db         0x00
+0x234c16f3                        db         0x00
 #endif
 };
 
-static Menu_Item_Inner4_Data_0_Data_0x20 Data_234c171c = //234c171c
+static uint8_t menu_main_graphic_item_2_text_buffer[40] = "2"; //234c16f4
+static Graphic_Job_2_5_Item_Text menu_main_graphic_text_item_2 = //234c171c
 {
-	{0, 0, 0, 0},
-	&Data_234c16f4[0], //Data_0x10
+	0, 0x0051, 0x0084, 0x0137, 0x00a0, 0x01, 0x04, 0x09, 0x01, &menu_main_graphic_item_2_text_buffer[0], 0, 0, 0
 #if 0
-	0x234c171c 0000                   movs       r0, r0                             ; DATA XREF=0x234c19d4
-	0x234c171e 5100                   lsls       r1, r2, #0x1
-	0x234c1720 8400                   lsls       r4, r0, #0x2
-	0x234c1722 3701                   lsls       r7, r6, #0x4
-	0x234c1724 A000                   lsls       r0, r4, #0x2
-	0x234c1726 0104                   lsls       r1, r0, #0x10
-	0x234c1728 0901                   lsls       r1, r1, #0x4
-	0x234c172a 0000                   movs       r0, r0
-	0x234c172c                        dd         0x234c16f4
+0x234c171c                        db         0x00                               ; DATA XREF=0x234c19d4
+0x234c171d                        db  0x00 ; '.'
+0x234c171e                        dw         0x0051
+0x234c1720                        dw         0x0084
+0x234c1722                        dw         0x0137
+0x234c1724                        dw         0x00a0
+0x234c1726                        db         0x01
+0x234c1727                        db         0x04
+0x234c1728                        db         0x09
+0x234c1729                        db         0x01
+0x234c172a 0000                   movs       r0, r0
+0x234c172c                        dd         0x234c16f4
+0x234c1730                        dw         0x0000
+0x234c1732                        db         0x00
+0x234c1733                        db         0x00
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
+static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 {
-	{0}, //{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c128c/*Data_0x18*/, 9, 0, 0, {0}, 0}, //[0] = 234c1834
+	{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c128c/*Data_0x18*/, 9, 0, 0, {0}, 0}, //[0] = 234c1834
 #if 0
 0x234c1834                        db         0x01                               ; DATA XREF=menu_main_on_enter+18, menu_main_on_enter+30, dword_234c1efc
 0x234c1835                        db         0x00
@@ -152,7 +231,7 @@ static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
 0x234c1870 0000                   movs       r0, r0
 0x234c1872 0000                   movs       r0, r0
 #endif
-	{0}, //{1, 0, 0, 0/*Data_8*/, 0x3d, 0x29, 0xfa, 0x26, 0, 0/*Data_0x18*/, 2, 0, &Data_234c158c/*Data_0x20*/}, //[1] = 234C1874
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x29, 0xfa, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &menu_main_graphic_header_text_item/*Data_0x20*/}, //[1] = 234C1874 = header
 #if 0
 0x234c1874                        db         0x01                               ; DATA XREF=0x234c2050
 0x234c1875                        db         0x00
@@ -171,7 +250,7 @@ static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
 0x234c1894                        dd         0x234c158c
 #endif
 	{0}, //[2] = 234C18B4
-	{0}, //{1, 0, 0, 0/*Data_8*/, 0x3d, 0x1c3, 0x21a, 0x3a, 0, 0/*Data_0x18*/, 3, 0, &Data_234c169c/*Data_0x20*/}, //[3] = 234C18F4
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x1c3, 0x21a, 0x3a, 0, &Data_234c134c/*Data_0x18*/, 3, 0, &menu_main_graphic_help_text_item/*Data_0x20*/}, //[3] = 234C18F4 = help
 #if 0
 0x234c18f4                        db         0x01                               ; DATA XREF=0x234c2054
 0x234c18f5                        db         0x00
@@ -199,8 +278,56 @@ static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
 0x234c1930                        dd         0x00000000
 #endif
 	{0}, //[4] = 234C1934 
-	{0}, //[5] = 234C1974
-	{0}, //[6] = 234C19B4
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xfa, 0x20, 0, &Data_234c1298/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_1/*Data_0x20*/}, //[5] = 234C1974: "Einstellungen" col 0
+#if 0
+0x234c1974                        db         0x01                               ; DATA XREF=0x234c1f40
+0x234c1975                        db         0x00
+0x234c1976 0000                   movs       r0, r0
+0x234c1978                        dd         0x234c1548
+0x234c197c                        dd         0x00000000
+0x234c1980                        dw         0x003d
+0x234c1982                        dw         0x0060
+0x234c1984                        dw         0x00fa
+0x234c1986                        dw         0x0020
+0x234c1988 0000                   movs       r0, r0
+0x234c198a 0000                   movs       r0, r0
+0x234c198c                        dd         0x234c1298
+0x234c1990                        dw         0x0009
+0x234c1992                        dw         0x0000
+0x234c1994                        dd         0x234c16dc
+0x234c1998                        dd         0x00000000
+0x234c199c                        dd         0x00000000
+0x234c19a0                        dd         0x00000000
+0x234c19a4                        dd         0x00000000
+0x234c19a8                        dd         0x00000000
+0x234c19ac                        dd         0x00000000
+0x234c19b0                        dd         0x00000000
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x80, 0xfa, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_2/*Data_0x20*/}, //[6] = 234C19B4: "Installation"
+#if 0
+0x234c19b4                        db         0x01                               ; DATA XREF=0x234c1f6c
+0x234c19b5                        db         0x00
+0x234c19b6 0000                   movs       r0, r0
+0x234c19b8                        dd         0x234c1548
+0x234c19bc                        dd         0x00000000
+0x234c19c0                        dw         0x003d
+0x234c19c2                        dw         0x0080
+0x234c19c4                        dw         0x00fa
+0x234c19c6                        dw         0x0020
+0x234c19c8 0000                   movs       r0, r0
+0x234c19ca 0000                   movs       r0, r0
+0x234c19cc                        dd         0x234c12d4
+0x234c19d0                        dw         0x0009
+0x234c19d2                        dw         0x0000
+0x234c19d4                        dd         0x234c171c
+0x234c19d8                        dd         0x00000000
+0x234c19dc                        dd         0x00000000
+0x234c19e0                        dd         0x00000000
+0x234c19e4                        dd         0x00000000
+0x234c19e8                        dd         0x00000000
+0x234c19ec                        dd         0x00000000
+0x234c19f0                        dd         0x00000000
+#endif
 	{0}, //[7] = 234C19F4 
 	{0}, //[8] = 234C1A34
 	{0}, //[9] = 234C1A74 
@@ -210,6 +337,7 @@ static Struct_2377ded0_Inner_0x1c Data_234c1834[14] = //234c1834
 	{0}, //[13] = 234C1B74
 };
 
+#if 0
 static Struct_235fdf74_Inner12 Data_234c1874 = //234c1874
 {
 	{0, 0, 0, 0, 0, 0, 0, 0}, //TODO
@@ -232,7 +360,9 @@ static Struct_235fdf74_Inner12 Data_234c1874 = //234c1874
 	0x234c1894                        dd         0x234c158c
 #endif
 };
+#endif
 
+#if 0
 static Menu_Item_Inner4_Data_0 Data_234c1974 = //234c1974
 {
 	1,
@@ -257,7 +387,9 @@ static Menu_Item_Inner4_Data_0 Data_234c1974 = //234c1974
 	0x234c1994                        dd         0x234c16dc
 #endif
 };
+#endif
 
+#if 0
 static Menu_Item_Inner4_Data_0 Data_234c19b4 = //234c19b4
 {
 	1,
@@ -282,16 +414,17 @@ static Menu_Item_Inner4_Data_0 Data_234c19b4 = //234c19b4
 	0x234c19d4                        dd         0x234c171c
 #endif
 };
+#endif
 
 #if 1
-static Struct_23414b38_b Data_234c1ef4 = //234c1ef4
+static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 {
 	0, //uint8_t bData_0; //0
 	0xfa, //uint8_t bData_1; //1
 	0x0004, //uint16_t wData_2; //2
 	0x04, //uint8_t bData_4; //4
-	&Data_234c1834[0], //int Data_8; //8
-	&Data_234c123c, //Struct_23414b38_b_Inner_0xc* Data_0xc; //12
+	&menu_main_graphic_items[0], //int Data_8; //8
+	&menu_main_graphic_color_data, //Graphic_Color_Data* Data_0xc; //12
 	0x0f, //uint8_t bData_0x10; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
 	14, //uint8_t bData_0x18; //0x18 = 24
@@ -302,7 +435,7 @@ static Struct_23414b38_b Data_234c1ef4 = //234c1ef4
 #endif
 };
 #else
-static Struct_235fdf74_Inner20 Data_234c1ef4 = //234c1ef4
+static Struct_235fdf74_Inner20 menu_main_graphic_data = //234c1ef4
 {
 	0, //uint16_t fill_0; //0
 	0, //uint16_t wData_2; //2
@@ -336,11 +469,7 @@ static Menu_Item menu_main_items[] = //234c1f3c
 		0x4a, //"Einstellungen"
 		0xffff, //uint16_t wData_2; //2
 		{
-				&Data_234c1974, //Data_4.Data_0
-				0,
-				0,
-				0,
-				0
+			&menu_main_graphic_items[5], //234c1974, //Data_4.Data_0
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -368,11 +497,7 @@ static Menu_Item menu_main_items[] = //234c1f3c
 		0x79, //"Installation"
 		0xffff, //uint16_t wData_2; //2
 		{
-				&Data_234c19b4, //Data_4.Data_0
-				0,
-				0,
-				0,
-				0
+			&menu_main_graphic_items[6], //234c19b4, //Data_4.Data_0
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -403,12 +528,12 @@ static Menu menu_main = //234c2044
     10, //"Hauptmenu"
     &menu_main_items[0], //Menu_Item* Data_4; //4
     &menu_main_items[0], //Menu_Item* Data_8; //8
-    &Data_234c1874, //&Data_234c1834[1], /*234c1874*/ //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
-    0, //&Data_234c1834[3], /*234C18F4*/ //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
-    &Data_234c1ef4, //int Data_0x14; //20 = 0x14
+    &menu_main_graphic_items[1], /*234c1874*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
+    0, //&menu_main_graphic_items[3], /*234C18F4*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &menu_main_graphic_data, //Graphic_Job_2_5* graphicData; //20 = 0x14
     1, //5, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
-    sub_23414b38, //void (*Data_0x1c)(); //0x1c
+    graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
 	menu_items_navigate, //void (*onNavigate)(); //0x20
     menu_main_on_enter, //void (*onEnter)(); //36 = 0x24
     menu_main_on_exit, //int (*onExit)(); //0x28
@@ -428,7 +553,7 @@ static Menu menu_main = //234c2044
     0x234c2058                        dd         0x234c1ef4                         ; DATA XREF=sub_2344d060+6
     0x234c205c 0500                   movs       r5, r0
     0x234c205e 0000                   movs       r0, r0
-    0x234c2060                        dd         sub_23414b38
+    0x234c2060                        dd         graphic_start_job_2_5
     0x234c2064                        dd         sub_2344dbb8+1
     0x234c2068                        dd         menu_main_on_enter+1
     0x234c206c                        dd         menu_main_on_exit+1
@@ -523,12 +648,37 @@ int menu_main_items_on_event(void* r0)
 
 
 /*  /  / 2344d060 - todo */
-void menu_main_on_enter(int a)
+int menu_main_on_enter(int a)
 {
-#if 1
+#if 0
 	console_send_string("menu_main_on_enter (todo.c): TODO\r\n");
 #endif
 
+	Graphic_Job_2_5* r4 = Data_234c1240->graphicData;
+
+	Data_234c1248 = Data_234c1244 = musb_msd_get_device(0);
+
+	r4->pItems[10].bData_0 = 0;
+
+	if (Data_234c1244 != 0)
+	{
+		r4->wData_2 = 5;
+
+		r4->pItems[4].height = 0xcc;
+		r4->pItems[11].bData_0 = 1;
+		r4->pItems[9].Data_0x18 = r4->pItems[7].Data_0x18;
+	}
+	else
+	{
+		//loc_2344d0aa
+		r4->wData_2 = 4;
+
+		r4->pItems[4].height = 0xac;
+		r4->pItems[11].bData_0 = 0;
+		r4->pItems[9].Data_0x18 = r4->pItems[11].Data_0x18;
+	}
+
+	return 0;
 }
 
 
@@ -597,7 +747,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 	int r7 = 0;
 	//r5 = &r4->0x100;
 
-	if ((r6 == 0) || (r6->Data_0x14->wData_2 == 1))
+	if ((r6 == 0) || (r6->graphicData->wData_2 == 1))
 	{
 		//loc_2344d11c
 		sp = sub_23451f60();
@@ -727,20 +877,20 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 			//loc_2344d25a
 			if ((Data_234c1250 != r6) &&
 					//0x2344d262
-					(r6->Data_0xc != 0) &&
+					(r6->header != 0) &&
 					//0x2344d268
-					(r6->Data_0xc->Data_0x20 != 0))
+					(r6->header->Data_0x20 != 0))
 			{
 				//0x2344d26e: Handle Menu Header
 #if 0
     			console_send_string("sub_2344d0d0: 0x2344d26e: TODO!!!\r\n");
 #endif
-				r4->bData_8[0] = 0x22; //r7
+				r4->bData_8[0] = '"'; //r7
 
-				strncpy(&r4->bData_8[1], r6->Data_0xc->Data_0x20->Data_0x10, 10);
+				strncpy(&r4->bData_8[1], r6->header->Data_0x20->pString, 10);
 
 				uint8_t r0 = (uint8_t) strlen(sp_0x38);
-				r4->bData_8[r0] = 0x22; //r7
+				r4->bData_8[r0] = '"'; //r7
 				r0++;
 				r4->bData_8[r0] = 0; //r7
 				r4->bNumTextChars = strlen(sp_0x38);
@@ -938,7 +1088,7 @@ int sub_2344d414(UI_Thread_Params* r4)
 	console_send_string("sub_2344d414 (todo.c): TODO\r\n");
 #endif
 
-	sub_2344db36(r4);
+	sub_2343d458(r4);
 
 	channel_handle_user_settings(1, &sp4);
 

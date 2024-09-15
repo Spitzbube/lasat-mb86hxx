@@ -859,7 +859,7 @@ int sub_2345aa18()
 
 	Data_23494098 = 1; //r8
 
-	sub_23436900(Data_237c0d80, sp_0x14, sp_0x10, sub_2345aa08, 0);
+	dma_start_memcpy(Data_237c0d80, sp_0x14, sp_0x10, sub_2345aa08, 0);
 
 	sys_invalidate_data_cache(Data_237c0d80, sp_0x10);
 
@@ -873,7 +873,7 @@ int sub_2345aa18()
 		//0x2345aac8
 		Data_23494098 = 1; //r8
 
-		sub_23436900(&Data_237c0d80[0][sp_0x10 & ~3], 
+		dma_start_memcpy(&Data_237c0d80[0][sp_0x10 & ~3], 
 			sp_0xc, sp8, sub_2345aa08, 0);
 
 		sys_invalidate_data_cache(&Data_237c0d80[0][sp_0x10 & ~3], sp8);

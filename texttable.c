@@ -2,6 +2,7 @@
 
 #include "data.h"
 #include "flash.h"
+#include "graphic.h"
 #include "av.h"
 
 
@@ -60,7 +61,7 @@ struct
 
 
 
-/* 23407de8 - todo */
+/* 23407de8 /  / 2340a8c4 - todo */
 int sub_23407de8(uint16_t a, void* b, int c)
 {
 	a--;
@@ -86,7 +87,7 @@ int sub_23407de8(uint16_t a, void* b, int c)
 }
 
 
-/* 23407f24 - todo */
+/* 23407f24 /  / 2340aa00 - todo */
 int sub_23407f24(int a/*sp_0xc*/, char* b, 
 	int c/*sp_0x14*/, int d/*sp_0x18*/, int e/*sp_0x40*/, 
 	int sp_0x44, uint32_t sp_0x48)
@@ -95,7 +96,7 @@ int sub_23407f24(int a/*sp_0xc*/, char* b,
 	console_send_string("sub_23407f24 (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23407f24: b[0]='%c'\r\n", b[0]);
@@ -123,7 +124,7 @@ int sub_23407f24(int a/*sp_0xc*/, char* b,
 	uint8_t height = (bitfield >> 5) & 0x3f; //r1 = 6 bits
 	int sb = (bitfield >> 11);
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23407f24: width=%d, height=%d, sb=%d\r\n", 
@@ -383,8 +384,8 @@ void sub_234082f4(void)
 }
 
 
-/* 23408604 - todo */
-int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_2377ded0_Inner_0x1c_Inner_0x20* b/*sp_0x70?*/)
+/* 23408604 /  / 2340b0e0 - todo */
+int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_Text* b/*sp_0x70?*/)
 {
 #if 0
 	console_send_string("sub_23408604 (todo.c): TODO\r\n");
@@ -409,8 +410,8 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 	uint8_t* r8;
 	uint8_t r7;
 	uint32_t r6;
-	uint16_t r5 = a.wData_2;
-	uint8_t* r4 = a.Data_0x10;
+	uint16_t r5 = a.x1;
+	uint8_t* r4 = a.pString;
 
 	sp_0x30 = r5;
 	sl = a.wData_0x14;
@@ -432,7 +433,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 	sp_0x14 = Data_234fd894[sp_0x1c];
 
 	int r0 = sub_23409424(".", sp_0x1c);
-	r6 = a.wData_6;
+	r6 = a.x2;
 	r0 = r0 + 2 * r0;
 	r7 = a.bData_0xb;
 
@@ -470,7 +471,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 				//loc_23408708
 				int fp = a.bData_0xc;
 				sp8 = sp_0x2c;
-				sp_0xc = a.wData_4;
+				sp_0xc = a.y1;
 
 				sub_23407de8((uint16_t)(ch - 0x30), &Data_234f9814[0], 0);
 
@@ -513,7 +514,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 			{
 				sp_0x10 = 0;
 			}
-			a.wData_4 += r0;
+			a.y1 += r0;
 			//->loc_2340898c
 //			continue;
 		} //else if (*r4 == 0x0a)
@@ -529,13 +530,13 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 			if ((*r4 < 0x20) || 
 				((*r4 >= 0x7f) && (*r4 < 0xa0)))
 			{
-				//0x234087e4
+				//0x234087e4 /  / 2340b2c0
 				sp_0x24 = ' ';
 
 				sub_23407f24(sp_0x2c, 
 					&sp_0x24, 
 					r5, 
-					a.wData_4,
+					a.y1,
 					r7,
 					sp_0x1c,
 					r6);
@@ -552,7 +553,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 					r0 = sub_23407f24(sp_0x2c,
 						r4, 
 						r5,
-						a.wData_4,
+						a.y1,
 						r7,
 						sp_0x1c,
 						r6);
@@ -563,7 +564,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 					r0 = sub_23407f24(sp_0x2c,
 						r4, 
 						r5,
-						a.wData_4,
+						a.y1,
 						a.bData_0x16,
 						sp_0x1c,
 						r6);
@@ -573,12 +574,12 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 			else
 			{
 				//loc_2340883c
-				sp_0x28 = a.wData_4;
+				sp_0x28 = a.y1;
 
 				r0 = sub_23407f24(sp_0x2c,
 					r4,
 					r5,
-					a.wData_4,
+					a.y1,
 					r7,
 					sp_0x1c,
 					sp_0x18);
@@ -665,7 +666,7 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 
 			r4++;
 
-			if (a.wData_4/*r2*/ >= (a.wData_8/*r3*/ - sp_0x14/*r1*/))
+			if (a.y1/*r2*/ >= (a.y2/*r3*/ - sp_0x14/*r1*/))
 			{
 				//->loc_23408998
 				break;
@@ -680,14 +681,14 @@ int sub_23408604(Struct_2377ded0_Inner_0x1c_Inner_0x20 a/*sp_0x58?*/, Struct_237
 		}
 	} //while (*r4 != 0)
 	//loc_23408998
-	b->wData_6 = sb;
-	b->wData_8 = a.wData_4 + sp_0x14;
+	b->x2 = sb;
+	b->y2 = a.y1 + sp_0x14;
 	//->loc_2340864c
 	return 0;
 }
 
 
-/* 23408d10 /  / - todo */
+/* 23408d10 /  / 2340b7ec - todo */
 int sub_23408d10(uint16_t a)
 {
 #if 0
@@ -780,7 +781,7 @@ int sub_23407e40(uint8_t* a, int b, void* sl, int fp)
 }
 
 
-/* 23409424 - complete */
+/* 23409424 /  / 2340bf00 - complete */
 uint16_t sub_23409424(char* a, int b)
 {
 #if 0

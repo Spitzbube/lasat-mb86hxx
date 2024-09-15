@@ -1,7 +1,8 @@
 
 #include "data.h"
-#include "menu.h"
 #include "frontdisplay.h"
+#include "graphic.h"
+#include "menu.h"
 #include "sub_2340a6a0.h"
 #include "channel_list_update.h"
 
@@ -9,8 +10,6 @@
 
 
 #ifndef VDR110
-
-extern void sub_23414b38(); //->graphic.c
 
 extern uint8_t Data_2397044c[]; //2397044c
 extern uint8_t Data_2397056c[]; //2397056c
@@ -33,6 +32,7 @@ extern uint8_t Data_239707ec[]; //239707ec
 static Menu menu_general_settings;
 static Menu* menu_general_settings_p = &menu_general_settings; //234e9324
 
+#if 0
 Struct_235fdf74_Inner12_Inner0x20 Data_234e9334 = //234e9334
 {
 	{0, 0, 0, 0},
@@ -49,6 +49,7 @@ Struct_235fdf74_Inner12_Inner0x20 Data_234e9334 = //234e9334
 	0x234e9344                        dd         0x2397044c
 #endif
 };
+#endif
 
 static Menu_Item_Inner4_Data_0_Data_0x20 Data_234e9364 = //234e9364
 {
@@ -763,6 +764,7 @@ static Menu_Item_Inner4_Data_0 Data_234e9a54 = //234e9a54
 #endif
 };
 
+#if 0
 static Struct_235fdf74_Inner12 Data_234e9ad4 = //234e9ad4
 {
 	{0, 0, 0, 0, 0, 0, 0, 0}, //TODO
@@ -787,14 +789,11 @@ static Struct_235fdf74_Inner12 Data_234e9ad4 = //234e9ad4
 	0x234e9af4                        dd         0x234e9334
 #endif
 };
+#endif
 
-static Struct_235fdf74_Inner20 Data_234ea194 = //234ea194
+static Graphic_Job_2_5 Data_234ea194 = //234ea194
 {
-		0, //uint16_t fill_0; //0
-		0, //uint16_t wData_2; //2
-		{0, 0, 0, 0, 0, 0}, //int fill_4[6]; //4
-		0, //void (*Data_0x1c)(); //28 = 0x1c
-		0, //void (*Data_0x20)(); //32 = 0x20
+	0
 #if 0
 		0x234ea194                        db  0x00 ; '.'                                ; DATA XREF=0x234ea4b0
 		0x234ea195                        db  0xfa ; '.'
@@ -859,12 +858,12 @@ static Menu menu_general_settings = //234963ac /  / 234ea49c
 		0, //int8_t currentItem; //0x19
 		0, //void (*Data_0x1c)(); //0x1c
 #else
-		&Data_234e9ad4, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
+		0, //&Data_234e9ad4, //Struct_235fdf74_Inner12* Data_0xc; //12 = 0xc
 		0, //&Data_234e9594, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
 		&Data_234ea194, //int Data_0x14; //20 = 0x14
 		7, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
-		sub_23414b38, //void (*Data_0x1c)(); //0x1c
+		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
 #endif
 		menu_items_navigate, //void (*onNavigate)(); //0x20
 		menu_general_settings_on_enter, //void (*onEnter)(); //36 = 0x24

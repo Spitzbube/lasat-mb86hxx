@@ -4,6 +4,7 @@
 #include "frontdisplay.h"
 #include "usb_msd.h"
 #include "fatfs.h"
+#include "graphic.h"
 #include "menu.h"
 
 #pragma thumb

@@ -2,11 +2,11 @@
 #include <string.h>
 #include "data.h"
 #include "ucos_ii.h"
-#include "frontdisplay.h"
 #include "sub_2340a6a0.h"
 #include "nit.h"
 #include "channel_list_update.h"
 #include "frontdisplay.h"
+#include "graphic.h"
 #include "menu.h"
 
 #pragma thumb

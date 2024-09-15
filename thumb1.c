@@ -1,7 +1,8 @@
 
 #include "data.h"
-#include "menu.h"
 #include "frontdisplay.h"
+#include "graphic.h"
+#include "menu.h"
 #include "sub_2340a6a0.h"
 #include "eit.h"
 #include "radiotext.h"

@@ -4,6 +4,8 @@
 #include "data.h"
 #include "eth.h"
 #include "frontdisplay.h"
+#include "graphic.h"
+#include "menu.h"
 #include "network.h"
 
 #pragma thumb
