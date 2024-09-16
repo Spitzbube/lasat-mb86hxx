@@ -6,6 +6,9 @@
 #include "menu.h"
 #include "amplifier.h"
 
+#ifndef VDR110
+#include "sub_2348d61a.h"
+#endif
 
 #pragma thumb
 
@@ -791,10 +794,13 @@ int sub_2343d580()
 /* 2343d610 / 2344e6a2 - todo */
 void mainfunction_thread(UI_Thread_Params* a)
 {
+#ifndef VDR110
+	int sp_0x70 = 1; //  sp_0x70
+#endif
     int timeout;
-	uint8_t err; //sp_0xc;
-	Menu_Event sp;
-	uint8_t ir_key;
+	uint8_t ir_key; //  / sp_0x6c
+	uint8_t err; //sp_0xc / 0x68
+	Menu_Event menuEvent; //sp / sp_0x5c
 	Menu* pMenu; //r4
 	struct
 	{
@@ -810,8 +816,13 @@ void mainfunction_thread(UI_Thread_Params* a)
 	void (*r4_)(int);
 	void (*r5)(int);
 #else
-	void (*sp8)(); //sp8
-	void (*sp4)(); //sp4
+	Graphic_Queue_Item sp_0x4c; //sp_0x4c +0x10 = sp_0x5c
+	Struct_2348dc50* sp_0x48; //sp_0x48
+	void (*r7)() = 0; //  / r7
+	int sp_0x10 = 0; //  / sp_0x10
+	int (*sp_0xc)(Graphic_Queue_Item *, void *) = 0; //  / sp_0xc
+	void (*sp8)(); //  / sp8
+	void (*sp4)(); //  / sp4
 #endif
 
 #if 0
@@ -824,6 +835,8 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 	OSSemPost(Data_235fdf28.pSema);
 	OSMboxAccept(Data_235fdf28.pMBox);
+
+	//r5 = 23796794;
 
 #ifdef VDR110
 	if (Menu_Data.menu_stack_level == 0)
@@ -853,12 +866,16 @@ void mainfunction_thread(UI_Thread_Params* a)
 #if 0
         {
             extern char debug_string[];
-            sprintf(debug_string, "mainfunction_thread (thumb.c): after OSMboxPend, sp_0xc=%d\r\n", sp_0xc);
+            sprintf(debug_string, "mainfunction_thread (thumb.c): after OSMboxPend, err=%d\r\n", err);
             console_send_string(debug_string);
         }
 #endif
 
 		ir_key = pMsg->bData_0;
+
+#ifndef VDR110
+		sp_0x48 = sub_2348dcd2();
+#endif
 
 		if (pMenu != 0)
 		{
@@ -881,6 +898,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 			r4_ = 0;
 			r5 = 0;
 #else
+			//0x2344e728
 			pMenuItem = 0;
 			sp8 = 0;
 			sp4 = 0;
@@ -899,8 +917,8 @@ void mainfunction_thread(UI_Thread_Params* a)
 #endif
 
 #ifndef VDR110
-#if 0 //TODO!!!
 			sp_0x70 = 1;
+#if 0 //TODO!!!
 
 			if (0 != sub_2345a4e6(1))
 			{
@@ -1104,7 +1122,42 @@ void mainfunction_thread(UI_Thread_Params* a)
 					}
 					//2344e8f0 -> 2344e990
 					//TODO
+
+					break;
+
+				case 87: //OK
+				case 0xf7:
+					//0x2344e8c8
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						sub_2348d61a();
+						sub_2348d660(1);
+
+						pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
+						pMenuItem = pMenu->Data_4;
+
+						sp_0x48 = sub_2348dcd2();						
+					}
+					//0x2344e8ec
+					//r0, #0x20
+					//->0x2344ec7c
+					//TODO!!!
+
+					//0x2344ec8c
+					r7 = pMenuItem->onEvent;
+					sp_0xc = pMenu->graphicHandler;
+					//->2344ee44
+					break;
+				} //switch
+#if 0
+				//2344e990???
+				if (Menu_Data.menu_stack_level == 0)
+				{
+					//0x2344e996
+					sub_2348d61a();
 				}
+				//2344e99a -> 2344edee
+#endif
 			}
 #endif
 
@@ -1120,7 +1173,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 			void (*r7_)(void*);
 
 			r0_ = pMenuItem->onEvent;
-			sp.keyCode = ir_key;
+			menuEvent.keyCode = ir_key;
 			r7_ = r0_;
 #endif
 
@@ -1136,8 +1189,9 @@ void mainfunction_thread(UI_Thread_Params* a)
 					console_send_string(debug_string);
 				}
 #endif
-				(sp8)();
+				err = (sp8)();
 			}
+#endif //TODO!!!
 			//0x2344ee4e
 			if (r7 != 0)
 			{
@@ -1148,11 +1202,12 @@ void mainfunction_thread(UI_Thread_Params* a)
 					console_send_string(debug_string);
 				}
 #endif
-				(r7)(&sp_0x5c);
+				(r7)(&menuEvent);
 
 				r7 = 0;
 			}
 			//0x2344ee58
+#if 0 //TODO!!!
 			if (sp_0x10 != 0)
 			{
 #if 1
@@ -1166,6 +1221,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 				sp_0x10 = 0;
 			}
+#endif //TODO!!!
 			//0x2344ee68
 			if (sp_0xc != 0)
 			{
@@ -1176,9 +1232,10 @@ void mainfunction_thread(UI_Thread_Params* a)
 					console_send_string(debug_string);
 				}
 #endif
-				(sp_0xc)(&sp_0x4c/*, r4->Data_0x14*/);
+				(sp_0xc)(&sp_0x4c, pMenu->graphicData);
 			}
 			//0x2344ee7a
+#if 0 //TODO!!!
 			if (sp4 != 0)
 			{
 #if 1
@@ -1204,7 +1261,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 			//loc_2343d6b0
 			if (r7_ != 0)
 			{
-				(r7_)(&sp);
+				(r7_)(&menuEvent);
 			}
 			//loc_2343d6b8
 			if (r5 != 0)

@@ -62,7 +62,7 @@ struct
 
 
 /* 23407de8 /  / 2340a8c4 - todo */
-int sub_23407de8(uint16_t a, void* b, int c)
+int texttable_load_bitmap(uint16_t a, void* b, int c)
 {
 	a--;
 
@@ -77,7 +77,7 @@ int sub_23407de8(uint16_t a, void* b, int c)
 		flash_read(Data_23491ff8, r1, c, b);
 
 #if 1
-		hex_dump("sub_23407de8", b, c);
+		hex_dump("texttable_load_bitmap", b, c);
 #endif
 
 		return 0;
@@ -473,7 +473,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				sp8 = sp_0x2c;
 				sp_0xc = a.y1;
 
-				sub_23407de8((uint16_t)(ch - 0x30), &Data_234f9814[0], 0);
+				texttable_load_bitmap((uint16_t)(ch - 0x30), &Data_234f9814[0], 0);
 
 				uint8_t* r4_ = &Data_234f9814[0];
 				uint16_t r0;
@@ -695,7 +695,7 @@ int sub_23408d10(uint16_t a)
 	console_send_string("sub_23408d10 (todo.c): TODO\r\n");
 #endif
 
-	sub_23407de8(a, &Data_234f9814[0], 0);
+	texttable_load_bitmap(a, &Data_234f9814[0], 0);
 
 	return &Data_234f9814[0];
 }
