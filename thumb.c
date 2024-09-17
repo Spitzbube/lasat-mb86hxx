@@ -1141,8 +1141,10 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//0x2344e8ec
 					//r0, #0x20
 					//->0x2344ec7c
-					//TODO!!!
-
+					sp_0x48->Data_0 = 0x20; //r0;
+					menuEvent.Data_0 = 0x20; //r0
+					menuEvent.Data_8 = sp_0x48; 
+					menuEvent.keyCode = ir_key;
 					//0x2344ec8c
 					r7 = pMenuItem->onEvent;
 					sp_0xc = pMenu->graphicHandler;

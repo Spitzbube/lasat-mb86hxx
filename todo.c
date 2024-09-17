@@ -943,6 +943,38 @@ void sub_234548c2()
 }
 
 
+/*  /  / 2340e9e8 - todo */
+void sub_2340e9e8()
+{
+	console_send_string("sub_2340e9e8 (todo.c): TODO\r\n");
+
+}
+
+
+/* 234521ea - todo */
+void sub_234521ea()
+{
+	console_send_string("sub_234521ea (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23421f84 - todo */
+int sub_23421f84()
+{
+	console_send_string("sub_23421f84 (todo.c): TODO\r\n");
+
+	return 0;
+}
+
+
+/*  /  / 2344f662 - todo */
+void sub_2344f662()
+{
+	console_send_string("sub_2344f662 (todo.c): TODO\r\n");
+
+}
+
 
 #endif //!VDR110
 

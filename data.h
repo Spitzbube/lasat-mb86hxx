@@ -189,9 +189,9 @@ typedef struct
 
 typedef struct
 {
-	int fill_0; //0
+	int Data_0; //0
 	uint8_t keyCode; //4
-	int fill_8; //8
+	void* Data_8; //8
 	//12
 } Menu_Event;
 

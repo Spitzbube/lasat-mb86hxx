@@ -29,7 +29,7 @@ int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
 	14, 5, 0x0f, //...
 #if 0

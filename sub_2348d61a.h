@@ -1,0 +1,33 @@
+
+
+typedef struct
+{
+    int Data_0; //0
+    Menu* Data_4; //4
+    int fill_8[2]; //8
+    int Data_0x10; //0x10
+    void (*Data_0x14)(); //0x14
+    void (*Data_0x18)(); //0x18
+    uint16_t wData_0x1c; //0x1c
+    int16_t wData_0x1e; //0x1e
+    uint16_t wData_0x20; //0x20
+    int16_t wData_0x22; //0x22
+    uint16_t wData_0x24; //0x24
+    uint16_t wData_0x26; //0x26
+    uint16_t arwData_0x28[21]; //0x28
+    int Data_0x54; //0x54
+    uint8_t fill_0x58; //0x58
+    uint8_t bData_0x59; //0x59
+    uint8_t bData_0x5a; //0x5a
+    uint8_t bData_0x5b; //0x5b
+    uint8_t bData_0x5c; //0x5c
+    uint8_t fill_0x5d; //0x5d
+    uint8_t bData_0x5e; //0x5e
+    uint8_t bData_0x5f; //0x5f
+    int fill_0x60; //0x60
+    //0x64
+} Struct_2348dc50;
+
+
+extern Struct_2348dc50* sub_2348dcd2(void);
+

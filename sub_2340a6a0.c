@@ -2371,7 +2371,7 @@ void channel_start_number(Channel* r8, uint32_t channelNr)
 }
 
 
-/* 2340bf0c / 2340e194 - todo */
+/* 2340bf0c / 2340e194 / 2340e9e8 - todo */
 void sub_2340bf0c(Struct_2340bf0c* r6)
 {
 	Struct_2340bf0c sp4;

@@ -7,7 +7,7 @@
 
 
 int ts_play_thread_stack[THREAD_STACK_SIZE_TS_PLAY]; //235afe88 -> 235B0B08
-Struct_235b0b08 Data_235b0b08; //235b0b08
+Struct_235b0b08 Data_235b0b08; //235b0b08 /  / 23661dc8
 
 
 /* 234188e4 - todo */
@@ -66,8 +66,8 @@ int ts_play_init(Struct_23418b54* r4)
 }
 
 
-/* 23418bf0 - complete */
-int sub_23418bf0()
+/* 23418bf0 /  / 23424134 - complete */
+int sub_23418bf0(void)
 {
 	int r4;
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
