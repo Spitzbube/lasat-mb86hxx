@@ -5,12 +5,12 @@ typedef struct
     int Data_0; //0
     Menu* Data_4; //4
     int fill_8[2]; //8
-    int Data_0x10; //0x10
+    int* Data_0x10; //0x10
     void (*Data_0x14)(); //0x14
     void (*Data_0x18)(); //0x18
     uint16_t wData_0x1c; //0x1c
     int16_t wData_0x1e; //0x1e
-    uint16_t wData_0x20; //0x20
+    int16_t wData_0x20; //0x20
     int16_t wData_0x22; //0x22
     uint16_t wData_0x24; //0x24
     uint16_t wData_0x26; //0x26

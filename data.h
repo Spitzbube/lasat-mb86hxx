@@ -103,8 +103,8 @@ typedef struct
 	Menu_Item_Inner4_Data_0_Data_0x20* Data_0x20; //32 = 0x20
 	int fill_0x24[6]; //36 = 0x24
 	uint8_t bData_0x3c;
-	//???
-} Menu_Item_Inner4_Data_0;
+	//0x40???
+} Menu_Item_Inner4_Data_0; //Graphic_Job_2_5_Item
 
 typedef struct Menu_Item
 {

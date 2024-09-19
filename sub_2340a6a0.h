@@ -28,6 +28,7 @@ typedef struct
 	uint8_t menuLanguage; //13 = 0x0d
 	uint8_t bData_0xe; //14 = 0x0e
 	/*
+		Bit 0...3: Channel banner dialog hold time?
 		Bit 6: Deep standby
 		Bit 7: Channel list update
 		Bit 11: Timer storage

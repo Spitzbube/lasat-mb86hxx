@@ -136,7 +136,7 @@ Menu menuMain = //234930cc
 void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
 
 UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 -0x70
-UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 - 0x18
+UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 / 2379676C - 0x18
 
 #if 0
 UI_Thread_Params Data_235fdf58; //0 235fdf58 235fdf98 -0x40
@@ -791,6 +791,16 @@ int sub_2343d580()
 }
 
 
+/*  /  / 2344e40a - todo */
+void sub_2344e40a() //inputThreadFunc
+{
+#if 1
+	console_send_string("sub_2344e40a (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 2343d610 / 2344e6a2 - todo */
 void mainfunction_thread(UI_Thread_Params* a)
 {
@@ -996,17 +1006,35 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 				case 16:
 					//2344E878???
-#if 1 //Until v290 implementation
+#if 0 //Until v290 implementation
 					channel_change_volume(1, 1);
 					break;
 #endif
 					//break;
 				case 17:
 					//0x2344e878 -> 0x2344ea6e
-#if 1 //Until v290 implementation
+#if 0 //Until v290 implementation
 					channel_change_volume(1, -1);
 					break;
 #endif
+
+					//TODO
+					//->0x2344eab4
+					if (Menu_Data.menu_stack_level != 0)
+					{
+						//0x2344eab8
+						if (pMenu->onExit != 0)
+						{
+							//0x2344eabe
+							(pMenu->onExit)(&Data_235fdf40);
+						}
+						//0x2344eac4
+						pMenu = MENU_STACK_POP();
+					}
+					//0x2344eacc
+					sub_2348f414(&Data_235fdf40);
+					//->0x2344ee44
+					break;
 
 #if 0 //TODO
 				case 65: //VOL-
@@ -1024,6 +1052,15 @@ void mainfunction_thread(UI_Thread_Params* a)
 						int r0 = sub_23451f66();
 						//TODO!!!
 						channel_next();
+						//->0x2344e990
+						if (Menu_Data.menu_stack_level == 0)
+						{
+							//0x2344e996
+							sub_2348d61a();
+						}
+						//2344e99a -> 2344edee
+						sub_2348d660(1);
+						//->0x2344ee44
 					}
 					break;
 
@@ -1032,7 +1069,18 @@ void mainfunction_thread(UI_Thread_Params* a)
 					{
 						int r0 = sub_23451f66();
 						//TODO
+
+						//0x2344ea1a
 						channel_prev();
+						//->0x2344e990
+						if (Menu_Data.menu_stack_level == 0)
+						{
+							//0x2344e996
+							sub_2348d61a();
+						}
+						//2344e99a -> 2344edee
+						sub_2348d660(1);
+						//->0x2344ee44
 					}
 					break;
 
@@ -1151,15 +1199,6 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//->2344ee44
 					break;
 				} //switch
-#if 0
-				//2344e990???
-				if (Menu_Data.menu_stack_level == 0)
-				{
-					//0x2344e996
-					sub_2348d61a();
-				}
-				//2344e99a -> 2344edee
-#endif
 			}
 #endif
 
@@ -2006,6 +2045,44 @@ void sub_2343d98e(UI_Thread_Params* r1)
 		}
 		//->loc_2343d9ba
 	}
+}
+
+
+/*  /  / 2344f662 - todo */
+void sub_2344f662(Graphic_Queue_Item* pQueueItem)
+{
+#if 0
+	console_send_string("sub_2344f662 (todo.c): TODO\r\n");
+#endif
+
+	Menu* pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+
+	if (Menu_Data.menu_stack_level != 0)
+	{
+		//0x2344f678
+		if ((pMenu->onExit == 0) || (0 == (pMenu->onExit)(Menu_Data.Data_235fdf70)))
+		{
+			//loc_2344f686
+			Menu* pMenu = MENU_STACK_POP();
+
+			if (pMenu != 0)
+			{
+				//0x2344f692
+				sub_2343d51e(pMenu, Menu_Data.Data_235fdf70);
+
+				graphic_start_job_2_5(pQueueItem, pMenu->graphicData);
+			}
+			else
+			{
+				//loc_2344f69c
+				sub_2343d51e(0, Menu_Data.Data_235fdf70);
+
+				graphic_start_job_2_5(pQueueItem, 0);
+			}
+		}
+		//loc_2344f6aa
+	}
+	//loc_2344f6aa
 }
 
 

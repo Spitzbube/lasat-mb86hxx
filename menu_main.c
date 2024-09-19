@@ -114,6 +114,18 @@ static uint32_t menu_main_clut[] = //234c1388
 0x7181c100, 0x4181a100, 0x50505000, 0x6b6fb800
 };
 
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1558 = //234c1558
+{
+	14, 12, 0x00, //...
+#if 0
+0x234c1558                        dw         0x000e                             ; DATA XREF=0x234e7050, 0x234eb294, dword_23504814
+0x234c155a                        db  0x00 ; '.'
+0x234c155b                        db  0x00 ; '.'
+0x234c155c                        dd         0x0000000c
+0x234c1560                        db         0x00
+#endif	
+};
+
 static uint8_t menu_main_header_text_buffer[40] = "Head"; //234c1564 +0x28 = 234C158C
 static Graphic_Job_2_5_Item_Text menu_main_graphic_header_text_item = //234c158c
 {
