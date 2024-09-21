@@ -11,15 +11,15 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1558; //234c1558
-static Menu Data_234e71ec; //234e71ec
-static Menu_Item Data_234e71c0[]; //234e71c0
+static Menu menu_volume_bar; //234e71ec
+static Menu_Item menu_volume_bar_items[]; //234e71c0
 
 extern void sub_2344e40a(void);
-static int sub_2348f2c0(void); 
-static int sub_2348f2c4(void); 
-static int sub_2348f304(int*);
+static int menu_volume_bar_on_enter(void); 
+static int menu_volume_bar_on_exit(void); 
+static int menu_volume_bar_on_event(int*);
 
-Menu* Data_234e6ee4 = &Data_234e71ec; //234e6ee4
+Menu* menu_volume_bar_p = &menu_volume_bar; //234e6ee4
 int Data_234e6eec = 0; //234e6eec
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6ef8 = //234e6ef8
@@ -240,7 +240,7 @@ static Graphic_Job_2_5 Data_234e7178 = //234e7178
 	0, //void (*Data_0x20)(); //0x20
 	//???
 #if 0
-0x234e7178                        db         0x00                               ; DATA XREF=sub_2348f2c8+18, sub_2348f414+68, dword_234e7200
+0x234e7178                        db         0x00                               ; DATA XREF=sub_2348f2c8+18, menu_volume_bar_entry+68, dword_234e7200
 0x234e7179                        db         0x00
 0x234e717a                        dw         0x0016
 0x234e717c                        db         0x04
@@ -253,22 +253,22 @@ static Graphic_Job_2_5 Data_234e7178 = //234e7178
 0x234e718a 0000                   movs       r0, r0
 0x234e718c                        dd         0x00000000
 0x234e7190                        db  0x04 ; '.'
-0x234e7191                        db         0x01                               ; DATA XREF=sub_2348f414+70
+0x234e7191                        db         0x01                               ; DATA XREF=menu_volume_bar_entry+70
 0x234e7192 0000                   movs       r0, r0
 0x234e7194                        dd         0x00000000
 0x234e7198                        dd         0x00000000
 #endif
 };
 
-static Menu_Item Data_234e71c0[] = //234e71c0
+static Menu_Item menu_volume_bar_items[] = //234e71c0
 {
     //[0]
     {
 	0xffff, //uint16_t wData_0; //0
 	0xffff, //uint16_t helpStringId; //2
-	0, //Menu_Item_Inner4_Data_0* Data_4[5]; //4
+	{0}, //Menu_Item_Inner4_Data_0* Data_4[5]; //4
 	0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-	sub_2348f304, //void* onEvent; //0x1c = 28
+	menu_volume_bar_on_event, //void* onEvent; //0x1c = 28
 	sub_2344e40a, //void* inputThreadFunc; //0x20 = 32
 	0, //void* Data_0x24; //0x24 = 36
 	0, //void* Data_0x28; //0x28 = 40
@@ -289,7 +289,7 @@ static Menu_Item Data_234e71c0[] = //234e71c0
 0x234e71d6 0000                   movs       r0, r0
 0x234e71d8 0000                   movs       r0, r0
 0x234e71da 0000                   movs       r0, r0
-0x234e71dc                        dd         sub_2348f304+1
+0x234e71dc                        dd         menu_volume_bar_on_event+1
 0x234e71e0                        dd         sub_2344e40a+1
 0x234e71e4 0000                   movs       r0, r0
 0x234e71e6 0000                   movs       r0, r0
@@ -298,11 +298,11 @@ static Menu_Item Data_234e71c0[] = //234e71c0
 #endif
 };
 
-static Menu Data_234e71ec = //234e71ec
+static Menu menu_volume_bar = //234e71ec
 {
     0xffff,
-    &Data_234e71c0[0],
-    &Data_234e71c0[0],
+    &menu_volume_bar_items[0],
+    &menu_volume_bar_items[0],
     0, //234e6f38, //header
     0, //&Data_234e6f78, //help
     &Data_234e7178, //graphicData
@@ -310,30 +310,30 @@ static Menu Data_234e71ec = //234e71ec
     0, //currentItem
     graphic_start_job_2_5,
     0, //onNavigate
-    sub_2348f2c0, //onEnter
-    sub_2348f2c4, //onExit
+    menu_volume_bar_on_enter, //onEnter
+    menu_volume_bar_on_exit, //onExit
     0xff,
     0, //timeout
 
 #if 0
-0x234e71ec                        dw         0xffff                             ; DATA XREF=sub_2348f2c8+10, sub_2348f414+42, sub_2348f414+64, sub_2348f414+76, sub_2348f414+82, dword_234e6ee4, dword_234e6ef0
+0x234e71ec                        dw         0xffff                             ; DATA XREF=sub_2348f2c8+10, menu_volume_bar_entry+42, menu_volume_bar_entry+64, menu_volume_bar_entry+76, menu_volume_bar_entry+82, dword_234e6ee4, dword_234e6ef0
 0x234e71ee 0000                   movs       r0, r0
 0x234e71f0                        dd         0x234e71c0
 0x234e71f4                        dd         0x234e71c0
 0x234e71f8                        dd         0x234e6f38
 0x234e71fc                        dd         0x234e6f78
-0x234e7200                        dd         0x234e7178                         ; DATA XREF=sub_2348f2c8+18, sub_2348f414+68
+0x234e7200                        dd         0x234e7178                         ; DATA XREF=sub_2348f2c8+18, menu_volume_bar_entry+68
 0x234e7204 0000                   movs       r0, r0
 0x234e7206 0000                   movs       r0, r0
 0x234e7208                        dd         graphic_start_job_2_5
 0x234e720c 0000                   movs       r0, r0
 0x234e720e 0000                   movs       r0, r0
-0x234e7210                        dd         sub_2348f2c0+1
-0x234e7214                        dd         sub_2348f2c4+1
+0x234e7210                        dd         menu_volume_bar_on_enter+1
+0x234e7214                        dd         menu_volume_bar_on_exit+1
 0x234e7218                        dw         0x00ff
 0x234e721a 0000                   movs       r0, r0
                               dword_234e721c:
-0x234e721c                        dd         0x00000000                         ; DATA XREF=sub_2348f414+44
+0x234e721c                        dd         0x00000000                         ; DATA XREF=menu_volume_bar_entry+44
 0x234e7220 0000                   movs       r0, r0
 0x234e7222 0000                   movs       r0, r0
 0x234e7224 0000                   movs       r0, r0
@@ -343,14 +343,14 @@ static Menu Data_234e71ec = //234e71ec
 
 
 /* /  / 2348f2c0 - complete */
-static int sub_2348f2c0(void)
+static int menu_volume_bar_on_enter(void)
 {
     return 0;
 }
 
 
 /* /  / 2348f2c4 - complete */
-static int sub_2348f2c4(void)
+static int menu_volume_bar_on_exit(void)
 {
     return 0;
 }
@@ -365,9 +365,9 @@ int sub_2348f2c8(uint32_t a)
 
     a = (a * 100) / 32;
 
-    Graphic_Job_2_5_Item* r4 = &Data_234e6ee4->graphicData->pItems[0];
-    Graphic_Job_2_5_Item* r6 = &Data_234e6ee4->graphicData->pItems[1];
-    Graphic_Job_2_5_Item* r5 = &Data_234e6ee4->graphicData->pItems[2];
+    Graphic_Job_2_5_Item* r4 = &menu_volume_bar_p->graphicData->pItems[0];
+    Graphic_Job_2_5_Item* r6 = &menu_volume_bar_p->graphicData->pItems[1];
+    Graphic_Job_2_5_Item* r5 = &menu_volume_bar_p->graphicData->pItems[2];
 
     r5->width = 10 + (a * 300) / 100;
     r4->bData_0x3c = 1;
@@ -379,11 +379,19 @@ int sub_2348f2c8(uint32_t a)
 
 
 /* /  / 2348f304 - complete */
-static int sub_2348f304(int* a)
+static int menu_volume_bar_on_event(int* a)
 {
     Graphic_Queue_Item sp;
 
     int r1 = *a;
+
+#if 0
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "menu_volume_bar_on_event (menu_volume_bar.c): a=0x%x\r\n", a);
+        console_send_string(debug_string);
+    }
+#endif
 
     if (a != 0)
     {
@@ -436,7 +444,7 @@ void* sub_2348f334(FrontDisplay_Job* a)
 
 
 /* /  / 2348f414 - todo */
-int sub_2348f414(UI_Thread_Params* r5)
+int menu_volume_bar_entry(UI_Thread_Params* r5)
 {
     frontdisplay_start_text(0);
 
@@ -447,7 +455,7 @@ int sub_2348f414(UI_Thread_Params* r5)
         sub_2349984e(0, 1);
     }
 
-    Data_234e6ee4->timeout = 400;
+    menu_volume_bar_p->timeout = 400;
 
     int r0 = channel_change_volume(0, 0);
 
@@ -455,47 +463,17 @@ int sub_2348f414(UI_Thread_Params* r5)
 
     sub_2343d458(r5);
 
-    Data_234e6ee4->graphicData->bData_0x19 = 1;
+    menu_volume_bar_p->graphicData->bData_0x19 = 1;
 
-    MENU_STACK_PUSH(Data_234e6ee4);
+    MENU_STACK_PUSH(menu_volume_bar_p);
 
-    menu_initialize(Data_234e6ee4);
+    menu_initialize(menu_volume_bar_p);
 
-    sub_2343d51e(Data_234e6ee4, r5);
+    sub_2343d51e(menu_volume_bar_p, r5);
 
     frontdisplay_start_text(sub_2348f334);
 
     return 0;
 }
-
-#if 0
-sub_23451f60 (todo.c): TODO
-sub_23418f80 (todo.c): TODO
-igmp_input (todo.c): TODO
-igmp_input (todo.c): TODO
-mainfunction_thread: ir key=16
-graphic_thread: r7->command=2
-loc_23453500: r5->wData_2=0x16, bData_0=0, bData_0x19=1, bData_4=4
-loc_23453500: r5->bNumItems=4, r5->pItems=23452adc, bData_1=255
-dma_start_memcpy: writeAddr=22048000, readAddr=22000000, length=221184
-channel_check_streaming: channel_audioWritePtr=24572, writePtr=24572, Data_2349204c=200
-mainfunction_thread: ir key=16
-graphic_thread: r7->command=2
-loc_23453500: r5->wData_2=0x16, bData_0=0, bData_0x19=1, bData_4=4
-loc_23453500: r5->bNumItems=4, r5->pItems=23452adc, bData_1=255
-dma_start_memcpy: writeAddr=22000000, readAddr=22048000, length=221184
-channel_check_streaming: channel_audioWritePtr=51228, writePtr=51228, Data_2349204c=200
-mainfunction_thread: ir key=16
-graphic_thread: r7->command=2
-loc_23453500: r5->wData_2=0x16, bData_0=0, bData_0x19=1, bData_4=4
-loc_23453500: r5->bNumItems=4, r5->pItems=23452adc, bData_1=255
-dma_start_memcpy: writeAddr=22048000, readAddr=22000000, length=221184
-mainfunction_thread: ir key=16
-graphic_thread: r7->command=2
-loc_23453500: r5->wData_2=0x16, bData_0=0, bData_0x19=1, bData_4=4
-loc_23453500: r5->bNumItems=4, r5->pItems=23452adc, bData_1=255
-dma_start_memcpy: writeAddr=22000000, readAddr=22048000, length=221184
-
-#endif
 
 #endif //!VDR110

@@ -126,7 +126,7 @@ int dma_start_memcpy(uint32_t writeAddr/*r6*/, uint32_t readAddr/*r7*/,
 	console_send_string("dma_start_memcpy (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
     {
         extern char debug_string[];
         sprintf(debug_string, "dma_start_memcpy: writeAddr=%p, readAddr=%p, length=%d\r\n", 

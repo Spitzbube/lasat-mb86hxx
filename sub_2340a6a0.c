@@ -2455,7 +2455,7 @@ int channel_change_volume(int r5, int r7)
 
 		uint8_t r5 = Data_235462e4.bVolume;
 
-#if 1
+#if 0
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "channel_change_volume: r7=%d, r5=%d\r\n",

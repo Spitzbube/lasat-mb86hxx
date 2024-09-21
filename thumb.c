@@ -135,7 +135,10 @@ Menu menuMain = //234930cc
 
 void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
 
-UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 -0x70
+#ifndef VDR110
+UI_Thread_Params Data_2379673c; //  / 2379673C
+#endif
+UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 / 23796754 -0x70
 UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 / 2379676C - 0x18
 
 #if 0
@@ -791,14 +794,158 @@ int sub_2343d580()
 }
 
 
+#ifndef VDR110
+
 /*  /  / 2344e40a - todo */
-void sub_2344e40a() //inputThreadFunc
+void sub_2344e40a(UI_Thread_Params* a)
 {
 #if 1
-	console_send_string("sub_2344e40a (todo.c): TODO\r\n");
+	console_send_string("sub_2344e40a (inputThreadFunc): TODO\r\n");
 #endif
 
+//	Menu** sp_0x20; //sp_0x20
+	uint8_t sp_0x1c; //sp_0x1c
+	Graphic_Queue_Item sp_0xc; //sp_0xc
+	Menu* r4;
+	int (*r6)(Graphic_Queue_Item *, void *) = 0;
+	void (*r5)() = 0;
+	uint8_t (*r7)() = 0;
+	int sp8; //sp8
+	Menu_Item* sp4; //sp4
+	uint8_t (*sp)() = 0;
+
+	Data_2379673c = *a;
+
+	Menu_Data.Data_235fdf70/*2379679C*/ = &Data_2379673c; //r4
+
+	sp_0x1c = OSSemPost(Data_2379673c.pSema);
+
+	OSMboxAccept(Data_2379673c.pMBox);
+
+//	sp_0x20 = &Menu_Data.menu_stack[9]/*237967C4*/;
+
+	while (1)
+	{
+		//loc_2344e43e
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+		sp4 = r4->Data_4;
+
+		uint8_t* r0_ = OSMboxPend(Data_2379673c.pMBox, (uint16_t)r4->timeout, &sp_0x1c);
+
+		uint8_t keyCode = *r0_;
+
+		if (sp_0x1c != 10)
+		{
+			//0x2344e468
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_2344e40a (thumb.c): keyCode=0x%x\r\n", keyCode);
+				console_send_string(debug_string);
+			}
+#endif
+			switch (keyCode)
+			{
+				case 0x34:
+					//loc_2344e4e2
+					break;
+
+				case 0x11:
+					//loc_2344e598 -> loc_2344e5ce
+					//r0 = 8;
+					//->loc_2344e5d4
+					sp8 = 8;
+					r5 = sp4->onEvent;
+					r6 = r4->graphicHandler;
+					//->loc_2344e622
+					break;
+
+				case 0x10:
+					//loc_2344e55a -> loc_2344e5d2
+					//r0 = 4;
+					//loc_2344e5d4
+					sp8 = 4;
+					r5 = sp4->onEvent;
+					r6 = r4->graphicHandler;
+					//->loc_2344e622
+					break;
+
+				case 0x20:
+					//loc_2344e59a
+					break;
+
+				case 0x21:
+					//0x2344e4a2
+					break;
+
+				case 0x2c:
+					//loc_2344e57e
+					break;
+
+				case 0x22:
+					//loc_2344e57e
+					break;
+
+				default:
+					//loc_2344e59c -> loc_2344e622???
+					break;
+			} //switch (keyCode)
+			//loc_2344e622
+			if (r7 != 0)
+			{
+				//0x2344e626
+				sp_0x1c = (r7)();
+			}
+			//loc_2344e62a
+			if (r5 != 0)
+			{
+				//0x2344e62e
+				(r5)(&sp8);
+
+				r5 = 0;
+			}
+			//loc_2344e634
+			if (r6 != 0)
+			{
+				//0x2344e638
+				(r6)(&sp_0xc, r4->graphicData);
+
+				r6 = 0;
+			}
+			//loc_2344e640
+			if (sp != 0)
+			{
+				//0x2344e646
+				sp_0x1c = (sp)();
+			}
+			//->loc_2344e65e
+		} //if (sp_0x1c != 10)
+		else
+		{
+			//loc_2344e540 -> loc_2344e64c
+			if (sp4 != 0)
+			{
+				//0x2344e652
+				r5 = sp4->onEvent;
+				if (r5 != 0)
+				{
+					(r5)(0);
+
+					r5 = 0;
+				}
+			}
+			//loc_2344e65e
+		}
+		//loc_2344e65e
+		if (62 == OSTaskDelReq(0xff))
+		{
+			OSTaskDel(0xff);
+		}
+		//->loc_2344e43e
+	} //while (1)
 }
+
+#endif //!VDR110
 
 
 /* 2343d610 / 2344e6a2 - todo */
@@ -839,12 +986,21 @@ void mainfunction_thread(UI_Thread_Params* a)
 	console_send_string("mainfunction_thread (thumb.c): entry\r\n");
 #endif
 
+#ifdef VDR110
 	memcpy(&Data_235fdf28, a, sizeof(UI_Thread_Params));
 
 	Menu_Data.Data_235fdf70 = &Data_235fdf28/*r4*/;
 
 	OSSemPost(Data_235fdf28.pSema);
 	OSMboxAccept(Data_235fdf28.pMBox);
+#else
+	memcpy(&Data_235fdf40, a, sizeof(UI_Thread_Params));
+
+	Menu_Data.Data_235fdf70 = &Data_235fdf40/*r4*/;
+
+	OSSemPost(Data_235fdf40.pSema);
+	OSMboxAccept(Data_235fdf40.pMBox);
+#endif
 
 	//r5 = 23796794;
 
@@ -872,7 +1028,13 @@ void mainfunction_thread(UI_Thread_Params* a)
 #if 0
 		console_send_string("mainfunction_thread (thumb.c): before OSMboxPend\r\n");
 #endif
+
+#ifdef VDR110
 		pMsg = (void*) OSMboxPend(Data_235fdf28.pMBox, timeout, &err);
+#else
+		pMsg = (void*) OSMboxPend(Data_235fdf40.pMBox, timeout, &err);
+#endif
+
 #if 0
         {
             extern char debug_string[];
@@ -1032,7 +1194,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 						pMenu = MENU_STACK_POP();
 					}
 					//0x2344eacc
-					sub_2348f414(&Data_235fdf40);
+					menu_volume_bar_entry(&Data_235fdf40);
 					//->0x2344ee44
 					break;
 
@@ -1150,7 +1312,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 				case 82: //Menu
 					//0x2344e806
-					sub_2344d414(&Data_235fdf28);
+					sub_2344d414(&Data_235fdf40);
 					//->0x2344ee44
 					break;
 
