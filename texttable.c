@@ -781,6 +781,17 @@ int sub_23407e40(uint8_t* a, int b, void* sl, int fp)
 }
 
 
+/* 2340beb0 - todo */
+int sub_2340beb0(char* a, char* b)
+{
+#if 1
+	console_send_string("sub_2340beb0 (todo.c): TODO\r\n");
+#endif
+
+	return 1;
+}
+
+
 /* 23409424 /  / 2340bf00 - complete */
 uint16_t sub_23409424(char* a, int b)
 {

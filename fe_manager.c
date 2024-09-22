@@ -834,7 +834,7 @@ int fe_manager_register_measurement_callback(void* h, int (*cbk)(Frontend_Measur
 }
 
 
-/* 2340ecc0 - complete */
+/* 2340ecc0 /  / 23416694 - complete */
 int sub_2340ecc0(Frontend* r4, uint8_t* b, uint8_t* r5)
 {
 	int r0;
@@ -881,7 +881,7 @@ int sub_2340ecc0(Frontend* r4, uint8_t* b, uint8_t* r5)
 }
 
 
-/* 2340ed18 - todo */
+/* 2340ed18 /  / 234166ec - todo */
 int fe_manager_get_transponder_type(Transponder* r0)
 {
 #if 0
@@ -967,7 +967,7 @@ int fe_manager_shutdown(Frontend* r4, int b, void (*func)())
 }
 
 
-/* 2340ee34 - complete */
+/* 2340ee34 /  / 23416808 - complete */
 int sub_2340ee34(Frontend* p)
 {
 	if (p != 0)

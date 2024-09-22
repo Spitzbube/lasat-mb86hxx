@@ -984,6 +984,14 @@ void sub_2348f254()
 }
 
 
+/*  /  / 2348cffa - todo */
+void sub_2348cffa()
+{
+	console_send_string("sub_2348cffa (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 2349984e - todo */
 void sub_2349984e()
 {
@@ -993,6 +1001,14 @@ void sub_2349984e()
 
 
 #endif //!VDR110
+
+
+/* 234126dc /  / 2341a0f0 - todo */
+void sub_234126dc()
+{
+	console_send_string("sub_234126dc (todo.c): TODO\r\n");
+
+}
 
 
 #ifndef DVBC_RADIO

@@ -934,7 +934,7 @@ Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id)
 }
 
 
-/* 2344ec90 - complete */
+/* 2344ec90 /  / 23476478 - complete */
 struct Struct_2377b8d0_Inner8* sub_2344ec90(Struct_2377b8d0* a, uint8_t b)
 {
 #if 0

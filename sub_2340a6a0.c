@@ -2400,7 +2400,7 @@ void sub_2340bf0c(Struct_2340bf0c* r6)
 }
 
 
-/* 2340bf94 / 2340e21c - todo */
+/* 2340bf94 / 2340e21c / 2340ea70 - todo */
 void sub_2340bf94(int r7, Channel* pChannel, Transponder* pTransponder)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */

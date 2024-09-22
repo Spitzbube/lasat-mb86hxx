@@ -75,7 +75,7 @@ set(SRCS
    menu_settings.c
    menu_picture.c
    main2.c
-   sub_2348d61a.c
+   menu_info_bar.c
    menu_volume_bar.c
    hexdump.c
    todo.c

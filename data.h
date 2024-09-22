@@ -27,8 +27,8 @@ extern int Data_23491da4; //23491da4 +0x18
 extern int Data_23491da8; //23491da8
 extern void* main_hHdmi; //23491dac
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
-extern Frontend* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8
-extern Frontend* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec
+extern Frontend* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8 / 234c01d4
+extern Frontend* Data_23491db8; //23491db8 +44 = 0x2c //Data_234ac4ec / 234c01d8
 extern MemBlk_Handle* main_hMemBlk1; //23491DBC +0x30
 extern MemBlk_Handle* main_hMemBlk2; //23491dc0 +0x34
 extern Struct_20611068* main_hUsbGpio; //23491dc4 +0x38 

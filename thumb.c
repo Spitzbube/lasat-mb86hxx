@@ -7,7 +7,7 @@
 #include "amplifier.h"
 
 #ifndef VDR110
-#include "sub_2348d61a.h"
+#include "menu_info_bar.h"
 #endif
 
 #pragma thumb
@@ -1218,7 +1218,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 						if (Menu_Data.menu_stack_level == 0)
 						{
 							//0x2344e996
-							sub_2348d61a();
+							menu_info_bar_enter();
 						}
 						//2344e99a -> 2344edee
 						sub_2348d660(1);
@@ -1238,7 +1238,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 						if (Menu_Data.menu_stack_level == 0)
 						{
 							//0x2344e996
-							sub_2348d61a();
+							menu_info_bar_enter();
 						}
 						//2344e99a -> 2344edee
 						sub_2348d660(1);
@@ -1340,7 +1340,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//0x2344e8c8
 					if (Menu_Data.menu_stack_level == 0)
 					{
-						sub_2348d61a();
+						menu_info_bar_enter();
 						sub_2348d660(1);
 
 						pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
