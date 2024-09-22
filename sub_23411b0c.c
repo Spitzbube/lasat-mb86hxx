@@ -6,18 +6,6 @@
 
 typedef struct
 {
-	uint8_t fill_0; //0
-	uint8_t bData_1; //1
-	uint8_t bData_2; //2
-	uint8_t bData_3; //3
-	uint8_t bData_4; //4
-	int Data_8; //8
-	//12
-} Struct_2358be5c_Inner0;
-
-
-typedef struct
-{
 	Struct_2358be5c_Inner0 Data_0; //0
 	Struct_235b1c24* Data_12; //12
 	int fill_16[9]; //16
@@ -77,7 +65,7 @@ void sub_23411b0c(int r6, uint8_t* r5)
 }
 
 
-/* 23411d74 - complete */
+/* 23411d74 /  / 23419788 - complete */
 int sub_23411d74(Struct_2358be5c_Inner0* a)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
@@ -100,6 +88,16 @@ int sub_23411d74(Struct_2358be5c_Inner0* a)
 	OS_EXIT_CRITICAL();
 
 	return 0;
+}
+
+
+/* 23411da0 /  / 234197b4 - todo */
+void sub_23411da0()
+{
+#if 1
+	console_send_string("sub_23411da0 (todo.c): TODO\r\n");
+#endif
+
 }
 
 

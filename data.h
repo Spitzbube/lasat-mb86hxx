@@ -196,6 +196,18 @@ typedef struct
 } Menu_Event;
 
 
+typedef struct
+{
+	uint8_t fill_0; //0
+	uint8_t bData_1; //1
+	uint8_t bData_2; //2
+	uint8_t bData_3; //3
+	uint8_t bData_4; //4
+	int Data_8; //8
+	//12
+} Struct_2358be5c_Inner0;
+
+
 extern int menu_items_navigate(int*);
 extern int menu_general_settings_entry(UI_Thread_Params*);
 

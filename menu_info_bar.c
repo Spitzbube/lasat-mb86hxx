@@ -30,12 +30,14 @@ static void sub_2348db78(void);
 
 
 //234dfe48
+uint8_t bData_234dfe48 = 0; //234dfe48 +0
 int (*Data_234dfe50)() = 0; //234DFE50 +8
 Menu* Data_234dfe54 = //234dfe54 +0xc
     &Data_234e1c78;
 
 Menu* Data_234dfe58 = //234dfe58 +0x10
     &Data_234e1cf0; 
+uint8_t Data_234dfe5c[] = "--:--  "; //234DFE5C +0x14
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe74 = //234dfe74
 {
@@ -139,9 +141,21 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfeec = //234dfeec
 #if 0
 0x234dfeec                        dw         0x000e                             ; DATA XREF=sub_2348d81e+64, 0x234e07b8
 0x234dfeee 0000                   movs       r0, r0
-                              dword_234dfef0:
 0x234dfef0                        dd         0x00000004                         ; DATA XREF=sub_2348d81e+66
 0x234dfef4                        db         0x0f
+#endif
+};
+
+static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dff04 = //234dff04
+{
+	9, //uint16_t wData_0; //0
+	4, //int Data_4; //4
+	0x07, //uint8_t bData_8; //8
+#if 0
+0x234dff04                        dw         0x0009                             ; DATA XREF=sub_2348d81e+72, 0x234e0b38
+0x234dff06 0000                   movs       r0, r0
+0x234dff08                        dd         0x00000004                         ; DATA XREF=sub_2348d81e+74
+0x234dff0c                        db         0x07
 #endif
 };
 
@@ -610,6 +624,25 @@ static Graphic_Job_2_5_Item_Text Data_234e0444 = //234e0444
 #endif
 };
 
+static Graphic_Job_2_5_Item_Text Data_234e0568 = //234e0568
+{
+	0, 0x0239, 0x014a, 0x028a, 0x016d, 0x01, 0x05, 0x03, 0x01, &Data_234dfe5c[0], 0, 0, 0
+#if 0
+0x234e0568                        db         0x00                               ; DATA XREF=0x234e0b40
+0x234e0569                        db         0x00
+0x234e056a                        dw         0x0239
+0x234e056c                        dw         0x014a
+0x234e056e                        dw         0x028a
+0x234e0570                        dw         0x016d
+0x234e0572                        db         0x01
+0x234e0573                        db         0x05
+0x234e0574                        db         0x03
+0x234e0575                        db         0x01
+0x234e0576 0000                   movs       r0, r0
+0x234e0578                        dd         0x234dfe5c
+#endif
+};
+
 static Graphic_Job_2_5_Item Data_234e0620[40] = //234e0620
 {
     {1, 0, 0/*fill_4*/, 0/*Data_8*/, 0x41, 0x0140, 0x186, 0x32, 0/*fill_0x14*/, &Data_234dfe74/*Data_0x18*/, 2/*wData_0x1c*/}, //[0] = 234e0620 = header
@@ -960,7 +993,26 @@ static Graphic_Job_2_5_Item Data_234e0620[40] = //234e0620
     {0}, //[17] = 234E0A60
     {0}, //[18] = 234E0AA0
     {0}, //[19] = 234E0AE0
-    {0}, //[20] = 234E0B20
+    {1, 0, 0/*fill_4*/, 0/*Data_8*/, 0x0230, 0x0145, 0x005a, 0x0028, 0/*fill_0x14*/, &Data_234dff04/*Data_0x18*/, 3/*wData_0x1c*/, 0, &Data_234e0568}, //[20] = 234E0B20
+#if 0
+0x234e0b20                        db         0x01
+0x234e0b21                        db  0x00 ; '.'
+0x234e0b22 0000                   movs       r0, r0
+0x234e0b24 0000                   movs       r0, r0
+0x234e0b26 0000                   movs       r0, r0
+0x234e0b28 0000                   movs       r0, r0
+0x234e0b2a 0000                   movs       r0, r0
+0x234e0b2c                        dw         0x0230
+0x234e0b2e                        dw         0x0145
+0x234e0b30                        dw         0x005a
+0x234e0b32                        dw         0x0028
+0x234e0b34 0000                   movs       r0, r0
+0x234e0b36 0000                   movs       r0, r0
+0x234e0b38                        dd         0x234dff04
+0x234e0b3c                        dw         0x0003
+0x234e0b3e 0000                   movs       r0, r0
+0x234e0b40                        dd         0x234e0568
+#endif
     {0}, //[21] = 234E0B60
     {0}, //[22] = 234E0BA0
     {0}, //[23] = 234E0BE0: Data_234dfe58->Item[0]
@@ -1792,7 +1844,7 @@ int sub_2348d3f6(Menu_Event* r5)
         Graphic_Queue_Item graphicQueueItem; //sp_0x8c
         int sp_0x88 = 0;
         int sp_0x84 = 0;
-        int sp_0x78;
+        Struct_2358be5c_Inner0 sp_0x78;
 
         sub_2348d3a2();
 
@@ -1889,12 +1941,38 @@ void sub_2348d660(int r4)
 
 
 /* 2348d87e - todo */
-void sub_2348d87e(void* a, int b)
+void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
 {
-#if 1
+#if 0
 	console_send_string("sub_2348d87e (todo.c): TODO\r\n");
 #endif
 
+//    int r6 = 1;
+
+    Data_234dfe54->graphicData->pItems[20].Data_0x20->bData_0x17 = 1;
+    Data_234dfe5c[0] = 0;
+
+    sub_23411d74/*sub_23419788*/(r4);
+
+    sub_2348d920(b, r4);
+
+    if (r4->bData_4 != 0)
+    {
+        //0x2348d8b4
+        sub_23411da0/*sub_234197b4*/(r4, Data_2396b628.Data_2396b720.timeDiff);
+
+        sprintf(&Data_234dfe5c[0], "%02d:%02d", r4->bData_3, r4->bData_2);
+    }
+    else
+    {
+        //loc_2348d8cc
+        sprintf(&Data_234dfe5c[0], "--:--");
+    }
+    //loc_2348d8d6
+    if ((bData_234dfe48 ^= 1) != 0)
+    {
+        Data_234dfe5c[2] = ' ';
+    }
 }
 
 

@@ -992,6 +992,14 @@ void sub_2348cffa()
 }
 
 
+/* /  / 2348d920 - todo */
+void sub_2348d920()
+{
+	console_send_string("sub_2348d920 (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 2349984e - todo */
 void sub_2349984e()
 {
