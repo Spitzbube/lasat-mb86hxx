@@ -43,7 +43,7 @@ set(SRCS
    sub_23418e1c.c
    psi.c
    sub_2344ed20.c
-   sub_23411b0c.c
+   clocktime.c
    channel_list_update.c    #0x2343dcfc
    audec.c
    scan.c

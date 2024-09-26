@@ -39,7 +39,7 @@ Menu* Data_234dfe54 = //234dfe54 +0xc
 
 Menu* Data_234dfe58 = //234dfe58 +0x10
     &Data_234e1cf0; 
-uint8_t Data_234dfe5c[] = "--:--  "; //234DFE5C +0x14
+uint8_t menu_info_bar_time_string[] = "--:--  "; //234DFE5C +0x14
 
 static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe74 = //234dfe74
 {
@@ -713,7 +713,7 @@ static Graphic_Job_2_5_Item_Text Data_234e0550 = //234e0550
 
 static Graphic_Job_2_5_Item_Text Data_234e0568 = //234e0568
 {
-	0, 0x0239, 0x014a, 0x028a, 0x016d, 0x01, 0x05, 0x03, 0x01, &Data_234dfe5c[0], 0, 0, 0
+	0, 0x0239, 0x014a, 0x028a, 0x016d, 0x01, 0x05, 0x03, 0x01, &menu_info_bar_time_string[0], 0, 0, 0
 #if 0
 0x234e0568                        db         0x00                               ; DATA XREF=0x234e0b40
 0x234e0569                        db         0x00
@@ -2146,7 +2146,7 @@ void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
 //    int r6 = 1;
 
     Data_234dfe54->graphicData->pItems[20].Data_0x20->bData_0x17 = 1;
-    Data_234dfe5c[0] = 0;
+    menu_info_bar_time_string[0] = 0;
 
     sub_23411d74/*sub_23419788*/(r4);
 
@@ -2157,17 +2157,17 @@ void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
         //0x2348d8b4
         sub_23411da0/*sub_234197b4*/(r4, Data_2396b628.Data_2396b720.timeDiff);
 
-        sprintf(&Data_234dfe5c[0], "%02d:%02d", r4->bData_3, r4->bData_2);
+        sprintf(&menu_info_bar_time_string[0], "%02d:%02d", r4->bData_3, r4->bData_2);
     }
     else
     {
         //loc_2348d8cc
-        sprintf(&Data_234dfe5c[0], "--:--");
+        sprintf(&menu_info_bar_time_string[0], "--:--");
     }
     //loc_2348d8d6
     if ((bData_234dfe48 ^= 1) != 0)
     {
-        Data_234dfe5c[2] = ' ';
+        menu_info_bar_time_string[2] = ' ';
     }
 }
 

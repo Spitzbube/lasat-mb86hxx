@@ -144,6 +144,9 @@ void startup_thread()
 	main_uart1_init();
 	sub_234014dc();
 	main_bt_init();
+#ifndef VDR110
+	clocktime_init();
+#endif
 	inputhandler_register_uart_callback(main_process_uart_command);
 	main_usb_init();
 	main_ts_play_init();
