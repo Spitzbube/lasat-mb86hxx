@@ -153,8 +153,13 @@ struct Menu_Data Menu_Data; //235fdf58 / 23796784 -0x40
 
 
 #ifndef VDR110
+void sub_2344d850(Menu_Item*, uint16_t, uint8_t, uint8_t);
+
 //0x234c21c4
-void (*Data_234c21c8)(); //234c21c8 +4
+void (*Data_234c21c8)() = sub_2344d850; //234c21c8 +4
+void (*Data_234c21cc)() = 0; //234C21CC +8
+void (*Data_234c21d4)() = 0; //234c21d4 +0x10
+void (*Data_234c21d8)() = 0; //234C21D8 +0x14
 #endif
 
 
@@ -1480,16 +1485,51 @@ void mainfunction_thread(UI_Thread_Params* a)
 #if 0
 			console_send_string("mainfunction_thread (thumb.c): timeout\r\n");
 #endif
+
+#ifdef VDR110
 			if (pMenuItem != 0)
 			{
-				// / 0x2344eed2
 				void (*r1)(int) = pMenuItem->onEvent;
 				if (r1 != 0)
 				{
 					(r1)(0);
 				}
+			}
+#else
+			if (pMenuItem != 0)
+			{
+				// / 0x2344eed2
+				r7 = pMenuItem->onEvent;
+				if (r7 != 0)
+				{
+					(r7)(0);
+				}
 				//  / 0x2344eeea
 			}
+			else
+			{
+				//0x2344eee0
+				if (Data_234c21d8 != 0)
+				{
+					(Data_234c21d8)();
+				}
+				//2344eeea
+			}
+			//0x2344eeea
+			if (Data_234c21cc != 0)
+			{
+				//0x2344eef2
+				(Data_234c21cc)(sp_0x70);
+
+				sp_0x70 = 0;
+			}
+			//0x2344eefa
+			if (Data_234c21d4 != 0)
+			{
+				(Data_234c21d4)();
+			}
+			//0x2344ef02
+#endif
 		}
 		//loc_2343d6d0 / 0x2344ef02
 		if (62 == OSTaskDelReq(0xff))
