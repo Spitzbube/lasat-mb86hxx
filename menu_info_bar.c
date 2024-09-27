@@ -7,6 +7,7 @@
 #include "graphic.h"
 #include "menu.h"
 #include "eit.h"
+#include "clocktime.h"
 #include "menu_info_bar.h"
 
 #pragma thumb
@@ -1627,7 +1628,8 @@ int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x5
     {
         //0x2348cf54
 
-        sub_234126dc/*sub_2341a0f0*/(r4->bData_0x1c, r4->bData_0x1d, r4->bData_0x1f, r4->bData_0x20,
+        sub_234126dc/*sub_2341a0f0*/(r4->start_time[0], r4->start_time[1], 
+            r4->duration[0], r4->duration[0],
             &sp_0x40[0], 20);
 
         struct Struct_2377b8d0_Inner8_Inner8_Inner0* r5 = r4->Data_8->Data_0;
@@ -1700,7 +1702,7 @@ int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x5
 
 
 /* 2348d06a - todo */
-int sub_2348d06a(int* r4, int* r7)
+int sub_2348d06a(struct Struct_2377b8d0_Inner8** r4, struct Struct_2377b8d0_Inner8** r7)
 {
 #if 0
 	console_send_string("sub_2348d06a (todo.c): TODO\r\n");
@@ -1827,7 +1829,7 @@ int sub_2348d06a(int* r4, int* r7)
             return 0;
         }
         //loc_2348d33a
-        struct Struct_2377b8d0_Inner8* r0_ = sub_2344ec90/*sub_23476478*/(r6_, 4);
+        Struct_2377b8d0_Inner8* r0_ = sub_2344ec90/*sub_23476478*/(r6_, 4);
 
         *r4 = r0_;
 
@@ -2038,15 +2040,15 @@ int sub_2348d3f6(Menu_Event* r5)
     {
         //loc_2348d4e6 -> loc_2348d5d6
         Graphic_Queue_Item graphicQueueItem; //sp_0x8c
-        int sp_0x88 = 0;
-        int sp_0x84 = 0;
-        Struct_2358be5c_Inner0 sp_0x78;
+        Struct_2377b8d0_Inner8* sp_0x88 = 0;
+        Struct_2377b8d0_Inner8* sp_0x84 = 0;
+        Clock_Time clockTime; //sp_0x78;
 
         sub_2348d3a2();
 
         int r5 = sub_2348d06a(&sp_0x88, &sp_0x84);
 
-        sub_2348d87e(&sp_0x78, sp_0x88);
+        sub_2348d87e(&clockTime, sp_0x88);
 
         graphic_start_job_2_5(&graphicQueueItem, Data_234dfe54->graphicData);
 
@@ -2137,7 +2139,7 @@ void sub_2348d660(int r4)
 
 
 /* 2348d87e - todo */
-void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
+void sub_2348d87e(Clock_Time* r4, Struct_2377b8d0_Inner8* b)
 {
 #if 0
 	console_send_string("sub_2348d87e (todo.c): TODO\r\n");
@@ -2148,7 +2150,7 @@ void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
     Data_234dfe54->graphicData->pItems[20].Data_0x20->bData_0x17 = 1;
     menu_info_bar_time_string[0] = 0;
 
-    sub_23411d74/*sub_23419788*/(r4);
+    clocktime_get(r4);
 
     sub_2348d920(b, r4);
 
@@ -2157,7 +2159,7 @@ void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
         //0x2348d8b4
         sub_23411da0/*sub_234197b4*/(r4, Data_2396b628.Data_2396b720.timeDiff);
 
-        sprintf(&menu_info_bar_time_string[0], "%02d:%02d", r4->bData_3, r4->bData_2);
+        sprintf(&menu_info_bar_time_string[0], "%02d:%02d", r4->hours, r4->minutes);
     }
     else
     {
@@ -2169,6 +2171,70 @@ void sub_2348d87e(Struct_2358be5c_Inner0* r4, int b)
     {
         menu_info_bar_time_string[2] = ' ';
     }
+}
+
+
+/* /  / 2348d920 - todo */
+int sub_2348d920(Struct_2377b8d0_Inner8* r0, Clock_Time* pClockTime)
+{
+#if 0
+	console_send_string("sub_2348d920 (todo.c): TODO\r\n");
+#endif
+
+    Graphic_Job_2_5_Item* r3 = Data_234dfe54->graphicData->pItems;
+    uint32_t r2 = 0;
+
+    Graphic_Job_2_5_Item* r4 = &r3[15];
+    Graphic_Job_2_5_Item* r5 = &r3[16];
+    Graphic_Job_2_5_Item* r6 = &r3[14];
+
+    if ((pClockTime == 0) || (pClockTime->bData_4 == 0))
+    {
+        return 4;
+    }
+
+    if (r0 == 0)
+    {
+        r5->y = r4->y;
+        //->loc_2348dad0
+    }
+    else
+    {
+        //0x2348d96c
+        uint32_t minutes = pClockTime->hours * (uint8_t)60;
+        minutes = minutes + pClockTime->minutes;
+
+        uint32_t start = ((r0->start_time[0] & 0xf0) >> 4) * 10.0;
+        start += (double)(r0->start_time[0] & 0x0f);
+        start = start * 60;
+        start += ((r0->start_time[1] & 0xf0) >> 4) * 10.0; 
+        start += (double)(r0->start_time[1] & 0x0f);
+
+        uint32_t duration = ((r0->duration[0] & 0xf0) >> 4) * 10.0;
+        duration += (double)(r0->duration[0] & 0x0f);
+        duration = duration * 60;
+        duration += ((r0->duration[1] & 0xf0) >> 4) * 10.0;
+        duration += (double)(r0->duration[1] & 0x0f);
+
+        if ((start <= minutes) && ((start + duration) >= minutes))
+        {
+            //0x2348dabc
+            r2 = ((minutes - start) * 118) / duration;
+        }
+    }
+    //loc_2348dad0
+    r6->bData_0x3c = 1;
+    r4->bData_0x3c = 1;
+    r5->bData_0x3c = 1;
+
+    if (r4->height < r2)
+    {
+        r2 = 0;
+    }
+
+    r5->y = r4->y + r2;
+
+    return 0;
 }
 
 

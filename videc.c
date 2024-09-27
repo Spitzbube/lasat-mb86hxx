@@ -276,7 +276,7 @@ int sub_2345d830(int a)
 
 		r0 = r0  - Data_2389fb64.Data_238a0e44;
 		int r5 = r0 - 2;
-		r0 = sub_23460320(r0);
+		r0 = sub_23460320();
 		if (r0 == 0)
 		{
 			//->loc_2345d9c0
@@ -2720,7 +2720,7 @@ void sub_23460294()
 
 
 /* 23460320 - complete */
-int sub_23460320(int a)
+int sub_23460320(void)
 {
 #if 0
 	console_send_string("sub_23460320 (todo.c): TODO\r\n");

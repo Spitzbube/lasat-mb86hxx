@@ -1,0 +1,13 @@
+
+typedef struct
+{
+	uint8_t fill_0; //0
+	uint8_t seconds; //1
+	uint8_t minutes; //2
+	uint8_t hours; //3
+	uint8_t bData_4; //4
+	int Data_8; //8
+	//12
+} Clock_Time;
+
+

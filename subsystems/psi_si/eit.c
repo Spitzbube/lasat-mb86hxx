@@ -823,12 +823,12 @@ void decode_eit_section(uint8_t* r6, int b)
 			r4->table_id = r6[0]; //table_id
 			r4->section_number = r6[6]; //section_number
 			r4->version_number = (r6[5] >> 1) & 0x1f; //(x << 26) >> 27; //version_number
-			r4->bData_0x1c = r5[4]; //start_time
-			r4->bData_0x1d = r5[5]; //start_time
-			r4->bData_0x1e = r5[6]; //start_time
-			r4->bData_0x1f = r5[7]; //duration
-			r4->bData_0x20 = r5[8]; //duration
-			r4->bData_0x21 = r5[9]; //duration
+			r4->start_time[0] = r5[4]; //start_time
+			r4->start_time[1] = r5[5]; //start_time
+			r4->start_time[2] = r5[6]; //start_time
+			r4->duration[0] = r5[7]; //duration
+			r4->duration[1] = r5[8]; //duration
+			r4->duration[2] = r5[9]; //duration
 			r4->running_status = r5[10] >> 5; //running_status
 
 #if 0
