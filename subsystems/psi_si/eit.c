@@ -45,7 +45,7 @@ Struct_2377b8d0* Data_2377b8d0[1000]; //2377b8d0 / 2390c728
 
 
 /* 2344dd34 - complete */
-void* eit_free_memblk(struct Struct_2377b8d0_Inner8* r5)
+void* eit_free_memblk(EIT_Event* r5)
 {
 #if 0
 	console_send_string("eit_free_memblk (todo.c): TODO\r\n");
@@ -186,12 +186,12 @@ int sub_2344de88(int a)
 					(Data_2377b8d0[r4]->service_id != a))
 			{
 				//0x2344def4
-				struct Struct_2377b8d0_Inner8* r5 = Data_2377b8d0[r4]->Data_8;
+				EIT_Event* r5 = Data_2377b8d0[r4]->Data_8;
 				//->loc_2344df1c
 				while (r5 != 0)
 				{
 					//loc_2344df00
-					struct Struct_2377b8d0_Inner8* sb = eit_free_memblk(r5);
+					EIT_Event* sb = eit_free_memblk(r5);
 
 					memblk_free(main_hMemBlk1, r5);
 
@@ -215,7 +215,7 @@ int sub_2344de88(int a)
 
 
 /* 2344df54 - todo */
-int decode_eit_descriptors(uint8_t* r4, int b, struct Struct_2377b8d0_Inner8* r8)
+int decode_eit_descriptors(uint8_t* r4, int b, EIT_Event* r8)
 {
 #if 0
 	console_send_string("decode_eit_descriptors (todo.c): TODO\r\n");
@@ -725,7 +725,7 @@ void decode_eit_section(uint8_t* r6, int b)
 
 		sp = 1;
 
-		struct Struct_2377b8d0_Inner8* r4 = sb->Data_8;
+		EIT_Event* r4 = sb->Data_8;
 
 		if (r4 != 0)
 		{
@@ -777,7 +777,7 @@ void decode_eit_section(uint8_t* r6, int b)
 		else
 		{
 			//loc_2344ea48
-			r4 = memblk_alloc(main_hMemBlk1, sizeof(struct Struct_2377b8d0_Inner8));
+			r4 = memblk_alloc(main_hMemBlk1, sizeof(EIT_Event));
 			if (r4 == 0)
 			{
 				//->loc_2344ebc4
@@ -792,7 +792,7 @@ void decode_eit_section(uint8_t* r6, int b)
 			}
 			else
 			{
-				struct Struct_2377b8d0_Inner8* r0 = sb->Data_8;
+				EIT_Event* r0 = sb->Data_8;
 				while (1)
 				{
 					//loc_2344ea70
@@ -837,8 +837,8 @@ void decode_eit_section(uint8_t* r6, int b)
 				sprintf(debug_string, "decode_eit_section: r4->event_id=%d, r4->wData_0x16=%x/%x/%x/%x, %x/%x/%x\r\n",
 						r4->event_id,
 						r4->wData_0x16,
-						r4->bData_0x1c, r4->bData_0x1d, r4->bData_0x1e,
-						r4->bData_0x1f, r4->bData_0x20, r4->bData_0x21);
+						r4->start_time[0], r4->start_time[1], r4->start_time[2],
+						r4->duration[0], r4->duration[1], r4->duration[2]);
 				console_send_string(debug_string);
 			}
 #endif
@@ -935,13 +935,13 @@ Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id)
 
 
 /* 2344ec90 /  / 23476478 - complete */
-struct Struct_2377b8d0_Inner8* sub_2344ec90(Struct_2377b8d0* a, uint8_t b)
+EIT_Event* eit_get_present_following_event(Struct_2377b8d0* a, uint8_t b)
 {
 #if 0
-	console_send_string("sub_2344ec90 (todo.c): TODO\r\n");
+	console_send_string("eit_get_present_following_event (todo.c): TODO\r\n");
 #endif
 
-	struct Struct_2377b8d0_Inner8* r0 = 0;
+	EIT_Event* r0 = 0;
 
 	if (a == 0)
 	{

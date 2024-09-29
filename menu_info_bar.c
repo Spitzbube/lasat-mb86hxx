@@ -1363,7 +1363,7 @@ struct
     uint16_t wChannelNumber; //2396b73c
     uint16_t wData_2396b73e; //2396b73e
     uint16_t fill_2396b740; //2396b740
-    uint16_t wData_2396b742; //2396b742
+    uint16_t wServiceId; //2396b742
     uint8_t bData_2396b744; //2396B744
     int fill_2396b748; //2396b748
     void (*Data_2396b74c)(void); //2396b74c
@@ -1601,13 +1601,13 @@ void sub_2348cc10(void)
 
 
 /*  /  / 2348cf20 - todo */
-int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x58)
+int menu_info_bar_populate_event_field(EIT_Event* r4, Graphic_Job_2_5_Item* sp_0x58)
 {
 #if 0
-	console_send_string("sub_2348cf20 (todo.c): TODO\r\n");
+	console_send_string("menu_info_bar_populate_event_field (todo.c): TODO\r\n");
 #endif
 
-    char sp_0x40[24] = "TODO";
+    char strStartEndTime[24]; //sp_0x40
     int sp_0xc;
     char* r6;
 
@@ -1627,10 +1627,19 @@ int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x5
     if (r4->Data_8 != 0)
     {
         //0x2348cf54
+#if 0
+        {
+            extern char debug_string[];
+            sprintf(debug_string, "menu_info_bar_populate_event_field: %02x:%02x (%02x:%02x)\r\n",
+                    r4->start_time[0], r4->start_time[1], 
+                    r4->duration[0], r4->duration[1]);
+            console_send_string(debug_string);
+        }
+#endif
 
-        sub_234126dc/*sub_2341a0f0*/(r4->start_time[0], r4->start_time[1], 
-            r4->duration[0], r4->duration[0],
-            &sp_0x40[0], 20);
+        clocktime_get_event_time_string(r4->start_time[0], r4->start_time[1], 
+            r4->duration[0], r4->duration[1],
+            &strStartEndTime[0], 20);
 
         struct Struct_2377b8d0_Inner8_Inner8_Inner0* r5 = r4->Data_8->Data_0;
         if (r5 != 0)
@@ -1654,7 +1663,7 @@ int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x5
                 r4 = r4->next;
             }
             //loc_2348cf92
-            uint16_t r7 = strlen(&sp_0x40[0]) + 3;
+            uint16_t r7 = strlen(&strStartEndTime[0]) + 3;
 
             char* r4_ = r5->strName;
             if (r4_ != 0)
@@ -1677,7 +1686,7 @@ int sub_2348cf20(struct Struct_2377b8d0_Inner8* r4, Graphic_Job_2_5_Item* sp_0x5
                     r4_ = r0 + 3;
                 }
                 //loc_2348cfba
-                sprintf(r6, "%s ", &sp_0x40[0]);
+                sprintf(r6, "%s ", &strStartEndTime[0]);
                 strncat(r6, r4_, 100 - r7);
 
                 sub_234089e8/*sub_2340b4c4*/(&sp_0xc, r6, 
@@ -1814,7 +1823,7 @@ int sub_2348d06a(struct Struct_2377b8d0_Inner8** r4, struct Struct_2377b8d0_Inne
         }
         //loc_2348d328
         Struct_2377b8d0* r6_;
-        r6_ = eit_get_section_data(Data_2396b628.wData_2396b742/*service_id*/ /*sp_0x110*/,
+        r6_ = eit_get_section_data(Data_2396b628.wServiceId,
             sp_0xe0.transport_stream_id);
 
         if (r6_ == 0)
@@ -1829,14 +1838,16 @@ int sub_2348d06a(struct Struct_2377b8d0_Inner8** r4, struct Struct_2377b8d0_Inne
             return 0;
         }
         //loc_2348d33a
-        Struct_2377b8d0_Inner8* r0_ = sub_2344ec90/*sub_23476478*/(r6_, 4);
+        EIT_Event* pEvent;
+        
+        pEvent = eit_get_present_following_event(r6_, 4);
 
-        *r4 = r0_;
+        *r4 = pEvent;
 
-        if (r0_ != 0)
+        if (pEvent != 0)
         {
             //loc_2348d34a -> loc_2348d1cc
-            sub_2348cf20(r0_, &Data_234dfe54->graphicData->pItems[4]);
+            menu_info_bar_populate_event_field(pEvent, &Data_234dfe54->graphicData->pItems[4]);
             //->loc_2348d1ec
         }
         else
@@ -1845,14 +1856,14 @@ int sub_2348d06a(struct Struct_2377b8d0_Inner8** r4, struct Struct_2377b8d0_Inne
             sub_2348cffa(2, &Data_234dfe54->graphicData->pItems[4]);
         }
         //loc_2348d1ec
-        r0_ = sub_2344ec90/*sub_23476478*/(r6_, 1);
+        pEvent = eit_get_present_following_event(r6_, 1);
 
-        *r7 = r0_;
+        *r7 = pEvent;
 
-        if (r0_ != 0)
+        if (pEvent != 0)
         {
             //0x2348d1fa
-            sub_2348cf20(r0_, &Data_234dfe54->graphicData->pItems[5]);
+            menu_info_bar_populate_event_field(pEvent, &Data_234dfe54->graphicData->pItems[5]);
             //->loc_2348d230
         }
         else
@@ -2040,8 +2051,8 @@ int sub_2348d3f6(Menu_Event* r5)
     {
         //loc_2348d4e6 -> loc_2348d5d6
         Graphic_Queue_Item graphicQueueItem; //sp_0x8c
-        Struct_2377b8d0_Inner8* sp_0x88 = 0;
-        Struct_2377b8d0_Inner8* sp_0x84 = 0;
+        EIT_Event* sp_0x88 = 0;
+        EIT_Event* sp_0x84 = 0;
         Clock_Time clockTime; //sp_0x78;
 
         sub_2348d3a2();
@@ -2114,7 +2125,7 @@ void sub_2348d660(int r4)
         Data_2396b628.Data_2396b6f8 = sp4.Data_0; //Channel
         Data_2396b628.wChannelNumber = sp4.wCurrentChannel + 1;
         Data_2396b628.wData_2396b73e = Data_2396b628.wChannelNumber;
-        Data_2396b628.wData_2396b742 = Data_2396b628.Data_2396b6f8.service_id;
+        Data_2396b628.wServiceId = Data_2396b628.Data_2396b6f8.service_id;
 
         int r0;
         if (r4 != 0)
@@ -2139,7 +2150,7 @@ void sub_2348d660(int r4)
 
 
 /* 2348d87e - todo */
-void sub_2348d87e(Clock_Time* r4, Struct_2377b8d0_Inner8* b)
+void sub_2348d87e(Clock_Time* r4, EIT_Event* b)
 {
 #if 0
 	console_send_string("sub_2348d87e (todo.c): TODO\r\n");
@@ -2175,7 +2186,7 @@ void sub_2348d87e(Clock_Time* r4, Struct_2377b8d0_Inner8* b)
 
 
 /* /  / 2348d920 - todo */
-int sub_2348d920(Struct_2377b8d0_Inner8* r0, Clock_Time* pClockTime)
+int sub_2348d920(EIT_Event* r0, Clock_Time* pClockTime)
 {
 #if 0
 	console_send_string("sub_2348d920 (todo.c): TODO\r\n");

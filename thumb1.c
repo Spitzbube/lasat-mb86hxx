@@ -525,8 +525,8 @@ static void* event_display_timer_func(uint32_t* pCount)
 			if (pEITSectionData != 0)
 			{
 				//0x2346f01e
-				struct Struct_2377b8d0_Inner8* r0 =
-						sub_2344ec90(pEITSectionData, 4 - 3 * Data_23495970.bEventDisplayMode);
+				EIT_Event* r0 =
+						eit_get_present_following_event(pEITSectionData, 4 - 3 * Data_23495970.bEventDisplayMode);
 #if 0
 				{
 					extern char debug_string[];

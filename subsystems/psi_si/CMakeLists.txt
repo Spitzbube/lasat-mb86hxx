@@ -7,6 +7,7 @@ set (
    pat.c
    pmt.c
    sdt.c
+   tdt.c
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})

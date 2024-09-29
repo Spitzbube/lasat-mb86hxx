@@ -1003,27 +1003,21 @@ void sub_2349984e()
 #endif //!VDR110
 
 
-/* 23412148 /  /  - todo */
-void sub_23412148()
+/* 23411e6c /  /  - todo */
+void sub_23411e6c()
 {
-	console_send_string("sub_23412148 (todo.c): TODO\r\n");
+	console_send_string("sub_23411e6c (todo.c): TODO\r\n");
 
+	return 0;
 }
 
 
-/* 23412444 /  /  - todo */
-void sub_23412444()
+/* 23412e68 /  /  - todo */
+void sub_23412e68()
 {
-	console_send_string("sub_23412444 (todo.c): TODO\r\n");
+	console_send_string("sub_23412e68 (todo.c): TODO\r\n");
 
-}
-
-
-/* 234126dc /  / 2341a0f0 - todo */
-void sub_234126dc()
-{
-	console_send_string("sub_234126dc (todo.c): TODO\r\n");
-
+	return 0;
 }
 
 

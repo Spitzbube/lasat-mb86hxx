@@ -106,16 +106,31 @@ int sub_2340051c()
 	return 0;
 }
 
+#ifdef VDR110
 
 /* 2340052c - complete */
-void sub_2340052c()
+void main_time_set_from_utc(uint8_t* pData, int len)
 {
 #if 0
-	console_send_string("loc_2340052c (todo.c): TODO\r\n");
+	console_send_string("main_time_set_from_utc (todo.c): TODO\r\n");
 #endif
 
 	/* empty */
 }
+
+#else
+
+/*  /  / 23480d70 -todo */
+void sub_23480d78(uint8_t* pData, int len)
+{
+#if 0
+	console_send_string("sub_23480d78 (todo.c): TODO\r\n");
+#endif
+
+	/* TODO */
+}
+
+#endif
 
 
 /* 23400530 - complete */

@@ -1,5 +1,5 @@
 
-typedef struct Struct_2377b8d0_Inner8
+typedef struct
 {
 	int fill_0; //0
 	struct Struct_2377b8d0_Inner8_Inner4
@@ -48,7 +48,7 @@ typedef struct Struct_2377b8d0_Inner8
 	uint8_t running_status; //0x22 = 34
 	uint8_t fill_0x23; //0x23 = 35
 	//36 = 0x24
-} Struct_2377b8d0_Inner8;
+} EIT_Event;
 
 typedef struct
 {
@@ -56,10 +56,11 @@ typedef struct
 	uint16_t transport_stream_id; //2
 	uint16_t original_network_id; //4
 	uint16_t service_id; //6
-	Struct_2377b8d0_Inner8* Data_8; //8
+	EIT_Event* Data_8; //8
 	//12
 } Struct_2377b8d0;
 
 
 Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id);
+EIT_Event* eit_get_present_following_event(Struct_2377b8d0* a, uint8_t b);
 

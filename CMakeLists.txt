@@ -42,8 +42,8 @@ set(SRCS
    sub_2345d710.c
    sub_23418e1c.c
    psi.c
-   sub_2344ed20.c
    clocktime.c
+   clocktime1.c
    channel_list_update.c    #0x2343dcfc
    audec.c
    scan.c
@@ -164,6 +164,7 @@ target_compile_definitions(${TARGET_VDR110} PUBLIC
     USB_HUB
     USB_ASIX
 #    PSI_PMT_FILTER_DEBUG
+    main_time_set_from_utc=sub_23480d78
 )
 
 set(ENTRY_FUNC ARM1176_Start)

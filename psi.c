@@ -2516,6 +2516,14 @@ int psi_handle_state(Struct_234a73e8* r4)
 	if (r4->activeMask & PSI_MASK_TDT)
 	{
 		//0x23405c8c
+#if 0
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "psi_handle_state: r4->bData_0x21e78=0x%x\r\n",
+					r4->bData_0x21e78);
+			console_send_string(debug_string);
+		}
+#endif
 		if (r4->bData_0x21e78 == 2)
 		{
 			//0x23405c98
@@ -2526,18 +2534,23 @@ int psi_handle_state(Struct_234a73e8* r4)
 			uint8_t* r0 = ((uint8_t*) &r4->Data_0x240->Data_0x10) + 4;
 			uint8_t r1 = *r0;
 
+#if 0
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "psi_handle_state: r1=0x%x\r\n", r1);
+				console_send_string(debug_string);
+			}
+#endif
+
 			if (r1 == 0x70)
 			{
-				sub_2344ed20(r4->Data_0x240, 0);
+				tdt_decode_utc(r0, 0);
 				//->loc_23405cd0
 			}
-			else
+			//loc_23405cc4 /  / loc_234087a0
+			else if (r1 == 0x73)
 			{
-				//loc_23405cc4
-				if (r1 == 0x73)
-				{
-					sub_2344ed58(r4->Data_0x240, 0);
-				}
+				tot_decode_section(r0, 0);
 			}
 			//loc_23405cd0
 			sub_23406ac8(r4->Data_0x240);

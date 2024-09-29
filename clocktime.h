@@ -6,7 +6,7 @@ typedef struct
 	uint8_t minutes; //2
 	uint8_t hours; //3
 	uint8_t bData_4; //4
-	int Data_8; //8
+	uint32_t mjd; //8
 	//12
 } Clock_Time;
 
