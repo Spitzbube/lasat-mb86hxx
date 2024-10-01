@@ -1330,7 +1330,7 @@ void sub_234114e4(void)
 }
 
 
-/* 2341151c - complete */
+/* 2341151c /  / 23418f1c - complete */
 void sub_2341151c(uint8_t* r5)
 {
 	uint8_t err;
@@ -1341,13 +1341,13 @@ void sub_2341151c(uint8_t* r5)
 
 	OSSemPend(Data_23492098, 0, &err);
 
-	sub_2341a290(r5, 0);;
+	sub_2341a290(r5, 0);
 
 	OSSemPost(Data_23492098);
 }
 
 
-/* 23411550 - complete */
+/* 23411550 /  / 23418f50 - complete */
 void sub_23411550()
 {
 	uint8_t sp;
@@ -1364,7 +1364,7 @@ void sub_23411550()
 }
 
 
-/* 2341159c / 23418538 - complete */
+/* 2341159c / 23418538 / 23418f9c - complete */
 void sub_2341159c()
 {
 #if 0

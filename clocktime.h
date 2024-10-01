@@ -11,3 +11,4 @@ typedef struct
 } Clock_Time;
 
 
+extern int clocktime_get(Clock_Time*);

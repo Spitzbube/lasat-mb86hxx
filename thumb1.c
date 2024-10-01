@@ -512,7 +512,7 @@ static void* event_display_timer_func(uint32_t* pCount)
 
 			sub_2340bf94(sp_0x48.wCurrentChannel, &sp8, &sp_0x30);
 
-			Struct_2377b8d0* pEITSectionData =
+			EIT_EventList* pEITSectionData =
 					eit_get_section_data(sp8.service_id, sp_0x30.transport_stream_id);
 #if 0
 			{

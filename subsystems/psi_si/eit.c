@@ -3,9 +3,9 @@
 #include "eit.h"
 
 
-//0x2349360c / 0x234c7820
+//0x2349360c / 0x234c7820 / 0x234dcd70
 uint8_t bData_2349360c = 0; //2349360c +0
-void (*Data_23493610)(int) = 0; //23493610 / 234c7824 +4
+void (*Data_23493610)(int) = 0; //23493610 / 234c7824 / 234dcd74 +4
 
 struct Struct_2376ad90
 {
@@ -40,7 +40,7 @@ struct
 	uint8_t bData_2377b8cc; //2377b8cc
 } Data_2377b8c0;
 
-Struct_2377b8d0* Data_2377b8d0[1000]; //2377b8d0 / 2390c728
+EIT_EventList* eit_event_list[1000]; //2377b8d0 / 2390c728 / 239205ec
 
 
 
@@ -146,70 +146,61 @@ void* eit_free_memblk(EIT_Event* r5)
 }
 
 
-/* 2344de88 - todo */
-int sub_2344de88(int a)
+/* 2344de88 /  / 23475670 - complete */
+int sub_2344de88(int service_id)
 {
 #if 0
 	console_send_string("sub_2344de88 (todo.c): TODO\r\n");
 #endif
 
-	if (a == 0)
+	uint32_t i;
+
+	if (service_id == 0)
 	{
-		//0x2344dea4
 		if (bData_2349360c != 0)
 		{
-			//0x2344deb4
 			if (Data_23493610 != 0)
 			{
 				(Data_23493610)(0);
 			}
 
-			int32_t r0 = 999;
-			do
+			i = 1000;
+			while (i--)
 			{
-				//loc_2344dec8
-				Data_2377b8d0[r0] = 0; //r7
-				r0--;
+				eit_event_list[i] = 0;
 			}
-			while (r0 != -1);
 
 			memblk_init(main_hMemBlk1);
 		}
-		//loc_2344df4c
 	}
 	else
 	{
-		for (uint32_t r4 = 0; r4 < 1000; r4++)
+		for (i = 0; i < 1000; i++)
 		{
-			//loc_2344dee0
-			if ((Data_2377b8d0[r4] != 0) &&
-					(Data_2377b8d0[r4]->service_id != a))
+			if ((eit_event_list[i] != 0) &&
+					(eit_event_list[i]->service_id != service_id))
 			{
-				//0x2344def4
-				EIT_Event* r5 = Data_2377b8d0[r4]->Data_8;
-				//->loc_2344df1c
+				EIT_Event* r5 = eit_event_list[i]->pEventFirst;
 				while (r5 != 0)
 				{
-					//loc_2344df00
 					EIT_Event* sb = eit_free_memblk(r5);
 
 					memblk_free(main_hMemBlk1, r5);
 
 					r5 = sb;
 				}
-				//0x2344df24
-				Data_2377b8d0[r4]->Data_8 = 0; //r7
 
-				memblk_free(main_hMemBlk1, Data_2377b8d0[r4]);
+				eit_event_list[i]->pEventFirst = 0;
 
-				Data_2377b8d0[r4] = 0; //r7
-				//->loc_2344df4c
+				memblk_free(main_hMemBlk1, eit_event_list[i]);
+
+				eit_event_list[i] = 0;
+
 				break;
 			}
-			//loc_2344df40
-		} //for (uint32_t r4 = 0; r4 < 1000; r4++)
+		} //for (uint32_t i = 0; i < 1000; i++)
 	}
-	//loc_2344df4c
+
 	return 0;
 }
 
@@ -640,7 +631,7 @@ void decode_eit_section(uint8_t* r6, int b)
 #endif
 
 	int r1 = 0;
-	Struct_2377b8d0* sb = 0;
+	EIT_EventList* sb = 0;
 	uint8_t sl = 0;
 	int sp = 0;
 	//r5, =0x2377b8d0
@@ -658,10 +649,10 @@ void decode_eit_section(uint8_t* r6, int b)
 	for (uint32_t r4 = 0; r4 < 1000; r4++)
 	{
 		//loc_2344e8f4
-		if (Data_2377b8d0[r4] == 0)
+		if (eit_event_list[r4] == 0)
 		{
 			//0x2344e900
-			sb = memblk_alloc(main_hMemBlk1, sizeof(Struct_2377b8d0));
+			sb = memblk_alloc(main_hMemBlk1, sizeof(EIT_EventList));
 #if 0
 			{
 				extern char debug_string[];
@@ -670,14 +661,14 @@ void decode_eit_section(uint8_t* r6, int b)
 				console_send_string(debug_string);
 			}
 #endif
-			Data_2377b8d0[r4] = sb;
+			eit_event_list[r4] = sb;
 			//->loc_2344e938
 			break;
 		}
 		//loc_2344e91c
-		if (Data_2377b8d0[r4]->service_id == r1)
+		if (eit_event_list[r4]->service_id == r1)
 		{
-			sb = Data_2377b8d0[r4];
+			sb = eit_event_list[r4];
 #if 0
 			{
 				extern char debug_string[];
@@ -725,7 +716,7 @@ void decode_eit_section(uint8_t* r6, int b)
 
 		sp = 1;
 
-		EIT_Event* r4 = sb->Data_8;
+		EIT_Event* r4 = sb->pEventFirst;
 
 		if (r4 != 0)
 		{
@@ -785,14 +776,14 @@ void decode_eit_section(uint8_t* r6, int b)
 				return;
 			}
 			//0x2344ea60
-			if (sb->Data_8 == 0)
+			if (sb->pEventFirst == 0)
 			{
-				sb->Data_8 = r4;
+				sb->pEventFirst = r4;
 				//->loc_2344ea84
 			}
 			else
 			{
-				EIT_Event* r0 = sb->Data_8;
+				EIT_Event* r0 = sb->pEventFirst;
 				while (1)
 				{
 					//loc_2344ea70
@@ -891,8 +882,8 @@ void decode_eit_section(uint8_t* r6, int b)
 }
 
 
-/* 2344ec24 - todo */
-void sub_2344ec24/*sub_2346a6e0*/(void (*a)(int))
+/* 2344ec24 / 2346a6e0 / 2347640c - todo */
+void sub_2344ec24(void (*a)(int))
 {
 #if 0
 	console_send_string("sub_2344ec24 (todo.c): TODO\r\n");
@@ -900,7 +891,7 @@ void sub_2344ec24/*sub_2346a6e0*/(void (*a)(int))
 
 	for (uint32_t i = 0; i < 1000; i++)
 	{
-		Data_2377b8d0[i] = 0;
+		eit_event_list[i] = 0;
 	}
 
 	Data_23493610 = a;
@@ -908,7 +899,7 @@ void sub_2344ec24/*sub_2346a6e0*/(void (*a)(int))
 
 
 /* 2344ec4c - todo */
-Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id)
+EIT_EventList* eit_get_section_data(int service_id, int transport_stream_id)
 {
 #if 0
 	console_send_string("eit_get_section_data (todo.c): TODO\r\n");
@@ -917,16 +908,16 @@ Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id)
 	for (uint32_t i = 0; i < 1000; i++)
 	{
 		//loc_2344ec58
-		if (Data_2377b8d0[i] == 0)
+		if (eit_event_list[i] == 0)
 		{
 			//->loc_2344ec88
 			break;
 		}
 
-		if ((Data_2377b8d0[i]->service_id == service_id) &&
-				(Data_2377b8d0[i]->transport_stream_id == transport_stream_id))
+		if ((eit_event_list[i]->service_id == service_id) &&
+				(eit_event_list[i]->transport_stream_id == transport_stream_id))
 		{
-			return Data_2377b8d0[i];
+			return eit_event_list[i];
 		}
 	}
 	//loc_2344ec88
@@ -935,7 +926,7 @@ Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id)
 
 
 /* 2344ec90 /  / 23476478 - complete */
-EIT_Event* eit_get_present_following_event(Struct_2377b8d0* a, uint8_t b)
+EIT_Event* eit_get_present_following_event(EIT_EventList* a, uint8_t b)
 {
 #if 0
 	console_send_string("eit_get_present_following_event (todo.c): TODO\r\n");
@@ -948,7 +939,7 @@ EIT_Event* eit_get_present_following_event(Struct_2377b8d0* a, uint8_t b)
 		return r0;
 	}
 
-	r0 = a->Data_8;
+	r0 = a->pEventFirst;
 
 	if (r0 == 0)
 	{

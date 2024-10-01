@@ -2306,8 +2306,8 @@ int channel_prev()
 }
 
 
-/* 2340bdec / 2340e074 - todo */
-uint16_t channel_swap()
+/* 2340bdec / 2340e074 / 2340e8c8 - todo */
+uint16_t channel_swap(void)
 {
 	uint8_t sp;
 

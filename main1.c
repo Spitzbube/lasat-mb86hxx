@@ -596,7 +596,12 @@ void main_psi_init()
 
 	memset(&sp_0x14, 0, sizeof(sp_0x14));
 
+#ifdef VDR110
 	psi_init(0);
+#else
+	extern void sub_23456f72(void);
+	psi_init(sub_23456f72);
+#endif
 
 	sp_0x14.onNewPSIDecoder = main_on_new_psi_decoder1;
 	sp_0x14.threadPrio = THREAD_PRIO_PSI_1;

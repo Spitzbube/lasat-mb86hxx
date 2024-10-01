@@ -1134,7 +1134,6 @@ void mainfunction_thread(UI_Thread_Params* a)
 				//0x2344e77e
 				switch (ir_key)
 				{
-#if 0 //TODO!!!
 				case 0:
 				case 1:
 				case 2:
@@ -1146,9 +1145,30 @@ void mainfunction_thread(UI_Thread_Params* a)
 				case 8:
 				case 9:
 					//2344E8F8???
-					//TODO!!!
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344e8fe
+						menu_info_bar_enter();
+
+						pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
+						pMenuItem = pMenu->Data_4;
+
+						sp_0x48 = sub_2348dcd2();
+					}
+					//0x2344e916
+					//r0, #0x40
+					//->0x2344ec7c
+					sp_0x48->Data_0 = 0x40;
+					menuEvent.Data_0 = 0x40; //r0
+					menuEvent.Data_8 = sp_0x48; 
+					menuEvent.keyCode = ir_key;
+					//0x2344ec8c
+					r7 = pMenuItem->onEvent;
+					sp_0xc = pMenu->graphicHandler;
+					//->2344ee44
 					break;
 
+#if 0 //TODO!!!
 				case 10:
 				case 11:
 					//2344E7FC??? -> 0x2344ee44
@@ -1173,18 +1193,9 @@ void mainfunction_thread(UI_Thread_Params* a)
 
 				case 16:
 					//2344E878???
-#if 0 //Until v290 implementation
-					channel_change_volume(1, 1);
-					break;
-#endif
 					//break;
 				case 17:
 					//0x2344e878 -> 0x2344ea6e
-#if 0 //Until v290 implementation
-					channel_change_volume(1, -1);
-					break;
-#endif
-
 					//TODO
 					//->0x2344eab4
 					if (Menu_Data.menu_stack_level != 0)
@@ -1213,7 +1224,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					break;
 #endif //TODO
 
-				case 32: //0x20
+				case 32: //0x20 = Up
 					//2344E99C???
 					{
 						int r0 = sub_23451f66();
@@ -1231,7 +1242,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					}
 					break;
 
-				case 33:
+				case 33: //Down
 					//2344E98C??? -> 2344e9e4
 					{
 						int r0 = sub_23451f66();
@@ -1251,13 +1262,21 @@ void mainfunction_thread(UI_Thread_Params* a)
 					}
 					break;
 
-#if 0 //TODO!!!
-				case 34:
+				case 34: // <->
 					//2344E98A??? -> 2344ea20
-					sub_2340e8c8();
+					channel_swap();
 					//->0x2344e990
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344e996
+						menu_info_bar_enter();
+					}
+					//2344e99a -> 2344edee
+					sub_2348d660(1);
+					//->0x2344ee44
 					break;
 
+#if 0 //TODO!!!
 				case 35:
 					//2344E988??? -> 0x2344ed36
 					//TODO!!!
@@ -1271,38 +1290,62 @@ void mainfunction_thread(UI_Thread_Params* a)
 					//2344E986??? -> 0x2344ea4a
 					//TODO!!!
 					break;
+#endif //TODO
 
-				case 44:
-				case 47:
+				case 44: //Info / EPG
+				case 47: // I / i (Displaytext aktualisieren)
 					//2344E984??? -> 0x2344eb84
-					//TODO!!!
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344eb8a
+						sub_23456ed0(&Data_235fdf40);
+						//->0x2344ee44
+					}
+					//0x2344eab2 -> 0x2344ee44
 					break;
 
+#if 0 //TODO
 				case 45:
 					//2344E91A???
 					//TODO!!!
 					break;
+#endif //TODO
 
 				case 48: //CH+
 					//2344E982??? -> 0x2344e9de
 					channel_next();
 					//->0x2344e990
-					//TODO!!!
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344e996
+						menu_info_bar_enter();
+					}
+					//2344e99a -> 2344edee
+					sub_2348d660(1);
+					//->0x2344ee44
 					break;
 
 				case 49: //CH-
 					//2344E980??? -> 0x2344ea1a
 					channel_prev();
 					//->0x2344e990
-					//TODO!!!
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344e996
+						menu_info_bar_enter();
+					}
+					//2344e99a -> 2344edee
+					sub_2348d660(1);
+					//->0x2344ee44
 					break;
 
+#if 0 //TODO
 				case 50:
 					//2344E97E??? -> 2344ead6
 					//TODO!!!
 					break;
 
-				case 52:
+				case 52: //BT (VT8500: Blue)
 					//2344E97C??? -> 2344eb5a
 					//TODO!!!
 					break;
@@ -1328,7 +1371,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 					break;
 #endif //TODO
 
-				case 69: //0x45
+				case 69: //0x45 //Radio
 					//0x2344e7f0
 					if (0 == channel_switch_lists())
 					{
@@ -1336,8 +1379,14 @@ void mainfunction_thread(UI_Thread_Params* a)
 						//2344ee44
 					}
 					//2344e8f0 -> 2344e990
-					//TODO
-
+					if (Menu_Data.menu_stack_level == 0)
+					{
+						//0x2344e996
+						menu_info_bar_enter();
+					}
+					//2344e99a -> 2344edee
+					sub_2348d660(1);
+					//->0x2344ee44
 					break;
 
 				case 87: //OK
@@ -2025,6 +2074,287 @@ void menu_event_thread(UI_Thread_Params* p)
 	return;
 }
 
+#ifndef VDR110
+
+/* /  / 2344f102 - todo */
+void sub_2344f102(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_2344f102 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t sp_0x44; //sp_0x44
+	uint8_t sp_0x40; //sp_0x40
+	int sp_0x3c; //sp_0x3c
+	UI_Thread_Params sp_0x24; //sp_0x24
+	Graphic_Queue_Item sp_0x14; //sp_0x14
+	Struct_2348dc50* sp_0x10; //sp_0x10
+	int (*sp_0xc)(int*); //sp_0xc
+	uint8_t (*sp8)(); //sp8
+	uint8_t (*sp4)(); //sp4
+
+	//int r2 = 0;
+	Menu* r4; //r4
+	Menu_Item* r6; //r6
+	void (*r7)() = 0;
+	int (*r5)(void*) = 0;
+	sp_0xc = 0;
+
+	sp_0x24 = *a;
+	Menu_Data.Data_235fdf70/*2379679C*/ = &sp_0x24;
+
+	sp_0x40 = OSSemPost(sp_0x24.pSema);
+	OSMboxAccept(sp_0x24.pMBox);
+
+	//sp_0x48 = &Menu_Data.menu_stack[9]/*237967C4*/;
+
+	while (1)
+	{
+		//loc_2344f132
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+
+		uint32_t timeout;
+		if (r4 != 0)
+		{
+			timeout = r4->timeout;
+		}
+		else
+		{
+			timeout = 0;
+		}
+		//loc_2344f148
+		uint8_t* r0__ = OSMboxPend(sp_0x24.pMBox, (uint16_t)timeout, &sp_0x40);
+		sp_0x44 = *r0__;
+		r6 = r4->Data_4;
+
+		sp_0x10 = sub_2348dcd2();
+
+		sp_0x10->Data_8 = &sp_0x24;
+
+		sp8 = r4->graphicData->Data_0x20;
+		sp4 = r4->graphicData->Data_0x1c;
+
+		if (sp_0x40 == 0)
+		{
+			//0x2344f174
+			switch (sp_0x44)
+			{
+				case 0xf6:
+					//loc_2344f216
+					break;
+
+				case 0xea:
+					//loc_2344f2b0
+					break;
+
+				case 0xe4:
+					//loc_2344f208
+					break;
+
+				case 0xe0:
+					//loc_2344f216
+					break;
+
+				case 0x2c:
+					//loc_2344f24a
+					break;
+
+				case 0x36:
+					//loc_2344f26a
+					break;
+
+				case 0x0c: //On-Off
+					//loc_2344f26e -> loc_2344f2dc
+					if (0 != sub_2345a4e6(0))
+					{
+						//0x2344f2e6
+						if (r4 != 0)
+						{
+							while (1)
+							{
+								//loc_2344f2ea							
+								if (r4->onExit != 0)
+								{
+									//0x2344f2f0
+									(r4->onExit)(&sp_0x24);
+								}
+								//loc_2344f2f4
+								r4 = MENU_STACK_POP();
+								if (r4 == 0)
+								{
+									//->0x2344f2fe
+									break;
+								}
+							}
+							//0x2344f2fe
+							graphic_start_job_2_5(&sp_0x14, 0);
+						}
+						//loc_2344f306
+						sub_2348f4e0();
+						powermode_set_state(6, &sp_0x24, standby_thread);
+					}
+					//loc_2344f312
+					if (0 != sub_23451e8c(1))
+					{
+						//0x2344f31c
+						if (r4 != 0)
+						{
+							while (1)
+							{
+								//loc_2344f320
+								if (r4->onExit != 0)
+								{
+									//0x2344f326
+									(r4->onExit)(&sp_0x24);
+								}
+								//loc_2344f32a
+								r4 = MENU_STACK_POP();
+								if (r4 == 0)
+								{
+									//->0x2344f334
+									break;
+								}
+							} //while (1)
+							//0x2344f334
+							graphic_start_job_2_5(&sp_0x14, 0);
+						}
+						//loc_2344f33c
+						sub_2348f4e0();
+						powermode_set_state(2, &sp_0x24, standby_thread);
+					}
+					//loc_2344f34a
+					r5 = 0;
+					r7 = 0;
+					sp_0xc = 0;
+					//->loc_2344f3b2
+					goto loc_2344f3b2;
+					break;
+
+				case 0x10: //Right
+					//loc_2344f270 -> loc_2344f296
+					//r0 = 0x200
+					//->loc_2344f27c
+					sp_0x3c = 0x200;
+					r7 = r4->graphicHandler;
+					r5 = r6->onEvent;
+					sp_0xc = r4->onNavigate;
+					//->loc_2344f352
+					break;
+
+				case 0x11: //Left
+					//0x2344f194
+					//r0 = 0x400
+					//->loc_2344f27c
+					sp_0x3c = 0x400;
+					r7 = r4->graphicHandler;
+					r5 = r6->onEvent;
+					sp_0xc = r4->onNavigate;
+					//->loc_2344f352
+					break;
+
+				case 0x20: //Up
+					//loc_2344f276
+					//r0 = 1;
+					//->loc_2344f27c
+					sp_0x3c = 0x01;
+					r7 = r4->graphicHandler;
+					r5 = r6->onEvent;
+					sp_0xc = r4->onNavigate;
+					//->loc_2344f352
+					break;
+
+				case 0x39:
+					//loc_2344f2a0
+					break;
+
+				case 0x40:
+					//0x2344f1d0
+					break;
+
+				case 0x41:
+					//loc_2344f2ac
+					break;
+
+				case 0x37:
+					//loc_2344f2b4
+					break;
+
+				default:
+					//loc_2344f248 -> loc_2344f352
+					break;
+			}
+			//loc_2344f352???
+			if (sp8 != 0)
+			{
+				//0x2344f358
+				sp_0x40 = (sp8)();				
+			}
+			//loc_2344f35c
+			if (r5 != 0)
+			{
+				//0x2344f360
+				sp_0x10->Data_0 = sp_0x3c;
+
+				int r0 = (r5)(sp_0x10);
+				if (r0 != 0)
+				{
+					//0x2344f36e
+					sub_2343d51e(0, &sp_0x24);
+				}
+				//loc_2344f376
+				r5 = 0;
+			}
+			//loc_2344f378
+			if (sp_0xc != 0)
+			{
+				//0x2344f37e
+				sp_0x40 = (sp_0xc)(&sp_0x3c);
+
+				sp_0xc = 0;
+			}
+			//loc_2344f38a
+			if (r7 != 0)
+			{
+				//0x2344f38e
+				(r7)(&sp_0x14, r4->graphicData);
+
+				r7 = 0;
+			}
+			//loc_2344f396
+			if (sp4 != 0)
+			{
+				//0x2344f39c
+				sp_0x40 = (sp4)();
+
+				sp4 = 0;
+			}
+			//loc_2344f3b2
+		} //if (sp_0x40 == 0)
+		else
+		{
+			//loc_2344f268 -> loc_2344f3a2
+			if (r6 != 0)
+			{
+				r5 = r6->onEvent;
+				if (r5 != 0)
+				{
+					(r5)(0);
+					r5 = 0;
+				}
+			}
+			//loc_2344f3b2
+		}
+		//loc_2344f3b2
+loc_2344f3b2:
+		if (62 == OSTaskDelReq(0xff))
+		{
+			OSTaskDel(0xff);
+		}
+		//->loc_2344f132
+	} //while (1)
+}
+
+#endif //!VDR110
 
 /* 2343d8b4 - todo */
 void standby_thread(UI_Thread_Params* a)

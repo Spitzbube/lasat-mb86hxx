@@ -829,6 +829,7 @@ static void* item_string_display(FrontDisplay_Job*);
 #else
 static int menu_language_change(int*);
 static int menu_initial_volume_change(int*);
+static int menu_time_difference_change(int*);
 static int sub_23490826(int*);
 static void get_time_difference_value_string(Menu_Item*);
 static void get_menu_language_string(Menu_Item*);
@@ -942,7 +943,7 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_time_difference_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //menu_time_difference_change, //void* Data_0x1c; //0x1c = 28
+		menu_time_difference_change, //void* Data_0x1c; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1635,6 +1636,50 @@ int menu_initial_volume_change(int* a)
 	channel_handle_user_settings(1, &settings);
 
 	if (menu_general_settings_backup.initialVolume == settings.initialVolume)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+
+/*  /  / 2349070c - todo */
+int menu_time_difference_change(int* a)
+{
+#if 0
+	console_send_string("menu_time_difference_change (todo.c): TODO\r\n");
+#endif
+
+	User_Settings settings;
+
+	int r5 = *a;
+
+	uint32_t r6 = menu_general_settings_backup.timeDiff & 0x80;
+	uint16_t r4 = menu_general_settings_backup.timeDiff & 0x7f; //(menu_general_settings_backup.timeDiff << 25) >> 25;
+
+	channel_handle_user_settings(1, &settings);
+
+	if (r5 & (1 << 3))
+	{
+		r4++;
+		if (r4 >= 50)
+		{
+			r4--;
+		}
+	}
+	else
+	{
+		if (r4 != 0)
+		{
+			r4--;
+		}
+	}
+
+	menu_general_settings_backup.timeDiff = r6;
+	menu_general_settings_backup.timeDiff |= r4;
+
+	if (menu_general_settings_backup.timeDiff == settings.timeDiff)
 	{
 		return 1;
 	}

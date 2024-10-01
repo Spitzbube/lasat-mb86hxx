@@ -3524,7 +3524,7 @@ void* psi_open(PSI_Params* r5)
 }
 
 
-/* 234063cc / 23408828 - complete */
+/* 234063cc / 23408828 / 23408ea8 - complete */
 int psi_init(int sb)
 {
 #if 0
@@ -3748,7 +3748,7 @@ int sub_234066d0(void* h, PSI_Program* r6)
 }
 
 
-/* 234067a8 - complete */
+/* 234067a8 /  / 23409284 - complete */
 int psi_get_all_current_programs(Struct_234a73e8* r4, 
 		uint16_t* pNumPrograms, PSI_Program** ppPrograms)
 {

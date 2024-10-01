@@ -1,5 +1,5 @@
 
-typedef struct
+typedef struct EIT_Event
 {
 	int fill_0; //0
 	struct Struct_2377b8d0_Inner8_Inner4
@@ -36,7 +36,7 @@ typedef struct
 		uint8_t text_char[20]; //12
 		//32 = 0x20
 	}* component_descriptor; //12 = 0xc
-	struct Struct_2377b8d0_Inner8* next; //0x10 = 16
+	struct EIT_Event* next; //0x10 = 16
 	uint16_t event_id; //0x14 = 20
 	uint16_t wData_0x16; //0x16 = 22
 	uint8_t table_id; //0x18 = 24
@@ -56,11 +56,11 @@ typedef struct
 	uint16_t transport_stream_id; //2
 	uint16_t original_network_id; //4
 	uint16_t service_id; //6
-	EIT_Event* Data_8; //8
+	EIT_Event* pEventFirst; //8
 	//12
-} Struct_2377b8d0;
+} EIT_EventList;
 
 
-Struct_2377b8d0* eit_get_section_data(int service_id, int transport_stream_id);
-EIT_Event* eit_get_present_following_event(Struct_2377b8d0* a, uint8_t b);
+EIT_EventList* eit_get_section_data(int service_id, int transport_stream_id);
+EIT_Event* eit_get_present_following_event(EIT_EventList* a, uint8_t b);
 
