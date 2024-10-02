@@ -28,6 +28,7 @@ int Data_234c1248; //234c1248 +0x18
 int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
+void* Data_234c1258 = 0; //234c1258 +0x28?
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {

@@ -109,7 +109,7 @@ void clocktime_set_from_utc(int mjd, uint8_t* r5)
 	console_send_string("clocktime_set_from_utc (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "clocktime_set_from_utc: mjd=0x%x, %02x:%02x:%02x\r\n", 
@@ -582,7 +582,7 @@ void sub_23412444(Struct_23419f50* r4)
 		sprintf(&r4->Data_0[0], "%02d.%02d.%04d", 
 			r4->day, r4->month, r4->year);
 
-#if 1
+#if 0
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "sub_23412444: &r4->Data_0[0]='%s'\r\n", 

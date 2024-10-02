@@ -1012,6 +1012,30 @@ int sub_23421f84()
 }
 
 
+/*  /  / 2345630e - todo */
+void sub_2345630e()
+{
+	console_send_string("sub_2345630e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234564e0 - todo */
+void sub_234564e0()
+{
+	console_send_string("sub_234564e0 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234566a8 - todo */
+void sub_234566a8()
+{
+	console_send_string("sub_234566a8 (todo.c): TODO\r\n");
+
+}
+
+
 /*  /  / 23456f72 - todo */
 void sub_23456f72()
 {

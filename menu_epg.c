@@ -13,6 +13,7 @@
 #pragma thumb
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
+extern void* Data_234c1258; //234c1258
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
 extern void* sub_2344d0d0(FrontDisplay_Job*);
@@ -20,10 +21,10 @@ extern void sub_2344f102(UI_Thread_Params*);
 extern void sub_2348dbf8(void);
 extern  int sub_2348de88(int*a);
 static Menu Data_234cc1b4;
-static void sub_234562ec(void);
+static int sub_234562ec(void);
 static void sub_23456302(void);
-static void sub_234567d8(void);
-static void sub_23456aa2(void);
+static int sub_234567d8(Struct_2348dc50*);
+static int sub_23456aa2(void);
 static int sub_23456bc0(void);
 
 static uint8_t Data_23799ce8[]; //23799ce8
@@ -550,7 +551,7 @@ static Menu Data_234cc1b4 = //234cc1b4
     &Data_234cbdec[0],
     &Data_234cbdec[0],
     &Data_234ca85c[2], //header
-    &Data_234ca85c[31], //help
+    0, //&Data_234ca85c[31], //help
     &Data_234cbd5c, //graphicData
     9, //maxItem
     0, //currentItem
@@ -605,33 +606,58 @@ uint8_t Data_2379c098[100]; //2379c098, size???
 uint8_t Data_2379c2d4[100]; //2379c2d4, size???
 
 
-/* /  / 234562ec - todo */
-void sub_234562ec(void)
+/* /  / 234562ec - complete */
+int sub_234562ec(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_234562ec (todo.c): TODO\r\n");
 #endif
 
+    uint8_t err = 0;
+
+    OSSemPend(Data_234c1258, 0, &err);
+
+    return 0;
 }
 
 
-/* /  / 23456302 - todo */
+/* /  / 23456302 - complete */
 void sub_23456302(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_23456302 (todo.c): TODO\r\n");
 #endif
 
+    OSSemPost(Data_234c1258);
 }
 
 
 /* /  / 234567d8 - todo */
-void sub_234567d8(void)
+int sub_234567d8(Struct_2348dc50* r5)
 {
-#if 1
+#if 0
 	console_send_string("sub_234567d8 (todo.c): TODO\r\n");
 #endif
 
+    Struct_2348dc50 sp4;
+
+    if (r5 != 0)
+    {
+        //0x234567e0
+        sp4 = *r5;
+
+    	console_send_string("sub_234567d8 (0x234567e0): TODO\r\n");
+    }
+    else
+    {
+        //loc_234568de -> loc_23456924
+        sub_234562ec();
+        sub_234566a8();
+        sub_23456302();
+        //->loc_2345691e
+    }
+    //loc_2345691e
+    return 0;
 }
 
 
@@ -646,15 +672,16 @@ void sub_23456932(void)
 
 
 /* /  / 23456aa2 - todo */
-void sub_23456aa2(void)
+int sub_23456aa2(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_23456aa2 (todo.c): TODO\r\n");
 #endif
 
-    int sp_0xd4; //sp_0xd4
+    uint16_t sp_0xd4; //sp_0xd4
     Struct_2348dc50 sp_0x70; //sp_0x70
     Struct_2340bf0c sp_0x3c;
+    Struct_2340bf0c sp8;
     PSI_Program* sp4;
     uint16_t sp;
 
@@ -707,7 +734,25 @@ void sub_23456aa2(void)
     r4 = sub_2348dc50(&sp_0x70);
     Data_2379c004.Data_2379c00c = r4;
 
-    //TODO!!!
+    if (0 != sub_234564e0(&sp_0xd4))
+    {
+        //0x23456b62
+        r4->arwData_0x28[0] = sp_0xd4 + 1;
+        r4->Data_0x54 = &r4->arwData_0x28[0];
+        r4->wData_0x1e = sp_0xd4;
+        //->loc_23456b90
+        r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+    }
+    //loc_23456b98
+    sub_2340bf0c(&sp8);
+
+    strncpy(&Data_23799ce8[0], &sp8.Data_0.service_name[0], 38);
+
+    Data_234ca55c->graphicData->pItems[2].Data_0x20->bData_0x17 = 1;
+
+    sub_2345630e();
+
+    return 0;
 }
 
 

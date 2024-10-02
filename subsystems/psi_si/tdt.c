@@ -78,7 +78,7 @@ void tot_decode_descriptors(uint8_t* a, int b)
 
 			sp.next_time_offset = (a[10] << 8) | a[11];
 
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "tot_decode_descriptors: country_code='%s', pol=%d, offset=%d, next_offset=%d\r\n", 
