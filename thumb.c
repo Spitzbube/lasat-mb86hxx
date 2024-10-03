@@ -2131,16 +2131,66 @@ void sub_2344f102(UI_Thread_Params* a)
 
 		sp_0x10->Data_8 = &sp_0x24;
 
+		//r0 = r4->graphicData;
 		sp8 = r4->graphicData->Data_0x20;
 		sp4 = r4->graphicData->Data_0x1c;
 
 		if (sp_0x40 == 0)
 		{
 			//0x2344f174
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_2344f102: keyCode=0x%02x (%d)\r\n", sp_0x44, sp_0x44);
+				console_send_string(debug_string);
+			}
+#endif
 			switch (sp_0x44)
 			{
+				case 0xe0:
 				case 0xf6:
 					//loc_2344f216
+				case 0x2d: //45 = Exit
+					//2344F216???
+					if (r4->graphicData/*r0*/->wData_2 == 0x27)
+					{
+						//loc_2344f248 -> loc_2344f352
+					}
+					else
+					{
+						//loc_2344f21c
+						if ((r4->onExit != 0) && (0 != (r4->onExit)(&sp_0x24)))
+						{
+							//loc_2344f192 -> loc_2344f248
+						}
+						else
+						{
+							//loc_2344f22a
+							r4 = MENU_STACK_POP();
+							if (r4 != 0)
+							{
+								//0x2344f234
+								sp8 = r4->graphicData->Data_0x20;
+								sp4 = r4->graphicData->Data_0x1c;
+								r7 = r4->graphicHandler;
+
+								sub_2343d51e(r4, &sp_0x24);
+								//loc_2344f248 -> loc_2344f352
+							}
+							else
+							{
+								//loc_2344f252
+								sp4 = 0;
+
+								graphic_start_job_2_5(&sp_0x14, 0);
+								sub_2343d51e(0, &sp_0x24);
+								//->loc_2344f35c
+								goto loc_2344f35c;
+							}
+						}
+					}
+					break;
+
 					break;
 
 				case 0xea:
@@ -2149,10 +2199,6 @@ void sub_2344f102(UI_Thread_Params* a)
 
 				case 0xe4:
 					//loc_2344f208
-					break;
-
-				case 0xe0:
-					//loc_2344f216
 					break;
 
 				case 0x2c:
@@ -2290,6 +2336,7 @@ void sub_2344f102(UI_Thread_Params* a)
 				sp_0x40 = (sp8)();				
 			}
 			//loc_2344f35c
+loc_2344f35c:
 			if (r5 != 0)
 			{
 				//0x2344f360

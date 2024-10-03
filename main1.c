@@ -28,9 +28,13 @@
 
 
 extern int main_process_uart_command(uint8_t*);
+extern void sub_2345eaee(void);
 
 
 uint8_t main_bNeedSetup = 0; //23491d8c +0
+#ifndef VDR110
+uint8_t bData_234c01ad = 0; //234c01ad +1
+#endif
 Uart_Module* main_hUart0 = 0; //23491d90 +4
 void* main_hUart1 = 0; //23491d94 +8
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
@@ -413,6 +417,13 @@ void main_inputhandler_init()
 	Channel channel;
 
 	ir_init(ir_user_send_data, 0x3b);
+
+#ifndef VDR110
+	sub_2344d610(bData_234c01ad, sub_2345eaee);
+
+	//TODO!!!
+
+#endif //!VDR110
 
 	menu_main_adapt_items(amplifier_get_data);
 	

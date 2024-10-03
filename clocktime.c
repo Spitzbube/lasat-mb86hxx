@@ -763,7 +763,7 @@ void clocktime_get_event_time_string(uint8_t startHoursBcd, uint8_t startMinutes
 /* 234128f4 /  / 2341a308 - todo */
 void sub_234128f4()
 {
-#if 1
+#if 0
 	console_send_string("sub_234128f4 (todo.c): TODO\r\n");
 #endif
 

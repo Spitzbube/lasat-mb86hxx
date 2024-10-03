@@ -42,7 +42,8 @@ typedef struct
 	uint8_t bDisplayAdjustment; //21 = 0x15 // 0 = Letterbox, 
 	uint8_t bVideoSignalAnalog; //22 = 0x16
 	uint8_t displayFormat; //23 = 0x17 // 0 = 4:3, 1 = 16:9
-	int fill_0x18; //24 235441c8
+	uint8_t fill_0x18; //24 235441c8
+	uint8_t bData_0x19; //25 = 0x19
 	//28 = 0x1c
 } User_Settings;
 

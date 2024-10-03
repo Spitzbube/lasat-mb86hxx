@@ -13,6 +13,7 @@
 #pragma thumb
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
+extern void* Data_234c1258; //234c1258
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c; //234c128c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
 
@@ -27,11 +28,13 @@ static uint8_t Data_2396c98c[]; //2396c98c
 static uint8_t Data_2396c9a0[]; //2396c9a0
 
 static int sub_2348c9e0(void);
+static int sub_2348c8b4(void);
+static void sub_2348c8c8(void);
 static int sub_2348cbc8(void);
 static int sub_2348cecc(void);
 static int sub_2348d3f6(Menu_Event*);
 static void sub_2348db56(Menu_Item*, uint16_t, uint8_t, uint8_t);
-static void sub_2348db78(void);
+/*static*/ int sub_2348db78(Menu_Item*, int);
 /*static*/ void sub_2348dcd8(int);
 /*static*/ int sub_2348de88(int*a);
 
@@ -1249,8 +1252,8 @@ static Graphic_Job_2_5 Data_234e1a20 = //234e1a20
     0,
     40, //bNumItems
     1, //bData_0x19
-    0, //sub_2348c8c8, //Data_0x1c
-    0, //sub_2348c8b4, //Data_0x20
+    sub_2348c8c8, //Data_0x1c
+    sub_2348c8b4, //Data_0x20
 #if 0
 0x234e1a20                        db         0x00                               ; DATA XREF=sub_2348c8d4+28, sub_2348ca2a+10, sub_2348cc10+16, sub_2348cc10+30, sub_2348cc10+40, sub_2348cc10+50, sub_2348cc10+62, sub_2348cc10+74, sub_2348cc10+84, sub_2348cc10+94, sub_2348cc10+106
 0x234e1a21                        db         0x00
@@ -1392,6 +1395,32 @@ uint8_t Data_2396c98c[20]; //2396c98c, size???
 uint8_t Data_2396c9a0[100]; //2396c9a0, size???
 
 Struct_2348dc50 Data_2396ca04[10]; //2396ca04???, size???
+
+
+/* /  / 2348c8b4 - complete */
+int sub_2348c8b4(void)
+{
+#if 0
+	console_send_string("sub_2348c8b4 (todo.c): TODO\r\n");
+#endif
+
+    uint8_t err = 0;
+
+    OSSemPend(Data_234c1258, 0, &err);
+
+    return 0;
+}
+
+
+/* /  / 2348c8c8 - complete */
+void sub_2348c8c8(void)
+{
+#if 0
+	console_send_string("sub_2348c8c8 (todo.c): TODO\r\n");
+#endif
+
+    OSSemPost(Data_234c1258);
+}
 
 
 /* 2348c8d4 - todo */
@@ -2449,6 +2478,26 @@ void sub_2348d660(int r4)
 }
 
 
+/* /  / 2348d6c0 - todo */
+void sub_2348d6c0(void)
+{
+#if 1
+	console_send_string("sub_2348d6c0 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* /  / 2348d742 - todo */
+void sub_2348d742(void)
+{
+#if 1
+	console_send_string("sub_2348d742 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* 2348d87e - todo */
 void sub_2348d87e(Clock_Time* r4, EIT_Event* b)
 {
@@ -2577,12 +2626,26 @@ void sub_2348db56(Menu_Item* a, uint16_t b, uint8_t c, uint8_t d)
 
 
 /* 2348db78 - todo */
-void sub_2348db78(void)
+int sub_2348db78(Menu_Item* a, int b)
 {
-#if 1
+#if 0
 	console_send_string("sub_2348db78 (todo.c): TODO\r\n");
 #endif
 
+    int r5 = 0;
+
+    if (b == 1)
+    {
+        (Data_234e1d6c)(a, Data_234e1d70->bData_0x5b, 1, 0);
+    }
+    else if (b == 2)
+    {
+        (Data_234e1d6c)(a, Data_234e1d70->bData_0x5a, 1, 0);
+
+        r5 = 1;
+    }
+
+    return r5;
 }
 
 

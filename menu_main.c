@@ -9,6 +9,8 @@
 
 #pragma thumb
 
+extern void sub_2348d742();
+
 static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
 
@@ -28,7 +30,7 @@ int Data_234c1248; //234c1248 +0x18
 int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
-void* Data_234c1258 = 0; //234c1258 +0x28?
+void* Data_234c1258 = 0; //234c1258 +0x28
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
@@ -94,6 +96,17 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8 = //234c12f8
 0x234c12fc                        dd         0x00000004                         ; DATA XREF=sub_2344d444+288
 0x234c1300                        db         0x03
 #endif
+};
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340 = //234c1340
+{
+	9, 4, 0x01, //...
+#if 0
+0x234c1340                        dw         0x0009                             ; DATA XREF=sub_2344d444+322, 0x234caf74, 0x234e98ac, 0x234eb194, 0x234ef290, 0x234f5d14
+0x234c1342 0000                   movs       r0, r0
+0x234c1344                        dd         0x00000004                         ; DATA XREF=sub_2344d444+324
+0x234c1348                        db         0x01
+#endif	
 };
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
@@ -1435,6 +1448,35 @@ int sub_2344d414(UI_Thread_Params* r4)
 	}
 
 	return 0;
+}
+
+
+/* /  / 2344d610 - todo */
+int sub_2344d610(int r6, int r4)
+{
+#if 0
+	console_send_string("sub_2344d610 (todo.c): TODO\r\n");
+#endif
+
+	User_Settings sp_0x3c;
+
+	Data_234c1258 = OSSemCreate(1);
+
+	sub_2348d6c0();
+	sub_2349235e();
+
+	channel_handle_user_settings(1, &sp_0x3c);
+
+	sub_2340f838(sub_2348d742);
+
+	sub_2344d5dc(sp_0x3c.bData_0x19);
+
+	sub_2344d444((sp_0x3c.Data_0x10 << 21) >> 29); //TODO
+
+	//TODO!!!
+#if 1
+	console_send_string("sub_2344d610 (todo.c): TODO\r\n");
+#endif
 }
 
 #endif //VDR110

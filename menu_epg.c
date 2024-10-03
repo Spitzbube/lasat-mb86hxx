@@ -1,6 +1,7 @@
 
 #ifndef VDR110
 
+#include <string.h>
 #include "data.h"
 #include "frontdisplay.h"
 #include "texttable.h"
@@ -14,7 +15,10 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern void* Data_234c1258; //234c1258
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
 extern void* sub_2344d0d0(FrontDisplay_Job*);
 extern void sub_2344f102(UI_Thread_Params*);
@@ -29,11 +33,23 @@ static int sub_23456bc0(void);
 
 static uint8_t Data_23799ce8[]; //23799ce8
 static uint8_t Data_2379c098[]; //2379c098
+static uint8_t Data_2379c138[]; //2379c138
+static uint8_t Data_2379c160[]; //2379c160
+static uint8_t Data_2379c188[]; //2379c188
+static uint8_t Data_2379c1b0[]; //2379c1b0
+static uint8_t Data_2379c1d8[]; //2379c1d8
+static uint8_t Data_2379c200[]; //2379c200
+static uint8_t Data_2379c228[]; //2379c228
+static uint8_t Data_2379c250[]; //2379c250
+static uint8_t Data_2379c278[]; //2379c278
+static uint8_t Data_2379c2a0[]; //2379c2a0
 static uint8_t Data_2379c2d4[]; //2379c2d4
 
 //0x234ca54c
+volatile uint8_t bData_234ca54c = 0; //234ca54c +0
 static Menu* Data_234ca55c = &Data_234cc1b4; //234ca55c +0x10
 static Menu* Data_234ca564 = 0; //234CA564 +0x18
+static uint8_t menu_epg_clock_time_string[]; //234ca7f4
 
 static Graphic_Job_2_5_Item_Text Data_234ca580 = //234ca580
 {
@@ -57,6 +73,27 @@ static Graphic_Job_2_5_Item_Text Data_234ca580 = //234ca580
 #endif
 };
 
+static Graphic_Job_2_5_Item_Text menu_epg_clock_time_text_field = //234ca5b0
+{
+	0, 0x0217, 0x002e, 0x0257, 0x004f, 0x01, 0x04, 0x09, 0x01, &menu_epg_clock_time_string[0], 0, 0, 0
+#if 0
+0x234ca5b0                        db         0x00                               ; DATA XREF=sub_23456f24+18, 0x234caf7c
+0x234ca5b1                        db         0x00
+0x234ca5b2                        dw         0x0217
+0x234ca5b4                        dw         0x002e
+0x234ca5b6                        dw         0x0257
+0x234ca5b8                        dw         0x004f
+0x234ca5ba                        db         0x01
+0x234ca5bb                        db         0x04
+0x234ca5bc                        db         0x09
+0x234ca5bd                        db         0x01
+0x234ca5be 0000                   movs       r0, r0
+0x234ca5c0                        dd         0x234ca7f4                         ; "--:--  "
+0x234ca5c4 0000                   movs       r0, r0
+0x234ca5c6 0000                   movs       r0, r0
+#endif
+};
+
 static Graphic_Job_2_5_Item_Text Data_234ca5e0 = //234ca5e0
 {
 	0, 0x0047, 0x0064, 0x00dd, 0x0080, 0x01, 0x04, 0x09, 0x01, &Data_2379c098[0], 0, 0, 0
@@ -77,6 +114,200 @@ static Graphic_Job_2_5_Item_Text Data_234ca5e0 = //234ca5e0
 0x234ca5f6 0000                   movs       r0, r0
 #endif
 };
+
+static Graphic_Job_2_5_Item_Text Data_234ca6d0 = //234ca6d0
+{
+	0, 0x00ed, 0x0064, 0x0256, 0x0080, 0x01, 0x04, 0x09, 0x01, &Data_2379c138[0], 0, 0, 0
+#if 0
+0x234ca6d0                        db         0x00                               ; DATA XREF=0x234cac7c
+0x234ca6d1                        db         0x00
+0x234ca6d2                        dw         0x00ed
+0x234ca6d4                        dw         0x0064
+0x234ca6d6                        dw         0x0256
+0x234ca6d8                        dw         0x0080
+0x234ca6da                        db         0x01
+0x234ca6db                        db         0x04
+0x234ca6dc                        db         0x09
+0x234ca6dd                        db         0x01
+0x234ca6de 0000                   movs       r0, r0
+0x234ca6e0                        dd         0x2379c138
+0x234ca6e4 0000                   movs       r0, r0
+0x234ca6e6 0000                   movs       r0, r0
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca6e8 = //Data_234ca6e8
+{
+	0, 0x00ed, 0x0084, 0x0256, 0x00a0, 0x01, 0x04, 0x09, 0x01, &Data_2379c160[0], 0, 0, 0
+#if 0
+0x234ca6e8                        db         0x00                               ; DATA XREF=0x234cacbc
+0x234ca6e9                        db         0x00
+0x234ca6ea                        dw         0x00ed
+0x234ca6ec                        dw         0x0084
+0x234ca6ee                        dw         0x0256
+0x234ca6f0                        dw         0x00a0
+0x234ca6f2                        db         0x01
+0x234ca6f3                        db         0x04
+0x234ca6f4                        db         0x09
+0x234ca6f5                        db         0x01
+0x234ca6f6 0000                   movs       r0, r0
+0x234ca6f8                        dd         0x2379c160
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca700 = //234ca700
+{
+	0, 0x00ed, 0x00a4, 0x0256, 0x00c0, 0x01, 0x04, 0x09, 0x01, &Data_2379c188[0], 0, 0, 0
+#if 0
+0x234ca700                        db         0x00                               ; DATA XREF=0x234cacfc
+0x234ca701                        db         0x00
+0x234ca702                        dw         0x00ed
+0x234ca704                        dw         0x00a4
+0x234ca706                        dw         0x0256
+0x234ca708                        dw         0x00c0
+0x234ca70a                        db         0x01
+0x234ca70b                        db         0x04
+0x234ca70c                        db         0x09
+0x234ca70d                        db         0x01
+0x234ca70e 0000                   movs       r0, r0
+0x234ca710                        dd         0x2379c188
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca718 = //234ca718
+{
+	0, 0x00ed, 0x00c4, 0x0256, 0x00e0, 0x01, 0x04, 0x09, 0x01, &Data_2379c1b0[0], 0, 0, 0
+#if 0
+0x234ca718                        db         0x00                               ; DATA XREF=0x234cad3c
+0x234ca719                        db         0x00
+0x234ca71a                        dw         0x00ed
+0x234ca71c                        dw         0x00c4
+0x234ca71e                        dw         0x0256
+0x234ca720                        dw         0x00e0
+0x234ca722                        db         0x01
+0x234ca723                        db         0x04
+0x234ca724                        db         0x09
+0x234ca725                        db         0x01
+0x234ca726 0000                   movs       r0, r0
+0x234ca728                        dd         0x2379c1b0
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca730 = //234ca730
+{
+	0, 0x00ed, 0x00e4, 0x0256, 0x0100, 0x01, 0x04, 0x09, 0x01, &Data_2379c1d8[0], 0, 0, 0
+#if 0
+0x234ca730                        db         0x00                               ; DATA XREF=0x234cad7c
+0x234ca731                        db         0x00
+0x234ca732                        dw         0x00ed
+0x234ca734                        dw         0x00e4
+0x234ca736                        dw         0x0256
+0x234ca738                        dw         0x0100                             ; DATA XREF=dword_234ca4e8+60
+0x234ca73a                        db         0x01
+0x234ca73b                        db         0x04
+0x234ca73c                        db         0x09
+0x234ca73d                        db         0x01
+0x234ca73e 0000                   movs       r0, r0
+0x234ca740                        dd         0x2379c1d8
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca748 = //234ca748
+{
+	0, 0x00ed, 0x0104, 0x0256, 0x0120, 0x01, 0x04, 0x09, 0x01, &Data_2379c200[0], 0, 0, 0
+#if 0
+0x234ca748                        db         0x00                               ; DATA XREF=0x234cadbc
+0x234ca749                        db         0x00
+0x234ca74a                        dw         0x00ed
+0x234ca74c                        dw         0x0104
+0x234ca74e                        dw         0x0256
+0x234ca750                        dw         0x0120
+0x234ca752                        db         0x01
+0x234ca753                        db         0x04
+0x234ca754                        db         0x09
+0x234ca755                        db         0x01
+0x234ca756 0000                   movs       r0, r0
+0x234ca758                        dd         0x2379c200
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca760 = //234ca760
+{
+	0, 0x00ed, 0x0124, 0x0256, 0x0140, 0x01, 0x04, 0x09, 0x01, &Data_2379c228[0], 0, 0, 0
+#if 0
+0x234ca760                        db         0x00                               ; DATA XREF=0x234cadfc
+0x234ca761                        db         0x00
+0x234ca762                        dw         0x00ed
+0x234ca764                        dw         0x0124
+0x234ca766                        dw         0x0256
+0x234ca768                        dw         0x0140
+0x234ca76a                        db         0x01
+0x234ca76b                        db         0x04
+0x234ca76c                        db         0x09
+0x234ca76d                        db         0x01
+0x234ca76e 0000                   movs       r0, r0
+0x234ca770                        dd         0x2379c228
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca778 = //234ca778
+{
+	0, 0x00ed, 0x0144, 0x0256, 0x0160, 0x01, 0x04, 0x09, 0x01, &Data_2379c250[0], 0, 0, 0
+#if 0
+0x234ca778                        db         0x00                               ; DATA XREF=0x234cae3c
+0x234ca779                        db         0x00
+0x234ca77a                        dw         0x00ed
+0x234ca77c                        dw         0x0144                             ; DATA XREF=dword_234ca468+112
+0x234ca77e                        dw         0x0256
+0x234ca780                        dw         0x0160                             ; DATA XREF=dword_234ca468+116
+0x234ca782                        db         0x01
+0x234ca783                        db         0x04
+0x234ca784                        db         0x09
+0x234ca785                        db         0x01
+0x234ca786 0000                   movs       r0, r0
+0x234ca788                        dd         0x2379c250
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca790 = //234ca790
+{
+	0, 0x00ed, 0x0164, 0x0256, 0x0180, 0x01, 0x04, 0x09, 0x01, &Data_2379c278[0], 0, 0, 0
+#if 0
+0x234ca790                        db         0x00                               ; DATA XREF=0x234cae7c
+0x234ca791                        db         0x00
+0x234ca792                        dw         0x00ed
+0x234ca794                        dw         0x0164
+0x234ca796                        dw         0x0256
+0x234ca798                        dw         0x0180
+0x234ca79a                        db         0x01
+0x234ca79b                        db         0x04
+0x234ca79c                        db         0x09
+0x234ca79d                        db         0x01
+0x234ca79e 0000                   movs       r0, r0
+0x234ca7a0                        dd         0x2379c278
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234ca7a8 = //234ca7a8
+{
+	0, 0x00ed, 0x0184, 0x0256, 0x01a0, 0x01, 0x04, 0x09, 0x01, &Data_2379c2a0[0], 0, 0, 0
+#if 0
+0x234ca7a8                        db         0x00                               ; DATA XREF=0x234caebc
+0x234ca7a9                        db         0x00
+0x234ca7aa                        dw         0x00ed
+0x234ca7ac                        dw         0x0184
+0x234ca7ae                        dw         0x0256
+0x234ca7b0                        dw         0x01a0
+0x234ca7b2                        db         0x01
+0x234ca7b3                        db         0x04
+0x234ca7b4                        db         0x09
+0x234ca7b5                        db         0x01
+0x234ca7b6 0000                   movs       r0, r0
+0x234ca7b8                        dd         0x2379c2a0
+#endif
+};
+
+uint8_t menu_epg_clock_time_string[] = "--:--  "; //234ca7f4
 
 static Graphic_Job_2_5_Item_Text Data_234ca82c = //234ca82c
 {
@@ -104,7 +335,7 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
 {
     {0}, //[0] = 234ca85c
     {0}, //[1] = 234CA89C
-    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0029, 0x00a2, 0x0026, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234ca580/*Data_0x20*/}, //[2] = 234CA8DC: header
+    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0029, 0x00a2, 0x0026, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234ca580/*Data_0x20*/}, //[2] = 234CA8DC: header / service name
 #if 0
 0x234ca8dc                        db         0x01                               ; DATA XREF=0x234cc1c0
 0x234ca8dd                        db  0x00 ; '.'
@@ -127,7 +358,7 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
     {0}, //[3] = 234CA91C
     {0}, //[4] = 234CA95C
     {0}, //[5] = 234CA99C
-    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x00a0, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 2, 0, &Data_234ca5e0/*Data_0x20*/}, //[6] = 234CA9DC
+    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x00a0, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234ca5e0/*Data_0x20*/}, //[6] = 234CA9DC
 #if 0
 0x234ca9dc                        db         0x01                               ; DATA XREF=0x234cbdf0
 0x234ca9dd                        db  0x00 ; '.'
@@ -156,19 +387,227 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
     {0}, //[13] = 234CAB9C
     {0}, //[14] = 234CABDC
     {0}, //[15] = 234CAC1C
-    {0}, //[16] = 234CAC5C
-    {0}, //[17] = 234CAC9C
-    {0}, //[18] = 234CACDC
-    {0}, //[19] = 234CAD1C
-    {0}, //[20] = 234CAD5C
-    {0}, //[21] = 234CAD9C
-    {0}, //[22] = 234CADDC
-    {0}, //[23] = 234CAE1C
-    {0}, //[24] = 234CAE5C
-    {0}, //[25] = 234CAE9C
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0060, 0x0173, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234ca6d0/*Data_0x20*/}, //[16] = 234CAC5C
+#if 0
+0x234cac5c                        dw         0x0001                             ; DATA XREF=0x234cbdf4
+0x234cac5e 0000                   movs       r0, r0
+0x234cac60 0000                   movs       r0, r0
+0x234cac62 0000                   movs       r0, r0
+0x234cac64 0000                   movs       r0, r0
+0x234cac66 0000                   movs       r0, r0
+0x234cac68                        dw         0x00e3
+0x234cac6a                        dw         0x0060
+0x234cac6c                        dw         0x0173
+0x234cac6e                        dw         0x0020
+0x234cac70 0000                   movs       r0, r0
+0x234cac72 0000                   movs       r0, r0
+0x234cac74                        dd         0x234c12f8
+0x234cac78                        dw         0x0009
+0x234cac7a                        dw         0x0000
+0x234cac7c                        dd         0x234ca6d0
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0080, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca6e8/*Data_0x20*/}, //[17] = 234CAC9C
+#if 0
+0x234cac9c                        db         0x01                               ; DATA XREF=0x234cbe20
+0x234cac9d                        db  0x00 ; '.'
+0x234cac9e 0000                   movs       r0, r0
+0x234caca0 0000                   movs       r0, r0                             ; DATA XREF=menu_epg_clock_time_string+840
+0x234caca2 0000                   movs       r0, r0
+0x234caca4 0000                   movs       r0, r0
+0x234caca6 0000                   movs       r0, r0
+0x234caca8                        dw         0x00e3
+0x234cacaa                        dw         0x0080
+0x234cacac                        dw         0x0173
+0x234cacae                        dw         0x0020
+0x234cacb0 0000                   movs       r0, r0
+0x234cacb2 0000                   movs       r0, r0
+0x234cacb4                        dd         0x234c12d4
+0x234cacb8                        dw         0x0009
+0x234cacba                        dw         0x0000
+0x234cacbc                        dd         0x234ca6e8
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x00a0, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca700/*Data_0x20*/}, //[18] = 234CACDC
+#if 0
+0x234cacdc                        db         0x01                               ; DATA XREF=0x234cbe4c
+0x234cacdd                        db  0x00 ; '.'
+0x234cacde 0000                   movs       r0, r0
+0x234cace0 0000                   movs       r0, r0
+0x234cace2 0000                   movs       r0, r0
+0x234cace4 0000                   movs       r0, r0
+0x234cace6 0000                   movs       r0, r0
+0x234cace8                        dw         0x00e3
+0x234cacea                        dw         0x00a0
+0x234cacec                        dw         0x0173
+0x234cacee                        dw         0x0020
+0x234cacf0 0000                   movs       r0, r0
+0x234cacf2 0000                   movs       r0, r0
+0x234cacf4                        dd         0x234c12d4
+0x234cacf8                        dw         0x0009
+0x234cacfa                        dw         0x0000
+0x234cacfc                        dd         0x234ca700
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x00c0, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca718/*Data_0x20*/}, //[19] = 234CAD1C
+#if 0
+0x234cad1c                        db         0x01                               ; DATA XREF=0x234cbe78
+0x234cad1d                        db  0x00 ; '.'
+0x234cad1e 0000                   movs       r0, r0
+0x234cad20 0000                   movs       r0, r0
+0x234cad22 0000                   movs       r0, r0
+0x234cad24 0000                   movs       r0, r0
+0x234cad26 0000                   movs       r0, r0
+0x234cad28                        dw         0x00e3
+0x234cad2a                        dw         0x00c0
+0x234cad2c                        dw         0x0173
+0x234cad2e                        dw         0x0020
+0x234cad30 0000                   movs       r0, r0
+0x234cad32 0000                   movs       r0, r0
+0x234cad34                        dd         0x234c12d4
+0x234cad38                        dw         0x0009
+0x234cad3a                        dw         0x0000
+0x234cad3c                        dd         0x234ca718
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x00e0, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca730/*Data_0x20*/}, //[20] = 234CAD5C
+#if 0
+0x234cad5c                        db         0x01                               ; DATA XREF=0x234cbea4
+0x234cad5d                        db  0x00 ; '.'
+0x234cad5e 0000                   movs       r0, r0
+0x234cad60 0000                   movs       r0, r0
+0x234cad62 0000                   movs       r0, r0
+0x234cad64 0000                   movs       r0, r0
+0x234cad66 0000                   movs       r0, r0
+0x234cad68                        dw         0x00e3
+0x234cad6a                        dw         0x00e0
+0x234cad6c                        dw         0x0173
+0x234cad6e                        dw         0x0020
+0x234cad70 0000                   movs       r0, r0
+0x234cad72 0000                   movs       r0, r0
+0x234cad74                        dd         0x234c12d4
+0x234cad78                        dw         0x0009
+0x234cad7a 0000                   movs       r0, r0
+0x234cad7c                        dd         0x234ca730
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0100, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca748/*Data_0x20*/}, //[21] = 234CAD9C
+#if 0
+0x234cad9c                        db         0x01                               ; DATA XREF=0x234cbed0
+0x234cad9d                        db  0x00 ; '.'
+0x234cad9e 0000                   movs       r0, r0
+0x234cada0 0000                   movs       r0, r0
+0x234cada2 0000                   movs       r0, r0
+0x234cada4 0000                   movs       r0, r0
+0x234cada6 0000                   movs       r0, r0
+0x234cada8                        dw         0x00e3
+0x234cadaa                        dw         0x0100
+0x234cadac                        dw         0x0173
+0x234cadae                        dw         0x0020
+0x234cadb0 0000                   movs       r0, r0
+0x234cadb2 0000                   movs       r0, r0
+0x234cadb4                        dd         0x234c12d4
+0x234cadb8                        dw         0x0009
+0x234cadba                        dw         0x0000
+0x234cadbc                        dd         0x234ca748
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0120, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca760/*Data_0x20*/}, //[22] = 234CADDC
+#if 0
+0x234caddc                        db         0x01                               ; DATA XREF=0x234cbefc
+0x234caddd                        db  0x00 ; '.'
+0x234cadde 0000                   movs       r0, r0
+0x234cade0 0000                   movs       r0, r0                             ; DATA XREF=menu_epg_clock_time_string+968
+0x234cade2 0000                   movs       r0, r0
+0x234cade4 0000                   movs       r0, r0
+0x234cade6 0000                   movs       r0, r0
+0x234cade8                        dw         0x00e3
+0x234cadea                        dw         0x0120
+0x234cadec                        dw         0x0173
+0x234cadee                        dw         0x0020
+0x234cadf0 0000                   movs       r0, r0
+0x234cadf2 0000                   movs       r0, r0
+0x234cadf4                        dd         0x234c12d4
+0x234cadf8 0900                   movs       r1, r1
+0x234cadfa 0000                   movs       r0, r0
+0x234cadfc                        dd         0x234ca760
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0140, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca778/*Data_0x20*/}, //[23] = 234CAE1C
+#if 0
+0x234cae1c                        db         0x01                               ; DATA XREF=0x234cbf28
+0x234cae1d                        db  0x00 ; '.'
+0x234cae1e 0000                   movs       r0, r0
+0x234cae20 0000                   movs       r0, r0                             ; DATA XREF=menu_epg_clock_time_string+584
+0x234cae22 0000                   movs       r0, r0
+0x234cae24 0000                   movs       r0, r0
+0x234cae26 0000                   movs       r0, r0
+0x234cae28                        dw         0x00e3
+0x234cae2a                        dw         0x0140
+0x234cae2c                        dw         0x0173
+0x234cae2e                        dw         0x0020
+0x234cae30 0000                   movs       r0, r0
+0x234cae32 0000                   movs       r0, r0
+0x234cae34                        dd         0x234c12d4
+0x234cae38                        dw         0x0009
+0x234cae3a                        dw         0x0000
+0x234cae3c                        dd         0x234ca778
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0160, 0x0173, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234ca790/*Data_0x20*/}, //[24] = 234CAE5C
+#if 0
+0x234cae5c                        db         0x01                               ; DATA XREF=0x234cbf54
+0x234cae5d                        db  0x00 ; '.'
+0x234cae5e 0000                   movs       r0, r0
+0x234cae60 0000                   movs       r0, r0
+0x234cae62 0000                   movs       r0, r0
+0x234cae64 0000                   movs       r0, r0
+0x234cae66 0000                   movs       r0, r0
+0x234cae68                        dw         0x00e3
+0x234cae6a                        dw         0x0160
+0x234cae6c                        dw         0x0173
+0x234cae6e                        dw         0x0020
+0x234cae70 0000                   movs       r0, r0
+0x234cae72 0000                   movs       r0, r0
+0x234cae74                        dd         0x234c12d4
+0x234cae78                        dw         0x0009
+0x234cae7a                        dw         0x0000
+0x234cae7c                        dd         0x234ca790
+#endif
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0180, 0x0173, 0x0020, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234ca7a8/*Data_0x20*/}, //[25] = 234CAE9C
+#if 0
+0x234cae9c                        db         0x01                               ; DATA XREF=0x234cbf80
+0x234cae9d                        db  0x00 ; '.'
+0x234cae9e 0000                   movs       r0, r0
+0x234caea0 0000                   movs       r0, r0
+0x234caea2 0000                   movs       r0, r0
+0x234caea4 0000                   movs       r0, r0
+0x234caea6 0000                   movs       r0, r0
+0x234caea8                        dw         0x00e3
+0x234caeaa                        dw         0x0180
+0x234caeac                        dw         0x0173
+0x234caeae                        dw         0x0020
+0x234caeb0 0000                   movs       r0, r0
+0x234caeb2 0000                   movs       r0, r0
+0x234caeb4                        dd         0x234c12ec
+0x234caeb8                        dw         0x0009
+0x234caeba 0000                   movs       r0, r0
+0x234caebc                        dd         0x234ca7a8
+#endif
     {0}, //[26] = 234CAEDC
     {0}, //[27] = 234CAF1C
-    {0}, //[28] = 234CAF5C
+    {1, 0, 0, 0/*Data_8*/, 0x020e, 0x0029, 0x0049, 0x0026, 0, &Data_234c1340/*Data_0x18*/, 3, 0, &menu_epg_clock_time_text_field/*Data_0x20*/}, //[28] = 234CAF5C: Clock Time
+#if 0
+0x234caf5c                        db         0x01
+0x234caf5d                        db  0x00 ; '.'
+0x234caf5e 0000                   movs       r0, r0
+0x234caf60 0000                   movs       r0, r0
+0x234caf62 0000                   movs       r0, r0
+0x234caf64 0000                   movs       r0, r0
+0x234caf66 0000                   movs       r0, r0
+0x234caf68                        dw         0x020e
+0x234caf6a                        dw         0x0029
+0x234caf6c                        dw         0x0049
+0x234caf6e                        dw         0x0026
+0x234caf70 0000                   movs       r0, r0
+0x234caf72 0000                   movs       r0, r0
+0x234caf74                        dd         0x234c1340
+0x234caf78                        dw         0x0009
+0x234caf7a                        dw         0x0000
+0x234caf7c                        dd         0x234ca5b0
+#endif
     {0}, //[29] = 234CAF9C
     {0}, //[30] = 234CAFDC
     {1, 0, 0, 0/*Data_8*/, 0x003d, 0x01c3, 0x021a, 0x003a, 0, &Data_234c134c/*Data_0x18*/, 3, 0, &Data_234ca82c/*Data_0x20*/}, //[31] = 234CB01C: help
@@ -600,9 +1039,20 @@ struct
     uint16_t wData_2379c014; //2379c014
 
 } Data_2379c004; //2379c004
-Channel Data_2379c04c; //2379c04c
-Transponder Data_2379c074; //2379c074
+Channel Data_2379c04c; //2379c04c +0x28 = 2379C074
+Transponder Data_2379c074; //2379c074 +0x18 = 2379C08C
+Clock_Time Data_2379c08c; //2379c08c
 uint8_t Data_2379c098[100]; //2379c098, size???
+uint8_t Data_2379c138[40]; //2379c138, size???
+uint8_t Data_2379c160[40]; //2379c160, size???
+uint8_t Data_2379c188[40]; //2379c188, size???
+uint8_t Data_2379c1b0[40]; //2379c1b0, size???
+uint8_t Data_2379c1d8[40]; //2379c1d8, size???
+uint8_t Data_2379c200[40]; //2379c200, size???
+uint8_t Data_2379c228[40]; //2379c228, size???
+uint8_t Data_2379c250[40]; //2379c250, size???
+uint8_t Data_2379c278[40]; //2379c278, size???
+uint8_t Data_2379c2a0[40]; //2379c2a0, size???
 uint8_t Data_2379c2d4[100]; //2379c2d4, size???
 
 
@@ -629,6 +1079,303 @@ void sub_23456302(void)
 #endif
 
     OSSemPost(Data_234c1258);
+}
+
+
+/*  /  / 2345630e - todo */
+void menu_epg_update_clock_time_text_field(void)
+{
+#if 0
+	console_send_string("menu_epg_update_clock_time_text_field (todo.c): TODO\r\n");
+#endif
+
+    Graphic_Job_2_5_Item* r4 = &Data_234ca55c->graphicData->pItems[28];
+    char* pString = r4->Data_0x20->pString;
+
+    clocktime_get(&Data_2379c08c);
+
+    if (Data_2379c08c.bData_4 != 0)
+    {
+        //0x23456330
+        sub_23411da0/*sub_234197b4*/(&Data_2379c08c, Data_2379a6d4.timeDiff);
+
+        sprintf(pString, "%02d:%02d", 
+            Data_2379c08c.hours, Data_2379c08c.minutes);
+        
+        if (bData_234ca54c != 0)
+        {
+            pString[2] = ' ';
+        }
+        //loc_23456350
+        bData_234ca54c ^= 1; 
+    }
+    else
+    {
+        //loc_2345635a
+        sprintf(pString, "--:--");
+    }
+    //loc_23456362
+    r4->Data_0x20->bData_0x17 = 1;
+}
+
+
+/* /  / 234564e0 - todo */
+int sub_234564e0(uint16_t* a)
+{
+#if 0
+	console_send_string("sub_234564e0 (todo.c): TODO\r\n");
+#endif
+
+    uint16_t index;
+
+    if (a != 0)
+    {
+        *a = 0;
+
+        EIT_Event** r4 = &Data_2379a704[0];
+        EIT_Event* r1 = Data_2379c004.Data_2379c004;
+
+        if (r1 != 0)
+        {
+            //->loc_2345652c
+            for (index = 0; index < Data_2379c004.wData_2379c012; index++)
+            {
+                //loc_234564fe
+                if (((*r4)->wData_0x16 == r1->wData_0x16) && 
+                    ((*r4)->start_time[0] == r1->start_time[0]) &&
+                    ((*r4)->start_time[1] == r1->start_time[1]) &&
+                    ((*r4)->start_time[2] == r1->start_time[2]))
+                {
+                    *a = index;
+
+                    return 1;
+                }
+                //loc_23456526
+                r4++;
+            }
+            //loc_23456530
+        }
+        //loc_23456530
+    }
+    //loc_23456530
+    return 0;
+}
+
+
+/* /  / 23456534 - todo */
+void sub_23456534(void)
+{
+#if 0
+	console_send_string("sub_23456534 (todo.c): TODO\r\n");
+#endif
+
+    uint32_t r4;
+    uint32_t r3;
+    uint32_t r2;
+    EIT_Event* sp8;
+    uint32_t sp4;
+    uint32_t sp;
+    uint32_t a, b, c;
+    uint32_t lr;
+    uint32_t ip;
+    
+    if (Data_2379c004.wData_2379c012 != 0)
+    {
+        ip = Data_2379c004.wData_2379c012;
+        while (1)
+        {
+            //loc_23456542
+            r2 = 0;
+            lr = 0;
+            r4 = 0;
+            EIT_Event** r0 = &Data_2379a704[0];
+            EIT_Event** r1 = r0 + 1;
+            r2 = ip;
+            r2--;
+            sp4 = r2;
+            //->loc_234565a2
+            while (r4 < r2)
+            {
+                //loc_23456556
+                EIT_Event* pEvent = *r0;
+
+                a = pEvent->section_number;
+                b = pEvent->table_id;
+                c = pEvent->bData_0x1b;
+                sp8 = pEvent;
+
+                sp = (a * 100) + ((b & 0x0f) * 100000) + c;
+
+                pEvent = *r1;
+
+                a = pEvent->section_number;
+                b = pEvent->table_id;
+                c = pEvent->bData_0x1b;
+
+                r3 = (a * 100) + ((b & 0x0f) * 100000) + c;
+
+                if (sp > r3)
+                {
+                    //0x23456590
+                    lr = 1;
+                    *r0 = pEvent;
+                    *r1 = sp8;
+                }
+                //loc_2345659a
+                r2 = sp4;
+                r0++;
+                r1++;
+                r4++;
+            }
+            //0x234565a6
+            ip--;
+            if ((lr == 0) || (ip == 0))
+            {
+                //->loc_234565b8
+                break;
+            }
+            //->loc_23456542
+        } //while (1)
+    }
+    //loc_234565b8
+}
+
+
+/* /  / 234565ba - todo */
+int sub_234565ba(void)
+{
+#if 0
+	console_send_string("sub_234565ba (todo.c): TODO\r\n");
+#endif
+
+    EIT_Event* pEvent;
+    EIT_Event** pList;
+
+    Data_2379c004.wData_2379c012 = 0;
+    Data_2379c004.wData_2379c014 = 0;
+
+    Data_2379c004.Data_2379c008 = 
+        eit_get_section_data(Data_2379c04c.service_id, Data_2379c074.transport_stream_id);
+
+    if (Data_2379c004.Data_2379c008 != 0)
+    {
+        //0x234565da
+        pList = &Data_2379a704[0];
+        pEvent = Data_2379c004.Data_2379c008->pEventFirst;
+    }
+    else
+    {
+        //loc_234565e2
+        Data_2379c004.wData_2379c012 = 0;
+
+        return 2;
+    }
+    //->loc_23456618
+    while (pEvent != 0)
+    {
+        //->loc_234565e8
+        if (pEvent->table_id == 0x4e)
+        {
+            if (Data_2379c004.wData_2379c012 >= 1599)
+            {
+                return 1;
+            }
+            //loc_234565fa
+            *pList++ = pEvent;
+
+            Data_2379c004.wData_2379c012++;
+        }
+        //loc_23456602
+        if ((pEvent->running_status == 4) &&
+            (Data_2379c004.wData_2379c014 == 0))
+        {
+            Data_2379c004.wData_2379c014 = pEvent->event_id;
+            Data_2379c004.Data_2379c004 = pEvent;
+        }
+        //loc_23456616
+        pEvent = pEvent->next;
+    }
+
+    return 0;
+}
+
+
+/* /  / 234566a8 - todo */
+void sub_234566a8(void)
+{
+#if 0
+	console_send_string("sub_234566a8 (todo.c): TODO\r\n");
+#endif
+
+    uint8_t sp_0x1c;
+    uint16_t sp_0x18;
+    Graphic_Queue_Item sp8;
+    PSI_Program* sp4;
+    uint16_t sp;
+
+    sp_0x18 = 0;
+
+    Struct_2348dc50* r4 = Data_2379c004.Data_2379c00c;
+
+    if (Data_2379c04c.wTransponderIndex == 0xffff)
+    {
+        if (0 == psi_get_all_current_programs(main_hPSIDecoder1, &sp, &sp4))
+        {
+            Data_2379c074.transport_stream_id/*2379C084*/ = sp4->transport_stream_id;
+            Data_2379c04c.service_id = sp4->pat_program_number;
+        }
+    }
+    //loc_234566e6
+    int r0 = sub_2345703c(&sp_0x1c);
+    int r1 = 0;
+    if (r0 == 0)
+    {
+        //->loc_2345676c
+        r0 = sub_23456fe8(&sp_0x1c);
+        r1 = 1;
+    }
+    //loc_23456774
+    if ((Data_2379c004.wData_2379c012 != r0) || (sp_0x1c != 0))
+    {
+        //loc_23456784
+        if (r1 == 0)
+        {
+            //0x23456788
+            sub_23457200();
+            //->loc_23456792
+        }
+        else
+        {
+            //loc_2345678e
+            sub_234565ba();
+        }
+        //loc_23456792
+        sub_23456534();
+
+        if (0 != sub_234564e0(&sp_0x18))
+        {
+            //0x234567a0
+            r4->arwData_0x28[0] = sp_0x18 + 1;
+            r4->Data_0x54 = &r4->arwData_0x28[0];
+        }
+        //loc_234567ae
+        r4->wData_0x20 = Data_2379c004.wData_2379c012;
+
+        if (r4->Data_0x14 != 0)
+        {
+            //0x234567b8
+            (r4->Data_0x14)(r4);
+        }
+        //loc_234567bc
+        sub_2348dcd8(r4->bData_0x5f);
+        //loc_234567c4
+        graphic_start_job_2_5(&sp8, Data_234ca55c->graphicData);
+        return;
+    }
+    //->loc_234567d2
+    menu_epg_update_clock_time_text_field();
+    //->loc_234567c4
+    graphic_start_job_2_5(&sp8, Data_234ca55c->graphicData);
 }
 
 
@@ -662,12 +1409,178 @@ int sub_234567d8(Struct_2348dc50* r5)
 
 
 /* /  / 23456932 - todo */
-void sub_23456932(void)
+int sub_23456932(Struct_2348dc50* a)
 {
-#if 1
+#if 0
 	console_send_string("sub_23456932 (todo.c): TODO\r\n");
 #endif
 
+    uint16_t r7;
+    Menu_Item* sp_0x70;
+    EIT_Event** sp_0x6c;
+    Struct_2348dc50 sp8 = *a;
+
+    sp_0x70 = Data_234ca55c->Data_8;
+    
+    sp_0x6c = &sp8.Data_0x10[sp8.wData_0x1e - sp8.wData_0x22];
+    //->loc_23456a82
+    for (r7 = 0; r7 < sp8.wData_0x26; r7++)
+    {
+        //loc_23456960
+        char* r4 = sp_0x70->Data_4[0]->Data_0x20->Data_0x10;
+        char* r5 = sp_0x70->Data_4[1]->Data_0x20->Data_0x10;
+
+        sp_0x70->Data_4[0]->Data_0x20->bData_0x17 = 1;
+        sp_0x70->Data_4[1]->Data_0x20->bData_0x17 = 1;
+
+        uint16_t r6 = (sp8.wData_0x1e - sp8.wData_0x22) + r7;
+
+        if (sp8.wData_0x22 != r7)
+        {
+            //0x2345698e
+            if (sp8.Data_0x54 != 0)
+            {
+                //0x23456994
+                //r2 = 1;
+                //->loc_234569ac
+                sub_2348dba4(sp_0x70, r6, 1);
+                //->loc_234569be
+            }
+            else
+            {
+                //loc_23456998
+                //r1 = 1;
+                //->loc_234569b8
+                sub_2348db78(sp_0x70, 1);
+                //loc_234569be
+            }
+        }
+        else
+        {
+            //loc_2345699c
+            if ((sp8.Data_0x54 != 0) &&
+                //0x234569a2
+                (((uint16_t*)(sp8.Data_0x54))[0] == (sp8.wData_0x1e + 1)))
+            {
+                //0x234569aa
+                sub_2348dba4(sp_0x70, r6, 2);
+                //->loc_234569be
+            }
+            else
+            {
+                //loc_234569b6
+                sub_2348db78(sp_0x70, 2);
+            }
+        }
+        //loc_234569be
+        if (sp8.wData_0x20 > r6)
+        {
+            //0x234569c8
+            if (r4 != 0)
+            {
+                //0x234569cc
+                sub_2341a0f0(
+                    (*sp_0x6c)->start_time[0],
+                    (*sp_0x6c)->start_time[1],
+                    (*sp_0x6c)->duration[0],
+                    (*sp_0x6c)->duration[1],
+                    r4, 15);
+            }
+            //loc_234569e4
+            if (r5 != 0)
+            {
+                memset(r5, 0, 40);
+
+                struct Struct_2377b8d0_Inner8_Inner8* r0 = (*sp_0x6c)->Data_8;
+                if (r0 != 0)
+                {
+                    //0x234569fa
+                    struct Struct_2377b8d0_Inner8_Inner8_Inner0* r6 = r0->Data_0;
+                    struct Struct_2377b8d0_Inner8_Inner8_Inner0* r4 = r6;
+                    //->loc_23456a14
+                    while (r4 != 0)
+                    {
+                        //loc_23456a00
+                        if (0 != sub_2340beb0(r4->ISO_639_language_code, Data_2379a6d4.menuLanguage))
+                        {
+                            //0x23456a0e
+                            r6 = r4;
+                            //->loc_23456a18
+                            break;
+                        }
+                        //loc_23456a12
+                        r4 = r4->next;
+                    } //while (r4 != 0)
+                    //loc_23456a18
+                    if ((r6 != 0) && (r6->strName != 0))
+                    {
+                        //0x23456a22
+#if 0
+                        {
+                            extern char debug_string[];
+                            sprintf(debug_string, "sub_23456932: r6->strName='%s'\r\n", 
+                                r6->strName);
+                            console_send_string(debug_string);
+                        }
+#endif
+                        int r4 = 0;
+                        if (Data_2379c08c.bData_4 != 0)
+                        {
+                            //0x23456a2c
+                            if (0 == sub_2345a746(*sp_0x6c, &Data_2379c04c))
+                            {
+                                //0x23456a3c
+                                r5[0] = 7;
+                                r5[1] = ' ';
+                                r5[2] = 0x59;
+                                r5[3] = ' ';
+                                r5[4] = 0;
+                                r4 = 4;
+                            }
+                            //loc_23456a50
+                        }
+                        //loc_23456a50
+                        char* r1 = r6->strName;
+
+                        if (r1[0] == 0x10)
+                        {
+                            //0x23456a58
+                            strncat(r5, &r1[3], 38 - r4);
+                        }
+                        else
+                        {
+                            //loc_23456a60
+                            strncat(r5, &r1[0], 38 - r4);
+                        }
+#if 1
+                        {
+                            extern char debug_string[];
+                            sprintf(debug_string, "sub_23456932: r5='%s'\r\n", r5);
+                            console_send_string(debug_string);
+                        }
+#endif
+                        //->loc_23456a72
+                    } //if ((r6 != 0) && (r6->strName != 0))
+                    //loc_23456a72
+                } //if (r0 != 0)
+                //loc_23456a72
+            } //if (r5 != 0)
+            //loc_23456a72
+        } //if (sp8.wData_0x20 > r6)
+        else
+        {
+            //loc_23456a6c
+            *r4 = 0;
+            *r5 = 0;
+        }
+        //loc_23456a72
+        sp_0x6c++;
+        sp_0x70++;
+    }
+    //loc_23456a8c
+    sub_2345661e(sp8.Data_0x10[sp8.wData_0x1e]);
+
+    return 0;
 }
 
 
@@ -750,7 +1663,7 @@ int sub_23456aa2(void)
 
     Data_234ca55c->graphicData->pItems[2].Data_0x20->bData_0x17 = 1;
 
-    sub_2345630e();
+    menu_epg_update_clock_time_text_field();
 
     return 0;
 }
@@ -911,6 +1824,120 @@ int sub_23456ed0(UI_Thread_Params* r5)
 }
 
 
+/* /  / 23456fe8 - todo */
+int16_t sub_23456fe8(uint8_t* r5)
+{
+#if 0
+	console_send_string("sub_23456fe8 (todo.c): TODO\r\n");
+#endif
+
+    uint16_t r4 = 0;
+
+    *r5 = 0; //r4
+
+    EIT_EventList* pEventList = 
+        eit_get_section_data(Data_2379c04c.service_id, Data_2379c074.transport_stream_id);
+    
+    if (pEventList == 0)
+    {
+        return 0;
+    }
+
+    EIT_Event* pEvent = pEventList->pEventFirst;
+    //r1 = 0x2379c004;
+    //int r3 = 1;
+    //->loc_2345702e
+    while (pEvent != 0)
+    {
+        //loc_2345700a
+        if (pEvent->table_id == 0x4e)
+        {
+            //0x23457010
+            r4++;
+
+            if ((pEvent->running_status == 4) && 
+                (Data_2379c004.Data_2379c004 != 0) &&
+                (pEvent->event_id != Data_2379c004.wData_2379c014))
+            {
+                *r5 = 1; //r3
+            }
+        }
+        //loc_2345702c
+        pEvent = pEvent->next;
+        //loc_2345702e
+    } //while (pEvent != 0)
+
+    return r4;
+}
+
+
+/* /  / 2345703c - todo */
+int16_t sub_2345703c(uint8_t* r7)
+{
+#if 0
+	console_send_string("sub_2345703c (todo.c): TODO\r\n");
+#endif
+
+    Clock_Time sp_0x20;
+    EIT_Event* pEvent;
+    uint16_t r5 = 0;
+
+    *r7 = 0;
+
+    EIT_EventList* pEventList = 
+        eit_get_section_data(Data_2379c04c.service_id, Data_2379c074.transport_stream_id);
+    
+    if (pEventList == 0)
+    {
+        return 0;
+    }
+
+    clocktime_get(&sp_0x20);
+
+    pEvent = pEventList->pEventFirst;
+
+    uint32_t r6;
+    if (sp_0x20.bData_4 == 0)
+    {
+        r6 = 0;
+    }
+    else
+    {
+        r6 = (sp_0x20.mjd << 16) | (sp_0x20.hours << 8) | (sp_0x20.minutes);
+    }
+    //->loc_234571e8
+    while (pEvent != 0)
+    {
+        //loc_234570a4
+        if (pEvent->table_id != 0x4e)
+        {
+            //0x234570b0
+#if 1
+        	console_send_string("sub_2345703c (0x234570b0): TODO\r\n");
+#endif
+
+
+            //->loc_234571e4
+        }
+        else
+        {
+            //loc_234571b4
+            if ((pEvent->running_status == 4) &&
+                (Data_2379c004.Data_2379c004 != 0) &&
+                (pEvent->event_id != Data_2379c004.wData_2379c014))
+            {
+                *r7 = 1;
+            }
+        }
+        //loc_234571e4
+        pEvent = pEvent->next;
+        //loc_234571e8
+    } //while (pEvent != 0)
+
+    return r5;
+}
+
+
 /* /  / 23457200 */
 int sub_23457200(void)
 {
@@ -983,6 +2010,15 @@ int sub_23457200(void)
                 r0++;
             }
 
+#if 0
+            {
+                extern char debug_string[];
+                sprintf(debug_string, "sub_23457200: %08x, %08x\r\n",
+                        ((r0 << 16) | (r2 << 8) | r1), r8);
+                console_send_string(debug_string);
+            }
+#endif
+
             if (((r0 << 16) | (r2 << 8) | r1) > r8)
             {
                 *r6++ = r4;
@@ -1006,6 +2042,14 @@ int sub_23457200(void)
         r4 = r4->next;
     } //while (r4 != 0)
     //0x234573e0
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_23457200: Data_2379c004.wData_2379c012=%d\r\n",
+                Data_2379c004.wData_2379c012);
+        console_send_string(debug_string);
+    }
+#endif
     return 0;
 }
 
