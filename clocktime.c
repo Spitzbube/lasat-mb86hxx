@@ -437,7 +437,7 @@ void sub_23412148(Struct_23419f50* r4, uint16_t r6)
 			//loc_23412280
 			//r1 = 1;
 			//->loc_2341230c
-			sub_23412e68(&r4->weekDay, 1);
+			clocktime_weekday_next(&r4->weekDay, 1);
 		}
 		//loc_23412314
 	}
@@ -464,7 +464,7 @@ void sub_23412148(Struct_23419f50* r4, uint16_t r6)
 				r4->day = r8[r4->month];
 			}
 			//loc_23412308
-			sub_23412e68(&r4->weekDay, -1);
+			clocktime_weekday_next(&r4->weekDay, -1);
 		}
 		//loc_23412314
 	}
@@ -489,7 +489,7 @@ void sub_23412148(Struct_23419f50* r4, uint16_t r6)
 		//loc_23412384
 		//r1 = -1;
 		//->loc_234123e8
-		sub_23412e68(&r4->weekDay, -1);
+		clocktime_weekday_next(&r4->weekDay, -1);
 		//loc_234123f0
 	}
 	//loc_2341238c
@@ -510,7 +510,7 @@ void sub_23412148(Struct_23419f50* r4, uint16_t r6)
 			}
 		}
 		//loc_234123e4
-		sub_23412e68(&r4->weekDay, 1);
+		clocktime_weekday_next(&r4->weekDay, 1);
 	}
 	//loc_234123f0
 	if (r5 != 0)
@@ -529,7 +529,7 @@ void sub_23412148(Struct_23419f50* r4, uint16_t r6)
 	sprintf(&r4->Data_0[0], "%02d.%02d.%04d", 
 		r4->day, r4->month, r4->year);
 
-#if 1
+#if 0
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "sub_23412148: &r4->Data_0[0]='%s'\r\n", 
@@ -761,12 +761,97 @@ void clocktime_get_event_time_string(uint8_t startHoursBcd, uint8_t startMinutes
 
 
 /* 234128f4 /  / 2341a308 - todo */
-void sub_234128f4()
+void sub_234128f4(uint8_t bStartHoursBCD, uint8_t bStartMinutesBCD, 
+	uint8_t bDurationHoursBCD, uint8_t bDurationMinutesBCD, 
+	uint16_t* pStartHours, uint16_t* pStartMinutes, 
+	uint16_t* pEndHours, uint16_t* pEndMinutes, int x)
 {
 #if 0
 	console_send_string("sub_234128f4 (todo.c): TODO\r\n");
 #endif
 
+	int16_t r0 = ((int16_t)x) / 60; 
+	int16_t r1 = ((int16_t)x) % 60; 
+
+	int16_t r2__ = ((bStartHoursBCD & 0xf0) >> 4) * 10.0;
+	uint32_t r2_ = r2__ + (double)(bStartHoursBCD & 0x0f);
+	r0 = r0 + r2_;
+
+	r2__ = ((bStartMinutesBCD & 0xf0) >> 4) * 10.0;
+	r2_ = r2__ + (double)(bStartMinutesBCD & 0x0f);
+	r1 = r1 + r2_;
+
+	if (r1 < 0)
+	{
+		r1 += 60;
+		r0--;
+	}
+
+	if (r0 < 0)
+	{
+		r0 +=24;
+	}
+
+	r2__ = ((bDurationHoursBCD & 0xf0) >> 4) * 10.0;
+	r2_ = r2__ + (double)(bDurationHoursBCD & 0x0f);
+	r2__ = (int16_t)(r0 + r2_);
+
+	int16_t r3__ = ((bDurationMinutesBCD & 0xf0) >> 4) * 10.0;
+	uint32_t r3_ = r3__ + (double)(bDurationMinutesBCD & 0x0f);
+	int16_t r3 = r3_ + r1;
+
+	if (r3 > 59)
+	{
+		r3 -= 60;
+		r2__++;
+	}
+
+	if (r2__ >= 24)
+	{
+		r2__ -= 24;
+	}
+
+	if (r1 > 59)
+	{
+		r1 -= 60;
+		r0++;
+	}
+
+	if (r0 >= 24)
+	{
+		r0 -= 24;
+	}
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_234128f4: %02x:%02x +%02x:%02x = %d:%d - %d:%d\r\n", 
+			bStartHoursBCD, bStartMinutesBCD, 
+			bDurationHoursBCD, bDurationMinutesBCD, 
+			r0, r1, r2__, r3);
+		console_send_string(debug_string);
+	}
+#endif
+
+	if (pStartHours != 0)
+	{
+		*pStartHours = r0;
+	}
+
+	if (pStartMinutes != 0)
+	{
+		*pStartMinutes = r1;
+	}
+
+	if (pEndHours != 0)
+	{
+		*pEndHours = r2__;
+	}
+
+	if (pEndMinutes != 0)
+	{
+		*pEndMinutes = r3;
+	}
 }
 
 

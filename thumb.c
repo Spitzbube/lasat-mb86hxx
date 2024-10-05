@@ -2309,6 +2309,15 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->loc_2344f352
 					break;
 
+				case 0x21: //Down?
+					//0x2344f27a
+					sp_0x3c = 0x02;
+					r7 = r4->graphicHandler;
+					r5 = r6->onEvent;
+					sp_0xc = r4->onNavigate;
+					//->loc_2344f352
+					break;
+
 				case 0x39:
 					//loc_2344f2a0
 					break;

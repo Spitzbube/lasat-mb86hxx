@@ -50,6 +50,7 @@ static uint8_t Data_2379c2d4[]; //2379c2d4
 //0x234ca54c
 volatile uint8_t bData_234ca54c = 0; //234ca54c +0
 static Menu* Data_234ca55c = &Data_234cc1b4; //234ca55c +0x10
+/*static*/ Menu* Data_234ca560 = 0; //234ca560 +0x14 //TODO!!!
 static Menu* Data_234ca564 = 0; //234CA564 +0x18
 static uint8_t menu_epg_date_string[]; //234ca7c0
 static uint8_t menu_epg_clock_time_string[]; //234ca7f4
@@ -1477,7 +1478,133 @@ int sub_234567d8(Struct_2348dc50* r5)
         //0x234567e0
         sp4 = *r5;
 
-    	console_send_string("sub_234567d8 (0x234567e0): TODO\r\n");
+#if 1
+        {
+            extern char debug_string[];
+            sprintf(debug_string, "sub_234567d8: sp4.Data_0 = 0x%x, sp4.wData_0x20=%d\r\n",
+                    sp4.Data_0, sp4.wData_0x20);
+            console_send_string(debug_string);
+        }
+#endif
+
+        if (sp4.Data_0 & (1 << 6))
+        {
+            sub_2348dc9e();
+
+            if (sp4.Data_0 & (1 << 1))
+            {  
+                channel_prev();
+                //->loc_2345680c
+            }
+            //loc_23456802
+            else if (sp4.Data_0 & (1 << 0))
+            {
+                channel_next();
+            }
+            //loc_2345680c
+            sub_2348dd36(Data_234ca55c, 1);
+            //->loc_2345691e
+        }
+        else
+        {
+            //loc_23456816
+            if (sp4.wData_0x20 != 0)
+            {
+                //0x23456820
+                if (sp4.Data_0 & (1 << 1))
+                {
+                    //0x23456826
+                    //sp4.Data_0x10[sp4.wData_0x1e + 1];
+                    //->loc_23456848
+                    menu_epg_update_date_text_field(sp4.Data_0x10[sp4.wData_0x1e + 1]);
+                    //->loc_23456854 -> loc_2345691e
+                }
+                //loc_23456832
+                else if (sp4.Data_0 & (1 << 0))
+                {
+                    //0x23456838
+                    if (sp4.wData_0x1e == 0)
+                    {
+                        //0x23456842
+                        menu_epg_update_date_text_field(sp4.Data_0x10[sp4.wData_0x20 - 1]);
+                        //->loc_23456854 -> loc_2345691e
+                    }
+                    else
+                    {
+                        //loc_2345684c
+                        menu_epg_update_date_text_field(sp4.Data_0x10[sp4.wData_0x1e - 1]);
+                        //->loc_23456854 -> loc_2345691e
+                    }
+                }
+                //loc_2345685c
+                else if (sp4.Data_0 & (1 << 9)) //0x200 (Right key)
+                {
+                    //0x23456862
+                    //sp4.bData_0x58;
+                    //->loc_23456878
+                    sub_2348dff2(r5, (int8_t) sp4.bData_0x58);
+                    //0x2345687e
+                    sp4 = *r5;
+
+                    menu_epg_update_date_text_field(sp4.Data_0x10[sp4.wData_0x1e]);
+
+                    rtos_task_wait(10);
+                    //->loc_2345691e
+                }
+                //loc_2345686a
+                else if (sp4.Data_0 & (1 << 10)) //0x400 (Left key)
+                {
+                    //0x23456870
+                    //sp4.bData_0x58;
+                    //->loc_23456878
+                    sub_2348dff2(r5, (int8_t)  -sp4.bData_0x58);
+                    //0x2345687e
+                    sp4 = *r5;
+
+                    menu_epg_update_date_text_field(sp4.Data_0x10[sp4.wData_0x1e]);
+
+                    rtos_task_wait(10);
+                    //->loc_2345691e
+                }
+                //loc_234568a2
+                else if (sp4.Data_0 & (1 << 5))
+                {
+                    //0x234568a8
+                    sub_2345636a(sp4.Data_0x10[sp4.wData_0x1e]);
+
+                    void* r5 = sub_2344dda2();
+
+                    Data_234ca560->graphicData->pItems[0].height = 0x14C;
+                    Data_234ca560->graphicData->pItems[1].height = 0x140;
+
+                    Data_234ca560->graphicData->bData_0x19 = 0;
+                    Data_234ca560->timeout = 0;
+                    //->loc_234568e0
+                    MENU_STACK_PUSH(Data_234ca560);
+                    menu_initialize(Data_234ca560);
+                    sub_2343d51e(Data_234ca560, r5);
+                    //->loc_2345691e
+                }
+                //loc_234568f4
+                else if (sp4.Data_0 & (1 << 7))
+                {
+                    //0x234568fa
+                    if (((Data_2379a6d4.Data_0x10 << 26) >> 30) != 2)
+                    {
+                        //0x23456906
+                        EIT_Event** r4 = &sp4.Data_0x10[sp4.wData_0x1e];
+                        void* r0 = sub_2344dda2();
+
+                        sub_23459b66(r0, *r4, &Data_2379a6d4);
+                    }
+                    //loc_2345691e
+                }
+                //loc_2345691e
+            } //if (sp4.wData_0x20 != 0)
+            //loc_2345691e
+        }
+        //->loc_2345691e
+        return 0;
     }
     else
     {
@@ -1563,7 +1690,7 @@ int sub_23456932(Struct_2348dc50* a)
             if (r4 != 0)
             {
                 //0x234569cc
-                sub_2341a0f0(
+                clocktime_get_event_time_string(
                     (*sp_0x6c)->start_time[0],
                     (*sp_0x6c)->start_time[1],
                     (*sp_0x6c)->duration[0],
@@ -1636,7 +1763,7 @@ int sub_23456932(Struct_2348dc50* a)
                             //loc_23456a60
                             strncat(r5, &r1[0], 38 - r4);
                         }
-#if 1
+#if 0
                         {
                             extern char debug_string[];
                             sprintf(debug_string, "sub_23456932: r5='%s'\r\n", r5);
@@ -1685,7 +1812,7 @@ int sub_23456aa2(void)
     Struct_2348dc50* r4 = 0;
     sp_0xd4 = 0;
 
-    sub_234764fc(0);
+    sub_2344ed14(0);
 
     sub_2340bf0c(&sp_0x3c);
 
@@ -1761,7 +1888,7 @@ int sub_23456bc0(void)
 #endif
 
     sub_2348dc9e();
-    sub_234764fc(1);
+    sub_2344ed14(1);
 
     return 0;
 }
@@ -1974,6 +2101,8 @@ int16_t sub_2345703c(uint8_t* r7)
 #endif
 
     Clock_Time sp_0x20;
+    uint16_t sp_0x1c;
+    uint16_t sp_0x18;
     EIT_Event* pEvent;
     uint16_t r5 = 0;
 
@@ -2007,11 +2136,32 @@ int16_t sub_2345703c(uint8_t* r7)
         if (pEvent->table_id != 0x4e)
         {
             //0x234570b0
-#if 1
-        	console_send_string("sub_2345703c (0x234570b0): TODO\r\n");
-#endif
+            sub_234128f4(pEvent->start_time[0], pEvent->start_time[1],
+                pEvent->duration[0], pEvent->duration[1],
+                0, 0, &sp_0x1c, &sp_0x18, 0);
 
+            uint32_t r0 = pEvent->wData_0x16;
 
+            uint8_t h = ((pEvent->start_time[0] & 0xf0) >> 4) * 10.0;
+            h = h + (double)(pEvent->start_time[0] & 0x0f);
+
+            uint8_t m = ((pEvent->start_time[1] & 0xf0) >> 4) * 10.0;
+            m = m + (double)(pEvent->start_time[1] & 0x0f);
+
+            uint32_t r3 = (h << 8) | m;
+            uint32_t ip = (sp_0x1c << 8) | sp_0x18;
+
+            if (r3 > ip)
+            {
+                r0++;
+            }
+
+            r0 = (r0 << 16) | (sp_0x1c << 8) | sp_0x18;
+
+            if (r0 > r6)
+            {
+                r5++;
+            }
             //->loc_234571e4
         }
         else
@@ -2089,7 +2239,7 @@ int sub_23457200(void)
                 return 1;
             }
             //0x234572ac
-            sub_234128f4/*sub_2341a308*/(r4->start_time[0], r4->start_time[1], 
+            sub_234128f4(r4->start_time[0], r4->start_time[1], 
                 r4->duration[0], r4->duration[1], 0, 0, &sp_0x18, &sp_0x14, 0);
 
             uint8_t r2 = ((r4->start_time[0] & 0xf0) >> 4) * 10.0;

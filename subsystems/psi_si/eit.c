@@ -989,3 +989,11 @@ EIT_Event* eit_get_present_following_event(EIT_EventList* a, uint8_t b)
 }
 
 
+/* 2344ed14 /  / 234764fc - todo */
+void sub_2344ed14(int a)
+{
+	bData_2349360c = a;
+}
+
+
+

@@ -2683,12 +2683,62 @@ int sub_2348db78(Menu_Item* a, int b)
 
 
 /* /  / 2348dbf8 - todo */
-void sub_2348dbf8(void)
+int sub_2348dbf8(Menu_Item* pItem, int r1)
 {
-#if 1
+#if 0
 	console_send_string("sub_2348dbf8 (todo.c): TODO\r\n");
 #endif
 
+    uint16_t* r2 = &Data_234e1d70->arwData_0x28[0];
+    uint8_t i = 0;
+
+    do
+    {
+        //loc_2348dc10
+        if (*r2 == (Data_234e1d70->wData_0x1e + 1))
+        {
+            //0x2348dc16
+            if (r1 == 1)
+            {
+                //0x2348dc1a
+                //r1 = Data_234e1d70->bData_0x5d;
+                //->loc_2348dc24
+                (Data_234e1d6c)(pItem, Data_234e1d70->bData_0x5d, 1, 0);
+            }
+            //loc_2348dc1e
+            else if (r1 == 2)
+            {
+                //0x2348dc22
+                //r1 = Data_234e1d70->bData_0x5c;
+                //loc_2348dc24
+                (Data_234e1d6c)(pItem, Data_234e1d70->bData_0x5c, 1, 0);
+            }
+            //loc_2348dc2a
+            return 1;
+        }
+        //loc_2348dc2e
+        i++;
+        r2++;
+    }
+    while (i < 20);
+    //0x2348dc38
+    if (r1 == 1)
+    {
+        //0x2348dc3c
+        //r1 = Data_234e1d70->bData_0x5b;
+        //->loc_2348dc46
+        (Data_234e1d6c)(pItem, Data_234e1d70->bData_0x5b, 1, 0);
+    }
+    //loc_2348dc40
+    else if (r1 == 2)
+    {
+        //0x2348dc44
+        //r1 = Data_234e1d70->bData_0x5a;
+        //loc_2348dc46
+        (Data_234e1d6c)(pItem, Data_234e1d70->bData_0x5a, 1, 0);
+    }
+    //loc_2348dc4c
+    return 0;
 }
 
 

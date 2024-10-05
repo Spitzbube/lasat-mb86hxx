@@ -518,6 +518,11 @@ void graphic_thread()
 		{
 			//0x2345315c
 #if 1
+			if (r7->command == 2)
+			{
+				//No trace
+			}
+			else
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "graphic_thread: r7->command=%d\r\n", r7->command);
@@ -598,7 +603,7 @@ void graphic_thread()
 
 					Graphic_Job_2_5* r5 = r7->pPayload;
 
-#if 1
+#if 0
 					{
 						extern char debug_string[];
 						sprintf(debug_string, "loc_23453500: r5->wData_2=0x%x, bData_0=%d, bData_0x19=%d, bData_4=%d\r\n",

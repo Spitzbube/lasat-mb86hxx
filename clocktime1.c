@@ -15,3 +15,25 @@ uint8_t sub_23412e4c(uint8_t a)
 }
 
 
+/* 23412e68 /  / 2341a87c - todo */
+void clocktime_weekday_next(uint16_t* pWeekday, int b)
+{
+#if 0
+	console_send_string("clocktime_weekday_next (todo.c): TODO\r\n");
+#endif
+
+	int8_t day = *pWeekday + b;
+
+	if (day < 1)
+	{
+		day = 7;
+	}
+	else if (day > 7)
+	{
+		day = 1;
+	}
+
+	*pWeekday = day;
+}
+
+

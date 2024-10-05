@@ -781,14 +781,52 @@ int sub_23407e40(uint8_t* a, int b, void* sl, int fp)
 }
 
 
-/* 2340beb0 - todo */
-int sub_2340beb0(char* a, char* b)
+const struct Struct_23487f18
 {
-#if 1
+	char lang[4][4];
+}
+Data_23487f18[] = //23487f18  /   / 234b2408
+{
+	{{"ger", "DEU", "deu", "GER"}},
+	{{"eng", "ENG", "", ""}},
+	{{"ita", "ITA", "", ""}},
+	{{"fin", "FIN", "", ""}},
+	{{"fre", "fra", "FRE", "FRA"}},
+	{{"cze", "ces", "CZE", "CES"}},
+	{{"tur", "TUR", "", ""}},
+	{{"hun", "HUN", "", ""}},
+	{{"spa", "esl", "SPA", "ESL"}},
+	{{"swe", "SWE", "sve", "SVE"}},
+	{{"gre", "GRE", "", ""}},
+	{{"por", "POR", "", ""}},
+	{{"dan", "DAN", "", ""}},
+	{{"slv", "SLV", "", ""}},
+	{{"nld", "NLD", "dut", "DUT"}},
+};
+
+
+/* 234093d4 /  / 2340beb0 - todo */
+int sub_2340beb0(char* r7, int b)
+{
+#if 0
 	console_send_string("sub_2340beb0 (todo.c): TODO\r\n");
 #endif
 
-	return 1;
+	const struct Struct_23487f18* r6 = &Data_23487f18[b];
+
+	for (uint8_t i = 0; i < 4; i++)
+	{
+		//loc_2340bec4
+		char* r0 = &r6->lang[i];
+		uint32_t r5 = (r0[0] | (r0[1] << 8) | (r0[2] << 16) | (r0[3] << 24)) & 0xffffff;
+
+		if (r5 == ((r7[0] | (r7[1] << 8) | (r7[2] << 16) | (r7[3] << 24)) & 0xffffff))
+		{
+			return 1;
+		}
+	}
+
+	return 0;
 }
 
 
