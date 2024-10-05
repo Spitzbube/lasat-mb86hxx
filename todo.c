@@ -955,14 +955,6 @@ int sub_23451f60()
 }
 
 
-/*  /  / 23418f80 */
-void sub_23418f80()
-{
-	console_send_string("sub_23418f80 (todo.c): TODO\r\n");
-
-}
-
-
 /*  /   / 23454624 - todo */
 void sub_23454624()
 {
@@ -1042,14 +1034,6 @@ int sub_2345a746()
 	console_send_string("sub_2345a746 (todo.c): TODO\r\n");
 
 	return 1;
-}
-
-
-/* /  / 2345661e - todo */
-void sub_2345661e()
-{
-	console_send_string("sub_2345661e (todo.c): TODO\r\n");
-
 }
 
 

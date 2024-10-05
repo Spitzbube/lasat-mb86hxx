@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "menu_info_bar.h"
 #include "clocktime.h"
+#include "tdt.h"
 #include "eit.h"
 
 #pragma thumb
@@ -32,6 +33,7 @@ static int sub_23456aa2(void);
 static int sub_23456bc0(void);
 
 static uint8_t Data_23799ce8[]; //23799ce8
+static uint8_t menu_epg_weekday_string[]; //2379A6F0
 static uint8_t Data_2379c098[]; //2379c098
 static uint8_t Data_2379c138[]; //2379c138
 static uint8_t Data_2379c160[]; //2379c160
@@ -49,6 +51,7 @@ static uint8_t Data_2379c2d4[]; //2379c2d4
 volatile uint8_t bData_234ca54c = 0; //234ca54c +0
 static Menu* Data_234ca55c = &Data_234cc1b4; //234ca55c +0x10
 static Menu* Data_234ca564 = 0; //234CA564 +0x18
+static uint8_t menu_epg_date_string[]; //234ca7c0
 static uint8_t menu_epg_clock_time_string[]; //234ca7f4
 
 static Graphic_Job_2_5_Item_Text Data_234ca580 = //234ca580
@@ -70,6 +73,25 @@ static Graphic_Job_2_5_Item_Text Data_234ca580 = //234ca580
 0x234ca594 0000                   movs       r0, r0
 0x234ca596 0000                   movs       r0, r0
 0x234ca598 0000                   movs       r0, r0
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text menu_epg_date_text_field = //234ca598
+{
+    0, 0x0100, 0x002e, 0x01f8, 0x004f, 0x01, 0x04, 0x09, 0x01, &menu_epg_date_string[0], 0, 0, 0
+#if 0
+0x234ca598                        db         0x00                               ; DATA XREF=sub_23456f24+24, 0x234caefc
+0x234ca599                        db         0x00
+0x234ca59a                        dw         0x0100
+0x234ca59c                        dw         0x002e
+0x234ca59e                        dw         0x01f8
+0x234ca5a0                        dw         0x004f
+0x234ca5a2                        db         0x01
+0x234ca5a3                        db         0x04
+0x234ca5a4                        db         0x09
+0x234ca5a5                        db         0x01
+0x234ca5a6 0000                   movs       r0, r0
+0x234ca5a8                        dd         0x234ca7c0
 #endif
 };
 
@@ -307,6 +329,7 @@ static Graphic_Job_2_5_Item_Text Data_234ca7a8 = //234ca7a8
 #endif
 };
 
+uint8_t menu_epg_date_string[52] = "--.--.----"; //234ca7c0
 uint8_t menu_epg_clock_time_string[] = "--:--  "; //234ca7f4
 
 static Graphic_Job_2_5_Item_Text Data_234ca82c = //234ca82c
@@ -586,7 +609,26 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
 0x234caeba 0000                   movs       r0, r0
 0x234caebc                        dd         0x234ca7a8
 #endif
-    {0}, //[26] = 234CAEDC
+    {1, 0, 0, 0/*Data_8*/, 0x00f6, 0x0029, 0x0102, 0x0026, 0, &Data_234c134c/*Data_0x18*/, 9, 0, &menu_epg_date_text_field/*Data_0x20*/}, //[26] = 234CAEDC: Date field
+#if 0
+0x234caedc                        db         0x01
+0x234caedd                        db  0x00 ; '.'
+0x234caede 0000                   movs       r0, r0
+0x234caee0 0000                   movs       r0, r0
+0x234caee2 0000                   movs       r0, r0
+0x234caee4 0000                   movs       r0, r0
+0x234caee6 0000                   movs       r0, r0
+0x234caee8                        dw         0x00f6
+0x234caeea                        dw         0x0029
+0x234caeec                        dw         0x0102
+0x234caeee                        dw         0x0026
+0x234caef0 0000                   movs       r0, r0
+0x234caef2 0000                   movs       r0, r0
+0x234caef4                        dd         0x234c134c
+0x234caef8                        dw         0x0009
+0x234caefa                        dw         0x0000
+0x234caefc                        dd         0x234ca598
+#endif
     {0}, //[27] = 234CAF1C
     {1, 0, 0, 0/*Data_8*/, 0x020e, 0x0029, 0x0049, 0x0026, 0, &Data_234c1340/*Data_0x18*/, 3, 0, &menu_epg_clock_time_text_field/*Data_0x20*/}, //[28] = 234CAF5C: Clock Time
 #if 0
@@ -1027,7 +1069,8 @@ static Menu Data_234cc1b4 = //234cc1b4
 
 
 uint8_t Data_23799ce8[100]; //23799ce8, size???
-User_Settings Data_2379a6d4; //2379a6d4
+User_Settings Data_2379a6d4; //2379a6d4 +0x1c = 2379A6F0
+uint8_t menu_epg_weekday_string[20]; //2379A6F0 +0x14 = 2379a704
 EIT_Event* Data_2379a704[1600]; //2379a704 -> 2379C004
 struct 
 {
@@ -1297,6 +1340,47 @@ int sub_234565ba(void)
     }
 
     return 0;
+}
+
+
+/* /  / 2345661e - todo */
+void menu_epg_update_date_text_field(EIT_Event* pEvent)
+{
+#if 0
+	console_send_string("menu_epg_update_date_text_field (todo.c): TODO\r\n");
+#endif
+
+    Struct_23419f50 sp8;
+
+    Graphic_Job_2_5_Item* pItem = &Data_234ca55c->graphicData->pItems[26];
+
+    if (pEvent != 0)
+    {
+        char* pString = pItem->Data_0x20->pString;
+
+        if (pEvent->wData_0x16 != 0)
+        {
+            sp8.time_of_change_mjd = pEvent->wData_0x16;
+            sp8.time_of_change_utc_hours = sub_23456fd8(pEvent->start_time[0]);
+            sp8.time_of_change_utc_minutes = sub_23456fd8(pEvent->start_time[1]);
+
+            sub_23412444(&sp8);
+
+            sub_23412148(&sp8, Data_2379a6d4.timeDiff);
+
+            memset(&menu_epg_weekday_string[0], 0, 20);
+
+            text_table_get_string(sp8.weekDay + 2, &menu_epg_weekday_string[0], 19);
+
+            snprintf(pString, 50, "%s %s", &menu_epg_weekday_string[0], &sp8.Data_0[0]);
+        } //if (pEvent->wData_0x16 != 0)
+        else
+        {
+            strncpy(pString, "      - - . - - . - - - -", 50);
+        }
+
+        pItem->Data_0x20->bData_0x17 = 1;
+    }
 }
 
 
@@ -1578,7 +1662,7 @@ int sub_23456932(Struct_2348dc50* a)
         sp_0x70++;
     }
     //loc_23456a8c
-    sub_2345661e(sp8.Data_0x10[sp8.wData_0x1e]);
+    menu_epg_update_date_text_field(sp8.Data_0x10[sp8.wData_0x1e]);
 
     return 0;
 }
@@ -1821,6 +1905,17 @@ int sub_23456ed0(UI_Thread_Params* r5)
     frontdisplay_start_text(sub_23456db4);
 
     return 0;
+}
+
+
+/* /  / 23456fd8 - todo */
+uint8_t sub_23456fd8(uint8_t bData)
+{
+#if 0
+	console_send_string("sub_23456fd8 (todo.c): TODO\r\n");
+#endif
+
+    return ((bData >> 4) * 10) + (bData & 0x0f);
 }
 
 

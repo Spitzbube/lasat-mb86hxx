@@ -73,7 +73,7 @@ struct Struct_2358bda4
 	void (*frontDisplayTask)(); //128 = 0x80
 	void (*pfPeriodicCheck)(); //132 = 0x84
 
-} Data_2358bda4; //2358bda4 -> 2358BE2C?
+} Data_2358bda4; //2358bda4 -> 2358BE2C? /  / 235fb37c
 
 //2358bdd0
 
@@ -1348,7 +1348,7 @@ void sub_2341151c(uint8_t* r5)
 
 
 /* 23411550 /  / 23418f50 - complete */
-void sub_23411550()
+void sub_23411550(void)
 {
 	uint8_t sp;
 
@@ -1364,8 +1364,19 @@ void sub_23411550()
 }
 
 
+/*  /  / 23418f80 - complete */
+void sub_23418f80(void)
+{
+#if 0
+	console_send_string("sub_23418f80 (todo.c): TODO\r\n");
+#endif
+
+	Data_2358bda4.Data_28 = 1;
+}
+
+
 /* 2341159c / 23418538 / 23418f9c - complete */
-void sub_2341159c()
+void sub_2341159c(void)
 {
 #if 0
 	console_send_string("sub_2341159c (todo.c): TODO\r\n");

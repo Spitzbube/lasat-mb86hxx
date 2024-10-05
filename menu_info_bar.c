@@ -2103,10 +2103,43 @@ int sub_2348d06a(struct Struct_2377b8d0_Inner8** r4, struct Struct_2377b8d0_Inne
 /* 2348d34c - todo */
 void sub_2348d34c(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_2348d34c (todo.c): TODO\r\n");
 #endif
 
+    Channel sp;
+
+    if (Data_2396b628.wChannelNumber != 0)
+    {
+        uint32_t r0 = Data_2396b628.wChannelNumber - 1;
+        Data_2396b628.bDirectChannelDigits = 0;
+
+        channel_start_number(&sp, (uint16_t) r0, (uint16_t) r0);
+
+        sub_23411550();
+
+        uint16_t r1 = 0xffff;
+
+        if (sp.service_id != (r1 - 1))
+        {
+            Data_2396b628.Data_2396b6f8 = sp;
+
+            Data_2396b628.wServiceId = Data_2396b628.Data_2396b6f8.service_id;
+            Data_2396b628.wData_2396b73e = Data_2396b628.wChannelNumber;
+        }
+        else
+        {
+            //loc_2348d394
+            Data_2396b628.wChannelNumber = Data_2396b628.wData_2396b73e;
+        }
+    }
+    else
+    {
+        //loc_2348d394
+        Data_2396b628.wChannelNumber = Data_2396b628.wData_2396b73e;
+    }
+    //loc_2348d398
+    Data_2396b628.Data_2396b74c = sub_2348cc10;
 }
 
 
