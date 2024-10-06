@@ -753,7 +753,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 }
 
 
-/* 2343d556 / 2344c756 - todo */
+/* 2343d556 / 2344c756 / 2344dd86 - todo */
 void sub_2343d556(void* pMsg)
 {
 #if 0
@@ -767,7 +767,7 @@ void sub_2343d556(void* pMsg)
 
 
 /* Get UI Thread Params */
-/* 2343d572 - todo */
+/* 2343d572 /  / 2344dda2 - todo */
 UI_Thread_Params* sub_2343d572(void)
 {
 #if 0
@@ -2193,8 +2193,15 @@ void sub_2344f102(UI_Thread_Params* a)
 
 					break;
 
+				case 0x57: //87 = OK
 				case 0xea:
 					//loc_2344f2b0
+					//r0, #0x20
+					//->0x2344f1d2
+					sp_0x3c = (1 << 5); //0x20;
+					//->0x2344f29c
+					r5 = r6->onEvent;
+					//->2344f352
 					break;
 
 				case 0xe4:
@@ -2309,7 +2316,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->loc_2344f352
 					break;
 
-				case 0x21: //Down?
+				case 0x21: //Down
 					//0x2344f27a
 					sp_0x3c = 0x02;
 					r7 = r4->graphicHandler;
@@ -2409,6 +2416,221 @@ loc_2344f3b2:
 		//->loc_2344f132
 	} //while (1)
 }
+
+
+/* /  / 234500bc - todo */
+void sub_234500bc(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_234500bc (todo.c): TODO\r\n");
+#endif
+
+	uint8_t sp_0x34; //sp_0x34
+	int sp_0x30; //sp_0x30
+	Graphic_Queue_Item sp_0x20; //sp_0x20
+	UI_Thread_Params sp8;
+	void (*sp4)(void);
+	uint8_t (*r7)(void);
+	int (*r6)(int*) = 0;
+	void (*r5)(Graphic_Queue_Item*, Graphic_Job_2_5*);
+	Menu* r4;
+
+	sp8 = *a;
+	Menu_Data.Data_235fdf70/*2379679C*/ = &sp8;
+
+	sp_0x34 = OSSemPost(sp8.pSema);
+
+	r5 = 0;
+
+	OSMboxAccept(sp8.pMBox);
+
+	while (1)
+	{
+		//loc_234500e8
+		Menu* r0 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+
+		uint32_t timeout;
+		if (r0 != 0)
+		{
+			timeout = r0->timeout;
+		}
+		else
+		{
+			timeout = 0;
+		}
+		//loc_234500fa
+		uint8_t* r0__ = OSMboxPend(sp8.pMBox, (uint16_t)timeout, &sp_0x34);
+		uint8_t keyCode/*r0*/ = *r0__;
+
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+
+		Menu_Item* r1 = r4->Data_4;
+		sp4 = r4->graphicData->Data_0x20;
+		r7 = r4->graphicData->Data_0x1c;
+
+		if (sp_0x34 != 10)
+		{
+			//0x23450122
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_234500bc: keyCode=0x%02x (%d)\r\n", keyCode, keyCode);
+				console_send_string(debug_string);
+			}
+#endif
+			switch (keyCode)
+			{
+				case 0x2c:
+				case 0x2d:
+				case 0x2f:
+					//loc_23450144
+					if ((r4->onExit == 0) || (0 == (r4->onExit(&sp8))))
+					{
+						//loc_23450152
+						r4 = MENU_STACK_POP();
+						if (r4 != 0)
+						{
+							//0x2345015c
+							sp4 = r4->graphicData->Data_0x20;
+							r7 = r4->graphicData->Data_0x1c;
+							r5 = r4->graphicHandler;
+
+							sub_2343d51e(r4, &sp8);
+							//->loc_23450192
+						}
+						else
+						{
+							//loc_23450170
+							r7 = 0;
+
+							graphic_start_job_2_5(&sp_0x20, 0);
+							sub_2343d51e(0, &sp8);
+							//->loc_2345019c
+							goto loc_2345019c;
+						}
+					}
+					//loc_23450192
+					break;
+
+				case 0x20:
+					//loc_23450184
+					break;
+
+				case 0x21:
+					//loc_2345018e
+					break;
+
+				case 0x32:
+					//0x2345013e
+					break;
+
+				default:
+					//loc_23450192
+					break;
+			} //switch (keyCode)
+			//loc_23450192
+			if (sp4 != 0)
+			{
+				(sp4)();
+
+				sp4 = 0;
+			}
+loc_2345019c:
+			//loc_2345019c
+			if (r6 != 0)
+			{
+				(r6)(&sp_0x30);
+
+				r6 = 0;
+			}
+			//loc_234501a6
+			if (r5 != 0)
+			{
+				(r5)(&sp_0x20, r4->graphicData);
+
+				r5 = 0;
+			}
+			//loc_234501b2
+			if (r7 != 0)
+			{
+				sp_0x34 = (r7)();
+			}
+			//->loc_2345020c
+		} //if (sp_0x34 != 10)
+		else
+		{
+			//loc_234501bc
+			r6 = r1->onEvent;
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_234500bc: loc_234501bc: r6=%p\r\n", r6);
+				console_send_string(debug_string);
+			}
+#endif
+			if (r6 != 0)
+			{
+				//0x234501c2
+				int res = (r6)(0);
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "sub_234500bc: OnEvent->res=%d\r\n", res);
+					console_send_string(debug_string);
+				}
+#endif
+				if (res = 0xff)
+				{
+					//0x234501ca
+					if ((r4->onExit == 0) || (0 == (r4->onExit)(&sp8)))
+					{
+						//loc_234501d8
+						r4 = MENU_STACK_POP();
+						if (r4 != 0)
+						{
+							//0x234501e2
+							sub_2343d51e(r4, &sp8);
+
+							if (r5 != 0)
+							{
+								//0x234501f0
+								(r5)(&sp_0x20, r4->graphicData);
+
+								r5 = 0;
+							}
+							//->loc_2345020a
+						}
+						else
+						{
+							//loc_234501fa
+							graphic_start_job_2_5(&sp_0x20, 0);
+
+							sub_2343d51e(0, &sp8);
+						}
+						//loc_2345020a
+					}
+					else
+					{
+						//->loc_23450220
+						return;
+					}
+				}
+				//loc_2345020a
+				r6 = 0;
+			}
+			//loc_2345020c
+		}
+		//loc_2345020c
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//loc_23450218
+			OSTaskDel(0xff);
+		}
+		//->loc_234500e8
+	} //while (1)
+	//loc_23450220
+}
+
 
 #endif //!VDR110
 
