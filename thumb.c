@@ -135,7 +135,10 @@ Menu menuMain = //234930cc
 
 void (*Data_23493104)(UI_Thread_Params*) = 0; //23493104
 
-UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 -0x70
+#ifndef VDR110
+UI_Thread_Params Data_2379673c; //  / 2379673C
+#endif
+UI_Thread_Params Data_235fdf28; //235fdf28 235fdf98 / 23796754 -0x70
 UI_Thread_Params Data_235fdf40; //235fdf40 235fdf58 / 2379676C - 0x18
 
 #if 0
@@ -791,14 +794,64 @@ int sub_2343d580()
 }
 
 
+#ifndef VDR110
+
 /*  /  / 2344e40a - todo */
-void sub_2344e40a() //inputThreadFunc
+void sub_2344e40a(UI_Thread_Params* a) //inputThreadFunc
 {
 #if 1
 	console_send_string("sub_2344e40a (todo.c): TODO\r\n");
 #endif
 
+//	Menu** sp_0x20; //sp_0x20
+	uint8_t sp_0x1c; //sp_0x1c
+
+	Menu* r4;
+	int r6 = 0;
+	int r5 = 0;
+	int r7 = 0;
+	Menu_Item* sp4; //sp4
+	int sp = 0;
+
+	Data_2379673c = *a;
+
+	Menu_Data.Data_235fdf70/*2379679C*/ = &Data_2379673c; //r4
+
+	sp_0x1c = OSSemPost(Data_2379673c.pSema);
+
+	OSMboxAccept(Data_2379673c.pMBox);
+
+//	sp_0x20 = &Menu_Data.menu_stack[9]/*237967C4*/;
+
+	while (1)
+	{
+		//loc_2344e43e
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+		sp4 = r4->Data_4;
+
+		uint8_t* r0_ = OSMboxPend(Data_2379673c.pMBox, (uint16_t)r4->timeout, &sp_0x1c);
+
+		uint8_t keyCode = *r0_;
+
+		if (sp_0x1c != 10)
+		{
+			//0x2344e468
+		} //if (sp_0x1c != 10)
+		else
+		{
+			//loc_2344e540 -> loc_2344e64c
+
+		}
+		//loc_2344e65e
+		if (62 == OSTaskDelReq(0xff))
+		{
+			OSTaskDel(0xff);
+		}
+		//->loc_2344e43e
+	} //while (1)
 }
+
+#endif //!VDR110
 
 
 /* 2343d610 / 2344e6a2 - todo */
