@@ -3232,7 +3232,7 @@ int sub_2340ce30(Transponder* r4, uint16_t* r5)
 
 #endif
 
-/* 2340d0d0 - todo */
+/* 2340d0d0 /  / 2340fbac - todo */
 int sub_2340d0d0()
 {
 #if 0
@@ -3248,7 +3248,7 @@ int sub_2340d0d0()
 }
 
 
-/* 2340d1c8 / 2340f3b8 - todo */
+/* 2340d1c8 / 2340f3b8 / 2340fca4 - todo */
 void channel_set_psi_data_callback(void (*r5)())
 {
 	uint8_t err;

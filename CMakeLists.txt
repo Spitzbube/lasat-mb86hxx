@@ -57,6 +57,8 @@ set(SRCS
    sub_234774c4.c
    graphic.c
    sub_23419cd0.c
+   menu_installation.c
+   sub_23453d00.c
    sub_23454df4.c
    menu_epg.c
    sub_2345bc50.c
