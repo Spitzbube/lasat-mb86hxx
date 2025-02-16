@@ -214,7 +214,7 @@ int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
 				r4->y + r4->Data_0x18->wData_0,
 				r4->Data_0x18->wData_0,
 				r4->height - r4->Data_0x18->wData_0 * r0,
-				r4->wData_0x1c);
+				r4->wColor);
 		}
 		else
 		{
@@ -223,7 +223,7 @@ int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
 				r4->y,
 				r4->Data_0x18->wData_0,
 				r4->height - r4->Data_0x18->wData_0 * r0,
-				r4->wData_0x1c);
+				r4->wColor);
 		}
 		
 		r4->width -= r4->Data_0x18->wData_0;
@@ -239,7 +239,7 @@ int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
 				r4->y + r4->Data_0x18->wData_0,
 				r4->Data_0x18->wData_0,
 				r4->height - r4->Data_0x18->wData_0 * r6,
-				r4->wData_0x1c);
+				r4->wColor);
 		}
 		else
 		{
@@ -248,7 +248,7 @@ int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
 				r4->y,
 				r4->Data_0x18->wData_0,
 				r4->height - r4->Data_0x18->wData_0 * r6,
-				r4->wData_0x1c);
+				r4->wColor);
 		}
 
 		r4->width -= r4->Data_0x18->wData_0;
@@ -360,7 +360,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 				(int16_t) sp_0xc[r5].wData_0,
 				(int16_t) sp_0xc[r5].wData_4,
 				(int16_t) sp_0xc[r5].wData_6,
-				1, r4->wData_0x1c);
+				1, r4->wColor);
 		}
 		//loc_23453000
 		if ((r6->Data_4 == 5) ||
@@ -382,7 +382,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 			sp_0x34.y,
 			sp_0x34.width,
 			sp_0x34.height,
-			sp_0x34.wData_0x1c);
+			sp_0x34.wColor);
 		console_send_string(debug_string);
 	}
 #endif
@@ -392,9 +392,9 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 		sp_0x34.y,
 		sp_0x34.width,
 		sp_0x34.height,
-		sp_0x34.wData_0x1c);
+		sp_0x34.wColor);
 
-	if ((sp_0x34.wData_0x1c == 0) || (r6->Data_4 == 0))
+	if ((sp_0x34.wColor == 0) || (r6->Data_4 == 0))
 	{
 		return;
 	}
@@ -733,7 +733,7 @@ void graphic_thread()
 													pItem->Data_8->wData_4, 
 													pItem->Data_8->wData_6,
 													sp8,
-													pItem->wData_0x1c & 0xff);
+													pItem->wColor & 0xff);
 
 												if (((uint8_t*)sp8)[7] == 0)
 												{
@@ -747,7 +747,7 @@ void graphic_thread()
 									if (pItem->Data_0x20 != 0)
 									{
 										//0x2345371c
-										pItem->Data_0x20->bData_0xc = pItem->wData_0x1c & 0xff;
+										pItem->Data_0x20->bData_0xc = pItem->wColor & 0xff;
 
 										if ((graphics_data.arData_0x1c[i] != pItem) ||
 											(pItem->bData_0x3c != 0) ||

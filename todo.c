@@ -1124,7 +1124,7 @@ int sub_2347f098()
 {
 	console_send_string("sub_2347f098 (todo.c): TODO\r\n");
 
-	return 0;
+	return 1;
 }
 
 

@@ -16,13 +16,16 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
 
 extern void sub_2344f6ac();
 static int menu_channel_search_on_enter(int);
 static int menu_channel_search_on_exit(UI_Thread_Params*);
-static void sub_23453d36(Menu_Item*);
+static void menu_channel_search_get_antenna_value_string(Menu_Item*);
 static int sub_23453d78(void*);
+static void menu_channel_search_get_search_mode_string(Menu_Item*);
+static void menu_channel_search_get_encryption_mode_string(Menu_Item*);
 static void sub_23453fea();
 
 static Menu Data_234c4e7c; //234c4e7c
@@ -33,6 +36,8 @@ static uint8_t Data_237994a4[]; //237994a4
 static uint8_t Data_237994cc[]; //237994cc
 static uint8_t Data_237994f4[]; //237994f4
 static uint8_t Data_2379951c[]; //2379951c
+static uint8_t Data_23799544[]; //23799544
+static uint8_t Data_2379956c[]; //2379956c
 static uint8_t Data_2379960c[]; //2379960c
 static uint8_t menu_channel_search_ber_string[]; //234c32d4
 
@@ -63,6 +68,9 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c2fa8 = //234c2fa8
 #endif
 };
 
+static uint8_t menu_channel_search_qpsk_string[40] = "QPSK"; //234c2fb4
+static uint8_t menu_channel_search_fec_string[40] = "FEC"; //234c2fdc
+
 static Graphic_Job_2_5_Item_Text Data_234c3004 = //234c3004
 {
 	0, 0x01da, 0x00a4, 0x0257, 0x00c0, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_ber_string[0], 0, 0, 0
@@ -79,6 +87,17 @@ static Graphic_Job_2_5_Item_Text Data_234c3004 = //234c3004
 0x234c3011                        db         0x01
 0x234c3012 0000                   movs       r0, r0
 0x234c3014                        dd         0x234c32d4                         ; "BER: 0"
+#endif
+};
+
+static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c3028 = //234c3028
+{
+	0x000e, 0, 0x05, //...
+#if 0
+0x234c3028                        dw         0x000e                             ; DATA XREF=0x234c38ec
+0x234c302a                        dw         0x0000
+0x234c302c                        dd         0x00000000
+0x234c3030                        db         0x05
 #endif
 };
 
@@ -237,6 +256,82 @@ static Graphic_Job_2_5_Item_Text Data_234c3214 = //234c3214
 #endif
 };
 
+static Graphic_Job_2_5_Item_Text Data_234c322c = //234c322c
+{
+	0, 0x0128, 0x0084, 0x01c0, 0x00a0, 0x01, 0x04, 0x09, 0x01, &Data_23799544[0], 0, 0, 0
+#if 0
+0x234c322c                        db         0x00                               ; DATA XREF=0x234c36b4
+0x234c322d                        db         0x00
+0x234c322e                        dw         0x0128
+0x234c3230                        dw         0x0084
+0x234c3232                        dw         0x01c0
+0x234c3234                        dw         0x00a0
+0x234c3236                        db         0x01
+0x234c3237                        db         0x04
+0x234c3238                        db         0x09
+0x234c3239                        db         0x01
+0x234c323a 0000                   movs       r0, r0
+0x234c323c                        dd         0x23799544
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c3244 = //234c3244
+{
+	0, 0x0128, 0x00a4, 0x01c0, 0x00c0, 0x01, 0x04, 0x09, 0x01, &Data_2379956c[0], 0, 0, 0
+#if 0
+0x234c3244                        db         0x00                               ; DATA XREF=0x234c36f4
+0x234c3245                        db         0x00
+0x234c3246                        dw         0x0128
+0x234c3248                        dw         0x00a4
+0x234c324a                        dw         0x01c0
+0x234c324c                        dw         0x00c0
+0x234c324e                        db         0x01
+0x234c324f                        db         0x04
+0x234c3250                        db         0x09
+0x234c3251                        db         0x01
+0x234c3252 0000                   movs       r0, r0
+0x234c3254                        dd         0x2379956c
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c32a4 = //234c32a4
+{
+	0, 0x01f8, 0x0064, 0x02d7, 0x0080, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_qpsk_string[0], 0, 0, 0
+#if 0
+0x234c32a4                        db         0x00                               ; DATA XREF=0x234c3834
+0x234c32a5                        db         0x00
+0x234c32a6                        dw         0x01f8
+0x234c32a8                        dw         0x0064
+0x234c32aa                        dw         0x02d7
+0x234c32ac                        dw         0x0080
+0x234c32ae                        db         0x01
+0x234c32af                        db         0x04
+0x234c32b0                        db         0x09
+0x234c32b1                        db         0x01
+0x234c32b2 0000                   movs       r0, r0
+0x234c32b4                        dd         0x234c2fb4                         ; "QPSK"
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c32bc = //234c32bc
+{
+	0, 0x01f8, 0x0084, 0x02d7, 0x00a0, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_fec_string[0], 0, 0, 0
+#if 0
+0x234c32bc                        db         0x00                               ; DATA XREF=0x234c38b4
+0x234c32bd                        db         0x00
+0x234c32be                        dw         0x01f8
+0x234c32c0                        dw         0x0084
+0x234c32c2                        dw         0x02d7
+0x234c32c4                        dw         0x00a0
+0x234c32c6                        db         0x01
+0x234c32c7                        db         0x04
+0x234c32c8                        db         0x09
+0x234c32c9                        db         0x01
+0x234c32ca 0000                   movs       r0, r0
+0x234c32cc                        dd         0x234c2fdc
+#endif
+};
+
 static uint8_t menu_channel_search_ber_string[40] = "BER: 0"; //234c32d4
 
 
@@ -307,7 +402,7 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 	{0}, //[1] = 234C33D4 
 	{0}, //[2] = 234C3414 
 	{0}, //[3] = 234C3454 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xc0, 0x20, 0, &Data_234c1334/*Data_0x18*/, 9, 0, &Data_234c3184/*Data_0x20*/}, //[4] = 234C3494 
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xc0, 0x20, 0, &Data_234c1334/*Data_0x18*/, 9, 0, &Data_234c3184/*Data_0x20*/}, //[4] = 234C3494: Antenne Label
 #if 0
 0x234c3494                        db         0x01                               ; DATA XREF=0x234c4c18
 0x234c3495                        db         0x00
@@ -426,7 +521,7 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 0x234c35f4                        dd         0x234c31fc
 #endif
 	{0}, //[10] = 234C3614 
-	{1, 0, 0, 0/*Data_8*/, 0x114, 0x60, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c3214/*Data_0x20*/}, //[11] = 234C3654 
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0x60, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c3214/*Data_0x20*/}, //[11] = 234C3654: Antenna Value String
 #if 0
 0x234c3654                        db         0x01                               ; DATA XREF=0x234c4c1c
 0x234c3655                        db  0x00 ; '.'
@@ -446,16 +541,120 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 0x234c3672                        dw         0x0000
 0x234c3674                        dd         0x234c3214
 #endif
-	{0}, //[12] = 234C3694 
-	{0}, //[13] = 234C36D4 
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0x80, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c322c/*Data_0x20*/}, //[12] = 234C3694 
+#if 0
+0x234c3694                        db         0x01                               ; DATA XREF=0x234c4c48
+0x234c3695                        db         0x00
+0x234c3696                        db         0x00
+0x234c3697                        db         0x00
+0x234c3698                        dd         0x00000000
+0x234c369c                        dd         0x00000000
+0x234c36a0                        dw         0x0114
+0x234c36a2                        dw         0x0080
+0x234c36a4                        dw         0x00ac
+0x234c36a6                        dw         0x0020
+0x234c36a8 0000                   movs       r0, r0
+0x234c36aa 0000                   movs       r0, r0
+0x234c36ac                        dd         0x234c12d4
+0x234c36b0                        dw         0x0009
+0x234c36b2                        dw         0x0000
+0x234c36b4                        dd         0x234c322c
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0xa0, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c3244/*Data_0x20*/}, //[13] = 234C36D4
+#if 0
+0x234c36d4                        db         0x01                               ; DATA XREF=0x234c4c74
+0x234c36d5                        db         0x00
+0x234c36d6                        db         0x00
+0x234c36d7                        db         0x00
+0x234c36d8                        dd         0x00000000
+0x234c36dc                        dd         0x00000000
+0x234c36e0                        dw         0x0114
+0x234c36e2                        dw         0x00a0
+0x234c36e4                        dw         0x00ac
+0x234c36e6                        dw         0x0020
+0x234c36e8 0000                   movs       r0, r0
+0x234c36ea 0000                   movs       r0, r0
+0x234c36ec                        dd         0x234c12d4
+0x234c36f0                        dw         0x0009
+0x234c36f2                        dw         0x0000
+0x234c36f4                        dd         0x234c3244
+#endif
 	{0}, //[14] = 234C3714 
 	{0}, //[15] = 234C3754 
 	{0}, //[16] = 234C3794 
 	{0}, //[17] = 234C37D4 
-	{0}, //[18] = 234C3814 
-	{0}, //[19] = 234C3854 
-	{0}, //[20] = 234C3894 
-	{0}, //[21] = 234C38D4 
+	{1, 0, 0, 0/*Data_8*/, 0x01d7, 0x0060, 0x0080, 0x0020, 0, &Data_234c1340/*Data_0x18*/, 0x09/*blue*/, 0, &Data_234c32a4/*Data_0x20*/}, //[18] = 234C3814
+#if 0
+0x234c3814                        db         0x01
+0x234c3815                        db         0x00
+0x234c3816                        db         0x00
+0x234c3817                        db         0x00
+0x234c3818                        dd         0x00000000
+0x234c381c                        dd         0x00000000
+0x234c3820                        dw         0x01d7
+0x234c3822                        dw         0x0060
+0x234c3824                        dw         0x0080
+0x234c3826                        dw         0x0020
+0x234c3828 0000                   movs       r0, r0
+0x234c382a 0000                   movs       r0, r0
+0x234c382c                        dd         0x234c1340
+0x234c3830                        dw         0x0009
+0x234c3832                        dw         0x0000
+0x234c3834                        dd         0x234c32a4
+#endif 
+	{1, 0, 0, 0/*Data_8*/, 0x01db, 0x0064, 0x0018, 0x0018, 0, &Data_234c3028/*Data_0x18*/, 0x0b/*0x0a = red*/, 0, NULL/*Data_0x20*/}, //[19] = 234C3854
+#if 0
+0x234c3854                        db         0x01
+0x234c3855                        db         0x00
+0x234c3856                        db         0x00
+0x234c3857                        db         0x00
+0x234c3858                        dd         0x00000000
+0x234c385c                        dd         0x00000000
+0x234c3860                        dw         0x01db
+0x234c3862                        dw         0x0064
+0x234c3864                        dw         0x0018
+0x234c3866                        dw         0x0018
+0x234c3868 0000                   movs       r0, r0
+0x234c386a 0000                   movs       r0, r0
+0x234c386c                        dd         0x234c3028
+0x234c3870                        dw         0x000b
+#endif 
+	{1, 0, 0, 0/*Data_8*/, 0x01d7, 0x0080, 0x0080, 0x0020, 0, &Data_234c12d4/*Data_0x18*/, 0x09/*blue*/, 0, &Data_234c32bc/*Data_0x20*/}, //[20] = 234C3894: FEC String
+#if 0
+0x234c3894                        db         0x01
+0x234c3895                        db         0x00
+0x234c3896                        db         0x00
+0x234c3897                        db         0x00
+0x234c3898                        dd         0x00000000
+0x234c389c                        dd         0x00000000
+0x234c38a0                        dw         0x01d7
+0x234c38a2                        dw         0x0080
+0x234c38a4                        dw         0x0080
+0x234c38a6                        dw         0x0020
+0x234c38a8 0000                   movs       r0, r0
+0x234c38aa 0000                   movs       r0, r0
+0x234c38ac                        dd         0x234c12d4
+0x234c38b0                        dw         0x0009
+0x234c38b2                        dw         0x0000
+0x234c38b4                        dd         0x234c32bc
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x01db, 0x0084, 0x0018, 0x0018, 0, &Data_234c3028/*Data_0x18*/, 0x0b/*green*/, 0, NULL/*Data_0x20*/}, //[21] = 234C38D4
+#if 0
+0x234c38d4                        db         0x01
+0x234c38d5                        db         0x00
+0x234c38d6                        db         0x00
+0x234c38d7                        db         0x00
+0x234c38d8                        dd         0x00000000
+0x234c38dc                        dd         0x00000000
+0x234c38e0                        dw         0x01db
+0x234c38e2                        dw         0x0084
+0x234c38e4                        dw         0x0018
+0x234c38e6                        dw         0x0018
+0x234c38e8 0000                   movs       r0, r0
+0x234c38ea 0000                   movs       r0, r0
+0x234c38ec                        dd         0x234c3028
+0x234c38f0                        dw         0x000b
+#endif
 	{1, 0, 0, 0/*Data_8*/, 0x01d7, 0x00a0, 0x0080, 0x20, 0, &Data_234c1328/*Data_0x18*/, 9, 0, &Data_234c3004/*Data_0x20*/}, //[22] = 234C3914: BER String
 #if 0
 0x234c3914                        db         0x01
@@ -607,7 +806,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 			&Data_234c3394[4], //234c3494,
 			&Data_234c3394[11], //234c3654,
 		}, //int fill_4[5]; //4
-		sub_23453d36, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_antenna_value_string, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
 		0, //sub_23453d78, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -624,7 +823,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4c26 0000                   movs       r0, r0
 0x234c4c28 0000                   movs       r0, r0
 0x234c4c2a 0000                   movs       r0, r0
-0x234c4c2c                        dd         sub_23453d36+1
+0x234c4c2c                        dd         menu_channel_search_get_antenna_value_string+1
 0x234c4c30                        dd         sub_23453d78+1
 0x234c4c34                        dd         menu_item_event_thread+1
 0x234c4c38 0000                   movs       r0, r0
@@ -639,8 +838,9 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 		0xffff, //uint16_t wData_2; //2
 		{
 			&Data_234c3394[5], //234c34d4,
+			&Data_234c3394[12], //234c3694,
 		}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_search_mode_string, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
 		0, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -657,7 +857,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4c52 0000                   movs       r0, r0
 0x234c4c54 0000                   movs       r0, r0
 0x234c4c56 0000                   movs       r0, r0
-0x234c4c58                        dd         sub_23453f1a+1
+0x234c4c58                        dd         menu_channel_search_get_search_mode_string+1
 0x234c4c5c                        dd         sub_23453f4e+1
 0x234c4c60                        dd         menu_item_event_thread+1
 #endif
@@ -668,8 +868,9 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 		0xffff, //uint16_t wData_2; //2
 		{
 			&Data_234c3394[6], //234c3514,
+			&Data_234c3394[13], //234c36d4
 		}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_encryption_mode_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		0, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -686,7 +887,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4c7e 0000                   movs       r0, r0
 0x234c4c80 0000                   movs       r0, r0
 0x234c4c82 0000                   movs       r0, r0
-0x234c4c84                        dd         sub_23453fa8+1
+0x234c4c84                        dd         menu_channel_search_get_encryption_mode_string+1
 0x234c4c88                        dd         sub_23453fa8+41
 0x234c4c8c                        dd         menu_item_event_thread+1
 #endif
@@ -869,6 +1070,7 @@ struct Struct_23796d30
 		int Data_8; //8
 	} Data_23798030; //23798030
 	void* Data_23798078; //23798078
+	Graphic_Queue_Item Data_23798088; //23798088
 	void* Data_23798098; //23798098
 	uint8_t bData_2379809c; //2379809c
 	uint8_t bData_2379809d; //2379809d
@@ -883,9 +1085,21 @@ static uint8_t Data_2379947c[40]; //2379947c
 static uint8_t Data_237994a4[40]; //237994a4
 static uint8_t Data_237994cc[40]; //237994cc
 static uint8_t Data_237994f4[40]; //237994f4
-static uint8_t Data_2379951c[40]; //2379951c, size???
+static uint8_t Data_2379951c[40]; //2379951c
+static uint8_t Data_23799544[40]; //23799544
+static uint8_t Data_2379956c[40]; //2379956c, size???
 static uint8_t Data_2379960c[40]; //2379960c, size???
 
+
+
+/* /  / 23452ac4 */
+void sub_23452ac4(uint32_t a, Graphic_Job_2_5_Item* b, int c, int d)
+{
+#if 1
+	console_send_string("sub_23452ac4 (todo.c): TODO\r\n");
+#endif
+
+}
 
 
 /* /  / 23452b1c - todo */
@@ -910,6 +1124,7 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 	//sp_0x10 = &r4->pItems[28];
 	//r4 = &r4->pItems[19];
 	//sp_0xc =  &r4->pItems[29];
+	//r5 = &r4->pItems[21];
 	//r3 = &r4->pItems[22]: BER String
 	//sp8 = &r4->pItems[30];
 	//r1 = &r4->pItems[26]: C/N String
@@ -938,9 +1153,101 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 		return 0xff;
 	}
 	//loc_23452bc2
+	//r0, #0xb
+	//r1, #0xa
+	//r2 = r4->pItems[19].wColor;
+	if (r6->bLock == 1)
+	{
+		//0x23452bce
+		if (r4->pItems[19].wColor != 0x0b)
+		{
+			//0x23452bd2
+			r4->pItems[19].wColor = 0x0b;
+			//->loc_23452bdc
+			r4->pItems[19].bData_0x3c = 1; //r7
+		}
+		//loc_23452be0
+	}
+	else
+	{
+		//loc_23452bd6
+		if (r4->pItems[19].wColor != 0x0a)
+		{
+			//0x23452bda
+			r4->pItems[19].wColor = 0x0a;
+			//->loc_23452bdc
+			r4->pItems[19].bData_0x3c = 1; //r7
+		}
+		//loc_23452be0
+	}
+	//loc_23452be0
+	if (r6->bData_0xb == 0)
+	{
+		//0x23452be6
+		if (r4->pItems[21].wColor != 0x0a)
+		{
+			//0x23452bec
+			r4->pItems[21].wColor = 0x0a; //r1
+			//->loc_23452bf8
+			r4->pItems[21].bData_0x3c = 1; //r7
+		}
+		//loc_23452bfc
+	}
+	else
+	{
+		//loc_23452bf0
+		if (r4->pItems[21].wColor != 0x0b)
+		{
+			//0x23452bf6
+			r4->pItems[21].wColor = 0x0b; //r0
+			//loc_23452bf8
+			r4->pItems[21].bData_0x3c = 1; //r7
+		}
+		//loc_23452bfc
+	}
+	//loc_23452bfc
+	if (r6->dwBER < 9000)
+	{
+		//0x23452c04
+		sprintf(/*sp_0x1c*/&r4->pItems[22].Data_0x20->pString[0], "BER: %d ", r6->dwBER);
+		//->loc_23452c16
+	}
+	else
+	{
+		//loc_23452c0e
+		sprintf(/*sp_0x1c*/&r4->pItems[22].Data_0x20->pString[0], "BER: >9000");
+	}
+	//loc_23452c16
+	uint32_t cnr = r6->bSNR;
+	if (cnr > 40)
+	{
+		cnr = 40;
+	}
+	//loc_23452c1e
+	sub_23452ac4(cnr, /*sp_0xc*/&r4->pItems[29], 0x87, 0x28);
 
-	//TODO!!!
+	/*sp_0xc*/r4->pItems[29].bData_0x3c = 1; //r7
+	/*sp_0x10*/r4->pItems[28].bData_0x3c = 1; //r7
 
+	uint32_t signal_strength = r6->bStrength;
+	if (signal_strength > 100)
+	{
+		signal_strength = 100;
+	}
+	//loc_23452c40
+	sub_23452ac4(signal_strength, /*sp4*/&r4->pItems[31], 0x87, 0x64);
+
+	/*sp4*/r4->pItems[31].bData_0x3c = 1; //r7
+	/*sp8*/r4->pItems[30].bData_0x3c = 1; //r7
+
+	sprintf(/*sp_0x18*/&r4->pItems[26].Data_0x20->pString[0], "C/N: %ddB", cnr);
+
+	sprintf(/*sp_0x14*/&r4->pItems[27].Data_0x20->pString[0], "Level: %d%%", signal_strength);
+
+	graphic_start_job_2_5(&Data_23796d30.Data_23798088, Data_234c2f70->graphicData);
+
+	OSSemPost(Data_23796d30.Data_23798078);
+	//->loc_23452baa
 	return 0;
 }
 
@@ -1254,12 +1561,12 @@ int sub_23453d00(UI_Thread_Params* r5)
 
 
 /* /  / 23453d36 - todo */
-static void sub_23453d36(Menu_Item* item)
+static void menu_channel_search_get_antenna_value_string(Menu_Item* item)
 {
 	uint8_t* pStr = item->Data_4[1]->Data_0x20->Data_0x10;
 
 #if 0
-	console_send_string("sub_23453d36 (todo.c): TODO\r\n");
+	console_send_string("menu_channel_search_get_antenna_value_string (todo.c): TODO\r\n");
 #endif
 
 	if (Data_23796d30.Data_23796d50 == 0)
@@ -1291,6 +1598,75 @@ static int sub_23453d78(void* a)
 #endif
 
 	return 0;
+}
+
+
+/* /  / 23453f1a - todo */
+static void menu_channel_search_get_search_mode_string(Menu_Item* item)
+{
+#if 0
+	console_send_string("menu_channel_search_get_search_mode_string (todo.c): TODO\r\n");
+#endif
+
+	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+
+	switch (Data_23796d30.Data_23798030.Data_0)
+	{
+		case 0:
+			//loc_23453f34
+			text_table_get_string(0xc0/*Automatisch*/, pString, 12);
+			break;
+
+		case 1:
+			//loc_23453f38
+			text_table_get_string(0xbf/*Manuell*/, pString, 12);
+			break;
+
+		case 2:
+			//loc_23453f3c
+			text_table_get_string(0x15d/*Netzwerk*/, pString, 12);
+			break;
+
+		default:
+			//loc_23453f34
+			text_table_get_string(0xc0/*Automatisch*/, pString, 12);
+			break;
+	}
+
+	pString[12] = 0;
+}
+
+
+/* /  / 23453fa8 - todo */
+void menu_channel_search_get_encryption_mode_string(Menu_Item* item)
+{
+#if 0
+	console_send_string("menu_channel_search_get_encryption_mode_string (todo.c): TODO\r\n");
+#endif
+
+	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	int nStr;
+
+	switch (Data_23796d30.Data_23798030.Data_4)
+	{
+		case 0:
+			//loc_23453fbc
+			nStr = 0x6e/*Ja*/;
+			break;
+
+		case 1:
+			//loc_23453fc0
+			nStr = 0x6f/*Nein*/;
+			break;
+
+		default:
+			//loc_23453fbc
+			nStr = 0x6e/*Ja*/;
+			break;
+	}
+
+	text_table_get_string(nStr, pString, 8);
+	pString[7] = 0;
 }
 
 
