@@ -120,6 +120,18 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c = //234c131c
 #endif
 };
 
+
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328 = //234c1328
+{
+	9, 4, 0x04, //...
+#if 0
+0x234c1328                        dw         0x0009                             ; DATA XREF=sub_2344d444+310, sub_23492670+30, dword_234926c4, sub_2349511c+48, dword_2349534c, sub_234987c2+48, dword_23498a60, 0x234c392c, 0x234e99ec, 0x234e9a2c, 0x234e9a6c
+0x234c132a 0000                   movs       r0, r0
+0x234c132c                        dd         0x00000004                         ; DATA XREF=sub_2344d444+312
+0x234c1330                        db         0x04                               ; DATA XREF=sub_2344d444+314
+#endif
+};
+
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334 = //234c1334
 {
 	9, 4, 0x02, //...

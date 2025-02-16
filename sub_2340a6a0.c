@@ -1887,7 +1887,7 @@ void sub_2340aee4()
 }
 
 
- /* 2340b22c / 2340d534 - todo */
+ /* 2340b22c / 2340d534 / 2340dd08 - todo */
 int sub_2340b22c(int r4)
 {
 	uint8_t err; //sp_0x40
@@ -2591,7 +2591,7 @@ void sub_2340c204(int a)
 }
 
 
-/* 2340c29c - todo */
+/* 2340c29c /  / 2340ed78 - todo */
 void sub_2340c29c(Struct_23543df0* r5, uint32_t r4)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
@@ -2653,7 +2653,7 @@ int sub_2340c368(int get, int* r4)
 }
 
 
-/* 2340c488 - todo */
+/* 2340c488 /  / 2340ef64 - todo */
 uint16_t channel_get_transponder_list(uint16_t r6, Transponder list[], uint16_t maxNum)
 {
 	uint8_t err; //sp

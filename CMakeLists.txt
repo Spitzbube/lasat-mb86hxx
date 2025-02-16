@@ -47,7 +47,7 @@ set(SRCS
    channel_list_update.c    #0x2343dcfc
    audec.c
    scan.c
-   menu_channel_search.c    #0x23470090     0x23495ea0      0x238de5d0
+   menu_channel_search_old.c    #0x23470090     0x23495ea0      0x238de5d0
    sub_23472004.c           #0x23471fe4     0x23496474      0x238e0ad4
    sub_2344f770.c
    sub_234515f0.c

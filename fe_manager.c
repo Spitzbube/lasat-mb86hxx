@@ -814,7 +814,7 @@ int fe_manager_register_state_change_callback(Frontend* r4, void (*func)())
 }
 
 
-/* 2340ec8c / 23415ba8 - complete */
+/* 2340ec8c / 23415ba8 / 23416660 - complete */
 int fe_manager_register_measurement_callback(void* h, int (*cbk)(Frontend_Measurement*))
 {
 #if 0

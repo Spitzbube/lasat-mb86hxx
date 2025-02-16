@@ -1119,6 +1119,15 @@ void sub_234994a2()
 }
 
 
+/* /  / 2347f098 - todo */
+int sub_2347f098()
+{
+	console_send_string("sub_2347f098 (todo.c): TODO\r\n");
+
+	return 0;
+}
+
+
 #endif //!VDR110
 
 

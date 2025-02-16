@@ -45,7 +45,7 @@ Menu_Item menu_main_items[7] = //23492f98 +4
 		0xffff, //uint16_t wData_2; //2
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		menu_channel_search_entry, //void* Data_0x1c; //0x1c = 28
+		0/*menu_channel_search_entry*/, //void* Data_0x1c; //0x1c = 28
 		menu_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -503,6 +503,13 @@ void sub_2343d458(UI_Thread_Params* a)
 }
 
 
+/* 2343d470 /  / 2344db54 - todo */
+Menu* sub_2344db54(void)
+{
+	return Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+}
+
+
 /* 2343d482 /  / 2344db72 - todo */
 Menu* menu_stack_operate(Menu* r4)
 {
@@ -706,7 +713,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 {
 	UI_Thread_Params sp4;
 
-#if 0
+#if 1
 	console_send_string("sub_2343d51e (todo.c): TODO\r\n");
 #endif
 
@@ -714,6 +721,15 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 	{
 		//0x2343d528
 		Menu_Item* pMenuItem = r2->Data_4;
+
+#if 0
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_2343d51e: pMenuItem->inputThreadFunc=%p, r0->threadFunc=%p\r\n", 
+				pMenuItem->inputThreadFunc, r0->threadFunc);
+			console_send_string(debug_string);
+		}
+#endif
 
 		if (pMenuItem->inputThreadFunc == r0->threadFunc)
 		{
@@ -786,6 +802,13 @@ struct Menu_Data* sub_2344de8e(void)
 #endif
 
 	return &Menu_Data;
+}
+
+
+/* /  / 2344de94 */
+int sub_2344de94(void)
+{
+	return Menu_Data.menu_stack_level;
 }
 
 

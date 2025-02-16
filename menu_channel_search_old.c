@@ -722,7 +722,7 @@ void sub_23470538()
 
 
 /* 23470548 - complete */
-int menu_channel_search_entry(UI_Thread_Params* r4)
+int menu_channel_search_entry__(UI_Thread_Params* r4)
 {
 #if 1
 	console_send_string("menu_channel_search_entry (todo.c): TODO\r\n");

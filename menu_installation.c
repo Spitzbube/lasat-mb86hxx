@@ -759,7 +759,7 @@ int menu_installation_items_on_event(void* r0)
 			{
 				case 0:
 					//loc_23452890
-					sub_23453d00();
+					sub_23453d00(r0);
 					//->loc_23452a38
 					break;
 
@@ -791,7 +791,7 @@ int menu_installation_items_on_event(void* r0)
 #else
 			if (/*r2*/menu_installation_p->currentItem == 0)
 			{
-				sub_23453d00();
+				sub_23453d00(r0);
 			}
 			else if (/*r2*/menu_installation_p->currentItem == 1)
 			{
@@ -825,7 +825,7 @@ int menu_installation_items_on_event(void* r0)
 
 				case 1:
 					//loc_23452890
-					sub_23453d00();
+					sub_23453d00(r0);
 					//->loc_23452a38
 					break;
 
@@ -872,7 +872,7 @@ int menu_installation_items_on_event(void* r0)
 			}
 			else if (/*r2*/menu_installation_p->currentItem == 1)
 			{
-				sub_23453d00();
+				sub_23453d00(r0);
 			}
 			else if (/*r2*/menu_installation_p->currentItem == 2)
 			{
@@ -900,7 +900,7 @@ int menu_installation_items_on_event(void* r0)
 			}
 #endif
 		}
-    }
+    } //if (r0 != NULL)
 	else
 	{
 	    //loc_234528c8
