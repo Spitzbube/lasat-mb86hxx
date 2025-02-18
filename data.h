@@ -89,8 +89,8 @@ typedef struct
 {
 	int fill_0[4]; //0
 	void* Data_0x10; //16 = 0x10
-	uint16_t fill_0x14; //20 = 0x14
-	uint8_t fill_0x16; //22 = 0x16
+	uint16_t wData_0x14; //20 = 0x14
+	uint8_t bData_0x16; //22 = 0x16
 	uint8_t bData_0x17; //23 = 0x17
 	//???
 } Menu_Item_Inner4_Data_0_Data_0x20;

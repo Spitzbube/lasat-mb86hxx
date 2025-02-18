@@ -20,8 +20,9 @@ typedef struct
 		{
 			uint32_t fill_bit0: 8; //bit 0
 			uint32_t bit8: 5; //bit 8
-			uint32_t fill_bit13: 14; //bit 13
-//			uint32_t fill_bit0: 27; //bit 0
+			uint32_t fill_bit13: 10; //bit 13
+			uint32_t bit23: 2; //bit23
+			uint32_t fill_bit25: 2; //bit25
 			uint32_t video_system: 4; //bit27
 		} bitData;
 	} Data_4; //4

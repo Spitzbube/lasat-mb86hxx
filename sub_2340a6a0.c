@@ -3050,8 +3050,8 @@ int sub_2340ca1c(int r4, Struct_234fd8f0_Inner_489DC* r6)
 }
 
 
-/* 2340ca5c - todo */
-int sub_2340ca5c(int get, void* r6)
+/* 2340ca5c /  / 2340f538 - todo */
+int sub_2340ca5c(int get, Struct_2354613c* r6)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */
     OS_CPU_SR  cpu_sr = 0u;

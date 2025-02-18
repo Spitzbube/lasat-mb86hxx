@@ -65,6 +65,18 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
 #endif
 };
 
+Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12c8 = //234c12c8
+{
+	14, 5, 0x0a, //...
+#if 0
+0x234c12c8                        dw         0x000e                             ; DATA XREF=sub_2344d444+262, dword_2345985c+110, dword_2345985c+126, 0x234c346c, dword_234cec20, 0x234eefd0
+0x234c12ca                        db  0x00 ; '.'
+0x234c12cb                        db  0x00 ; '.'
+0x234c12cc                        dd         0x00000005                         ; DATA XREF=sub_2344d444+264
+0x234c12d0                        db         0x0a                               ; DATA XREF=sub_2344d444+266
+#endif
+};
+
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 {
 	14, 0, 0x06, //...

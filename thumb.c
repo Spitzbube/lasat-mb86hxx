@@ -3182,7 +3182,7 @@ loc_2344f81c:
 						//r2 = 1;
 						//r1 = 9;
 						//->loc_2344f85c
-						(Data_234c21c8)(r7, 1, 9, 1);
+						(Data_234c21c8)(r7, 9, 1, 1);
 						//loc_2344f866
 					}
 				} //if (sp_0x40 == 1)
@@ -3195,7 +3195,7 @@ loc_2344f81c:
 						//r2 = 1;
 						//r1 = 0xa
 						//->loc_2344f85c
-						(Data_234c21c8)(r7, 1, 0xa, 1);
+						(Data_234c21c8)(r7, 10, 1, 1);
 						//loc_2344f866
 					}
 					else
@@ -3204,7 +3204,7 @@ loc_2344f81c:
 						//r2 = 1;
 						//r1 = 8;
 						//loc_2344f85c
-						(Data_234c21c8)(r7, 1, 8, 1);
+						(Data_234c21c8)(r7, 8, 1, 1);
 						//loc_2344f866
 					}
 				}
@@ -3600,6 +3600,146 @@ void sub_2343dcce(void)
 		channel_start_number(&sp, 
 			sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
 	}
+}
+
+
+/* /  / 23450f66 - todo */
+void sub_23450f66(UI_Thread_Params* p)
+{
+#if 1
+	console_send_string("sub_23450f66 (todo.c): TODO\r\n");
+#endif
+
+	Menu* r4; //pMenu;
+	Menu_Item* r7;
+	Graphic_Queue_Item sp_0x28;
+	uint8_t sp_0x3c;
+	int sp_0x38;
+	UI_Thread_Params sp_0x10;
+	int (*r6)(void*) = NULL;
+	void (*sp_0xc)(void*) = 0;
+	int (*sp8)();
+	int (*sp4)();
+
+	sp_0x10 = *p;
+
+	Menu_Data.Data_235fdf70 = &sp_0x10;
+
+	sp_0x3c = OSSemPost(sp_0x10.pSema);
+
+	void (*r5)(Graphic_Queue_Item*, Graphic_Job_2_5*) = NULL;
+
+	OSMboxAccept(sp_0x10.pMBox);
+
+	//sp_0x40 = 237967C4;
+
+	while (1)
+	{
+		//loc_23450f96
+		struct
+		{
+			uint8_t bData_0; //0
+			uint8_t bData_1; //1
+			uint8_t bData_2; //2
+	
+		}* pMsg;
+		int r0;
+	
+		pMsg = (void*) OSMboxPend(sp_0x10.pMBox, 0, &sp_0x3c);
+		r0 = pMsg->bData_0;
+
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+		r7 = r4->Data_4;
+		sp8 = r4->graphicData->Data_0x20;
+		sp4 = r4->graphicData->Data_0x1c;
+
+		switch (r0)
+		{
+			case 0x21:
+				//loc_23451028
+				break;
+
+			case 0x2d:
+				//loc_23450fe2
+				break;
+
+			case 0x57:
+				//loc_23450fdc
+				break;
+
+			case 0xea:
+				//loc_23450fdc
+				break;
+
+			//TODO!!!
+		}
+		//loc_23451040
+		if (sp8 != NULL)
+		{
+			sp_0x3c = (sp8)();
+		}
+		//loc_2345104a
+		if (r6 != NULL)
+		{
+			sp_0x3c = (r6)(&sp_0x38);
+
+			if (sp_0x3c == 0)
+			{
+				//0x2345105c
+				//r2 = 1;
+				//r1 = 8;
+				//->loc_2345106a
+				(Data_234c21c8)(r7, 8, 1, 1);
+			}
+			//loc_23451062
+			else if (sp_0x3c == 1)
+			{
+				//0x23451066
+				//r2 = 1;
+				//r1 = 0x0a;
+				//loc_2345106a
+				(Data_234c21c8)(r7, 10, 1, 1);
+			}
+			//loc_23451074
+			if (r7->initValueString != NULL)
+			{
+				(r7->initValueString)(r7);
+			}
+			//loc_2345107e
+			r6 = NULL;
+		}
+		//loc_23451080
+		if (sp_0xc != NULL)
+		{
+			//0x23451086
+			(sp_0xc)(&sp_0x38);
+
+			sp_0x3c = /*sub_2344de56*/sub_2343d51e(r4, &sp_0x10);
+
+			sp_0xc = NULL;
+		}
+		//loc_2345109a
+		if (r5 != NULL)
+		{
+			//0x2345109e
+			(r5)(&sp_0x28, r4->graphicData);
+
+			r5 = NULL;
+		}
+		//loc_234510a6
+		if (sp4 != NULL)
+		{
+			//0x234510ac
+			sp_0x3c = (sp4)();
+		}
+		//loc_234510b0
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//loc_234510bc
+			OSTaskDel(0xff);
+		}
+		//->loc_23450f96
+	} //while (1)
 }
 
 

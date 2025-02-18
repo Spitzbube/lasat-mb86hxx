@@ -11,7 +11,9 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern void* Data_234c1258; //234c1258
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c; //234c128c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4; //234c12a4
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12c8; //234c12c8
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
@@ -19,9 +21,13 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
 
-extern void sub_2344f6ac();
+extern void sub_2344f6ac(UI_Thread_Params*);
+extern void sub_23450f66(UI_Thread_Params*);
 static int menu_channel_search_on_enter(int);
 static int menu_channel_search_on_exit(UI_Thread_Params*);
+static void menu_channel_search_get_symbolrate_value_string(Menu_Item*);
+static void menu_channel_search_get_polarization_value_string(Menu_Item*);
+static void menu_channel_search_get_frequency_value_string(Menu_Item*);
 static void menu_channel_search_get_antenna_value_string(Menu_Item*);
 static int sub_23453d78(void*);
 static void menu_channel_search_get_search_mode_string(Menu_Item*);
@@ -38,6 +44,9 @@ static uint8_t Data_237994f4[]; //237994f4
 static uint8_t Data_2379951c[]; //2379951c
 static uint8_t Data_23799544[]; //23799544
 static uint8_t Data_2379956c[]; //2379956c
+static uint8_t menu_channel_search_frequency_value_string[]; //23799594
+static uint8_t menu_channel_search_polarization_value_string[]; //237995bc
+static uint8_t menu_channel_search_symbolrate_value_string[]; //237995e4
 static uint8_t Data_2379960c[]; //2379960c
 static uint8_t menu_channel_search_ber_string[]; //234c32d4
 
@@ -294,6 +303,63 @@ static Graphic_Job_2_5_Item_Text Data_234c3244 = //234c3244
 #endif
 };
 
+static Graphic_Job_2_5_Item_Text Data_234c325c = //234c325c
+{
+	0, 0x0128, 0x00c4, 0x01c0, 0x00e0, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_frequency_value_string[0], 0, 0, 0
+#if 0
+0x234c325c                        db         0x00                               ; DATA XREF=0x234c3734
+0x234c325d                        db         0x00
+0x234c325e                        dw         0x0128
+0x234c3260                        dw         0x00c4
+0x234c3262                        dw         0x01c0
+0x234c3264                        dw         0x00e0                             ; DATA XREF=dword_234c2f70+16
+0x234c3266                        db         0x01
+0x234c3267                        db         0x04
+0x234c3268                        db         0x09
+0x234c3269                        db         0x01
+0x234c326a                        dw         0x0000
+0x234c326c                        dd         0x23799594
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c3274 = //234c3274
+{
+	0, 0x0128, 0x00e4, 0x01c0, 0x0100, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_polarization_value_string[0], 0, 0, 0
+#if 0
+0x234c3274                        db         0x00                               ; DATA XREF=0x234c3774
+0x234c3275                        db         0x00
+0x234c3276                        dw         0x0128
+0x234c3278                        dw         0x00e4
+0x234c327a                        dw         0x01c0
+0x234c327c                        dw         0x0100
+0x234c327e                        db         0x01
+0x234c327f                        db         0x04
+0x234c3280                        db         0x09
+0x234c3281                        db         0x01
+0x234c3282 0000                   movs       r0, r0
+0x234c3284                        dd         0x237995bc
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c328c = //234c328c
+{
+	0, 0x0128, 0x0104, 0x01c0, 0x0120, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_symbolrate_value_string[0], 0, 0, 0
+#if 0
+0x234c328c                        db         0x00                               ; DATA XREF=0x234c37b4
+0x234c328d                        db         0x00
+0x234c328e                        dw         0x0128
+0x234c3290                        dw         0x0104
+0x234c3292                        dw         0x01c0
+0x234c3294                        dw         0x0120
+0x234c3296                        db         0x01
+0x234c3297                        db         0x04
+0x234c3298                        db         0x09
+0x234c3299                        db         0x01
+0x234c329a 0000                   movs       r0, r0
+0x234c329c                        dd         0x237995e4
+#endif
+};
+
 static Graphic_Job_2_5_Item_Text Data_234c32a4 = //234c32a4
 {
 	0, 0x01f8, 0x0064, 0x02d7, 0x0080, 0x01, 0x04, 0x09, 0x01, &menu_channel_search_qpsk_string[0], 0, 0, 0
@@ -401,7 +467,23 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 	{0}, //[0] = 234c3394 
 	{0}, //[1] = 234C33D4 
 	{0}, //[2] = 234C3414 
-	{0}, //[3] = 234C3454 
+	{1, 0, 0, 0/*Data_8*/, 0x0037, 0x005a, 0x00cd, 0x00cc, 0, &Data_234c12c8/*Data_0x18*/, 2, 0, NULL/*Data_0x20*/}, //[3] = 234C3454
+#if 0
+0x234c3454                        db         0x01                               ; DATA XREF=sub_234533bc+32
+0x234c3455                        db         0x00
+0x234c3456                        db         0x00
+0x234c3457                        db         0x00
+0x234c3458                        dd         0x00000000
+0x234c345c                        dd         0x00000000
+0x234c3460                        dw         0x0037
+0x234c3462                        dw         0x005a
+0x234c3464                        dw         0x00cd
+0x234c3466                        dw         0x00cc
+0x234c3468 0000                   movs       r0, r0
+0x234c346a 0000                   movs       r0, r0
+0x234c346c                        dd         0x234c12c8
+0x234c3470                        dw         0x0002
+#endif 
 	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xc0, 0x20, 0, &Data_234c1334/*Data_0x18*/, 9, 0, &Data_234c3184/*Data_0x20*/}, //[4] = 234C3494: Antenne Label
 #if 0
 0x234c3494                        db         0x01                               ; DATA XREF=0x234c4c18
@@ -579,9 +661,63 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 0x234c36f2                        dw         0x0000
 0x234c36f4                        dd         0x234c3244
 #endif
-	{0}, //[14] = 234C3714 
-	{0}, //[15] = 234C3754 
-	{0}, //[16] = 234C3794 
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0xc0, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c325c/*Data_0x20*/}, //[14] = 234C3714: Frequency Value String
+#if 0
+0x234c3714                        db         0x01                               ; DATA XREF=0x234c4ca0
+0x234c3715                        db         0x00
+0x234c3716                        db         0x00
+0x234c3717                        db         0x00
+0x234c3718                        dd         0x00000000
+0x234c371c                        dd         0x00000000
+0x234c3720                        dw         0x0114
+0x234c3722                        dw         0x00c0
+0x234c3724                        dw         0x00ac
+0x234c3726                        dw         0x0020
+0x234c3728 0000                   movs       r0, r0
+0x234c372a 0000                   movs       r0, r0
+0x234c372c                        dd         0x234c12d4
+0x234c3730                        dw         0x0009
+0x234c3732                        dw         0x0000
+0x234c3734                        dd         0x234c325c
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0xe0, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c3274/*Data_0x20*/}, //[15] = 234C3754: Polarization Value String
+#if 0
+0x234c3754                        db         0x01                               ; DATA XREF=0x234c4ccc
+0x234c3755                        db         0x00
+0x234c3756                        db         0x00
+0x234c3757                        db         0x00
+0x234c3758                        dd         0x00000000
+0x234c375c                        dd         0x00000000
+0x234c3760                        dw         0x0114
+0x234c3762                        dw         0x00e0
+0x234c3764                        dw         0x00ac
+0x234c3766                        dw         0x0020
+0x234c3768 0000                   movs       r0, r0
+0x234c376a 0000                   movs       r0, r0
+0x234c376c                        dd         0x234c12d4
+0x234c3770                        dw         0x0009
+0x234c3772                        dw         0x0000
+0x234c3774                        dd         0x234c3274
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x114, 0x100, 0xac, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234c328c/*Data_0x20*/}, //[16] = 234C3794: Symbolrate Value String
+#if 0
+0x234c3794                        db         0x01                               ; DATA XREF=0x234c4cf8
+0x234c3795                        db         0x00
+0x234c3796                        db         0x00
+0x234c3797                        db         0x00
+0x234c3798                        dd         0x00000000
+0x234c379c                        dd         0x00000000
+0x234c37a0                        dw         0x0114
+0x234c37a2                        dw         0x0100
+0x234c37a4                        dw         0x00ac
+0x234c37a6                        dw         0x0020
+0x234c37a8 0000                   movs       r0, r0
+0x234c37aa 0000                   movs       r0, r0
+0x234c37ac                        dd         0x234c12d4
+0x234c37b0                        dw         0x0009
+0x234c37b2                        dw         0x0000
+0x234c37b4                        dd         0x234c328c
+#endif
 	{0}, //[17] = 234C37D4 
 	{1, 0, 0, 0/*Data_8*/, 0x01d7, 0x0060, 0x0080, 0x0020, 0, &Data_234c1340/*Data_0x18*/, 0x09/*blue*/, 0, &Data_234c32a4/*Data_0x20*/}, //[18] = 234C3814
 #if 0
@@ -674,8 +810,24 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 0x234c3932                        dw         0x0000
 0x234c3934                        dd         0x234c3004
 #endif
-	{0}, //[23] = 234C3954 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x130, 0xe8, 0x20, 0, &Data_234c134c/*Data_0x18*/, 9, 0, &Data_234c32fc/*Data_0x20*/}, //[24] = 234C3994 
+	{1, 0, 0, 0/*Data_8*/, 0x37, 0x12a, 0xf5, 0x2c, 0, &Data_234c128c/*Data_0x18*/, 2, 0, NULL/*Data_0x20*/}, //[23] = 234C3954
+#if 0
+0x234c3954                        db         0x01
+0x234c3955                        db         0x00
+0x234c3956                        db         0x00
+0x234c3957                        db         0x00
+0x234c3958                        dd         0x00000000
+0x234c395c                        dd         0x00000000
+0x234c3960                        dw         0x0037
+0x234c3962                        dw         0x012a
+0x234c3964                        dw         0x00f5
+0x234c3966                        dw         0x002c
+0x234c3968 0000                   movs       r0, r0
+0x234c396a 0000                   movs       r0, r0
+0x234c396c                        dd         0x234c128c
+0x234c3970                        dw         0x0002
+#endif
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x130, 0xe8, 0x20, 0, &Data_234c134c/*Data_0x18*/, 9, 0, &Data_234c32fc/*Data_0x20*/}, //[24] = 234C3994: "Start scan" String
 #if 0
 0x234c3994                        db         0x01                               ; DATA XREF=0x234c4d20
 0x234c3995                        db         0x00
@@ -898,8 +1050,9 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 		0xffff, //uint16_t wData_2; //2
 		{
 			&Data_234c3394[7], //234c3554,
+			&Data_234c3394[14], //234c3714
 		}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_frequency_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		0, //void* onEvent; //0x1c = 28
 		sub_2344f6ac, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -916,7 +1069,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4caa 0000                   movs       r0, r0
 0x234c4cac 0000                   movs       r0, r0
 0x234c4cae 0000                   movs       r0, r0
-0x234c4cb0                        dd         sub_23453164+1                     ; DATA XREF=sub_234533bc+798
+0x234c4cb0                        dd         menu_channel_search_get_frequency_value_string+1                     ; DATA XREF=sub_234533bc+798
 0x234c4cb4                        dd         sub_2345327c+1                     ; DATA XREF=sub_234533bc+796
 0x234c4cb8                        dd         sub_2344f6ac+1                     ; DATA XREF=sub_234533bc+792
 #endif
@@ -927,8 +1080,9 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 		0xffff, //uint16_t wData_2; //2
 		{
 			&Data_234c3394[8], //234c3594,
+			&Data_234c3394[15], //234c3754
 		}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_polarization_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		0, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -945,7 +1099,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4cd6 0000                   movs       r0, r0
 0x234c4cd8 0000                   movs       r0, r0
 0x234c4cda 0000                   movs       r0, r0
-0x234c4cdc                        dd         sub_23453136+1                     ; DATA XREF=sub_234533bc+806
+0x234c4cdc                        dd         menu_channel_search_get_polarization_value_string+1                     ; DATA XREF=sub_234533bc+806
 0x234c4ce0                        dd         sub_2345323c+1                     ; DATA XREF=sub_234533bc+800
 0x234c4ce4                        dd         menu_item_event_thread+1           ; DATA XREF=sub_234533bc+804
 #endif
@@ -956,8 +1110,9 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 		0xffff, //uint16_t wData_2; //2
 		{
 			&Data_234c3394[9], //234c35d4,
+			&Data_234c3394[16], //234c3794
 		}, //int fill_4[5]; //4
-		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_channel_search_get_symbolrate_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		0, //void* onEvent; //0x1c = 28
 		sub_2344f6ac, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
@@ -974,7 +1129,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4d02 0000                   movs       r0, r0
 0x234c4d04 0000                   movs       r0, r0
 0x234c4d06 0000                   movs       r0, r0
-0x234c4d08                        dd         sub_234530e8+1
+0x234c4d08                        dd         menu_channel_search_get_symbolrate_value_string+1
 0x234c4d0c                        dd         sub_234531bc+1
 0x234c4d10                        dd         sub_2344f6ac+1
 #endif
@@ -1059,18 +1214,24 @@ struct Struct_23796d30
 {
 	Struct_23543df0 Data_23796d30; //23796D30 +0x20
 	int Data_23796d50; //23796d50
-	Transponder Data_23796d54; //23796d54
-	Transponder Data_23796d6c[200]; //23796d6c
+	Transponder Data_23796d54; //23796d54 +0x18
+	Transponder Data_23796d6c[200]; //23796d6c +0x12C0
 	uint16_t wData_2379802c; //2379802c
 	uint16_t wData_2379802e; //2379802e
 	struct 
 	{
 		int Data_0; //0
 		int Data_4; //4
-		int Data_8; //8
+		int polarization; //8
+		uint8_t bData_0xc; //12 = 0xc
+		uint8_t bData_0xd[51]; //13 = 0xd, size???
 	} Data_23798030; //23798030
+	uint16_t fill_23798070; //23798070
+	uint16_t wData_23798072; //23798072
+	int fill_23798074; //23798074
 	void* Data_23798078; //23798078
-	Graphic_Queue_Item Data_23798088; //23798088
+	int fill_2379807c[3]; //2379807c
+	Graphic_Queue_Item Data_23798088; //23798088 +0x10
 	void* Data_23798098; //23798098
 	uint8_t bData_2379809c; //2379809c
 	uint8_t bData_2379809d; //2379809d
@@ -1087,8 +1248,12 @@ static uint8_t Data_237994cc[40]; //237994cc
 static uint8_t Data_237994f4[40]; //237994f4
 static uint8_t Data_2379951c[40]; //2379951c
 static uint8_t Data_23799544[40]; //23799544
-static uint8_t Data_2379956c[40]; //2379956c, size???
+static uint8_t Data_2379956c[40]; //2379956c
+static uint8_t menu_channel_search_frequency_value_string[40]; //23799594
+static uint8_t menu_channel_search_polarization_value_string[40]; //237995bc
+static uint8_t menu_channel_search_symbolrate_value_string[40]; //237995e4
 static uint8_t Data_2379960c[40]; //2379960c, size???
+
 
 
 
@@ -1252,24 +1417,542 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 }
 
 
+/* /  / 23452c9c - complete */
+void sub_23452c9c(uint32_t* a, int b, int c, uint8_t* pString)
+{
+#if 0
+	console_send_string("sub_23452c9c (todo.c): TODO\r\n");
+#endif
+
+	uint32_t r0 = (*a / 100);
+
+	sprintf(pString, "%2d.%03dMS", r0 / 1000, r0 % 1000);
+}
+
+
+/* /  / 23452cbe - todo */
+static void sub_23452cbe(Menu_Item* item)
+{
+#if 1
+	console_send_string("sub_23452cbe (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* /  / 23452d0c - todo */
+static void sub_23452d0c(Menu_Item* item)
+{
+#if 1
+	console_send_string("sub_23452d0c (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* /  / 23452d52 - todo */
+static void sub_23452d52(Menu_Item* item)
+{
+#if 0
+	console_send_string("sub_23452d52 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	Transponder* pTransponder = &Data_23796d30.Data_23796d54;
+
+	sprintf(pString, "%c%d (%d.%dMHz)", 
+		pTransponder->Data_0.wData_0x0e >> 8,
+		pTransponder->Data_0.wData_0x0e & 0xff,
+		pTransponder->Data_0.frequency / 10000, 
+		(pTransponder->Data_0.frequency % 10000) / 1000);
+}
+
+
+/* /  / 23452d86 - todo */
+static void sub_23452d86()
+{
+#if 1
+	console_send_string("sub_23452d86 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* /  / 23452f4c - todo */
+static void sub_23452f4c()
+{
+#if 1
+	console_send_string("sub_23452f4c (todo.c): TODO\r\n");
+#endif
+
+
+}
+
+
+/* /  / 23452fd0 - todo */
+static void sub_23452fd0()
+{
+#if 1
+	console_send_string("sub_23452fd0 (todo.c): TODO\r\n");
+#endif
+
+
+}
+
+
+/* /  / 234530e8 */
+static void menu_channel_search_get_symbolrate_value_string(Menu_Item* item)
+{
+#if 0
+	console_send_string("menu_channel_search_get_symbolrate_value_string (todo.c): TODO\r\n");
+#endif
+
+	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	uint8_t* pString = r0->Data_0x20->Data_0x10;
+
+	if (Data_23796d30.Data_23798030.bData_0xc == 0)
+	{
+		//0x23453100
+		r0->Data_0x20->wData_0x14 = 0;
+		r0->Data_0x20->bData_0x16 = 0;
+
+		uint32_t sp = Data_23796d30.Data_23796d54.Data_0.frequency * 100;
+
+		sub_23452c9c(&sp, 2000, 45000, pString);
+	}
+	else
+	{
+		//loc_23453122
+		r0->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r0->Data_0x20->bData_0x16 = 7;
+
+		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
+	}
+}
+
+
+/*  /  / 23453136 */
+static void menu_channel_search_get_polarization_value_string(Menu_Item* item)
+{
+#if 0
+	console_send_string("menu_channel_search_get_polarization_value_string (todo.c): TODO\r\n");
+#endif
+
+	int nStr;
+	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	uint8_t* pString = r0->Data_0x20->Data_0x10;
+
+	switch (Data_23796d30.Data_23798030.polarization)
+	{
+		case 0:
+			//loc_23453150
+			nStr = 0x1f; //Horizontal
+			break;
+
+		case 1:
+			//0x2345314c
+			nStr = 0x20; //Vertikal
+			break;
+
+		default:
+			//loc_23453154
+			nStr = 0x12; //'---'
+			break;
+	}
+
+	text_table_get_string(nStr, pString, 12);
+	pString[11] = 0;
+}
+
+
+/* /  / 23453164 - todo */
+static void menu_channel_search_get_frequency_value_string(Menu_Item* item)
+{
+#if 0
+	console_send_string("menu_channel_search_get_frequency_value_string (todo.c): TODO\r\n");
+#endif
+
+	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	uint8_t* pString = r0->Data_0x20->Data_0x10;
+
+	if (Data_23796d30.Data_23798030.bData_0xc == 0)
+	{
+		//0x2345317c
+		r0->Data_0x20->wData_0x14 = 0;
+		r0->Data_0x20->bData_0x16 = 0;
+
+		uint32_t r0 = ((Data_23796d30.Data_23796d54.Data_0.Data_0.Data_0 * 100) / 100000);
+
+		sprintf(pString, "%2d.%03dGHz", r0 / 1000, r0 % 1000);
+	}
+	else
+	{
+		//loc_234531a6
+		r0->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r0->Data_0x20->bData_0x16 = 7;
+
+		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
+	}
+}
+
+
 /* /  / 234533bc - todo */
 int sub_234533bc(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_234533bc (todo.c): TODO\r\n");
 #endif
 
-	return 0;
+	int sp_0x6c;
+	int sp_0x68 = 2;
+	Graphic_Job_2_5* sp_0x64 = Data_234c2f70->graphicData;
+	Menu_Item* sp_0x60 = &Data_234c2f70->Data_8[2];
+	Menu_Item* sp_0x5c;
+
+	Graphic_Job_2_5_Item* sp_0x38 = &sp_0x64->pItems[3];
+	Graphic_Job_2_5_Item* sp_0x34 = &sp_0x64->pItems[10];
+
+	Menu_Item* r4 = &Data_234c2f70->Data_8[3]; //"Frequency"
+	Menu_Item* r6 = &Data_234c2f70->Data_8[4]; //"Polarisation"
+	Menu_Item* r5 = &Data_234c2f70->Data_8[5]; //"Symbolrate"
+
+	Struct_2340bf0c sp;
+
+	/*sub_2340e9e8*/sub_2340bf0c(&sp);
+
+	//sp_0x6c = 0x23798030;
+	//r0 = 0x23796d30;
+	if (sp.wNumChannels != 0)
+	{
+		//0x23453402
+		sp_0x68 = fe_manager_get_transponder_type(&Data_23796d30.Data_23796d54);
+		if (sp_0x68 == 0)
+		{
+			//->loc_23453426
+			//TODO!!!
+#if 1
+			console_send_string("sub_234533bc (loc_23453426): TODO!!!\r\n");
+#endif
+		}
+		//loc_2345350c -> loc_2345355a
+		else if (sp_0x68 == 2)
+		{
+			//loc_2345355e
+			//TODO!!!
+#if 1
+			console_send_string("sub_234533bc (loc_2345355e): TODO!!!\r\n");
+#endif
+		}
+		//loc_2345362c
+		else if (sp_0x68 == 1)
+		{
+			//loc_23453630
+			int r0 = /*sub_23416808*/sub_2340ee34(Data_23491db8);
+
+			if (r0 == 6)
+			{
+				//0x2345363c
+				r6->Data_4[0]->bData_0 = 0; 
+				r6->Data_4[1]->bData_0 = 0; 
+
+				r5->Data_4[0]->bData_0 = 0; 
+				r5->Data_4[1]->bData_0 = 0; 
+
+				r4->inputThreadFunc = sub_23450f66;
+				r4->onEvent = sub_23452d86;
+				r4->initValueString = sub_23452d52;
+
+				if (Data_23796d30.Data_23798030.Data_0 != 0)
+				{
+					//0x23453662
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c131c;
+
+					sp_0x38->height = 0x8c;
+					sp_0x34->height = 0x8c;
+					//->loc_2345368e
+				}
+				else
+				{
+					//loc_23453674
+					r4->Data_4[0]->bData_0 = 0; //r0
+					r4->Data_4[1]->bData_0 = 0; //r0
+
+					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+
+					sp_0x38->height = 0x6c;
+					sp_0x34->height = 0x6c;
+				}
+				//loc_2345368e
+				sp_0x64->wData_2 = 0x13;
+
+				sub_23452d52(r4);
+				//->loc_23453848
+			} //if (r0 == 6)
+			else
+			{
+				//loc_2345369c
+				r4 = &Data_234c2f70->Data_8[3];
+				r5 = &Data_234c2f70->Data_8[4];
+				sp_0x5c = &Data_234c2f70->Data_8[5];
+
+				r4->wData_0 = 0xf2; //"Modulation"
+				r5->wData_0 = 0x1b; //"Symbolrate"
+				sp_0x5c->wData_0 = 0x16; //"Kanal"
+
+				r4->helpStringId = sp_0x60->helpStringId;
+				r5->helpStringId = sp_0x5c->helpStringId;
+
+				r4->inputThreadFunc = menu_item_event_thread;
+				r4->onEvent = sub_23452fd0;
+				r4->initValueString = sub_23452d0c;
+
+				r5->inputThreadFunc = sub_2344f6ac;
+				r5->onEvent = sub_23452f4c;
+				r5->initValueString = sub_23452cbe;
+
+				sp_0x5c->initValueString = sub_23452d52;
+				r5->onEvent = sub_23452d86;
+				sp_0x5c->inputThreadFunc = sub_23450f66;
+
+				if (Data_23796d30.Data_23798030.Data_0 != 0)
+				{
+					//0x234536fe
+					sp_0x5c->Data_4[0]->bData_0 = 1;
+					sp_0x5c->Data_4[1]->bData_0 = 1;
+
+					r4->Data_4[0]->bData_0 = 1;
+					r4->Data_4[1]->bData_0 = 1;
+
+					r5->Data_4[0]->bData_0 = 1;
+					r5->Data_4[1]->bData_0 = 1;
+
+					((Graphic_Job_2_5_Item*)(sp_0x5c->Data_4[0]))->Data_0x18 = &Data_234c131c;
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c12d4;
+					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c12d4;
+					//->loc_234537b0
+				}
+				else
+				{
+					//loc_2345373e
+					//TODO!!!
+#if 1
+					console_send_string("sub_234533bc (loc_2345373e): TODO!!!\r\n");
+#endif
+				}
+
+			}
+		}
+		//loc_23453558 -> loc_234538aa
+	}
+	else
+	{
+		//loc_23453410
+		if (Data_23796d30.Data_23796d50 != 0)
+		{
+			//0x23453416
+			if (Data_23796d30.Data_23796d50 == 0xffff)
+			{
+				//0x2345341c
+				sp_0x68 = 1;
+				//->loc_23453630
+
+				//TODO!!!
+#if 1
+				console_send_string("sub_234533bc (loc_2345355e): TODO!!!\r\n");
+#endif
+			}
+			else
+			{
+				//loc_23453422
+				sp_0x68 = 0;
+				//loc_23453426
+				//TODO!!!
+#if 1
+				console_send_string("sub_234533bc (loc_23453426): TODO!!!\r\n");
+#endif
+			}
+		}
+		else
+		{
+			//loc_2345350e -> loc_2345355e
+			//TODO!!!
+#if 1
+			console_send_string("sub_234533bc (loc_2345350e): TODO!!!\r\n");
+#endif
+		}
+
+	}
+
+	//loc_234538aa
+	return sp_0x68;
 }
 
 
 /* /  / 234538b0 - todo */
-void sub_234538b0(int a)
+void sub_234538b0(int r7_)
 {
-#if 1
+#if 0
 	console_send_string("sub_234538b0 (todo.c): TODO\r\n");
 #endif
 
+	Transponder* sp_0x38;
+	Graphic_Job_2_5* sp_0x34 = Data_234c2f70->graphicData;
+	int sp_0x30 = /*sub_23416808*/sub_2340ee34(Data_23491db8);
+	//Menu_Item* r4 = Data_234c2f70->Data_8;
+	Menu_Item* sp_0x2c = &Data_234c2f70->Data_8[2]; //"Encrypted"
+	Menu_Item* r6 = &Data_234c2f70->Data_8[3]; //"Frequency"
+	Menu_Item* r5 = &Data_234c2f70->Data_8[4];
+	Menu_Item* r4 = &Data_234c2f70->Data_8[5];
+
+	Graphic_Job_2_5_Item* sp_0x28 = &sp_0x34->pItems[3];
+	Graphic_Job_2_5_Item* sp_0x24 = &sp_0x34->pItems[10];
+	Struct_2354613c sp4; //+0x20
+	uint32_t sp;
+	sp_0x38 = &Data_23796d30.Data_23796d54;
+	Graphic_Job_2_5_Item* r1 = &sp_0x34->pItems[23];
+	Graphic_Job_2_5_Item* r0 = &sp_0x34->pItems[24]; //"Start scan"
+
+	//int r7 = 0;
+	//r3 = 1;
+	switch (r7_/*r2*/)
+	{
+		case 0:
+			//loc_23453974
+			r1->bData_0 = 1; //r3
+			r0->bData_0 = 1; //r3
+
+			/*sub_2340f538*/sub_2340ca5c(1, &sp4);
+
+			sp = sp4.crc;
+			sp4.crc = 0; //r7
+
+			if (crc32(&sp4, sizeof(Struct_2354613c)) == sp)
+			{
+				//0x23453994
+				r6->Data_4[0]->bData_0 = 0; //r7
+				r6->Data_4[1]->bData_0 = 0; //r7
+				//ip = 0x234c131c;
+				r5->Data_4[0]->bData_0 = 0; //r7
+				r5->Data_4[1]->bData_0 = 0; //r7
+				//r6 = sp_0x28
+				r4->Data_4[0]->bData_0 = 0; //r7
+				r4->Data_4[1]->bData_0 = 0; //r7
+
+				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				sp_0x28->height = 0x6c;
+				sp_0x24->height = 0x6c;
+				//->loc_23453a42
+				sp_0x34->wData_2 = 0x0e;
+				//->loc_23453a2a
+			}
+			else
+			{
+				//loc_234539c6
+				if (1 == fe_manager_get_transponder_type(sp_0x38))
+				{
+					//0x234539d0
+					int r1 = 2;
+					if (sp_0x30 != 6)
+					{
+						r1 = 1; //r0
+					}
+					//loc_234539da
+					if (r1 == 1)
+					{
+						//->loc_23453a0c
+						r4->Data_4[0]->bData_0 = 0; //r7
+						r4->Data_4[1]->bData_0 = 0; //r7
+
+						((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->Data_0x18 = &Data_234c131c;
+						sp_0x28->height = 0xac;
+						sp_0x24->height = 0xac;
+						//loc_23453a24
+						sp_0x34->wData_2 = 0x0e;
+						//loc_23453a2a
+						break;
+					}
+					//loc_234539de
+				}
+				//loc_234539de
+				r6->Data_4[0]->bData_0 = 0; //r7
+				r6->Data_4[1]->bData_0 = 0; //r7
+
+				r5->Data_4[0]->bData_0 = 0; //r7
+				r5->Data_4[1]->bData_0 = 0; //r7
+
+				r4->Data_4[0]->bData_0 = 0; //r7
+				r4->Data_4[1]->bData_0 = 0; //r7
+
+				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				sp_0x28->height = 0x6c;
+				sp_0x24->height = 0x6c;
+				//->loc_23453a24
+				sp_0x34->wData_2 = 0x0e;
+				//loc_23453a2a
+			}			
+			break;
+
+		case 1:
+			//0x2345390e
+			if (Data_23799410.Data_4.bitData.bit23 != 0)
+			{
+				//0x23453918
+				r1->bData_0 = 0; //r7
+				r0->bData_0 = 0; //r7
+			}
+			//loc_2345391c
+			r6->Data_4[0]->bData_0 = 1;
+			r6->Data_4[1]->bData_0 = 1;
+
+			((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c12d4;
+
+			int r0 = fe_manager_get_transponder_type(sp_0x38);
+			if (r0 == 1)
+			{
+				//0x23453938
+				int r1 = 2;
+				if (sp_0x30 != 6)
+				{
+					//0x23453940
+					r1 = 1; //r0
+				}
+				//loc_23453942
+				r0 = r1;
+			}
+			//loc_23453944
+			if ((r0 == 0) || (r0 == 1))
+			{
+				//loc_2345394c
+				((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->Data_0x18 = NULL;
+				r5->Data_4[0]->bData_0 = 1;
+				r5->Data_4[1]->bData_0 = 1;
+
+				r4->Data_4[0]->bData_0 = 1;
+				r4->Data_4[1]->bData_0 = 1;
+
+				sp_0x28->height = 0xcc;
+				sp_0x24->height = 0xcc;
+				//->loc_23453a40
+			}
+			else
+			{
+				//loc_23453a30
+				((Graphic_Job_2_5_Item*)(r6->Data_4[0]))->Data_0x18 = &Data_234c131c;
+
+				sp_0x28->height = 0x8c;
+				sp_0x24->height = 0x8c;
+			}
+			//loc_23453a40
+			sp_0x34->wData_2 = 0x0d;
+			//loc_23453a2a
+		break;
+
+		default:
+			//loc_23453a0a -> loc_23453a2a
+			break;
+	}
+	//loc_23453a2a
 }
 
 
@@ -1371,14 +2054,14 @@ static int menu_channel_search_on_enter(int a)
 			Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[0];
 			//0x23453b14
 			Data_23796d30.Data_23796d50 = Data_23796d30.Data_23796d54.Data_0.wData_0x0a;
-			Data_23796d30.Data_23798030.Data_8 = Data_23796d30.Data_23796d54.Data_0.symbol_rate & 0x01;
+			Data_23796d30.Data_23798030.polarization = Data_23796d30.Data_23796d54.Data_0.symbol_rate & 0x01;
 			//->loc_23453b68
 		} //if (sp.wTransponderIndex == 0xffff)
 		else
 		{
 			//loc_23453b24
 			Data_23796d30.Data_23796d50 = Data_23796d30.Data_23796d54.Data_0.wData_0x0a;
-			Data_23796d30.Data_23798030.Data_8 = Data_23796d30.Data_23796d54.Data_0.symbol_rate & 0x01;
+			Data_23796d30.Data_23798030.polarization = Data_23796d30.Data_23796d54.Data_0.symbol_rate & 0x01;
 
 			Data_23796d30.wData_2379802e = 
 				channel_get_transponder_list(Data_23796d30.Data_23796d50, 
