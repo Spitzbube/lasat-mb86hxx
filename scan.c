@@ -450,7 +450,7 @@ void sub_2340fa48()
 /* 2340fb14 - todo */
 void scan_next(int r0)
 {
-	int sp;
+	Scan_Progress_State sp;
 
 #if 1
 	{
@@ -512,14 +512,14 @@ void scan_next(int r0)
 	}
 	else
 	{
-		//0x2340fbd4
+		//0x2340fbd4: Finish
 		scanData.state = 0;
 
-		sp = 2;
+		sp.state = 2;
 
 		if (scanData.pfProgress != 0)
 		{
-			(scanData.pfProgress)(&sp, 0, 3);
+			(scanData.pfProgress)(&sp, 0, SCAN_PROGRESS_CALLBACK_STATE);
 		}
 	}
 	//loc_2340fbf4
@@ -640,13 +640,8 @@ int scan_check_NIT(NIT_TransportStream* a, uint32_t r1)
 void scan_thread()
 {
 	uint8_t err; //sp_0x2c
-	struct
-	{
-		int Data_0; //0
-		uint16_t wData_4; //4
-		uint16_t wData_6; //6
-		void* Data_8; //8
-	} sp_0x20;
+	Scan_Progress_Transponder progress_transponder; //sp_0x24
+	Scan_Progress_State progress_state; //sp_0x20
 	int sb = 3;
 	Frontend** r8;
 	Frontend* sp_0x18[2];
@@ -740,19 +735,19 @@ void scan_thread()
 					//loc_2340fda0
 					scanData.wData_0x12 = r0;
 					//0x2340fda4
-					if (scanData.pfProgress != 0) //-> sub_23470298
+					if (scanData.pfProgress != NULL) //-> sub_23470298
 					{
-						//0x2340fdb0
+						//0x2340fdb0 /  / 0x234177a8
+						progress_transponder.current = scanData.currentItem;
+						progress_transponder.pTransponder = &scanData.pList[scanData.currentItem];
+						progress_transponder.total = scanData.numItems;
+						
+						progress_state.state = 1;
 
-						sp_0x20.wData_6 = scanData.currentItem;
-						sp_0x20.Data_8 = &scanData.pList[scanData.currentItem];
-						sp_0x20.wData_4 = scanData.numItems;
-						sp_0x20.Data_0 = 1;
-
-						(scanData.pfProgress)(&sp_0x20.wData_4, 0, 2);
-						(scanData.pfProgress)(&sp_0x20, 0, 3);
+						(scanData.pfProgress)(&progress_transponder, 0, SCAN_PROGRESS_CALLBACK_TRANSPONDER);
+						(scanData.pfProgress)(&progress_state, 0, SCAN_PROGRESS_CALLBACK_STATE);
 					}
-					//->loc_2340fee0
+					//->loc_2340fee0 /  / loc_234178d8
 				} //if (transpnderType != 4)
 				else
 				{

@@ -1085,8 +1085,8 @@ void mainfunction_thread(UI_Thread_Params* a)
 			r5 = pMenuItem->Data_0x28;
 #else
 			pMenuItem = pMenu->Data_4;
-			sp8 = pMenu->graphicData->Data_0x20;
-			sp4 = pMenu->graphicData->Data_0x1c;
+			sp8 = pMenu->graphicData->lock;
+			sp4 = pMenu->graphicData->unlock;
 #endif
 			//->loc_2343d682 / 0x2344e72e
 		}
@@ -1678,8 +1678,8 @@ void menu_event_thread(UI_Thread_Params* p)
 		pMenuItem = pMenu->Data_4;
 #ifndef VDR110
 		Graphic_Job_2_5* r2_ = pMenu->graphicData;
-		int (*sp)() = r2_->Data_0x20;
-		int (*r7)() = r2_->Data_0x1c;
+		int (*sp)() = r2_->lock;
+		int (*r7)() = r2_->unlock;
 #else
 		sp4 = pMenuItem->Data_0x24;
 		r6 = pMenuItem->Data_0x28;
@@ -1761,8 +1761,8 @@ void menu_event_thread(UI_Thread_Params* p)
 						if (pMenu != 0)
 						{
 							//0x2344e360
-							sp = pMenu->graphicData->Data_0x20;
-							r7 = pMenu->graphicData->Data_0x1c;
+							sp = pMenu->graphicData->lock;
+							r7 = pMenu->graphicData->unlock;
 							pfGraphicHandler = pMenu->graphicHandler;
 
 							sub_2343d51e(pMenu, &sp8);
@@ -1798,8 +1798,8 @@ void menu_event_thread(UI_Thread_Params* p)
 					if (pMenu != 0)
 					{
 						//0x2344e360
-						sp = pMenu->graphicData->Data_0x20;
-						r7 = pMenu->graphicData->Data_0x1c;
+						sp = pMenu->graphicData->lock;
+						r7 = pMenu->graphicData->unlock;
 						pfGraphicHandler = pMenu->graphicHandler;
 
 						sub_2343d51e(pMenu, &sp8);
@@ -2152,11 +2152,11 @@ void sub_2344f102(UI_Thread_Params* a)
 
 		sp_0x10 = sub_2348dcd2();
 
-		sp_0x10->Data_8 = &sp_0x24;
+		sp_0x10->pThreadParams = &sp_0x24;
 
 		//r0 = r4->graphicData;
-		sp8 = r4->graphicData->Data_0x20;
-		sp4 = r4->graphicData->Data_0x1c;
+		sp8 = r4->graphicData->lock;
+		sp4 = r4->graphicData->unlock;
 
 		if (sp_0x40 == 0)
 		{
@@ -2193,8 +2193,8 @@ void sub_2344f102(UI_Thread_Params* a)
 							if (r4 != 0)
 							{
 								//0x2344f234
-								sp8 = r4->graphicData->Data_0x20;
-								sp4 = r4->graphicData->Data_0x1c;
+								sp8 = r4->graphicData->lock;
+								sp4 = r4->graphicData->unlock;
 								r7 = r4->graphicHandler;
 
 								sub_2343d51e(r4, &sp_0x24);
@@ -2449,61 +2449,127 @@ void sub_2344f3c6(UI_Thread_Params* a)
 #endif
 
 	uint8_t keyCode; //sp_0x3c
-	uint8_t sp_0x38; //sp_0x38
-	UI_Thread_Params sp_0x20;
+	uint8_t err; //sp_0x38
+	UI_Thread_Params thread_params; //sp_0x20
+	Graphic_Queue_Item sp_0x10;
 	Struct_2348dc50* sp_0xc;
 	Menu_Item* sp8;
-	void (*sp4)(); //sp4
-	void (*sp)(); //sp
+	int (*graphic_lock)(); //sp4
+	int (*graphic_unlock)(); //sp
 	Menu* r4;
 
-	int r6 = 0;
-	int r5 = 0;
-	int r7 = 0;
+	void (*r6)() = NULL;
+	int (*r5)(Graphic_Queue_Item *, void *) = NULL;
+	void (*r7)() = NULL;
 
-	sp_0x20 = *a;
-	Menu_Data.Data_235fdf70/*2379679C*/ = &sp_0x20;
+	thread_params = *a;
+	Menu_Data.Data_235fdf70/*2379679C*/ = &thread_params;
 
 	sub_2348dcd2();
 
-	sp_0x38 = OSSemPost(sp_0x20.pSema);
+	err = OSSemPost(thread_params.pSema);
 
-	OSMboxAccept(sp_0x20.pMBox);
+	OSMboxAccept(thread_params.pMBox);
 
 	//sp_0x40 = &237967C4
 
 	while (1)
 	{
 		//loc_2344f3f8
-		uint8_t* r0__ = OSMboxPend(sp_0x20.pMBox, 0, &sp_0x38);
+		uint8_t* r0__ = OSMboxPend(thread_params.pMBox, 0, &err);
 		keyCode = *r0__;
 
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 		sp8 = r4->Data_4;
 
 		sp_0xc = sub_2348dcd2();
-		sp_0xc->Data_8 = &sp_0x20;
+		sp_0xc->pThreadParams = &thread_params;
 
-		sp4 = r4->graphicData->Data_0x20;
-		sp = r4->graphicData->Data_0x1c;
-
-#if 1
-	{
-		extern char debug_string[];
-		sprintf(debug_string, "sub_2344f3c6: keyCode=%d(0x%x)\r\n", keyCode, keyCode);
-		console_send_string(debug_string);
-	}
-#endif
+		graphic_lock = r4->graphicData->lock;
+		graphic_unlock = r4->graphicData->unlock;
 
 		switch (keyCode)
 		{
 			case 0x2d:
 				//loc_2344f472
+				if ((r4->onExit == NULL) ||
+					(0 == (r4->onExit)(&thread_params)))
+				{
+					//loc_2344f480
+					r4 = menu_stack_operate(NULL);
+					if (r4 != NULL)
+					{
+						//0x2344f48a
+						graphic_lock = r4->graphicData->lock;
+						graphic_unlock = r4->graphicData->unlock;
+						r5 = r4->graphicHandler;
+
+						/*sub_2344de56*/sub_2343d51e(r4, &thread_params);
+						//->loc_2344f4e8
+					}
+					else
+					{
+						//loc_2344f4a0
+						graphic_start_job_2_5(&sp_0x10, NULL);
+
+						/*sub_2344de56*/sub_2343d51e(NULL, &thread_params);
+
+						graphic_unlock = NULL;
+						//->loc_2344f4f2
+						goto loc_2344f4f2;
+					}
+				}
+				//loc_2344f4e8
 				break;
 
-			//TODO!!!
-		}
+				//TODO!!!
 
+			default:
+#if 1
+				{
+					extern char debug_string[];
+					sprintf(debug_string, "sub_2344f3c6: keyCode=%d(0x%x)\r\n", keyCode, keyCode);
+					console_send_string(debug_string);
+				}
+#endif
+				break;
+		} //switch (keyCode)
+		//loc_2344f4e8
+		if (graphic_lock != NULL)
+		{
+			//0x2344f4ee
+			err = (graphic_lock)();
+		}
+loc_2344f4f2:
+		//loc_2344f4f2
+		if (r7 != NULL)
+		{
+			//0x2344f4f6
+			(r7)(sp_0xc);
+
+			r7 = NULL;
+		}
+		//loc_2344f4fc
+		if (r6 != NULL)
+		{
+			//0x2344f500
+			(r6)(sp_0xc);
+
+			r6 = NULL;
+		}
+		//loc_2344f506
+		if (r5 != NULL)
+		{
+			//0x2344f50a
+			(r5)(&sp_0x10, r4->graphicData);
+
+			r5 = NULL;
+		}
+		//loc_2344f512
+		if (graphic_unlock != NULL)
+		{
+			err = (graphic_unlock)();
+		}
 		//loc_2344f51c
 		if (62 == OSTaskDelReq(0xff))
 		{
@@ -2563,8 +2629,8 @@ void sub_234500bc(UI_Thread_Params* a)
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 
 		Menu_Item* r1 = r4->Data_4;
-		sp4 = r4->graphicData->Data_0x20;
-		r7 = r4->graphicData->Data_0x1c;
+		sp4 = r4->graphicData->lock;
+		r7 = r4->graphicData->unlock;
 
 		if (sp_0x34 != 10)
 		{
@@ -2589,8 +2655,8 @@ void sub_234500bc(UI_Thread_Params* a)
 						if (r4 != 0)
 						{
 							//0x2345015c
-							sp4 = r4->graphicData->Data_0x20;
-							r7 = r4->graphicData->Data_0x1c;
+							sp4 = r4->graphicData->lock;
+							r7 = r4->graphicData->unlock;
 							r5 = r4->graphicHandler;
 
 							sub_2343d51e(r4, &sp8);
@@ -3059,8 +3125,8 @@ void sub_2344f6ac(UI_Thread_Params* p)
 		r0 = pMsg->bData_0;
 
 		r7 = r4->Data_4;
-		sp4 = r4->graphicData->Data_0x20;
-		sp = r4->graphicData->Data_0x1c;
+		sp4 = r4->graphicData->lock;
+		sp = r4->graphicData->unlock;
 
 		if (sp_0x44 != 0)
 		{
@@ -3148,8 +3214,8 @@ void sub_2344f6ac(UI_Thread_Params* p)
 							if (r4 != NULL)
 							{
 								//0x2344f7a2
-								sp4 = r4->graphicData->Data_0x20;
-								sp = r4->graphicData->Data_0x1c;
+								sp4 = r4->graphicData->lock;
+								sp = r4->graphicData->unlock;
 								r7 = r4->Data_4;
 								r6 = r4->graphicHandler;
 
@@ -3403,8 +3469,8 @@ void menu_item_event_thread(UI_Thread_Params* p)
 		pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 		pMenuItem = pMenu->Data_4;
 #ifndef VDR110
-		sp8 = pMenu->graphicData->Data_0x20;
-		sp4 = pMenu->graphicData->Data_0x1c;
+		sp8 = pMenu->graphicData->lock;
+		sp4 = pMenu->graphicData->unlock;
 #endif
 
 		if (err != 10)
@@ -3502,8 +3568,8 @@ void menu_item_event_thread(UI_Thread_Params* p)
 					if (pMenu != 0)
 					{
 						//0x2344f976
-						sp8 = pMenu->graphicData->Data_0x20;
-						sp4 = pMenu->graphicData->Data_0x1c;
+						sp8 = pMenu->graphicData->lock;
+						sp4 = pMenu->graphicData->unlock;
 
 						pMenuItem = pMenu->Data_4;
 						pfGraphicHandler = pMenu->graphicHandler;
@@ -3726,8 +3792,8 @@ void sub_23450f66(UI_Thread_Params* p)
 
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 		r7 = r4->Data_4;
-		sp8 = r4->graphicData->Data_0x20;
-		sp4 = r4->graphicData->Data_0x1c;
+		sp8 = r4->graphicData->lock;
+		sp4 = r4->graphicData->unlock;
 
 		switch (r0)
 		{

@@ -28,5 +28,23 @@ typedef struct
 } Struct_2340c538;
 
 
+#define SCAN_PROGRESS_CALLBACK_TRANSPONDER 2
+#define SCAN_PROGRESS_CALLBACK_STATE 3
+
+typedef struct
+{
+	uint16_t total; //0
+	uint16_t current; //2
+	Transponder* pTransponder; //4
+	//8
+} Scan_Progress_Transponder;
+
+typedef struct
+{
+	uint32_t state; //0
+	//4
+} Scan_Progress_State; 
+
+
 void scan_init(Scan_Params* pParams);
 int sub_23410148(Struct_23410148* r5, int r6, void (*r7)(), int r8);

@@ -1438,7 +1438,7 @@ static int sub_2348c8d4(Struct_2348dc50* a)
     Graphic_Job_2_5_Item* r0 = &Data_234dfe54->graphicData->pItems[30];
 
     int r7 = 1;
-    Menu_Item* r4 = sp.Data_4->Data_8;
+    Menu_Item* r4 = sp.pMenu->Data_8;
 
     struct Struct_2348dc50_Data_0x10
     {
@@ -1521,7 +1521,7 @@ int sub_2348c9e0(void)
 {
     Struct_2348dc50 sp;
 
-    sp.Data_4 = Data_234dfe58;
+    sp.pMenu = Data_234dfe58;
     sp.Data_0x10 = 0;
     sp.wData_0x1c = 4;
     sp.Data_0x14 = sub_2348c8d4;
@@ -1582,10 +1582,10 @@ static int sub_2348ca2a(Struct_2348dc50* a)
     else
     {
         //loc_2348caa8
-        sp.Data_4->currentItem = sp.wData_0x22;
-        sp.Data_4->Data_4 = &sp.Data_4->Data_8[sp.wData_0x22];
+        sp.pMenu->currentItem = sp.wData_0x22;
+        sp.pMenu->Data_4 = &sp.pMenu->Data_8[sp.wData_0x22];
 
-        Menu_Item* r4 = sp.Data_4->Data_8;
+        Menu_Item* r4 = sp.pMenu->Data_8;
 
         sp_0x74 = sp.Data_0x10[sp.wData_0x1e - sp.wData_0x22];
 
@@ -1672,7 +1672,7 @@ int sub_2348cbc8(void) //onEnter
 
     Struct_2348dc50 sp;
 
-    sp.Data_4 = Data_234dfe54;
+    sp.pMenu = Data_234dfe54;
     sp.Data_0x10 = 0;
     sp.wData_0x1c = 4;
     sp.Data_0x14 = sub_2348ca2a;
@@ -2754,7 +2754,7 @@ Struct_2348dc50* sub_2348dc50(Struct_2348dc50* a)
     uint8_t i;
     for (i = 1; i < 7; i++)
     {
-        if (r3->Data_4 == 0)
+        if (r3->pMenu == NULL)
         {
             break;
         }
@@ -2863,7 +2863,7 @@ int sub_2348dd36(Menu* r4, int b)
         r4->header->Data_0x20->bData_0x17 = 1;
     }
     //loc_2348dd6e
-    if ((Data_234e1d70->Data_4 != r4) ||
+    if ((Data_234e1d70->pMenu != r4) ||
         ((r6 = r4->Data_8) == 0))
     {
         return 4;
@@ -2954,7 +2954,7 @@ int sub_2348de88(int* a)
     int r6 = 0;
     int r4 = *a;
 
-    Menu* r5 = Data_234e1d70->Data_4;
+    Menu* r5 = Data_234e1d70->pMenu;
     Menu_Item* r0 = r5->Data_4;
 
     if (Data_234e1d70->wData_0x20 == 0)
@@ -3133,7 +3133,7 @@ int sub_2348dff2(Struct_2348dc50* r4, int8_t r5)
 	console_send_string("sub_2348dff2 (todo.c): TODO\r\n");
 #endif
 
-    Menu* pMenu = r4->Data_4;
+    Menu* pMenu = r4->pMenu;
 
     if (r4 == 0)
     {

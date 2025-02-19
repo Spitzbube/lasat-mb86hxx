@@ -100,8 +100,8 @@ typedef struct
 	int fill_0x14; //0x14 = 20
 	uint8_t bNumItems; //0x18 = 24
 	uint8_t bData_0x19; //0x19 = 25
-	void (*Data_0x1c)(); //0x1c
-	void (*Data_0x20)(); //0x20
+	void (*unlock)(); //0x1c
+	void (*lock)(); //0x20
 	//???
 } Graphic_Job_2_5;
 #endif

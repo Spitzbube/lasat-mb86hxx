@@ -3,8 +3,8 @@
 typedef struct
 {
     int Data_0; //0
-    Menu* Data_4; //4
-    UI_Thread_Params* Data_8;
+    Menu* pMenu; //4
+    UI_Thread_Params* pThreadParams;
     int fill_0xc; //0xc
     int* Data_0x10; //0x10
     void (*Data_0x14)(); //0x14

@@ -2270,7 +2270,7 @@ int sub_23456aa2(void)
         sub_23456534();
     }
     //loc_23456b0c
-    sp_0x70.Data_4 = Data_234ca55c;
+    sp_0x70.pMenu = Data_234ca55c;
     sp_0x70.Data_0x10 = &Data_2379a704[0];
     sp_0x70.wData_0x1c = 4;
     sp_0x70.Data_0x54 = 0; //r4
@@ -2346,7 +2346,7 @@ static void* sub_23456db4(FrontDisplay_Job* r5)
 #endif
 
     Struct_2348dc50* r0__ = sub_2348dcd2();
-    Menu* r0 = r0__->Data_4;
+    Menu* r0 = r0__->pMenu;
     int r6 = 0;
 
     if (r0 == 0)
