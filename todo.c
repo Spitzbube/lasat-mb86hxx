@@ -1122,7 +1122,9 @@ void sub_234994a2()
 /* /  / 2347f098 - todo */
 int sub_2347f098()
 {
+#if 0
 	console_send_string("sub_2347f098 (todo.c): TODO\r\n");
+#endif
 
 	return 1;
 }

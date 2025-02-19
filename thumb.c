@@ -713,7 +713,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 {
 	UI_Thread_Params sp4;
 
-#if 1
+#if 0
 	console_send_string("sub_2343d51e (todo.c): TODO\r\n");
 #endif
 
@@ -2441,6 +2441,81 @@ loc_2344f3b2:
 }
 
 
+/* /  / 2344f3c6 - todo */
+void sub_2344f3c6(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_2344f3c6 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t keyCode; //sp_0x3c
+	uint8_t sp_0x38; //sp_0x38
+	UI_Thread_Params sp_0x20;
+	Struct_2348dc50* sp_0xc;
+	Menu_Item* sp8;
+	void (*sp4)(); //sp4
+	void (*sp)(); //sp
+	Menu* r4;
+
+	int r6 = 0;
+	int r5 = 0;
+	int r7 = 0;
+
+	sp_0x20 = *a;
+	Menu_Data.Data_235fdf70/*2379679C*/ = &sp_0x20;
+
+	sub_2348dcd2();
+
+	sp_0x38 = OSSemPost(sp_0x20.pSema);
+
+	OSMboxAccept(sp_0x20.pMBox);
+
+	//sp_0x40 = &237967C4
+
+	while (1)
+	{
+		//loc_2344f3f8
+		uint8_t* r0__ = OSMboxPend(sp_0x20.pMBox, 0, &sp_0x38);
+		keyCode = *r0__;
+
+		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+		sp8 = r4->Data_4;
+
+		sp_0xc = sub_2348dcd2();
+		sp_0xc->Data_8 = &sp_0x20;
+
+		sp4 = r4->graphicData->Data_0x20;
+		sp = r4->graphicData->Data_0x1c;
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2344f3c6: keyCode=%d(0x%x)\r\n", keyCode, keyCode);
+		console_send_string(debug_string);
+	}
+#endif
+
+		switch (keyCode)
+		{
+			case 0x2d:
+				//loc_2344f472
+				break;
+
+			//TODO!!!
+		}
+
+		//loc_2344f51c
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//loc_23450218
+			OSTaskDel(0xff);
+		}
+		//->loc_2344f3f8
+	} //while (1)
+
+}
+
+
 /* /  / 234500bc - todo */
 void sub_234500bc(UI_Thread_Params* a)
 {
@@ -3602,6 +3677,7 @@ void sub_2343dcce(void)
 	}
 }
 
+#ifndef VDR110
 
 /* /  / 23450f66 - todo */
 void sub_23450f66(UI_Thread_Params* p)
@@ -3742,4 +3818,4 @@ void sub_23450f66(UI_Thread_Params* p)
 	} //while (1)
 }
 
-
+#endif

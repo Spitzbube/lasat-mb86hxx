@@ -4,6 +4,7 @@
 #include "frontdisplay.h"
 #include "graphic.h"
 #include "menu.h"
+#include "channel_list_update.h"
 
 #ifndef VDR110
 
@@ -33,6 +34,7 @@ static int sub_23453d78(void*);
 static void menu_channel_search_get_search_mode_string(Menu_Item*);
 static void menu_channel_search_get_encryption_mode_string(Menu_Item*);
 static void sub_23453fea();
+static void menu_channel_search_on_start_scan_event(int);
 
 static Menu Data_234c4e7c; //234c4e7c
 static uint8_t Data_2379942c[]; //2379942c
@@ -1142,7 +1144,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 			&Data_234c3394[24], //234c3994,
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //void* onEvent; //0x1c = 28
+		menu_channel_search_on_start_scan_event, //void* onEvent; //0x1c = 28
 		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1161,7 +1163,7 @@ static Menu_Item Data_234c4c14[] = //234c4c14
 0x234c4d32 0000                   movs       r0, r0
 0x234c4d34 0000                   movs       r0, r0
 0x234c4d36 0000                   movs       r0, r0
-0x234c4d38                        dd         sub_23452c86+1
+0x234c4d38                        dd         menu_channel_search_on_start_scan_event+1
 0x234c4d3c                        dd         menu_event_thread+1
 #endif
 	},
@@ -1215,7 +1217,7 @@ struct Struct_23796d30
 	Struct_23543df0 Data_23796d30; //23796D30 +0x20
 	int Data_23796d50; //23796d50
 	Transponder Data_23796d54; //23796d54 +0x18
-	Transponder Data_23796d6c[200]; //23796d6c +0x12C0
+	Transponder arTransponders[200]; //23796d6c +0x12C0
 	uint16_t wData_2379802c; //2379802c
 	uint16_t wData_2379802e; //2379802e
 	struct 
@@ -1260,7 +1262,7 @@ static uint8_t Data_2379960c[40]; //2379960c, size???
 /* /  / 23452ac4 */
 void sub_23452ac4(uint32_t a, Graphic_Job_2_5_Item* b, int c, int d)
 {
-#if 1
+#if 0
 	console_send_string("sub_23452ac4 (todo.c): TODO\r\n");
 #endif
 
@@ -1270,7 +1272,7 @@ void sub_23452ac4(uint32_t a, Graphic_Job_2_5_Item* b, int c, int d)
 /* /  / 23452b1c - todo */
 static int sub_23452b1c(Frontend_Measurement* r6)
 {
-#if 1
+#if 0
 	console_send_string("sub_23452b1c (todo.c): TODO\r\n");
 #endif
 
@@ -1417,6 +1419,19 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 }
 
 
+/* /  / 23452c86 - todo */
+void menu_channel_search_on_start_scan_event(int r4)
+{
+#if 0
+	console_send_string("menu_channel_search_on_start_scan_event (todo.c): TODO\r\n");
+#endif
+
+	fe_manager_register_measurement_callback(Data_23796d30.Data_23798098, NULL);
+
+	sub_2348fc86(r4);
+}
+
+
 /* /  / 23452c9c - complete */
 void sub_23452c9c(uint32_t* a, int b, int c, uint8_t* pString)
 {
@@ -1431,22 +1446,74 @@ void sub_23452c9c(uint32_t* a, int b, int c, uint8_t* pString)
 
 
 /* /  / 23452cbe - todo */
-static void sub_23452cbe(Menu_Item* item)
+static void menu_channel_search_get_cable_symbolrate_value_string(Menu_Item* item)
 {
-#if 1
-	console_send_string("sub_23452cbe (todo.c): TODO\r\n");
+#if 0
+	console_send_string("menu_channel_search_get_cable_symbolrate_value_string (todo.c): TODO\r\n");
 #endif
 
+	Menu_Item_Inner4_Data_0* r1 = item->Data_4[1];
+	uint8_t* pString = r1->Data_0x20->Data_0x10;
+
+	if (Data_23796d30.Data_23798030.bData_0xc == 0)
+	{
+		//0x23452cd8
+		r1->Data_0x20->wData_0x14 = 0;
+		r1->Data_0x20->bData_0x16 = 0;
+
+		uint32_t sp = Data_23796d30.Data_23796d54.Data_0.symbol_rate * 100;
+
+		sub_23452c9c(&sp, 2200, 7199, pString);
+	}
+	else
+	{
+		//loc_23452cf8
+		r1->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r1->Data_0x20->bData_0x16 = 7;
+
+		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
+	}
 }
 
 
 /* /  / 23452d0c - todo */
-static void sub_23452d0c(Menu_Item* item)
+static void menu_channel_search_get_modulation_value_string(Menu_Item* item)
 {
-#if 1
-	console_send_string("sub_23452d0c (todo.c): TODO\r\n");
+#if 0
+	console_send_string("menu_channel_search_get_modulation_value_string (todo.c): TODO\r\n");
 #endif
 
+	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint32_t modulation = Data_23796d30.Data_23796d54.Data_0.Data_0.Bitfield_0.modulation; // 23796D57 >> 4;
+
+	if (modulation == 1)
+	{
+		sprintf(pString, "16QAM");
+	}
+	else if (modulation == 2)
+	{
+		sprintf(pString, "32QAM");
+	}
+	else if (modulation == 3)
+	{
+		sprintf(pString, "64QAM");
+	}
+	else if (modulation == 4)
+	{
+		sprintf(pString, "128QAM");
+	}
+	else if (modulation == 5)
+	{
+		sprintf(pString, "256QAM");
+	}
+	else if (modulation == 6)
+	{
+		sprintf(pString, "AUTO");
+	}
+	else
+	{
+		sprintf(pString, "---");
+	}
 }
 
 
@@ -1608,6 +1675,8 @@ int sub_234533bc(void)
 	Graphic_Job_2_5* sp_0x64 = Data_234c2f70->graphicData;
 	Menu_Item* sp_0x60 = &Data_234c2f70->Data_8[2];
 	Menu_Item* sp_0x5c;
+	Struct_2354613c sp_0x3c; //+0x20
+	uint32_t r7;
 
 	Graphic_Job_2_5_Item* sp_0x38 = &sp_0x64->pItems[3];
 	Graphic_Job_2_5_Item* sp_0x34 = &sp_0x64->pItems[10];
@@ -1626,6 +1695,13 @@ int sub_234533bc(void)
 	{
 		//0x23453402
 		sp_0x68 = fe_manager_get_transponder_type(&Data_23796d30.Data_23796d54);
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_234533bc: sp_0x68=%d\r\n", sp_0x68);
+			console_send_string(debug_string);
+		}
+#endif
 		if (sp_0x68 == 0)
 		{
 			//->loc_23453426
@@ -1648,7 +1724,13 @@ int sub_234533bc(void)
 		{
 			//loc_23453630
 			int r0 = /*sub_23416808*/sub_2340ee34(Data_23491db8);
-
+#if 1
+			{
+				extern char debug_string[];
+				sprintf(debug_string, "sub_234533bc: r0=%d\r\n", r0);
+				console_send_string(debug_string);
+			}
+#endif
 			if (r0 == 6)
 			{
 				//0x2345363c
@@ -1704,11 +1786,11 @@ int sub_234533bc(void)
 
 				r4->inputThreadFunc = menu_item_event_thread;
 				r4->onEvent = sub_23452fd0;
-				r4->initValueString = sub_23452d0c;
+				r4->initValueString = menu_channel_search_get_modulation_value_string;
 
 				r5->inputThreadFunc = sub_2344f6ac;
 				r5->onEvent = sub_23452f4c;
-				r5->initValueString = sub_23452cbe;
+				r5->initValueString = menu_channel_search_get_cable_symbolrate_value_string;
 
 				sp_0x5c->initValueString = sub_23452d52;
 				r5->onEvent = sub_23452d86;
@@ -1730,17 +1812,77 @@ int sub_234533bc(void)
 					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c12d4;
 					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c12d4;
 					//->loc_234537b0
+					sp_0x38->height = 0xcc;
+					sp_0x34->height = 0xcc;
+					//loc_234537b6
 				}
 				else
 				{
 					//loc_2345373e
-					//TODO!!!
-#if 1
-					console_send_string("sub_234533bc (loc_2345373e): TODO!!!\r\n");
-#endif
-				}
+					/*sub_2340f538*/sub_2340ca5c(1, &sp_0x3c);
 
+					r7 = sp_0x3c.crc;
+					sp_0x3c.crc = 0; //r6
+
+					//r0 = sp_0x5c
+					if (crc32(&sp_0x3c, sizeof(Struct_2354613c)) == r7)
+					{
+						//0x2345375a
+						sp_0x5c->Data_4[0]->bData_0 = 0; //r6
+						sp_0x5c->Data_4[1]->bData_0 = 0; //r6
+
+						r4->Data_4[0]->bData_0 = 0; //r6
+						r4->Data_4[1]->bData_0 = 0; //r6
+
+						r5->Data_4[0]->bData_0 = 0; //r6
+						r5->Data_4[1]->bData_0 = 0; //r6
+
+						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+
+						sp_0x38->height = 0x6c;
+						sp_0x34->height = 0x6c;
+						//->loc_234537b6
+					}
+					else
+					{
+						//loc_23453788
+						sp_0x5c->Data_4[0]->bData_0 = 0; //r6
+						sp_0x5c->Data_4[1]->bData_0 = 0; //r6
+
+						r4->Data_4[0]->bData_0 = 1;
+						r4->Data_4[1]->bData_0 = 1;
+
+						r5->Data_4[0]->bData_0 = 1;
+						r5->Data_4[1]->bData_0 = 1;
+
+						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+						//loc_234537b0
+						sp_0x38->height = 0xac;
+						sp_0x34->height = 0xac;
+					}
+				}
+				//loc_234537b6
+				sp_0x64->wData_2 = 0x13;
+
+				sub_23452d52(sp_0x5c);
+				//->loc_2345383c
+				menu_channel_search_get_modulation_value_string(r4);
+				menu_channel_search_get_cable_symbolrate_value_string(r5);
+				//loc_23453848
 			}
+			//loc_23453848
+			sp_0x64->pItems[21].wColor = 9;
+			sp_0x64->pItems[21].bData_0 = 0;
+			sp_0x64->pItems[20].bData_0 = 0;
+			sp_0x64->pItems[17].height = 0x4c;
+			sp_0x64->pItems[22].y = 0x80;
+			sp_0x64->pItems[22].Data_0x24.pString = NULL;
+
+			Data_234c3004.y1 = 0x84;
+
+			sprintf(&menu_channel_search_qpsk_string[0], "Lock");
+			sprintf(&menu_channel_search_fec_string[0], " ");
+			//loc_234538aa
 		}
 		//loc_23453558 -> loc_234538aa
 	}
@@ -2048,10 +2190,10 @@ static int menu_channel_search_on_enter(int a)
 
 			Data_23796d30.wData_2379802e = 
 				channel_get_transponder_list(Data_23796d30.Data_23796d50, 
-					/*sp_0x5c*/&Data_23796d30.Data_23796d6c[0], 200);
+					/*sp_0x5c*/&Data_23796d30.arTransponders[0], 200);
 
-//			memcpy(&Data_23796d30.Data_23796d54, &Data_23796d30.Data_23796d6c[0], sizeof(Transponder))
-			Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[0];
+//			memcpy(&Data_23796d30.Data_23796d54, &Data_23796d30.arTransponders[0], sizeof(Transponder))
+			Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[0];
 			//0x23453b14
 			Data_23796d30.Data_23796d50 = Data_23796d30.Data_23796d54.Data_0.wData_0x0a;
 			Data_23796d30.Data_23798030.polarization = Data_23796d30.Data_23796d54.Data_0.symbol_rate & 0x01;
@@ -2065,7 +2207,7 @@ static int menu_channel_search_on_enter(int a)
 
 			Data_23796d30.wData_2379802e = 
 				channel_get_transponder_list(Data_23796d30.Data_23796d50, 
-					/*sp_0x5c*/&Data_23796d30.Data_23796d6c[0], 200);
+					/*sp_0x5c*/&Data_23796d30.arTransponders[0], 200);
 			//->loc_23453b68
 		}
 	} //if (sp_0x28.wNumChannels != 0)
@@ -2093,10 +2235,10 @@ static int menu_channel_search_on_enter(int a)
 
 		Data_23796d30.wData_2379802e = 
 			channel_get_transponder_list(Data_23796d30.Data_23796d50, 
-				/*sp_0x5c*/&Data_23796d30.Data_23796d6c[0], 200);
+				/*sp_0x5c*/&Data_23796d30.arTransponders[0], 200);
 
-//		memcpy(&Data_23796d30.Data_23796d54, &Data_23796d30.Data_23796d6c[0], sizeof(Transponder))
-		Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[0];
+//		memcpy(&Data_23796d30.Data_23796d54, &Data_23796d30.arTransponders[0], sizeof(Transponder))
+		Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[0];
 	}
 	//loc_23453b68
 	Data_23796d30.wData_2379802c = 0; //r5
@@ -2140,11 +2282,11 @@ static int menu_channel_search_on_enter(int a)
 		for (r5 = 0; r5 < Data_23796d30.wData_2379802e; r5++)
 		{
 			//loc_23453bce
-			if (0 == memcmp(&Data_23796d30.Data_23796d6c[r5].Data_0, 
+			if (0 == memcmp(&Data_23796d30.arTransponders[r5].Data_0, 
 						&Data_23796d30.Data_23796d54.Data_0, 0x10))
 			{
 				//->loc_23453c32
-				Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[r5];
+				Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[r5];
 
 				Data_23796d30.wData_2379802c = r5;
 				//->loc_23453bee
@@ -2152,7 +2294,7 @@ static int menu_channel_search_on_enter(int a)
 			}
 		} //for (r5 = 0; r5 < Data_23796d30.wData_2379802e; r5++)
 		//loc_23453bee
-		Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[ Data_23796d30.wData_2379802c ];
+		Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[ Data_23796d30.wData_2379802c ];
 		//loc_23453c08
 	}
 	else
@@ -2165,10 +2307,10 @@ static int menu_channel_search_on_enter(int a)
 		for (r5 = 0; r5 < Data_23796d30.wData_2379802e; r5++)
 		{
 			//loc_23453c20: TODO!!!
-			if (Data_23796d30.Data_23796d6c[r5].Data_0.wData_0x0c == Data_23796d30.Data_23796d54.Data_0.wData_0x0c)
+			if (Data_23796d30.arTransponders[r5].Data_0.wData_0x0c == Data_23796d30.Data_23796d54.Data_0.wData_0x0c)
 			{
 				//->loc_23453c32
-				Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[r5];
+				Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[r5];
 
 				Data_23796d30.wData_2379802c = r5;
 				//->loc_23453bee
@@ -2176,7 +2318,7 @@ static int menu_channel_search_on_enter(int a)
 			}
 		} //for (r5 = 0; r5 < Data_23796d30.wData_2379802e; r5++)
 		//loc_23453bee
-		Data_23796d30.Data_23796d54 = Data_23796d30.Data_23796d6c[ Data_23796d30.wData_2379802c ];
+		Data_23796d30.Data_23796d54 = Data_23796d30.arTransponders[ Data_23796d30.wData_2379802c ];
 		//loc_23453c08
 	}
 	//loc_23453c08
@@ -2360,6 +2502,68 @@ static void sub_23453fea()
 	console_send_string("sub_23453fea (todo.c): TODO\r\n");
 #endif
 
+}
+
+
+/* /  / 23454294 - todo */
+void sub_23454294(Struct_2343df02* r4)
+{
+#if 1
+	console_send_string("sub_23454294 (todo.c): TODO\r\n");
+#endif
+
+	if (r4 == NULL)
+	{
+		//->loc_234542be
+		return;
+	}
+
+	r4->bData_0x11 = Data_23796d30.Data_23798030.Data_4;
+	r4->wData_0x14 = 0xffff;
+
+	if (Data_23796d30.Data_23798030.Data_0 == 1)
+	{
+		//0x234542b8
+		r4->listLen = 1; //r6
+		r4->pList = &Data_23796d30.Data_23796d54; //r5
+		r4->bData_0x10 = 0; //r7;
+		//loc_234542be
+	}
+	//loc_234542c2
+	else if (Data_23796d30.Data_23798030.Data_0 == 2)
+	{
+		//0x234542c6
+		r4->listLen = 1; //r6
+		r4->pList = &Data_23796d30.Data_23796d54; //r5
+		r4->bData_0x10 = 1; //r6
+		//->loc_234542be
+	}
+	else
+	{
+		//loc_234542ce
+		memset(&Data_23796d30.arTransponders[0]/*sp_0x20*/, 0, sizeof(Data_23796d30.arTransponders));
+
+		r4->listLen = channel_get_transponder_list(Data_23796d30.Data_23796d50,
+			&Data_23796d30.arTransponders[0], 200);
+
+		r4->pList = &Data_23796d30.arTransponders[0];
+
+		if (Data_23796d30.Data_23796d50 == 0)
+		{
+			//0x234542f8
+			r4->bData_0x10 = 0; //r7;
+			//->loc_234542fe
+		}
+		else
+		{
+			//loc_234542fc
+			r4->bData_0x10 = 1; //r6
+		}
+		//loc_234542fe
+
+		//TODO!!!
+	}
+	//loc_234542be
 }
 
 

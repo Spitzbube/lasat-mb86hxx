@@ -7,7 +7,7 @@ extern OS_EVENT* channel_sema;
 extern Channel_Database channel_database;
 
 
-/* 2344f770 - complete */
+/* 2344f770 /  / 234107b0 - complete */
 Channel_Database* sub_2344f770(void)
 {
 	uint8_t err;

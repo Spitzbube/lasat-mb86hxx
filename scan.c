@@ -852,7 +852,7 @@ void scan_init(Scan_Params* pParams)
 }
 
 
-/* 2340ff80 - todo */
+/* 2340ff80 /  / 2341797c - todo */
 int scan_start(Struct_2343df02* r4)
 {
 	uint8_t err; //sp

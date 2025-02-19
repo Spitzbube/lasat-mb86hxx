@@ -74,6 +74,7 @@ set(SRCS
    menu_amplifier_inputs.c
    menu_net_radio.c
    sub_23476ed4.c
+   sub_2348fc86.c
    menu_main.c
    menu_settings.c
    menu_picture.c
