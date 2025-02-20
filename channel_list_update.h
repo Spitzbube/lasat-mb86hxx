@@ -4,7 +4,7 @@ typedef struct
 {
 	Transponder* pList; //0
 	uint16_t listLen; //4
-	int Data_8; //8
+	void (*pfData_8)(uint16_t, uint16_t); //8
 	void (*pfProgress)(); //12
 	uint8_t bData_0x10; //16 = 0x10
 	uint8_t bData_0x11; //17 = 0x11

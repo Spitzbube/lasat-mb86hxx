@@ -2562,7 +2562,7 @@ void channel_write_lastmode(void)
 }
 
 
-/* 2340c19c - complete */
+/* 2340c19c /  / 2340ec78 - complete */
 void sub_2340c19c(int channelIdx, Channel* pChannel, Transponder* pTransponder)
 {
 	uint8_t err;
@@ -2696,8 +2696,8 @@ uint16_t channel_get_transponder_list(uint16_t r6, Transponder list[], uint16_t 
 }
 
 
-/* 2340c538 - todo */
-int sub_2340c538(Struct_2340c538* r7)
+/* 2340c538 /  / 2340f014 - todo */
+int channel_database_add_entry(Scan_New_Channel* r7)
 {
 	uint8_t err;
 	uint16_t r4;
@@ -2707,7 +2707,7 @@ int sub_2340c538(Struct_2340c538* r7)
 	PSI_Program* r6 = r7->pPsiProgram;
 
 #if 0
-	console_send_string("sub_2340c538 (todo.c): TODO\r\n");
+	console_send_string("channel_database_add_entry (todo.c): TODO\r\n");
 #endif
 
 	OSSemPend(channel_sema, 0, &err);
@@ -2717,7 +2717,7 @@ int sub_2340c538(Struct_2340c538* r7)
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_2340c538: transponderType=%d\r\n", transponderType);
+		sprintf(debug_string, "channel_database_add_entry: transponderType=%d\r\n", transponderType);
 		console_send_string(debug_string);
 	}
 #endif
@@ -2725,7 +2725,7 @@ int sub_2340c538(Struct_2340c538* r7)
 	if (transponderType == 0)
 	{
 		//0x2340c574
-		console_send_string("sub_2340c538: transponderType=0: TODO!!!\r\n");
+		console_send_string("channel_database_add_entry: transponderType=0: TODO!!!\r\n");
 #if 0
 		sl = 0;
 
@@ -2784,7 +2784,7 @@ int sub_2340c538(Struct_2340c538* r7)
 	else if (transponderType == 2)
 	{
 		//0x2340c650
-		console_send_string("sub_2340c538: transponderType=2: TODO!!!\r\n");
+		console_send_string("channel_database_add_entry: transponderType=2: TODO!!!\r\n");
 #if 0
 		r4 = 0;
 		int r0 = 0;
@@ -2864,7 +2864,7 @@ int sub_2340c538(Struct_2340c538* r7)
 	else if (transponderType == 3)
 	{
 		//0x2340c794
-		console_send_string("sub_2340c538: transponderType=3: TODO!!!\r\n");
+		console_send_string("channel_database_add_entry: transponderType=3: TODO!!!\r\n");
 #if 0
 		r4 = 0xffff; //sb
 		//loc_2340c798
@@ -2886,6 +2886,7 @@ int sub_2340c538(Struct_2340c538* r7)
 		//loc_2340c7c0
 		if (pChannel->wFlags_2 == 0xffff)
 		{
+			// Free entry can be used
 			pChannel->wFlags_2 = r6->bData_0 | (1 << 7);
 			pChannel->wData_6 = 0; //r3
 			pChannel->service_id = r6->pat_program_number;
@@ -2916,7 +2917,7 @@ int sub_2340c538(Struct_2340c538* r7)
 		if ((pChannel->service_id == r6->pat_program_number) &&
 			(pChannel->wTransponderIndex == r4))
 		{
-			//0x2340c85c
+			//0x2340c85c: Channel is already present
 			pChannel->wData_6 &= ~(1 << 14);
 
 			OSSemPost(channel_sema);

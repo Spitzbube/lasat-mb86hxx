@@ -1,13 +1,13 @@
 
 
-typedef struct
+typedef struct Struct_2348dc50
 {
     int Data_0; //0
     Menu* pMenu; //4
-    UI_Thread_Params* pThreadParams;
+    UI_Thread_Params* pThreadParams; //8
     int fill_0xc; //0xc
     int* Data_0x10; //0x10
-    void (*Data_0x14)(); //0x14
+    void (*Data_0x14)(struct Struct_2348dc50*); //0x14
     void (*Data_0x18)(); //0x18
     uint16_t wData_0x1c; //0x1c
     int16_t wData_0x1e; //0x1e

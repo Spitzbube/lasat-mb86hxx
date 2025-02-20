@@ -393,7 +393,7 @@ int sub_234701da(Transponder arTransponders[], int numTransponders, void* sema)
 	memset(&sp_0x40, 0, sizeof(Struct_2343df02));
 
 	sp_0x40.bData_0x11 = 1; //r6
-	sp_0x40.Data_8 = 0; //r5
+	sp_0x40.pfData_8 = NULL; //r5
 	sp_0x40.pfProgress = sub_23470144;
 	sp_0x40.listLen = numTransponders;
 	sp_0x40.pList = arTransponders;
@@ -684,7 +684,7 @@ int sub_2347045a(UI_Thread_Params* r0_, void (*r5)(void*))
 	//->loc_234704f4
 	memset(&sp4, 0, sizeof(Struct_2343df02));
 
-	sp4.Data_8 = 0; //r4
+	sp4.pfData_8 = NULL; //r4
 	sp4.pfProgress = menu_channel_search_progress;
 
 	if (r5 != 0)

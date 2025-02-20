@@ -25,9 +25,10 @@ typedef struct
 	int Data_8; //8 = sp_0x30
 	uint16_t wData_12; //12 = sp_0x34
 
-} Struct_2340c538;
+} Scan_New_Channel;
 
 
+#define SCAN_PROGRESS_CALLBACK_CHANNELS 1
 #define SCAN_PROGRESS_CALLBACK_TRANSPONDER 2
 #define SCAN_PROGRESS_CALLBACK_STATE 3
 

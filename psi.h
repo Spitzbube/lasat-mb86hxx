@@ -240,7 +240,7 @@ typedef struct Struct_234a73e8
 	void (*pfHandleQueueItem)(); //0x21c
 	void (*pfHandleState)(); //0x220
 	void (*pfOnPSIData)(); //0x224
-	void (*Data_0x228)(); //0x228
+	void (*Data_0x228)(uint16_t, uint16_t); //0x228
 	void (*Data_0x22c)(); //0x22c
 	void (*pfOnPMTData)(uint8_t*, int); //0x230
 	void (*pfOnSDTData)(uint8_t*, int); //0x234

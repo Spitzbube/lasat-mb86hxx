@@ -30,13 +30,13 @@ typedef struct
 	uint8_t bData_0x17; //0x17
 	uint8_t bData_0x18; //0x18 = 24
 	uint16_t wData_0x1a; //0x1a = 26
-	uint16_t Data_0x1c[150]; //0x1c = 28
+	uint16_t arChannels[150]; //0x1c = 28
 	Transponder* pList; //0x148
 	OS_EVENT* sema; //0x14c
 	int (*pfUpdateTransponderList)(); //0x150
 	void (*pfProgress)(); //0x154
-	int Data_0x158; //0x158
-	uint16_t wData_0x15c; //0x15c
+	void (*pfData_0x158)(uint16_t, uint16_t); //0x158
+	uint16_t wNumChannels; //0x15c
 	uint16_t threadPrio; //0x15e
 	void (*pfOnPSIData)(); //0x160
 	void (*Data_0x164)(); //0x164
@@ -151,14 +151,14 @@ void sub_2340f5ac()
 }
 
 
-/* 2340f5c0 - todo */
-void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
+/* 2340f5c0 /  / 23416f94 - todo */
+void scan_process_psi_programs(PSI_Program r4[], uint16_t r1, int sb)
 {
 #if 0
-	console_send_string("sub_2340f5c0 (todo.c): TODO\r\n");
+	console_send_string("scan_process_psi_programs (todo.c): TODO\r\n");
 #endif
 
-	Struct_2340c538 sp_0x28;
+	Scan_New_Channel sp_0x28;
 	Transponder transponder; //sp_0x10
 	Struct_2344dc3c sp4;
 
@@ -271,14 +271,14 @@ void sub_2340f5c0(PSI_Program r4[], uint16_t r1, int sb)
 			}
 		}
 		//loc_2340f730
-		if (0 == sub_2340c538(&sp_0x28))
+		if (0 == channel_database_add_entry(&sp_0x28))
 		{
 			//0x2340f740
-			scanData.wData_0x15c++;
+			scanData.wNumChannels++;
 
-			if ((scanData.wData_0x15c - 1) < 150)
+			if ((scanData.wNumChannels - 1) < 150)
 			{
-				scanData.Data_0x1c[scanData.wData_0x15c - 1] = sp_0x28.wData_12;
+				scanData.arChannels[scanData.wNumChannels - 1] = sp_0x28.wData_12;
 			}
 		}
 		//loc_2340f764
@@ -305,7 +305,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 	{
 		//0x2340f8e8
 		scanData.state = 5;
-		scanData.wData_0x15c = 0;
+		scanData.wNumChannels = 0;
 
 		int r5 = psi_get_all_current_programs(r5_, &numPrograms, &pPrograms);
 
@@ -352,7 +352,7 @@ void scan_psi_callback(Struct_234a73e8* r5_)
 				sub_2340f1f0(sp_0x10.pTransportStream);
 			}
 
-			sub_2340f5c0(pPrograms, numPrograms, r5);
+			scan_process_psi_programs(pPrograms, numPrograms, r5);
 		}
 	}
 	//loc_2340f930
@@ -787,7 +787,7 @@ void scan_thread()
 				psi_start(main_hPSIDecoder1,
 						scanData.PSISectionMask,
 						scanData.pfOnPSIData,
-						scanData.Data_0x158,
+						scanData.pfData_0x158,
 						scanData.wData_0x0c,
 						scanData.wData_0x0e);
 
@@ -799,10 +799,12 @@ void scan_thread()
 			else if (scanData.state == 5) //PSI Data received
 			{
 				//0x2340fea4
-				if ((scanData.wData_0x15c != 0) &&
+				if ((scanData.wNumChannels != 0) &&
 						(scanData.pfProgress != 0))
 				{
-					(scanData.pfProgress)(&scanData.Data_0x1c[0], scanData.wData_0x15c, 1);
+					(scanData.pfProgress)(&scanData.arChannels[0], 
+						scanData.wNumChannels, 
+						SCAN_PROGRESS_CALLBACK_CHANNELS);
 				}
 
 				if (scanData.pfUpdateTransponderList != 0)
@@ -878,7 +880,7 @@ int scan_start(Struct_2343df02* r4)
 	scanData.currentItem = 0;
 #endif
 	scanData.pfProgress = r4->pfProgress;
-	scanData.Data_0x158 = r4->Data_8;
+	scanData.pfData_0x158 = r4->pfData_8;
 	scanData.bData_0x16 = r4->bData_0x11;
 	scanData.bData_0x14 = r4->bData_0x12;
 	scanData.bData_0x18 = 0;
@@ -997,7 +999,7 @@ int sub_23410148(Struct_23410148* r5, int r6, void (*r7)(), int r8)
 #endif
 		scanData.currentItem = 0;
 		scanData.pfProgress = r5->Data_12;
-		scanData.Data_0x158 = 0;
+		scanData.pfData_0x158 = NULL;
 		scanData.PSISectionMask = r6;
 		scanData.pfUpdateTransponderList = 0;
 		scanData.pfOnPSIData = sub_2340f5ac;
@@ -1026,8 +1028,8 @@ int sub_234101e8()
 	psi_stop(main_hPSIDecoder1, 1);
 
 	scanData.state = 0;
-	scanData.pfProgress = 0;
-	scanData.Data_0x158 = 0;
+	scanData.pfProgress = NULL;
+	scanData.pfData_0x158 = NULL;
 
 	OSSemPost(scanData.sema);
 

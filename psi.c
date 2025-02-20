@@ -26,7 +26,7 @@ typedef struct
 	int activeMask; //4
 	int Data_8; //8
 	void (*pfOnPSIData)(); //12 = 0x0c
-	void (*Data_0x10)(); //16 = 0x10
+	void (*pfData_0x10)(uint16_t, uint16_t); //16 = 0x10
 	uint16_t wData_0x14; //20 = 0x14
 	uint16_t wData_0x16; //22 = 0x16
 	uint16_t wData_0x18; //24 = 0x18
@@ -1432,7 +1432,7 @@ int psi_handle_queue_item(Struct_234a73e8* r5, Queue_Item* pItem/*r6*/)
 		{
 			//0x23404d84
 			r5->pfOnPSIData = pItem->pData->pfOnPSIData;
-			r5->Data_0x228 = pItem->pData->Data_0x10;
+			r5->Data_0x228 = pItem->pData->pfData_0x10;
 
 			r5->wData_0x21e10 = 0; //r8
 			r5->Data_0x21dfc = pItem->pData->activeMask;
@@ -1478,8 +1478,8 @@ int psi_handle_queue_item(Struct_234a73e8* r5, Queue_Item* pItem/*r6*/)
 	else if (pItem->state == PSI_STATE_STOP) 
 	{
 		//0x23404e60
-		r5->pfOnPSIData = 0; //r8;
-		r5->Data_0x228 = 0; //r8;
+		r5->pfOnPSIData = NULL; //r8;
+		r5->Data_0x228 = NULL; //r8;
 
 		sub_23403734(r5);
 
@@ -3568,7 +3568,7 @@ int psi_start_for_service(Struct_234a73e8* r0, int r1, int sectionMask, void (*o
 	sp4.Data_8 |= (sectionMask & PSI_MASK_NIT);
 	sp4.Data_8 |= 0x3c00;
 
-	sp4.Data_0x10 = 0;
+	sp4.pfData_0x10 = NULL;
 	sp4.wData_0x14 = r1;
 	sp4.wData_0x16 = 0;
 	sp4.wData_0x18 = 0;
@@ -3597,7 +3597,7 @@ int psi_start_for_service(Struct_234a73e8* r0, int r1, int sectionMask, void (*o
 
 
 /* 234064bc / 23408918 - todo */
-int psi_start(Struct_234a73e8* r0, int sectionMask, void (*onPSIData)(), void (*r3)(), int arg_0, int arg_4)
+int psi_start(Struct_234a73e8* r0, int sectionMask, void (*onPSIData)(), void (*r3)(uint16_t, uint16_t), int arg_0, int arg_4)
 {
 	Queue_Item queueItem; //sp_0x20
 	Queue_Item_Data sp4;
@@ -3614,7 +3614,7 @@ int psi_start(Struct_234a73e8* r0, int sectionMask, void (*onPSIData)(), void (*
 	sp4.handled = 0;
 	sp4.activeMask = sectionMask;
 	sp4.Data_8 = 0;
-	sp4.Data_0x10 = r3;
+	sp4.pfData_0x10 = r3;
 	sp4.wData_0x14 = 0;
 	sp4.wData_0x16 = arg_0; //lr;
 	sp4.wData_0x18 = arg_4; //r4;
