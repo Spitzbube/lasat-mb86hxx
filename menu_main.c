@@ -818,7 +818,7 @@ static Menu_Item menu_main_items[] = //234c1f3c
 #endif
 	//[2]
 	{
-		0x44, //"Senderliste"
+		0x44, //"Senderliste" / 'Channel list'
 		0xf3, //uint16_t wData_2; //2
 		{
 			&menu_main_graphic_items[7], //234c19f4
@@ -1002,9 +1002,7 @@ int menu_main_items_on_event(void* r0)
 		else if (Data_234c1240->currentItem == 2)
 		{
 			//0x2344cfb4: Senderliste
-#if 0
-			sub_23490bd0();
-#endif
+			sub_23490bd0(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfba

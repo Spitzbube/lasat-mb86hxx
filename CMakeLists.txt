@@ -77,6 +77,8 @@ set(SRCS
    sub_2348fc86.c
    menu_main.c
    menu_settings.c
+   sub_23490bd0.c
+   sub_234929f6.c
    menu_picture.c
    main2.c
    menu_info_bar.c
