@@ -31,7 +31,7 @@ struct Menu_Data
 	UI_Thread_Params* Data_235fdf70; //24 = 0x18 235fdf70 / 2378336C -0x40 + 0x18 2379679C
 	Menu* menu_stack[13]; //28 = 0x1c 235fdf74 -0x40, size??? 237967A0
 	uint8_t menu_stack_level; //80 = 0x50 235fdfa8 235fdf98 + 0x10 237967D4
-	uint8_t bData_235fdfa9;
+	uint8_t bData_235fdfa9; //  /  /  + 0x11 237967D5
 
 };
 

@@ -1018,7 +1018,7 @@ int sub_23410148(Struct_23410148* r5, int r6, void (*r7)(), int r8)
 }
 
 
-/* 234101e8 - complete */
+/* 234101e8 /  / 23417bec - complete */
 int sub_234101e8()
 {
 	uint8_t err; //sp

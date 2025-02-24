@@ -1095,6 +1095,14 @@ void sub_2349615c()
 }
 
 
+/* /  / 23496cb2 - todo */
+void sub_23496cb2()
+{
+	console_send_string("sub_23496cb2 (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 234994a2 - todo */
 void sub_234994a2()
 {

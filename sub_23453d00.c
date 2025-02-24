@@ -2567,4 +2567,16 @@ void sub_23454294(Struct_2343df02* r4)
 }
 
 
+/* /  / 234543a0 - complete */
+void sub_234543a0(void)
+{
+#if 0
+	console_send_string("sub_234543a0 (todo.c): TODO\r\n");
+#endif
+
+	fe_manager_register_measurement_callback(Data_23796d30.Data_23798098, sub_23452b1c);
+}
+
+
+
 #endif

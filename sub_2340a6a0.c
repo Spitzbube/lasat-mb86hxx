@@ -1467,7 +1467,7 @@ void sub_2340a71c()
 }
 
 
-/* 2340a794 - todo */
+/* 2340a794 /  / 2340d270 - todo */
 int channel_load_lists(void)
 {
 	void* sp_0x18;
@@ -1757,7 +1757,7 @@ int channel_load_lists(void)
 }
 
 
-/* 2340add4 - todo */
+/* 2340add4 /  / 2340d8b0 - todo */
 int sub_2340add4(int r5)
 {
 	uint8_t err;
@@ -2914,7 +2914,7 @@ int channel_database_add_entry(Scan_New_Channel* r7)
 }
 
 
-/* 2340c8a8 - complete */
+/* 2340c8a8 /  / 2340f384 - complete */
 int channel_write_database(void)
 {
 	uint8_t err;

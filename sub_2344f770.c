@@ -280,3 +280,32 @@ Channel_Database* sub_2344f770(void)
 	return r4;
 }
 
+
+/* 2344f978 /  / 234109b8 - complete */
+void sub_2344f978(int r5)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_2344f978 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	Data_235462e4.bData_235491dc = r5;
+
+	OSSemPost(channel_sema);
+}
+
+
+/* 2344f9a8 /  / 234109e8 - todo */
+void sub_2344f9a8(int a)
+{
+#if 1
+	console_send_string("sub_2344f9a8 (todo.c): TODO\r\n");
+#endif
+
+
+}
+
+

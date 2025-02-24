@@ -3768,6 +3768,182 @@ void sub_2343dcce(void)
 
 #ifndef VDR110
 
+
+/* /  / 2344fa5a - todo */
+void sub_2344fa5a(UI_Thread_Params* p)
+{
+#if 0
+	console_send_string("sub_23450f66 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err; //sp_0x34
+	int cursor; //sp_0x30
+	Graphic_Queue_Item sp_0x20;
+
+	Menu* pMenu; //r4
+	Menu_Item* pMenuItem; //r1
+
+	UI_Thread_Params thread_params; //sp8
+	void (*navigate)() = NULL; //r7
+	int (*graphic_lock)() = NULL; //r5
+	void (*event_handler)() = NULL; //sp4
+	int (*graphic_unlock)() = NULL; //sp
+
+	thread_params = *p;
+
+	Menu_Data.Data_235fdf70 = &thread_params;
+
+	err = OSSemPost(thread_params.pSema);
+
+	//sp_0x38 = 237967C4;
+	void (*graphic_handler)(Graphic_Queue_Item*, Graphic_Job_2_5*) = NULL; //r6
+	Menu_Data.bData_235fdfa9/*237967D5*/ = 0; //r6
+
+	OSMboxAccept(thread_params.pMBox);
+
+	while (1)
+	{
+		//loc_2344fa8e
+		struct
+		{
+			uint8_t bData_0; //0
+			uint8_t bData_1; //1
+			uint8_t bData_2; //2
+	
+		}* pMsg;
+		int r0;
+	
+		pMsg = (void*) OSMboxPend(thread_params.pMBox, 0, &err);
+		r0 = pMsg->bData_0;
+
+		pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
+		pMenuItem = pMenu->Data_4;
+
+#if 0
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_2344fa5a: r0=0x%x(%d)\r\n", r0, r0);
+			console_send_string(debug_string);
+		}
+#endif
+
+		switch (r0)
+		{
+			case 0x2d:
+			case 0xe0:
+				//0x2344faba -> loc_2344face
+				cursor = 0x10;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2344fade
+				break;
+
+			case 0x57: //87
+			case 0xea: 
+				//loc_2344fac4
+				cursor = 0x20;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2344fade
+				break;
+	
+			case 0x10:
+				//loc_2344fad2
+				cursor = 0x01;
+				navigate = pMenu->onNavigate;
+				graphic_handler = pMenu->graphicHandler;
+				//loc_2344fade
+				break;
+
+			case 0x11:
+				//loc_2344fad6
+				cursor = 0x02;
+				navigate = pMenu->onNavigate;
+				graphic_handler = pMenu->graphicHandler;
+				//loc_2344fade
+				break;
+
+			default:
+				//loc_2344fade
+				break;
+		} //switch (r0)
+		//loc_2344fade
+		if (graphic_lock != NULL)
+		{
+			err = (graphic_lock)();
+		}
+		//loc_2344fae6
+		if (event_handler != NULL)
+		{
+			//0x2344faec
+			if (cursor == 0x20)
+			{
+				//0x2344faf2
+				(event_handler)(&thread_params);
+
+				pMenu = menu_stack_operate(NULL);
+			}
+			//loc_2344fb00
+			if ((pMenu != NULL) && 
+				(NULL != (pMenu = menu_stack_operate(NULL))))
+			{
+				//0x2344fb0e
+				err = /*sub_2344de56*/sub_2343d51e(pMenu, &thread_params);
+
+				graphic_handler = pMenu->graphicHandler;
+				graphic_lock = pMenu->graphicData->lock;
+				graphic_unlock = pMenu->graphicData->unlock;
+
+				if (graphic_lock != NULL)
+				{
+					err = (graphic_lock)();
+				}
+				//loc_2344fb2a				
+			}
+			else
+			{
+				//loc_2344fb6a
+				graphic_start_job_2_5(&sp_0x20, NULL);
+				/*sub_2344de56*/sub_2343d51e(NULL, &thread_params);
+				graphic_lock = NULL;
+				graphic_unlock = NULL;
+				//->loc_2344fb2a
+			}
+			//loc_2344fb2a				
+			event_handler = NULL;
+		}
+		//loc_2344fb2e
+		if (navigate != NULL)
+		{
+			//0x2344fb32
+			(navigate)(&cursor);
+
+			err = /*sub_2344de56*/sub_2343d51e(pMenu, &thread_params);
+
+			navigate = NULL;
+		}
+		//loc_2344fb42
+		if (graphic_handler != NULL)
+		{
+			//0x2344fb46
+			(graphic_handler)(&sp_0x20, pMenu->graphicData);
+
+			graphic_handler = NULL;
+		}
+		//loc_2344fb4e
+		if (graphic_unlock != NULL)
+		{
+			err = (graphic_unlock)();
+		}
+		//loc_2344fb58
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//0x2344fb62
+			OSTaskDel(0xff);
+		}
+		//->loc_2344fa8e
+	} //while (1)
+}
+
+
 /* /  / 23450f66 - todo */
 void sub_23450f66(UI_Thread_Params* p)
 {
@@ -3818,6 +3994,14 @@ void sub_23450f66(UI_Thread_Params* p)
 		sp8 = r4->graphicData->lock;
 		sp4 = r4->graphicData->unlock;
 
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_23450f66: r0=0x%x(%d)\r\n", r0, r0);
+			console_send_string(debug_string);
+		}
+#endif
+
 		switch (r0)
 		{
 			case 0x21:
@@ -3829,9 +4013,6 @@ void sub_23450f66(UI_Thread_Params* p)
 				break;
 
 			case 0x57:
-				//loc_23450fdc
-				break;
-
 			case 0xea:
 				//loc_23450fdc
 				break;
