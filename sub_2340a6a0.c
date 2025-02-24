@@ -65,33 +65,13 @@ int Data_23492054 = 0; //23492054 +0x58
 
 
 Channel_Database channel_database; //234fd8f0 + 489f4 = 235462E4
+Struct_235462e4 Data_235462e4; //235462e4
 
 #define CHANNEL_ACTIVE_STREAM_VIDEO      (1 << 0)
 #define CHANNEL_ACTIVE_STREAM_AUDIO      (1 << 1)
 #define CHANNEL_ACTIVE_STREAM_TTX        (1 << 3)
 #define CHANNEL_ACTIVE_STREAM_PSI        (1 << 6)
 
-struct
-{
-	void (*Data_0)(); //0 235462E4
-	int currentChannel; //4 235462E8
-	int prevChannel; //8 235462EC
-	uint16_t arChannelIdx[CHANNELS_MAX_NUM]; //12 = 0xc, 235462F0, size????
-	uint16_t numChannels; //0xEEC 235491d0
-	uint16_t wData_235491d2; //0xEEE 235491d2
-	uint16_t currentTvChannel; //235491D4 +0xf0
-	uint16_t currentRadioChannel; //235491d6 + 0xf2
-	uint16_t wAudioPID; //235491d8
-	uint16_t wVideoPID; //235491da
-	uint8_t bData_235491dc; //0xef8 235491dc
-	uint8_t currentChList; //0xEF9 235491dd
-	uint8_t activeStreamMask; //235491de 235482e4 + 0xefa
-	uint8_t bVolume; //235491df
-	uint8_t bData_235491e0; //235491e0 0xefc
-	uint8_t bData_235491e1; //235491e1 0xefd
-	uint8_t bData_235491e2; //235491E2 0xefe
-
-} Data_235462e4; //235462e4
 
 
 /* 234085ac - complete */
@@ -1545,7 +1525,7 @@ int channel_load_lists(void)
 
 	void* fp = &channel_database;
 
-	sp_0x18 = &channel_database.Data_235441d8;
+	sp_0x18 = &channel_database.Data_235441d8[0];
 
 	if (r0 == r1)
 	{
@@ -1561,7 +1541,7 @@ int channel_load_lists(void)
 		{
 			//0x2340a87c
 			uint16_t* r6 = (void*) sp_0x18;
-			sp = &channel_database.Data_23546118;
+			sp = &channel_database.Data_23546118[0];
 
 			r0 = crc32((void*) r6, 2000/*0x7d0*/);
 
@@ -1693,12 +1673,12 @@ int channel_load_lists(void)
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "loc_2340ab08: crc check r0=0x%x, channel_database.Data_23546118=0x%x\r\n",
-				r0, channel_database.Data_23546118);
+				r0, channel_database.Data_23546118[0]);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == channel_database.Data_23546118)
+	if (r0 == channel_database.Data_23546118[0])
 	{
 		Data_235462e4.bData_235491e0++;
 		//->loc_2340ab40
@@ -1708,69 +1688,67 @@ int channel_load_lists(void)
 		memset(sp_0x18, 0xff, 2000);
 	}
 	//loc_2340ab40
-	r0 = crc32((void*) &channel_database.favourites, 
-			sizeof(sizeof(channel_database.favourites)));
+	r0 = crc32((void*) &channel_database.Data_235441d8[1]/*favourites*/, 2000);
 
 #if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "loc_2340ab40: crc check r0=0x%x, channel_database.dwCrcFavourites=0x%x\r\n",
-				r0, channel_database.dwCrcFavourites);
+				r0, channel_database.Data_23546118[1]);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == channel_database.dwCrcFavourites)
+	if (r0 == channel_database.Data_23546118[1])
 	{
 		Data_235462e4.bData_235491e0++;
 		//->loc_2340ab78
 	}
 	else
 	{
-		memset(&channel_database.favourites, 0xff, 
-			sizeof(channel_database.favourites));
+		memset(&channel_database.Data_235441d8[1]/*favourites*/, 0xff, 2000);
 	}
 	//loc_2340ab78
-	r0 = crc32((void*) &channel_database.Data_23545178, 2000);
+	r0 = crc32((void*) &channel_database.Data_235441d8[2]/*23545178*/, 2000);
 
 #if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "loc_2340ab78: crc check r0=0x%x, channel_database.Data_23546120=0x%x\r\n",
-				r0, channel_database.Data_23546120);
+				r0, channel_database.Data_23546118[2]);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == channel_database.Data_23546120)
+	if (r0 == channel_database.Data_23546118[2])
 	{
 		Data_235462e4.bData_235491e0++;
 		//->loc_2340abb0
 	}
 	else
 	{
-		memset(&channel_database.Data_23545178, 0xff, 2000);
+		memset(&channel_database.Data_235441d8[2]/*23545178*/, 0xff, 2000);
 	}
 	//loc_2340abb0
-	r0 = crc32((void*) &channel_database.Data_23545948, 2000);
+	r0 = crc32((void*) &channel_database.Data_235441d8[3]/*23545948*/, 2000);
 
 #if 1
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "loc_2340abb0: crc check r0=0x%x, channel_database.Data_23546124=0x%x\r\n",
-				r0, channel_database.Data_23546124);
+				r0, channel_database.Data_23546118[3]);
 		console_send_string(debug_string);
 	}
 #endif
 
-	if (r0 == channel_database.Data_23546124)
+	if (r0 == channel_database.Data_23546118[3])
 	{
 		Data_235462e4.bData_235491e0++;
 		//->loc_2340abe8
 	}
 	else
 	{
-		memset(&channel_database.Data_23545948, 0xff, 2000);
+		memset(&channel_database.Data_235441d8[3]/*23545948*/, 0xff, 2000);
 	}
 	//loc_2340abe8
 	OSSemPost(channel_sema);

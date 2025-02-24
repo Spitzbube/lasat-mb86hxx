@@ -23,6 +23,7 @@ static uint8_t Data_239709ac[]; //239709ac
 static uint8_t Data_239709d4[]; //239709d4
 static uint8_t Data_239709fc[]; //239709fc
 
+extern int sub_2348e352(int);
 extern int sub_234929f6(int);
 
 //234ea514
@@ -307,7 +308,7 @@ static Menu_Item Data_234eac40[] = //234eac40
 			&Data_234ea5f8[5], //234ea738,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2348e352, //void* onEvent; //0x1c = 28
+		sub_2348e352, //void* onEvent; //0x1c = 28
 		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40

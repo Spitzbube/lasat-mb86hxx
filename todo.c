@@ -947,22 +947,6 @@ int sub_23451f60()
 }
 
 
-/*  /   / 23454624 - todo */
-void sub_23454624()
-{
-	console_send_string("sub_23454624 (todo.c): TODO\r\n");
-
-}
-
-
-/*  /   / 234548c2 - todo */
-void sub_234548c2()
-{
-	console_send_string("sub_234548c2 (todo.c): TODO\r\n");
-
-}
-
-
 /* 234521ea - todo */
 void sub_234521ea()
 {
@@ -1128,6 +1112,8 @@ int sub_2347f098()
 
 	return 1;
 }
+
+
 
 
 #endif //!VDR110

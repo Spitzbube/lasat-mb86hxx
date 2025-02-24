@@ -181,11 +181,12 @@ typedef struct
 	uint32_t dwCrcChannels; //235441cc 468DC
 	uint32_t dwCrcTransponders; //235441d0 468E0
 	uint32_t Data_235441d4; //235441d4 468E4
+#if 0
 	struct
 	{
-		int fill_0[500]; //235441d8
+		uint16_t wData_0[1000]; //235441d8
 		//0x7D0 size???
-	} Data_235441d8;
+	} Data_235441d8; //235441d8 +0x7d0 = 235449A8
 	struct
 	{
 		uint16_t arChannel[8]; //235449a8 470B8
@@ -201,11 +202,15 @@ typedef struct
 	{
 		int fill_0[500]; //0
 		//0x7D0 size???
-	} Data_23545948; //23545948
-	int Data_23546118; //23546118
-	uint32_t dwCrcFavourites; //2354611c 0x4882c
-	uint32_t Data_23546120; //23546120
-	uint32_t Data_23546124; //23546124
+	} Data_23545948; //23545948 +0x7d0 = 23546118
+#else
+	struct
+	{
+		uint16_t arChannel[1000]; //235441d8
+		//0x7D0 size???
+	} Data_235441d8[4]; //235441d8 +4*0x7d0 = 23546118
+#endif
+	uint32_t Data_23546118[4]; //23546118
 	struct Struct_23546128
 	{
 		int Data_0; //0
@@ -252,6 +257,28 @@ typedef struct
 	//0x32 = 50
 } Struct_2340bf0c;
 
+
+typedef struct
+{
+	void (*Data_0)(); //0 235462E4
+	int currentChannel; //4 235462E8
+	int prevChannel; //8 235462EC
+	uint16_t arChannelIdx[CHANNELS_MAX_NUM]; //12 = 0xc, 235462F0, size????
+	uint16_t numChannels; //0xEEC 235491d0
+	uint16_t wData_235491d2; //0xEEE 235491d2
+	uint16_t currentTvChannel; //235491D4 +0xf0
+	uint16_t currentRadioChannel; //235491d6 + 0xf2
+	uint16_t wAudioPID; //235491d8
+	uint16_t wVideoPID; //235491da
+	uint8_t bData_235491dc; //0xef8 235491dc
+	uint8_t currentChList; //0xEF9 235491dd
+	uint8_t activeStreamMask; //235491de 235482e4 + 0xefa
+	uint8_t bVolume; //235491df
+	uint8_t bData_235491e0; //235491e0 0xefc
+	uint8_t bData_235491e1; //235491e1 0xefd
+	uint8_t bData_235491e2; //235491E2 0xefe
+
+} Struct_235462e4;
 
 
 extern int channel_handle_user_settings(int get, User_Settings*);

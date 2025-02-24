@@ -27,10 +27,92 @@ struct Struct_235b0cf8
 	struct Struct_235b0cf8_Inner4* Data_4; //4
 	uint32_t Data_8; //8
 	int Data_0xc; //12
+	Struct_23419cd0 Data_235b0d08; //235b0d08
 
 } Data_235b0cf8; //235b0cf8
 
-Struct_23419cd0 Data_235b0d08; //235b0d08
+
+
+/* 23419908 /  /  - todo */
+void sub_23419908(int a)
+{
+#if 0
+	console_send_string("sub_23419908 (todo.c): TODO\r\n");
+#endif
+
+	if ((a != 0) &&
+		(Data_235b0cf8.Data_0xc != 0))
+	{
+		flash_write(Data_235b0cf8.Data_235b0d08.hFlash, Data_235b0cf8.Data_235b0d08.Data_0, 0x10000, Data_235b0cf8.Data_0);
+
+		Data_235b0cf8.Data_0xc = 0;
+	}
+}
+
+
+/* 23419940 /  /  - todo */
+int sub_23419940(uint32_t r4, int sb)
+{
+#if 0
+	console_send_string("sub_23419940 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err; //sp
+
+	OSSemPend(Data_23492114, 0, &err);
+
+	if (err == 0)
+	{
+		//0x2341996c
+		if (r4 < 500)
+		{
+			//0x23419974
+			if (Data_235b0cf8.Data_4[r4].Data_4 == 0)
+			{
+				//0x2341998c
+				OSSemPost(Data_23492114);
+
+				return -1;
+			}
+			//loc_2341999c
+			Data_235b0cf8.Data_4[r4].Data_4 = 0;
+
+			struct Struct_235b0cf8_Inner4* r7 = ((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + 0x10000;
+
+			memcpy(r7, Data_235b0cf8.Data_4, 0x10000);
+
+			Data_235b0cf8.Data_8 = 4000;
+
+			for (r4 = 0; r4 < 500; r4++)
+			{
+				//loc_234199c8
+				struct Struct_235b0cf8_Inner4* r6 = &r7[r4];
+				if (r6->Data_4 != 0)
+				{
+					//0x234199d8
+					memcpy(((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + Data_235b0cf8.Data_8,
+						((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + r7[r4].Data_0 + 0x10000,
+						r6->Data_4);
+
+					Data_235b0cf8.Data_4[r4] = *r6;
+					Data_235b0cf8.Data_4[r4].Data_0 = Data_235b0cf8.Data_8;
+					Data_235b0cf8.Data_8 += r6->Data_4;
+					Data_235b0cf8.Data_0xc = 1;
+				}
+				//loc_23419a28
+				//for (r4 = 0; r4 < 500; r4++)
+			}
+			//0x23419a34
+			Data_235b0cf8.Data_0->Data_0xfffc = crc32(Data_235b0cf8.Data_0, 0xfffc);
+		}
+		//loc_23419a4c
+		sub_23419908(sb);
+
+		OSSemPost(Data_23492114);
+	}
+	//loc_23419a5c
+	return 0;
+}
 
 
 /* 23419cd0 - complete */
@@ -84,7 +166,7 @@ int sub_23419cd0(Struct_23419cd0* r4)
 		//loc_23419d60
 	}
 	//loc_23419d60
-	Data_235b0d08 = *r4;
+	Data_235b0cf8.Data_235b0d08 = *r4;
 
 	Data_235b0cf8.Data_0xc = 0;
 

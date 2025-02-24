@@ -25,7 +25,7 @@ typedef struct Struct_2348dc50
     uint8_t bData_0x5d; //0x5d
     uint8_t bData_0x5e; //0x5e
     uint8_t bData_0x5f; //0x5f
-    int fill_0x60; //0x60
+    uint32_t Data_0x60; //0x60
     //0x64
 } Struct_2348dc50;
 

@@ -3,6 +3,7 @@
 #include "frontdisplay.h"
 #include "graphic.h"
 #include "menu.h"
+#include "menu_info_bar.h"
 
 #ifndef VDR110
 
@@ -10,11 +11,15 @@
 
 void sub_2344f3c6(UI_Thread_Params*);
 
+extern void sub_2348dbf8();
+extern int sub_2348de88(int*);
+
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Menu* Data_234c5354; //234c5354
 
 static Menu Data_234ee504; //234ee504
 static uint8_t Data_239727bc[]; //239727bc
@@ -29,7 +34,9 @@ static uint8_t Data_239729f4[]; //239729f4
 static uint8_t Data_23972a1c[]; //23972a1c
 static uint8_t Data_23972a44[]; //23972a44
 
+static int sub_2349281e(Struct_2348dc50*);
 static int sub_23492914();
+static int sub_23492a1c(UI_Thread_Params*);
 
 
 //234ed9bc
@@ -505,7 +512,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[5], //234edc44,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -536,7 +543,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[6], //234edc84,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -567,7 +574,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[7], //234edcc4,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -598,7 +605,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[8], //234edd04,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -629,7 +636,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[9], //234edd44,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -661,7 +668,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[10], //234edd84,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -692,7 +699,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[11], //234eddc4,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -723,7 +730,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[12], //234ede04,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -754,7 +761,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[13], //234ede44,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -785,7 +792,7 @@ static Menu_Item Data_234ee34c[] = //234ee34c
 			&Data_234edb04[14], //234ede84,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		0, //sub_2349281e, //void* onEvent; //0x1c = 28
+		sub_2349281e, //void* onEvent; //0x1c = 28
 		sub_2344f3c6, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -821,11 +828,11 @@ static Menu Data_234ee504 = //234ee504
     9, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
     graphic_start_job_2_5, //void (*graphicHandler)(); //0x1c
-    0, //sub_2348de88, //void (*onNavigate)(); //0x20
+    sub_2348de88, //void (*onNavigate)(); //0x20
     sub_23492914, //int (*onEnter)(int); //36 = 0x24
-    0, //sub_23492a1c, //int (*onExit)(UI_Thread_Params*); //0x28
+    sub_23492a1c, //int (*onExit)(UI_Thread_Params*); //0x28
 #if 0
-0x234ee504                        dw         0x010b                             ; DATA XREF=sub_23492914+36, sub_234929f6+6, sub_234929f6+12, sub_234929f6+20, dword_234ed9bc, 0x234ed9c4
+0x234ee504                        dw         0x010b
 0x234ee506                        dw         0x0000
 0x234ee508                        dd         0x234ee34c
 0x234ee50c                        dd         0x234ee34c
@@ -844,6 +851,20 @@ static Menu Data_234ee504 = //234ee504
 };
 
 
+//0x23972748
+struct 
+{
+	Struct_23543df0* Data_23972748; //23972748 +0
+	Transponder* Data_2397274c; //2397274c +4
+	Channel* Data_23972750; //23972750 +8
+	uint16_t arData_23972754[30]; //23972754 +0xc, size???
+	uint16_t arData_23972790[20]; //23972790
+	uint16_t wData_239727b8; //239727b8 +0x10
+	uint8_t bData_239727ba; //239727ba +0x12
+
+} Data_2397275a; //2397275a???
+
+
 static uint8_t Data_239727bc[40]; //239727bc, size???
 static uint8_t Data_239728dc[40]; //239728dc, size???
 static uint8_t Data_23972904[40]; //23972904, size???
@@ -857,12 +878,326 @@ static uint8_t Data_23972a1c[40]; //23972a1c, size???
 static uint8_t Data_23972a44[40]; //23972a44, size???
 
 
-/* /  / 23492914 - todo */
-static int sub_23492914()
+
+/* /  / 234926c8 - todo */
+int sub_234926c8(Struct_2348dc50* a)
 {
-#if 1
+#if 0
+	console_send_string("sub_234926c8 (todo.c): TODO\r\n");
+#endif
+
+	Struct_2348dc50 sp_0x24;
+	Struct_23543df0 sp4;
+
+	sp_0x24 = *a;
+	Menu_Item* r4 = sp_0x24.pMenu->Data_8;
+	uint8_t r5;
+
+	for (r5 = 0; r5 < sp_0x24.wData_0x26; r4++, r5++)
+	{
+		//loc_234926de
+		uint16_t r6 = sp_0x24.wData_0x1e - sp_0x24.wData_0x22 + r5;
+
+		if (sp_0x24.Data_0x54 != 0)
+		{
+			//0x234926f0
+			sub_2348dba4(r4, r6, 1);
+		}
+		//loc_234926fa
+		if (r6 < sp_0x24.wData_0x20)
+		{
+			//0x23492704
+			int r1 = Data_2397275a.arData_23972754[r6];
+
+			if (r1 == 0xfffe)
+			{
+				//0x23492712
+				strcpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, "Internet Radio");
+				//->loc_2349275c
+			}
+			//loc_23492720
+			else if (r1 == 0xffff)
+			{
+				//0x23492728
+				text_table_get_string(0x158/*'Kabel'*/, 
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, 20);
+				//->loc_2349275c
+			}
+			else 
+			{
+				//loc_2349273a
+				/*sub_2340ed78*/sub_2340c29c(&sp4, r1);
+
+				strncpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString,
+					&sp4.Data_8[0], 20);
+				//->loc_2349275c
+			}
+		}
+		else
+		{
+			//loc_23492750
+			memset(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, 
+				0, 40);
+		}
+		//loc_2349275c
+		((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->bData_0x17 = 1;
+		r4->Data_4[0]->bData_0x3c = 1;
+		//loc_23492772
+	} //for (r5 = 0; r5 < sp_0x24.wData_0x26; r5++)
+	//0x2349277a
+	return 0;
+}
+
+
+/* /  / 23492780 - todo */
+uint8_t sub_23492780(void)
+{
+#if 0
+	console_send_string("sub_23492780 (todo.c): TODO\r\n");
+#endif
+
+	Channel_Database* pDb;
+	int r4 = 0;
+	int sp = 0xff;
+
+	pDb = /*sub_234107b0*/sub_2344f770();
+	Data_2397275a.Data_23972748 = &pDb->Data_23543df0[0];
+	Data_2397275a.Data_2397274c = &pDb->arTransponders[0];
+	Data_2397275a.Data_23972750 = &pDb->arChannels[0];
+
+	uint16_t r0 = 0;
+	uint16_t r1; //r1 = 0;
+	for (r1 = 0; r1 < 6000; r1++)
+	{
+		//loc_234927a0
+		Channel* ip = &Data_2397275a.Data_23972750[r1];
+
+		uint16_t r2 = ip->wTransponderIndex;
+		Transponder* r3 = &Data_2397275a.Data_2397274c[r2];
+		uint16_t r5 = ip->wFlags_2;
+
+		if (r5 == 0xffff)
+		{
+			//->loc_23492814
+			break;
+		}
+		//0x234927c4
+		int r6 = 0xfffe;
+		if ((ip->service_id != 0xfffe) && ((r5 & (1 << 7)) != 0))
+		{
+			//0x234927d4
+			if (r2 != 0xffff)
+			{
+				//0x234927da
+				r6 = r3->Data_0.wData_0x0a;
+			}
+			//loc_234927dc
+			if (r6 != sp)
+			{
+				//->0x234927e2
+				uint8_t r2; //r2 = 0;
+				//->loc_234927f4
+				for (r2 = 0; r2 < r0; r2++)
+				{
+					//loc_234927e6
+					if (Data_2397275a.arData_23972754[r2] == r6)
+					{
+						r4 = 1;
+						//->loc_23492808
+						//goto loc_23492808;
+						break;
+					}
+				} //for (r2 = 0; r2 < r0; r2++)
+				//0x234927f8
+				if (r4 == 0)
+				{
+					//0x234927fc
+					Data_2397275a.arData_23972754[r0] = r6;
+					r0++;
+					sp = r6;
+				}
+				//loc_23492808
+loc_23492808:
+				r4 = 0;
+			}
+			//loc_2349280a
+		}
+		//loc_2349280a
+	} //for (uint16_t r1 = 0; r1 < 6000; r1++)
+	//loc_23492814
+	Data_2397275a.wData_239727b8 = r1;
+
+	return r0;
+}
+
+
+/*  /  / 2349281e - todo */
+static int sub_2349281e(Struct_2348dc50* r4)
+{
+#if 0
+	console_send_string("sub_2349281e (todo.c): TODO\r\n");
+#endif
+
+	Struct_2348dc50 sp_0x10;
+	Graphic_Queue_Item sp;
+
+	sp_0x10 = *r4;
+
+	uint16_t* r2 = NULL;
+	uint8_t r3 = 0;
+	int r6 = 0;
+	uint16_t r7 = r4->wData_0x1e + 1;
+
+	if (sp_0x10.Data_0/*r0*/ == 0x20)
+	{
+		//0x23492840
+		uint8_t r1;
+		uint16_t* r0 = &r4->arwData_0x28[0];
+		for (r1 = 0; r1 < 20; r1++, r0++)
+		{
+			//loc_23492846
+			uint16_t r5 = r0[0];
+			if (r5 != 0)
+			{
+				//0x2349284c
+				r3++;
+				//->loc_23492858
+			}
+			else
+			{
+				//loc_23492852
+				if (r2 == NULL)
+				{
+					//0x23492856
+					r2 = r0;
+				}
+				//loc_23492858
+			}
+			//loc_23492858
+			if (r5 == r7)
+			{
+				//0x2349285c
+				r0[0] = 0; //r6;
+
+				r4->wData_0x24--;
+
+				return 1;
+			}
+			//loc_2349286a
+		} //for (r1 = 0; r1 < 20; r1++, r0++)
+		//0x23492874
+		if (r3 < 20)
+		{
+			//0x23492878
+			r4->wData_0x24++;
+			r4->Data_0x54 = r2;
+			*r2 = r7;
+		}
+		//->loc_23492910
+	} //if (sp_0x10.Data_0/*r0*/ == 0x20)
+	//loc_23492884
+	else if (sp_0x10.Data_0/*r0*/ == 0x80)
+	{
+		//0x23492888
+		if (r4->wData_0x24 != 0)
+		{
+			//0x2349288e
+			menu_initialize(Data_234c5354);
+
+			graphic_start_job_2_5(&sp, Data_234c5354->graphicData);
+
+			uint8_t r5;
+			for (r5 = 0; r5 < 20; r5++)
+			{
+				//loc_234928a4
+				int r0 = r4->arwData_0x28[r5];
+				if (r0 != 0)
+				{
+					//0x234928ae
+					r0 = Data_2397275a.arData_23972754[r0 - 1];
+
+					sub_23492a64(r0);
+				}
+				//loc_234928b8
+			} //for (r5 = 0; r5 < 20; r5++)
+			//0x234928c0
+			graphic_start_job_2_5(&sp, NULL);
+
+			Data_2397275a.bData_239727ba = sub_23492780();
+
+			r4->wData_0x20 = Data_2397275a.bData_239727ba;
+			if (r4->wData_0x20 != 0)
+			{
+				//0x234928da
+				if (r4->wData_0x1e >= r4->wData_0x20)
+				{
+					//0x234928e2
+					r4->wData_0x1e = r4->wData_0x20 - 1;
+				}
+				//loc_234928ea
+			}
+			else
+			{
+				//loc_234928e8
+				r4->wData_0x1e = 0; //r6;
+			}
+			//loc_234928ea
+			r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+			r4->wData_0x24 = 0;
+
+			uint8_t r0;
+			for (r0 = 0; r0 < 20; r0++)
+			{
+				//loc_234928fa
+				r4->arwData_0x28[r0] = 0; //r6
+			}
+			//0x23492908
+			sub_234926c8(r4);
+
+			r4->Data_0x54 = 0; //r6
+			//loc_23492910
+		} //if (r4->wData_0x24 != 0)
+		//loc_23492910
+	}
+	//loc_23492910
+	return 0;
+}
+
+
+/* /  / 23492914 - todo */
+static int sub_23492914(int a)
+{
+#if 0
 	console_send_string("sub_23492914 (todo.c): TODO\r\n");
 #endif
+
+	Struct_2348dc50 sp4;
+
+	Data_2397275a.bData_239727ba = sub_23492780();
+
+	memset(&sp4, 0, sizeof(Struct_2348dc50));
+
+	sp4.Data_0x60 = /*sub_23410390*/sub_2344f350();
+	sp4.pMenu = Data_234ed9bc;
+	sp4.Data_0x10 = NULL;
+	sp4.wData_0x1c = 0;
+	sp4.Data_0x14 = sub_234926c8;
+	sp4.Data_0x18 = sub_2348dbf8;
+	sp4.Data_0x54 = 0;
+	sp4.wData_0x1e = 0;
+	sp4.wData_0x22 = 0;
+	sp4.wData_0x20 = Data_2397275a.bData_239727ba;
+	sp4.bData_0x58 = 10;
+	sp4.wData_0x26 = 10;
+	sp4.wData_0x24 = 0;
+	sp4.bData_0x5c = 7;
+	sp4.bData_0x5d = 8;
+	sp4.bData_0x5e = 9;
+	sp4.bData_0x59 = 2;
+	sp4.bData_0x5a = 10;
+	sp4.bData_0x5b = 9;
+
+	sub_2348dc50(&sp4);
 
     return 0;
 }
@@ -891,9 +1226,124 @@ int sub_234929f6(int r5)
     menu_stack_operate(Data_234ed9bc);
     sub_2348dd36(Data_234ed9bc, 1);
     /*sub_2344de56*/sub_2343d51e(Data_234ed9bc, r5);
+#if 0 //TODO!!!
     frontdisplay_start_text(sub_23492980);
+#endif
 
     return 0;
+}
+
+
+/* /  / 23492a1c - todo */
+static int sub_23492a1c(UI_Thread_Params* r4)
+{
+#if 0
+	console_send_string("sub_23492a64 (todo.c): TODO\r\n");
+#endif
+
+	Struct_2348dc50* r5 = sub_2348dcd2();
+
+	if (/*sub_23410390*/sub_2344f350() != r5->Data_0x60)
+	{
+		//0x23492a30
+		if (r4->Data_20 == 0)
+		{
+			//0x23492a36
+			sub_23454624(4);
+			//loc_23492a3c
+			return 0;
+		}
+		else
+		{
+			//loc_23492a40
+			if (0 == sub_234548c2(r4, 4))
+			{
+				return 1;
+			}
+			//loc_23492a50
+			sub_2348dc9e();
+			//->loc_23492a3c
+		}
+	}
+	else
+	{
+		//loc_23492a50
+		sub_2348dc9e();
+		//->loc_23492a3c
+	}
+	//loc_23492a3c
+	return 0;
+}
+
+
+/* /  / 23492a64 - todo */
+int sub_23492a64(int r7)
+{
+#if 0
+	console_send_string("sub_23492a64 (todo.c): TODO\r\n");
+#endif
+
+	uint16_t r4 = 0;
+	int sp = 0;
+
+	int r5 = Data_2397275a.wData_239727b8;
+	//->loc_23492ae4
+	while (--r5)
+	{
+		//loc_23492a74
+		if (r7 == 0xfffe)
+		{
+			//0x23492a7a
+			if (Data_2397275a.Data_23972750[r5].wTransponderIndex == 0xffff)
+			{
+				//0x23492a8c
+				//r0 = 0x23972748 + r4*2;
+				//->loc_23492ab0
+				Data_2397275a.arData_23972790[r4] = r5;
+				r4++;
+			}
+			//loc_23492ab8
+		}
+		else
+		{
+			//loc_23492a92
+			int tp = Data_2397275a.Data_23972750[r5].wTransponderIndex;
+
+			if (Data_2397275a.Data_2397274c[tp].Data_0.wData_0x0a == r7)
+			{
+				//r0 = 0x23972748 + r4*2;
+				//loc_23492ab0
+				Data_2397275a.arData_23972790[r4] = r5;
+				r4++;
+			}
+			//loc_23492ab8
+		}
+		//loc_23492ab8
+		if (r4 != 0)
+		{
+			if ((r4 == 20) || (r5 == 0))
+			{
+				//loc_23492ac4
+				sub_23410760(&Data_2397275a.arData_23972790[0], (uint8_t)r4);
+
+				rtos_task_wait(1);
+
+				Data_2397275a.wData_239727b8 -= r4;
+
+				if (r5 > 0)
+				{
+					//0x23492ae0
+					r5 = Data_2397275a.wData_239727b8;
+				}
+				//loc_23492ae2
+				r4 = 0;
+			}
+			//loc_23492ae4
+		}
+		//loc_23492ae4
+	} //while (r5--)
+	//0x23492ae8
+	return sp;
 }
 
 #endif

@@ -68,12 +68,14 @@ set(SRCS
    ts_play.c                #?              #?              #0x235afe88
    ts_record.c              #?              #?              #0x237bf890
    web_interface.c
+   sub_23454a1a.c
    sub_2345c09c.c
    menu_sw_update.c
    bluetooth.c
    menu_amplifier_inputs.c
    menu_net_radio.c
    sub_23476ed4.c
+   sub_2348e352.c
    sub_2348fc86.c
    menu_main.c
    menu_settings.c

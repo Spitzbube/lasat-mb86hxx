@@ -2522,6 +2522,29 @@ void sub_2344f3c6(UI_Thread_Params* a)
 				//loc_2344f4e8
 				break;
 
+			case 0x37: //55: Red
+			case 0x38: //56: F1
+				//loc_2344f462
+				sp_0xc->Data_0 = 0x80;
+				//->loc_2344f4d0
+				r7 = sp8->onEvent;
+				r6 = r4->onNavigate;
+				r5 = r4->graphicHandler;
+				//->loc_2344f4e8
+				break;
+
+			case 0x57: //87: OK
+				//loc_2344f4da
+				//r1 = 0x20
+				//->loc_2344f4e2
+				sp_0xc->Data_0 = 0x20;
+				//->loc_2344f4d0
+				r7 = sp8->onEvent;
+				r6 = r4->onNavigate;
+				r5 = r4->graphicHandler;
+				//->loc_2344f4e8
+				break;
+
 				//TODO!!!
 
 			default:

@@ -338,12 +338,11 @@ static void* store_favourite_timer_func(uint32_t* pCount)
 
 		frontdisplay_start_text(string_display);
 
-		uint16_t* pFav = &r5->favourites.arChannel[0];
+		uint16_t* pFav = &r5->Data_235441d8[1]/*favourites*/.arChannel[0];
 		pFav[Data_23495970.wFavouriteIndex - 1] = sp4.wCurrentChannel;
 
-		uint32_t* pCrc = &r5->dwCrcFavourites;
-		*pCrc = crc32(&r5->favourites.arChannel[0], 
-			sizeof(r5->favourites));
+		uint32_t* pCrc = &r5->Data_23546118[1];
+		*pCrc = crc32(&r5->Data_235441d8[1]/*favourites*/.arChannel[0], 2000);
 
 		sub_2340c204(1);
 		channel_write_database();
@@ -797,7 +796,7 @@ static void check_favourite_channel(void)
 #endif
 
 	Channel_Database* r0 = sub_2344f770();
-	uint16_t* pFav = &r0->favourites.arChannel[0];
+	uint16_t* pFav = &r0->Data_235441d8[1]/*favourites*/.arChannel[0];
 	int channel = pFav[Data_23495970.wFavouriteIndex - 1];
 	Data_23495970.nCountToStoreFavourite = 0;
 
