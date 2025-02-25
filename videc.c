@@ -347,7 +347,7 @@ int sub_2345d830(int a)
 
 
 /* 2345da3c - todo */
-int sub_2345da3c()
+int sub_2345da3c(void)
 {
 #if 0
 	console_send_string("sub_2345da3c (todo.c): TODO\r\n");
@@ -355,25 +355,29 @@ int sub_2345da3c()
 
 	if (Data_2389fb64.Data_4 == 0xff)
 	{
-		if ((900 > (Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550] >> 16)) &&
-				(1280 < (Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550] >> 16)))
+		uint16_t r1 = 900;
+		if (r1 > (Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550] >> 16)) 	
 		{
-			if ((uint16_t)(Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550]) >= 1080)
+			uint16_t r1 = 1280;
+			if (r1 < (Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550] >> 16))
 			{
-				sub_2345d9c4();
-				sub_2345de14();
+				if ((uint16_t)(Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550]) >= 1080)
+				{
+					sub_2345d9c4();
+					sub_2345de14();
 
-				return 0x100;
-			}
-			//loc_2345daac
-			else if ((uint16_t)(Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550]) <= 576)
-			{
-				sub_2345d9c4();
-				sub_2345e034();
+					return 0x100;
+				}
+				//loc_2345daac
+				if ((uint16_t)(Data_2389fb64.Data_0x30c[Data_2389fb64.Data_0x550]) <= 576)
+				{
+					sub_2345d9c4();
+					sub_2345e034();
 
-				return 0x800;
+					return 0x800;
+				}
+				//loc_2345dad4
 			}
-			//loc_2345dad4
 		}
 		//loc_2345dad4
 	}
@@ -943,6 +947,14 @@ void videc_audcallback_h264(int r0, int audNum, uint32_t r5/*foundPtr*/)
 
 		sub_2345d830(1);
 	}
+}
+
+
+/* 2345e410 - todo */
+void sub_2345e410()
+{
+	console_send_string("sub_2345e410 (todo.c): TODO\r\n");
+
 }
 
 

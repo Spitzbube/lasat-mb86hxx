@@ -45,7 +45,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 {
-	9, 4, 0x03, //...
+	9, 4, 0x02|0x01, //...
 #if 0
 0x234c1298 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+238, 0x234c198c
 0x234c129a 0000                   movs       r0, r0
@@ -79,7 +79,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12c8 = //234c12c8
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4 = //234c12d4
 {
-	14, 0, 0x06, //...
+	14, 0, 0x04|0x02, //...
 #if 0
 0x234c12d4 0E00                   movs       r6, r1                             ; DATA XREF=sub_2344d444+268, sub_234533bc+118, sub_234533bc+872, dword_234537d4, sub_234538b0+112, dword_23453c9c, sub_23459656+196, sub_2345afa4+190, dword_2345b32c, sub_2349511c+192, dword_23495360
 0x234c12d6 0000                   movs       r0, r0
@@ -101,7 +101,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12e0 = //234c12e0
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec = //234c12ec
 {
-	9, 4, 0x0c, //...
+	9, 4, 0x08|0x04, //...
 #if 0
 0x234c12ec                        dw         0x0009                             ; DATA XREF=sub_2344d444+280, sub_234523c8+376, sub_234523c8+474, sub_234523c8+536, sub_234523c8+604, sub_234523c8+664, sub_23452a3e+20, dword_23452a98, sub_2345afa4+264, dword_2345b338, sub_2348c8d4+252
 0x234c12ee                        dw         0x0000
@@ -168,7 +168,7 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340 = //234c1340
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c = //234c134c
 {
-	9, 4, 0x0f, //...
+	9, 4, 0x08|0x04|0x02|0x01, //...
 #if 0
 0x234c134c 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+328, sub_23452a3e+24, dword_23452a9c, sub_2345afa4+260, dword_2345b334, 0x234c188c, 0x234c190c, 0x234df3c0, 0x234eef90, dword_234f7dd0
 0x234c134e 0000                   movs       r0, r0
@@ -530,7 +530,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 0x234c19ec                        dd         0x00000000
 0x234c19f0                        dd         0x00000000
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xa0, 0xfa, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_3/*Data_0x20*/}, //[7] = 234C19F4 
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xa0, 0xfa, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_3/*Data_0x20*/}, //[7] = 234C19F4: 'Channel list'
 #if 0
 0x234c19f4                        db         0x01                               ; DATA XREF=0x234c1f98
 0x234c19f5                        db  0x00 ; '.'
@@ -556,7 +556,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 0x234c1a2c                        dd         0x00000000
 0x234c1a30                        dd         0x00000000
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xc0, 0xfa, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_4}, //[8] = 234C1A34
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xc0, 0xfa, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_4}, //[8] = 234C1A34: "Timer"
 #if 0
 0x234c1a34                        db         0x01                               ; DATA XREF=0x234c1fc4
 0x234c1a35                        db  0x00 ; '.'
@@ -589,7 +589,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 0x234c1a70 0000                   movs       r0, r0
 0x234c1a72 0000                   movs       r0, r0
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xfa, 0x20, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_5}, //[9] = 234C1A74
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xfa, 0x20, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &menu_main_graphic_text_item_5}, //[9] = 234C1A74: "Information"
 #if 0
 0x234c1a74                        db         0x01                               ; DATA XREF=0x234c1ff0
 0x234c1a75                        db  0x00 ; '.'
@@ -762,7 +762,7 @@ static Menu_Item menu_main_items[] = //234c1f3c
 {
 	//[0]
 	{
-		0x4a, //"Einstellungen"
+		0x4a, //"Einstellungen" / 'Settings'
 		0xf3, //uint16_t wData_2; //2
 		{
 			&menu_main_graphic_items[5], //234c1974, //Data_4.Data_0
@@ -1493,7 +1493,7 @@ int sub_2344d414(UI_Thread_Params* r4)
 
 	if (((sp4.Data_0x10 & 0x30) >> 4) != 0)
 	{
-		sub_23457a3e(r4, 1);
+		menu_pin_entry(r4, 1);
 	}
 	else
 	{
@@ -1501,6 +1501,14 @@ int sub_2344d414(UI_Thread_Params* r4)
 	}
 
 	return 0;
+}
+
+
+/* /  /  2344d444 - todo */
+void sub_2344d444(int r4)
+{
+	console_send_string("sub_2344d444 (todo.c): TODO\r\n");
+
 }
 
 
@@ -1524,7 +1532,7 @@ int sub_2344d610(int r6, int r4)
 
 	sub_2344d5dc(sp_0x3c.bData_0x19);
 
-	sub_2344d444((sp_0x3c.Data_0x10 << 21) >> 29); //TODO
+	sub_2344d444((sp_0x3c.Data_0x10 & (0x7 << 8)) >> 8);
 
 	//TODO!!!
 #if 1

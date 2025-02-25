@@ -7,7 +7,8 @@
 #include "amplifier.h"
 
 #ifndef VDR110
-#include "menu_info_bar.h"
+//#include "menu_info_bar.h"
+#include "osd_list.h"
 #endif
 
 #pragma thumb
@@ -976,7 +977,7 @@ void sub_2344e40a(UI_Thread_Params* a)
 #endif //!VDR110
 
 
-/* 2343d610 / 2344e6a2 - todo */
+/* 2343d610 /  / 2344e6a2 - todo */
 void mainfunction_thread(UI_Thread_Params* a)
 {
 #ifndef VDR110
@@ -2098,6 +2099,18 @@ void menu_event_thread(UI_Thread_Params* p)
 }
 
 #ifndef VDR110
+
+
+
+/* /  / 2344ef18 - todo */
+void sub_2344ef18(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_2344ef18 (todo.c): TODO\r\n");
+#endif
+
+}
+
 
 /* /  / 2344f102 - todo */
 void sub_2344f102(UI_Thread_Params* a)

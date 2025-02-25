@@ -7,7 +7,7 @@
 #include "texttable.h"
 #include "graphic.h"
 #include "menu.h"
-#include "menu_info_bar.h"
+#include "osd_list.h"
 #include "clocktime.h"
 #include "tdt.h"
 #include "eit.h"
@@ -1936,7 +1936,7 @@ int sub_234567d8(Struct_2348dc50* r5)
                 channel_next();
             }
             //loc_2345680c
-            sub_2348dd36(Data_234ca55c, 1);
+            osd_list_draw(Data_234ca55c, 1);
             //->loc_2345691e
         } //if (sp4.Data_0 & (1 << 6))
         else
@@ -2067,7 +2067,7 @@ int sub_23456932(Struct_2348dc50* a)
 
     sp_0x70 = Data_234ca55c->Data_8;
     
-    sp_0x6c = &sp8.Data_0x10[sp8.wData_0x1e - sp8.wData_0x22];
+    sp_0x6c = &sp8.Data_0x10[sp8.wData_0x1e - sp8.wCurrentItem];
     //->loc_23456a82
     for (r7 = 0; r7 < sp8.wData_0x26; r7++)
     {
@@ -2078,9 +2078,9 @@ int sub_23456932(Struct_2348dc50* a)
         sp_0x70->Data_4[0]->Data_0x20->bData_0x17 = 1;
         sp_0x70->Data_4[1]->Data_0x20->bData_0x17 = 1;
 
-        uint16_t r6 = (sp8.wData_0x1e - sp8.wData_0x22) + r7;
+        uint16_t r6 = (sp8.wData_0x1e - sp8.wCurrentItem) + r7;
 
-        if (sp8.wData_0x22 != r7)
+        if (sp8.wCurrentItem != r7)
         {
             //0x2345698e
             if (sp8.Data_0x54 != 0)
@@ -2277,7 +2277,7 @@ int sub_23456aa2(void)
     sp_0x70.Data_0x14 = sub_23456932;
     sp_0x70.Data_0x18 = sub_2348dbf8;
     sp_0x70.wData_0x1e = 0; //r4
-    sp_0x70.wData_0x22 = 0; //r4
+    sp_0x70.wCurrentItem = 0; //r4
     sp_0x70.wData_0x20 = Data_2379c004.wData_2379c012;
     sp_0x70.wData_0x24 = 0; //r4
     sp_0x70.wData_0x26 = 10;
@@ -2289,7 +2289,7 @@ int sub_23456aa2(void)
     sp_0x70.bData_0x5a = 10;
     sp_0x70.bData_0x5b = 9;
 
-    r4 = sub_2348dc50(&sp_0x70);
+    r4 = osd_list_create(&sp_0x70);
     Data_2379c004.Data_2379c00c = r4;
 
     if (0 != sub_234564e0(&sp_0xd4))
@@ -2299,7 +2299,7 @@ int sub_23456aa2(void)
         r4->Data_0x54 = &r4->arwData_0x28[0];
         r4->wData_0x1e = sp_0xd4;
         //->loc_23456b90
-        r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+        r4->wCurrentItem = r4->wData_0x1e % r4->wData_0x26;
     }
     //loc_23456b98
     sub_2340bf0c(&sp8);
@@ -2470,7 +2470,7 @@ int sub_23456ed0(UI_Thread_Params* r5)
     sub_2343d458(r5);
 
     MENU_STACK_PUSH(Data_234ca55c);
-    sub_2348dd36(Data_234ca55c, 1);
+    osd_list_draw(Data_234ca55c, 1);
     sub_2343d51e(Data_234ca55c, r5);
 
     frontdisplay_start_text(sub_23456db4);

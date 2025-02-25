@@ -4,7 +4,7 @@
 #include "frontdisplay.h"
 #include "graphic.h"
 #include "menu.h"
-#include "menu_info_bar.h"
+#include "osd_list.h"
 #include "channel_list_update.h"
 #include "scan.h"
 
@@ -14,7 +14,7 @@
 
 
 extern void sub_2348dbf8();
-extern int sub_2348dd36(Menu*, int);
+extern int osd_list_draw(Menu*, int);
 extern void sub_2344f3c6(UI_Thread_Params*);
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
@@ -2274,14 +2274,14 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 			//0x2348fa46
 			r4->wData_0x20 = Data_23970198.wData_2397019c;
 			r4->wData_0x1e = r4->wData_0x20 - 1;
-			r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+			r4->wCurrentItem = r4->wData_0x1e % r4->wData_0x26;
 			//->loc_2348fa5e
 		}
 		else
 		{
 			//loc_2348fa5a
 			r4->wData_0x1e = 0; //r5
-			r4->wData_0x22 = 0; //r5
+			r4->wCurrentItem = 0; //r5
 		}
 		//loc_2348fa5e
 		r4->wData_0x20 = Data_23970198.wData_2397019c;
@@ -2296,7 +2296,7 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 		if (Data_23970198.Data_23970198->bData_0x5f == sp_0x34.bData_0x5f)
 		{
 			//0x2348fa84
-			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wData_0x22];
+			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wCurrentItem];
 			//r0 = r4->pMenu->Data_4
 
 			if (r4->Data_0x18 != NULL)
@@ -2312,14 +2312,14 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 			//0x2348faa8
 			r4->wData_0x20 = Data_23970198.wData_239701a8;
 			r4->wData_0x1e = r4->wData_0x20 - 1;
-			r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+			r4->wCurrentItem = r4->wData_0x1e % r4->wData_0x26;
 			//->loc_2348fac0
 		}
 		else
 		{
 			//loc_2348fabc
 			r4->wData_0x1e = 0; //r5
-			r4->wData_0x22 = 0; //r5
+			r4->wCurrentItem = 0; //r5
 		}
 		//loc_2348fac0
 		r4->wData_0x20 = Data_23970198.wData_239701a8;
@@ -2334,7 +2334,7 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 		if (Data_23970198.Data_239701a4->bData_0x5f == sp_0x34.bData_0x5f)
 		{
 			//0x2348fae6
-			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wData_0x22];
+			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wCurrentItem];
 			//r0 = r4->pMenu->Data_4
 
 			if (r4->Data_0x18 != NULL)
@@ -2495,7 +2495,7 @@ int sub_2348fc86(UI_Thread_Params* r6)
 
     menu_stack_operate(Data_234e7268);
 
-    if (0 != sub_2348dd36(Data_234e7268, 1))
+    if (0 != osd_list_draw(Data_234e7268, 1))
     {
         //0x2348fce0
         //loc_2348fcf2
@@ -2504,7 +2504,7 @@ int sub_2348fc86(UI_Thread_Params* r6)
         return 8;
     }
     //loc_2348fce4
-    else if (0 != sub_2348dd36(Data_234e726c, 0))
+    else if (0 != osd_list_draw(Data_234e726c, 0))
     {
         //0x2348fcf0
         //loc_2348fcf2
@@ -2557,7 +2557,7 @@ static int sub_2348fe7a(Struct_2348dc50* p)
 	Channel channel; //sp_0x64
 	Struct_2348dc50 sp = *p;
 	Menu_Item* pMenuItem = sp.pMenu->Data_8;
-	uint16_t* ch = &((uint16_t*)(sp.Data_0x10))[sp.wData_0x1e - sp.wData_0x22];
+	uint16_t* ch = &((uint16_t*)(sp.Data_0x10))[sp.wData_0x1e - sp.wCurrentItem];
 	uint16_t r5;
 	int i;
 	//->loc_2348ff24
@@ -2570,7 +2570,7 @@ static int sub_2348fe7a(Struct_2348dc50* p)
 		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[0]))->Data_0x20->bData_0x17 = 1;
 		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[1]))->Data_0x20->bData_0x17 = 1;
 
-		uint16_t r7 = sp.wData_0x1e - sp.wData_0x22 + i;
+		uint16_t r7 = sp.wData_0x1e - sp.wCurrentItem + i;
 
 		sub_2348dba4(pMenuItem, r7, 1);
 
@@ -2628,7 +2628,7 @@ int sub_2348ff32(int a)
     sp.Data_0x54 = 0; //r4
     sp.Data_0x18 = sub_2348dbf8;
     sp.wData_0x1e = 0; //r4
-    sp.wData_0x22 = 0; //r4
+    sp.wCurrentItem = 0; //r4
     sp.wData_0x20 = 0; //r4
     sp.wData_0x24 = 0; //r4
     sp.wData_0x26 = 6;
@@ -2640,7 +2640,7 @@ int sub_2348ff32(int a)
     sp.bData_0x5a = 10;
     sp.bData_0x5b = 9;
 
-	Data_23970198.Data_239701a4 = sub_2348dc50(&sp);
+	Data_23970198.Data_239701a4 = osd_list_create(&sp);
 
 	Data_23970198.wData_239701a8 = 0; //r4
 
@@ -2674,7 +2674,7 @@ int sub_2348ff9e(int a)
     sp4.Data_0x14 = sub_2348fe7a;
     sp4.Data_0x18 = sub_2348dbf8;
     sp4.wData_0x1e = 0; //r4
-    sp4.wData_0x22 = 0; //r4
+    sp4.wCurrentItem = 0; //r4
     sp4.wData_0x20 = 0; //r4
     sp4.wData_0x24 = 0; //r4
     sp4.wData_0x26 = 6;
@@ -2686,7 +2686,7 @@ int sub_2348ff9e(int a)
     sp4.bData_0x5a = 10;
     sp4.bData_0x5b = 9;
 
-    Data_23970198.Data_23970198 = sub_2348dc50(&sp4);
+    Data_23970198.Data_23970198 = osd_list_create(&sp4);
 
     Data_23970198.wData_2397019c = 0; //r4
     Data_23970198.Data_239701ac = crc32(r6, 240000);

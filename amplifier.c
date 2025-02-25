@@ -667,7 +667,7 @@ void sub_2343b81a()
 }
 
 
-/* 2343b822 - todo */
+/* 2343b822 /  / 2345e9ca - todo */
 int sub_2343b822(void)
 {
 	User_Settings sp4;
@@ -742,7 +742,7 @@ int sub_2343b822(void)
 }
 
 
-/* 2343b8e6 - todo */
+/* 2343b8e6 /  / 2345ea8e - todo */
 int amplifier_gpio_init(Amplifier_Gpio_Params* a)
 {
 	Struct_20401328 sp;
@@ -791,7 +791,7 @@ int amplifier_gpio_init(Amplifier_Gpio_Params* a)
 }
 
 
-/* 2343b946 - todo */
+/* 2343b946 /  / 2345eaee - todo */
 int amplifier_get_data(Amplifier_Interface_Functions* r0, Amplifier_Settings* r6, uint8_t* r4, uint8_t* r5)
 {
 #if 0
@@ -827,7 +827,7 @@ int amplifier_get_data(Amplifier_Interface_Functions* r0, Amplifier_Settings* r6
 }
 
 
-/* 2343b992 - todo */
+/* 2343b992 /  / 2345eb3a - todo */
 int amplifier_switch_powermode(int r0)
 {
 #if 0
@@ -850,7 +850,7 @@ int amplifier_switch_powermode(int r0)
 }
 
 
-/* 2343b9ae / 2345eb56 - todo */
+/* 2343b9ae /  / 2345eb56 - todo */
 void sub_2343b9ae(void (*p)())
 {
 #if 0
@@ -861,7 +861,7 @@ void sub_2343b9ae(void (*p)())
 }
 
 
-/* 2343b9b6 - todo */
+/* 2343b9b6 /  / 2345eb5e - todo */
 int sub_2343b9b6(uint8_t a)
 {
 #if 0
@@ -876,7 +876,7 @@ int sub_2343b9b6(uint8_t a)
 }
 
 
-/* 2343b9d6 - todo */
+/* 2343b9d6 /  / 2345eb7e - todo */
 void amplifier_set_interface_functions(int r4)
 {
 #if 0
@@ -906,7 +906,7 @@ void amplifier_set_interface_functions(int r4)
 }
 
 
-/* 2343ba6a - todo */
+/* 2343ba6a /  / 2345ec12 - todo */
 int sub_2343ba6a(void)
 {
 #if 0

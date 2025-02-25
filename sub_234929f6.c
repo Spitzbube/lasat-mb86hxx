@@ -3,7 +3,7 @@
 #include "frontdisplay.h"
 #include "graphic.h"
 #include "menu.h"
-#include "menu_info_bar.h"
+#include "osd_list.h"
 
 #ifndef VDR110
 
@@ -896,7 +896,7 @@ int sub_234926c8(Struct_2348dc50* a)
 	for (r5 = 0; r5 < sp_0x24.wData_0x26; r4++, r5++)
 	{
 		//loc_234926de
-		uint16_t r6 = sp_0x24.wData_0x1e - sp_0x24.wData_0x22 + r5;
+		uint16_t r6 = sp_0x24.wData_0x1e - sp_0x24.wCurrentItem + r5;
 
 		if (sp_0x24.Data_0x54 != 0)
 		{
@@ -1142,7 +1142,7 @@ static int sub_2349281e(Struct_2348dc50* r4)
 				r4->wData_0x1e = 0; //r6;
 			}
 			//loc_234928ea
-			r4->wData_0x22 = r4->wData_0x1e % r4->wData_0x26;
+			r4->wCurrentItem = r4->wData_0x1e % r4->wData_0x26;
 			r4->wData_0x24 = 0;
 
 			uint8_t r0;
@@ -1185,7 +1185,7 @@ static int sub_23492914(int a)
 	sp4.Data_0x18 = sub_2348dbf8;
 	sp4.Data_0x54 = 0;
 	sp4.wData_0x1e = 0;
-	sp4.wData_0x22 = 0;
+	sp4.wCurrentItem = 0;
 	sp4.wData_0x20 = Data_2397275a.bData_239727ba;
 	sp4.bData_0x58 = 10;
 	sp4.wData_0x26 = 10;
@@ -1197,7 +1197,7 @@ static int sub_23492914(int a)
 	sp4.bData_0x5a = 10;
 	sp4.bData_0x5b = 9;
 
-	sub_2348dc50(&sp4);
+	osd_list_create(&sp4);
 
     return 0;
 }
@@ -1224,7 +1224,7 @@ int sub_234929f6(int r5)
 #endif
 
     menu_stack_operate(Data_234ed9bc);
-    sub_2348dd36(Data_234ed9bc, 1);
+    osd_list_draw(Data_234ed9bc, 1);
     /*sub_2344de56*/sub_2343d51e(Data_234ed9bc, r5);
 #if 0 //TODO!!!
     frontdisplay_start_text(sub_23492980);

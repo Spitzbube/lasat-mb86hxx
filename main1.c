@@ -31,6 +31,7 @@ extern int main_process_uart_command(uint8_t*);
 extern void sub_2345eaee(void);
 
 
+//  /   / 234c01ac
 uint8_t main_bNeedSetup = 0; //23491d8c +0
 #ifndef VDR110
 uint8_t bData_234c01ad = 0; //234c01ad +1
@@ -427,6 +428,7 @@ void main_inputhandler_init()
 
 	menu_main_adapt_items(amplifier_get_data);
 	
+	// /  / 0x23402240
 	memset(&sp_0x5c, 0, sizeof(Struct_2340d784));
 
 	sp_0x5c.threadPrioIR = THREAD_PRIO_IR_USER_IN;
@@ -457,41 +459,58 @@ void main_inputhandler_init()
 		{
 			menu_guided_install_entry(&sp_0x74);
 			//loc_23400a28
+			return;
 		}
-		else
+#ifndef VDR110
+		if (bData_234c01ad != 0)
 		{
-			//loc_23400a30
-			int state = powermode_get_state();
-			if (state == 1)
+			//0x234022c0
+			User_Settings sp_0x5c;
+
+			channel_handle_user_settings(1, &sp_0x5c);
+
+			if ((sp_0x5c.Data_0x10 & 0x30) == 0x10)
 			{
-				//0x23400a3c
-#ifndef VDR110
+				//0x234022dc
 				sub_2343d458(&sp_0x74);
-#endif
-				ui_thread_create(&sp_0x74);
 
-				sub_2340bf0c(&sp_0x28);
+				menu_pin_entry(&sp_0x74, 0);
 
-				channel_start_number(&channel, 
-					sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
-				//->loc_23400a28
+				return;
 			}
-			//loc_23400a60
-			else if (state == 2)
-			{
-				//0x23400a68
+		}
+#endif
+		//loc_23400a30 /  / loc_234022f4
+		int state = powermode_get_state();
+		if (state == 1)
+		{
+			//0x23400a3c
 #ifndef VDR110
-				sub_2343d458(&sp_0x74);
+			sub_2343d458(&sp_0x74);
 #endif
-				sp_0x74.Data_20 = 0;
-				sp_0x74.pMBox = pMBox;
-				sp_0x74.threadFunc = standby_thread;
-				sp_0x74.threadName = "MainInputHandler";
+			ui_thread_create(&sp_0x74);
 
-				ui_thread_create(&sp_0x74);
-			}
-			//loc_23400a28
-		} 
+			sub_2340bf0c(&sp_0x28);
+
+			channel_start_number(&channel, 
+				sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
+			//->loc_23400a28
+		}
+		//loc_23400a60
+		else if (state == 2)
+		{
+			//0x23400a68
+#ifndef VDR110
+			sub_2343d458(&sp_0x74);
+#endif
+			sp_0x74.Data_20 = 0;
+			sp_0x74.pMBox = pMBox;
+			sp_0x74.threadFunc = standby_thread;
+			sp_0x74.threadName = "MainInputHandler";
+
+			ui_thread_create(&sp_0x74);
+		}
+		//loc_23400a28
 	}
 	//loc_23400a28
 }
@@ -1431,7 +1450,7 @@ void main_vdec_init(void)
 }
 
 
-/* 234014dc - complete */
+/* 234014dc /  / 23402768 - complete */
 void sub_234014dc()
 {
 #if 0

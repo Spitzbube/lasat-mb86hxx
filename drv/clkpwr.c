@@ -83,7 +83,7 @@ void sub_234291cc(int);
 void sub_23429430(int);
 void sub_23428658(int);
 void sub_23428678(int);
-void sub_23428698(int);
+void VE_HD_SetEnable_En(int);
 void sub_234286b4(int);
 void sub_234286d4(int);
 void sub_234286f4(int);
@@ -422,7 +422,7 @@ int sub_23425ab8() //1080i@50???
 	sub_23428b48(6, 4);
 	sub_23428b5c(6, 0x22b);
 
-	sub_23428698(1);
+	VE_HD_SetEnable_En(1);
 
 	return 0;
 }
@@ -549,7 +549,7 @@ void sub_23425fdc() //720p@50???
 	sub_23428b20(3, 0x27);
 	sub_23428b5c(3, 0x2e8);
 
-	sub_23428698(1);
+	VE_HD_SetEnable_En(1);
 }
 
 
@@ -717,22 +717,30 @@ int sub_23427c68(void* a)
 
 
 /* 23427ed8 - todo */
-void sub_23427ed8()
+int sub_23427ed8(void)
 {
+#if 0
 	console_send_string("sub_23427ed8 (todo.c): TODO\r\n");
+#endif
 
+	return 0;
 }
 
 
-/* 23427ee0 - todo */
-void sub_23427ee0()
+/* 23427ee0 /  / 234341c4 - todo */
+int sub_23427ee0(void)
 {
+#if 0
 	console_send_string("sub_23427ee0 (todo.c): TODO\r\n");
+#endif
 
+	VE_HD_SetEnable_En(0);
+
+	return 0;
 }
 
 
-/* 23427ef4 - todo */
+/* 23427ef4 /  / 234341d8 - todo */
 void sub_23427ef4()
 {
 #if 0
@@ -748,7 +756,7 @@ void sub_23427ef4()
 }
 
 
-/* 23427f24 - todo */
+/* 23427f24 /  / 23434208 - todo */
 int sub_23427f24(Struct_23427f24* r6, void** r7)
 {
 	uint8_t sp;
@@ -1498,11 +1506,11 @@ void sub_23428678(int a)
 }
 
 
-/* 23428698 - complete */
-void sub_23428698(int a)
+/* 23428698 /  / 2343497c - complete */
+void VE_HD_SetEnable_En(int a)
 {
 #if 0
-	console_send_string("sub_23428698 (todo.c): TODO\r\n");
+	console_send_string("VE_HD_SetEnable_En (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 0);

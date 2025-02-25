@@ -5,7 +5,7 @@
 #include "graphic.h"
 
 
-static const uint8_t Data_2348fbac[] = //2348fbac
+static const uint8_t Data_2348fbac[] = //2348fbac /  / 234b257c
 {
 	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
 };
@@ -25,7 +25,7 @@ static const uint8_t Data_2348fe1c[] = //2348fe1c
 	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
 };
 
-static const uint8_t Data_2348feec[] = //2348feec
+static const uint8_t Data_2348feec[] = //2348feec /  / 234b28bc
 {
 	1, 2, 3, 4, 5, 6, 7, 8, //TODO!!!
 };

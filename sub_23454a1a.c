@@ -14,8 +14,10 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
 
 extern void sub_2344fa5a(UI_Thread_Params*);
 
+static Menu Data_234c7854; //234c7854
 static Menu Data_234c7944; //234c7944
 static Menu Data_234c79bc; //234c79bc
+static Menu Data_234c79f8; //234c79f8
 static Menu Data_234c7bd8; //234c7bd8
 static Menu Data_234c7ea8; //234c7ea8
 
@@ -25,15 +27,24 @@ static uint8_t Data_23799874[]; //23799874
 static uint8_t Data_2379989c[]; //2379989c
 
 static int sub_23454562(UI_Thread_Params*);
+static int sub_23454548(UI_Thread_Params*);
 static int sub_2345458e(UI_Thread_Params*);
+static int sub_234545a2(UI_Thread_Params*);
+static int sub_234545ba(UI_Thread_Params*);
+static int sub_234545dc(UI_Thread_Params*);
+static int sub_23454602(UI_Thread_Params*);
 static int sub_234549ca(int);
 static int sub_23454a1a(int);
+static int sub_23454a5c(UI_Thread_Params*);
+static int sub_23454b04(UI_Thread_Params*);
 static int sub_23454ea0(UI_Thread_Params*);
 static int sub_23454f30(UI_Thread_Params*);
 
 
 //0x234c52dc
 static Menu* Data_234c52e0 = &Data_234c7bd8; //234c52e0 +4
+static Menu* Data_234c52e8 = &Data_234c79f8; //234c52e8 +0xc
+static Menu* Data_234c52ec = &Data_234c7854; //234c52ec +0x10
 static Menu* Data_234c52fc = &Data_234c7944; //234c52fc +0x20
 static Menu* Data_234c5304 = &Data_234c79bc; //234c5304 +0x28
 Menu* Data_234c5354 = &Data_234c7ea8; //234c5354
@@ -292,6 +303,137 @@ static Graphic_Job_2_5 Data_234c5cf8 = //234c5cf8
 #endif
 };
 
+static Menu_Item Data_234c6638[] = //234c6638
+{
+	//[0]
+	{
+		0x006e, //'Ja'
+		0xffff, //uint16_t wData_2; //2
+		{
+			&Data_234c55b0[1], //234c55f0,
+		}, //int fill_4[5]; //4
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
+		sub_23454a5c, //void* onEvent; //0x1c = 28
+		sub_2344fa5a, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+		//0x2c = 234C6664
+#if 0
+0x234c6638                        dw         0x006e                             ; DATA XREF=0x234c7858, 0x234c785c
+0x234c663a                        dw         0xffff
+0x234c663c                        dd         0x234c55f0
+0x234c6640 0000                   movs       r0, r0
+0x234c6642 0000                   movs       r0, r0
+0x234c6644 0000                   movs       r0, r0
+0x234c6646 0000                   movs       r0, r0
+0x234c6648 0000                   movs       r0, r0
+0x234c664a 0000                   movs       r0, r0
+0x234c664c 0000                   movs       r0, r0
+0x234c664e 0000                   movs       r0, r0
+0x234c6650 0000                   movs       r0, r0
+0x234c6652 0000                   movs       r0, r0
+0x234c6654                        dd         sub_23454a5c+1
+0x234c6658                        dd         sub_2344fa5a+1
+#endif
+    },
+	//[1]
+	{
+		0x006f, //'Nein'
+		0xffff, //uint16_t wData_2; //2
+		{
+			&Data_234c55b0[2], //234c5630,
+		}, //int fill_4[5]; //4
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
+		sub_23454602, //void* onEvent; //0x1c = 28
+		sub_2344fa5a, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+		//0x2c = 234C6690
+#if 0
+0x234c6664                        dw         0x006f
+0x234c6666                        dw         0xffff
+0x234c6668                        dd         0x234c5630
+0x234c666c 0000                   movs       r0, r0
+0x234c666e 0000                   movs       r0, r0
+0x234c6670 0000                   movs       r0, r0
+0x234c6672 0000                   movs       r0, r0
+0x234c6674 0000                   movs       r0, r0
+0x234c6676 0000                   movs       r0, r0
+0x234c6678 0000                   movs       r0, r0
+0x234c667a 0000                   movs       r0, r0
+0x234c667c 0000                   movs       r0, r0
+0x234c667e 0000                   movs       r0, r0
+0x234c6680                        dd         sub_23454602+1
+0x234c6684                        dd         sub_2344fa5a+1
+#endif
+    }
+};
+
+static Menu_Item Data_234c6798[] = //234c6798
+{
+	//[0]
+	{
+		0x006e, //'Ja'
+		0xffff, //uint16_t wData_2; //2
+		{
+			&Data_234c55b0[1], //234c55f0,
+		}, //int fill_4[5]; //4
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
+		sub_23454b04, //void* onEvent; //0x1c = 28
+		sub_2344fa5a, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+		//0x2c = 234C67C4
+#if 0
+0x234c6798                        dw         0x006e                             ; DATA XREF=0x234c79fc, 0x234c7a00
+0x234c679a                        dw         0xffff
+0x234c679c                        dd         0x234c55f0
+0x234c67a0 0000                   movs       r0, r0
+0x234c67a2 0000                   movs       r0, r0
+0x234c67a4 0000                   movs       r0, r0
+0x234c67a6 0000                   movs       r0, r0
+0x234c67a8 0000                   movs       r0, r0
+0x234c67aa 0000                   movs       r0, r0
+0x234c67ac 0000                   movs       r0, r0
+0x234c67ae 0000                   movs       r0, r0
+0x234c67b0 0000                   movs       r0, r0
+0x234c67b2 0000                   movs       r0, r0
+0x234c67b4                        dd         sub_23454b04+1
+0x234c67b8                        dd         sub_2344fa5a+1
+#endif
+    },
+	//[1]
+	{
+		0x006f, //'Nein'
+		0xffff, //uint16_t wData_2; //2
+		{
+			&Data_234c55b0[2], //234c5630,
+		}, //int fill_4[5]; //4
+		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
+		sub_23454548, //void* onEvent; //0x1c = 28
+		sub_2344fa5a, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+		//0x2c = 234C67F0
+#if 0
+0x234c67c4                        dw         0x006f
+0x234c67c6                        dw         0xffff
+0x234c67c8                        dd         0x234c5630
+0x234c67cc                        dd         0x00000000                         ; DATA XREF=dword_234c5678+4060
+0x234c67d0 0000                   movs       r0, r0
+0x234c67d2 0000                   movs       r0, r0
+0x234c67d4 0000                   movs       r0, r0
+0x234c67d6 0000                   movs       r0, r0
+0x234c67d8 0000                   movs       r0, r0
+0x234c67da 0000                   movs       r0, r0
+0x234c67dc 0000                   movs       r0, r0
+0x234c67de 0000                   movs       r0, r0
+0x234c67e0                        dd         sub_23454548+1
+0x234c67e4                        dd         sub_2344fa5a+1
+#endif
+    }
+};
+
 
 static Menu_Item Data_234c6a58[] = //234c6a58
 {
@@ -424,6 +566,43 @@ static Menu_Item Data_234c6ab0[] = //234c6ab0
 	}
 };
 
+
+static Menu Data_234c7854 = //234c7854
+{
+    0x0085, //'Speichern?' / 'Save?'
+    &Data_234c6638[0], //Menu_Item* Data_4; //4
+    &Data_234c6638[0], //Menu_Item* Data_8; //8
+    &Data_234c55b0[3], //234c5670, //Struct_235fdf74_Inner12* header; //12 = 0xc
+    NULL, //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &Data_234c5cd4, //int graphicData; //20 = 0x14
+    1, //uint8_t maxItem; //0x18 = 24
+    0, //int8_t currentItem; //0x19
+    graphic_start_job_2_5, //void (*graphicHandler)(); //0x1c
+    menu_items_navigate, //void (*onNavigate)(); //0x20
+    NULL, //int (*onEnter)(int); //36 = 0x24
+    0, //int (*onExit)(UI_Thread_Params*); //0x28
+	0, //int Data_0x2c; //44 = 0x2c
+	0, //int timeout; //48 = 0x30
+	0, //Menu_Item* (*Data_0x34)(struct Menu*); //52 = 0x34
+	0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56 = 0x38
+#if 0
+0x234c7854                        dw         0x0085                             ; DATA XREF=0x234c52ec
+0x234c7856                        dw         0x0000
+0x234c7858                        dd         0x234c6638
+0x234c785c                        dd         0x234c6638
+0x234c7860                        dd         0x234c5670
+0x234c7864 0000                   movs       r0, r0
+0x234c7866 0000                   movs       r0, r0
+0x234c7868                        dd         0x234c5cd4
+0x234c786c                        db         0x01
+0x234c786d                        db  0x00 ; '.'
+0x234c786e 0000                   movs       r0, r0
+0x234c7870                        dd         graphic_start_job_2_5              ; DATA XREF=dword_234c7738+208
+0x234c7874                        dd         menu_items_navigate+1
+#endif
+//234C7890
+};
+
 static Menu Data_234c7944 = //234c7944
 {
     0x0085, //'Speichern?' / 'Save?'
@@ -493,6 +672,41 @@ static Menu Data_234c79bc = //234c79bc
 0x234c79dc                        dd         menu_items_navigate+1
 #endif
 //234C79F8
+};
+
+static Menu Data_234c79f8 = //234c79f8
+{
+    0x0085, //'Speichern?' / 'Save?'
+    &Data_234c6798[0], //Menu_Item* Data_4; //4
+    &Data_234c6798[0], //Menu_Item* Data_8; //8
+    &Data_234c55b0[3], //234c5670, //Struct_235fdf74_Inner12* header; //12 = 0xc
+    NULL, //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &Data_234c5cd4, //int graphicData; //20 = 0x14
+    1, //uint8_t maxItem; //0x18 = 24
+    0, //int8_t currentItem; //0x19
+    graphic_start_job_2_5, //void (*graphicHandler)(); //0x1c
+    menu_items_navigate, //void (*onNavigate)(); //0x20
+    NULL, //int (*onEnter)(int); //36 = 0x24
+    0, //int (*onExit)(UI_Thread_Params*); //0x28
+	0, //int Data_0x2c; //44 = 0x2c
+	0, //int timeout; //48 = 0x30
+	0, //Menu_Item* (*Data_0x34)(struct Menu*); //52 = 0x34
+	0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56 = 0x38
+#if 0
+0x234c79f8                        dw         0x0085                             ; DATA XREF=0x234c52e8
+0x234c79fa 0000                   movs       r0, r0
+0x234c79fc                        dd         0x234c6798
+0x234c7a00                        dd         0x234c6798
+0x234c7a04                        dd         0x234c5670
+0x234c7a08                        dd         0x00000000                         ; DATA XREF=dword_234c7918+12
+0x234c7a0c                        dd         0x234c5cd4
+0x234c7a10                        db         0x01
+0x234c7a11                        db  0x00 ; '.'
+0x234c7a12 0000                   movs       r0, r0
+0x234c7a14                        dd         graphic_start_job_2_5
+0x234c7a18                        dd         menu_items_navigate+1
+#endif
+//234C7A34
 };
 
 static Menu Data_234c7bd8 = //234c7bd8
@@ -599,6 +813,22 @@ static int sub_23454562(UI_Thread_Params *a)
 }
 
 
+/* /  / 23454548 - todo */
+static int sub_23454548(UI_Thread_Params *a)
+{
+#if 0
+	console_send_string("sub_23454548 (todo.c): TODO\r\n");
+#endif
+
+	sub_23418a50(0, 0);
+	/*sub_2340add0*/sub_234082f4();
+	sub_2344d8f8();
+	sub_234907be();
+
+	return 0;
+}
+
+
 /* /  / 2345458e - todo */
 static int sub_2345458e(UI_Thread_Params *a)
 {
@@ -610,13 +840,140 @@ static int sub_2345458e(UI_Thread_Params *a)
 }
 
 
-/*  /   / 23454624 - todo */
-void sub_23454624(int a)
+/* /  / 234545a2 - todo */
+static int sub_234545a2(UI_Thread_Params* a)
 {
 #if 1
+	console_send_string("sub_234545a2 (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
+/* /  / 234545ba - todo */
+static int sub_234545ba(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_234545ba (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
+/* /  / 234545dc - todo */
+static int sub_234545dc(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_234545dc (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
+/* 23454602 - todo */
+/*static*/ int sub_23454602(UI_Thread_Params* a)
+{
+#if 0
+	console_send_string("sub_23454602 (todo.c): TODO\r\n");
+#endif
+
+	Struct_2340bf0c sp_0x28;
+	Channel sp;
+
+	/*sub_2340e9e8*/sub_2340bf0c(&sp_0x28);
+	/*sub_2340d8b0*/sub_2340add4(0x40300000);
+	channel_start_number(&sp, sp_0x28.wCurrentChannel, sp_0x28.wCurrentChannel);
+
+	return 0;
+}
+
+
+/*  /   / 23454624 - todo */
+int sub_23454624(int a)
+{
+#if 0
 	console_send_string("sub_23454624 (todo.c): TODO\r\n");
 #endif
 
+	if (a == 0x0b)
+	{
+		//0x2345462a
+		sub_23454602(NULL);
+	}
+	else if (a == 0x1b)
+	{
+		//0x23454636
+		sub_2349ad52();
+	}
+	else if (a == 0x1c)
+	{
+		//0x23454640
+		sub_2349a798();
+	}
+	else if (a == 0x0a)
+	{
+		//->loc_234546b4
+	}
+	else if (a == 0x01)
+	{
+		//loc_2345464e
+		sub_23454548(NULL);
+		//->loc_234546b4
+	}
+	else if (a == 0x02)
+	{
+		//0x2345465a
+		sub_234545dc(NULL);
+	}
+	else if (a == 0x03)
+	{
+		//0x23454666
+		sub_234545ba(NULL);
+	}
+	else if (a == 0x04)
+	{
+		//0x23454672
+		sub_234545a2(NULL);
+	}
+	else if (a == 0x05)
+	{
+		//0x2345467e
+		sub_2345458e(NULL);
+	}
+	else if (a == 0x06)
+	{
+		//0x2345468a
+		sub_23454562(NULL);
+	}
+	else if (a == 0x08)
+	{
+		//->loc_234546b4
+	}
+	else if (a == 0x0c)
+	{
+		//->loc_234546b4
+	}
+	else if (a == 0x0d)
+	{
+		//loc_2345464e
+		sub_23454548(NULL);
+		//->loc_234546b4
+	}
+	else if (a == 0x12)
+	{
+		//0x234546a2
+		sub_23418a50(0, 0);
+	}
+	else if (a == 0x17)
+	{
+		//0x234546b0
+		sub_234995a8();
+	}
+	//loc_234546b4
+	return 0;
 }
 
 
@@ -639,13 +996,23 @@ int sub_234548c2(UI_Thread_Params* r7, int r3)
 
 	switch (r3)
 	{
-		case 4:
+		case 0x0b:
+			//234548F6
+			r4 = Data_234c52ec;
+			break;
+
+		case 1:
+			//23454906
+			r4 = Data_234c52e8;
+			break;
+
+		case 5:
 			//23454942
 			r4 = Data_234c5304;
 			//->0x234549a2
 			break;
 
-		case 5:
+		case 6:
 			//23454946
 			r4 = Data_234c52fc;
 			break;
@@ -697,6 +1064,28 @@ static int sub_23454a1a(int a)
     text_table_get_string(0xd1/*'Please wait...'*/, &Data_23799814[0], 80);
 
     return 0;
+}
+
+
+/* /  / 23454a5c - todo */
+static int sub_23454a5c(UI_Thread_Params* a)
+{
+	#if 1
+	console_send_string("sub_23454a5c (todo.c): TODO\r\n");
+#endif
+
+	return 0;
+}
+
+
+/* /  / 23454b04 - todo */
+static int sub_23454b04(UI_Thread_Params* a)
+{
+#if 1
+	console_send_string("sub_23454b04 (todo.c): TODO\r\n");
+#endif
+
+	return 0;
 }
 
 

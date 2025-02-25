@@ -11,7 +11,6 @@ set(SRCS
    sub_2340199c.c           #0x2340199c     0x23491e10
    m88dc2800.c              #0x2340257c?    0x23491e20
    sub_234070cc.c
-   sub_234089e8.c
    sub_2340a6a0.c           #0x2340956c     0x23491ffc      0x234fd8f0
    console.c                #0x2341af84?
    memblk.c
@@ -85,6 +84,8 @@ set(SRCS
    main2.c
    menu_info_bar.c
    menu_volume_bar.c
+   menu_pin.c
+   osd_list.c
    hexdump.c
    todo.c
 )

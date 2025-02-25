@@ -33,8 +33,10 @@ typedef struct
 	uint8_t bData_0xe; //14 = 0x0e
 	/*
 		Bit 0...3: Channel banner dialog hold time?
+		Bit 4...5: Pin necessary?
 		Bit 6: Deep standby
 		Bit 7: Channel list update
+		Bit 8...10: ? //(x << 21) >> 29
 		Bit 11: Timer storage
 		Bit 15: Auto standby
 	 */

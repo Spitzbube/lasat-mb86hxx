@@ -1703,6 +1703,16 @@ void get_initial_volume_value_string(Menu_Item* item)
 }
 
 
+/* /  / 234907be - todo */
+void sub_234907be()
+{
+#if 1
+	console_send_string("sub_234907be (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* /  / 23490826 - todo */
 int sub_23490826(int* a)
 {
