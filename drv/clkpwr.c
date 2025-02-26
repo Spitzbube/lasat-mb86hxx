@@ -10,38 +10,38 @@
 
 void sub_2342925c();
 void sub_2342934c();
-void sub_23428188(int);
-void sub_234281b0(int);
-void sub_234281d8(int);
+void VE_SetRgbconf_Colbar(int);
+void VE_SetRgbconf_Ycrcb(int);
+void VE_SetRgbconf_NtscOn(int);
 void sub_23429150(int);
-void sub_23428200(int);
-void sub_23428228(int);
-void sub_23428250(int);
-void sub_23428278(int);
-void sub_234282a0(int);
-void sub_234282c8(int);
-void sub_234282f0(int);
-void sub_23428318(int);
-void sub_23428340(int);
-void sub_23428368(int);
-void sub_23428390(int);
-void sub_234283b8(int);
-void sub_234283e0(int);
-void sub_23428404(int);
-void sub_2342842c(int);
-void sub_23428458(int);
-void sub_23428480(int);
-void sub_234284a4(int);
-void sub_234284cc(int);
-void sub_234284f4(int);
-void sub_2342851c(int);
-void sub_23428544(int);
-void sub_2342856c(int);
-void sub_23428594(int);
-void sub_234285bc(int);
-void sub_234285e4(int);
-void sub_2342860c(int);
-void sub_23428634(int);
+void VE_SetRgbconf_BlkOn(int);
+void VE_SetRgbconf_SynconGree(int);
+void VE_SetCeconf_Secam(int);
+void VE_SetCeconf_Ipce1sel(int);
+void VE_SetCeconf_Bwgui(int);
+void VE_SetCeconf_Xsyncmx(int);
+void VE_SetCeconf_Cydly(int);
+void VE_SetCeconf_Cysel(int);
+void VE_SetCeconf_M3db(int);
+void VE_SetCeconf_Pal525(int);
+void VE_SetCeconf_Pal(int);
+void VE_SetCeconf_M1m0(int);
+void VE_SetCeconf_Pslev(int);
+void VE_SetCeburstint_Pal60mEn(int);
+void VE_SetCeburstint_Fscint(int);
+void VE_SetCeburstfra1_Fscfra(int);
+void VE_SetCeburstfra2_Fscfra(int);
+void VE_SetDacPd_CeFilterFlag(int);
+void VE_SetDacPd_Pddac6(int);
+void VE_SetDacPd_Pddac5(int);
+void VE_SetDacPd_Pddac4(int);
+void VE_SetDacPd_Pddac3(int);
+void VE_SetDacPd_Pddac2(int);
+void VE_SetDacPd_Pddac1(int);
+void VE_SetDacPd_Pddac0(int);
+void VE_SetLutConf_RgbLutEn(int);
+void VE_SetLutConf_LutSel(int);
+void VE_SetLutConf_LutEn(int);
 void VO_SetDisphdmidehorstartstop_Dehorstart(int);
 void VO_SetDisphdmidehorstartstop_Dehorstop(int);
 void VO_SetDisphdmideverstartstop_Deverstart(int);
@@ -81,8 +81,8 @@ void sub_23429178(int);
 void sub_234291a0(int);
 void sub_234291cc(int);
 void sub_23429430(int);
-void sub_23428658(int);
-void sub_23428678(int);
+void VE_HD_SetEnable_ConvEn(int);
+void VE_HD_SetEnable_RgbEn(int);
 void VE_HD_SetEnable_En(int);
 void sub_234286b4(int);
 void sub_234286d4(int);
@@ -218,22 +218,22 @@ void sub_23425940()
 	console_send_string("sub_23425940 (todo.c): TODO\r\n");
 #endif
 
-	sub_234281d8(1);
-	sub_23428250(0);
-	sub_23428278(0);
-	sub_234282a0(0);
-	sub_234282c8(0);
-	sub_234282f0(0);
-	sub_23428318(0);
-	sub_23428340(0);
-	sub_23428368(0);
-	sub_23428390(0);
-	sub_234283b8(3);
-	sub_234283e0(0);
-	sub_23428404(0);
-	sub_2342842c(0x43e);
-	sub_23428458(0xf7a);
-	sub_23428480(0xd7);
+	VE_SetRgbconf_NtscOn(1);
+	VE_SetCeconf_Secam(0);
+	VE_SetCeconf_Ipce1sel(0);
+	VE_SetCeconf_Bwgui(0);
+	VE_SetCeconf_Xsyncmx(0);
+	VE_SetCeconf_Cydly(0);
+	VE_SetCeconf_Cysel(0);
+	VE_SetCeconf_M3db(0);
+	VE_SetCeconf_Pal525(0);
+	VE_SetCeconf_Pal(0);
+	VE_SetCeconf_M1m0(3);
+	VE_SetCeconf_Pslev(0);
+	VE_SetCeburstint_Pal60mEn(0);
+	VE_SetCeburstint_Fscint(0x43e);
+	VE_SetCeburstfra1_Fscfra(0xf7a);
+	VE_SetCeburstfra2_Fscfra(0xd7);
 	sub_23429048(0xd68);
 	sub_23429074(0x106);
 	sub_234290a0(0x1e0);
@@ -256,22 +256,22 @@ void sub_23425a1c()
 	console_send_string("sub_23425a1c (todo.c): TODO\r\n");
 #endif
 
-	sub_23428200(0);
-	sub_234281b0(0);
-	sub_234285e4(0);
-	sub_2342860c(0);
-	sub_23428634(0);
-	sub_23428228(0);
-	sub_234284a4(0);
+	VE_SetRgbconf_BlkOn(0);
+	VE_SetRgbconf_Ycrcb(0);
+	VE_SetLutConf_RgbLutEn(0);
+	VE_SetLutConf_LutSel(0);
+	VE_SetLutConf_LutEn(0);
+	VE_SetRgbconf_SynconGree(0);
+	VE_SetDacPd_CeFilterFlag(0);
 	sub_23428fe8(0);
 	sub_23428fc8(1);
 	sub_23428fa8(1);
-	sub_23428544(0);
-	sub_2342851c(0);
-	sub_234284f4(0);
-	sub_234284cc(0);
-	sub_23428278(0);
-	sub_23428188(0);
+	VE_SetDacPd_Pddac3(0);
+	VE_SetDacPd_Pddac4(0);
+	VE_SetDacPd_Pddac5(0);
+	VE_SetDacPd_Pddac6(0);
+	VE_SetCeconf_Ipce1sel(0);
+	VE_SetRgbconf_Colbar(0);
 	sub_23429150(1);
 
 	FREG(0xcb013008)[0] = 0x2e2e; //VE_RGBChrom
@@ -660,14 +660,14 @@ int sub_23427c68(void* a)
 		sub_2342877c(4);
 		sub_2342879c(0x35);
 		sub_234287bc(0xf5);
-		sub_234285bc(0);
-		sub_23428594(0);
-		sub_2342856c(0);
-		sub_23428658(1);
+		VE_SetDacPd_Pddac0(0);
+		VE_SetDacPd_Pddac1(0);
+		VE_SetDacPd_Pddac2(0);
+		VE_HD_SetEnable_ConvEn(1);
 
 		//r0, #0x1
 		//->loc_23427ea0
-		sub_23428678(1);
+		VE_HD_SetEnable_RgbEn(1);
 		//->loc_23427ec8
 	}
 	//loc_23427d9c
@@ -695,19 +695,20 @@ int sub_23427c68(void* a)
 		sub_2342877c(3);
 		sub_2342879c(0x12);
 		sub_234287bc(0x0c);
-		sub_234285bc(0);
-		sub_23428594(0);
-		sub_2342856c(0);
-		sub_23428658(0);
-		sub_23428678(0);
+		VE_SetDacPd_Pddac0(0);
+		VE_SetDacPd_Pddac1(0);
+		VE_SetDacPd_Pddac2(0);
+		VE_HD_SetEnable_ConvEn(0);
+		VE_HD_SetEnable_RgbEn(0);
 		//->loc_23427ec8
 	}
 	//loc_23427ea8
 	else if (r4->Data_8.Data_12 == 1)
 	{
-		sub_234285bc(1);
-		sub_23428594(1);
-		sub_2342856c(1);
+		// Power down DACs
+		VE_SetDacPd_Pddac0(1);
+		VE_SetDacPd_Pddac1(1);
+		VE_SetDacPd_Pddac2(1);
 	}
 	//loc_23427ec8
 	sub_23427c28(r4);
@@ -891,30 +892,30 @@ int sub_2342808c(int r4, int b)
 		return err;
 	}
 
-	if (r4 == 6)
+	if (r4 == 6) // FBAS / RGB
 	{
 		sub_23425a1c();
 		//->loc_23428168
 	}
 	//loc_234280c4
-	else if (r4 == 4)
+	else if (r4 == 4) // YUV
 	{
-		sub_23428200(0);
-		sub_234281b0(1);
-		sub_234285e4(0);
-		sub_2342860c(0);
-		sub_23428634(0);
-		sub_23428228(1);
-		sub_234284a4(0);
+		VE_SetRgbconf_BlkOn(0);
+		VE_SetRgbconf_Ycrcb(1);
+		VE_SetLutConf_RgbLutEn(0);
+		VE_SetLutConf_LutSel(0);
+		VE_SetLutConf_LutEn(0);
+		VE_SetRgbconf_SynconGree(1);
+		VE_SetDacPd_CeFilterFlag(0);
 		sub_23428fe8(0);
 		sub_23428fc8(1);
 		sub_23428fa8(1);
-		sub_23428544(0);
-		sub_2342851c(0);
-		sub_234284f4(0);
-		sub_234284cc(0);
-		sub_23428278(0);
-		sub_23428188(0);
+		VE_SetDacPd_Pddac3(0);
+		VE_SetDacPd_Pddac4(0);
+		VE_SetDacPd_Pddac5(0);
+		VE_SetDacPd_Pddac6(0);
+		VE_SetCeconf_Ipce1sel(0);
+		VE_SetRgbconf_Colbar(0);
 		sub_23429150(1);
 
 		FREG(0xcb013004)[0] = 0x5f2f; //VE_RGBLum
@@ -949,11 +950,11 @@ void sub_23428184(int a)
 }
 
 
-/* 23428188 / 2343359c - complete */
-void sub_23428188(int a)
+/* 23428188 / 2343359c / 2343446c - complete */
+void VE_SetRgbconf_Colbar(int a)
 {
 #if 0
-	console_send_string("sub_23428188 (todo.c): TODO\r\n");
+	console_send_string("VE_SetRgbconf_Colbar (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 12);
@@ -966,11 +967,11 @@ void sub_23428188(int a)
 }
 
 
-/* 234281b0 - complete */
-void sub_234281b0(int a)
+/* 234281b0 /  / 23434494 - complete */
+void VE_SetRgbconf_Ycrcb(int a)
 {
 #if 0
-	console_send_string("sub_234281b0 (todo.c): TODO\r\n");
+	console_send_string("VE_SetRgbconf_Ycrcb (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 11);
@@ -983,11 +984,11 @@ void sub_234281b0(int a)
 }
 
 
-/* 234281d8 - complete */
-void sub_234281d8(int a)
+/* 234281d8 /  / 234344bc - complete */
+void VE_SetRgbconf_NtscOn(int a)
 {
 #if 0
-	console_send_string("sub_234281d8 (todo.c): TODO\r\n");
+	console_send_string("VE_SetRgbconf_NtscOn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 10);
@@ -1000,11 +1001,11 @@ void sub_234281d8(int a)
 }
 
 
-/* 23428200 - complete */
-void sub_23428200(int a)
+/* 23428200 /  / 234344e4 - complete */
+void VE_SetRgbconf_BlkOn(int a)
 {
 #if 0
-	console_send_string("sub_23428200 (todo.c): TODO\r\n");
+	console_send_string("VE_SetRgbconf_BlkOn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 9);
@@ -1017,11 +1018,11 @@ void sub_23428200(int a)
 }
 
 
-/* 23428228 - complete */
-void sub_23428228(int a)
+/* 23428228 /  / 2343450c - complete */
+void VE_SetRgbconf_SynconGree(int a)
 {
 #if 0
-	console_send_string("sub_23428228 (todo.c): TODO\r\n");
+	console_send_string("VE_SetRgbconf_SynconGree (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 7);
@@ -1034,11 +1035,11 @@ void sub_23428228(int a)
 }
 
 
-/* 23428250 - complete */
-void sub_23428250(int a)
+/* 23428250 /  / 23434534 - complete */
+void VE_SetCeconf_Secam(int a)
 {
 #if 0
-	console_send_string("sub_23428250 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Secam (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 15);
@@ -1051,11 +1052,11 @@ void sub_23428250(int a)
 }
 
 
-/* 23428278 - complete */
-void sub_23428278(int a)
+/* 23428278 /  / 2343455c - complete */
+void VE_SetCeconf_Ipce1sel(int a)
 {
 #if 0
-	console_send_string("sub_23428278 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Ipce1sel (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 13);
@@ -1068,11 +1069,11 @@ void sub_23428278(int a)
 }
 
 
-/* 234282a0 - complete */
-void sub_234282a0(int a)
+/* 234282a0 /  / 23434584 - complete */
+void VE_SetCeconf_Bwgui(int a)
 {
 #if 0
-	console_send_string("sub_234282a0 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Bwgui (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 12);
@@ -1085,11 +1086,11 @@ void sub_234282a0(int a)
 }
 
 
-/* 234282c8 - complete */
-void sub_234282c8(int a)
+/* 234282c8 /  / 234345ac - complete */
+void VE_SetCeconf_Xsyncmx(int a)
 {
 #if 0
-	console_send_string("sub_234282c8 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Xsyncmx (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 11);
@@ -1102,11 +1103,11 @@ void sub_234282c8(int a)
 }
 
 
-/* 234282f0 - complete */
-void sub_234282f0(int a)
+/* 234282f0 /  / 234345d4 - complete */
+void VE_SetCeconf_Cydly(int a)
 {
 #if 0
-	console_send_string("sub_234282f0 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Cydly (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0x07 << 8);
@@ -1119,11 +1120,11 @@ void sub_234282f0(int a)
 }
 
 
-/* 23428318 - complete */
-void sub_23428318(int a)
+/* 23428318 /  / 234345fc - complete */
+void VE_SetCeconf_Cysel(int a)
 {
 #if 0
-	console_send_string("sub_23428318 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Cysel (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 7);
@@ -1136,11 +1137,11 @@ void sub_23428318(int a)
 }
 
 
-/* 23428340 - complete */
-void sub_23428340(int a)
+/* 23428340 /  / 23434624 - complete */
+void VE_SetCeconf_M3db(int a)
 {
 #if 0
-	console_send_string("sub_23428340 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_M3db (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0x03 << 5);
@@ -1153,11 +1154,11 @@ void sub_23428340(int a)
 }
 
 
-/* 23428368 - complete */
-void sub_23428368(int a)
+/* 23428368 /  / 2343464c - complete */
+void VE_SetCeconf_Pal525(int a)
 {
 #if 0
-	console_send_string("sub_23428368 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Pal525 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 4);
@@ -1170,11 +1171,11 @@ void sub_23428368(int a)
 }
 
 
-/* 23428390 - complete */
-void sub_23428390(int a)
+/* 23428390 /  / 23434674 - complete */
+void VE_SetCeconf_Pal(int a)
 {
 #if 0
-	console_send_string("sub_23428390 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Pal (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 3);
@@ -1187,11 +1188,11 @@ void sub_23428390(int a)
 }
 
 
-/* 234283b8 - complete */
-void sub_234283b8(int a)
+/* 234283b8 /  / 2343469c - complete */
+void VE_SetCeconf_M1m0(int a)
 {
 #if 0
-	console_send_string("sub_234283b8 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_M1m0 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0x03 << 1);
@@ -1204,11 +1205,11 @@ void sub_234283b8(int a)
 }
 
 
-/* 234283e0 - complete */
-void sub_234283e0(int a)
+/* 234283e0 /  / 234346c4 - complete */
+void VE_SetCeconf_Pslev(int a)
 {
 #if 0
-	console_send_string("sub_234283e0 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeconf_Pslev (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 0);
@@ -1221,11 +1222,11 @@ void sub_234283e0(int a)
 }
 
 
-/* 23428404 - complete */
-void sub_23428404(int a)
+/* 23428404 /  / 234346e8 - complete */
+void VE_SetCeburstint_Pal60mEn(int a)
 {
 #if 0
-	console_send_string("sub_23428404 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeburstint_Pal60mEn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 12);
@@ -1238,11 +1239,11 @@ void sub_23428404(int a)
 }
 
 
-/* 2342842c - complete */
-void sub_2342842c(int a)
+/* 2342842c /  / 23434710 - complete */
+void VE_SetCeburstint_Fscint(int a)
 {
 #if 0
-	console_send_string("sub_2342842c (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeburstint_Fscint (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0xfff << 0);
@@ -1255,11 +1256,11 @@ void sub_2342842c(int a)
 }
 
 
-/* 23428458 - complete */
-void sub_23428458(int a)
+/* 23428458 /  / 2343473c - complete */
+void VE_SetCeburstfra1_Fscfra(int a)
 {
 #if 0
-	console_send_string("sub_23428458 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeburstfra1_Fscfra (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0xffff << 0);
@@ -1272,11 +1273,11 @@ void sub_23428458(int a)
 }
 
 
-/* 23428480 - complete */
-void sub_23428480(int a)
+/* 23428480 /  / 23434764 - complete */
+void VE_SetCeburstfra2_Fscfra(int a)
 {
 #if 0
-	console_send_string("sub_23428480 (todo.c): TODO\r\n");
+	console_send_string("VE_SetCeburstfra2_Fscfra (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (0xff << 0);
@@ -1289,11 +1290,11 @@ void sub_23428480(int a)
 }
 
 
-/* 234284a4 - complete */
-void sub_234284a4(int a)
+/* 234284a4 /  / 23434788 - complete */
+void VE_SetDacPd_CeFilterFlag(int a)
 {
 #if 0
-	console_send_string("sub_234284a4 (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_CeFilterFlag (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 15);
@@ -1306,11 +1307,11 @@ void sub_234284a4(int a)
 }
 
 
-/* 234284cc - complete */
-void sub_234284cc(int a)
+/* 234284cc /  / 234347b0 - complete */
+void VE_SetDacPd_Pddac6(int a)
 {
 #if 0
-	console_send_string("sub_234284cc (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac6 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 14);
@@ -1323,11 +1324,11 @@ void sub_234284cc(int a)
 }
 
 
-/* 234284f4 - complete */
-void sub_234284f4(int a)
+/* 234284f4 /  / 234347d8 - complete */
+void VE_SetDacPd_Pddac5(int a)
 {
 #if 0
-	console_send_string("sub_234284f4 (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac5 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 13);
@@ -1340,11 +1341,11 @@ void sub_234284f4(int a)
 }
 
 
-/* 2342851c - complete */
-void sub_2342851c(int a)
+/* 2342851c /  / 23434800 - complete */
+void VE_SetDacPd_Pddac4(int a)
 {
 #if 0
-	console_send_string("sub_2342851c (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac4 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 12);
@@ -1357,11 +1358,11 @@ void sub_2342851c(int a)
 }
 
 
-/* 23428544 - complete */
-void sub_23428544(int a)
+/* 23428544 /  / 23434828 - complete */
+void VE_SetDacPd_Pddac3(int a)
 {
 #if 0
-	console_send_string("sub_23428544 (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac3 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 11);
@@ -1374,11 +1375,11 @@ void sub_23428544(int a)
 }
 
 
-/* 2342856c - complete */
-void sub_2342856c(int a)
+/* 2342856c /  / 23434850 - complete */
+void VE_SetDacPd_Pddac2(int a)
 {
 #if 0
-	console_send_string("sub_2342856c (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac2 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 10);
@@ -1391,11 +1392,11 @@ void sub_2342856c(int a)
 }
 
 
-/* 23428594 - complete */
-void sub_23428594(int a)
+/* 23428594 /  / 23434878 - complete */
+void VE_SetDacPd_Pddac1(int a)
 {
 #if 0
-	console_send_string("sub_23428594 (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac1 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 9);
@@ -1408,11 +1409,11 @@ void sub_23428594(int a)
 }
 
 
-/* 234285bc - complete */
-void sub_234285bc(int a)
+/* 234285bc /  / 234348a0 - complete */
+void VE_SetDacPd_Pddac0(int a)
 {
 #if 0
-	console_send_string("sub_234285bc (todo.c): TODO\r\n");
+	console_send_string("VE_SetDacPd_Pddac0 (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 8);
@@ -1425,11 +1426,11 @@ void sub_234285bc(int a)
 }
 
 
-/* 234285e4 - complete */
-void sub_234285e4(int a)
+/* 234285e4 /  / 234348c8 - complete */
+void VE_SetLutConf_RgbLutEn(int a)
 {
 #if 0
-	console_send_string("sub_234285e4 (todo.c): TODO\r\n");
+	console_send_string("VE_SetLutConf_RgbLutEn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 2);
@@ -1442,11 +1443,11 @@ void sub_234285e4(int a)
 }
 
 
-/* 2342860c - complete */
-void sub_2342860c(int a)
+/* 2342860c /  / 234348f0 - complete */
+void VE_SetLutConf_LutSel(int a)
 {
 #if 0
-	console_send_string("sub_2342860c (todo.c): TODO\r\n");
+	console_send_string("VE_SetLutConf_LutSel (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 1);
@@ -1459,11 +1460,11 @@ void sub_2342860c(int a)
 }
 
 
-/* 23428634 - complete */
-void sub_23428634(int a)
+/* 23428634 /  / 23434918 - complete */
+void VE_SetLutConf_LutEn(int a)
 {
 #if 0
-	console_send_string("sub_23428634 (todo.c): TODO\r\n");
+	console_send_string("VE_SetLutConf_LutEn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 0);
@@ -1476,11 +1477,11 @@ void sub_23428634(int a)
 }
 
 
-/* 23428658 - complete */
-void sub_23428658(int a)
+/* 23428658 /  / 2343493c - complete */
+void VE_HD_SetEnable_ConvEn(int a)
 {
 #if 0
-	console_send_string("sub_23428658 (todo.c): TODO\r\n");
+	console_send_string("VE_HD_SetEnable_ConvEn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 2);
@@ -1491,11 +1492,11 @@ void sub_23428658(int a)
 }
 
 
-/* 23428678 - complete */
-void sub_23428678(int a)
+/* 23428678 /  / 2343495c - complete */
+void VE_HD_SetEnable_RgbEn(int a)
 {
 #if 0
-	console_send_string("sub_23428678 (todo.c): TODO\r\n");
+	console_send_string("VE_HD_SetEnable_RgbEn (todo.c): TODO\r\n");
 #endif
 
 	uint32_t mask = (1 << 1);
@@ -2826,22 +2827,22 @@ void sub_2342925c()
 	console_send_string("sub_2342925c (todo.c): TODO\r\n");
 #endif
 
-	sub_234281d8(0);
-	sub_23428250(0);
-	sub_23428278(0);
-	sub_234282a0(0);
-	sub_234282c8(0);
-	sub_234282f0(0);
-	sub_23428318(0);
-	sub_23428340(0);
-	sub_23428368(0);
-	sub_23428390(0);
-	sub_234283b8(0);
-	sub_234283e0(0);
-	sub_23428404(0);
-	sub_2342842c(0);
-	sub_23428458(0);
-	sub_23428480(0);
+	VE_SetRgbconf_NtscOn(0);
+	VE_SetCeconf_Secam(0);
+	VE_SetCeconf_Ipce1sel(0);
+	VE_SetCeconf_Bwgui(0);
+	VE_SetCeconf_Xsyncmx(0);
+	VE_SetCeconf_Cydly(0);
+	VE_SetCeconf_Cysel(0);
+	VE_SetCeconf_M3db(0);
+	VE_SetCeconf_Pal525(0);
+	VE_SetCeconf_Pal(0);
+	VE_SetCeconf_M1m0(0);
+	VE_SetCeconf_Pslev(0);
+	VE_SetCeburstint_Pal60mEn(0);
+	VE_SetCeburstint_Fscint(0);
+	VE_SetCeburstfra1_Fscfra(0);
+	VE_SetCeburstfra2_Fscfra(0);
 	sub_23429048(0);
 	sub_23429074(0);
 	sub_234290a0(0);
@@ -2867,22 +2868,22 @@ void sub_2342934c()
 	console_send_string("sub_2342934c (todo.c): TODO\r\n");
 #endif
 
-	sub_234281d8(0);
-	sub_23428250(0);
-	sub_23428278(0);
-	sub_234282a0(0);
-	sub_234282c8(0);
-	sub_234282f0(4);
-	sub_23428318(0);
-	sub_23428340(0);
-	sub_23428368(0);
-	sub_23428390(1);
-	sub_234283b8(0);
-	sub_234283e0(1);
-	sub_23428404(0);
-	sub_2342842c(0x541);
-	sub_23428458(0x3159);
-	sub_23428480(0x68);
+	VE_SetRgbconf_NtscOn(0);
+	VE_SetCeconf_Secam(0);
+	VE_SetCeconf_Ipce1sel(0);
+	VE_SetCeconf_Bwgui(0);
+	VE_SetCeconf_Xsyncmx(0);
+	VE_SetCeconf_Cydly(4);
+	VE_SetCeconf_Cysel(0);
+	VE_SetCeconf_M3db(0);
+	VE_SetCeconf_Pal525(0);
+	VE_SetCeconf_Pal(1);
+	VE_SetCeconf_M1m0(0);
+	VE_SetCeconf_Pslev(1);
+	VE_SetCeburstint_Pal60mEn(0);
+	VE_SetCeburstint_Fscint(0x541);
+	VE_SetCeburstfra1_Fscfra(0x3159);
+	VE_SetCeburstfra2_Fscfra(0x68);
 	sub_23429048(0xd80);
 	sub_23429074(0x138);
 	sub_234290a0(0x210);

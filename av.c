@@ -60,10 +60,10 @@ struct Struct_2358bda4
 	int Data_0x30; //48 = 0x30
 #endif
 	Struct_23410ea4 Data_0x34; //52 = 0x34 //2358bdd8
-	User_Settings Data_0x40; //64 = 0x40
-	User_Settings* Data_0x5c; //92 = 0x5C
+	User_Settings user_settings; //64 = 0x40
+	User_Settings* pUserSettings; //92 = 0x5C
 	int Data_0x60; //96 = 0x60
-	int Data_0x64; //100 = 0x64
+	int dwVideoSignalAnalog; //100 = 0x64
 	int Data_0x68; //104 = 0x68
 	int Data_0x6c; //108 = 0x6c
 	int Data_0x70; //112 = 0x70
@@ -104,9 +104,9 @@ int sub_23410398(uint8_t* r4)
 				Data_2358bda4.Data_0x28 = 0; //r7
 				*r4 = 1; //r6
 
-				if (Data_2358bda4.Data_0x5c->displayFormat/*r1*/ != 0)
+				if (Data_2358bda4.pUserSettings->displayFormat/*r1*/ != 0)
 				{
-					if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ != 0)
+					if (Data_2358bda4.pUserSettings->bDisplayAdjustment/*r0*/ != 0)
 					{
 						//0x23410430
 						sub_23428184(3);
@@ -153,7 +153,7 @@ int sub_23410398(uint8_t* r4)
 							//->loc_23410614
 							break;
 						} //switch (sp4.Data_8.Data_0)
-					} //if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ != 0)
+					} //if (Data_2358bda4.pUserSettings->bDisplayAdjustment/*r0*/ != 0)
 					else
 					{
 						//loc_23410468
@@ -220,11 +220,11 @@ int sub_23410398(uint8_t* r4)
 							break;
 						}
 					}
-				} //if (Data_2358bda4.Data_0x5c->bData_0x17/*r1*/ != 0)
+				} //if (Data_2358bda4.pUserSettings->bData_0x17/*r1*/ != 0)
 				else
 				{
 					//loc_234104a0
-					if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ == 0)
+					if (Data_2358bda4.pUserSettings->bDisplayAdjustment/*r0*/ == 0)
 					{
 						//0x234104a8
 						sub_23428184(2);
@@ -279,7 +279,7 @@ int sub_23410398(uint8_t* r4)
 							//->loc_23410614
 							break;
 						}
-					} //if (Data_2358bda4.Data_0x5c->bDisplayAdjustment/*r0*/ == 0)
+					} //if (Data_2358bda4.pUserSettings->bDisplayAdjustment/*r0*/ == 0)
 					else
 					{
 						//loc_234104fc
@@ -355,13 +355,13 @@ int sub_23410398(uint8_t* r4)
 
 				*r4 = 1;
 
-				if (Data_2358bda4.Data_0x5c->displayFormat == 0)
+				if (Data_2358bda4.pUserSettings->displayFormat == 0)
 				{
 					//0x2341056c
 					gpio_set(Data_2358bda4.Data_4, 0);
 
 					if ((Data_2358bda4.Data_0x28 > 2) &&
-							(Data_2358bda4.Data_0x5c->bDisplayAdjustment == 0))
+							(Data_2358bda4.pUserSettings->bDisplayAdjustment == 0))
 					{
 						//0x23410594
 						sub_2343471c(2);
@@ -399,7 +399,7 @@ int sub_23410398(uint8_t* r4)
 					else
 					{
 						//loc_234105dc
-						if (Data_2358bda4.Data_0x5c->bDisplayAdjustment != 0)
+						if (Data_2358bda4.pUserSettings->bDisplayAdjustment != 0)
 						{
 							//0x234105e8
 							sub_2343471c(3);
@@ -457,7 +457,7 @@ void sub_23410620(int r0)
 	sp_0x18.Data_0 = 3; //r2
 	sp_0x18.Data_8 = 0;
 
-	if ((Data_2358bda4.Data_0x5c->Data_4.dwData & 2) == 0)
+	if ((Data_2358bda4.pUserSettings->Data_4.dwData & 2) == 0)
 	{
 		sp_0x18.Data_12 = 4; //r1
 	}
@@ -587,24 +587,24 @@ int sub_23410804()
 
 	if (sp_0x14.Data_0 <= 576)
 	{
-		r4 = Data_2358bda4.Data_0x5c->wPictureScaling & 0x0f;
+		r4 = Data_2358bda4.pUserSettings->wPictureScaling & 0x0f;
 		//->loc_234108a0
 	}
 	else if (sp_0x14.Data_0 == 720)
 	{
-		r4 = (Data_2358bda4.Data_0x5c->wPictureScaling >> 4) & 0x0f;
+		r4 = (Data_2358bda4.pUserSettings->wPictureScaling >> 4) & 0x0f;
 		//loc_234108a0
 	}
 	else if (sp_0x14.Data_0 >= 1080)
 	{
-		r4 = (Data_2358bda4.Data_0x5c->wPictureScaling >> 8) & 0x0f;
+		r4 = (Data_2358bda4.pUserSettings->wPictureScaling >> 8) & 0x0f;
 		//loc_234108a0
 	}
 
 	if (r4 == 0)
 	{
 		//loc_234108a8
-		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
+		int r0 = Data_2358bda4.pUserSettings->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			//0x234108bc
@@ -649,7 +649,7 @@ int sub_23410804()
 	else if (r4 == 1)
 	{
 		//0x23410910
-		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
+		int r0 = Data_2358bda4.pUserSettings->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			r4 = 2;
@@ -683,7 +683,7 @@ int sub_23410804()
 	else if (r4 == 2)
 	{
 		//0x23410958
-		int r0 = Data_2358bda4.Data_0x5c->Data_4.dwData;
+		int r0 = Data_2358bda4.pUserSettings->Data_4.dwData;
 		if ((r0 & 0x78000000) == 0)
 		{
 			r4 = 3;
@@ -718,7 +718,7 @@ int sub_23410804()
 	//loc_23410990
 	if (Data_2358bda4.Data_0x60 == r4)
 	{
-		if (Data_2358bda4.Data_0x68 == ((Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1))
+		if (Data_2358bda4.Data_0x68 == ((Data_2358bda4.pUserSettings->Data_4.dwData >> 1) & 1))
 		{
 			//r0 = 0;
 			//->loc_23410844
@@ -736,7 +736,7 @@ int sub_23410804()
 #endif
 
 	Data_2358bda4.Data_0x60 = r4;
-	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1;
+	Data_2358bda4.Data_0x68 = (Data_2358bda4.pUserSettings->Data_4.dwData >> 1) & 1;
 
 	sub_2341159c();
 
@@ -745,19 +745,17 @@ int sub_23410804()
 
 
 /* 234109d4 - todo */
-void sub_234109d4()
+void sub_234109d4(void)
 {
 #if 0
 	console_send_string("sub_234109d4 (todo.c): TODO\r\n");
 #endif
 
-	int r2 = Data_2358bda4.Data_0x64;
-
-	if (Data_2358bda4.Data_0x5c->bVideoSignalAnalog != r2)
+	if (Data_2358bda4.pUserSettings->bVideoSignalAnalog != Data_2358bda4.dwVideoSignalAnalog)
 	{
-		Data_2358bda4.Data_0x64 = Data_2358bda4.Data_0x5c->bVideoSignalAnalog;
+		Data_2358bda4.dwVideoSignalAnalog = Data_2358bda4.pUserSettings->bVideoSignalAnalog;
 
-		int r1 = Data_2358bda4.Data_0x5c->bVideoSignalAnalog;
+		int r1 = Data_2358bda4.pUserSettings->bVideoSignalAnalog;
 
 		if ((r1 == 0/*FBAS*/) || (r1 == 1/*RGB*/))
 		{
@@ -781,10 +779,10 @@ void sub_234109d4()
 		{
 			gpio_set(Data_2358bda4.Data_8, 0);
 		}
-	}
+	} //if (Data_2358bda4.pUserSettings->bVideoSignalAnalog != Data_2358bda4.dwVideoSignalAnalog)
 	//loc_23410a48
 	//r5 = 0;
-	if (Data_2358bda4.Data_0x5c->bDisplayAdjustment != Data_2358bda4.Data_0x6c)
+	if (Data_2358bda4.pUserSettings->bDisplayAdjustment != Data_2358bda4.Data_0x6c)
 	{
 		Data_2358bda4.Data_0x28 = 0; //r5
 
@@ -796,10 +794,10 @@ void sub_234109d4()
 			sub_2345f8f8();
 		}
 
-		Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x5c->bDisplayAdjustment;
+		Data_2358bda4.Data_0x6c = Data_2358bda4.pUserSettings->bDisplayAdjustment;
 	}
 	//loc_23410a90
-	if (Data_2358bda4.Data_0x5c->displayFormat != Data_2358bda4.Data_0x70)
+	if (Data_2358bda4.pUserSettings->displayFormat != Data_2358bda4.Data_0x70)
 	{
 		Data_2358bda4.Data_0x28 = 0; //r5
 
@@ -809,7 +807,7 @@ void sub_234109d4()
 			sub_2345f8f8();
 		}
 
-		Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x5c->displayFormat;
+		Data_2358bda4.Data_0x70 = Data_2358bda4.pUserSettings->displayFormat;
 	}
 	//loc_23410ac4
 }
@@ -973,9 +971,9 @@ void sub_23410be8(int* pChannelNr, int* pChannelList)
 	else
 	{
 		//loc_23410cbc
-		if (((Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1) != Data_2358bda4.Data_0x68)
+		if (((Data_2358bda4.pUserSettings->Data_4.dwData >> 1) & 1) != Data_2358bda4.Data_0x68)
 		{
-			Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x5c->Data_4.dwData >> 1) & 1;
+			Data_2358bda4.Data_0x68 = (Data_2358bda4.pUserSettings->Data_4.dwData >> 1) & 1;
 
 			sub_2341159c();
 		}
@@ -1027,7 +1025,7 @@ void av_thread()
 		gpio_open(&sp, &Data_2358bda4.Data_8);
 	}
 	//loc_23410d5c
-	channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
+	channel_handle_user_settings(1, &Data_2358bda4.user_settings);
 
 	Data_2358bda4.channelNr = 0;
 	Data_2358bda4.channelList = 0;
@@ -1035,11 +1033,11 @@ void av_thread()
 	Data_2358bda4.Data_24 = 0;
 	Data_2358bda4.Data_28 = 0;
 	Data_2358bda4.Data_32 = 0;
-	Data_2358bda4.Data_0x6c = Data_2358bda4.Data_0x40.bDisplayAdjustment;
-	Data_2358bda4.Data_0x70 = Data_2358bda4.Data_0x40.displayFormat;
-	Data_2358bda4.Data_0x64 = -1;
+	Data_2358bda4.Data_0x6c = Data_2358bda4.user_settings.bDisplayAdjustment;
+	Data_2358bda4.Data_0x70 = Data_2358bda4.user_settings.displayFormat;
+	Data_2358bda4.dwVideoSignalAnalog = -1;
 	Data_2358bda4.Data_0x60 = 3; /* HDMI: 20 1920x1080i @ 50Hz */
-	Data_2358bda4.Data_0x68 = (Data_2358bda4.Data_0x40.Data_4.dwData & 3) / 2;
+	Data_2358bda4.Data_0x68 = (Data_2358bda4.user_settings.Data_4.dwData & 3) / 2;
 	Data_2358bda4.Data_0x78 = 0;
 	Data_2358bda4.pfPeriodicCheck = 0;
 
@@ -1059,7 +1057,7 @@ void av_thread()
 		console_send_string("av_thread (todo.c): TODO\r\n");
 #endif
 
-		channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
+		channel_handle_user_settings(1, &Data_2358bda4.user_settings);
 
 		if (Data_2358bda4.pfPeriodicCheck != 0)
 		{
@@ -1104,7 +1102,7 @@ void av_thread()
 
 		rtos_task_wait(5);
 		//->loc_23410de4
-	}
+	} //while (1)
 }
 
 
@@ -1118,7 +1116,7 @@ int av_init(Struct_23410ea4* r4)
 
 	memcpy(&Data_2358bda4.Data_0x34, r4, sizeof(Struct_23410ea4));
 
-	Data_2358bda4.Data_0x5c = &Data_2358bda4.Data_0x40;
+	Data_2358bda4.pUserSettings = &Data_2358bda4.user_settings;
 
 	Data_23492098 = OSSemCreate(1);
 
@@ -1195,25 +1193,25 @@ void sub_23410fe4()
 
 
 /* 23411050 /  / 23418a50 - todo */
-void sub_23418a50(User_Settings* r6, int r7)
+void av_update_user_settings(User_Settings* pSettings, int set)
 {
-	uint8_t sp;
+	uint8_t err;
 
 #if 0
 	console_send_string("sub_23418a20 (todo.c): TODO\r\n");
 #endif
 
-	OSSemPend(Data_23492098, 0, &sp);
+	OSSemPend(Data_23492098, 0, &err);
 
-	if (r7 != 0)
+	if (set != 0)
 	{
-		Data_2358bda4.Data_0x5c = r6;
+		Data_2358bda4.pUserSettings = pSettings;
 	}
 	else
 	{
-		channel_handle_user_settings(1, &Data_2358bda4.Data_0x40);
+		channel_handle_user_settings(1, &Data_2358bda4.user_settings);
 
-		Data_2358bda4.Data_0x5c = &Data_2358bda4.Data_0x40;
+		Data_2358bda4.pUserSettings = &Data_2358bda4.user_settings;
 	}
 
 	OSSemPost(Data_23492098);
@@ -1244,7 +1242,7 @@ void av_switch_powermode(int powerdown)
 		//loc_234110e0
 		Data_2358bda4.Data_0x78 = 0;
 		Data_2358bda4.frontDisplayTask = 0;
-		Data_2358bda4.Data_0x64 = 0;
+		Data_2358bda4.dwVideoSignalAnalog = 0;
 		Data_2358bda4.pfPeriodicCheck = 0;
 
 		channel_periodic_check(1);
@@ -1287,9 +1285,9 @@ int sub_23411190(void)
 	console_send_string("sub_23411190 (todo.c): TODO\r\n");
 #endif
 
-	if (Data_2358bda4.Data_0x5c != 0)
+	if (Data_2358bda4.pUserSettings != 0)
 	{
-		return Data_2358bda4.Data_0x5c->bData_0xe;
+		return Data_2358bda4.pUserSettings->bData_0xe;
 	}
 
 	return 0xff;
@@ -1303,9 +1301,9 @@ int av_get_language()
 	console_send_string("av_get_language (todo.c): TODO\r\n");
 #endif
 
-	if (Data_2358bda4.Data_0x5c != 0)
+	if (Data_2358bda4.pUserSettings != 0)
 	{
-		return Data_2358bda4.Data_0x5c->menuLanguage;
+		return Data_2358bda4.pUserSettings->menuLanguage;
 	}
 
 	return 0;

@@ -12,7 +12,7 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4; //234c12a4
 
 extern void menu_item_event_thread();
 
-static void sub_23492b64();
+static int video_signal_analog_change(uint32_t*);
 static void get_video_signal_analog_value_string(Menu_Item*);
 #if 0
 static int menu_video_signal_digital_change();
@@ -1197,7 +1197,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			&Data_234eeef8[14], //234ef278,
 		}, //int fill_4[5]; //4
 		get_video_signal_analog_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_23492b64, //void* Data_0x1c; //0x1c = 28
+		video_signal_analog_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1214,7 +1214,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 0x234efbd4 0000                   movs       r0, r0
 0x234efbd6 0000                   movs       r0, r0
 0x234efbd8                        dd         get_video_signal_analog_value_string+1
-0x234efbdc                        dd         sub_23492b64+1
+0x234efbdc                        dd         video_signal_analog_change+1
 0x234efbe0                        dd         menu_item_event_thread+1
 0x234efbe4 0000                   movs       r0, r0
 0x234efbe6 0000                   movs       r0, r0
@@ -1231,7 +1231,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, //&Data_234ef2b8,
 		}, //int fill_4[5]; //4
 		get_video_signal_digital_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //menu_video_signal_digital_change, //void* Data_0x1c; //0x1c = 28
+		0, //menu_video_signal_digital_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1266,7 +1266,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_display_format_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //sub_23492e1e, //void* Data_0x1c; //0x1c = 28
+		0, //sub_23492e1e, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1301,7 +1301,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_display_adjustment_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //menu_display_adjustment_change, //void* Data_0x1c; //0x1c = 28
+		0, //menu_display_adjustment_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1336,7 +1336,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_video_system_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //sub_23492dcc, //void* Data_0x1c; //0x1c = 28
+		0, //sub_23492dcc, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1371,7 +1371,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		sub_23492c4a, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_23492e6c, //void* Data_0x1c; //0x1c = 28
+		sub_23492e6c, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1406,7 +1406,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		sub_23492c78, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_23492ec0, //void* Data_0x1c; //0x1c = 28
+		sub_23492ec0, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1440,7 +1440,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		sub_23492ca6, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		sub_23492f14, //void* Data_0x1c; //0x1c = 28
+		sub_23492f14, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1535,13 +1535,44 @@ uint8_t Data_23972f70[40]; //23972f70
 uint8_t Data_23972f98[40]; //23972f98
 
 
-/*/  / 23492b64 - todo */
-void sub_23492b64()
+/* /  / 23492b64 - todo */
+int video_signal_analog_change(uint32_t* a)
 {
-#if 1
-	console_send_string("sub_23492b64 (menu_picture.c): TODO\r\n");
+#if 0
+	console_send_string("video_signal_analog_change (menu_picture.c): TODO\r\n");
 #endif
 
+	User_Settings sp4;
+	uint32_t cursor = *a;
+	uint16_t val = menu_picture_user_settings.bVideoSignalAnalog;
+	 
+	channel_handle_user_settings(1, &sp4);
+
+	if (cursor & 0x08)
+	{
+		val++;
+		if (val == 3)
+		{
+			val = 0;
+		}
+	}
+	else
+	{
+		if (val == 0)
+		{
+			val = 3;
+		}
+		val--;
+	}
+
+	menu_picture_user_settings.bVideoSignalAnalog = val;
+
+	if (menu_picture_user_settings.bVideoSignalAnalog == sp4.bVideoSignalAnalog)
+	{
+		return 1;
+	}
+
+	return 0;
 }
 
 
@@ -1993,7 +2024,7 @@ int menu_picture_on_enter(void)
 
 	sub_23492d8a(&menu_picture_user_settings);
 
-	sub_23418a50(&menu_picture_user_settings, 1); //->av.c
+	av_update_user_settings(&menu_picture_user_settings, 1);
 
 	return 0;
 }
@@ -2012,7 +2043,6 @@ int menu_picture_on_exit(UI_Thread_Params* r4)
 
 	if (0 != memcmp(&sp4, &menu_picture_user_settings, sizeof(User_Settings)))
 	{
-#if 0
 		if ((r4->Data_20 == 0) && (r4->threadFunc == 0))
 		{
 			sub_23454624(0x12);
@@ -2024,17 +2054,11 @@ int menu_picture_on_exit(UI_Thread_Params* r4)
 			sub_234548c2(r4, 0x12);
 			return 1;
 		}
-#else
-		console_send_string("menu_picture_on_exit (menu_picture.c): Save dialog TODO\r\n");
-		// To save dialog?
-		sub_23470890(r4, 1);
-		return 1;
-#endif
 	}
 	else
 	{
 		//loc_23493046
-		sub_23418a50(0, 0); //->av.c
+		av_update_user_settings(0, 0);
 		return 0;
 	}
 }
@@ -2055,5 +2079,18 @@ int menu_picture_entry(UI_Thread_Params* p)
 
 	return 0;
 }
+
+
+/* /  / 2349306e - todo */
+User_Settings* menu_picture_get_settings(void)
+{
+#if 0
+	console_send_string("menu_picture_get_settings (todo.c): TODO\r\n");
+#endif
+
+	return &menu_picture_user_settings;
+}
+
+
 
 #endif //!VDR110

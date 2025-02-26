@@ -3440,7 +3440,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 #endif
 	Menu* pMenu; //r5 / r4
 	Menu_Item* pMenuItem; //r1 / r7
-	uint8_t (*pfMenuItemOnEvent)() = 0; //r4 / r5
+	uint8_t (*pfMenuItemOnEvent)(int*) = 0; //r4 / r5
 #ifndef VDR110
 	void (*pfGraphicHandler)(); // / r6
 #endif

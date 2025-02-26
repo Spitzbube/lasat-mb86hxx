@@ -1847,7 +1847,7 @@ int menu_general_settings_on_enter(int a)
 	// Get the settings
 	channel_handle_user_settings(1, &menu_general_settings_backup);
 #ifndef VDR110
-	sub_23418a50(&menu_general_settings_backup, 1); //->av.c
+	av_update_user_settings(&menu_general_settings_backup, 1);
 #endif
 
 #ifdef VDR110
