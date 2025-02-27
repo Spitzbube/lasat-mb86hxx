@@ -23,8 +23,8 @@ extern void* main_hUart1; //23491d94 +8
 extern void* main_hI2c0; //23491d98 +12 = 0xc
 extern Struct_234a73e8* main_hPSIDecoder1; //23491d9c / 234ac4d0 +16 = 0x10
 extern Struct_234a73e8* main_hPSIDecoder2; //23491da0 +20 = 0x14
-extern int Data_23491da4; //23491da4 +0x18
-extern int Data_23491da8; //23491da8
+extern void* main_hViencSd; //23491da4 +0x18
+extern void* main_hViencHd; //23491da8
 extern void* main_hHdmi; //23491dac
 extern Struct_235f2e2c* main_hFlash; //23491db0 +0x24
 extern Frontend* main_hFrontend1; //23491db4 +40 = 0x28 //Data_234ac4e8 / 234c01d4

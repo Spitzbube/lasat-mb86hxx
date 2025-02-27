@@ -129,7 +129,7 @@ void startup_thread()
 #if 1 //Only v241!!!
 	main_vdec_init();
 #endif
-	main_video_hdmi_init();
+	main_video_out_init();
 	main_audio_init();
 	main_channel_init();
 	main_pes_init();

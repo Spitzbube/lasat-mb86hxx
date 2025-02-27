@@ -16,6 +16,7 @@
 #include "auout.h"
 #include "hdmi.h"
 #include "clkpwr.h"
+#include "vienc.h"
 #include "videc.h"
 #include "graphic.h"
 #include "sub_23419cd0.h"
@@ -41,8 +42,8 @@ void* main_hUart1 = 0; //23491d94 +8
 void* main_hI2c0 = 0; //23491d98 +12 = 0xc
 Struct_234a73e8* main_hPSIDecoder1 = 0; //23491d9c / 234ac4d0 +16 = 0x10
 Struct_234a73e8* main_hPSIDecoder2 = 0; //23491da0 +20 = 0x14
-int Data_23491da4 = 0; //23491da4 +0x18
-int Data_23491da8 = 0; //23491da8
+void* main_hViencSd = 0; //23491da4 +0x18
+void* main_hViencHd = 0; //23491da8
 void* main_hHdmi = 0; //23491dac
 Struct_235f2e2c* main_hFlash = 0; //23491db0 +0x24
 Frontend* main_hFrontend1 = 0; //23491db4 +40 = 0x28 //Data_234ac4e8
@@ -1583,44 +1584,47 @@ void main_frontpanel_init()
 }
 
 
-/* 23401654 / 234013ac - todo */
-void main_video_hdmi_init()
+/* 23401654 / 234013ac / 23401440 - todo */
+void main_video_out_init()
 {
-	sub_23427ef4();
+	int res;
+	uint32_t bg;
+
+	vienc_init();
 
 	Struct_234248a0 sp_0x28;
-	Struct_23427f24 sp_0x18;
+	Vienc_Params vienc_params; //sp_0x18
 	HDMI_VideoParams sp4;
 
-	sp_0x18.Data_12 = 5;
-	sp_0x18.Data_0 = 2;
-	sp_0x18.Data_4 = 1;
-	sp_0x18.Data_8 = 4; //r8
+	vienc_params.Data_12 = 5;
+	vienc_params.sd_hd = 2;
+	vienc_params.Data_4 = 1;
+	vienc_params.Data_8 = 4; //r8
 
-	int r0 = sub_23427f24(&sp_0x18, &Data_23491da4);
-	if (r0 == 0)
+	res = vienc_open(&vienc_params, &main_hViencSd);
+	if (res == 0)
 	{
-		sub_23427fe8(Data_23491da4);
+		vienc_start(main_hViencSd);
 	}
 
-	sp_0x18.Data_8 = 0;
-	sp_0x18.Data_0 = 3; //r7
-	sp_0x18.Data_4 = 4; // r8
-	sp_0x18.Data_12 = 4; //r8
+	vienc_params.Data_8 = 0;
+	vienc_params.sd_hd = 3; //r7
+	vienc_params.Data_4 = 4; // r8
+	vienc_params.Data_12 = 4; //r8
 
-	r0 = sub_23427f24(&sp_0x18, &Data_23491da8);
-	if (r0 == 0)
+	res = vienc_open(&vienc_params, &main_hViencHd);
+	if (res == 0)
 	{
-		sub_23427fe8(Data_23491da8);
+		vienc_start(main_hViencHd);
 	}
 
 	sub_23434718(0);
 
 	sub_234345a4(4); //->viout.c
 
-	r0 = viscale_osd_get_background(0, 0, 0, 0xff);
+	bg = viscale_osd_get_background(0, 0, 0, 0xff);
 
-	vo_set_background((r0 >> 16) & 0xff, (r0 >> 24) & 0xff, (r0 >> 8) & 0xff);
+	vo_set_background((bg >> 16) & 0xff, (bg >> 24) & 0xff, (bg >> 8) & 0xff);
 
 	hdmi_init();
 

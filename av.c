@@ -3,7 +3,8 @@
 #include "vfd.h"
 #include "frontdisplay.h"
 #include "sub_2340a6a0.h"
-#include "clkpwr.h"
+//#include "clkpwr.h"
+#include "vienc.h"
 #include "hdmi.h"
 #include "av.h"
 
@@ -433,7 +434,7 @@ int sub_23410398(uint8_t* r4)
 /* 23410620 / 234175d8 - todo */
 void sub_23410620(int r0)
 {
-	Struct_23427f24 sp_0x18;
+	Vienc_Params sp_0x18;
 	HDMI_VideoParams sp4;
 
 #if 0
@@ -454,7 +455,7 @@ void sub_23410620(int r0)
 	sp4.outputType = 2;
 	sp4.scanInfo = 1;
 	sp4.activeFormat = 8; //ip
-	sp_0x18.Data_0 = 3; //r2
+	sp_0x18.sd_hd = 3; //r2
 	sp_0x18.Data_8 = 0;
 
 	if ((Data_2358bda4.pUserSettings->Data_4.dwData & 2) == 0)
@@ -550,7 +551,7 @@ void sub_23410620(int r0)
 		graphics_configure_osd_layer(3);
 	}
 	//loc_234107d0
-	sub_2342803c(&sp_0x18, Data_23491da8);
+	sub_2342803c(&sp_0x18, main_hViencHd);
 	sub_2345f8f8();
 	hdmi_SetVideoParameters(main_hHdmi, &sp4);
 	hdmi_video_start(main_hHdmi);
@@ -762,7 +763,7 @@ void sub_234109d4(void)
 			gpio_set(Data_2358bda4.Data_8, r1);
 			//r0, #0x6
 			//->loc_23410a34
-			sub_2342808c(6, Data_23491da4);
+			sub_2342808c(6, main_hViencSd);
 			//->loc_23410a48
 		}
 		//loc_23410a1c
@@ -771,7 +772,7 @@ void sub_234109d4(void)
 			//0x23410a24
 			gpio_set(Data_2358bda4.Data_8, 0);
 
-			sub_2342808c(4, Data_23491da4);
+			sub_2342808c(4, main_hViencSd);
 			//->loc_23410a48
 		}
 		//loc_23410a3c
@@ -1044,7 +1045,7 @@ void av_thread()
 	channelNr = 0;
 	channelList = 0;
 
-	r0 = ((sub_23428178(Data_23491da8) - 4) != 0)? 1: 0;
+	r0 = ((sub_23428178(main_hViencHd) - 4) != 0)? 1: 0;
 	if (Data_2358bda4.Data_0x68 != r0)
 	{
 		sub_2341159c();

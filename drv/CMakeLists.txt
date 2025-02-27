@@ -17,6 +17,7 @@ set (
    auout.c
    dpll.c
    hdmi.c
+   vienc.c
    viout.c
    dma.c
    eth.c

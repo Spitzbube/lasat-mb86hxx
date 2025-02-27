@@ -18,7 +18,9 @@ typedef struct
 		uint32_t dwData; //4
 		struct
 		{
-			uint32_t fill_bit0: 8; //bit 0
+			uint32_t fill_bit0: 1; //bit 0
+			uint32_t digital_video_signal: 1; //bit 1
+			uint32_t fill_bit2: 6; //bit 2
 			uint32_t bit8: 5; //bit 8
 			uint32_t fill_bit13: 10; //bit 13
 			uint32_t bit23: 2; //bit23
