@@ -2072,8 +2072,8 @@ int sub_23456932(Struct_2348dc50* a)
     for (r7 = 0; r7 < sp8.wData_0x26; r7++)
     {
         //loc_23456960
-        char* r4 = sp_0x70->Data_4[0]->Data_0x20->Data_0x10;
-        char* r5 = sp_0x70->Data_4[1]->Data_0x20->Data_0x10;
+        char* r4 = sp_0x70->Data_4[0]->Data_0x20->pString;
+        char* r5 = sp_0x70->Data_4[1]->Data_0x20->pString;
 
         sp_0x70->Data_4[0]->Data_0x20->bData_0x17 = 1;
         sp_0x70->Data_4[1]->Data_0x20->bData_0x17 = 1;
@@ -2408,7 +2408,7 @@ static void* sub_23456db4(FrontDisplay_Job* r5)
     {
         int r0_ = 0;
         //0x23456e50
-        char* r1 = r0->Data_4->Data_4[1]->Data_0x20->Data_0x10;
+        char* r1 = r0->Data_4->Data_4[1]->Data_0x20->pString;
         if (r1[0] == 7)
         {
             char r2 = r1[2];

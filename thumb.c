@@ -433,7 +433,7 @@ void menu_initialize(Menu* pMenu)
 				{
 					//0x2344daa8
 					text_table_get_string(pMenuItem->wData_0,
-							pMenuItem->Data_4[0]->Data_0x20->Data_0x10, 36);
+							pMenuItem->Data_4[0]->Data_0x20->pString, 36);
 				}
 				//loc_2344dab0: Get the string of the menu item value (column 2), if available
 				if (pMenuItem->initValueString != 0)

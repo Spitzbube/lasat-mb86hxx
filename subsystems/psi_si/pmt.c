@@ -66,7 +66,6 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 
 	case 0x6b:
 		//loc_2344c07c: ancillary_data_descriptor
-		//TODO!!!
 		break;
 
 	case 0x7a:
@@ -80,12 +79,23 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 
 	case 0x7c:
 		//loc_2344bdf0: AAC_descriptor
-		//TODO!!!
+		if (r2 != 0)
+		{
+			r4->bData_9 = 1;
+		}
+		//->loc_2344c07c
 		break;
 
 	case 0xc5:
-		//0x2344bc74
-		//TODO!!!
+		//0x2344bc74: Hyperlink Descriptor?
+		if (r2 != 0)
+		{
+			//0x2344bc7c
+			memcpy(&r4->Data_0xe[0], &r5[3], 16);
+
+			r4->Data_0xe[16] = ' ';
+		}
+		//->loc_2344c07c
 		break;
 
 	case 0x09:

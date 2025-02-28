@@ -81,6 +81,7 @@ set(SRCS
    sub_23490bd0.c
    sub_234929f6.c
    menu_picture.c
+   menu_sound.c
    main2.c
    menu_info_bar.c
    menu_volume_bar.c

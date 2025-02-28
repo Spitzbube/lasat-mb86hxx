@@ -1478,7 +1478,7 @@ static int sub_2348c8d4(Struct_2348dc50* a)
                 if (r4->Data_4[0]->Data_0x20 != 0)
                 {
                     //0x2348c998
-                    r4->Data_4[0]->Data_0x20->Data_0x10 = &r5->Data_4[0];
+                    r4->Data_4[0]->Data_0x20->pString = &r5->Data_4[0];
                 }
                 //loc_2348c99c
                 r4->Data_4[0]->bData_0 = 1; //r7
@@ -1491,7 +1491,7 @@ static int sub_2348c8d4(Struct_2348dc50* a)
                 if (r4->Data_4[0]->Data_0x20 != 0)
                 {
                     //0x2348c998
-                    r4->Data_4[0]->Data_0x20->Data_0x10 = &Data_234dfe4c[0];
+                    r4->Data_4[0]->Data_0x20->pString = &Data_234dfe4c[0];
                 }
                 //loc_2348c9b4
                 r4->Data_4[0]->bData_0 = 0;
@@ -1591,7 +1591,7 @@ static int sub_2348ca2a(Struct_2348dc50* a)
             //loc_2348caec
             r4->Data_4[0]->Data_0x20->bData_0x17 = 1; //r7
 
-            sp_0x78 = r4->Data_4[0]->Data_0x20->Data_0x10;
+            sp_0x78 = r4->Data_4[0]->Data_0x20->pString;
 
             r4->Data_4[0]->bData_0x3c = 1; //r7
 

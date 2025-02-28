@@ -914,14 +914,6 @@ void sub_2344d8f8()
 }
 
  
-/*  /  / 23492d8a - todo */
-void sub_23492d8a()
-{
-	console_send_string("sub_23492d8a (todo.c): TODO\r\n");
-
-}
-
-
 /*  /  / 23451f60 */
 int sub_23451f60()
 {

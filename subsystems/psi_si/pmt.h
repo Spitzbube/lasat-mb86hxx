@@ -6,9 +6,10 @@ typedef struct PMT_ElementaryStream
 	uint8_t component_tag; //5
 	uint16_t elementary_PID; //6
 	uint8_t bData_8; //8
-	uint8_t fill_9; //9
+	uint8_t bData_9; //9
 	char language[3]; //10 = 0x0a
-	char Data_0x0d[203/*size??*/]; //13 = 0xd
+	char bData_0x0d; //13 = 0xd
+	char Data_0xe[202]; //14 = 0xe
 	struct PMT_ElementaryStream* next; //0xd8
 	//220 = 0xdc
 } PMT_ElementaryStream;

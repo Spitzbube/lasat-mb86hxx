@@ -17,6 +17,7 @@ static uint8_t Data_2396b4e8[]; //2396b4e8
 
 extern int menu_general_settings_entry(UI_Thread_Params*);
 extern int menu_picture_entry(UI_Thread_Params*);
+extern int menu_sound_entry(UI_Thread_Params*);
 
 static Menu_Item menu_settings_items[]; //234dfb30
 
@@ -213,7 +214,7 @@ static Graphic_Job_2_5_Item Data_234df368[15] = //234df368
 0x234df520                        dd         0x00000000
 0x234df524                        dd         0x00000000
 #endif 
-	{0}, //[7] = 234DF528 
+	{0}, //[7] = 234DF528: Sound
 	{0}, //[8] = 234DF568 
 	{0}, //[9] = 234DF5A8 
 	{0}, //[10] = 234DF5E8 
@@ -377,7 +378,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfb44                        dd         0x00000000
 		0x234dfb48                        dd         0x00000000
 		0x234dfb4c                        dd         sub_23490aa4+1
-		0x234dfb50                        dd         sub_2344e2a6+1
+		0x234dfb50                        dd         menu_event_thread+1
 		0x234dfb54                        dd         0x00000000
 		0x234dfb58                        dd         0x00000000
 #endif
@@ -405,22 +406,22 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfb70                        dd         0x00000000
 		0x234dfb74                        dd         0x00000000
 		0x234dfb78                        dd         sub_23493050+1
-		0x234dfb7c                        dd         sub_2344e2a6+1
+		0x234dfb7c                        dd         menu_event_thread+1
 		0x234dfb80                        dd         0x00000000
 		0x234dfb84                        dd         0x00000000
 #endif
 	},
-#if 0
 	//[2]
 	{
 		137, //0x89 = "Ton",
 		0xffff,
 		{
-			&Data_234df528,
-			0, 0, 0, 0}, //int fill_4[5]; //4
+			&Data_234df368[7], //234df528,
+			0, 0, 0, 0
+		}, //int fill_4[5]; //4
 		0,
 		menu_sound_entry,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 		//0x2349301c
@@ -434,11 +435,12 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfb9c                        dd         0x00000000
 		0x234dfba0                        dd         0x00000000
 		0x234dfba4                        dd         sub_2349118a+1
-		0x234dfba8                        dd         sub_2344e2a6+1
+		0x234dfba8                        dd         menu_event_thread+1
 		0x234dfbac                        dd         0x00000000
 		0x234dfbb0                        dd         0x00000000
 #endif
 	},
+	#if 0
 	//[3]
 	{
 		0xc3, //"Untertitel"
@@ -448,7 +450,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 			0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		menu_subtitles_entry,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 		//0x23493048
@@ -462,7 +464,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x234dfbc8                        dd         0x00000000
 		0x234dfbcc                        dd         0x00000000
 		0x234dfbd0                        dd         sub_2349573e+1
-		0x234dfbd4                        dd         sub_2344e2a6+1
+		0x234dfbd4                        dd         menu_event_thread+1
 		0x234dfbd8                        dd         0x00000000
 		0x234dfbdc                        dd         0x00000000
 #endif
@@ -474,7 +476,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		sub_2343d1ca,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 		//0x23493074
@@ -500,7 +502,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		sub_23471d2c,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 		//0x234930a0
@@ -526,7 +528,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		sub_2347004a,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 		//0x234930cc
@@ -552,7 +554,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		0, //TODO!!!, sub_2347004a,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 	},
@@ -563,7 +565,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		{0, 0, 0, 0, 0}, //int fill_4[5]; //4
 		0,
 		0, //TODO!!!, sub_2347004a,
-		sub_2344e2a6,
+		menu_event_thread,
 		0,
 		0
 	}

@@ -1453,7 +1453,7 @@ static void menu_channel_search_get_cable_symbolrate_value_string(Menu_Item* ite
 #endif
 
 	Menu_Item_Inner4_Data_0* r1 = item->Data_4[1];
-	uint8_t* pString = r1->Data_0x20->Data_0x10;
+	uint8_t* pString = r1->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
@@ -1483,7 +1483,7 @@ static void menu_channel_search_get_modulation_value_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_modulation_value_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
 	uint32_t modulation = Data_23796d30.Data_23796d54.Data_0.Data_0.Bitfield_0.modulation; // 23796D57 >> 4;
 
 	if (modulation == 1)
@@ -1524,7 +1524,7 @@ static void sub_23452d52(Menu_Item* item)
 	console_send_string("sub_23452d52 (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
 	Transponder* pTransponder = &Data_23796d30.Data_23796d54;
 
 	sprintf(pString, "%c%d (%d.%dMHz)", 
@@ -1575,7 +1575,7 @@ static void menu_channel_search_get_symbolrate_value_string(Menu_Item* item)
 #endif
 
 	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->Data_0x10;
+	uint8_t* pString = r0->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
@@ -1607,7 +1607,7 @@ static void menu_channel_search_get_polarization_value_string(Menu_Item* item)
 
 	int nStr;
 	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->Data_0x10;
+	uint8_t* pString = r0->Data_0x20->pString;
 
 	switch (Data_23796d30.Data_23798030.polarization)
 	{
@@ -1640,7 +1640,7 @@ static void menu_channel_search_get_frequency_value_string(Menu_Item* item)
 #endif
 
 	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->Data_0x10;
+	uint8_t* pString = r0->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
@@ -2388,7 +2388,7 @@ int sub_23453d00(UI_Thread_Params* r5)
 /* /  / 23453d36 - todo */
 static void menu_channel_search_get_antenna_value_string(Menu_Item* item)
 {
-	uint8_t* pStr = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* pStr = item->Data_4[1]->Data_0x20->pString;
 
 #if 0
 	console_send_string("menu_channel_search_get_antenna_value_string (todo.c): TODO\r\n");
@@ -2433,7 +2433,7 @@ static void menu_channel_search_get_search_mode_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_search_mode_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
 
 	switch (Data_23796d30.Data_23798030.Data_0)
 	{
@@ -2469,7 +2469,7 @@ void menu_channel_search_get_encryption_mode_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_encryption_mode_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
 	int nStr;
 
 	switch (Data_23796d30.Data_23798030.Data_4)

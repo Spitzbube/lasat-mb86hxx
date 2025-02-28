@@ -1,4 +1,29 @@
 
+typedef struct
+{
+	uint8_t bData_0; //0
+	int fill_4[6]; //4
+	uint16_t wData_0x1c; //28 = 0x1c
+	Graphic_Job_2_5_Item_Text* Data_0x20; //32 = 0x20
+	int fill_0x24[6]; //36 = 0x24
+	uint8_t bData_0x3c;
+	//0x40???
+} Menu_Item_Inner4_Data_0; //Graphic_Job_2_5_Item
+
+typedef struct Menu_Item
+{
+	uint16_t wData_0; //0
+	uint16_t helpStringId; //2
+	Menu_Item_Inner4_Data_0* Data_4[5]; //4
+	void (*initValueString)(struct Menu_Item*); //0x18 = 24
+	void* onEvent; //0x1c = 28
+	void* inputThreadFunc; //0x20 = 32
+	void* Data_0x24; //0x24 = 36
+	void* Data_0x28; //0x28 = 40
+	//0x2c = 44
+} Menu_Item;
+
+
 typedef struct Menu
 {
 	uint16_t stringId; //0

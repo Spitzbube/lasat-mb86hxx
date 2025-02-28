@@ -19,13 +19,9 @@ extern void menu_item_event_thread();
 
 static int video_signal_analog_change(uint32_t*);
 static void get_video_signal_analog_value_string(Menu_Item*);
-#if 0
-static int menu_video_signal_digital_change();
-#endif
+static int video_signal_digital_change(uint32_t*);
 static void get_video_signal_digital_value_string(Menu_Item*);
-#if 0
 static int menu_display_adjustment_change();
-#endif
 static void get_display_adjustment_value_string(Menu_Item*);
 static void get_display_format_value_string(Menu_Item*);
 static void get_video_system_value_string(Menu_Item*);
@@ -35,9 +31,8 @@ static void sub_23492ca6(Menu_Item*);
 static int sub_23492e6c(uint32_t*);
 static int sub_23492ec0(uint32_t*);
 static int sub_23492f14(uint32_t*);
-#if 0
-static int sub_23492e1e();
-#endif
+static int video_system_change(uint32_t*);
+static int display_format_change();
 static int menu_picture_on_enter(void);
 static int menu_picture_on_exit(UI_Thread_Params*);
 
@@ -559,7 +554,7 @@ static Graphic_Job_2_5_Item Data_234eeef8[25] = //234eeef8
 0x234ef0d6 0000                   movs       r0, r0
 0x234ef0d8                        dd         0x234eeda8
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xed, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234eedc0, {0}, 0}, //[8] = 234EF0F8
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xed, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 9, 0, &Data_234eedc0, {0}, 0}, //[8] = 234EF0F8: "Videosystem" Caption
 #if 0
 0x234ef0f8                        dw         0x0001                             ; DATA XREF=0x234efc74
 0x234ef0fa 0000                   movs       r0, r0
@@ -837,85 +832,6 @@ static Graphic_Job_2_5_Item Data_234eeef8[25] = //234eeef8
 	{0}, //[24] = 234EF4F8
 };
 
-#if 0
-static Struct_235fdf74_Inner20_Inner8 Data_234eeef8 = //234eeef8
-{
-	//Struct_2377ded0_Inner_0x1c[9]
-	{
-		{
-			1, //uint8_t bData_0; //0
-			0, //uint8_t bData_1; //1
-			0, //int fill_4; //4
-			0, //Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
-			{0}, //int fill_0xc[4]; //0xc
-			2, //uint16_t wData_0x1c; //0x1c
-			0, //Graphic_Job_2_5_Item_Text* Data_0x20; //0x20
-			0, //int Data_0x24; //0x24
-			{0}, //int fill_0x28[3]; //0x28
-			0, //int Data_0x34; //0x34
-			0, //int fill_0x38; //0x38
-			0, //uint8_t bData_0x3c; //0x3c
-			//0x40
-#if 0
-0x234eeef8                        db         0x01                               ; DATA XREF=sub_23492fc8+14, 0x234efb80
-0x234eeef9                        db         0x00
-0x234eeefa                        db  0x00 ; '.'
-0x234eeefb                        db  0x00 ; '.'
-0x234eeefc                        dd         0x00000000
-0x234eef00 0000                   movs       r0, r0
-0x234eef02 0000                   movs       r0, r0
-0x234eef04 3700                   movs       r7, r6
-0x234eef06 2300                   movs       r3, r4
-0x234eef08 FA00                   lsls       r2, r7, #0x3
-0x234eef0a 3200                   movs       r2, r6
-0x234eef0c 0000                   movs       r0, r0
-0x234eef0e 0000                   movs       r0, r0
-0x234eef10                        dd         0x234c12b0
-0x234eef14                        dw         0x0002
-0x234eef16 0000                   movs       r0, r0
-0x234eef18                        dd         0x00000000                         ; DATA XREF=sub_23492fc8+18
-0x234eef1c                        dd         0x00000000
-0x234eef20 0000                   movs       r0, r0
-0x234eef22 0000                   movs       r0, r0
-0x234eef24 0000                   movs       r0, r0
-0x234eef26 0000                   movs       r0, r0
-0x234eef28 0000                   movs       r0, r0
-0x234eef2a 0000                   movs       r0, r0
-0x234eef2c                        dd         0x00000000
-0x234eef30 0000                   movs       r0, r0
-0x234eef32 0000                   movs       r0, r0
-0x234eef34                        dd         0x00000000
-#endif
-		},
-	},
-	//234EF138
-	{
-		{0, 0, 0, 0, 0, 0, 0, 0},
-		&Data_234eedd8,
-#if 0
-		0x234ef138                        db         0x01
-		0x234ef139                        db  0x00 ; '.'
-		0x234ef13a 0000                   movs       r0, r0
-		0x234ef13c 0000                   movs       r0, r0
-		0x234ef13e 0000                   movs       r0, r0
-		0x234ef140 0000                   movs       r0, r0
-		0x234ef142 0000                   movs       r0, r0
-		0x234ef144 3D00                   movs       r5, r7
-		0x234ef146 0001                   lsls       r0, r0, #0x4
-		0x234ef148 ED00                   lsls       r5, r5, #0x3
-		0x234ef14a 2000                   movs       r0, r4
-		0x234ef14c 0000                   movs       r0, r0
-		0x234ef14e 0000                   movs       r0, r0
-		0x234ef150                        dd         0x234c12d4
-		0x234ef154 0900                   movs       r1, r1
-		0x234ef156 0000                   movs       r0, r0
-		0x234ef158                        dd         0x234eedd8
-#endif
-	}
-};
-#endif
-
-#if 1
 static Graphic_Job_2_5 Data_234efb78 = //234efb78
 {
 	0, //uint8_t bData_0; //0
@@ -950,33 +866,6 @@ static Graphic_Job_2_5 Data_234efb78 = //234efb78
 0x234efb98                        dd         0x00000000
 #endif
 };
-#else
-static Struct_235fdf74_Inner20 Data_234efb78 = //234efb78
-{
-	0, //uint16_t fill_0; //0
-	0, //uint16_t wData_2; //2
-	{0, &Data_234eeef8, 0, 0, 0, 0}, //int fill_4[6]; //4
-	0, //void (*Data_0x1c)(); //28 = 0x1c
-	0, //void (*Data_0x20)(); //32 = 0x20
-#if 0
-	0x234efb78                        db  0x00 ; '.'                                ; DATA XREF=menu_picture_on_enter+12, 0x234efe94
-	0x234efb79                        db  0xfa ; '.'
-	0x234efb7a 0700                   movs       r7, r0
-	0x234efb7c 0400                   movs       r4, r0
-	0x234efb7e 0000                   movs       r0, r0
-	0x234efb80                        dd         0x234eeef8                         ; DATA XREF=menu_picture_on_enter+14
-	0x234efb84                        dd         0x234c123c
-	0x234efb88 1000                   movs       r0, r2
-	0x234efb8a 0000                   movs       r0, r0
-	0x234efb8c 0000                   movs       r0, r0
-	0x234efb8e 0000                   movs       r0, r0
-	0x234efb90 1901                   lsls       r1, r3, #0x4
-	0x234efb92 0000                   movs       r0, r0
-	0x234efb94                        dd         0x00000000
-	0x234efb98                        dd         0x00000000
-#endif
-};
-#endif
 
 static Menu_Item menu_picture_items[] = //234efbc0
 {
@@ -1023,7 +912,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			&Data_234eeef8[15], //234ef2b8,
 		}, //int fill_4[5]; //4
 		get_video_signal_digital_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //menu_video_signal_digital_change, //void* onEvent; //0x1c = 28
+		video_signal_digital_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1057,7 +946,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			&Data_234eeef8[16], //234ef2f8,
 		}, //int fill_4[5]; //4
 		get_display_format_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //sub_23492e1e, //void* onEvent; //0x1c = 28
+		display_format_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1074,7 +963,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 		0x234efc2c 0000                   movs       r0, r0
 		0x234efc2e 0000                   movs       r0, r0
 		0x234efc30                        dd         get_display_format_value_string+1
-		0x234efc34                        dd         sub_23492e1e+1
+		0x234efc34                        dd         display_format_change+1
 		0x234efc38                        dd         menu_item_event_thread+1
 		0x234efc3c 0000                   movs       r0, r0
 		0x234efc3e 0000                   movs       r0, r0
@@ -1092,7 +981,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_display_adjustment_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //menu_display_adjustment_change, //void* onEvent; //0x1c = 28
+		menu_display_adjustment_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1119,7 +1008,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 	},
 	//[4]
 	{
-		374, //0x176 = "Videosystem"
+		374, //0x176 = "Videosystem" / 
 		0xf4, //uint16_t wData_2; //2
 		{
 			&Data_234eeef8[8], //234ef0f8,
@@ -1127,7 +1016,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_video_system_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
-		0, //sub_23492dcc, //void* onEvent; //0x1c = 28
+		video_system_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -1144,7 +1033,7 @@ static Menu_Item menu_picture_items[] = //234efbc0
 0x234efc84 0000                   movs       r0, r0
 0x234efc86 0000                   movs       r0, r0
 0x234efc88                        dd         get_video_system_value_string+1
-0x234efc8c                        dd         sub_23492dcc+1
+0x234efc8c                        dd         video_system_change+1
 0x234efc90                        dd         menu_item_event_thread+1
 0x234efc94 0000                   movs       r0, r0
 0x234efc96 0000                   movs       r0, r0
@@ -1374,7 +1263,7 @@ void get_video_signal_analog_value_string(Menu_Item* item)
 	console_send_string("get_video_signal_analog_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* str = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
 	int signal = menu_picture_user_settings.bVideoSignalAnalog;
 
 	if (signal == 0)
@@ -1395,23 +1284,22 @@ void get_video_signal_analog_value_string(Menu_Item* item)
 	}
 }
 
-#if 0
 
 /*  /  / 23492bd2 - todo */
-int menu_video_signal_digital_change()
+int video_signal_digital_change(uint32_t* a)
 {
 #if 0
-	console_send_string("menu_video_signal_digital_change (menu_picture.c): TODO\r\n");
+	console_send_string("video_signal_digital_change (menu_picture.c): TODO\r\n");
 #endif
 
-	Struct_235441b0 settings;
+	User_Settings settings;
 
-	menu_picture_user_settings.Data_4_.bitData.digital_video_signal ^= 1;
+	menu_picture_user_settings.Data_4.bitData.digital_video_signal ^= 1;
 
-	sub_2340c970/*sub_2340f44c*/(1, &settings);
+	channel_handle_user_settings(1, &settings);
 
-	if (menu_picture_user_settings.Data_4_.bitData.digital_video_signal ==
-			settings.Data_4_.bitData.digital_video_signal)
+	if (menu_picture_user_settings.Data_4.bitData.digital_video_signal ==
+			settings.Data_4.bitData.digital_video_signal)
 	{
 		return 1;
 	}
@@ -1419,7 +1307,6 @@ int menu_video_signal_digital_change()
 	return 0;
 }
 
-#endif
 
 /*  /  / 23492c02 - complete */
 void get_video_signal_digital_value_string(Menu_Item* item)
@@ -1428,7 +1315,7 @@ void get_video_signal_digital_value_string(Menu_Item* item)
 	console_send_string("get_video_signal_digital_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* buf = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* buf = item->Data_4[1]->Data_0x20->pString;
 
 	if (menu_picture_user_settings.Data_4.bitData.digital_video_signal == 0)
 	{
@@ -1444,8 +1331,7 @@ void get_video_signal_digital_value_string(Menu_Item* item)
 /*  /  / 23492c1e - todo */
 void get_video_system_value_string(Menu_Item* item)
 {
-	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->Data_0x20;
-	uint8_t* str = r1->pString;
+	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
 
 	if (menu_picture_user_settings.Data_4.bitData.video_system == 0)
 	{
@@ -1524,8 +1410,6 @@ void sub_23492ca6(Menu_Item* item)
 }
 
 
-#if 0
-
 /*  /  / 23492cd4 - complete */
 int menu_display_adjustment_change()
 {
@@ -1533,13 +1417,13 @@ int menu_display_adjustment_change()
 	console_send_string("menu_display_adjustment_change (todo.c): TODO\r\n");
 #endif
 
-	Struct_235441b0 settings; //sp
+	User_Settings settings; //sp
 
-	sub_2340c970/*sub_2340f44c*/(1, &settings);
+	channel_handle_user_settings(1, &settings);
 
-	menu_picture_user_settings.bData_0x15 ^= 1;
+	menu_picture_user_settings.bDisplayAdjustment ^= 1;
 
-	if (menu_picture_user_settings.bData_0x15 == settings.bData_0x15)
+	if (menu_picture_user_settings.bDisplayAdjustment == settings.bDisplayAdjustment)
 	{
 		return 1;
 	}
@@ -1547,7 +1431,28 @@ int menu_display_adjustment_change()
 	return 0;
 }
 
+
+/* /   / 23492cfe - todo */
+int sub_23492cfe()
+{
+#if 0
+	console_send_string("sub_23492cfe (todo.c): TODO\r\n");
 #endif
+
+	User_Settings settings; //sp
+
+	channel_handle_user_settings(1, &settings);
+
+	menu_picture_user_settings.bDisplayAdjustment ^= 1;
+
+	if (menu_picture_user_settings.bDisplayAdjustment == settings.bDisplayAdjustment)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
 
 /*  /  / 23492d26 - complete */
 void get_display_adjustment_value_string(Menu_Item* item)
@@ -1558,7 +1463,7 @@ void get_display_adjustment_value_string(Menu_Item* item)
 
 	if (item->Data_4[1]->Data_0x20 != 0)
 	{
-		uint8_t* str = item->Data_4[1]->Data_0x20->Data_0x10;
+		uint8_t* str = item->Data_4[1]->Data_0x20->pString;
 		if (str != 0)
 		{
 #if 0
@@ -1587,6 +1492,57 @@ void get_display_adjustment_value_string(Menu_Item* item)
 }
 
 
+/*  /  / 23492d58 - complete */
+void sub_23492d58(Menu_Item* item)
+{
+#if 0
+	console_send_string("sub_23492d58 (todo.c): TODO\r\n");
+#endif
+
+	if (item->Data_4[1]->Data_0x20 != NULL)
+	{
+		uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+		if (str != NULL)
+		{
+			if (menu_picture_user_settings.bDisplayAdjustment == 0)
+			{
+				text_table_get_string(0x73/*'Letterbox'*/, str, 35);
+			}
+			else
+			{
+				text_table_get_string(0x78/*'Pillarbox'*/, str, 35);
+			}
+
+			str[39] = 0;
+		}
+	}
+}
+
+
+/*  /  / 23492d8a - todo */
+int sub_23492d8a(User_Settings* a)
+{
+#if 0
+	console_send_string("sub_23492d8a (todo.c): TODO\r\n");
+#endif
+
+	Menu_Item* item = &menu_picture_p->Data_8[3];
+
+	if (a->displayFormat == 0)
+	{
+		item->initValueString = get_display_adjustment_value_string;
+		item->onEvent = menu_display_adjustment_change;
+	}
+	else
+	{
+		item->initValueString = sub_23492d58;
+		item->onEvent = sub_23492cfe;
+	}
+
+	return 0;
+}
+
+
 /*  /  / 23492dac - complete */
 void get_display_format_value_string(Menu_Item* item)
 {
@@ -1594,7 +1550,7 @@ void get_display_format_value_string(Menu_Item* item)
 	console_send_string("get_display_format_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* str = item->Data_4[1]->Data_0x20->Data_0x10;
+	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
 
 	switch (menu_picture_user_settings.displayFormat)
 	{
@@ -1611,18 +1567,58 @@ void get_display_format_value_string(Menu_Item* item)
 	}
 }
 
-#if 0
 
-/*  /  / 23492e1e - complete */
-int sub_23492e1e()
+/* /  / 23492dcc - todo */
+int video_system_change(uint32_t* a)
 {
 #if 0
-	console_send_string("sub_23492e1e (menu_picture.c): TODO\r\n");
+	console_send_string("video_system_change (menu_picture.c): TODO\r\n");
 #endif
 
-	Struct_235441b0 settings; //sp4
+	User_Settings settings; //sp4
+	int r0 = *a;
+	int32_t val = menu_picture_user_settings.Data_4.bitData.video_system;
 
-	Menu_Item* r5 = menu_picture_p->Data_8 + 3;
+	if (r0 & (1 << 3))
+	{
+		val++;
+		if (val > 2)
+		{
+			val = 0;
+		}
+	}
+	else
+	{
+		val--;
+		if (val < 0)
+		{
+			val = 2;
+		}
+	}
+
+	menu_picture_user_settings.Data_4.bitData.video_system = (uint32_t) val;
+
+	channel_handle_user_settings(1, &settings);
+
+	if (menu_picture_user_settings.Data_4.bitData.video_system == settings.Data_4.bitData.video_system)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+
+/*  /  / 23492e1e - complete */
+int display_format_change()
+{
+#if 0
+	console_send_string("display_format_change (menu_picture.c): TODO\r\n");
+#endif
+
+	User_Settings settings; //sp4
+
+	Menu_Item* r5 = &menu_picture_p->Data_8[3];
 
 	menu_picture_user_settings.displayFormat ^= 1;
 
@@ -1639,7 +1635,7 @@ int sub_23492e1e()
 
 	r5->Data_4[1]->Data_0x20->bData_0x17 = 1;
 
-	sub_2340c970/*sub_2340f44c*/(1, &settings);
+	channel_handle_user_settings(1, &settings);
 
 	if (menu_picture_user_settings.displayFormat == settings.displayFormat)
 	{
@@ -1648,8 +1644,6 @@ int sub_23492e1e()
 
 	return 0;
 }
-
-#endif
 
 
 /* /  / 23492e6c - todo */

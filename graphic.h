@@ -72,22 +72,6 @@ typedef struct
 	//0x40
 } Graphic_Job_2_5_Item; //Struct_2377ded0_Inner_0x1c;
 
-#if 0
-typedef struct
-{
-	uint16_t fill_0; //0
-	uint16_t wData_2; //2
-	struct
-	{
-		int fill_0; //0
-		Struct_235fdf74_Inner20_Inner8* Data_4; //4
-		int fill_8[4]; //8
-	} Data_4;
-	void (*Data_0x1c)(); //28 = 0x1c
-	void (*Data_0x20)(); //32 = 0x20
-	//???
-} Struct_235fdf74_Inner20;
-#else
 typedef struct
 {
 	uint8_t bData_0; //0
@@ -104,7 +88,6 @@ typedef struct
 	void (*lock)(); //0x20
 	//???
 } Graphic_Job_2_5;
-#endif
 
 typedef struct
 {

@@ -658,61 +658,6 @@ static Struct_235fdf74_Inner12 Data_234c1874 = //234c1874
 };
 #endif
 
-#if 0
-static Menu_Item_Inner4_Data_0 Data_234c1974 = //234c1974
-{
-	1,
-	{0, 0, 0, 0, 0, 0}, //TODO
-	0,
-	&Data_234c16dc, //Data_0x20
-#if 0
-	0x234c1974 0100                   movs       r1, r0                             ; DATA XREF=0x234c1f40
-	0x234c1976 0000                   movs       r0, r0
-	0x234c1978                        dd         0x234c1548
-	0x234c197c 0000                   movs       r0, r0
-	0x234c197e 0000                   movs       r0, r0
-	0x234c1980 3D00                   movs       r5, r7
-	0x234c1982 6000                   lsls       r0, r4, #0x1
-	0x234c1984 FA00                   lsls       r2, r7, #0x3
-	0x234c1986 2000                   movs       r0, r4
-	0x234c1988 0000                   movs       r0, r0
-	0x234c198a 0000                   movs       r0, r0
-	0x234c198c                        dd         0x234c1298
-	0x234c1990 0900                   movs       r1, r1
-	0x234c1992 0000                   movs       r0, r0
-	0x234c1994                        dd         0x234c16dc
-#endif
-};
-#endif
-
-#if 0
-static Menu_Item_Inner4_Data_0 Data_234c19b4 = //234c19b4
-{
-	1,
-	{0, 0, 0, 0, 0, 0}, //TODO
-	0,
-	&Data_234c171c, //Data_0x20
-#if 0
-	0x234c19b4 0100                   movs       r1, r0                             ; DATA XREF=0x234c1f6c
-	0x234c19b6 0000                   movs       r0, r0
-	0x234c19b8                        dd         0x234c1548
-	0x234c19bc 0000                   movs       r0, r0
-	0x234c19be 0000                   movs       r0, r0
-	0x234c19c0 3D00                   movs       r5, r7
-	0x234c19c2 8000                   lsls       r0, r0, #0x2
-	0x234c19c4 FA00                   lsls       r2, r7, #0x3
-	0x234c19c6 2000                   movs       r0, r4
-	0x234c19c8 0000                   movs       r0, r0
-	0x234c19ca 0000                   movs       r0, r0
-	0x234c19cc                        dd         0x234c12d4
-	0x234c19d0 0900                   movs       r1, r1
-	0x234c19d2 0000                   movs       r0, r0
-	0x234c19d4                        dd         0x234c171c
-#endif
-};
-#endif
-
-#if 1
 static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 {
 	0, //uint8_t bData_0; //0
@@ -727,36 +672,7 @@ static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 	0x01, //uint8_t bData_0x19; //0x19 = 25
 	0, //0x1c
 	0, //0x20
-#if 0
-#endif
 };
-#else
-static Struct_235fdf74_Inner20 menu_main_graphic_data = //234c1ef4
-{
-	0, //uint16_t fill_0; //0
-	0, //uint16_t wData_2; //2
-	{0, 0, 0, 0, 0, 0}, //int fill_4[6]; //4
-	0, //void (*Data_0x1c)(); //28 = 0x1c
-	0, //void (*Data_0x20)(); //32 = 0x20
-#if 0
-	0x234c1ef4                        db  0x00 ; '.'                                ; DATA XREF=sub_2344d060+6, dword_234c2058
-	0x234c1ef5                        db  0xfa ; '.'
-	0x234c1ef6 0400                   movs       r4, r0
-	0x234c1ef8 0400                   movs       r4, r0
-	0x234c1efa 0000                   movs       r0, r0
-	0x234c1efc                        dd         0x234c1834                         ; DATA XREF=sub_2344d060+18
-	0x234c1f00                        dd         0x234c123c
-	0x234c1f04 0F00                   movs       r7, r1
-	0x234c1f06 0000                   movs       r0, r0
-	0x234c1f08 0000                   movs       r0, r0
-	0x234c1f0a 0000                   movs       r0, r0
-	0x234c1f0c 0E01                   lsls       r6, r1, #0x4
-	0x234c1f0e 0000                   movs       r0, r0
-	0x234c1f10                        dd         0x00000000
-	0x234c1f14                        dd         0x00000000
-#endif
-};
-#endif
 
 static Menu_Item menu_main_items[] = //234c1f3c
 {
@@ -1334,7 +1250,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					return 0;
 				}
 				//loc_2344d2d4: Column 1
-				Menu_Item_Inner4_Data_0_Data_0x20* r0 = r0_->Data_0x20;
+				Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
 
 				if (r0 != 0)
 				{
@@ -1347,7 +1263,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 						console_send_string(debug_string);
 					}
 #endif
-					strncpy(sp_0x38, r0->Data_0x10, 0xff);
+					strncpy(sp_0x38, r0->pString, 0xff);
 
 					r4->bData_8[255] = 0;
 					r4->bNumTextChars = strlen(sp_0x38);
@@ -1386,7 +1302,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 						//0x2344d334
 						sp_0x34 = r4->bData_8;
 
-						strncpy(sp_0x34, r0_->Data_0x20->Data_0x10, 0xff);
+						strncpy(sp_0x34, r0_->Data_0x20->pString, 0xff);
 
 						r4->bData_8[0xff] = 0;
 

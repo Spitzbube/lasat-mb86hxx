@@ -3708,7 +3708,7 @@ int sub_23406654(void* h, uint32_t r5, PSI_Program* r6)
 }
 
 
-/* 234066d0 - complete */
+/* 234066d0 /  / 234091ac - complete */
 int sub_234066d0(void* h, PSI_Program* r6)
 {
 #if 0

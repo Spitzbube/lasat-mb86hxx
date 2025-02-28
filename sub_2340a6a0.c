@@ -3119,27 +3119,28 @@ uint8_t* channel_get_volume_table(void)
 	return &Data_23488068[0];
 }
 
- 
-#if 0
 
-/* 2340cbc4 - complete */
+/* 2340cbc4 /  / 2340f6a0 - complete */
 int channel_get_audio_pid()
 {
 #if 0
 	console_send_string("channel_get_audio_pid (todo.c): TODO\r\n");
 #endif
 
-	uint8_t sp;
-	int r4;
+	uint8_t err;
+	int pid;
 
-	OSSemPend(channel_sema, 0, &sp);
+	OSSemPend(channel_sema, 0, &err);
 
-	r4 = Data_235462e4.wAudioPID;
+	pid = Data_235462e4.wAudioPID;
 
 	OSSemPost(channel_sema);
 
-	return r4;
+	return pid;
 }
+
+
+#if 0
 
 
 #if 1
