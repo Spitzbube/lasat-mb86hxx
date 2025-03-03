@@ -34,7 +34,9 @@ void* Data_234c1258 = 0; //234c1258 +0x28
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
-	14, 5, 0x0f, //...
+	14, 
+	5, //Shaded round corner  
+	0x0f, //...
 #if 0
 0x234c128c                        dw         0x000e                             ; DATA XREF=sub_2344d444+18, sub_2344d444+232, sub_2348c844+46, 0x234c184c, dword_234eb848, 0x234eef50, dword_234f4b30
 0x234c128e 0000                   movs       r0, r0
@@ -45,7 +47,9 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 {
-	9, 4, 0x02|0x01, //...
+	9, 
+	4, //Solid round corner 
+	0x02|0x01, //...
 #if 0
 0x234c1298 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+238, 0x234c198c
 0x234c129a 0000                   movs       r0, r0
@@ -56,7 +60,9 @@ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298 = //234c1298
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4 = //234c12a4
 {
-	9, 4, 0x0b, //...
+	9, 
+	4, 
+	0x0b, //...
 #if 0
 0x234c12a4 0900                   movs       r1, r1                             ; DATA XREF=sub_2344d444+244, 0x234e9aec, 0x234eaf94, 0x234ef4d0, 0x234efb10, 0x234f5b54
 0x234c12a6 0000                   movs       r0, r0
@@ -383,7 +389,7 @@ static Graphic_Job_2_5_Item_Text menu_main_graphic_text_item_6 = //234c181c
 
 static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 {
-	{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c128c/*Data_0x18*/, 9, 0, 0, {0}, 0}, //[0] = 234c1834
+	{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c128c/*Data_0x18*/, 9, 0, 0, {0}, 0}, //[0] = 234c1834: Header border box
 #if 0
 0x234c1834                        db         0x01                               ; DATA XREF=menu_main_on_enter+18, menu_main_on_enter+30, dword_234c1efc
 0x234c1835                        db         0x00
@@ -415,7 +421,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 0x234c1870 0000                   movs       r0, r0
 0x234c1872 0000                   movs       r0, r0
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x29, 0xfa, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &menu_main_graphic_header_text_item/*Data_0x20*/}, //[1] = 234C1874 = header
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x29, 0xfa, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &menu_main_graphic_header_text_item/*Data_0x20*/}, //[1] = 234C1874 = header text box
 #if 0
 0x234c1874                        db         0x01                               ; DATA XREF=0x234c2050
 0x234c1875                        db         0x00
@@ -461,7 +467,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 0x234c192c                        dd         0x00000000
 0x234c1930                        dd         0x00000000
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x37, 0x5a, 0x106, 0xac, 0, &Data_234c128c/*Data_0x18*/, 2, 0, 0/*Data_0x20*/}, //[4] = 234C1934
+	{0, 0, 0, 0/*Data_8*/, 0x37, 0x5a, 0x106, 0xac, 0, &Data_234c128c/*Data_0x18*/, 2, 0, 0/*Data_0x20*/}, //[4] = 234C1934: Items border box
 #if 0
 0x234c1934                        db         0x01
 0x234c1935                        db         0x00
@@ -633,31 +639,6 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 	{0}, //[13] = 234C1B74
 };
 
-#if 0
-static Struct_235fdf74_Inner12 Data_234c1874 = //234c1874
-{
-	{0, 0, 0, 0, 0, 0, 0, 0}, //TODO
-	&Data_234c158c, //Data_0x20
-#if 0
-	0x234c1874 0100                   movs       r1, r0                             ; DATA XREF=0x234c2050
-	0x234c1876 0000                   movs       r0, r0
-	0x234c1878                        dd         0x234c1544
-	0x234c187c 0000                   movs       r0, r0
-	0x234c187e 0000                   movs       r0, r0
-	0x234c1880 3D00                   movs       r5, r7
-	0x234c1882 2900                   movs       r1, r5
-	0x234c1884 FA00                   lsls       r2, r7, #0x3
-	0x234c1886 2600                   movs       r6, r4
-	0x234c1888 0000                   movs       r0, r0
-	0x234c188a 0000                   movs       r0, r0
-	0x234c188c                        dd         0x234c134c
-	0x234c1890 0200                   movs       r2, r0
-	0x234c1892 0000                   movs       r0, r0
-	0x234c1894                        dd         0x234c158c
-#endif
-};
-#endif
-
 static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 {
 	0, //uint8_t bData_0; //0
@@ -666,7 +647,7 @@ static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 	0x04, //uint8_t bData_4; //4
 	&menu_main_graphic_items[0], //int Data_8; //8
 	&menu_main_graphic_color_data, //Graphic_Color_Data* Data_0xc; //12
-	15, //uint8_t bData_0x10; //0x10 = 16
+	0x0f, //uint8_t bData_0x10; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
 	14, //uint8_t bData_0x18; //0x18 = 24
 	0x01, //uint8_t bData_0x19; //0x19 = 25
@@ -868,7 +849,6 @@ static Menu menu_main = //234c2044
     0x234c204c                        dd         0x234c1f3c
     0x234c2050                        dd         0x234c1874
     0x234c2054                        dd         0x234c18f4
-                                    dword_234c2058:
     0x234c2058                        dd         0x234c1ef4                         ; DATA XREF=sub_2344d060+6
     0x234c205c 0500                   movs       r5, r0
     0x234c205e 0000                   movs       r0, r0

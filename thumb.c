@@ -3464,7 +3464,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 	uint8_t (*sp4)(); //sp4
 #endif
 
-#if 1
+#if 0
 	console_send_string("menu_item_event_thread (todo.c): TODO\r\n");
 #endif
 
@@ -3639,7 +3639,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 			//loc_2343db2a
 #else //!VDR110
 			//loc_2344f9c0
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "menu_item_event_thread: sp8=0x%x\r\n", sp8);
@@ -3709,7 +3709,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 			//loc_2343db4c
 #else
 			//loc_2344fa1e -> loc_2344fa22
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "menu_item_event_thread: pfGraphicHandler=%p\r\n", pfGraphicHandler);
@@ -3723,7 +3723,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 				pfGraphicHandler = 0;
 			}
 			//loc_2344fa2e
-#if 1
+#if 0
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "menu_item_event_thread: sp4=0x%x\r\n", sp4);

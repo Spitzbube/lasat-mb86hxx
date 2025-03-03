@@ -112,15 +112,19 @@ int sub_234521d4(Graphic_Job_2_5_Item* r4)
 		r4->y + r4->height - 20, 
 		(r5 & 8)? Data_2348ffbc: Data_2348fe1c);
 
+	//Top row 1
 	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y, 
 		r4->width - 40, 2, 15);
 
+	//Top row 2
 	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + 2, 
 		r4->width - 40, 2, 13);
 
+	//Top row 3
 	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + 4, 
 		r4->width - 40, 1, 12);
 
+#if 0
 	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + r4->height - 6, 
 		r4->width - 40, 2, 15);
 
@@ -147,6 +151,7 @@ int sub_234521d4(Graphic_Job_2_5_Item* r4)
 
 	viscale_osd_fill_rect(r4->bData_1, r4->x + r4->width - 2, r4->y + 20, 
 		1, r4->height - 40, 12);
+#endif
 }
 
 
@@ -285,6 +290,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 	}
 #endif
 
+#if 1
 	switch (r6->Data_4)
 	{
 		case 1:
@@ -322,13 +328,13 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 			break;
 
 		case 4:
-			//0x23452f78 /  / 23413fb8
+			//0x23452f78 /  / 23413fb8: Solid round corner
 			sub_23452584(r6->bData_8, &sp_0xc[0], &sp_0x34);
 			//->0x23452fa4
 			break;
 
 		case 5:
-			//0x23452f8c /  / 23413fcc
+			//0x23452f8c /  / 23413fcc: Shaded round corner
 			sub_234521d4(r4);
 			//->0x23452fa4
 			break;
@@ -339,7 +345,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 			sp_0xc[0].wData_0 = 0;
 			//0x23452fa4
 			break;
-	}
+	} //switch (r6->Data_4)
 	//0x23452fa4
 	if (r6->Data_4 != 0)
 	{
@@ -371,8 +377,9 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 			return;
 		}
 		//loc_23453014
-	}
+	} //if (r6->Data_4 != 0)
 	//loc_23453014
+#endif
 
 #if 0
 	{
@@ -387,12 +394,16 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 	}
 #endif
 
+#if 1
 	viscale_osd_fill_rect(sp_0x34.bData_1,
 		sp_0x34.x,
 		sp_0x34.y,
 		sp_0x34.width,
 		sp_0x34.height,
 		sp_0x34.wColor);
+#endif
+
+#if 0
 
 	if ((sp_0x34.wColor == 0) || (r6->Data_4 == 0))
 	{
@@ -474,6 +485,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 		//->loc_23453098
 	}
 	//loc_2345309c
+#endif
 }
 
 
@@ -708,13 +720,17 @@ void graphic_thread()
 #endif
 								if (pItem->bData_0 == 1)
 								{
-									//0x2345367c
+									//0x2345367c: Box handling
+#if 1
 									if ((graphics_data.arData_0x1c[i] != pItem) ||
 										(pItem->bData_0x3c != 0))
 									{
 										//0x23453698
+#if 1
 										sub_23452e88(pItem);
+#endif
 
+#if 0
 										if (pItem->Data_8 != 0)
 										{
 											//0x234536ac
@@ -741,9 +757,12 @@ void graphic_thread()
 												}
 											}
 										} //if (pItem->Data_8 != 0)
+#endif
 										//loc_23453710
 									}
-									//loc_23453710 /  / loc_23414750: Text handling?
+#endif
+									//loc_23453710 /  / loc_23414750: Text handling
+#if 1
 									if (pItem->Data_0x20 != 0)
 									{
 										//0x2345371c
@@ -774,6 +793,7 @@ void graphic_thread()
 										//loc_234537bc
 										pItem->Data_0x20->bData_0x17 = 0; //r8
 									} //if (pItem->Data_0x20 != 0)
+#endif
 									//loc_234537c4
 									pItem->bData_0x3c = 0; //r8
 								} //if (pItem->bData_0 == 1)

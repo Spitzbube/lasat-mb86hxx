@@ -76,7 +76,7 @@ int texttable_load_bitmap(uint16_t a, void* b, int c)
 
 		flash_read(Data_23491ff8, r1, c, b);
 
-#if 1
+#if 0
 		hex_dump("texttable_load_bitmap", b, c);
 #endif
 
