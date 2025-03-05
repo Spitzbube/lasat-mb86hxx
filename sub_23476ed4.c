@@ -404,5 +404,13 @@ void* sub_23476ed4(char* r6, int sl, char* r8, void (*sb)(int, int))
 }
 
 
+/* 2347718c - todo */
+void sub_2347718c()
+{
+	console_send_string("sub_2347718c (todo.c): TODO\r\n");
+
+}
+
+
 
 

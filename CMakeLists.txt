@@ -38,7 +38,6 @@ set(SRCS
    lastmode.c
    crc.c
    menu_equalizer.c
-   sub_2345d710.c
    sub_23418e1c.c
    psi.c
    clocktime.c
@@ -60,7 +59,6 @@ set(SRCS
    sub_23453d00.c
    sub_23454df4.c
    menu_epg.c
-   sub_2345bc50.c
    menu_information.c
    menu_guided_install.c    #?
    ttx.c
@@ -68,7 +66,10 @@ set(SRCS
    ts_record.c              #?              #?              #0x237bf890
    web_interface.c
    sub_23454a1a.c
+   sub_23459098.c
+   sub_2345bc50.c
    sub_2345c09c.c
+   sub_2345d594.c
    menu_sw_update.c
    bluetooth.c
    menu_amplifier_inputs.c

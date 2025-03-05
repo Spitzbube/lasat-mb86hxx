@@ -14,13 +14,11 @@ extern void web_interface_streaming_thread();
 extern void sub_2345ace8();
 
 
-//0x234920e8
+//0x234920e8 /  / 234c0568
 int Data_234920e8 = 0; //234920e8 +0
 #endif
 void (*network_pfGetMac)(Struct_234012b0_a*, Struct_234012b0_b*) = 0; //234920ec +4
-#if 0
 int Data_234920f0 = 0; //234920f0 +8
-#endif
 struct netif* network_pNetIF = 0; //234920f4 +0xc
 int Data_234920f8; //234920f8 +0x10
 ip_addr_t network_ipaddr; //23492100
@@ -272,9 +270,9 @@ int network_init(uint32_t r4)
 
 	int r0 = network_lwip_init();
 
-#if 0
 	Data_234920f0 = r4;
 
+#if 0
 	if (r0 == 0)
 #endif
 	{
@@ -428,6 +426,18 @@ uint32_t network_get_ipaddr()
 }
 
 #endif
+
+
+/* 23419448 /  / 2342498c - todo */
+int sub_23419448(void)
+{
+#if 0
+	console_send_string("sub_23419448 (todo.c): TODO\r\n");
+#endif
+
+	return Data_234920f0;
+}
+
 
 /* 23419454 - todo */
 void network_register_get_mac_func(void (*a)())

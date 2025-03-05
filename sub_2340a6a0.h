@@ -285,6 +285,27 @@ typedef struct
 } Struct_235462e4;
 
 
+typedef struct
+{
+	void* Data_0; //0
+	void* Data_4; //4
+	
+} Struct_2340ce18;
+
+
+typedef struct
+{
+	void* hAuOut; //0
+	void* hAudec2; //4
+	void* hAudec1; //8
+	void* hAudec0; //12
+	void* hAudec4; //16
+	void* hAudec5; //20
+	//24 = 0x18
+} Channel_Audio_Handles;
+
+
+
 extern int channel_handle_user_settings(int get, User_Settings*);
 extern void sub_2340bf94(int, Channel*, Transponder*);
 extern void sub_2340bf0c(Struct_2340bf0c*);

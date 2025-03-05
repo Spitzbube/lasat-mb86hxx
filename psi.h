@@ -207,7 +207,7 @@ typedef struct Struct_234a73e8_Inner_0x248
 	uint16_t arAudioPids[50]; //6
 	uint16_t arAudioComponentTags[50]; //0x6A
 	char* arAudioLanguageStrings[50]; //0xd0
-	int Data_0x198[50]; //0x198
+	char* arAc3ChannelsStrings[50]; //0x198
 	char* arAudioLanguage2Strings[50]; //0x260
 	uint8_t* service_name; //0x328
 	int transport_stream_id; //0x32c

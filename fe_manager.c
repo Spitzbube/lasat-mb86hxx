@@ -792,7 +792,7 @@ int fe_manager_tune(Frontend* r4, Transponder transponder, void (*callbackFunc/*
 }
 
 
-/* 2340ec54 - complete */
+/* 2340ec54 /  / 23416628 - complete */
 int fe_manager_register_state_change_callback(Frontend* r4, void (*func)())
 {
 	uint8_t err;

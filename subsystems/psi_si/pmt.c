@@ -6,6 +6,18 @@
 
 struct Struct_236001c8 Data_236001c8[4/*size???*/]; //236001c8
 
+static struct Struct_236001c8_Inner_0x3fd8* get_p(struct Struct_236001c8* r3)
+{
+	for (uint8_t i = 0; i < 10; i++)
+	{
+		if (r3->Data_0x3fd8[i].wData_6 == 0)
+		{
+			return &r3->Data_0x3fd8[i];
+		}
+	}
+
+	return NULL;
+}
 
 
 /* 2344bba0 - todo */
@@ -24,6 +36,11 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 		console_send_string(debug_string);
 	}
 #endif
+
+	//ip, =0x236001c8
+	//r6 = 1;
+	//r3, ip, r3, lsl #6
+	struct Struct_236001c8* r3 = &Data_236001c8[a];
 
 	switch (r5[0])
 	{
@@ -60,8 +77,25 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 		break;
 
 	case 0x6a:
-		//loc_2344bdfc
-		//TODO!!!
+		//loc_2344bdfc: AC-3_descriptor
+		if (r2 != 0)
+		{
+			//loc_2344be04
+			if (r5[2] & (1 << 7)/*component_type_flag*/)
+			{
+				r4->ac3_component_type = r5[3]; //component_type
+				//->loc_2344c07c
+			}
+			else
+			{
+				//0x2344be1c
+				if (r4->ac3_component_type == 0)
+				{
+					r4->ac3_component_type = 1; //r6
+				}				
+			}
+		}
+		//loc_2344c07c
 		break;
 
 	case 0x6b:
@@ -69,12 +103,31 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 		break;
 
 	case 0x7a:
-		//0x2344bc50
-		//TODO!!!
+		//0x2344bc50: enhanced_AC-3_descriptor
+		if (r2 != 0)
+		{
+			//0x2344bc58
+			r4->ac3_component_type = 0x80;
+			//->loc_2344be04
+			if (r5[2] & (1 << 7)/*component_type_flag*/)
+			{
+				r4->ac3_component_type = r5[3]; //component_type
+				//->loc_2344c07c
+			}
+			else
+			{
+				//0x2344be1c
+				if (r4->ac3_component_type == 0)
+				{
+					r4->ac3_component_type = 1; //r6
+				}				
+			}
+		}
+		//loc_2344c07c
 		break;
 
 	case 0x7b:
-		//loc_2344c07c
+		//loc_2344c07c: DTS® descriptor
 		break;
 
 	case 0x7c:
@@ -99,8 +152,118 @@ int pmt_decode_descriptor(uint8_t a, uint8_t* r5, int c,
 		break;
 
 	case 0x09:
-		//loc_2344bf04
-		//TODO!!!
+		//loc_2344bf04: CA_descriptor
+		{
+			struct Struct_236001c8_Inner_4* r4_;
+
+			if (r2 == 0)
+			{
+				//r4 = r3 + 4;
+				r4_ = &r3->Data_4[0];
+				//->loc_2344bf88
+			}
+			else
+			{
+				//0x2344bf10
+				if ((r4->stream_type != 0x02) &&
+					(r4->stream_type != 0x0f) &&
+					(r4->stream_type != 0x11) &&
+					(r4->stream_type != 0x03) &&
+					(r4->stream_type != 0x04) &&
+					(r4->stream_type != 0x06) &&
+					(r4->stream_type != 0x1b))
+				{
+					//->loc_2344c07c
+					break;
+				}
+				//0x2344bf34
+				if (r4->Data_0xd4 == 0)
+				{
+					//0x2344bf40
+#if 0
+					struct Struct_236001c8_Inner_0x3fd8* r1_ = NULL;
+					uint8_t r1;
+					for (r1 = 0; r1 < 10; r1++)
+					{
+						//loc_2344bf44
+						if (r3->Data_0x3fd8[r1].wData_6 == 0)
+						{
+							r1_ = &r3->Data_0x3fd8[r1];
+							//->loc_2344bf80
+							break;
+						}
+					}
+					//loc_2344bf80
+					r4->Data_0xd4 = r1_;
+#else
+					r4->Data_0xd4 = get_p(r3);
+#endif					
+				}
+				//loc_2344bf84
+				r4_ = r4->Data_0xd4;
+			}
+			//loc_2344bf88
+			int r1 = 20;
+			while (r1--)
+			{
+				//loc_2344bf8c
+				if (r4_->wData_6 == 0)
+				{
+					//->loc_2344bfac
+					break;
+				}
+				r4_++;
+			}
+
+			if (r1 != 0)
+			{
+				//loc_2344bfb4
+				r5++;
+				r4_->wData_6 = *r5++; //descriptor_len
+				r4_->wData_6 += 2;
+				r4_->ca_system_id = (r5[0] << 8) | r5[1]; //ca_system_id
+
+				if (0 == sub_2344ca6c(a, r4_->ca_system_id))
+				{
+					r4_->wData_6 = 0;
+					//->loc_2344c07c
+					break;
+				}
+				//0x2344bff0
+				r4_->ca_pid = ((r5[2] << 8) | r5[3]) & 0x1fff; //ca_pid
+				r5 += 2;
+
+				if (r4_->wData_6 < 0x100)
+				{
+					memcpy(&r4_->arData_8[0], &r5[-4], r4_->wData_6);
+				}
+
+				int16_t r1 = r4_->wData_6 - 6;
+				uint8_t* r0 = &r5[2];
+				//->loc_2344c074
+				while (r1 > 0)
+				{
+					//loc_2344c030
+					uint8_t tag = *r0++;
+					uint8_t len = *r0++;
+
+					if (tag == 0x8c)
+					{
+						//0x2344c044
+						r4_->wData_0x108 |= 2;
+						if (r0[0] != 0)
+						{
+							r4_->wData_0x108 |= 1;
+						}
+					}
+					//loc_2344c064
+					r1 = r1 - len - 2;
+					r0 += len;
+				}
+				//loc_2344c07c
+			}
+			//loc_2344c07c
+		}
 		break;
 
 	case 0x0a:
@@ -193,9 +356,9 @@ int pmt_decode_section(uint8_t a, uint8_t* b)
 		r6->Data_0x10fa8[1].bData_0 = 0; //sb;
 		r6->Data_0x10fa8[2].bData_0 = 0; //sb;
 
-		memset(&r6->arElementaryStreams, 0, 0x2af8);
-		memset(&r6->Data_0x3fd8, 0, 0xcfd0);
-		memset(&r6->Data_4, 0, 0x14c8);
+		memset(&r6->arElementaryStreams[0], 0, 50*0xdc/*0x2af8*/);
+		memset(&r6->Data_0x3fd8[0], 0, 10*0x14c8/*0xcfd0*/);
+		memset(&r6->Data_4[0], 0, 20*0x10A/*0x14c8*/);
 		//->loc_2344c1ac
 	}
 	//loc_2344c1ac

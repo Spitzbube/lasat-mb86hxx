@@ -11,6 +11,8 @@
 
 extern void sub_2348d742();
 
+static int Data_234c125c;
+static int Data_234c1264;
 static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
 
@@ -20,6 +22,8 @@ static int menu_main_items_on_event(void*);
 
 //0x234c1230
 uint8_t bData_234c1230 = 0; //234c1230 +0
+int* Data_234c1234 = &Data_234c125c; //234c1234 +4
+int* Data_234c1238 = &Data_234c1264; //234c1238 +8
 Graphic_Color_Data menu_main_graphic_color_data = //234c123c
 {
 	&menu_main_clut[0],
@@ -31,6 +35,8 @@ int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 void* Data_234c1258 = 0; //234c1258 +0x28
+int Data_234c125c = 0xf4; 
+int Data_234c1264 = 0x106; 
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {

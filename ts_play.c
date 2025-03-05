@@ -4,29 +4,63 @@
 #include "data.h"
 #include "ucos_ii.h"
 #include "ts_play.h"
+#include "sub_23459098.h"
 
 
 int ts_play_thread_stack[THREAD_STACK_SIZE_TS_PLAY]; //235afe88 -> 235B0B08
 Struct_235b0b08 Data_235b0b08; //235b0b08 /  / 23661dc8
 
 
-/* 234188e4 - todo */
+/* 234188e4 - complete */
 void ts_play_task()
 {
 	Data_235b0b08.Data_0 = 0;
-	Data_235b0b08.Data_0x20 = 0;
-	Data_235b0b08.Data_0x28 = 0;
-	Data_235b0b08.Data_0x2c = 0;
-
-	//TODO
+	Data_235b0b08.Data_0x20 = NULL;
+	Data_235b0b08.Data_0x28 = NULL;
+	Data_235b0b08.Data_0x2c = NULL;
 
 	while (1)
 	{
 		//loc_23418900
-		uint16_t r0 = 10;
+		uint16_t r0;
 
-		//TODO
+		if ((Data_235b0b08.Data_0 & 0xffff) == 0)
+		{
+			if (Data_235b0b08.Data_0x20 != 0)
+			{
+				Data_235b0b08.Data_0x20 = (Data_235b0b08.Data_0x20)(&Data_235b0b08);
+			}
+			//loc_23418928
+			r0 = 10;
+			//->loc_23418988
+		}
+		else
+		{
+			//loc_23418930
+			if (Data_235b0b08.Data_0x20 != 0)
+			{
+				Data_235b0b08.Data_0x20 = (Data_235b0b08.Data_0x20)(&Data_235b0b08);
+			}
+			//loc_23418944
+			if (Data_235b0b08.Data_0x28 != 0)
+			{
+				(Data_235b0b08.Data_0x28)(&Data_235b0b08);
+			}
 
+			if (Data_235b0b08.Data_0x2c != 0)
+			{
+				Data_235b0b08.Data_0x2c = (Data_235b0b08.Data_0x2c)(&Data_235b0b08);
+			}
+			//loc_2341896c
+			if (Data_235b0b08.Data_0x24 != 0)
+			{
+				r0 = (Data_235b0b08.Data_0x24)(&Data_235b0b08);
+			}
+			else
+			{
+				r0 = 4;
+			}
+		}
 		//loc_23418988
 		rtos_task_wait(r0);
 		//->loc_23418900
@@ -81,6 +115,16 @@ int sub_23418bf0(void)
 	OS_EXIT_CRITICAL();
 
 	return r4;
+}
+
+
+/* 23418c68 /  / 234241ac - todo */
+void sub_23418c68(int a, int b)
+{
+#if 1
+	console_send_string("sub_23418c68 (todo.c): TODO\r\n");
+#endif
+
 }
 
 

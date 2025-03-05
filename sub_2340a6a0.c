@@ -1971,23 +1971,87 @@ int sub_2340b348(uint8_t r6, Transponder* r5)
 }
 
 
-/* 2340b3cc - todo */
-void sub_2340b3cc()
+/* 2340b3cc /  / 2340dea8 - todo */
+int sub_2340b3cc()
 {
+#if 0
 	console_send_string("sub_2340b3cc (todo.c): TODO\r\n");
+#endif
 
+	if (Data_23492024 != NULL)
+	{
+		(Data_23492024)();
+	}
+
+	int ch = Data_235462e4.currentChannel;
+	//r6 = 234fd8f0 = channel_database
+	Channel channel = channel_database.arChannels[Data_235462e4.arChannelIdx[ch]];
+	Transponder transponder = channel_database.arTransponders[channel.wTransponderIndex];
+
+	Data_235462e4.wData_235491d2 = 0;
+
+	//Send the channel number to the av module
+	sub_23410f64(ch, Data_235462e4.currentChList);
+
+	if ((channel.wData_6 >> 15) != 0)
+	{
+		//->loc_2340b4e0
+		return 0xff;
+	}
+	//0x2340b458
+	if (channel.wTransponderIndex == 0xffff)
+	{
+		//0x2340b468
+		sub_2345d710(((channel.wPcrPID << 16) | (channel.wVideoPID << 0)) & 0xffff);
+
+		Data_23492024 = sub_23459188;
+		//->loc_2340b4dc
+	}
+	else
+	{
+		//loc_2340b480
+		fe_manager_tune(Data_23491db8, transponder, NULL, 0);
+
+		fe_manager_tune(main_hFrontend1, transponder, sub_2340b348, 0);
+	}
+	//loc_2340b4dc
+	return 0;
 }
 
 
-/* 2340b4e8 - todo */
-void sub_2340b4e8()
+/* 2340b4e8 /  / 2340dfc4 - todo */
+int sub_2340b4e8(int r5)
 {
+#if 0
 	console_send_string("sub_2340b4e8 (todo.c): TODO\r\n");
+#endif
 
+	uint8_t err;
+
+	OSSemPend(channel_sema, 0, &err);
+
+	if (err == 0)
+	{
+		if (Data_23492024 != NULL)
+		{
+			(Data_23492024)();
+		}
+
+		fe_manager_register_state_change_callback(Data_23491db8, NULL);
+		fe_manager_register_state_change_callback(main_hFrontend1, NULL);
+
+		sub_2345d738(r5);
+
+		Data_23492024 = sub_23459188;
+
+		OSSemPost(channel_sema);
+	}
+
+	return 0;
 }
 
 
-/* 2340b55c - todo */
+/* 2340b55c /  / 2340e038 - todo */
 int sub_2340b55c()
 {
 	Channel channel; //sp_0x2c
@@ -1997,9 +2061,9 @@ int sub_2340b55c()
 	console_send_string("sub_2340b55c (todo.c): TODO\r\n");
 #endif
 
-	Frontend* r4 = 0;
+	Frontend* pFrontend = NULL;
 
-	if (Data_23492024 != 0)
+	if (Data_23492024 != NULL)
 	{
 		(Data_23492024)();
 	}
@@ -2037,14 +2101,14 @@ int sub_2340b55c()
 		//loc_2340b634
 		if (transponder.bData_0x16 == 0)
 		{
-			r4 = main_hFrontend1;
+			pFrontend = main_hFrontend1;
 		}
 		else if (transponder.bData_0x16 == 1)
 		{
-			r4 = Data_23491db8;
+			pFrontend = Data_23491db8;
 		}
 		//loc_2340b64c
-		fe_manager_tune(r4, transponder, sub_2340b348, 0);
+		fe_manager_tune(pFrontend, transponder, sub_2340b348, 0);
 	}
 	//loc_2340b678
 	return 0;
@@ -2103,6 +2167,30 @@ void sub_2340b684(Struct_234a73e8* a)
 	return;
 }
 
+#endif
+
+
+/* 2340b8a4 /  / 2340e380 - complete */
+void channel_get_audio_handles(Channel_Audio_Handles* p)
+{
+#if 0
+	console_send_string("channel_get_audio_handles (todo.c): TODO\r\n");
+#endif
+
+	Channel_Audio_Handles h;
+
+	h.hAuOut = main_hAuOut;
+	h.hAudec2 = main_hAudec2;
+	h.hAudec1 = main_hAudec1;
+	h.hAudec0 = main_hAudec0;
+	h.hAudec4 = main_hAudec4;
+	h.hAudec5 = main_hAudec5;
+	
+	*p = h;
+}
+
+
+#if 0
 
 /* 2340baf0 / 2340dd80 - todo */
 int sub_2340baf0(int r7)
@@ -3140,7 +3228,27 @@ int channel_get_audio_pid()
 }
 
 
-#if 0
+/* 2340cbf4 /  / 2340f6d0 - complete */
+void channel_set_audio_pids(int r5, int r6)
+{
+	uint8_t err;
+
+	fe_manager_register_state_change_callback(Data_23491db8, NULL);
+	fe_manager_register_state_change_callback(main_hFrontend1, NULL);
+
+	OSSemPend(channel_sema, 0, &err);
+
+	if (Data_235462e4.wData_235491d2 == 0)
+	{
+		Channel* r0 = &channel_database.arChannels[ Data_235462e4.arChannelIdx[ Data_235462e4.currentChannel ] ];
+		r0->wAc3PID = r6;
+		r0->wAudioPID = r5;
+
+		(Data_23492014)();
+	}
+
+	OSSemPost(channel_sema);
+}
 
 
 #if 1
@@ -3159,6 +3267,8 @@ void sub_2340ce18(void** r0)
 }
 #endif
 
+
+#if 0
 
 /* 2340ce30 / 2340f04c - todo */
 int sub_2340ce30(Transponder* r4, uint16_t* r5)
@@ -3211,6 +3321,32 @@ int sub_2340ce30(Transponder* r4, uint16_t* r5)
 }
 
 #endif
+
+
+/* 2340d098 /  / 2340fb74 - todo */
+void  sub_2340d098(int r5)
+{
+#if 0
+	console_send_string("sub_2340d0d0 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err;
+
+	OSSemPend(channel_sema, 0, &err);
+
+	if (r5 != 0)
+	{
+		Data_23492014 = sub_2340b3cc;
+	}
+	else
+	{
+		Data_23492014 = sub_2340b55c;
+	}
+
+	OSSemPost(channel_sema);
+}
+
+
 
 /* 2340d0d0 /  / 2340fbac - todo */
 int sub_2340d0d0()
