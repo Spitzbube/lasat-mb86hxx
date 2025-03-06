@@ -10,8 +10,8 @@ OS_EVENT* Data_23492114 = 0; //23492114 +0
 
 struct Struct_235b0cf8_Inner4
 {
-	uint32_t Data_0; //0
-	uint32_t Data_4; //4
+	uint32_t offset; //0
+	uint32_t length; //4
 	//8
 };
 
@@ -26,7 +26,7 @@ struct Struct_235b0cf8
 	}* Data_0; //0
 	struct Struct_235b0cf8_Inner4* Data_4; //4
 	uint32_t Data_8; //8
-	int Data_0xc; //12
+	int dirty; //12
 	Struct_23419cd0 Data_235b0d08; //235b0d08
 
 } Data_235b0cf8; //235b0cf8
@@ -41,11 +41,11 @@ void sub_23419908(int a)
 #endif
 
 	if ((a != 0) &&
-		(Data_235b0cf8.Data_0xc != 0))
+		(Data_235b0cf8.dirty != 0))
 	{
 		flash_write(Data_235b0cf8.Data_235b0d08.hFlash, Data_235b0cf8.Data_235b0d08.Data_0, 0x10000, Data_235b0cf8.Data_0);
 
-		Data_235b0cf8.Data_0xc = 0;
+		Data_235b0cf8.dirty = 0;
 	}
 }
 
@@ -67,7 +67,7 @@ int sub_23419940(uint32_t r4, int sb)
 		if (r4 < 500)
 		{
 			//0x23419974
-			if (Data_235b0cf8.Data_4[r4].Data_4 == 0)
+			if (Data_235b0cf8.Data_4[r4].length == 0)
 			{
 				//0x2341998c
 				OSSemPost(Data_23492114);
@@ -75,7 +75,7 @@ int sub_23419940(uint32_t r4, int sb)
 				return -1;
 			}
 			//loc_2341999c
-			Data_235b0cf8.Data_4[r4].Data_4 = 0;
+			Data_235b0cf8.Data_4[r4].length = 0;
 
 			struct Struct_235b0cf8_Inner4* r7 = ((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + 0x10000;
 
@@ -87,17 +87,17 @@ int sub_23419940(uint32_t r4, int sb)
 			{
 				//loc_234199c8
 				struct Struct_235b0cf8_Inner4* r6 = &r7[r4];
-				if (r6->Data_4 != 0)
+				if (r6->length != 0)
 				{
 					//0x234199d8
 					memcpy(((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + Data_235b0cf8.Data_8,
-						((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + r7[r4].Data_0 + 0x10000,
-						r6->Data_4);
+						((uint8_t*)Data_235b0cf8.Data_235b0d08.Data_8) + r7[r4].offset + 0x10000,
+						r6->length);
 
 					Data_235b0cf8.Data_4[r4] = *r6;
-					Data_235b0cf8.Data_4[r4].Data_0 = Data_235b0cf8.Data_8;
-					Data_235b0cf8.Data_8 += r6->Data_4;
-					Data_235b0cf8.Data_0xc = 1;
+					Data_235b0cf8.Data_4[r4].offset = Data_235b0cf8.Data_8;
+					Data_235b0cf8.Data_8 += r6->length;
+					Data_235b0cf8.dirty = 1;
 				}
 				//loc_23419a28
 				//for (r4 = 0; r4 < 500; r4++)
@@ -111,6 +111,42 @@ int sub_23419940(uint32_t r4, int sb)
 		OSSemPost(Data_23492114);
 	}
 	//loc_23419a5c
+	return 0;
+}
+
+
+/* 23419a64 - complete */
+int sub_23419a64(int idx, uint8_t* str, uint32_t maxLen)
+{
+#if 0
+	console_send_string("sub_23419a64 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t err; //sp
+
+	OSSemPend(Data_23492114, 0, &err);
+
+	if (err == 0)
+	{
+		void* p = Data_235b0cf8.Data_235b0d08.Data_8 + Data_235b0cf8.Data_4[idx].offset;
+		uint32_t len;
+
+		if ((Data_235b0cf8.Data_4[idx].length + 1) > (maxLen - 1))
+		{
+			len = maxLen - 1;
+		}
+		else
+		{
+			len = Data_235b0cf8.Data_4[idx].length;
+		}
+
+		memcpy(str, p, len);
+
+		str[len] = 0;
+
+		OSSemPost(Data_23492114);
+	}
+
 	return 0;
 }
 
@@ -152,10 +188,10 @@ int sub_23419cd0(Struct_23419cd0* r4)
 		for (uint32_t r0 = 0; r0 < 500; r0++)
 		{
 			//loc_23419d34
-			uint32_t r1 = Data_235b0cf8.Data_4[r0].Data_4;
+			uint32_t r1 = Data_235b0cf8.Data_4[r0].length;
 			if (r1 != 0)
 			{
-				r1 = r1 + Data_235b0cf8.Data_4[r0].Data_0;
+				r1 = Data_235b0cf8.Data_4[r0].offset + r1;
 
 				if (Data_235b0cf8.Data_8 < r1)
 				{
@@ -168,7 +204,7 @@ int sub_23419cd0(Struct_23419cd0* r4)
 	//loc_23419d60
 	Data_235b0cf8.Data_235b0d08 = *r4;
 
-	Data_235b0cf8.Data_0xc = 0;
+	Data_235b0cf8.dirty = 0;
 
 	Data_23492114 = OSSemCreate(1);
 

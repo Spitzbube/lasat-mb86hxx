@@ -2,7 +2,14 @@
 
 typedef struct
 {
-    void* Data_0; //0
+	uint8_t* Data_0; //0
+	uint16_t wData_4; //4
+	//8
+} Struct_23459098_Inner0;
+
+typedef struct
+{
+    Struct_23459098_Inner0* Data_0; //0
     int fill_4; //4
     uint16_t wData_8; //8
     //12

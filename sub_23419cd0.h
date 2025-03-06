@@ -8,3 +8,5 @@ typedef struct
 } Struct_23419cd0;
 
 
+int sub_23419a64(int idx, uint8_t* str, uint32_t maxLen);
+

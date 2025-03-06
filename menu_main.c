@@ -904,7 +904,7 @@ int menu_main_items_on_event(void* r0)
 		else if (Data_234c1240->currentItem == 2)
 		{
 			//0x2344cfb4: Senderliste
-			sub_23490bd0(r0);
+			menu_channel_list_entry(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfba

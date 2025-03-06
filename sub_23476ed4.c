@@ -3,14 +3,16 @@
 #include "lwip/tcp.h"
 
 
-uint16_t wData_2349c018 = 0x11c1;
+//2349c018
+uint16_t wData_2349c018 = 0x11c1; //2349c018 +0
+void* Data_2349c01c = NULL; //2349c01c +4
 
 typedef struct 
 {
-    void* Data_0; //0
-    int* Data_4; //4
+    void* sema; //0
+    void* pAddr; //4
 
-} Struct_23476eb8;
+} DNS_Callback;
 
 
 typedef struct
@@ -236,25 +238,24 @@ static int sub_23476e4c(void *arg, struct tcp_pcb *tpcb, err_t err)
 
 
 /* 23476eb8 - complete */
-void sub_23476eb8(int a, int* b, Struct_23476eb8* c)
+void sub_23476eb8(const char* a, ip_addr_t *ipaddr, DNS_Callback* c)
 {
 #if 0
 	console_send_string("sub_23476eb8 (todo.c): TODO\r\n");
 #endif
 
-    void* sem = c->Data_0;
-
-    if (sem != 0)
+    void* sem = c->sema;
+    if (sem != NULL)
     {
-        int* r2 = c->Data_4;
-        *r2 = *b;
+        ip_addr_t* pAddr = c->pAddr;
+        *pAddr = *ipaddr;
         OSSemPost(sem);
     }
 }
 
 
 /* 23476ed4 - todo */
-void* sub_23476ed4(char* r6, int sl, char* r8, void (*sb)(int, int))
+void* sub_23476ed4(char* r6, int port, char* r8, void (*sb)(int, int))
 {
     Struct_238e0ae4* r4 = 0;
     void* fp;
@@ -266,18 +267,19 @@ void* sub_23476ed4(char* r6, int sl, char* r8, void (*sb)(int, int))
 
     uint16_t r5 = 500;
 
-    if (wData_2349c018++ == 0xffff)
+    wData_2349c018++;
+    if (wData_2349c018 == 0xffff)
     {
-        wData_2349c018 = 0x11c1;
+        wData_2349c018 = 4545;
     }
 
     if (0 == strncmp("http://", r6, 7))
     {
-        Struct_23476eb8 sp4;
+        DNS_Callback sp4;
         uint8_t err;
 
-        sp4.Data_0 = fp = OSSemCreate(0);
-        sp4.Data_4 = &sp_0xc;
+        sp4.sema = fp = OSSemCreate(0);
+        sp4.pAddr = &sp_0xc;
 
         err = dns_gethostbyname(&r6[7], &sp_0xc, sub_23476eb8, &sp4);
         if (err != 0)
@@ -339,7 +341,7 @@ void* sub_23476ed4(char* r6, int sl, char* r8, void (*sb)(int, int))
 
                     r4->sema = OSSemCreate(0);
 
-                    tcp_connect(r6, &sp_0xc, sl, sub_23476e4c);
+                    tcp_connect(r6, &sp_0xc, port, sub_23476e4c);
 
                     uint8_t sp8;
                     OSSemPend(r4->sema, 500, &sp8); 
@@ -405,10 +407,131 @@ void* sub_23476ed4(char* r6, int sl, char* r8, void (*sb)(int, int))
 
 
 /* 2347718c - todo */
-void sub_2347718c()
+int sub_2347718c(uint8_t* url, ip_addr_t* pAddr, int* pPort, uint8_t** r5)
 {
+#if 0
 	console_send_string("sub_2347718c (todo.c): TODO\r\n");
+#endif
 
+    int8_t res;
+    ip_addr_t ip_addr;
+    DNS_Callback dns_cbk;
+    int protocol_len;
+    uint8_t* slashPos = 0;
+    uint8_t* colonPos = 0;
+    uint8_t err = 0;
+    uint8_t* r4;
+
+    if (0 == strncmp("http://", url, 7))
+    {
+        protocol_len = 7;
+        //->loc_234771ec
+    }
+    else if (0 == strncmp("udp://", url, 6))
+    {
+        protocol_len = 6;
+    }
+    else
+    {
+        //->loc_23477348
+        return 0xff;
+    }
+    //loc_234771ec
+    if (Data_2349c01c == NULL)
+    {
+        Data_2349c01c = OSSemCreate(0);
+    }
+    //loc_23477208
+    dns_cbk.sema = Data_2349c01c;
+    dns_cbk.pAddr = &ip_addr;
+
+    *pPort = 80;
+    r4 = url + protocol_len;
+    //sb += protocol_len;
+    uint8_t* sb = r4;
+    //->loc_23477244
+    for (; *r4 != 0; r4++)
+    {
+        //loc_23477224
+        if (*r4 == '/')
+        {
+            //0x23477230
+            *r4 = 0; //r6
+            slashPos = r4;
+            *r5 = r4 + 1;
+            //->loc_23477250
+            break;
+        }
+    } //for (uint8_t* r4 = sb; *r4 != 0; r4++)
+    //loc_23477250 -> loc_234772d8
+    for (uint8_t* r5 = sb; *r5 != 0; r5++)
+    {
+        //loc_23477258
+        if (*r5 == ':')
+        {
+            //0x23477260
+            *r5 = 0; //r6
+            colonPos = r5;
+            uint8_t* r4 = r5 + 1;
+            uint8_t portStr[8] = {0};
+            uint8_t* r6 = &portStr[0];
+
+            uint8_t r0 = strlen(r4);
+            if (r0 > 5)
+            {
+                r0 = 5;
+            }
+#if 1
+            while (r0 > 0)
+            {
+                uint8_t* r1 = r6++;
+                *r1 = *r4++;
+                r0--;
+            }
+#else
+            //loc_23477294
+            for (; r0 != 0; r0--)
+            {
+                //0x2347729c
+                *r6++ = *r4++;
+            }
+#endif
+            //loc_234772b8
+            int port;
+            sscanf(&portStr[0], "%d", &port);
+            *pPort = port;
+            //->loc_234772e4
+            break;
+        }
+        //loc_234772d4
+    } //for (uint8_t* r5 = sb; *r5 != 0; r5++)
+    //loc_234772e4
+    res = dns_gethostbyname(sb, &ip_addr, sub_23476eb8, &dns_cbk);
+
+    if (slashPos != NULL)
+    {
+        *slashPos = '/';
+    }
+
+    if (colonPos != NULL)
+    {
+        *colonPos = ':';
+    }
+
+    if (res == ERR_INPROGRESS)
+    {
+        //0x2347731c
+        OSSemPend(Data_2349c01c, 0, &err);
+
+        if (err == 0)
+        {
+            res = 0;
+        }
+    }
+    //loc_23477338
+    *pAddr = ip_addr;
+
+    return res;
 }
 
 

@@ -1614,7 +1614,9 @@ do_join_leave_group(struct api_msg_msg *msg)
 }
 #endif /* LWIP_IGMP */
 
-#if LWIP_DNS
+#endif
+
+#if 1//LWIP_DNS
 /**
  * Callback function that is called when DNS name is resolved
  * (or on timeout). A waiting application thread is waked up by
@@ -1646,6 +1648,7 @@ do_dns_found(const char *name, ip_addr_t *ipaddr, void *arg)
  *
  * @param arg the dns_api_msg pointing to the query
  */
+/* 234843f2 /  / 234ae946 - complete */
 void
 do_gethostbyname(void *arg)
 {
@@ -1659,7 +1662,5 @@ do_gethostbyname(void *arg)
   }
 }
 #endif /* LWIP_DNS */
-
-#endif
 
 #endif /* LWIP_NETCONN */

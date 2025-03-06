@@ -2,6 +2,7 @@
 #include "data.h"
 #include "ts_play.h"
 #include "sub_23459098.h"
+#include "sub_23419cd0.h"
 
 
 //234940a4 /  / 234dd7d0
@@ -9,26 +10,9 @@ void* Data_234940a4 = 0; //234940a4 +0 /  / 234dd7d0
 int Data_234940a8 = 0; //234940a8 +4
 
 //234940ac
-#if 0
-int Data_234940ac = 0; //234940ac +0
-uint16_t wData_234940b0 = 0; //234940b0 +4
-#else
-struct
-{
-	int Data_0; //0
-	uint16_t wData_4; //4
-
-}
-Data_234940ac = {0, 0}; //234940ac
-#endif
-
+Struct_23459098_Inner0 Data_234940ac = {0, 0}; //234940ac
 //234940b4
-struct
-{
-    int Data_0; //0
-    uint16_t wData_4; //4
-
-} Data_234940b4 = {0, 0}; //234940b4
+Struct_23459098_Inner0 Data_234940b4 = {0, 0}; //234940b4
 
 
 typedef struct
@@ -67,7 +51,7 @@ struct
         int fill_8[3]; //8 = 0x3c
         int Data_0x14; //0x14 = 0x48
         void* Data_0x18; //0x18 = 0x4c
-        int Data_0x1c[256]; //0x1c = 0x50
+        uint8_t Data_0x1c[1024]; //0x1c = 0x50
         //0x41c
     } Data_0x34; //0x34 = 23876c58 -> 23877074 /  / 2394817c
     int Data_0x450; //0x450 = 23877074
@@ -91,6 +75,75 @@ void sub_2345c45c()
 	console_send_string("sub_2345c45c (todo.c): TODO\r\n");
 #endif
 
+}
+
+
+/* 2345c5c0 /  / 2347abbc - complete */
+int sub_2345c5c0(uint8_t* url, uint8_t* r7, void* pCallback)
+{
+#if 0
+	console_send_string("sub_2345c5c0 (todo.c): TODO\r\n");
+#endif
+
+    int res = 0;
+
+    int port;
+    int ip_addr;
+    int sp_0x38 = 0;
+    uint8_t sp_0x10[40]; 
+
+    if (0 == network_is_link_up())
+    {
+        return 0;
+    }
+
+    if (0 == sub_2347718c(url, &ip_addr, &port, &sp_0x38))
+    {
+        int8_t r4 = 40;
+        uint8_t* r5 = url + 7;
+        uint8_t* r6 = &sp_0x10[0];
+        uint8_t* sb = r7;
+
+        memset(&sp_0x10[0], 0, r4);
+
+        while (r4--)
+        {
+            if ((*r5 == 0) || (*r5 == '/') || (*r5 == ':'))
+            {
+                break;
+            }
+
+            *r6++ = *r5++;
+        }
+
+        if (r4 > 0)
+        {
+            sb = &sp_0x10[0];
+        }
+
+        if (sp_0x38 != 0)
+        {
+            snprintf(&Data_23877274[0], 0x3ff, 
+                "GET /%s HTTP/1.1\r\nHost: %s\r\nIcy-MetaData: 1\r\nConnection: close\r\n\r\n",
+                sp_0x38, sb);
+        }
+        else
+        {
+            snprintf(&Data_23877274[0], 0x3ff, 
+                "GET / HTTP/1.1\r\nHost: %s\r\nIcy-MetaData: 1\r\nConnection: close\r\n\r\n",
+                sb);
+        }
+
+        snprintf(r7, 16, "%d.%d.%d.%d",
+            ip_addr & 0xff,
+            (ip_addr >> 8) & 0xff,
+            (ip_addr >> 16) & 0xff,
+            (ip_addr >> 24) & 0xff);
+
+        res = sub_23476ed4(r7, (uint16_t)port, &Data_23877274[0], pCallback);
+    }
+
+    return res;
 }
 
 
@@ -320,15 +373,10 @@ void* sub_2345d090(Struct_235b0b08* r4)
     {
         //0x2345d0b0
         uint8_t sp_0x48[20] = "255.255.255.255";
-        int sp_0x44;
+        int port; //sp_0x44;
         int sp_0x40;
         uint8_t* sp_0x3c = 0;
-        struct
-        {
-            int Data_0; //0
-            uint16_t wData_4; //4
-
-        }* r5 = r4->Data_0x58.Data_0;
+        Struct_23459098_Inner0* r5 = r4->Data_0x58.Data_0;
         Struct_2340ce18 sp_0x34;
 
         sub_2340ce18(&sp_0x34);
@@ -346,7 +394,7 @@ void* sub_2345d090(Struct_235b0b08* r4)
         memset(&Data_23876c24.Data_23877078[0], 0, 300);
         memset(&Data_23877208[0], 0, 20);
 
-        if (r5->Data_0 == 0)
+        if (r5->Data_0 == NULL)
         {
             r5->Data_0 = &Data_23876c24.Data_0x34.Data_0x1c[0];
 
@@ -363,7 +411,7 @@ void* sub_2345d090(Struct_235b0b08* r4)
 
             return sub_2345d090;
         }
-        if (0 != sub_2347718c(r5->Data_0, &sp_0x40, &sp_0x44, &sp_0x3c))
+        if (0 != sub_2347718c(r5->Data_0, &sp_0x40, &port, &sp_0x3c))
         {
             //loc_2345d170
             r4->Data_0 = 2; //r6
@@ -391,9 +439,9 @@ void* sub_2345d090(Struct_235b0b08* r4)
 
             Data_23876c24.Data_0 = 0; //sb
 
-            sub_2345afdc(sp_0x40, (uint16_t)sp8, (uint16_t)sp_0x44);
+            sub_2345afdc(sp_0x40, (uint16_t)sp8, (uint16_t)port);
             //->loc_2345d350
-        }
+        } //if (0 == strncmp("udp://", r5->Data_0, 6))
         else
         {
             //loc_2345d1e8
@@ -444,7 +492,7 @@ void* sub_2345d090(Struct_235b0b08* r4)
             }
 
             Data_23876c24.Data_0 = sub_23476ed4(&sp_0x48, 
-                (uint16_t)sp_0x44, &Data_23877274[0], sub_2345ce38);
+                (uint16_t)port, &Data_23877274[0], sub_2345ce38);
 
             if (&Data_23877274[0] == r5->Data_0)
             {

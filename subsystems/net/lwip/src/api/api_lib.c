@@ -859,7 +859,9 @@ netconn_join_leave_group(struct netconn *conn,
 }
 #endif /* LWIP_IGMP */
 
-#if LWIP_DNS
+#endif
+
+#if 1//LWIP_DNS
 /**
  * Execute a DNS query, only one IP address is returned
  *
@@ -870,6 +872,7 @@ netconn_join_leave_group(struct netconn *conn,
  *         ERR_ARG: dns client not initialized or invalid hostname
  *         ERR_VAL: dns server response was invalid
  */
+/* 23482c58 /  / 234adcec - todo */
 err_t
 netconn_gethostbyname(const char *name, ip_addr_t *addr)
 {
@@ -877,8 +880,10 @@ netconn_gethostbyname(const char *name, ip_addr_t *addr)
   err_t err;
   sys_sem_t sem;
 
+  #if 0
   LWIP_ERROR("netconn_gethostbyname: invalid name", (name != NULL), return ERR_ARG;);
   LWIP_ERROR("netconn_gethostbyname: invalid addr", (addr != NULL), return ERR_ARG;);
+  #endif
 
   err = sys_sem_new(&sem, 0);
   if (err != ERR_OK) {
@@ -897,7 +902,5 @@ netconn_gethostbyname(const char *name, ip_addr_t *addr)
   return err;
 }
 #endif /* LWIP_DNS*/
-
-#endif
 
 #endif /* LWIP_NETCONN */

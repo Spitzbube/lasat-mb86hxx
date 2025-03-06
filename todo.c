@@ -758,14 +758,6 @@ void sub_23416b54()
 }
 
 
-/* 2345c5c0 /  / 2347abbc - todo */
-void sub_2345c5c0()
-{
-	console_send_string("sub_2345c5c0 (todo.c): TODO\r\n");
-
-}
-
-
 /* 23415a34 - todo */
 void sub_23415a34()
 {
@@ -786,14 +778,6 @@ void sub_234837cc()
 void sub_2345afdc()
 {
 	console_send_string("sub_2345afdc (todo.c): TODO\r\n");
-
-}
-
-
-/* 23419a64 - todo */
-void sub_23419a64()
-{
-	console_send_string("sub_23419a64 (todo.c): TODO\r\n");
 
 }
 

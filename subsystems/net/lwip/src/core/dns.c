@@ -951,6 +951,7 @@ dns_enqueue(const char *name, dns_found_callback found, void *callback_arg)
  * @param callback_arg argument to pass to the callback function
  * @return a err_t return code.
  */
+/* 2346c488 /  / 2348c590 - todo */
 err_t
 dns_gethostbyname(const char *hostname, ip_addr_t *addr, dns_found_callback found,
                   void *callback_arg)
