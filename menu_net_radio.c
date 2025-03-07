@@ -369,7 +369,7 @@ void sub_23481492(char* a, void (*b)(void))
     if (Data_2399be28.Data_0x10 != 0)
     {
         snprintf(&Data_2399bb08[0], 399, 
-            "GET /%s HTTP/1.1\r\nHost: %s\r\nUser-Agent: Tibor\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: de-de,de;q=0.8,en-us;q=0.5,en;q=0.3\r\nAccept-Encoding: deflate\r\nAccept-Charset: ISO-8859-1\r\nConnection: keep-alive\r\nCook",
+            "GET /%s HTTP/1.1\r\nHost: %s\r\nUser-Agent: Tibor\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: de-de,de;q=0.8,en-us;q=0.5,en;q=0.3\r\nAccept-Encoding: deflate\r\nAccept-Charset: ISO-8859-1\r\nConnection: keep-alive\r\nCookie: %s\r\n\r\n",
             a, "85.214.222.229", &Data_2399be28.Data_0x10);
     }
     else
@@ -384,7 +384,7 @@ void sub_23481492(char* a, void (*b)(void))
             "85.214.222.229");
 #endif
 
-    Data_2399be28.Data_2399c2a4 = sub_23476ed4("85.214.222.229", 80, 
+    Data_2399be28.Data_2399c2a4 = web_client_send_request("85.214.222.229", 80, 
         &Data_2399bb08[0], sub_23481454);
 
     Data_2399be28.Data_0xc = b;

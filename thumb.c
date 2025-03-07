@@ -2120,7 +2120,7 @@ void sub_2344f102(UI_Thread_Params* a)
 #endif
 
 	uint8_t sp_0x44; //sp_0x44
-	uint8_t sp_0x40; //sp_0x40
+	uint8_t err; //sp_0x40
 	int sp_0x3c; //sp_0x3c
 	UI_Thread_Params sp_0x24; //sp_0x24
 	Graphic_Queue_Item sp_0x14; //sp_0x14
@@ -2133,13 +2133,13 @@ void sub_2344f102(UI_Thread_Params* a)
 	Menu* r4; //r4
 	Menu_Item* r6; //r6
 	void (*r7)() = 0;
-	int (*r5)(void*) = 0;
+	int (*pOnEvent)(Struct_2348dc50*) = NULL; //r5
 	sp_0xc = 0;
 
 	sp_0x24 = *a;
 	Menu_Data.Data_235fdf70/*2379679C*/ = &sp_0x24;
 
-	sp_0x40 = OSSemPost(sp_0x24.pSema);
+	err = OSSemPost(sp_0x24.pSema);
 	OSMboxAccept(sp_0x24.pMBox);
 
 	//sp_0x48 = &Menu_Data.menu_stack[9]/*237967C4*/;
@@ -2159,7 +2159,7 @@ void sub_2344f102(UI_Thread_Params* a)
 			timeout = 0;
 		}
 		//loc_2344f148
-		uint8_t* r0__ = OSMboxPend(sp_0x24.pMBox, (uint16_t)timeout, &sp_0x40);
+		uint8_t* r0__ = OSMboxPend(sp_0x24.pMBox, (uint16_t)timeout, &err);
 		sp_0x44 = *r0__;
 		r6 = r4->Data_4;
 
@@ -2171,7 +2171,7 @@ void sub_2344f102(UI_Thread_Params* a)
 		sp8 = r4->graphicData->lock;
 		sp4 = r4->graphicData->unlock;
 
-		if (sp_0x40 == 0)
+		if (err == 0)
 		{
 			//0x2344f174
 #if 1
@@ -2236,7 +2236,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->0x2344f1d2
 					sp_0x3c = (1 << 5); //0x20;
 					//->0x2344f29c
-					r5 = r6->onEvent;
+					pOnEvent = r6->onEvent;
 					//->2344f352
 					break;
 
@@ -2312,7 +2312,7 @@ void sub_2344f102(UI_Thread_Params* a)
 						powermode_set_state(2, &sp_0x24, standby_thread);
 					}
 					//loc_2344f34a
-					r5 = 0;
+					pOnEvent = 0;
 					r7 = 0;
 					sp_0xc = 0;
 					//->loc_2344f3b2
@@ -2325,7 +2325,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->loc_2344f27c
 					sp_0x3c = 0x200;
 					r7 = r4->graphicHandler;
-					r5 = r6->onEvent;
+					pOnEvent = r6->onEvent;
 					sp_0xc = r4->onNavigate;
 					//->loc_2344f352
 					break;
@@ -2336,7 +2336,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->loc_2344f27c
 					sp_0x3c = 0x400;
 					r7 = r4->graphicHandler;
-					r5 = r6->onEvent;
+					pOnEvent = r6->onEvent;
 					sp_0xc = r4->onNavigate;
 					//->loc_2344f352
 					break;
@@ -2347,7 +2347,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//->loc_2344f27c
 					sp_0x3c = 0x01;
 					r7 = r4->graphicHandler;
-					r5 = r6->onEvent;
+					pOnEvent = r6->onEvent;
 					sp_0xc = r4->onNavigate;
 					//->loc_2344f352
 					break;
@@ -2356,7 +2356,7 @@ void sub_2344f102(UI_Thread_Params* a)
 					//0x2344f27a
 					sp_0x3c = 0x02;
 					r7 = r4->graphicHandler;
-					r5 = r6->onEvent;
+					pOnEvent = r6->onEvent;
 					sp_0xc = r4->onNavigate;
 					//->loc_2344f352
 					break;
@@ -2385,29 +2385,29 @@ void sub_2344f102(UI_Thread_Params* a)
 			if (sp8 != 0)
 			{
 				//0x2344f358
-				sp_0x40 = (sp8)();				
+				err = (sp8)();				
 			}
 			//loc_2344f35c
 loc_2344f35c:
-			if (r5 != 0)
+			if (pOnEvent != NULL)
 			{
 				//0x2344f360
 				sp_0x10->Data_0 = sp_0x3c;
 
-				int r0 = (r5)(sp_0x10);
+				int r0 = (pOnEvent)(sp_0x10);
 				if (r0 != 0)
 				{
 					//0x2344f36e
 					sub_2343d51e(0, &sp_0x24);
 				}
 				//loc_2344f376
-				r5 = 0;
+				pOnEvent = NULL;
 			}
 			//loc_2344f378
 			if (sp_0xc != 0)
 			{
 				//0x2344f37e
-				sp_0x40 = (sp_0xc)(&sp_0x3c);
+				err = (sp_0xc)(&sp_0x3c);
 
 				sp_0xc = 0;
 			}
@@ -2423,22 +2423,22 @@ loc_2344f35c:
 			if (sp4 != 0)
 			{
 				//0x2344f39c
-				sp_0x40 = (sp4)();
+				err = (sp4)();
 
 				sp4 = 0;
 			}
 			//loc_2344f3b2
-		} //if (sp_0x40 == 0)
+		} //if (err == 0)
 		else
 		{
-			//loc_2344f268 -> loc_2344f3a2
+			//loc_2344f268 -> loc_2344f3a2: Default event handler (timer?)
 			if (r6 != 0)
 			{
-				r5 = r6->onEvent;
-				if (r5 != 0)
+				pOnEvent = r6->onEvent;
+				if (pOnEvent != NULL)
 				{
-					(r5)(0);
-					r5 = 0;
+					(pOnEvent)(NULL);
+					pOnEvent = NULL;
 				}
 			}
 			//loc_2344f3b2

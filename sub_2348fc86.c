@@ -23,6 +23,17 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298; //234c1298
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
 
+/*extern*/ Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e1e24 = //234e1e24
+{
+	9, 4, 0x0f, //...
+#if 0
+0x234e1e24                        dw         0x0009                             ; DATA XREF=sub_2348f1ec+56, 0x23504ee8
+0x234e1e26                        dw         0x0000
+0x234e1e28                        dd         0x00000004                         ; DATA XREF=sub_2348f1ec+62
+0x234e1e2c                        db         0x0f
+#endif
+};
+
 /*extern*/ uint8_t Data_234e1e68[40] = "1"; //234e1e68, size???
 /*extern*/ uint8_t Data_234e1e8c[40] = "2"; //234e1e8c, size???
 /*extern*/ uint8_t Data_234e1eb0[40] = "3"; //234e1eb0, size???

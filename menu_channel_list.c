@@ -25,7 +25,7 @@ static uint8_t Data_239709fc[]; //239709fc
 
 extern int sub_2348e352(int);
 extern int sub_234929f6(int);
-extern int sub_2349b64e(int);
+extern int menu_net_radio_osd_entry(int);
 
 //234ea514
 static Menu* Data_234ea514 = &menu_channel_list; //234ea514
@@ -402,7 +402,7 @@ static Menu_Item menu_channel_list_items[] = //234eac40
 			&menu_channel_list_graphic_items[8], //234ea7f8,
 		}, //int fill_4[5]; //4
 		0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
-		sub_2349b64e, //void* onEvent; //0x1c = 28
+		menu_net_radio_osd_entry, //void* onEvent; //0x1c = 28
 		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
 		0, //void* Data_0x24; //0x24 = 36
 		0, //void* Data_0x28; //0x28 = 40
@@ -421,7 +421,7 @@ static Menu_Item menu_channel_list_items[] = //234eac40
 0x234eacda 0000                   movs       r0, r0
 0x234eacdc 0000                   movs       r0, r0
 0x234eacde 0000                   movs       r0, r0
-0x234eace0                        dd         sub_2349b64e+1                     ; DATA XREF=sub_23490bd0+58
+0x234eace0                        dd         menu_net_radio_osd_entry+1                     ; DATA XREF=sub_23490bd0+58
 0x234eace4                        dd         menu_event_thread+1
 #endif
     },

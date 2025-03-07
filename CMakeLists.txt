@@ -74,14 +74,14 @@ set(SRCS
    bluetooth.c
    menu_amplifier_inputs.c
    menu_net_radio.c
-   sub_23476ed4.c
+   web_client.c
    sub_2348e352.c
    sub_2348fc86.c
    menu_main.c
    menu_settings.c
    menu_channel_list.c
    sub_234929f6.c
-   sub_2349b64e.c
+   menu_net_radio_osd.c
    menu_picture.c
    menu_sound.c
    main2.c

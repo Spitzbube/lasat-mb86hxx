@@ -140,7 +140,7 @@ int sub_2345c5c0(uint8_t* url, uint8_t* r7, void* pCallback)
             (ip_addr >> 16) & 0xff,
             (ip_addr >> 24) & 0xff);
 
-        res = sub_23476ed4(r7, (uint16_t)port, &Data_23877274[0], pCallback);
+        res = web_client_send_request(r7, (uint16_t)port, &Data_23877274[0], pCallback);
     }
 
     return res;
@@ -491,7 +491,7 @@ void* sub_2345d090(Struct_235b0b08* r4)
                     fp);
             }
 
-            Data_23876c24.Data_0 = sub_23476ed4(&sp_0x48, 
+            Data_23876c24.Data_0 = web_client_send_request(&sp_0x48, 
                 (uint16_t)port, &Data_23877274[0], sub_2345ce38);
 
             if (&Data_23877274[0] == r5->Data_0)
