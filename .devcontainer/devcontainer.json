@@ -1,0 +1,28 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/docker-existing-dockerfile
+{
+    "name": "lasat-mb86hxx",
+
+    // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+    "dockerFile": "Dockerfile",
+
+    "build": {
+        "args": {
+            "USERNAME": "${localEnv:USER}"
+        }
+    },
+
+    "containerEnv": {
+//        "USER": "${localEnv:USER}"
+        "USER": "conan",
+        "LM_LICENSE_FILE": "/home/conan/license.dat"
+    },
+
+//    "remoteUser": "${localEnv:USER}",
+//    "containerUser": "${localEnv:USER}",
+
+    "mounts": [
+//        "source=${localEnv:HOME}/license.dat,target=${localEnv:HOME}/license.dat,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/license.dat,target=/home/conan/license.dat,type=bind,consistency=cached"
+    ]
+}
