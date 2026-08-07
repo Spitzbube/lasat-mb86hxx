@@ -13,4 +13,5 @@ cmake -DCMAKE_TOOLCHAIN_FILE=Toolchain-arm-rvct.cmake \
 
 make
 
-
+##conan create /home/conan/rvct-toolchain-files/.
+##conan build . -pr:a profiles/rvct_arm1176_release

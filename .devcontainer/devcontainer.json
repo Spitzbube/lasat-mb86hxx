@@ -23,6 +23,7 @@
 
     "mounts": [
 //        "source=${localEnv:HOME}/license.dat,target=${localEnv:HOME}/license.dat,type=bind,consistency=cached"
-        "source=${localEnv:HOME}/license.dat,target=/home/conan/license.dat,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/license.dat,target=/home/conan/license.dat,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/../rvct-toolchain-files,target=/home/conan/rvct-toolchain-files,type=bind,consistency=cached"
     ]
 }

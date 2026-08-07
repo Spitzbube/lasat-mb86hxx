@@ -1,0 +1,6 @@
+[settings]
+os=baremetal
+build_type=Release
+[tool_requires]
+*: rvct-toolchain-files/0.0.1
+[conf]
