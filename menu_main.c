@@ -3,18 +3,23 @@
 #include "data.h"
 #include "frontdisplay.h"
 #include "graphic.h"
+#include "amplifier.h"
 #include "menu.h"
 
 #ifndef VDR110
 
 #pragma thumb
 
+extern void sub_23424398();
 extern void sub_2348d742();
+extern void sub_23491634();
+extern void sub_2349972e();
 
-static int Data_234c125c;
-static int Data_234c1264;
+static int Data_234c125c[]; //234c125c
+static int Data_234c1264[]; //234c1264
 static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
+static Menu Data_234c2188; //234c2188
 
 static int menu_main_on_enter(int);
 static int menu_main_on_exit(void);
@@ -22,8 +27,8 @@ static int menu_main_items_on_event(void*);
 
 //0x234c1230
 uint8_t bData_234c1230 = 0; //234c1230 +0
-int* Data_234c1234 = &Data_234c125c; //234c1234 +4
-int* Data_234c1238 = &Data_234c1264; //234c1238 +8
+int* Data_234c1234 = &Data_234c125c[0]; //234c1234 +4
+int* Data_234c1238 = &Data_234c1264[0]; //234c1238 +8
 Graphic_Color_Data menu_main_graphic_color_data = //234c123c
 {
 	&menu_main_clut[0],
@@ -35,8 +40,21 @@ int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
 void* Data_234c1258 = 0; //234c1258 +0x28
-int Data_234c125c = 0xf4; 
-int Data_234c1264 = 0x106; 
+int Data_234c125c[] = //234c125c +0x2c
+{
+	0xf4,
+	0x162,
+};
+int Data_234c1264[] = //234c1264 +0x34
+{
+	0x106,
+	0x163,
+};
+Menu* Data_234c126c[] = //234C126C +3c
+{
+	&menu_main/*234c2044*/, 
+	&Data_234c2188/*234c2188*/
+};
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c = //234c128c
 {
@@ -871,6 +889,48 @@ static Menu menu_main = //234c2044
 #endif
 };
 
+/* TODO!!! item:....*/
+static Menu Data_234c2188 = //234c2188
+{
+    10, //"Hauptmenu"
+    &menu_main_items[0], //Menu_Item* Data_4; //4
+    &menu_main_items[0], //Menu_Item* Data_8; //8
+    &menu_main_graphic_items[1], /*234c1874*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
+    &menu_main_graphic_items[3], /*234C18F4*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &menu_main_graphic_data, //Graphic_Job_2_5* graphicData; //20 = 0x14
+    5, //uint8_t maxItem; //0x18 = 24
+    0, //int8_t currentItem; //0x19
+    graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
+	menu_items_navigate, //void (*onNavigate)(); //0x20
+    menu_main_on_enter, //void (*onEnter)(); //36 = 0x24
+    menu_main_on_exit, //int (*onExit)(); //0x28
+    0, //int Data_0x2c; //44 = 0x2c
+    0, //int Data_0x30; //48
+    0, //Menu_Item* (*Data_0x34)(struct Menu*); //52
+    0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56
+    //0x3c = 60
+#if 0
+0x234c2188                        dw         0x000a                             ; DATA XREF=0x234c1270
+0x234c218a                        dw         0x0000
+0x234c218c                        dd         0x234c2080
+0x234c2190                        dd         0x234c2080
+0x234c2194                        dd         0x234c1bf4
+0x234c2198                        dd         0x234c1c74
+0x234c219c                        dd         0x234c1f18
+0x234c21a0 0500                   movs       r5, r0
+0x234c21a2 0000                   movs       r0, r0
+0x234c21a4                        dd         graphic_start_job_2_5
+0x234c21a8                        dd         sub_2344dcb2+1
+0x234c21ac                        dd         menu_main_on_enter+1
+0x234c21b0                        dd         menu_main_on_exit+1
+0x234c21b4 0000                   movs       r0, r0
+0x234c21b6 0000                   movs       r0, r0
+0x234c21b8                        dw         0x000a
+0x234c21ba                        dw         0x0000
+0x234c21bc                        dd         sub_2344d9d0+1
+0x234c21c0                        dd         0x00000000
+#endif
+};
 
 
 /*  /  / 2344cf8c - todo */
@@ -1414,14 +1474,24 @@ void sub_2344d444(int r4)
 }
 
 
-/* /  / 2344d610 - todo */
-int sub_2344d610(int r6, int r4)
+/* / 2344bfe6 / 2344d610 - todo */
+int sub_2344d610(int r6, int (r4)(Amplifier_Interface_Functions*, Amplifier_Settings*, uint8_t*, uint8_t*))
 {
 #if 0
 	console_send_string("sub_2344d610 (todo.c): TODO\r\n");
 #endif
 
 	User_Settings sp_0x3c;
+#if 0
+	struct 
+	{
+		int fill_0[14]; //0
+		int Data_0x38; //0x38 = 56
+	} 
+#else	
+	Amplifier_Interface_Functions
+#endif
+	sp;
 
 	Data_234c1258 = OSSemCreate(1);
 
@@ -1436,10 +1506,134 @@ int sub_2344d610(int r6, int r4)
 
 	sub_2344d444((sp_0x3c.Data_0x10 & (0x7 << 8)) >> 8);
 
-	//TODO!!!
-#if 1
-	console_send_string("sub_2344d610 (todo.c): TODO\r\n");
+	sub_23492670(sp_0x3c.bData_0x19);
+
+	if ((sp_0x3c.Data_0x10 & (0x1 << 15)))
+	{
+		sub_2345112e(sub_2349972e);
+	}
+	else
+	{
+		sub_2345112e(0);
+	}
+	//0x2344d662
+	if (r6 != 0)
+	{
+		sub_23490ac2(1);
+		sub_2345a49e(0x35, (sp_0x3c.Data_0x10 & (0x1 << 11)) >> 11, 
+			sub_23424398);
+	}
+	else
+	{
+		//loc_2344d676
+		sub_23490ac2(0);
+		sub_2345a49e(0x35, (sp_0x3c.Data_0x10 & (0x1 << 11)) >> 11, 
+			0);
+	}
+
+	if (0 != network_get_device())
+	{
+		sub_2348c74a();
+	}
+	//loc_2344d696
+	if (r4 != 0)
+	{
+		if (0 == (r4)(&sp, 0, 0, 0))
+		{
+			//0x2344d6a8
+			Data_234c124c = sp.Data_235fc464;
+
+			sub_2348c7aa();
+			sub_2349a24e(r4);
+			sub_2349a84c(r4);
+			sub_2349aef4(r4);
+		}
+		//loc_2344d6c2
+	}
+	//loc_2344d6c2
+	sub_2340fc20(sub_23491634);
+
+	return 0;
+}
+
+
+/*  / 2344c0a4 / 2344d6ce - todo */
+void sub_2344d6ce(uint8_t r5)
+{
+	uint8_t sp;
+
+#if 0
+	console_send_string("sub_2344d6ce (todo.c): TODO\r\n");
 #endif
+
+	if (r5 < 2)
+	{
+		//0x2344d6d6
+		OSSemPend(Data_234c1258, 0, &sp);
+		if (sp == 0)
+		{
+			Data_234c1240 = Data_234c126c[r5];
+			Data_234c1234 = Data_234c125c[r5];
+			Data_234c1238 = Data_234c1264[r5];
+
+			sub_2348c89c(r5);
+			sub_23452a3e(r5);
+			sub_23490c8a(r5);
+			sub_23492b52(r5);
+			sub_2345625c(r5);
+			sub_23490bb0(r5);
+			sub_23493072(r5);
+			sub_234911ba(r5);
+			sub_23495a48(r5);
+			sub_2349269c(r5);
+			sub_23457a8a(r5);
+			sub_234911fe(r5);
+			sub_23498c7e(r5);
+			sub_234543ba(r5);
+			sub_234904ba(r5);
+			sub_2348e07a(r5);
+			sub_2348f1a6(r5);
+			sub_23496a26(r5);
+			sub_2345a87e(r5);
+			sub_23497004(r5);
+			sub_23456f24(r5);
+			sub_23497728(r5);
+			sub_2345c8ee(r5);
+			sub_23497ac6(r5);
+			sub_234923b0(r5);
+			sub_23492a56(r5);
+			sub_2345517e(r5);
+			sub_234966b4(r5);
+			//->loc_2344d7d4
+			sub_2345b8d2(r5);
+			sub_2345af0c(r5);
+			sub_23493734(r5);
+			sub_23494dea(r5);
+			sub_2348f502(r5);
+			sub_2348d7ee(r5);
+			sub_2349827a(r5);
+			sub_234995f4(r5);
+			sub_23499782(r5);
+			sub_23499946(r5);
+			sub_2349af36(r5);
+			sub_2349a854(r5);
+			sub_2349aefa(r5);
+			sub_2349a276(r5);
+			sub_2349b6d6(r5);
+			sub_2349b96c(r5);
+			sub_23498eee(r5);
+			sub_2349bcb6(r5);
+			sub_23495636(r5);
+			//0x2344d848
+			OSSemPost(Data_234c1258);
+		}
+		//loc_2344d7ae -> loc_2344d84c
+	}
+	else
+	{
+		//loc_2344d7ae -> loc_2344d84c
+	}
+	//loc_2344d84c
 }
 
 #endif //VDR110

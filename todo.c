@@ -916,14 +916,6 @@ void sub_234521ea()
 }
 
 
-/* /  / 2345eaee - todo */
-void sub_2345eaee()
-{
-	console_send_string("sub_2345eaee (todo.c): TODO\r\n");
-
-}
-
-
 /* /  / 2344d5dc - todo */
 void sub_2344d5dc()
 {
@@ -949,10 +941,42 @@ int sub_23421f84()
 }
 
 
+/* /  / 23424398 - todo */
+void sub_23424398()
+{
+	console_send_string("sub_23424398 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345112e - todo */
+void sub_2345112e()
+{
+	console_send_string("sub_2345112e (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 2349235e - todo */
 void sub_2349235e()
 {
 	console_send_string("sub_2349235e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23492670 - todo */
+void sub_23492670()
+{
+	console_send_string("sub_23492670 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349972e - todo */
+void sub_2349972e()
+{
+	console_send_string("sub_2349972e (todo.c): TODO\r\n");
 
 }
 
@@ -976,6 +1000,22 @@ void sub_23456f72()
 }
 
 
+/* /  / 2345a49e - todo */
+void sub_2345a49e()
+{
+	console_send_string("sub_2345a49e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348c74a - todo */
+void sub_2348c74a()
+{
+	console_send_string("sub_2348c74a (todo.c): TODO\r\n");
+
+}
+
+
 /* 2348dba4 - todo */
 void sub_2348dba4()
 {
@@ -992,10 +1032,26 @@ void sub_2348f254()
 }
 
 
+/* /  / 23491634 - todo */
+void sub_23491634()
+{
+	console_send_string("sub_23491634 (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 2349984e - todo */
 void sub_2349984e()
 {
 	console_send_string("sub_2349984e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23490ac2 - todo */
+void sub_23490ac2()
+{
+	console_send_string("sub_23490ac2 (todo.c): TODO\r\n");
 
 }
 
@@ -1084,6 +1140,414 @@ void sub_2349a798()
 void sub_2349ad52()
 {
 	console_send_string("sub_2349ad52 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348c7aa - todo */
+void sub_2348c7aa()
+{
+	console_send_string("sub_2348c7aa (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349a24e - todo */
+void sub_2349a24e()
+{
+	console_send_string("sub_2349a24e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349a84c - todo */
+void sub_2349a84c()
+{
+	console_send_string("sub_2349a84c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349aef4 - todo */
+void sub_2349aef4()
+{
+	console_send_string("sub_2349aef4 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348c89c - todo */
+void sub_2348c89c()
+{
+	console_send_string("sub_2348c89c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23452a3e - todo */
+void sub_23452a3e()
+{
+	console_send_string("sub_23452a3e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23490c8a - todo */
+void sub_23490c8a()
+{
+	console_send_string("sub_23490c8a (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23492b52 - todo */
+void sub_23492b52()
+{
+	console_send_string("sub_23492b52 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345625c - todo */
+void sub_2345625c()
+{
+	console_send_string("sub_2345625c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23490bb0 - todo */
+void sub_23490bb0()
+{
+	console_send_string("sub_23490bb0 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23493072 - todo */
+void sub_23493072()
+{
+	console_send_string("sub_23493072 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234911ba - todo */
+void sub_234911ba()
+{
+	console_send_string("sub_234911ba (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23495a48 - todo */
+void sub_23495a48()
+{
+	console_send_string("sub_23495a48 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349269c - todo */
+void sub_2349269c()
+{
+	console_send_string("sub_2349269c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23457a8a - todo */
+void sub_23457a8a()
+{
+	console_send_string("sub_23457a8a (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234911fe - todo */
+void sub_234911fe()
+{
+	console_send_string("sub_234911fe (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23498c7e - todo */
+void sub_23498c7e()
+{
+	console_send_string("sub_23498c7e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234543ba - todo */
+void sub_234543ba()
+{
+	console_send_string("sub_234543ba (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234904ba - todo */
+void sub_234904ba()
+{
+	console_send_string("sub_234904ba (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348e07a - todo */
+void sub_2348e07a()
+{
+	console_send_string("sub_2348e07a (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348f1a6 - todo */
+void sub_2348f1a6()
+{
+	console_send_string("sub_2348f1a6 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23496a26 - todo */
+void sub_23496a26()
+{
+	console_send_string("sub_23496a26 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345a87e - todo */
+void sub_2345a87e()
+{
+	console_send_string("sub_2345a87e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23497004 - todo */
+void sub_23497004()
+{
+	console_send_string("sub_23497004 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23456f24 - todo */
+void sub_23456f24()
+{
+	console_send_string("sub_23456f24 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23497728 - todo */
+void sub_23497728()
+{
+	console_send_string("sub_23497728 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345c8ee - todo */
+void sub_2345c8ee()
+{
+	console_send_string("sub_2345c8ee (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23497ac6 - todo */
+void sub_23497ac6()
+{
+	console_send_string("sub_23497ac6 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234923b0 - todo */
+void sub_234923b0()
+{
+	console_send_string("sub_234923b0 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23492a56 - todo */
+void sub_23492a56()
+{
+	console_send_string("sub_23492a56 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345517e - todo */
+void sub_2345517e()
+{
+	console_send_string("sub_2345517e (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234966b4 - todo */
+void sub_234966b4()
+{
+	console_send_string("sub_234966b4 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345b8d2 - todo */
+void sub_2345b8d2()
+{
+	console_send_string("sub_2345b8d2 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2345af0c - todo */
+void sub_2345af0c()
+{
+	console_send_string("sub_2345af0c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23493734 - todo */
+void sub_23493734()
+{
+	console_send_string("sub_23493734 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23494dea - todo */
+void sub_23494dea()
+{
+	console_send_string("sub_23494dea (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348f502 - todo */
+void sub_2348f502()
+{
+	console_send_string("sub_2348f502 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2348d7ee - todo */
+void sub_2348d7ee()
+{
+	console_send_string("sub_2348d7ee (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349827a - todo */
+void sub_2349827a()
+{
+	console_send_string("sub_2349827a (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 234995f4 - todo */
+void sub_234995f4()
+{
+	console_send_string("sub_234995f4 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23499782 - todo */
+void sub_23499782()
+{
+	console_send_string("sub_23499782 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23499946 - todo */
+void sub_23499946()
+{
+	console_send_string("sub_23499946 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349af36 - todo */
+void sub_2349af36()
+{
+	console_send_string("sub_2349af36 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349a854 - todo */
+void sub_2349a854()
+{
+	console_send_string("sub_2349a854 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349aefa - todo */
+void sub_2349aefa()
+{
+	console_send_string("sub_2349aefa (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349a276 - todo */
+void sub_2349a276()
+{
+	console_send_string("sub_2349a276 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349b6d6 - todo */
+void sub_2349b6d6()
+{
+	console_send_string("sub_2349b6d6 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349b96c - todo */
+void sub_2349b96c()
+{
+	console_send_string("sub_2349b96c (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23498eee - todo */
+void sub_23498eee()
+{
+	console_send_string("sub_23498eee (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 2349bcb6 - todo */
+void sub_2349bcb6()
+{
+	console_send_string("sub_2349bcb6 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23495636 - todo */
+void sub_23495636()
+{
+	console_send_string("sub_23495636 (todo.c): TODO\r\n");
 
 }
 

@@ -50,7 +50,7 @@ int (*Data_23492018)() = 0; //23492018 +0x1c
 void (*Data_2349201c)() = 0; //2349201c / 234ac62c +0x20
 void (*Data_23492020)() = 0; //23492020 +0x24
 void (*Data_23492024)() = 0; //23492024 +0x28
-void (*Data_23492028)() = 0; //23492028 +0x2c
+void (*Data_234c0470)() = 0; //23492028 /  / 234c0470 +0x2c
 void (*channel_pfCheckStreaming)() = 0; //2349202c +0x30
 void (*channel_pfChangeAmplifierVolume)(uint8_t) = 0; //23492030 +0x34
 void (*Data_23492034)(int) = 0; //23492034 +0x38
@@ -208,9 +208,9 @@ void channel_stop_pes(void)
 
 		sub_23460bfc();
 
-		if (Data_23492028 != 0)
+		if (Data_234c0470 != 0)
 		{
-			(Data_23492028)(0);
+			(Data_234c0470)(0);
 		}
 	}
 	//loc_23409690
@@ -779,9 +779,9 @@ void sub_23409c1c(PSI_Program* r7)
 			(Data_23492040->bData_2 & 0x0f);
 #endif
 
-	if (Data_23492028 != 0)
+	if (Data_234c0470 != 0)
 	{
-		(Data_23492028)(r0);
+		(Data_234c0470)(r0);
 	}
 
 	Data_23492040 = 0;
@@ -3361,6 +3361,23 @@ int sub_2340d0d0()
 	}
 
 	return 0;
+}
+
+
+/* /  / 2340fc20 - todo */
+void sub_2340fc20(void* r5)
+{
+	uint8_t err;
+
+#if 0
+	console_send_string("sub_2340fc20 (todo.c): TODO\r\n");
+#endif
+
+	OSSemPend(channel_sema, 0, &err);
+
+	Data_234c0470 = r5;
+
+	OSSemPost(channel_sema);
 }
 
 

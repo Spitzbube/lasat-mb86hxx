@@ -8,6 +8,8 @@ project (mb86h60)
 set(SRCS
    main.c                   #?                              0x2349c5a0? -> 2349D220?
    main1.c                  #0x23400510?    0x23491d8c      0x2349d230?
+        #main_base_init()   #23401938
+        #main_console_init() #23401958
    sub_2340199c.c           #0x2340199c     0x23491e10
    m88dc2800.c              #0x2340257c?    0x23491e20
    sub_234070cc.c

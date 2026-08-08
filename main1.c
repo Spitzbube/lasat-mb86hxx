@@ -29,10 +29,9 @@
 
 
 extern int main_process_uart_command(uint8_t*);
-extern void sub_2345eaee(void);
 
 
-//  /   / 234c01ac
+// 23491d8c / 234ac4c0 / 234c01ac
 uint8_t main_bNeedSetup = 0; //23491d8c +0
 #ifndef VDR110
 uint8_t bData_234c01ad = 0; //234c01ad +1
@@ -62,7 +61,8 @@ void* main_hAudec4 = 0; //23491de4 +0x58
 void* main_hAudec5 = 0; //23491de8 +0x5c
 void* main_hAudecRadioText = 0; //23491dec +0x60
 uint32_t Data_23491df0 = 0; //23491df0 +0x64
-void* main_hCurrentPCR_TSD_Handle = 0; //23491e08
+int Data_234c021c = 0; //   /  / 234c021c +0x70
+void* main_hCurrentPCR_TSD_Handle = 0; //23491e08 +0x7c
 void* main_hPESParserVideo = 0; //23491e0c +0x80 / 234ac510
 
 
@@ -248,7 +248,7 @@ void main_flash_init()
 }
 
 
-/* 234006c4 - complete */
+/* 234006c4 /  / 23401938 - complete */
 void main_base_init()
 {
 	ARM1176_INTR_Initialise();
@@ -258,7 +258,7 @@ void main_base_init()
 	timer_open(0);
 }
 
-/* 234006e4 - todo */
+/* 234006e4 /  / 23401958 - todo */
 void main_console_init()
 {
 	unsigned char str[72];
@@ -285,6 +285,13 @@ void main_console_init()
 	strcat(str, "             **\n\r");
 #if 1
 	console_send_string(str);
+#endif
+
+#ifndef VDR110
+	if (*((volatile unsigned int*)0x40000000) == 0xdeadbeef)
+	{
+		Data_234c021c = 1;
+	}
 #endif
 }
 
@@ -421,13 +428,14 @@ void main_inputhandler_init()
 	ir_init(ir_user_send_data, 0x3b);
 
 #ifndef VDR110
-	sub_2344d610(bData_234c01ad, sub_2345eaee);
+	sub_2344d610(bData_234c01ad, amplifier_get_data);
+	sub_2344d6ce((uint8_t) Data_234c021c);
 
 	//TODO!!!
-
+#else	
+	menu_main_adapt_items(amplifier_get_data);
 #endif //!VDR110
 
-	menu_main_adapt_items(amplifier_get_data);
 	
 	// /  / 0x23402240
 	memset(&sp_0x5c, 0, sizeof(Struct_2340d784));
