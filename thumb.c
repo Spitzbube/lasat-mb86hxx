@@ -608,6 +608,23 @@ Menu* menu_stack_operate(Menu* r4)
 }
 
 
+/* /  / sub_2344d9d0 - todo */
+Menu_Item* sub_2344d9d0(struct Menu* r5)
+{
+#if 1
+	console_send_string("sub_2344d9d0: TODO!!!\r\n");
+#endif
+
+	uint8_t r6 = r5->maxItem;
+	Menu_Item* r4 = r5->Data_8;
+
+	//TODO!!!
+
+	//0x2344da3e
+	return r4;
+}
+
+
 /* 2343d4c8 /  / 2344dbb8 - todo */
 int menu_items_navigate(int* a)
 {
