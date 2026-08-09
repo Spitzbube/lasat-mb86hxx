@@ -323,6 +323,13 @@ int pmt_decode_section(uint8_t a, uint8_t* b)
 
 
 	uint32_t sl = ((b[1] & 0x0f) << 8) | b[2]; //section_length
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "pmt_decode_section: sl=0x%04x\r\n", sl);
+		console_send_string(debug_string);
+	}
+#else
 	struct Struct_236001c8* r6 = &Data_236001c8[a];
 	Data_236001c8[a].Data_0 = &b[3];
 
@@ -442,6 +449,7 @@ int pmt_decode_section(uint8_t a, uint8_t* b)
 		}
 		//loc_2344c2b8
 	} //while (r8 > 1)
+#endif
 	//0x2344c2c0
 	return sl + 3;
 }

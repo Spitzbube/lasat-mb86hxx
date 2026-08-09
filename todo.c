@@ -1584,6 +1584,22 @@ void sub_2344bf70()
 }
 
 
+/* /  / 23413af4 - todo */
+void sub_23413af4()
+{
+	console_send_string("sub_23413af4 (todo.c): TODO\r\n");
+
+}
+
+
+/* /  / 23413cfc - todo */
+void sub_23413cfc()
+{
+	console_send_string("sub_23413cfc (todo.c): TODO\r\n");
+
+}
+
+
 /* /  / 2347f098 - todo */
 int sub_2347f098()
 {

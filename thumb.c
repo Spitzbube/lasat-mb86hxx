@@ -24,6 +24,10 @@ extern int menu_main_on_enter(int);
 extern int menu_main_on_exit(UI_Thread_Params*);
 extern int menu_items_navigate(int*);
 
+extern struct Struct_234c14f0 Data_234c14f0;
+extern struct Struct_234c14f0 Data_234c1508;
+extern struct Struct_234c14f0 Data_234c1514;
+
 OS_EVENT* Data_23492f94 = 0; //23492f94
 
 Menu_Item menu_main_items[7] = //23492f98 +4
@@ -375,6 +379,62 @@ void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 	while (r4 != 0);
 }
 
+
+/*  /  / 2344d872 - todo */
+void sub_2344d872(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
+{
+#if 0
+	console_send_string("sub_2344d872 (todo.c): TODO\r\n");
+#endif
+
+	//int r6 = 0;
+	//int r7 = 234c1508;
+	Menu_Item_Inner4_Data_0* r4;
+
+	do
+	{
+		//loc_2344d878
+		r4 = pMenuItem->Data_4[index];
+		if (r4 == 0)
+		{
+			//->loc_2344d8b2
+			break;
+		}
+
+		r4->wData_0x1c = 0; //r6
+		r4->bData_0x3c = r2;
+
+		if (r1 == 0xff)
+		{
+			//0x2344d88c
+			r4->fill_4[1]/*Data_8*/ = 0; //r6
+			//->loc_2344d8a4
+		}
+		//loc_2344d890
+		else if (r1 == 0xa)
+		{
+			//loc_2344d890
+			r4->fill_4[1]/*Data_8*/ = &Data_234c1508; //r7
+			//->loc_2344d8a4
+		}
+		//loc_2344d898
+		else if (r1 == 0x8)
+		{
+			r4->fill_4[1]/*Data_8*/ = &Data_234c1514; //r5
+		}
+		else
+		{
+			//loc_2344d8a0
+			r4->fill_4[1]/*Data_8*/ = &Data_234c14f0; //r5
+		}
+		//loc_2344d8a4
+		index++;
+		r4 = pMenuItem->Data_4[index];
+	}
+	while (r4 != 0);
+	//loc_2344d8b2
+}
+
 #endif //VDR110
 
 
@@ -705,6 +765,113 @@ int menu_items_navigate(int* a)
 	//loc_2344dcac
 #endif
 
+	return 0;
+}
+
+
+/* /  / 2344dcb2 - todo */
+int sub_2344dcb2(int* a)
+{
+#ifdef VDR110
+
+#if 1
+    {
+        extern char debug_string[];
+        sprintf(debug_string, "sub_2344dcb2: *a=%d: TODO!!!\r\n", *a);
+        console_send_string(debug_string);
+    }
+#endif
+
+	//TODO!!!
+
+#else //VDR110
+
+	Menu* pMenu; //r4
+	int r5 = *a;
+	struct
+	{
+		int fill_0[13]; //0
+		//0x34 = 52
+	} sp_0x10;
+
+#if 0
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "sub_2344dcb2: r5=%d\r\n", r5);
+		console_send_string(debug_string);
+	}
+#endif
+
+	pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
+
+	sub_2344d872(pMenu->Data_4, 0, 1, 0);
+
+	if (r5 == 1)
+	{
+		//0x2344dcd6
+		//Menu_Item* r1 = pMenu->Data_8;
+		while (1)
+		{
+			//loc_2344dcd8
+			pMenu->currentItem--;
+			if (pMenu->currentItem < 0)
+			{
+				pMenu->currentItem = pMenu->maxItem;
+			}
+			//loc_2344dce8
+			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			{
+				break;
+			}
+			//->loc_2344dcd8
+		}
+		//0x2344dcfa -> loc_2344dd22
+	}
+	else
+	{
+		//loc_2344dcfc
+		//r1 = pMenu->maxItem; //r4->Data_0x18;
+		//Menu_Item* r2 = pMenu->Data_8; //r2 = r4->Data_8;
+		//r5 = 0;
+		while (1)
+		{
+			//loc_2344dd02
+			pMenu->currentItem++;
+			if (pMenu->currentItem > pMenu->maxItem/*r1*/)
+			{
+				//0x2344dd0e
+				pMenu->currentItem = 0; //r5
+			}
+			//loc_2344dd10
+			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			{
+				break;
+			}
+			//->loc_2344dd02
+		}
+	}
+	//loc_2344dd22
+	Menu_Item* r5_ = &pMenu->Data_8[pMenu->currentItem];
+	pMenu->Data_4 = r5_;
+	sub_2344d872(r5_, 0xa, 1, 0);
+
+	if (pMenu->help != 0)
+	{
+		//0x2344dd42
+#if 1
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_2344dcb2: pMenu->currentItem=%d: TODO!!!\r\n", 
+				pMenu->currentItem);
+			console_send_string(debug_string);
+		}
+#endif
+
+		//TODO!!!
+	}
+	//loc_2344dd82
+#endif
+	//loc_2344dd82
 	return 0;
 }
 

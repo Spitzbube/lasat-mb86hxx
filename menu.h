@@ -1,4 +1,16 @@
 
+
+typedef struct
+{
+	//Structure elements unclear!
+	uint16_t wData_0; //0
+	uint16_t wData_2; //2
+	uint16_t wData_4; //4
+	uint16_t wData_6; //6
+	void* Data_8; //8
+} Struct_234c14f0;
+
+
 typedef struct
 {
 	uint8_t bData_0; //0
