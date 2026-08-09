@@ -735,6 +735,17 @@ int menu_installation_entry(UI_Thread_Params* sp_0x20)
 }
 
 
+/* /  / 2345274c - todo */
+void sub_2345274c(void* a)
+{
+#if 0
+	console_send_string("sub_2345274c (todo.c): TODO\r\n");
+#endif
+
+	Data_234c2200 = a;
+}
+
+
 /* /  / 2345284c - todo */
 int menu_installation_items_on_event(void* r0)
 {

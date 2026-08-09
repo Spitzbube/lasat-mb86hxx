@@ -663,6 +663,41 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 	{0}, //[13] = 234C1B74
 };
 
+static Graphic_Job_2_5_Item Data_234c1bb4[13] = //234C1BB4
+{
+	{0}, //[0] = 234C1BB4 
+	{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x3d, 0x29, 0xfa, 0x26, 0, &Data_234c12d4/*Data_0x18*/, 0, 0, &menu_main_graphic_header_text_item, {0}, 0}, //[1] = 234C1BF4
+#if 0
+0x234c1bf4                        db         0x01                               ; DATA XREF=0x234c2194
+0x234c1bf5                        db         0x00
+0x234c1bf6 0000                   movs       r0, r0
+0x234c1bf8                        dd         0x234c1544
+0x234c1bfc 0000                   movs       r0, r0
+0x234c1bfe 0000                   movs       r0, r0
+0x234c1c00                        dw         0x003d
+0x234c1c02                        dw         0x0029
+0x234c1c04                        dw         0x00fa
+0x234c1c06                        dw         0x0026
+0x234c1c08 0000                   movs       r0, r0
+0x234c1c0a 0000                   movs       r0, r0
+0x234c1c0c                        dd         0x234c12d4
+0x234c1c10 0000                   movs       r0, r0
+0x234c1c12 0000                   movs       r0, r0
+0x234c1c14                        dd         0x234c158c
+#endif
+	{0}, //[2] = 234C1C34 
+	{0}, //[3] = 234C1C74! 
+	{0}, //[4] = 234C1CB4 
+	{0}, //[5] = 234C1CF4! 
+	{0}, //[6] = 234C1D34! 
+	{0}, //[7] = 234C1D74! 
+	{0}, //[8] = 234C1DB4! 
+	{0}, //[9] = 234C1DF4! 
+	{0}, //[10] = 234C1E34 
+	{0}, //[11] = 234C1E74! 
+	{0}, //[12] = 234C1EB4 
+};
+
 static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 {
 	0, //uint8_t bData_0; //0
@@ -889,14 +924,221 @@ static Menu menu_main = //234c2044
 #endif
 };
 
+static Menu_Item Data_234c2080[] = //234c2080
+{
+	//[0]
+	{
+		0x004a, //"Einstellungen"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[5], //234c1cf4
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	},
+#if 0
+0x234c2080                        dw         0x004a                             ; DATA XREF=0x234c218c, 0x234c2190
+0x234c2082                        dw         0x0161
+0x234c2084                        dd         Data_234c1bb4+320
+0x234c2088 0000                   movs       r0, r0
+0x234c208a 0000                   movs       r0, r0
+0x234c208c 0000                   movs       r0, r0
+0x234c208e 0000                   movs       r0, r0
+0x234c2090 0000                   movs       r0, r0
+0x234c2092 0000                   movs       r0, r0
+0x234c2094 0000                   movs       r0, r0
+0x234c2096 0000                   movs       r0, r0
+0x234c2098 0000                   movs       r0, r0
+0x234c209a 0000                   movs       r0, r0
+0x234c209c                        dd         menu_main_items_on_event+1
+0x234c20a0                        dd         menu_event_thread+1
+0x234c20a4 0000                   movs       r0, r0
+0x234c20a6 0000                   movs       r0, r0
+0x234c20a8 0000                   movs       r0, r0
+0x234c20aa 0000                   movs       r0, r0
+#endif
+	//[1]
+	{
+		0x0079, //"Installation"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[6], //234C1D34
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	},
+#if 0
+0x234c20ac                        dw         0x0079
+0x234c20ae                        dw         0x0161
+0x234c20b0                        dd         Data_234c1bb4+384
+0x234c20b4 0000                   movs       r0, r0
+0x234c20b6 0000                   movs       r0, r0
+0x234c20b8 0000                   movs       r0, r0
+0x234c20ba 0000                   movs       r0, r0
+0x234c20bc 0000                   movs       r0, r0
+0x234c20be 0000                   movs       r0, r0
+0x234c20c0 0000                   movs       r0, r0
+0x234c20c2 0000                   movs       r0, r0
+0x234c20c4 0000                   movs       r0, r0
+0x234c20c6 0000                   movs       r0, r0
+0x234c20c8                        dd         menu_main_items_on_event+1
+0x234c20cc                        dd         menu_event_thread+1
+0x234c20d0 0000                   movs       r0, r0
+0x234c20d2 0000                   movs       r0, r0
+0x234c20d4 0000                   movs       r0, r0
+0x234c20d6 0000                   movs       r0, r0
+#endif
+	//[2]
+	{
+		0x0044, //"Senderliste"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[7], //234C1D74
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	},
+#if 0
+0x234c20d8                        dw         0x0044
+0x234c20da                        dw         0x0161
+0x234c20dc                        dd         Data_234c1bb4+448
+0x234c20e0 0000                   movs       r0, r0
+0x234c20e2 0000                   movs       r0, r0
+0x234c20e4 0000                   movs       r0, r0
+0x234c20e6 0000                   movs       r0, r0
+0x234c20e8 0000                   movs       r0, r0
+0x234c20ea 0000                   movs       r0, r0
+0x234c20ec 0000                   movs       r0, r0
+0x234c20ee 0000                   movs       r0, r0
+0x234c20f0 0000                   movs       r0, r0
+0x234c20f2 0000                   movs       r0, r0
+0x234c20f4                        dd         menu_main_items_on_event+1
+0x234c20f8                        dd         menu_event_thread+1
+0x234c20fc 0000                   movs       r0, r0
+0x234c20fe 0000                   movs       r0, r0
+0x234c2100 0000                   movs       r0, r0
+0x234c2102 0000                   movs       r0, r0
+#endif
+	//[3]
+	{
+		0x00a6, //"Timer"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[8], //234C1DB4
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	},
+#if 0
+0x234c2104                        dw         0x00a6
+0x234c2106                        dw         0x0161
+0x234c2108                        dd         Data_234c1bb4+512
+0x234c210c 0000                   movs       r0, r0
+0x234c210e 0000                   movs       r0, r0
+0x234c2110 0000                   movs       r0, r0
+0x234c2112 0000                   movs       r0, r0
+0x234c2114 0000                   movs       r0, r0
+0x234c2116 0000                   movs       r0, r0
+0x234c2118 0000                   movs       r0, r0
+0x234c211a 0000                   movs       r0, r0
+0x234c211c 0000                   movs       r0, r0
+0x234c211e 0000                   movs       r0, r0
+0x234c2120                        dd         menu_main_items_on_event+1
+0x234c2124                        dd         menu_event_thread+1
+0x234c2128 0000                   movs       r0, r0
+0x234c212a 0000                   movs       r0, r0
+0x234c212c 0000                   movs       r0, r0
+0x234c212e 0000                   movs       r0, r0
+#endif
+	//[4]
+	{
+		0x003f, //"Information"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[9], //234C1DF4
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	},
+#if 0
+0x234c2130                        dw         0x003f
+0x234c2132                        dw         0x0161
+0x234c2134                        dd         Data_234c1bb4+576
+0x234c2138 0000                   movs       r0, r0
+0x234c213a 0000                   movs       r0, r0
+0x234c213c 0000                   movs       r0, r0
+0x234c213e 0000                   movs       r0, r0
+0x234c2140 0000                   movs       r0, r0
+0x234c2142 0000                   movs       r0, r0
+0x234c2144                        dd         0x00000000
+0x234c2148 0000                   movs       r0, r0
+0x234c214a 0000                   movs       r0, r0
+0x234c214c                        dd         menu_main_items_on_event+1
+0x234c2150                        dd         menu_event_thread+1
+0x234c2154 0000                   movs       r0, r0
+0x234c2156 0000                   movs       r0, r0
+0x234c2158 0000                   movs       r0, r0
+0x234c215a 0000                   movs       r0, r0
+#endif
+	//[5]
+	{
+		0x0118, //"Aufnahmespeicher"
+		0x0161, //uint16_t wData_2; //2
+		{
+			&Data_234c1bb4[11], //234C1E74
+		}, //int fill_4[5]; //4
+		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_main_items_on_event, //void* onEvent; //0x1c = 28
+		menu_event_thread, //void* inputThreadFunc; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+	}
+#if 0
+0x234c215c                        dw         0x0118
+0x234c215e                        dw         0x0161
+0x234c2160                        dd         Data_234c1bb4+704
+0x234c2164 0000                   movs       r0, r0
+0x234c2166 0000                   movs       r0, r0
+0x234c2168 0000                   movs       r0, r0
+0x234c216a 0000                   movs       r0, r0
+0x234c216c 0000                   movs       r0, r0
+0x234c216e 0000                   movs       r0, r0
+0x234c2170 0000                   movs       r0, r0
+0x234c2172 0000                   movs       r0, r0
+0x234c2174 0000                   movs       r0, r0
+0x234c2176 0000                   movs       r0, r0
+0x234c2178                        dd         menu_main_items_on_event+1
+0x234c217c                        dd         menu_event_thread+1
+0x234c2180 0000                   movs       r0, r0
+0x234c2182 0000                   movs       r0, r0
+0x234c2184 0000                   movs       r0, r0
+0x234c2186 0000                   movs       r0, r0
+#endif
+};
+
 /* TODO!!! item:....*/
 static Menu Data_234c2188 = //234c2188
 {
     10, //"Hauptmenu"
-    &menu_main_items[0], //Menu_Item* Data_4; //4
-    &menu_main_items[0], //Menu_Item* Data_8; //8
-    &menu_main_graphic_items[1], /*234c1874*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
-    &menu_main_graphic_items[3], /*234C18F4*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &Data_234c2080[0], //Menu_Item* Data_4; //4
+    &Data_234c2080[0], //Menu_Item* Data_8; //8
+    &Data_234c1bb4[1], /*234c1bf4*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
+    &Data_234c1bb4[3], /*234c1c74*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
     &menu_main_graphic_data, //Graphic_Job_2_5* graphicData; //20 = 0x14
     5, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
@@ -1560,7 +1802,7 @@ int sub_2344d610(int r6, int (r4)(Amplifier_Interface_Functions*, Amplifier_Sett
 /*  / 2344c0a4 / 2344d6ce - todo */
 void sub_2344d6ce(uint8_t r5)
 {
-	uint8_t sp;
+	uint8_t err; //sp
 
 #if 0
 	console_send_string("sub_2344d6ce (todo.c): TODO\r\n");
@@ -1569,8 +1811,8 @@ void sub_2344d6ce(uint8_t r5)
 	if (r5 < 2)
 	{
 		//0x2344d6d6
-		OSSemPend(Data_234c1258, 0, &sp);
-		if (sp == 0)
+		OSSemPend(Data_234c1258, 0, &err);
+		if (err == 0)
 		{
 			Data_234c1240 = Data_234c126c[r5];
 			Data_234c1234 = Data_234c125c[r5];

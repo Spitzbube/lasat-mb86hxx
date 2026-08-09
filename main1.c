@@ -30,6 +30,10 @@
 
 extern int main_process_uart_command(uint8_t*);
 
+extern void sub_2344c366();
+extern void sub_2344c3aa();
+extern void sub_2344c45e();
+extern void sub_2344bf70();
 
 // 23491d8c / 234ac4c0 / 234c01ac
 uint8_t main_bNeedSetup = 0; //23491d8c +0
@@ -430,8 +434,13 @@ void main_inputhandler_init()
 #ifndef VDR110
 	sub_2344d610(bData_234c01ad, amplifier_get_data);
 	sub_2344d6ce((uint8_t) Data_234c021c);
-
-	//TODO!!!
+	sub_2345b852(
+		sub_2344c366,
+		sub_2344c3aa,
+		sub_2344c45e
+	);
+	sub_2345274c(sub_2344bf70);
+	sub_2345c9f8(0);
 #else	
 	menu_main_adapt_items(amplifier_get_data);
 #endif //!VDR110

@@ -91,6 +91,8 @@ set(SRCS
    menu_volume_bar.c
    menu_pin.c
    osd_list.c
+   sub_2345b852.c
+   sub_2345c9f8.c
    hexdump.c
    todo.c
 )
