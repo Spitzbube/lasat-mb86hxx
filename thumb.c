@@ -607,23 +607,58 @@ Menu* menu_stack_operate(Menu* r4)
 	}
 }
 
+#ifndef VDR110
 
-/* /  / sub_2344d9d0 - todo */
+/* /  / 2344d9d0 - todo */
 Menu_Item* sub_2344d9d0(struct Menu* r5)
 {
-#if 1
+#if 0
 	console_send_string("sub_2344d9d0: TODO!!!\r\n");
 #endif
 
 	uint8_t r6 = r5->maxItem;
 	Menu_Item* r4 = r5->Data_8;
 
-	//TODO!!!
+	Data_234c21c8 = sub_2344d872;
 
+	do
+	{
+		//loc_2344d9de
+		sub_2344d872(r4, 0xff, 0x01, 0x00);
+
+		if ((r4->Data_4[0] != NULL) &&
+			(r4->Data_4[0]->Data_0x20 != NULL))
+		{
+			if (r4->wData_0 != 0xffff)
+			{
+				//0x2344d9fe
+				text_table_get_string(r4->wData_0, r4->Data_4[0]->Data_0x20->pString, 36);
+			}
+		}
+		//loc_2344da06
+		if (r4->initValueString != NULL)
+		{
+			//0x2344da0c
+			(r4->initValueString)(r4);
+		}
+		//loc_2344da10
+		r4++;
+	}
+	while (r6--);
+
+	if (r5->Data_0x2c == 0)
+	{
+		r5->currentItem = 0;
+	}
+	//loc_2344da24
+	r4 = &r5->Data_8[r5->currentItem];
+	r5->Data_4 = r4;
+	sub_2344d872(r4, 0xa, 1, 0);
 	//0x2344da3e
 	return r4;
 }
 
+#endif
 
 /* 2343d4c8 /  / 2344dbb8 - todo */
 int menu_items_navigate(int* a)
