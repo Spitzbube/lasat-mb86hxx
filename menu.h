@@ -30,7 +30,7 @@ typedef struct Menu
 	int (*onExit)(UI_Thread_Params*); //0x28
 	int Data_0x2c; //44 = 0x2c
 	int timeout; //48 = 0x30
-	Menu_Item* (*Data_0x34)(struct Menu*); //52
+	Menu_Item* (*Data_0x34)(struct Menu*); //52 = 0x34
 #ifdef VDR110
 	//0x38 = 56?
 #else

@@ -2076,8 +2076,6 @@ void sub_2344d6ce(uint8_t r5)
 		sprintf(debug_string, "sub_2344d6ce: r5=%d\r\n", r5);
 		console_send_string(debug_string);
 	}
-
-	r5 = 1;
 #endif
 
 	if (r5 < 2)
@@ -2095,7 +2093,7 @@ void sub_2344d6ce(uint8_t r5)
 			sub_23490c8a(r5);
 			sub_23492b52(r5);
 			sub_2345625c(r5);
-			sub_23490bb0(r5);
+			menu_general_settings_set_flavor(r5); //->menu_general_settings.c
 			sub_23493072(r5);
 			sub_234911ba(r5);
 			sub_23495a48(r5);
@@ -2123,7 +2121,7 @@ void sub_2344d6ce(uint8_t r5)
 			sub_2345af0c(r5);
 			sub_23493734(r5);
 			sub_23494dea(r5);
-			sub_2348f502(r5);
+			menu_volume_bar_set_flavor(r5); //->menu_volume_bar.c
 			sub_2348d7ee(r5);
 			sub_2349827a(r5);
 			sub_234995f4(r5);

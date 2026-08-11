@@ -18,6 +18,7 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
+extern Menu_Item* sub_2344d9d0(struct Menu*);
 
 extern uint8_t Data_2397044c[]; //2397044c
 extern uint8_t Data_2397056c[]; //2397056c
@@ -37,9 +38,14 @@ extern uint8_t Data_2397079c[]; //2397079c
 extern uint8_t Data_239707c4[]; //239707c4
 extern uint8_t Data_239707ec[]; //239707ec
 
-static Menu menu_general_settings;
+static Menu menu_general_settings; //234ea49c
+static Menu menu_general_settings_ex; //234ea4d8
 static Menu* menu_general_settings_p = &menu_general_settings; //234e9324
-
+static Menu* menu_general_settings_flavor[] = //234e932c
+{
+	&menu_general_settings,
+	&menu_general_settings_ex
+};
 static Graphic_Job_2_5_Item_Text Data_234e9334 = //234e9334
 {
 	0, 0x0051, 0x002c, 0x0127, 0x004f, 0x01, 0x06, 0x02, 0x00, &Data_2397044c[0], 0, 0, 0
@@ -771,6 +777,48 @@ static Graphic_Job_2_5 Data_234ea194 = //234ea194
 0x234ea1ae 0000                   movs       r0, r0
 0x234ea1b0                        dd         0x00000000
 0x234ea1b4                        dd         0x00000000
+#endif
+};
+
+//TODO: items...
+static Menu menu_general_settings_ex = //234ea4d8
+{
+		80, //"Allgemein"?
+		&menu_general_settings_items[0], //Menu_Item* Data_4; //4
+		&menu_general_settings_items[0], //Menu_Item* Data_8; //8
+		&Data_234e9514[23], //&234ea114, //Graphic_Job_2_5_Item* header; //12 = 0xc
+		0, //&Data_234e9bd4, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
+		&Data_234ea194, //&234ea1b8, Graphic_Job_2_5* graphicData; //20 = 0x14
+		7, //uint8_t maxItem; //0x18 = 24
+		0, //int8_t currentItem; //0x19
+		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
+		sub_2344dcb2, //void (*onNavigate)(); //0x20
+		menu_general_settings_on_enter, //void (*onEnter)(); //36 = 0x24
+		on_menu_exit, //int (*onExit)(); //0x28
+		0, //int Data_0x2c; //44 = 0x2c
+		0, //int Data_0x30; //48
+		sub_2344d9d0, //Menu_Item* (*Data_0x34)(struct Menu*); //52
+		0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56
+		//0x3c = 60?
+#if 0
+0x234ea4d8                        dw         0x0050                             ; DATA XREF=0x234e9330
+0x234ea4da                        dw         0x0000
+0x234ea4dc                        dd         0x234ea33c
+0x234ea4e0                        dd         0x234ea33c
+0x234ea4e4                        dd         0x234ea114
+0x234ea4e8                        dd         0x234e9bd4
+0x234ea4ec                        dd         0x234ea1b8
+0x234ea4f0                        db         0x07
+0x234ea4f1                        db  0x00 ; '.'
+0x234ea4f2 0000                   movs       r0, r0
+0x234ea4f4                        dd         graphic_start_job_2_5
+0x234ea4f8                        dd         sub_2344dcb2+1
+0x234ea4fc                        dd         menu_general_settings_on_enter+1
+0x234ea500                        dd         sub_23490a66+1
+0x234ea504                        dd         0x00000000
+0x234ea508                        dd         0x00000000
+0x234ea50c                        dd         sub_2344d9d0+1
+0x234ea510                        dd         0x00000000
 #endif
 };
 
@@ -1880,6 +1928,19 @@ int menu_general_settings_entry(UI_Thread_Params* p)
 	return 0;
 }
 
+#ifndef VDR110
+
+/* /  / 23490bb0 - todo */
+void menu_general_settings_set_flavor(uint8_t a)
+{
+#if 0
+	console_send_string("menu_general_settings_set_flavor (todo.c): TODO\r\n");
+#endif
+
+	menu_general_settings_p = menu_general_settings_flavor[a];
+}
+
+#endif
 
 /* 23471fbe - todo */
 User_Settings* sub_23471fbe(void)

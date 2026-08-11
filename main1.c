@@ -297,6 +297,10 @@ void main_console_init()
 		Data_234c021c = 1;
 	}
 #endif
+
+#if 1
+	Data_234c021c = 1;
+#endif
 }
 
 

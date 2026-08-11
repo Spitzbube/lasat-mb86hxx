@@ -37,10 +37,10 @@ static Menu_Item menu_settings_items_ex[]; //234dfcbc
 
 static Menu menu_settings; //234df1cc
 static Menu menu_settings_ex; //234df208
-static Graphic_Job_2_5_Item Data_234df368[]; //234df368
-static Graphic_Job_2_5_Item Data_234df728[]; //234DF728
+static Graphic_Job_2_5_Item menu_settings_graphic_items[]; //234df368
+static Graphic_Job_2_5_Item menu_settings_graphic_items_ex[]; //234DF728
 static Graphic_Job_2_5 menu_settings_graphic_data;
-static Graphic_Job_2_5 Data_234dfb0c; //234dfb0c
+static Graphic_Job_2_5 menu_settings_graphic_data_ex; //234dfb0c
 
 static Menu* menu_settings_p = &menu_settings; //234df1c0
 static Menu* menu_settings_flavor[] = //0x234df1c4
@@ -53,7 +53,7 @@ static Menu menu_settings =  //234df1cc
 		0x004a, //""
 		&menu_settings_items[0], //Menu_Item* Data_4; //4
 		&menu_settings_items[0], //Menu_Item* Data_8; //8
-		&Data_234df368[1], //234df3a8, //Struct_235fdf74_Inner12* header; //12 = 0xc
+		&menu_settings_graphic_items[1], //234df3a8, //Struct_235fdf74_Inner12* header; //12 = 0xc
 		/*&Data_234df428*/0, //Struct_235fdf74_Inner16* help; //16 = 0x10
 		&menu_settings_graphic_data, //int graphicData; //20 = 0x14
 		2, //6, //uint8_t maxItem; //0x18 = 24
@@ -90,9 +90,9 @@ static Menu menu_settings_ex =  //234df208
 		0x004a, //""
 		&menu_settings_items_ex[0], //Menu_Item* Data_4; //4
 		&menu_settings_items_ex[0], //Menu_Item* Data_8; //8
-		&Data_234df728[1], //234df768, //Struct_235fdf74_Inner12* header; //12 = 0xc
+		&menu_settings_graphic_items_ex[1], //234df768, //Struct_235fdf74_Inner12* header; //12 = 0xc
 		/*&Data_234df7e8*/0, //Struct_235fdf74_Inner16* help; //16 = 0x10
-		&Data_234dfb0c, //int graphicData; //20 = 0x14
+		&menu_settings_graphic_data_ex, //int graphicData; //20 = 0x14
 		0, //2, //6, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
 		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
@@ -216,7 +216,7 @@ static Graphic_Job_2_5_Item_Text Data_234df2c0 = //234df2c0
 #endif
 };
 
-static Graphic_Job_2_5_Item Data_234df368[15] = //234df368
+static Graphic_Job_2_5_Item menu_settings_graphic_items[15] = //234df368
 {
 	{0}, //[0] = 234df368
 #if 0
@@ -353,7 +353,7 @@ static Graphic_Job_2_5_Item Data_234df368[15] = //234df368
 	{0}, //[14] = 234DF6E8 
 };
 
-static Graphic_Job_2_5_Item Data_234df728[] = //234DF728
+static Graphic_Job_2_5_Item menu_settings_graphic_items_ex[] = //234DF728
 {
 	{1, 0, &Data_234df244/*Data_4*/, 0/*&Data_234c14b4*//*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c1558/*Data_0x18*/}, //[0] = 234DF728: ???
 #if 0
@@ -444,7 +444,7 @@ static Graphic_Job_2_5 menu_settings_graphic_data = //234dfae8
 	0xfa, //uint8_t bData_1; //1
 	0x001d, //uint16_t wData_2; //2
 	0x04, //uint8_t bData_4; //4
-	&Data_234df368[0], //Graphic_Job_2_5_Item* pItems; //8
+	&menu_settings_graphic_items[0], //Graphic_Job_2_5_Item* pItems; //8
 	&menu_main_graphic_color_data, //Graphic_Color_Data* Data_0xc; //12
 	0x10, //uint8_t bData_0x10; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
@@ -474,13 +474,13 @@ static Graphic_Job_2_5 menu_settings_graphic_data = //234dfae8
 #endif
 };
 
-static Graphic_Job_2_5 Data_234dfb0c = //234dfb0c
+static Graphic_Job_2_5 menu_settings_graphic_data_ex = //234dfb0c
 {
 	0, //uint8_t bData_0; //0
 	0xfa, //uint8_t bData_1; //1
 	0x001d, //uint16_t wData_2; //2
 	0x0c, //uint8_t bData_4; //4
-	&Data_234df728[0], //Graphic_Job_2_5_Item* pItems; //8
+	&menu_settings_graphic_items_ex[0], //Graphic_Job_2_5_Item* pItems; //8
 	&menu_main_graphic_color_data, //Graphic_Color_Data* Data_0xc; //12
 	0x10, //uint8_t bData_0x10; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
@@ -517,7 +517,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		0x50, //80, //"Allgemein"
 		0xffff, //uint16_t wData_2; //2
 		{
-			&Data_234df368[5], //234df4a8,
+			&menu_settings_graphic_items[5], //234df4a8,
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_general_settings_entry, //void* onEvent; //0x1c = 28
@@ -545,7 +545,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		16, //0x10 = "Bild",
 		0xffff, //uint16_t wData_2; //2
 		{
-			&Data_234df368[6], //234df4e8,
+			&menu_settings_graphic_items[6], //234df4e8,
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_picture_entry, //sub_23470548, //void* Data_0x1c; //0x1c = 28
@@ -573,7 +573,7 @@ static Menu_Item menu_settings_items[] = //23492f98 +4 //234dfb30
 		137, //0x89 = "Ton",
 		0xffff,
 		{
-			&Data_234df368[7], //234df528,
+			&menu_settings_graphic_items[7], //234df528,
 			0, 0, 0, 0
 		}, //int fill_4[5]; //4
 		0,
@@ -736,7 +736,7 @@ static Menu_Item menu_settings_items_ex[] = //234dfcbc
 		0x50, //80, //"Allgemein"
 		0x161, //uint16_t wData_2; //2
 		{
-			&Data_234df728[5]/*???*/, //234df868,
+			&menu_settings_graphic_items_ex[5]/*???*/, //234df868,
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_general_settings_entry, //void* onEvent; //0x1c = 28
