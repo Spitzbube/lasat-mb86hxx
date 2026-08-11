@@ -56,7 +56,7 @@ typedef struct
 {
 	uint8_t bData_0; //0
 	uint8_t bData_1; //1
-	int fill_4; //4
+	int Data_4; //4
 	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
 	uint16_t x; //0xc = 12
 	uint16_t y; //0xe = 14

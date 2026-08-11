@@ -266,7 +266,7 @@ static Menu_Item menu_volume_bar_items[] = //234e71c0
     {
 	0xffff, //uint16_t wData_0; //0
 	0xffff, //uint16_t helpStringId; //2
-	{0}, //Menu_Item_Inner4_Data_0* Data_4[5]; //4
+	{0}, //Graphic_Job_2_5_Item* Data_4[5]; //4
 	0, //void (*initValueString)(struct Menu_Item*); //0x18 = 24
 	menu_volume_bar_on_event, //void* onEvent; //0x1c = 28
 	sub_2344e40a, //void* inputThreadFunc; //0x20 = 32

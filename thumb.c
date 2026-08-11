@@ -24,9 +24,9 @@ extern int menu_main_on_enter(int);
 extern int menu_main_on_exit(UI_Thread_Params*);
 extern int menu_items_navigate(int*);
 
-extern struct Struct_234c14f0 Data_234c14f0;
-extern struct Struct_234c14f0 Data_234c1508;
-extern struct Struct_234c14f0 Data_234c1514;
+extern struct Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c14f0;
+extern struct Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c1508;
+extern struct Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c1514;
 
 OS_EVENT* Data_23492f94 = 0; //23492f94
 
@@ -354,13 +354,13 @@ void menu_main_adapt_items(int (*p)(Amplifier_Interface_Functions*, int, int, in
 #ifndef VDR110
 
 /*  /  / 2344d850 - complete */
-void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
+void sub_2344d850(Menu_Item* pMenuItem, uint16_t wColor, uint8_t r2, uint8_t index)
 {
 #if 0
 	console_send_string("sub_2344d850 (todo.c): TODO\r\n");
 #endif
 
-	Menu_Item_Inner4_Data_0* r4;
+	Graphic_Job_2_5_Item* r4;
 
 	do
 	{
@@ -371,7 +371,7 @@ void sub_2344d850(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 		}
 		index++;
 
-		r4->wData_0x1c = r1;
+		r4->wColor = wColor;
 		r4->bData_0x3c = r2;
 
 		r4 = pMenuItem->Data_4[index];
@@ -389,7 +389,7 @@ void sub_2344d872(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 
 	//int r6 = 0;
 	//int r7 = 234c1508;
-	Menu_Item_Inner4_Data_0* r4;
+	Graphic_Job_2_5_Item* r4;
 
 	do
 	{
@@ -401,31 +401,31 @@ void sub_2344d872(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 			break;
 		}
 
-		r4->wData_0x1c = 0; //r6
+		r4->wColor = 0; //r6
 		r4->bData_0x3c = r2;
 
 		if (r1 == 0xff)
 		{
 			//0x2344d88c
-			r4->fill_4[1]/*Data_8*/ = 0; //r6
+			r4->Data_8 = NULL; //r6
 			//->loc_2344d8a4
 		}
 		//loc_2344d890
 		else if (r1 == 0xa)
 		{
 			//loc_2344d890
-			r4->fill_4[1]/*Data_8*/ = &Data_234c1508; //r7
+			r4->Data_8 = &Data_234c1508; //r7
 			//->loc_2344d8a4
 		}
 		//loc_2344d898
 		else if (r1 == 0x8)
 		{
-			r4->fill_4[1]/*Data_8*/ = &Data_234c1514; //r5
+			r4->Data_8 = &Data_234c1514; //r5
 		}
 		else
 		{
 			//loc_2344d8a0
-			r4->fill_4[1]/*Data_8*/ = &Data_234c14f0; //r5
+			r4->Data_8 = &Data_234c14f0; //r5
 		}
 		//loc_2344d8a4
 		index++;

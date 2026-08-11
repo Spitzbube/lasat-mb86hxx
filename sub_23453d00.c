@@ -1452,7 +1452,7 @@ static void menu_channel_search_get_cable_symbolrate_value_string(Menu_Item* ite
 	console_send_string("menu_channel_search_get_cable_symbolrate_value_string (todo.c): TODO\r\n");
 #endif
 
-	Menu_Item_Inner4_Data_0* r1 = item->Data_4[1];
+	Graphic_Job_2_5_Item* r1 = item->Data_4[1];
 	uint8_t* pString = r1->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
@@ -1574,7 +1574,7 @@ static void menu_channel_search_get_symbolrate_value_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_symbolrate_value_string (todo.c): TODO\r\n");
 #endif
 
-	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
 	uint8_t* pString = r0->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
@@ -1606,7 +1606,7 @@ static void menu_channel_search_get_polarization_value_string(Menu_Item* item)
 #endif
 
 	int nStr;
-	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
 	uint8_t* pString = r0->Data_0x20->pString;
 
 	switch (Data_23796d30.Data_23798030.polarization)
@@ -1639,7 +1639,7 @@ static void menu_channel_search_get_frequency_value_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_frequency_value_string (todo.c): TODO\r\n");
 #endif
 
-	Menu_Item_Inner4_Data_0* r0 = item->Data_4[1];
+	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
 	uint8_t* pString = r0->Data_0x20->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)

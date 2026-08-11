@@ -231,38 +231,35 @@ static uint32_t menu_main_clut[] = //234c1388
 0x7181c100, 0x4181a100, 0x50505000, 0x6b6fb800
 };
 
-extern void sub_23413af4();
-extern void sub_23413cfc();
+extern void sub_23413af4(void*, uint8_t);
+extern void sub_23413cfc(void*, uint8_t);
 
-/*static*/ Struct_234c14f0 Data_234c14f0 = //234c14f0
+/*static*/ Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c14f0 = //234c14f0
 {
-	0x34, 0, 0x37, 0x5a, &sub_23413cfc,
+	0x34, 0x37, 0x5a, &sub_23413cfc,
 #if 0
-0x234c14f0                        dw         0x0034                             ; DATA XREF=sub_2344d872+46, dword_2344dc7c, sub_2348db10+34, dword_2348df00
-0x234c14f2                        dw         0x0000
+0x234c14f0                        dd         0x00000034
 0x234c14f4                        dw         0x0037
 0x234c14f6                        dw         0x005a
 0x234c14f8                        dd         0x23413cfc
 #endif
 };
 //int Data_234c14fc; //234c14fc
-/*static*/ Struct_234c14f0  Data_234c1508 = //234c1508
+/*static*/ Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c1508 = //234c1508
 {
-	0x36, 0, 0, 0, &sub_23413af4,
+	0x36, 0, 0, &sub_23413af4,
 #if 0
-0x234c1508                        dw         0x0036                             ; DATA XREF=sub_2344d872+4, dword_2344dc74, sub_2348db10+4, dword_2348defc
-0x234c150a                        dw         0x0000
+0x234c1508                        dd         0x00000036
 0x234c150c                        dw         0x0000
 0x234c150e                        dw         0x0000
 0x234c1510                        dd         0x23413af4
 #endif
 };
-/*static*/ Struct_234c14f0  Data_234c1514 = //234c1514
+/*static*/ Struct_2377ded0_Inner_0x1c_Inner_8 Data_234c1514 = //234c1514
 {
-	0x37, 0, 0, 0, &sub_23413af4,
+	0x37, 0, 0, &sub_23413af4,
 #if 0
-0x234c1514                        dw         0x0037                             ; DATA XREF=sub_2344d872+42, dword_2344dc78
-0x234c1516                        dw         0x0000
+0x234c1514                        dd         0x00000037
 0x234c1518                        dw         0x0000
 0x234c151a                        dw         0x0000
 0x234c151c                        dd         0x23413af4
@@ -1800,8 +1797,8 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					return 0;
 				}
 
-				Menu_Item_Inner4_Data_0* r0_ = pMenuItem->Data_4[0];
-				if (r0_ == 0)
+				Graphic_Job_2_5_Item* r0_ = pMenuItem->Data_4[0];
+				if (r0_ == NULL)
 				{
 					//->loc_2344d2d0: No Columns
 					return 0;

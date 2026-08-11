@@ -12,6 +12,7 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1274; //234c1274
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1558; //234c1558
 extern Menu_Item* sub_2344d9d0(struct Menu*);
 extern int sub_2344dcb2(int* a);
 
@@ -23,8 +24,13 @@ extern int menu_general_settings_entry(UI_Thread_Params*);
 extern int menu_picture_entry(UI_Thread_Params*);
 extern int menu_sound_entry(UI_Thread_Params*);
 
+static uint8_t Data_234bfdb3[] = "SETHead";
+static uint8_t Data_234bfdbb[] = "SETHHead";
 static uint8_t Data_234bfdc4[] = "SETHeadStr"; //Settings Head String
 static uint8_t Data_234bfdcf[] = "SETLine"; //Settings Line
+static uint8_t Data_234bfdd7[] = "SETHelp";
+static uint8_t Data_234bfddf[] = "SETHelpH";
+static uint8_t Data_234bfde8[] = "SETEnd";
 
 static Menu_Item menu_settings_items[]; //234dfb30
 static Menu_Item menu_settings_items_ex[]; //234dfcbc
@@ -119,6 +125,7 @@ static Menu menu_settings_ex =  //234df208
 #endif
 };
 
+static uint8_t* Data_234df244 = Data_234bfdb3; //= "SETHead"; 234df244
 static uint8_t* Data_234df24c = Data_234bfdc4;// = "SETHeadStr"; //234df24c
 static uint8_t* Data_234df250 = Data_234bfdcf; //= "SETLine"; //234df250
 
@@ -211,8 +218,34 @@ static Graphic_Job_2_5_Item_Text Data_234df2c0 = //234df2c0
 
 static Graphic_Job_2_5_Item Data_234df368[15] = //234df368
 {
-	{0}, //[0] = 234df368 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x29, 0xf9, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234df260/*Data_0x20*/}, //[1] = 234DF3A8: header
+	{0}, //[0] = 234df368
+#if 0
+0x234df368                        db         0x01                               ; DATA XREF=sub_2348c74a+18, sub_2348c74a+32, sub_2348c74a+50, sub_2348c74a+60, sub_2348c74a+66, sub_2348c7aa+16, sub_2348c844+42, dword_234dfaf0
+0x234df369                        db         0x00
+0x234df36a                        db  0x00 ; '.'
+0x234df36b                        db  0x00 ; '.'
+0x234df36c                        dd         dword_234df21c+40
+0x234df370                        dd         0x00000000
+0x234df374                        dw         0x0037
+0x234df376                        dw         0x0023
+0x234df378                        dw         0x0106
+0x234df37a                        dw         0x0032
+0x234df37c                        dd         0x00000000
+0x234df380                        dd         menu_main_flavor+32                ; DATA XREF=sub_2348c844+46
+0x234df384                        db  0x02 ; '.'
+0x234df385                        db  0x00 ; '.'
+0x234df386                        db  0x00 ; '.'
+0x234df387                        db  0x00 ; '.'
+0x234df388                        dd         0x00000000
+0x234df38c                        dd         0x00000000
+0x234df390                        dd         0x00000000
+0x234df394                        dd         0x00000000
+0x234df398                        dd         0x00000000
+0x234df39c                        dd         0x00000000
+0x234df3a0                        dd         0x00000000
+0x234df3a4                        dd         0x00000000
+#endif 
+	{1, 0, &Data_234df24c/*Data_4*/, 0/*Data_8*/, 0x3d, 0x29, 0xf9, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234df260/*Data_0x20*/}, //[1] = 234DF3A8: header
 #if 0
 0x234df3a8                        db         0x01                               ; DATA XREF=0x234df1d8
 0x234df3a9                        db         0x00
@@ -322,7 +355,29 @@ static Graphic_Job_2_5_Item Data_234df368[15] = //234df368
 
 static Graphic_Job_2_5_Item Data_234df728[] = //234DF728
 {
-	{0}, //[0] = 234DF728 
+	{1, 0, &Data_234df244/*Data_4*/, 0/*&Data_234c14b4*//*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c1558/*Data_0x18*/}, //[0] = 234DF728: ???
+#if 0
+0x234df728                        db         0x01                               ; DATA XREF=sub_2348c74a+76, sub_2348c74a+88, sub_2348c74a+92, sub_2348c844+68, sub_2348c844+80, sub_2348c844+84, 0x234dfb14
+0x234df729                        db         0x00
+0x234df72a 0000                   movs       r0, r0
+0x234df72c                        dd         0x234df244
+0x234df730                        dd         0x234c14b4
+0x234df734                        dw         0x0037
+0x234df736                        dw         0x0023
+0x234df738                        dw         0x0106
+0x234df73a                        dw         0x0032
+0x234df73c                        dd         0x00000000
+0x234df740                        dd         0x234c1558
+0x234df744                        dd         0x00000000
+0x234df748                        dd         0x00000000
+0x234df74c                        dd         0x00000000
+0x234df750                        dd         0x00000000
+0x234df754                        dd         0x00000000
+0x234df758                        dd         0x00000000
+0x234df75c                        dd         0x00000000
+0x234df760                        dd         0x00000000
+0x234df764                        dd         0x00000000
+#endif
 	{1, 0, &Data_234df24c/*Data_4*/, 0, 0x3d, 0x29, 0xf9, 0x26, 0, &Data_234c12d4/*Data_0x18*/, 0, 0, &Data_234df260/*Data_0x20*/}, //[1] = 234DF768: header
 #if 0
 0x234df768                        db         0x01                               ; DATA XREF=0x234df214

@@ -1041,7 +1041,7 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 			&Data_234e9514[8], //234e9714, 
 			&Data_234e9514[18], //234e9994, 
 			0, 0, 0
-		}, //Menu_Item_Inner4_Data_0* Data_4[5]; //4
+		}, //Graphic_Job_2_5_Item* Data_4[5]; //4
 		get_auto_standby_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		on_auto_standby_change, //void* onEvent; //0x1c = 28
 		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
@@ -1448,7 +1448,7 @@ void get_time_difference_value_string(Menu_Item* item)
 	//uint8_t* sp;
 	int r0;
 	int r7;
-	Menu_Item_Inner4_Data_0* r5 = item->Data_4[1];
+	Graphic_Job_2_5_Item* r5 = item->Data_4[1];
 	uint8_t* r6 = r5->Data_0x20->pString;
 	uint8_t r4 = menu_general_settings_backup.timeDiff & 0x7f;
 
@@ -1726,7 +1726,7 @@ static void get_deep_standby_value_string(Menu_Item* pItem)
 	console_send_string("get_deep_standby_value_string (todo.c): TODO\r\n");
 #endif
 
-	Menu_Item_Inner4_Data_0* r0_ = pItem->Data_4[1];
+	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
 	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
 	uint8_t* str = r0->pString;
 	r0->bData_0x17 = 1;
@@ -1757,7 +1757,7 @@ static void get_auto_standby_value_string(Menu_Item* pItem)
 #endif
 
 	User_Settings* sett = &menu_general_settings_backup;
-	Menu_Item_Inner4_Data_0* r0_ = pItem->Data_4[1];
+	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
 	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
 	uint8_t* str = r0->pString;
 	r0->bData_0x17 = 1;
@@ -1776,7 +1776,7 @@ static void get_auto_standby_value_string(Menu_Item* pItem)
 /* /  / 23490984 - todo */
 void get_channel_list_sorting_value_string(Menu_Item* pItem)
 {
-	Menu_Item_Inner4_Data_0* r0_ = pItem->Data_4[1];
+	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
 	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
 	uint8_t* str = r0->pString;
 
@@ -1796,7 +1796,7 @@ void get_channel_list_sorting_value_string(Menu_Item* pItem)
 /* /  / 23490a2c - todo */
 void get_channel_list_update_value_string(Menu_Item* pItem)
 {
-	Menu_Item_Inner4_Data_0* r0_ = pItem->Data_4[1];
+	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
 	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
 	uint8_t* str = r0->pString;
 
