@@ -380,7 +380,7 @@ int psi_timer_func(Struct_234a73e8* r5)
 /* 23403734 - todo */
 void sub_23403734(Struct_234a73e8* r5)
 {
-#if 1
+#ifdef PSI_sub_23403734_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23403734 (TODO): r5->activeMask=0x%x\r\n", r5->activeMask);
@@ -744,7 +744,7 @@ void sub_23403ab4(uint8_t r6, Struct_234a73e8* r7)
 		uint8_t r4 = sub_2344cd54(r7->index)->table_id;
 		struct SDT_Service* r5 = sub_2344cd54(r7->index)->Data_8;
 
-#if 1
+#ifdef PSI_sub_23403ab4_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "sub_23403ab4: r4=0x%02x\r\n", r4);

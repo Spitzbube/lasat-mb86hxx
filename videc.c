@@ -1909,7 +1909,7 @@ void sub_2345f8f8()
 	console_send_string("sub_2345f8f8 (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#ifdef VDEC_sub_2345f8f8_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_2345f8f8: Data_2389fb64.Data_0x30c[%d]=0x%x, Data_2389fb64.Data_238a00b0=0x%x\r\n",
@@ -2087,7 +2087,7 @@ int videc_isr_display()
 							if (Data_2389fb64.Data_4 != 0xff)
 							{
 								//0x2345fae8
-#if 1
+#ifdef VIDEC_ISR_DISPLAY_DEBUG
 								{
 									extern char debug_string[];
 									sprintf(debug_string, "videc_isr_display: Data_2389fb64.Data_4 = 0x%x\r\n",
@@ -2153,7 +2153,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 	} sp;
 
 	flash_read(sb, r4, 4, &sp_0x28);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "vdec_flash_read(1): sp_0x28=0x%x\r\n", sp_0x28);
@@ -2169,7 +2169,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 	r4 += 4;
 
 	flash_read(sb, r4, 4, &sp_0x28);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "vdec_flash_read(2): sp_0x28=0x%x\r\n", sp_0x28);
@@ -2185,7 +2185,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 	int r7 = r4 + 4;
 
 	flash_read(sb, r7, 4, &sp_0x28);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "vdec_flash_read(3): sp_0x28=0x%x\r\n", sp_0x28);
@@ -2193,7 +2193,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 	}
 #endif
 	flash_read(sb, sp_0x28, 4, &sp_0x28);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "vdec_flash_read(4): sp_0x28=0x%x\r\n", sp_0x28);
@@ -2210,7 +2210,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 		r7 += 4;
 
 		flash_read(sb, r7, 4, &sp_0x28);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "vdec_flash_read(5): sp_0x28=0x%x\r\n", sp_0x28);
@@ -2218,7 +2218,7 @@ int vdec_flash_read(void* sb/*hFlash*/, int r4)
 		}
 #endif
 		flash_read(sb, sp_0x28, 40, &sp);
-#if 1
+#ifdef VDEC_FLASH_READ_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "vdec_flash_read(6): sp.sp='%s', sp.addr=0x%x, sp.size/4=0x%x\r\n",

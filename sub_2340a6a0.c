@@ -152,7 +152,7 @@ int channel_stop_audio()
 /* 234095f4 / 2340b958 - complete */
 int channel_stop_video()
 {
-#if 1
+#ifdef CHANNEL_STOP_VIDEO_DEBUG
 	console_send_string("channel_stop_video (todo.c): TODO\r\n");
 #endif
 
@@ -175,7 +175,7 @@ void channel_stop_pes(void)
 	console_send_string("channel_stop_pes (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#ifdef CHANNEL_STOP_PES_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "channel_stop_pes: Data_235462e4.activeStreamMask=0x%x\r\n",
@@ -332,7 +332,7 @@ int channel_start_audio(uint16_t pid, void* hAudio)
 	console_send_string("channel_start_audio (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#ifdef CHANNEL_START_AUDIO_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "channel_start_audio: main_hPESParserAudio=%p, main_hAuOut=%p, pid=0x%x\r\n",
@@ -385,7 +385,7 @@ int channel_start_video(int pid, int r4)
 	console_send_string("channel_start_video (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#ifdef CHANNEL_START_VIDEO_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "channel_start_video: main_hPESParserVideo=%p, pid=0x%x, r4=0x%x\r\n",
@@ -463,7 +463,7 @@ void channel_start_pes(Channel ch)
 
 	int sb = 0;
 
-#if 1
+#ifdef CHANNEL_START_PES_DEBUG
 	{
 		extern char debug_string[];
 
@@ -791,7 +791,7 @@ void sub_23409c1c(PSI_Program* r7)
 /* 23409e64 - todo */
 void channel_on_psi_data(Struct_234a73e8* a)
 {
-#if 1
+#ifdef CHANNEL_ON_PSI_DATA_DEBUG
 	console_send_string("channel_on_psi_data (todo.c): TODO\r\n");
 #endif
 
@@ -859,7 +859,7 @@ void channel_on_psi_data(Struct_234a73e8* a)
 
 			if (pPrograms[r0].service_name != 0)
 			{
-#if 1
+#ifdef CHANNEL_ON_PSI_DATA_DEBUG
 				{
 					extern char debug_string[];
 					sprintf(debug_string, "channel_on_psi_data: pPrograms[%d].service_name='%s'\r\n",
@@ -1110,7 +1110,7 @@ void channel_check_streaming(void)
 
 		if (channel_audioWritePtr == writePtr)
 		{
-#if 1
+#ifdef CHANNEL_CHECK_STREAMING
 			{
 				extern char debug_string[];
 				sprintf(debug_string, "channel_check_streaming: channel_audioWritePtr=%d, writePtr=%d, Data_2349204c=%d\r\n",

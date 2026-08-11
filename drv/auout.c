@@ -362,7 +362,7 @@ int auout_isr()
 	int r4 = r0_ & r1;
 //	Struct_2349251c* r0 = Data_2349251c;
 
-#if 1
+#ifdef AUOUT_ISR_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "auout_isr: r0_=0x%x, r1=0x%x\r\n", r0_, r1);
@@ -372,7 +372,7 @@ int auout_isr()
 
 	if (r4 == 0)
 	{
-#if 1
+#ifdef AUOUT_ISR_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "auout_isr: r4=0, Data_2349251c->Data_0x98=0x%x\r\n",
@@ -424,7 +424,7 @@ int auout_isr()
 	if ((pts_found >> 12) != 0)
 	{
 		//0x2342a074
-#if 1
+#ifdef AUOUT_ISR_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "auout_isr: pts_found\r\n");
@@ -438,7 +438,7 @@ int auout_isr()
 	if ((header_found >> 11) != 0)
 	{
 		//0x2342a180
-#if 1
+#ifdef AUOUT_ISR_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "auout_isr: header_found\r\n");

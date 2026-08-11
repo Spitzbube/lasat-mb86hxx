@@ -102,7 +102,9 @@ void igmp_start_timer ()
 
 void igmp_input ()
 {
+#ifdef IGMP_INPUT_DEBUG
 	console_send_string("igmp_input (todo.c): TODO\r\n");
+#endif
 
 }
 
