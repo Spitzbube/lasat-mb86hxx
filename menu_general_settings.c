@@ -19,6 +19,7 @@ extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
 extern Menu_Item* sub_2344d9d0(struct Menu*);
+extern int sub_2344dcb2(int* a);
 
 extern uint8_t Data_2397044c[]; //2397044c
 extern uint8_t Data_2397056c[]; //2397056c
@@ -373,7 +374,7 @@ static Graphic_Job_2_5_Item_Text Data_234e94e4 = //234e94e4
 
 
 
-static Graphic_Job_2_5_Item Data_234e9514[25] = //234e9514
+static Graphic_Job_2_5_Item menu_general_settings_graphic_items[25] = //234e9514
 {
 	{0}, //[0] = 234e9514
 	{0}, //[1] = 234E9554
@@ -745,13 +746,114 @@ Struct_235fdf74_Inner16 Data_234e9594 = //234e9594
 };
 #endif
 
-static Graphic_Job_2_5 Data_234ea194 = //234ea194
+#ifndef VDR110
+
+static Graphic_Job_2_5_Item menu_general_settings_graphic_items_ex[25] = //234E9B54
+{
+	{0}, //[0] = 234E9B54
+	{0}, //[1] = 234E9B94
+	{0}, //[2] = 234E9BD4
+	{0}, //[3] = 234E9C14
+	{1, 0, 0, 0, 0x3d, 0x60, 0xed, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 0, 0, &Data_234e9364/*Data_0x20*/}, //[4] = 234E9C54: "Zeitverschiebung", caption
+#if 0
+0x234e9c54                        db         0x01                               ; DATA XREF=0x234ea340
+0x234e9c55                        db         0x00
+0x234e9c56 0000                   movs       r0, r0
+0x234e9c58                        dd         0x00000000
+0x234e9c5c                        dd         0x00000000
+0x234e9c60                        dw         0x003d
+0x234e9c62                        dw         0x0060
+0x234e9c64                        dw         0x00ed
+0x234e9c66                        dw         0x0020
+0x234e9c68                        dd         0x00000000
+0x234e9c6c                        dd         0x234c12d4
+0x234e9c70                        dd         0x00000000
+0x234e9c74                        dd         0x234e9364
+0x234e9c78                        dd         0x00000000
+0x234e9c7c                        dd         0x00000000
+0x234e9c80                        dd         0x00000000
+0x234e9c84                        dd         0x00000000
+0x234e9c88                        dd         0x00000000
+0x234e9c8c                        dd         0x00000000
+0x234e9c90                        dd         0x00000000
+#endif
+	{0}, //[5] = 234E9C94
+	{0}, //[6] = 234E9CD4
+	{0}, //[7] = 234E9D14
+	{0}, //[8] = 234E9D54
+	{0}, //[9] = 234E9D94
+	{0}, //[10] = 234E9DD4
+	{0}, //[11] = 234E9E14
+	{0}, //[12] = 234E9E54
+	{0}, //[13] = 234E9E94
+	{1, 0, 0, 0, 0x141, 0x60, 0xed, 0x20, 0, &Data_234c12d4/*Data_0x18*/, 0, 0, &Data_234e943c/*Data_0x20*/}, //[14] = 234E9ED4: "Zeitverschiebung", value
+#if 0
+0x234e9ed4                        db         0x01                               ; DATA XREF=0x234ea344
+0x234e9ed5                        db         0x00
+0x234e9ed6 0000                   movs       r0, r0
+0x234e9ed8                        dd         0x00000000
+0x234e9edc                        dd         0x00000000
+0x234e9ee0                        dw         0x0141
+0x234e9ee2                        dw         0x0060
+0x234e9ee4                        dw         0x00ed
+0x234e9ee6                        dw         0x0020
+0x234e9ee8                        dd         0x00000000
+0x234e9eec                        dd         0x234c12d4
+0x234e9ef0                        dw         0x0000
+0x234e9ef2                        dw         0x0000
+0x234e9ef4                        dd         0x234e943c
+0x234e9ef8                        dd         0x00000000
+0x234e9efc                        dd         0x00000000
+0x234e9f00                        dd         0x00000000
+0x234e9f04                        dd         0x00000000
+0x234e9f08                        dd         0x00000000
+0x234e9f0c                        dd         0x00000000
+0x234e9f10                        dd         0x00000000
+#endif
+	{0}, //[15] = 234E9F14
+	{0}, //[16] = 234E9F54
+	{0}, //[17] = 234E9F94
+	{0}, //[18] = 234E9FD4
+	{0}, //[19] = 234EA014
+	{0}, //[20] = 234EA054
+	{0}, //[21] = 234EA094
+	{0}, //[22] = 234EA0D4
+	{1, 0, 0, 0, 0x3d, 0x29, 0xed, 0x26, 0, &Data_234c12a4/*Data_0x18*/, 0, 0, &Data_234e9334/*Data_0x20*/}, //[23] = 234EA114
+#if 0
+0x234ea114                        db         0x01                               ; DATA XREF=0x234ea4e4
+0x234ea115                        db         0x00
+0x234ea116 0000                   movs       r0, r0
+0x234ea118                        dd         0x00000000
+0x234ea11c                        dd         0x00000000
+0x234ea120                        dw         0x003d
+0x234ea122                        dw         0x0029
+0x234ea124                        dw         0x00ed
+0x234ea126                        dw         0x0026
+0x234ea128                        dd         0x00000000
+0x234ea12c                        dd         0x234c12a4
+0x234ea130                        dw         0x0000
+0x234ea132                        dw         0x0000
+0x234ea134                        dd         0x234e9334
+0x234ea138                        dd         0x00000000
+0x234ea13c                        dd         0x00000000
+0x234ea140                        dd         0x00000000
+0x234ea144                        dd         0x00000000
+0x234ea148                        dd         0x00000000
+0x234ea14c                        dd         0x00000000
+0x234ea150                        dd         0x00000000
+#endif
+	{0}, //[24] = 234EA154
+};
+
+#endif //!VDR110
+
+static Graphic_Job_2_5 menu_general_settings_graphic_data = //234ea194
 {
 	0, //uint8_t bData_0; //0
 	0xfa, //uint8_t bData_1; //1
 	0x0007, //uint16_t wData_2; //2
 	0x04, //uint8_t bData_4; //4
-	&Data_234e9514[0], //pItems; //8
+	&menu_general_settings_graphic_items[0], //pItems; //8
 	&menu_main_graphic_color_data, //Struct_23414b38_b_Inner_0xc* pColorData; //12
 	16, //uint8_t numColors; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
@@ -780,45 +882,38 @@ static Graphic_Job_2_5 Data_234ea194 = //234ea194
 #endif
 };
 
-//TODO: items...
-static Menu menu_general_settings_ex = //234ea4d8
+static Graphic_Job_2_5 menu_general_settings_graphic_data_ex = //234ea1b8
 {
-		80, //"Allgemein"?
-		&menu_general_settings_items[0], //Menu_Item* Data_4; //4
-		&menu_general_settings_items[0], //Menu_Item* Data_8; //8
-		&Data_234e9514[23], //&234ea114, //Graphic_Job_2_5_Item* header; //12 = 0xc
-		0, //&Data_234e9bd4, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
-		&Data_234ea194, //&234ea1b8, Graphic_Job_2_5* graphicData; //20 = 0x14
-		7, //uint8_t maxItem; //0x18 = 24
-		0, //int8_t currentItem; //0x19
-		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
-		sub_2344dcb2, //void (*onNavigate)(); //0x20
-		menu_general_settings_on_enter, //void (*onEnter)(); //36 = 0x24
-		on_menu_exit, //int (*onExit)(); //0x28
-		0, //int Data_0x2c; //44 = 0x2c
-		0, //int Data_0x30; //48
-		sub_2344d9d0, //Menu_Item* (*Data_0x34)(struct Menu*); //52
-		0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56
-		//0x3c = 60?
+	0, //uint8_t bData_0; //0
+	0xfa, //uint8_t bData_1; //1
+	0x0007, //uint16_t wData_2; //2
+	0x0c, //uint8_t bData_4; //4
+	&menu_general_settings_graphic_items_ex[0], //234e9b54 pItems; //8
+	&menu_main_graphic_color_data, //Struct_23414b38_b_Inner_0xc* pColorData; //12
+	16, //uint8_t numColors; //0x10 = 16
+	0, //int fill_0x14; //0x14 = 20
+	25, //uint8_t bNumItems; //0x18 = 24
+	0x01, //uint8_t bData_0x19; //0x19 = 25
+	0, //0x1c
+	0, //0x20
 #if 0
-0x234ea4d8                        dw         0x0050                             ; DATA XREF=0x234e9330
-0x234ea4da                        dw         0x0000
-0x234ea4dc                        dd         0x234ea33c
-0x234ea4e0                        dd         0x234ea33c
-0x234ea4e4                        dd         0x234ea114
-0x234ea4e8                        dd         0x234e9bd4
-0x234ea4ec                        dd         0x234ea1b8
-0x234ea4f0                        db         0x07
-0x234ea4f1                        db  0x00 ; '.'
-0x234ea4f2 0000                   movs       r0, r0
-0x234ea4f4                        dd         graphic_start_job_2_5
-0x234ea4f8                        dd         sub_2344dcb2+1
-0x234ea4fc                        dd         menu_general_settings_on_enter+1
-0x234ea500                        dd         sub_23490a66+1
-0x234ea504                        dd         0x00000000
-0x234ea508                        dd         0x00000000
-0x234ea50c                        dd         sub_2344d9d0+1
-0x234ea510                        dd         0x00000000
+0x234ea1b8                        db  0x00 ; '.'                                ; DATA XREF=0x234ea4ec
+0x234ea1b9                        db  0xfa ; '.'
+0x234ea1ba                        dw         0x0007
+0x234ea1bc                        db         0x0c
+0x234ea1bd                        db         0x00
+0x234ea1be                        dw         0x0000
+0x234ea1c0                        dd         0x234e9b54
+0x234ea1c4                        dd         menu_main_graphic_color_data
+0x234ea1c8                        db         0x10
+0x234ea1c9                        db  0x00 ; '.'
+0x234ea1ca 0000                   movs       r0, r0
+0x234ea1cc                        dd         0x00000000
+0x234ea1d0                        db         0x19
+0x234ea1d1                        db         0x01
+0x234ea1d2 0000                   movs       r0, r0
+0x234ea1d4                        dd         0x00000000
+0x234ea1d8                        dd         0x00000000
 #endif
 };
 
@@ -868,9 +963,9 @@ static Menu menu_general_settings = //234963ac /  / 234ea49c
 		0, //int8_t currentItem; //0x19
 		0, //void (*Data_0x1c)(); //0x1c
 #else
-		&Data_234e9514[23], //&234e9ad4, //Graphic_Job_2_5_Item* header; //12 = 0xc
+		&menu_general_settings_graphic_items[23], //&234e9ad4, //Graphic_Job_2_5_Item* header; //12 = 0xc
 		0, //&Data_234e9594, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
-		&Data_234ea194, //Graphic_Job_2_5* graphicData; //20 = 0x14
+		&menu_general_settings_graphic_data, //Graphic_Job_2_5* graphicData; //20 = 0x14
 		7, //uint8_t maxItem; //0x18 = 24
 		0, //int8_t currentItem; //0x19
 		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
@@ -887,7 +982,55 @@ static Menu menu_general_settings = //234963ac /  / 234ea49c
 		0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56
 		//0x3c = 60?
 #endif
-}; //->234963E4
+}; //->234963E4 /  / 234EA4D8
+
+#ifndef VDR110
+
+static Menu_Item menu_general_settings_items_ex[];
+
+//TODO: items...
+static Menu menu_general_settings_ex = //234ea4d8
+{
+		80, //"Allgemein"?
+		&menu_general_settings_items_ex[0], //Menu_Item* Data_4; //4
+		&menu_general_settings_items_ex[0], //Menu_Item* Data_8; //8
+		&menu_general_settings_graphic_items_ex[23], //&234ea114, //Graphic_Job_2_5_Item* header; //12 = 0xc
+		0/*&menu_general_settings_graphic_items_ex[2]*/, //&234e9bd4, //Struct_235fdf74_Inner16* Data_0x10; //16 = 0x10
+		&menu_general_settings_graphic_data_ex, //&234ea1b8, Graphic_Job_2_5* graphicData; //20 = 0x14
+		0, //7, //uint8_t maxItem; //0x18 = 24
+		0, //int8_t currentItem; //0x19
+		graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
+		sub_2344dcb2, //void (*onNavigate)(); //0x20
+		menu_general_settings_on_enter, //void (*onEnter)(); //36 = 0x24
+		on_menu_exit, //int (*onExit)(); //0x28
+		0, //int Data_0x2c; //44 = 0x2c
+		0, //int Data_0x30; //48
+		sub_2344d9d0, //Menu_Item* (*Data_0x34)(struct Menu*); //52
+		0, //void* (*Data_0x38)(struct FrontDisplay_Job*); //56
+		//0x3c = 60?
+#if 0
+0x234ea4d8                        dw         0x0050                             ; DATA XREF=0x234e9330
+0x234ea4da                        dw         0x0000
+0x234ea4dc                        dd         0x234ea33c
+0x234ea4e0                        dd         0x234ea33c
+0x234ea4e4                        dd         0x234ea114
+0x234ea4e8                        dd         0x234e9bd4
+0x234ea4ec                        dd         0x234ea1b8
+0x234ea4f0                        db         0x07
+0x234ea4f1                        db  0x00 ; '.'
+0x234ea4f2 0000                   movs       r0, r0
+0x234ea4f4                        dd         graphic_start_job_2_5
+0x234ea4f8                        dd         sub_2344dcb2+1
+0x234ea4fc                        dd         menu_general_settings_on_enter+1
+0x234ea500                        dd         sub_23490a66+1
+0x234ea504                        dd         0x00000000
+0x234ea508                        dd         0x00000000
+0x234ea50c                        dd         sub_2344d9d0+1
+0x234ea510                        dd         0x00000000
+#endif
+};
+
+#endif //!VDR110
 
 #ifdef VDR110
 
@@ -947,8 +1090,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		75, //0x4b = "Zeitverschiebung" / 'Time difference'
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[4], //234e9614,
-			&Data_234e9514[14], //234e9894,
+			&menu_general_settings_graphic_items[4], //234e9614,
+			&menu_general_settings_graphic_items[14], //234e9894,
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_time_difference_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -982,8 +1125,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		85, //0x55 = "Menusprache" = "Menu language"
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[5], //234e9654,
-			&Data_234e9514[15], //234e98d4,
+			&menu_general_settings_graphic_items[5], //234e9654,
+			&menu_general_settings_graphic_items[15], //234e98d4,
 			0, 0, 0 //TODO
 		}, //int fill_4[5]; //4
 		get_menu_language_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1017,8 +1160,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		82, //0x52 = "Startlautstarke" = "Initial volume"
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[6], //234e9694,
-			&Data_234e9514[16], //234e9914,
+			&menu_general_settings_graphic_items[6], //234e9694,
+			&menu_general_settings_graphic_items[16], //234e9914,
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_initial_volume_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1052,8 +1195,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		399, //0x18f = "Timer-Speicherung" / 'Timer storage'
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[7], //234e96d4,
-			&Data_234e9514[17], //234e9954,
+			&menu_general_settings_graphic_items[7], //234e96d4,
+			&menu_general_settings_graphic_items[17], //234e9954,
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_timer_storage_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1086,8 +1229,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		382, //0x017e = "Auto-Standby"
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[8], //234e9714, 
-			&Data_234e9514[18], //234e9994, 
+			&menu_general_settings_graphic_items[8], //234e9714, 
+			&menu_general_settings_graphic_items[18], //234e9994, 
 			0, 0, 0
 		}, //Graphic_Job_2_5_Item* Data_4[5]; //4
 		get_auto_standby_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1120,8 +1263,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		341, //0x155 = "Deep-Standby"
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[9], //234e9754, 
-			&Data_234e9514[19], //234e99d4, 
+			&menu_general_settings_graphic_items[9], //234e9754, 
+			&menu_general_settings_graphic_items[19], //234e99d4, 
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_deep_standby_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1154,8 +1297,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		389, //0x185 = "Sendersortierung" / 'Channel list sorting'
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[10], //234e9794, 
-			&Data_234e9514[20], //234e9a14, 
+			&menu_general_settings_graphic_items[10], //234e9794, 
+			&menu_general_settings_graphic_items[20], //234e9a14, 
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_channel_list_sorting_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1188,8 +1331,8 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 		394, //0x18a = "Senderaktualisierung" / 'Channel list update'
 		0, //uint16_t wData_2; //2
 		{
-			&Data_234e9514[11], //234e97d4, 
-			&Data_234e9514[21], //234e9a54, 
+			&menu_general_settings_graphic_items[11], //234e97d4, 
+			&menu_general_settings_graphic_items[21], //234e9a54, 
 			0, 0, 0
 		}, //int fill_4[5]; //4
 		get_channel_list_update_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
@@ -1219,6 +1362,64 @@ Menu_Item menu_general_settings_items[] = //234963f0 / 234ea1dc
 	} //234ea33c
 #endif //!VDR110
 };
+
+#ifndef VDR110
+
+Menu_Item menu_general_settings_items_ex[] = // / / 234ea33c
+{
+	//[0]
+	{
+		75, //0x4b = "Zeitverschiebung" / 'Time difference'
+		0x0162, //uint16_t wData_2; //2
+		{
+			&menu_general_settings_graphic_items_ex[4], //234e9c54,
+			&menu_general_settings_graphic_items_ex[14], //234e9ed4,
+			0, 0, 0
+		}, //int fill_4[5]; //4
+		get_time_difference_value_string, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
+		menu_time_difference_change, //void* Data_0x1c; //0x1c = 28
+		menu_item_event_thread, //void* Data_0x20; //0x20 = 32
+		0, //void* Data_0x24; //0x24 = 36
+		0, //void* Data_0x28; //0x28 = 40
+#if 0
+0x234ea33c                        dw         0x004b                             ; DATA XREF=0x234ea4dc, 0x234ea4e0
+0x234ea33e                        dw         0x0162
+0x234ea340                        dd         0x234e9c54
+0x234ea344                        dd         0x234e9ed4
+0x234ea348                        dd         0x00000000
+0x234ea34c                        dd         0x00000000
+0x234ea350                        dd         0x00000000
+0x234ea354                        dd         get_time_difference_value_string+1
+0x234ea358                        dd         menu_time_difference_change+1
+0x234ea35c                        dd         menu_item_event_thread+1
+0x234ea360                        dd         0x00000000
+0x234ea364                        dd         0x00000000
+#endif
+	},
+	//[1]
+	{
+	},
+	//[2]
+	{
+	},
+	//[3]
+	{
+	},
+	//[4]
+	{
+	},
+	//[5]
+	{
+	},
+	//[6]
+	{
+	},
+	//[7]
+	{
+	},
+};
+
+#endif //!VDR110
 
 static User_Settings menu_general_settings_backup; //238e0ab8
 
