@@ -1454,9 +1454,7 @@ int menu_main_items_on_event(void* r0)
 		else if (menu_main_current_flavor->currentItem == 4)
 		{
 			//0x2344cfc8: Information
-#if 0
-			sub_23456220();
-#endif
+			menu_information_entry(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfce
