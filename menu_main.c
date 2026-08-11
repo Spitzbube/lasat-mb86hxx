@@ -16,12 +16,13 @@ extern void sub_23491634();
 extern void sub_2349972e();
 extern Menu_Item* sub_2344d9d0(struct Menu*);
 extern int sub_2344dcb2(int* a);
+extern void menu_settings_set_flavor(uint8_t);
 
 static int Data_234c125c[]; //234c125c
 static int Data_234c1264[]; //234c1264
 static uint32_t menu_main_clut[]; //234c1388
 static Menu menu_main; //234c2044
-static Menu Data_234c2188; //234c2188
+static Menu menu_main_ex; //234c2188
 
 static int menu_main_on_enter(int);
 static int menu_main_on_exit(void);
@@ -35,9 +36,9 @@ Graphic_Color_Data menu_main_graphic_color_data = //234c123c
 {
 	&menu_main_clut[0],
 };
-Menu* Data_234c1240 = &menu_main; //234C1240 +0x10
-int Data_234c1244; //234c1244 +0x14
-int Data_234c1248; //234c1248 +0x18
+Menu* menu_main_current_flavor = &menu_main; //234C1240 +0x10
+int Data_234c1244 = 0; //234c1244 +0x14
+int Data_234c1248 = 0; //234c1248 +0x18
 int (*Data_234c124c)() = 0; //234C124C +0x1c
 Menu* Data_234c1250 = 0; //234c1250 +0x20
 Menu_Item* Data_234c1254 = 0; //234c1254 +0x24
@@ -52,10 +53,10 @@ int Data_234c1264[] = //234c1264 +0x34
 	0x106,
 	0x163,
 };
-Menu* Data_234c126c[] = //234C126C +3c
+Menu* menu_main_flavor[] = //234C126C +3c
 {
-	&menu_main/*234c2044*/, 
-	&Data_234c2188/*234c2188*/
+	&menu_main, //234c2044 
+	&menu_main_ex //234c2188
 };
 
 Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1274 = //234c1274
@@ -716,7 +717,7 @@ static Graphic_Job_2_5_Item menu_main_graphic_items[14] = //234c1834
 	{0}, //[13] = 234C1B74
 };
 
-static Graphic_Job_2_5_Item Data_234c1bb4[13] = //234C1BB4
+static Graphic_Job_2_5_Item menu_main_graphic_items_ex[13] = //234C1BB4
 {
 	{1, 0, 0/*&Data_234c1544*//*Data_4?*/, 0/*Data_8*/, 0x37, 0x23, 0x106, 0x32, 0, &Data_234c1558/*Data_0x18*/, 0, 0, 0, {0}, 0}, //[0] = 234C1BB4: ???
 #if 0
@@ -907,13 +908,13 @@ static Graphic_Job_2_5 menu_main_graphic_data = //234c1ef4
 	0, //0x20
 };
 
-static Graphic_Job_2_5 Data_234c1f18 = //234c1f18
+static Graphic_Job_2_5 menu_main_graphic_data_ex = //234c1f18
 {
 	0, //uint8_t bData_0; //0
 	0xfa, //uint8_t bData_1; //1
 	0x0004, //uint16_t wData_2; //2
 	0x0c, //uint8_t bData_4; //4
-	&Data_234c1bb4[0], //int Data_8; //8
+	&menu_main_graphic_items_ex[0], //int Data_8; //8
 	&menu_main_graphic_color_data, //Graphic_Color_Data* Data_0xc; //12
 	0x0f, //uint8_t bData_0x10; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
@@ -1154,14 +1155,14 @@ static Menu menu_main = //234c2044
 #endif
 };
 
-static Menu_Item Data_234c2080[] = //234c2080
+static Menu_Item menu_main_items_ex[] = //234c2080
 {
 	//[0]
 	{
 		0x004a, //"Einstellungen"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[5], //234c1cf4
+			&menu_main_graphic_items_ex[5], //234c1cf4
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1172,7 +1173,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c2080                        dw         0x004a                             ; DATA XREF=0x234c218c, 0x234c2190
 0x234c2082                        dw         0x0161
-0x234c2084                        dd         Data_234c1bb4+320
+0x234c2084                        dd         menu_main_graphic_items_ex+320
 0x234c2088 0000                   movs       r0, r0
 0x234c208a 0000                   movs       r0, r0
 0x234c208c 0000                   movs       r0, r0
@@ -1195,7 +1196,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 		0x0079, //"Installation"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[6], //234C1D34
+			&menu_main_graphic_items_ex[6], //234C1D34
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1206,7 +1207,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c20ac                        dw         0x0079
 0x234c20ae                        dw         0x0161
-0x234c20b0                        dd         Data_234c1bb4+384
+0x234c20b0                        dd         menu_main_graphic_items_ex+384
 0x234c20b4 0000                   movs       r0, r0
 0x234c20b6 0000                   movs       r0, r0
 0x234c20b8 0000                   movs       r0, r0
@@ -1229,7 +1230,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 		0x0044, //"Senderliste"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[7], //234C1D74
+			&menu_main_graphic_items_ex[7], //234C1D74
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1240,7 +1241,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c20d8                        dw         0x0044
 0x234c20da                        dw         0x0161
-0x234c20dc                        dd         Data_234c1bb4+448
+0x234c20dc                        dd         menu_main_graphic_items_ex+448
 0x234c20e0 0000                   movs       r0, r0
 0x234c20e2 0000                   movs       r0, r0
 0x234c20e4 0000                   movs       r0, r0
@@ -1263,7 +1264,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 		0x00a6, //"Timer"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[8], //234C1DB4
+			&menu_main_graphic_items_ex[8], //234C1DB4
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1274,7 +1275,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c2104                        dw         0x00a6
 0x234c2106                        dw         0x0161
-0x234c2108                        dd         Data_234c1bb4+512
+0x234c2108                        dd         menu_main_graphic_items_ex+512
 0x234c210c 0000                   movs       r0, r0
 0x234c210e 0000                   movs       r0, r0
 0x234c2110 0000                   movs       r0, r0
@@ -1297,7 +1298,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 		0x003f, //"Information"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[9], //234C1DF4
+			&menu_main_graphic_items_ex[9], //234C1DF4
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1308,7 +1309,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c2130                        dw         0x003f
 0x234c2132                        dw         0x0161
-0x234c2134                        dd         Data_234c1bb4+576
+0x234c2134                        dd         menu_main_graphic_items_ex+576
 0x234c2138 0000                   movs       r0, r0
 0x234c213a 0000                   movs       r0, r0
 0x234c213c 0000                   movs       r0, r0
@@ -1330,7 +1331,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 		0x0118, //"Aufnahmespeicher"
 		0x0161, //uint16_t wData_2; //2
 		{
-			&Data_234c1bb4[11], //234C1E74
+			&menu_main_graphic_items_ex[11], //234C1E74
 		}, //int fill_4[5]; //4
 		0, //void (*Data_0x18)(struct Menu_Item*); //0x18 = 24
 		menu_main_items_on_event, //void* onEvent; //0x1c = 28
@@ -1341,7 +1342,7 @@ static Menu_Item Data_234c2080[] = //234c2080
 #if 0
 0x234c215c                        dw         0x0118
 0x234c215e                        dw         0x0161
-0x234c2160                        dd         Data_234c1bb4+704
+0x234c2160                        dd         menu_main_graphic_items_ex+704
 0x234c2164 0000                   movs       r0, r0
 0x234c2166 0000                   movs       r0, r0
 0x234c2168 0000                   movs       r0, r0
@@ -1362,14 +1363,14 @@ static Menu_Item Data_234c2080[] = //234c2080
 };
 
 /* TODO!!! item:....*/
-static Menu Data_234c2188 = //234c2188
+static Menu menu_main_ex = //234c2188
 {
     10, //"Hauptmenu"
-    &Data_234c2080[0], //Menu_Item* Data_4; //4
-    &Data_234c2080[0], //Menu_Item* Data_8; //8
-    &Data_234c1bb4[1], /*234c1bf4*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
-    &Data_234c1bb4[3], /*234c1c74*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
-    &Data_234c1f18, //Graphic_Job_2_5* graphicData; //20 = 0x14
+    &menu_main_items_ex[0], //Menu_Item* Data_4; //4
+    &menu_main_items_ex[0], //Menu_Item* Data_8; //8
+    &menu_main_graphic_items_ex[1], /*234c1bf4*/ //Struct_235fdf74_Inner12* header; //12 = 0xc
+    &menu_main_graphic_items_ex[3], /*234c1c74*/ //Struct_235fdf74_Inner16* help; //16 = 0x10
+    &menu_main_graphic_data_ex, //Graphic_Job_2_5* graphicData; //20 = 0x14
     5, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
     graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
@@ -1406,7 +1407,13 @@ static Menu Data_234c2188 = //234c2188
 /*  /  / 2344cf8c - todo */
 int menu_main_items_on_event(void* r0)
 {
-#if 1
+	Graphic_Queue_Item sp8;
+	struct
+	{
+		int Data_0;
+	} sp4;
+
+#if 0
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "menu_main_items_on_event: r0=%p\r\n", r0);
@@ -1417,28 +1424,28 @@ int menu_main_items_on_event(void* r0)
 	if (r0 != 0)
 	{
 		//0x2344cf96
-		if (Data_234c1240->currentItem == 0)
+		if (menu_main_current_flavor->currentItem == 0)
 		{
 			//0x2344cfa0: Einstellungen
 			menu_settings_entry(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfa6
-		else if (Data_234c1240->currentItem == 1)
+		else if (menu_main_current_flavor->currentItem == 1)
 		{
 			//0x2344cfaa: Installation
 			menu_installation_entry(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfb0
-		else if (Data_234c1240->currentItem == 2)
+		else if (menu_main_current_flavor->currentItem == 2)
 		{
 			//0x2344cfb4: Senderliste
 			menu_channel_list_entry(r0);
 			//->loc_2344d05a
 		}
 		//loc_2344cfba
-		else if (Data_234c1240->currentItem == 3)
+		else if (menu_main_current_flavor->currentItem == 3)
 		{
 			//0x2344cfbe: Timer
 #if 0
@@ -1447,7 +1454,7 @@ int menu_main_items_on_event(void* r0)
 			//->loc_2344d05a
 		}
 		//loc_2344cfc4
-		else if (Data_234c1240->currentItem == 4)
+		else if (menu_main_current_flavor->currentItem == 4)
 		{
 			//0x2344cfc8: Information
 #if 0
@@ -1456,7 +1463,7 @@ int menu_main_items_on_event(void* r0)
 			//->loc_2344d05a
 		}
 		//loc_2344cfce
-		else if (Data_234c1240->currentItem == 5)
+		else if (menu_main_current_flavor->currentItem == 5)
 		{
 			//0x2344cfc8: Aufnahmespeicher
 #if 0
@@ -1469,9 +1476,43 @@ int menu_main_items_on_event(void* r0)
 	else
 	{
 		//loc_2344cfd8
-		console_send_string("menu_main_items_on_event: loc_2344cfd8: TODO\r\n");
+		Data_234c1244 = musb_msd_get_device(0);
+		if (Data_234c1244 != Data_234c1248)
+		{
+			//0x2344cfe6
+			Graphic_Job_2_5* r4 = menu_main_current_flavor->graphicData;
+			//r3 = 0x2C0;
+			//r6 = 0x240;
 
-		//TODO!!!
+			if (Data_234c1244 != 0)
+			{
+				//0x2344cff6
+				r4->wData_2 = 5;
+				r4->pItems[4].height/*0x112*/ = 0xcc;
+				r4->pItems[11].bData_0/*0x2c0*/ = 1; //r2
+				r4->pItems[9].Data_0x18/*0x258*/ = r4->pItems[7].Data_0x18/*0x1c0*/;
+			}
+			else
+			{
+				//loc_2344d01a
+				r4->wData_2 = 4;
+				r4->pItems[4].height/*0x112*/ = 0xac;
+				r4->pItems[11].bData_0/*0x2c0*/ = 0; //r2
+				r4->pItems[9].Data_0x18/*0x258*/ = r4->pItems[11].Data_0x18/*0x2d8*/;
+
+				if (menu_main_current_flavor->currentItem == 5)
+				{
+					//0x2344d042
+					sp4.Data_0 = 2;
+					(menu_main_current_flavor->onNavigate)(&sp4);
+				}
+				//loc_2344d04e
+			}
+			//loc_2344d04e
+			graphic_start_job_2_5(&sp8, r4);
+		}
+		//loc_2344d056
+		Data_234c1248 = Data_234c1244;
 	}
 	//loc_2344d05a
 	return 0;
@@ -1485,7 +1526,7 @@ int menu_main_on_enter(int a)
 	console_send_string("menu_main_on_enter (todo.c): TODO\r\n");
 #endif
 
-	Graphic_Job_2_5* r4 = Data_234c1240->graphicData;
+	Graphic_Job_2_5* r4 = menu_main_current_flavor->graphicData;
 
 	Data_234c1248 = Data_234c1244 = musb_msd_get_device(0);
 
@@ -1898,11 +1939,11 @@ int menu_main_entry(UI_Thread_Params* r5)
 	console_send_string("menu_main_entry (todo.c): TODO\r\n");
 #endif
 
-	menu_stack_operate(Data_234c1240);
+	menu_stack_operate(menu_main_current_flavor);
 
-	menu_initialize(Data_234c1240);
+	menu_initialize(menu_main_current_flavor);
 
-	sub_2343d51e(Data_234c1240, r5);
+	sub_2343d51e(menu_main_current_flavor, r5);
 
 	frontdisplay_start_text(sub_2344d0d0);
 
@@ -2048,11 +2089,11 @@ void sub_2344d6ce(uint8_t r5)
 		OSSemPend(Data_234c1258, 0, &err);
 		if (err == 0)
 		{
-			Data_234c1240 = Data_234c126c[r5];
+			menu_main_current_flavor = menu_main_flavor[r5];
 			Data_234c1234 = Data_234c125c[r5];
 			Data_234c1238 = Data_234c1264[r5];
 
-			sub_2348c89c(r5);
+			menu_settings_set_flavor(r5); //->menu_settings.c
 			sub_23452a3e(r5);
 			sub_23490c8a(r5);
 			sub_23492b52(r5);
