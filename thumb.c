@@ -4176,6 +4176,189 @@ void sub_2344fa5a(UI_Thread_Params* p)
 }
 
 
+/*  /  / 2344ffae -todo */
+void sub_2344ffae(UI_Thread_Params* p)
+{
+#if 0
+	console_send_string("sub_2344ffae (todo.c): TODO\r\n");
+#endif
+
+	Menu* pMenu; //r4
+	Menu_Item* pMenuItem; //r1
+	//Graphic_Job_2_5* r2;
+	//void (*r3)(); 
+//	int sp_0x38; //sp_0x38
+	uint8_t res; //sp_0x34
+	int cursor; //sp_0x30
+	Graphic_Queue_Item graphicQueueItem; //sp_0x20
+	UI_Thread_Params thread_params; //sp8
+	int (*graphic_lock)(); //sp4
+	int (*graphic_unlock)(); //r7 
+	void (*event_handler)(void*) = 0; //r6
+	int (*graphic_handler)(Graphic_Queue_Item*, void*); //r5
+
+	thread_params = *p;
+	Menu_Data.Data_235fdf70/*2379679C*/ = &thread_params;
+	res = OSSemPost(thread_params.pSema);
+	graphic_handler = 0;
+	OSMboxAccept(thread_params.pMBox);
+	//sp_0x38 = 237967C4;
+	while (1)
+	{
+		//loc_2344ffda
+		struct
+		{
+			uint8_t bData_0; //0
+			uint8_t bData_1; //1
+			uint8_t bData_2; //2
+	
+		}* pMsg;
+		int r0;
+	
+		pMsg = (void*) OSMboxPend(thread_params.pMBox, 0, &res);
+		r0 = pMsg->bData_0;
+
+#if 0
+		{
+			extern char debug_string[];
+			sprintf(debug_string, "sub_2344ffae: r0=0x%x(%d)\r\n", r0, r0);
+			console_send_string(debug_string);
+		}
+#endif
+		//0x2344ffe4
+		pMenu = Menu_Data.menu_stack/*237967A0*/[ Menu_Data.menu_stack_level/*sp_0x48*/ ];
+		//r2 = pMenu->graphicData;
+		pMenuItem = pMenu->Data_4;
+		graphic_lock = /*r3 =*/ pMenu->graphicData/*r2*/->lock;
+		graphic_unlock = pMenu->graphicData/*r2*/->unlock;
+
+		switch (r0)
+		{
+			case 0x10: //16: //Right
+			case 0x11: //17: //Left
+			case 0x32: //50:
+				//->loc_23450024
+				//r0 = 0x8000;
+				//->loc_2345006c
+				cursor = 0x8000;
+				graphic_handler = pMenu->graphicHandler;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2345007e
+				break;
+
+			case 0x20: //32: //Up
+			case 0x30: //48
+				//->loc_2345006a
+				//r0 = 0x0001;
+				//->loc_2345006c
+				cursor = 0x0001;
+				graphic_handler = pMenu->graphicHandler;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2345007e
+				break;
+
+			case 0x21: //33: //Down
+			case 0x31: //49:
+				//0x23450012 -> loc_23450074
+				//r0 = 0x0002;
+				//->loc_2345006c
+				cursor = 0x0002;
+				graphic_handler = pMenu->graphicHandler;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2345007e
+				break;
+
+			case 0x22: //34:
+				//->loc_23450078
+				//r0 = 0x0100;
+				//->loc_2345006c
+				cursor = 0x0100;
+				graphic_handler = pMenu->graphicHandler;
+				event_handler = pMenuItem->onEvent;
+				//->loc_2345007e
+				break;
+
+			case 0x2d:
+				//->loc_2345002a
+				{
+					if ((pMenu->onExit == 0) || 
+						(0 == (pMenu->onExit)(&thread_params)))
+					{
+						//loc_23450038
+						pMenu = menu_stack_operate(0);
+						if (pMenu != 0)
+						{
+							//0x23450042
+							graphic_lock = pMenu->graphicData->lock;
+							graphic_unlock = pMenu->graphicData->unlock;
+							graphic_handler = pMenu->graphicHandler;
+
+							/*sub_2344de56*/sub_2343d51e(pMenu, &thread_params);
+							//->loc_2345007e
+						} //if (pMenu != 0)
+						else
+						{
+							//loc_23450056
+							graphic_unlock = 0;
+
+							graphic_start_job_2_5(&graphicQueueItem, 0);
+							/*sub_2344de56*/sub_2343d51e(0, &thread_params);
+							//->loc_23450088
+							goto label_23450088;
+						}
+					} //if ((pMenu->onExit == 0) || (0 == (pMenu->onExit)(&thread_params)))
+					//loc_2345007e
+					{
+						//TODO!!!
+					}
+					//loc_23450088
+					//TODO!!!
+				} //case 0x2d:
+				break;
+
+			default:
+				//->loc_2345007e
+				break;
+		} //switch (r0)
+		//loc_2345007e
+		{
+			if (graphic_lock != NULL)
+			{
+				res = (graphic_lock)();
+			}
+		}
+		//loc_23450088
+label_23450088:
+		if (event_handler != 0)
+		{
+			//0x2345008c
+			(event_handler)(&cursor);
+			event_handler = 0;
+		}
+		//loc_23450092
+		if (graphic_handler != 0)
+		{
+			//0x23450096
+			(graphic_handler)(&graphicQueueItem, pMenu->graphicData);
+			graphic_handler = 0;
+		}
+		//loc_2345009e
+		if (graphic_unlock != 0)
+		{
+			//0x234500a2
+			res = (graphic_unlock)();
+		}
+		//loc_234500a6
+		if (62 == OSTaskDelReq(0xff))
+		{
+			//0x234500b0
+			OSTaskDel(0xff);
+		}
+		//->loc_2344ffda
+	}
+}
+
+
 /* /  / 23450f66 - todo */
 void sub_23450f66(UI_Thread_Params* p)
 {
