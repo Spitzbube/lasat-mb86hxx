@@ -87,76 +87,81 @@ typedef struct
 
 
 /* 234521d4 /  / 23413214 - todo */
-int sub_234521d4(Graphic_Job_2_5_Item* r4)
+int sub_234521d4(Graphic_Job_2_5_Item* pGraphicItem/*r4*/)
 {
 #if 0
 	console_send_string("sub_234521d4 (todo.c): TODO\r\n");
 #endif
 
-	uint8_t r5 = r4->Data_0x18->bData_8;
+	uint8_t pFlags/*r5*/ = pGraphicItem->background->bFlags;
 
-	sub_2342ce8c(r4->bData_1, r4->x, r4->y, 
-		(r5 & 2)? Data_2348feec: Data_2348fbac);
+	sub_2342ce8c(pGraphicItem->bData_1, pGraphicItem->x, pGraphicItem->y, 
+		(pFlags & 2)? Data_2348feec: Data_2348fbac);
 
-	sub_2342ce8c(r4->bData_1, 
-		r4->x + r4->width - 20, r4->y, 
-		(r5 & 1)? Data_2349008c: Data_2348fc7c);
+	sub_2342ce8c(pGraphicItem->bData_1, 
+		pGraphicItem->x + pGraphicItem->width - 20, pGraphicItem->y, 
+		(pFlags & 1)? Data_2349008c: Data_2348fc7c);
 
-	sub_2342ce8c(r4->bData_1, 
-		r4->x + r4->width - 20, 
-		r4->y + r4->height - 20, 
-		(r5 & 4)? Data_2349015c: Data_2348fd4c);
+	sub_2342ce8c(pGraphicItem->bData_1, 
+		pGraphicItem->x + pGraphicItem->width - 20, 
+		pGraphicItem->y + pGraphicItem->height - 20, 
+		(pFlags & 4)? Data_2349015c: Data_2348fd4c);
 
-	sub_2342ce8c(r4->bData_1, 
-		r4->x, 
-		r4->y + r4->height - 20, 
-		(r5 & 8)? Data_2348ffbc: Data_2348fe1c);
+	sub_2342ce8c(pGraphicItem->bData_1, 
+		pGraphicItem->x, 
+		pGraphicItem->y + pGraphicItem->height - 20, 
+		(pFlags & 8)? Data_2348ffbc: Data_2348fe1c);
 
 	//Top row 1
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y, 
-		r4->width - 40, 2, 15);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, 
+		pGraphicItem->x + 20, pGraphicItem->y, 
+		pGraphicItem->width - 40, 2, 15);
 
 	//Top row 2
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + 2, 
-		r4->width - 40, 2, 13);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, 
+		pGraphicItem->x + 20, pGraphicItem->y + 2, 
+		pGraphicItem->width - 40, 2, 13);
 
 	//Top row 3
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + 4, 
-		r4->width - 40, 1, 12);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, 
+		pGraphicItem->x + 20, pGraphicItem->y + 4, 
+		pGraphicItem->width - 40, 1, 12);
 
 #if 0
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + r4->height - 6, 
-		r4->width - 40, 2, 15);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + 20, pGraphicItem->y + pGraphicItem->height - 6, 
+		pGraphicItem->width - 40, 2, 15);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + r4->height - 4, 
-		r4->width - 40, 2, 13);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + 20, pGraphicItem->y + pGraphicItem->height - 4, 
+		pGraphicItem->width - 40, 2, 13);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 20, r4->y + r4->height - 2, 
-		r4->width - 40, 1, 12);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + 20, pGraphicItem->y + pGraphicItem->height - 2, 
+		pGraphicItem->width - 40, 1, 12);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x, r4->y + 20, 
-		2, r4->height - 40, 15);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x, pGraphicItem->y + 20, 
+		2, pGraphicItem->height - 40, 15);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 2, r4->y + 20, 
-		2, r4->height - 40, 13);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + 2, pGraphicItem->y + 20, 
+		2, pGraphicItem->height - 40, 13);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + 4, r4->y + 20, 
-		1, r4->height - 40, 12);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + 4, pGraphicItem->y + 20, 
+		1, pGraphicItem->height - 40, 12);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + r4->width - 6, r4->y + 20, 
-		2, r4->height - 40, 15);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + pGraphicItem->width - 6, pGraphicItem->y + 20, 
+		2, pGraphicItem->height - 40, 15);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + r4->width - 4, r4->y + 20, 
-		2, r4->height - 40, 13);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + pGraphicItem->width - 4, pGraphicItem->y + 20, 
+		2, pGraphicItem->height - 40, 13);
 
-	viscale_osd_fill_rect(r4->bData_1, r4->x + r4->width - 2, r4->y + 20, 
-		1, r4->height - 40, 12);
+	viscale_osd_fill_rect(pGraphicItem->bData_1, pGraphicItem->x + pGraphicItem->width - 2, pGraphicItem->y + 20, 
+		1, pGraphicItem->height - 40, 12);
 #endif
 }
 
 
 /* 23452584 /  / 234135c4 - todo */
-int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
+int sub_23452584(uint8_t flags/*r5*/, 
+	Struct_23452584_b* b, 
+	Graphic_Job_2_5_Item* pGraphicItem/*r4*/)
 {
 #if 0
 	console_send_string("sub_23452584 (todo.c): TODO\r\n");
@@ -166,98 +171,98 @@ int sub_23452584(uint8_t r5, Struct_23452584_b* b, Graphic_Job_2_5_Item* r4)
 	uint8_t r6 = 0;
 //	int r2 = 1;
 
-	if (r5 & 2)
+	if (flags & 2)
 	{
 		//0x234525a4
 		r6 = 1;
-		b->wData_0 = r4->Data_0x18->wData_0 + r4->x;
-		b->wData_4 = r4->Data_0x18->wData_0 + r4->y;
-		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_0 = pGraphicItem->background->wData_0 + pGraphicItem->x;
+		b->wData_4 = pGraphicItem->background->wData_0 + pGraphicItem->y;
+		b->wData_6 = pGraphicItem->background->wData_0;
 		b->wData_2 = 1; //r2
 		b++;
 	}
 	//loc_234525e8
-	if (r5 & 8)
+	if (flags & 8)
 	{
 		//0x234525f0
-		b->wData_0 = r4->Data_0x18->wData_0 + r4->x;
-		b->wData_4 = (r4->y + r4->height) - r4->Data_0x18->wData_0;
-		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_0 = pGraphicItem->background->wData_0 + pGraphicItem->x;
+		b->wData_4 = (pGraphicItem->y + pGraphicItem->height) - pGraphicItem->background->wData_0;
+		b->wData_6 = pGraphicItem->background->wData_0;
 		b->wData_2 = 1; //r2
 		r6++;
 		b++;
 	}
 	//loc_23452640
-	if (r5 & 1)
+	if (flags & 1)
 	{
 		//0x23452648
-		b->wData_0 = r4->width - r4->Data_0x18->wData_0 + r4->x;
-		b->wData_4 = r4->Data_0x18->wData_0 + r4->y;
-		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_0 = pGraphicItem->width - pGraphicItem->background->wData_0 + pGraphicItem->x;
+		b->wData_4 = pGraphicItem->background->wData_0 + pGraphicItem->y;
+		b->wData_6 = pGraphicItem->background->wData_0;
 		b->wData_2 = 1; //r2
 		b++;
 		r0 = 1;
 	}
 	//loc_23452694
-	if (r5 & 4)
+	if (flags & 4)
 	{
 		//0x2345269c
 		r0++;
-		b->wData_0 = r4->width - r4->Data_0x18->wData_0 + r4->x;
-		b->wData_4 = r4->y + r4->height - r4->Data_0x18->wData_0;
-		b->wData_6 = r4->Data_0x18->wData_0;
+		b->wData_0 = pGraphicItem->width - pGraphicItem->background->wData_0 + pGraphicItem->x;
+		b->wData_4 = pGraphicItem->y + pGraphicItem->height - pGraphicItem->background->wData_0;
+		b->wData_6 = pGraphicItem->background->wData_0;
 		b->wData_2 = 1; //r2
 	}
 	//loc_234526ec
 	if (r0 != 0)
 	{
 		//0x234526f4
-		if (r5 & 1)
+		if (flags & 1)
 		{
-			viscale_osd_fill_rect(r4->bData_1,
-				r4->width - r4->Data_0x18->wData_0 + r4->x,
-				r4->y + r4->Data_0x18->wData_0,
-				r4->Data_0x18->wData_0,
-				r4->height - r4->Data_0x18->wData_0 * r0,
-				r4->wColor);
+			viscale_osd_fill_rect(pGraphicItem->bData_1,
+				pGraphicItem->width - pGraphicItem->background->wData_0 + pGraphicItem->x,
+				pGraphicItem->y + pGraphicItem->background->wData_0,
+				pGraphicItem->background->wData_0,
+				pGraphicItem->height - pGraphicItem->background->wData_0 * r0,
+				pGraphicItem->wColor);
 		}
 		else
 		{
-			viscale_osd_fill_rect(r4->bData_1,
-				r4->width - r4->Data_0x18->wData_0 + r4->x,
-				r4->y,
-				r4->Data_0x18->wData_0,
-				r4->height - r4->Data_0x18->wData_0 * r0,
-				r4->wColor);
+			viscale_osd_fill_rect(pGraphicItem->bData_1,
+				pGraphicItem->width - pGraphicItem->background->wData_0 + pGraphicItem->x,
+				pGraphicItem->y,
+				pGraphicItem->background->wData_0,
+				pGraphicItem->height - pGraphicItem->background->wData_0 * r0,
+				pGraphicItem->wColor);
 		}
 		
-		r4->width -= r4->Data_0x18->wData_0;
+		pGraphicItem->width -= pGraphicItem->background->wData_0;
 	}
 	//loc_23452768
 	if (r6 != 0)
 	{
 		//0x23452770
-		if (r5 & 2)
+		if (flags & 2)
 		{
-			viscale_osd_fill_rect(r4->bData_1,
-				r4->x,
-				r4->y + r4->Data_0x18->wData_0,
-				r4->Data_0x18->wData_0,
-				r4->height - r4->Data_0x18->wData_0 * r6,
-				r4->wColor);
+			viscale_osd_fill_rect(pGraphicItem->bData_1,
+				pGraphicItem->x,
+				pGraphicItem->y + pGraphicItem->background->wData_0,
+				pGraphicItem->background->wData_0,
+				pGraphicItem->height - pGraphicItem->background->wData_0 * r6,
+				pGraphicItem->wColor);
 		}
 		else
 		{
-			viscale_osd_fill_rect(r4->bData_1,
-				r4->x,
-				r4->y,
-				r4->Data_0x18->wData_0,
-				r4->height - r4->Data_0x18->wData_0 * r6,
-				r4->wColor);
+			viscale_osd_fill_rect(pGraphicItem->bData_1,
+				pGraphicItem->x,
+				pGraphicItem->y,
+				pGraphicItem->background->wData_0,
+				pGraphicItem->height - pGraphicItem->background->wData_0 * r6,
+				pGraphicItem->wColor);
 		}
 
-		r4->width -= r4->Data_0x18->wData_0;
-		r4->x += r4->Data_0x18->wData_0;
+		pGraphicItem->width -= pGraphicItem->background->wData_0;
+		pGraphicItem->x += pGraphicItem->background->wData_0;
 	}
 	//loc_234527e4
 }
@@ -273,7 +278,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 	Graphic_Job_2_5_Item sp_0x34;
 	Struct_23452584_b sp_0xc[5];
 
-	Struct_2377ded0_Inner_0x1c_Inner_0x18* r6 = r4->Data_0x18;
+	Graphic_Job_2_5_Item_Background* r6 = r4->background;
 
 	sp_0x34 = *r4;
 
@@ -281,11 +286,11 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 
 	int r0 = 1;
 
-#if 0
+#ifdef GRAPHIC_sub_23452e88_DEBUG
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23452e88: '%s', r6->Data_4=%d, r6->bData_8=0x%02x\r\n", 
-			r4->Data_0x20->pString, r6->Data_4, r6->bData_8);
+		sprintf(debug_string, "sub_23452e88: '%s', r6->Data_4=%d, r6->bFlags=0x%02x\r\n", 
+			r4->Data_0x20->pString, r6->Data_4, r6->bFlags);
 		console_send_string(debug_string);
 	}
 #endif
@@ -329,7 +334,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 
 		case 4:
 			//0x23452f78 /  / 23413fb8: Solid round corner
-			sub_23452584(r6->bData_8, &sp_0xc[0], &sp_0x34);
+			sub_23452584(r6->bFlags, &sp_0xc[0], &sp_0x34);
 			//->0x23452fa4
 			break;
 

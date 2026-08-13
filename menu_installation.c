@@ -11,10 +11,8 @@ static int menu_installation_items_on_event(void*);
 extern void sub_2349615c();
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298; //234c1298
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12e0; //234c12e0
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c1298; //234c1298
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 
 static Menu menu_installation;
 static uint8_t Data_23796ad0[]; //23796ad0, size???
@@ -231,7 +229,7 @@ static Graphic_Job_2_5_Item Data_234c2338[] = //234c2338
 0x234c24b0                        dd         0x00000000
 0x234c24b4                        dd         0x00000000
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x80, 0xf9, 0x20, 0, &Data_234c12e0/*Data_0x18*/, 9, 0, &Data_234c22a8/*Data_0x20*/}, //[6] =  234C24B8
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x80, 0xf9, 0x20, 0, &menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 9, 0, &Data_234c22a8/*Data_0x20*/}, //[6] =  234C24B8
 #if 0
 0x234c24b8                        db         0x01                               ; DATA XREF=0x234c2cb0
 0x234c24b9                        db         0x00
@@ -258,7 +256,7 @@ static Graphic_Job_2_5_Item Data_234c2338[] = //234c2338
 0x234c24f0                        dd         0x00000000
 0x234c24f4                        dd         0x00000000
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xa0, 0xf9, 0x20, 0, &Data_234c12e0/*Data_0x18*/, 9, 0, &Data_234c22c0/*Data_0x20*/}, //[7] =  234C24F8
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xa0, 0xf9, 0x20, 0, &menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 9, 0, &Data_234c22c0/*Data_0x20*/}, //[7] =  234C24F8
 #if 0
 0x234c24f8                        db         0x01                               ; DATA XREF=0x234c2cdc
 0x234c24f9                        db         0x00
@@ -292,7 +290,7 @@ static Graphic_Job_2_5_Item Data_234c2338[] = //234c2338
 0x234c2534 0000                   movs       r0, r0
 0x234c2536 0000                   movs       r0, r0
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xc0, 0xf9, 0x20, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234c22d8/*Data_0x20*/}, //[8] =  234C2538
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0xc0, 0xf9, 0x20, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234c22d8/*Data_0x20*/}, //[8] =  234C2538
 #if 0
 0x234c2538                        db         0x01                               ; DATA XREF=0x234c2d08
 0x234c2539                        db         0x00
@@ -312,7 +310,7 @@ static Graphic_Job_2_5_Item Data_234c2338[] = //234c2338
 0x234c2556                        dw         0x0000
 0x234c2558                        dd         0x234c22d8
 #endif
-	{0, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xf9, 0x20, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234c22f0/*Data_0x20*/}, //[9] =  234C2578
+	{0, 0, 0, 0/*Data_8*/, 0x3d, 0xe0, 0xf9, 0x20, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234c22f0/*Data_0x20*/}, //[9] =  234C2578
 #if 0
 0x234c2578                        db         0x00                               ; DATA XREF=0x234c2d34
 0x234c2579                        db         0x00

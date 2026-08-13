@@ -16,8 +16,6 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern void* Data_234c1258; //234c1258
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c; //234c128c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
 
 static Graphic_Job_2_5_Item Data_234e0620[]; //234e0620
 static Menu Data_234e1c78;
@@ -54,7 +52,7 @@ uint8_t menu_info_bar_time_string[] = "--:--  "; //234DFE5C +0x14
 
 uint8_t bData_234dfe64 = 0; //234DFE64
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe74 = //234dfe74
+static Graphic_Job_2_5_Item_Background Data_234dfe74 = //234dfe74
 {
 	14, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -67,7 +65,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe74 = //234dfe74
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe80 = //234dfe80
+static Graphic_Job_2_5_Item_Background Data_234dfe80 = //234dfe80
 {
 	9, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -83,7 +81,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe80 = //234dfe80
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe8c = //234dfe8c
+static Graphic_Job_2_5_Item_Background Data_234dfe8c = //234dfe8c
 {
 	9, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -96,7 +94,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe8c = //234dfe8c
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe98 = //234dfe98
+static Graphic_Job_2_5_Item_Background Data_234dfe98 = //234dfe98
 {
 	9, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -109,7 +107,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfe98 = //234dfe98
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfea4 = //234dfea4
+static Graphic_Job_2_5_Item_Background Data_234dfea4 = //234dfea4
 {
 	9, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -122,7 +120,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfea4 = //234dfea4
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfebc = //234dfebc
+static Graphic_Job_2_5_Item_Background Data_234dfebc = //234dfebc
 {
 	14, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -135,7 +133,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfebc = //234dfebc
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfed4 = //234dfed4
+static Graphic_Job_2_5_Item_Background Data_234dfed4 = //234dfed4
 {
 	4, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -148,7 +146,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfed4 = //234dfed4
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfee0 = //234dfee0
+static Graphic_Job_2_5_Item_Background Data_234dfee0 = //234dfee0
 {
 	14, //uint16_t wData_0; //0
 	0, //int Data_4; //4
@@ -161,7 +159,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfee0 = //234dfee0
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfeec = //234dfeec
+static Graphic_Job_2_5_Item_Background Data_234dfeec = //234dfeec
 {
 	14, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -174,7 +172,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfeec = //234dfeec
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfef8 = //234dfef8
+static Graphic_Job_2_5_Item_Background Data_234dfef8 = //234dfef8
 {
 	14, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -187,7 +185,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dfef8 = //234dfef8
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234dff04 = //234dff04
+static Graphic_Job_2_5_Item_Background Data_234dff04 = //234dff04
 {
 	9, //uint16_t wData_0; //0
 	4, //int Data_4; //4
@@ -994,7 +992,9 @@ static Graphic_Job_2_5_Item Data_234e0620[40] = //234e0620
 0x234e07dc 0000                   movs       r0, r0
 0x234e07de 0000                   movs       r0, r0
 #endif
-    {1, 0, 0/*fill_4*/, 0/*Data_8*/, 0x00f0, 0x1e, 0xb4, 0x0165, 0/*fill_0x14*/, &Data_234c128c/*Data_0x18*/, 2/*wData_0x1c*/}, //[7] = 234E07E0
+    {1, 0, 0/*fill_4*/, 0/*Data_8*/, 0x00f0, 0x1e, 0xb4, 0x0165, 0/*fill_0x14*/, 
+    &menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+    2/*wData_0x1c*/}, //[7] = 234E07E0
 #if 0
 0x234e07e0                        db         0x01                               ; DATA XREF=sub_2348ca2a+26
 0x234e07e1                        db         0x00
@@ -1204,7 +1204,9 @@ static Graphic_Job_2_5_Item Data_234e0620[40] = //234e0620
 0x234e0b76 0000                   movs       r0, r0
 0x234e0b78                        dd         0x234dfeec
 #endif
-    {0, 0, 0/*fill_4*/, 0/*Data_8*/, 0x0037, 0x001e, 0x00b4, 0x0165, 0/*fill_0x14*/, &Data_234c128c/*Data_0x18*/, 2/*wData_0x1c*/}, //[22] = 234E0BA0
+    {0, 0, 0/*fill_4*/, 0/*Data_8*/, 0x0037, 0x001e, 0x00b4, 0x0165, 0/*fill_0x14*/, 
+    &menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+    2/*wData_0x1c*/}, //[22] = 234E0BA0
 #if 0
 0x234e0ba0                        db         0x00
 0x234e0ba1                        db  0x00 ; '.'
@@ -1473,7 +1475,7 @@ static int sub_2348c8d4(Struct_2348dc50* a)
             if (sp.wData_0x20 > r1)
             {
                 //0x2348c988
-                ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234dfee0;
+                ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234dfee0;
 
                 if (r4->Data_4[0]->Data_0x20 != 0)
                 {
@@ -1502,7 +1504,7 @@ static int sub_2348c8d4(Struct_2348dc50* a)
         }
         //0x2348c9ca
         //234E0258 / 234E0270 = 234c12ec
-        ((Graphic_Job_2_5_Item*)(Data_234e0298[r6 - 1].Data_4[0]))->Data_0x18 = &Data_234c12ec; //TODO!!!
+        ((Graphic_Job_2_5_Item*)(Data_234e0298[r6 - 1].Data_4[0]))->background = &menu_main_graphic_item_background_dark_blue_bottom_round_left_right; //TODO!!!
     }
     //loc_2348c9da
     return 0;
@@ -1626,7 +1628,7 @@ static int sub_2348ca2a(Struct_2348dc50* a)
                 //loc_2348cb50
                 r6++;
 
-                ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234dfee0;
+                ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234dfee0;
 
                 r4->Data_4[0]->bData_0 = 1; //r7
                 //->loc_2348cb7c

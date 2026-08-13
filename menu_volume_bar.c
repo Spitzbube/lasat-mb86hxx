@@ -11,8 +11,8 @@
 
 extern Menu_Item* sub_2344d9d0(struct Menu*);
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1558; //234c1558
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c1558; //234c1558
 static Menu menu_volume_bar; //234e71ec
 static Menu_Item menu_volume_bar_items[]; //234e71c0
 static Menu menu_volume_bar_ex; //234e7228
@@ -29,7 +29,7 @@ Menu* menu_volume_bar_flavor[] = //234e6ef0
     &menu_volume_bar,
     &menu_volume_bar_ex
 };
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6ef8 = //234e6ef8
+static Graphic_Job_2_5_Item_Background Data_234e6ef8 = //234e6ef8
 {
     10, 4, 0x0f
 #if 0
@@ -40,7 +40,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6ef8 = //234e6ef8
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6f04 = //234e6f04
+static Graphic_Job_2_5_Item_Background Data_234e6f04 = //234e6f04
 {
     9, 4, 0x0f
 #if 0
@@ -51,7 +51,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6f04 = //234e6f04
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e6f10 = //234e6f10
+static Graphic_Job_2_5_Item_Background Data_234e6f10 = //234e6f10
 {
     5, 4, 0x0f
 #if 0

@@ -16,12 +16,9 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern void* Data_234c1258; //234c1258
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c; //234c128c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c1340; //234c1340
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 extern void* sub_2344d0d0(FrontDisplay_Job*);
 extern void sub_2344f102(UI_Thread_Params*);
 extern void sub_234500bc(UI_Thread_Params*);
@@ -430,7 +427,7 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
     {0}, //[3] = 234CA91C
     {0}, //[4] = 234CA95C
     {0}, //[5] = 234CA99C
-    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x00a0, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234ca5e0/*Data_0x20*/}, //[6] = 234CA9DC
+    {1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x00a0, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 9, 0, &Data_234ca5e0/*Data_0x20*/}, //[6] = 234CA9DC
 #if 0
 0x234ca9dc                        db         0x01                               ; DATA XREF=0x234cbdf0
 0x234ca9dd                        db  0x00 ; '.'
@@ -459,7 +456,7 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
     {0}, //[13] = 234CAB9C
     {0}, //[14] = 234CABDC
     {0}, //[15] = 234CAC1C
-    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0060, 0x0173, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234ca6d0/*Data_0x20*/}, //[16] = 234CAC5C
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0060, 0x0173, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 9, 0, &Data_234ca6d0/*Data_0x20*/}, //[16] = 234CAC5C
 #if 0
 0x234cac5c                        dw         0x0001                             ; DATA XREF=0x234cbdf4
 0x234cac5e 0000                   movs       r0, r0
@@ -638,7 +635,7 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
 0x234cae7a                        dw         0x0000
 0x234cae7c                        dd         0x234ca790
 #endif
-    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0180, 0x0173, 0x0020, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234ca7a8/*Data_0x20*/}, //[25] = 234CAE9C
+    {1, 0, 0, 0/*Data_8*/, 0x00e3, 0x0180, 0x0173, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234ca7a8/*Data_0x20*/}, //[25] = 234CAE9C
 #if 0
 0x234cae9c                        db         0x01                               ; DATA XREF=0x234cbf80
 0x234cae9d                        db  0x00 ; '.'
@@ -727,7 +724,9 @@ static Graphic_Job_2_5_Item Data_234ca85c[34] = //234ca85c
 
 static Graphic_Job_2_5_Item Data_234cb95c[8] = //234cb95c
 {
-    {1, 0, 0, 0/*Data_8*/, 0x0037, 0x005a, 0x0226, 0x014c, 0, &Data_234c128c/*Data_0x18*/, 2, 0, 0/*Data_0x20*/}, //[0] = 234cb95c: header
+    {1, 0, 0, 0/*Data_8*/, 0x0037, 0x005a, 0x0226, 0x014c, 0, 
+    &menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+    2, 0, 0/*Data_0x20*/}, //[0] = 234cb95c: header
 #if 0
 0x234cb95c                        db         0x01                               ; DATA XREF=sub_2345636a+14, sub_23456c9c+20, 0x234cbdac, 0x234cc238
 0x234cb95d                        db  0x00 ; '.'
@@ -765,7 +764,9 @@ static Graphic_Job_2_5_Item Data_234cb95c[8] = //234cb95c
 0x234cb9ba                        dw         0x0000
 0x234cb9bc                        dd         0x234ca814
 #endif
-    {0, 0, 0, 0/*Data_8*/, 0x00f0, 0x0023, 0x010e, 0x0032, 0, &Data_234c128c/*Data_0x18*/, 2, 0, 0/*Data_0x20*/}, //[2] = 234CB9DC: Menu Item 0
+    {0, 0, 0, 0/*Data_8*/, 0x00f0, 0x0023, 0x010e, 0x0032, 0, 
+    &menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+    2, 0, 0/*Data_0x20*/}, //[2] = 234CB9DC: Menu Item 0
 #if 0
 0x234cb9dc                        db         0x00                               ; DATA XREF=0x234cc160
 0x234cb9dd                        db  0x00 ; '.'

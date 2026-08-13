@@ -10,12 +10,12 @@
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern int* Data_234c1234; //234c1234
 extern int* Data_234c1238; //234c1238
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4; //234c12a4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
+extern Graphic_Job_2_5_Item_Background Data_234c12a4; //234c12a4
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c131c; //234c131c
+extern Graphic_Job_2_5_Item_Background Data_234c1328; //234c1328
+extern Graphic_Job_2_5_Item_Background Data_234c1334; //234c1334
+extern Graphic_Job_2_5_Item_Background Data_234c1340; //234c1340
 
 static void get_sound_channel_tv_value_string();
 static void get_sound_channel_digital_value_string(int);

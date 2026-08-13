@@ -30,9 +30,14 @@ typedef struct
 {
 	uint16_t wData_0; //0
 	int Data_4; //4
-	uint8_t bData_8; //8
+	uint8_t bFlags; //8
 	//???
-} Struct_2377ded0_Inner_0x1c_Inner_0x18;
+} Graphic_Job_2_5_Item_Background;
+
+extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right; //234c128c
+extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue; //234c12e0
+extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue_bottom_round_left_right; //234c12ec
+extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue_top_round_left_right; //234c12f8
 
 typedef struct
 {
@@ -63,7 +68,7 @@ typedef struct
 	uint16_t width; //0x10 = 16
 	uint16_t height; //0x12 = 18
 	int fill_0x14; //0x14
-	Struct_2377ded0_Inner_0x1c_Inner_0x18* Data_0x18; //0x18
+	Graphic_Job_2_5_Item_Background* background; //0x18
 	uint16_t wColor; //0x1c
 	uint16_t wData_0x1e; //0x1e
 	Graphic_Job_2_5_Item_Text* Data_0x20; //0x20

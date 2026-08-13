@@ -8,12 +8,12 @@
 #ifndef VDR110
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4; //234c12a4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
+extern Graphic_Job_2_5_Item_Background Data_234c12a4; //234c12a4
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c131c; //234c131c
+extern Graphic_Job_2_5_Item_Background Data_234c1328; //234c1328
+extern Graphic_Job_2_5_Item_Background Data_234c1334; //234c1334
+extern Graphic_Job_2_5_Item_Background Data_234c1340; //234c1340
 
 extern void menu_item_event_thread();
 

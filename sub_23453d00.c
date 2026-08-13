@@ -12,15 +12,13 @@
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
 extern void* Data_234c1258; //234c1258
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c128c; //234c128c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12a4; //234c12a4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12c8; //234c12c8
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c131c; //234c131c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1328; //234c1328
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1334; //234c1334
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1340; //234c1340
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c12a4; //234c12a4
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c131c; //234c131c
+extern Graphic_Job_2_5_Item_Background Data_234c1328; //234c1328
+extern Graphic_Job_2_5_Item_Background Data_234c1334; //234c1334
+extern Graphic_Job_2_5_Item_Background Data_234c1340; //234c1340
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 
 extern void sub_2344f6ac(UI_Thread_Params*);
 extern void sub_23450f66(UI_Thread_Params*);
@@ -50,14 +48,14 @@ static uint8_t menu_channel_search_frequency_value_string[]; //23799594
 static uint8_t menu_channel_search_polarization_value_string[]; //237995bc
 static uint8_t menu_channel_search_symbolrate_value_string[]; //237995e4
 static uint8_t Data_2379960c[]; //2379960c
-static uint8_t menu_channel_search_ber_string[]; //234c32d4
+/*static*/ uint8_t menu_channel_search_ber_string[]; //234c32d4
 
 //0x234c2f60
 static uint16_t wData_234c2f60 = 0x0106; //234C2F60 +0
 static void (*Data_234c2f68)() = sub_23453fea; //234C2F68 +8
 static Menu* Data_234c2f70 = &Data_234c4e7c; //234C2F70 +0x10
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c2f9c = //234c2f9c
+static Graphic_Job_2_5_Item_Background Data_234c2f9c = //234c2f9c
 {
 	9, 4, 0x0c, //...
 #if 0
@@ -68,7 +66,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c2f9c = //234c2f9c
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c2fa8 = //234c2fa8
+static Graphic_Job_2_5_Item_Background Data_234c2fa8 = //234c2fa8
 {
 	9, 4, 0x03, //...
 #if 0
@@ -80,7 +78,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c2fa8 = //234c2fa8
 };
 
 static uint8_t menu_channel_search_qpsk_string[40] = "QPSK"; //234c2fb4
-static uint8_t menu_channel_search_fec_string[40] = "FEC"; //234c2fdc
+/*static*/ uint8_t menu_channel_search_fec_string[40] = "FEC"; //234c2fdc
 
 static Graphic_Job_2_5_Item_Text Data_234c3004 = //234c3004
 {
@@ -101,7 +99,7 @@ static Graphic_Job_2_5_Item_Text Data_234c3004 = //234c3004
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c3028 = //234c3028
+static Graphic_Job_2_5_Item_Background Data_234c3028 = //234c3028
 {
 	0x000e, 0, 0x05, //...
 #if 0
@@ -400,7 +398,7 @@ static Graphic_Job_2_5_Item_Text Data_234c32bc = //234c32bc
 #endif
 };
 
-static uint8_t menu_channel_search_ber_string[40] = "BER: 0"; //234c32d4
+/*static*/ uint8_t menu_channel_search_ber_string[40] = "BER: 0"; //234c32d4
 
 
 static Graphic_Job_2_5_Item_Text Data_234c32fc = //234c32fc
@@ -422,7 +420,7 @@ static Graphic_Job_2_5_Item_Text Data_234c32fc = //234c32fc
 #endif
 };
 
-static uint8_t menu_channel_search_cnr_string[40] = "C/N:0 "; //234c3314
+/*static*/ uint8_t menu_channel_search_cnr_string[40] = "C/N:0 "; //234c3314
 
 static Graphic_Job_2_5_Item_Text Data_234c333c = //234c333c
 {
@@ -443,7 +441,7 @@ static Graphic_Job_2_5_Item_Text Data_234c333c = //234c333c
 #endif
 };
 
-static uint8_t menu_channel_search_signal_level_string[] = "Level:0 "; //234c3354
+/*static*/ uint8_t menu_channel_search_signal_level_string[] = "Level:0 "; //234c3354
 
 static Graphic_Job_2_5_Item_Text Data_234c337c = //234c337c
 {
@@ -469,7 +467,9 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 	{0}, //[0] = 234c3394 
 	{0}, //[1] = 234C33D4 
 	{0}, //[2] = 234C3414 
-	{1, 0, 0, 0/*Data_8*/, 0x0037, 0x005a, 0x00cd, 0x00cc, 0, &Data_234c12c8/*Data_0x18*/, 2, 0, NULL/*Data_0x20*/}, //[3] = 234C3454
+	{1, 0, 0, 0/*Data_8*/, 0x0037, 0x005a, 0x00cd, 0x00cc, 0, 
+	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+	2, 0, NULL/*Data_0x20*/}, //[3] = 234C3454
 #if 0
 0x234c3454                        db         0x01                               ; DATA XREF=sub_234533bc+32
 0x234c3455                        db         0x00
@@ -812,7 +812,9 @@ static Graphic_Job_2_5_Item Data_234c3394[] = //234c3394
 0x234c3932                        dw         0x0000
 0x234c3934                        dd         0x234c3004
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x37, 0x12a, 0xf5, 0x2c, 0, &Data_234c128c/*Data_0x18*/, 2, 0, NULL/*Data_0x20*/}, //[23] = 234C3954
+	{1, 0, 0, 0/*Data_8*/, 0x37, 0x12a, 0xf5, 0x2c, 0, 
+	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+	2, 0, NULL/*Data_0x20*/}, //[23] = 234C3954
 #if 0
 0x234c3954                        db         0x01
 0x234c3955                        db         0x00
@@ -1747,7 +1749,7 @@ int sub_234533bc(void)
 				if (Data_23796d30.Data_23798030.Data_0 != 0)
 				{
 					//0x23453662
-					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c131c;
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234c131c;
 
 					sp_0x38->height = 0x8c;
 					sp_0x34->height = 0x8c;
@@ -1759,7 +1761,7 @@ int sub_234533bc(void)
 					r4->Data_4[0]->bData_0 = 0; //r0
 					r4->Data_4[1]->bData_0 = 0; //r0
 
-					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 
 					sp_0x38->height = 0x6c;
 					sp_0x34->height = 0x6c;
@@ -1808,9 +1810,9 @@ int sub_234533bc(void)
 					r5->Data_4[0]->bData_0 = 1;
 					r5->Data_4[1]->bData_0 = 1;
 
-					((Graphic_Job_2_5_Item*)(sp_0x5c->Data_4[0]))->Data_0x18 = &Data_234c131c;
-					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c12d4;
-					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c12d4;
+					((Graphic_Job_2_5_Item*)(sp_0x5c->Data_4[0]))->background = &Data_234c131c;
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234c12d4;
+					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c12d4;
 					//->loc_234537b0
 					sp_0x38->height = 0xcc;
 					sp_0x34->height = 0xcc;
@@ -1837,7 +1839,7 @@ int sub_234533bc(void)
 						r5->Data_4[0]->bData_0 = 0; //r6
 						r5->Data_4[1]->bData_0 = 0; //r6
 
-						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 
 						sp_0x38->height = 0x6c;
 						sp_0x34->height = 0x6c;
@@ -1855,7 +1857,7 @@ int sub_234533bc(void)
 						r5->Data_4[0]->bData_0 = 1;
 						r5->Data_4[1]->bData_0 = 1;
 
-						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->Data_0x18 = &Data_234c131c;
+						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 						//loc_234537b0
 						sp_0x38->height = 0xac;
 						sp_0x34->height = 0xac;
@@ -1980,7 +1982,7 @@ void sub_234538b0(int r7_)
 				r4->Data_4[0]->bData_0 = 0; //r7
 				r4->Data_4[1]->bData_0 = 0; //r7
 
-				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c131c;
 				sp_0x28->height = 0x6c;
 				sp_0x24->height = 0x6c;
 				//->loc_23453a42
@@ -2005,7 +2007,7 @@ void sub_234538b0(int r7_)
 						r4->Data_4[0]->bData_0 = 0; //r7
 						r4->Data_4[1]->bData_0 = 0; //r7
 
-						((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->Data_0x18 = &Data_234c131c;
+						((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->background = &Data_234c131c;
 						sp_0x28->height = 0xac;
 						sp_0x24->height = 0xac;
 						//loc_23453a24
@@ -2025,7 +2027,7 @@ void sub_234538b0(int r7_)
 				r4->Data_4[0]->bData_0 = 0; //r7
 				r4->Data_4[1]->bData_0 = 0; //r7
 
-				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c131c;
 				sp_0x28->height = 0x6c;
 				sp_0x24->height = 0x6c;
 				//->loc_23453a24
@@ -2046,7 +2048,7 @@ void sub_234538b0(int r7_)
 			r6->Data_4[0]->bData_0 = 1;
 			r6->Data_4[1]->bData_0 = 1;
 
-			((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->Data_0x18 = &Data_234c12d4;
+			((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c12d4;
 
 			int r0 = fe_manager_get_transponder_type(sp_0x38);
 			if (r0 == 1)
@@ -2065,8 +2067,8 @@ void sub_234538b0(int r7_)
 			if ((r0 == 0) || (r0 == 1))
 			{
 				//loc_2345394c
-				((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x18 = &Data_234c131c;
-				((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->Data_0x18 = NULL;
+				((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234c131c;
+				((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->background = NULL;
 				r5->Data_4[0]->bData_0 = 1;
 				r5->Data_4[1]->bData_0 = 1;
 
@@ -2080,7 +2082,7 @@ void sub_234538b0(int r7_)
 			else
 			{
 				//loc_23453a30
-				((Graphic_Job_2_5_Item*)(r6->Data_4[0]))->Data_0x18 = &Data_234c131c;
+				((Graphic_Job_2_5_Item*)(r6->Data_4[0]))->background = &Data_234c131c;
 
 				sp_0x28->height = 0x8c;
 				sp_0x24->height = 0x8c;

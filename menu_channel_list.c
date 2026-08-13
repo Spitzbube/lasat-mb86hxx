@@ -9,10 +9,8 @@
 #pragma thumb
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 
 
 static Menu menu_channel_list; //234eadf8
@@ -169,7 +167,7 @@ static Graphic_Job_2_5_Item menu_channel_list_graphic_items[] = //234ea5f8
 	{0}, //[2] = 234EA678 
 	{0}, //[3] = 234EA6B8 
 	{0}, //[4] = 234EA6F8 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0060, 0x0110, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234ea568/*Data_0x20*/}, //[5] = 234EA738: 'Edit main list'
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0060, 0x0110, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 9, 0, &Data_234ea568/*Data_0x20*/}, //[5] = 234EA738: 'Edit main list'
 #if 0
 0x234ea738                        db         0x01                               ; DATA XREF=0x234eac44
 0x234ea739                        db  0x00 ; '.'
@@ -207,7 +205,7 @@ static Graphic_Job_2_5_Item menu_channel_list_graphic_items[] = //234ea5f8
 0x234ea796 0000                   movs       r0, r0
 0x234ea798                        dd         0x234ea580
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x00a0, 0x0110, 0x0020, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234ea598/*Data_0x20*/}, //[7] = 234EA7B8: 'Delete all channels'
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x00a0, 0x0110, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234ea598/*Data_0x20*/}, //[7] = 234EA7B8: 'Delete all channels'
 #if 0
 0x234ea7b8                        db         0x01                               ; DATA XREF=sub_23490bd0+44, sub_23490bd0+48, dword_234eac9c
 0x234ea7b9                        db  0x00 ; '.'
@@ -226,7 +224,7 @@ static Graphic_Job_2_5_Item menu_channel_list_graphic_items[] = //234ea5f8
 0x234ea7d6 0000                   movs       r0, r0
 0x234ea7d8                        dd         0x234ea598
 #endif
-	{0, 0, 0, 0/*Data_8*/, 0x3d, 0x00c0, 0x0110, 0x0020, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234ea5b0/*Data_0x20*/}, //[8] = 234EA7F8: 'Internet Radio'
+	{0, 0, 0, 0/*Data_8*/, 0x3d, 0x00c0, 0x0110, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234ea5b0/*Data_0x20*/}, //[8] = 234EA7F8: 'Internet Radio'
 #if 0
 0x234ea7f8                        db         0x00                               ; DATA XREF=0x234eacc8
 0x234ea7f9                        db  0x00 ; '.'

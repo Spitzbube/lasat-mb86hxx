@@ -13,12 +13,11 @@
 #pragma thumb
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
 extern void sub_2344f102(UI_Thread_Params*);
 extern void sub_2348dbf8();
 extern int osd_list_draw(Menu*, int);
 
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234e1e24; //234e1e24
+extern Graphic_Job_2_5_Item_Background Data_234e1e24; //234e1e24
 extern uint8_t Data_234e1e68[];
 extern uint8_t Data_234e1fd0[]; 
 
@@ -121,7 +120,7 @@ static Graphic_Job_2_5_Item Data_23504e90[] = //23504e90
 	{0}, //[3] = 23504F50 
 	{0}, //[4] = 23504F90 
 	{0}, //[5] = 23504FD0 
-	{1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x004b, 0x0020, 0, &Data_234c12f8, 3, 0, &Data_23504c80}, //[6] = 23505010: Item 1 Label
+	{1, 0, 0, 0/*Data_8*/, 0x003d, 0x0060, 0x004b, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right, 3, 0, &Data_23504c80}, //[6] = 23505010: Item 1 Label
 #if 0
 0x23505010                        db         0x01                               ; DATA XREF=0x23505cdc
 0x23505011                        db  0x00 ; '.'
@@ -150,7 +149,7 @@ static Graphic_Job_2_5_Item Data_23504e90[] = //23504e90
 	{0}, //[13] = 235051D0 
 	{0}, //[14] = 23505210 
 	{0}, //[15] = 23505250 
-	{1, 0, 0, 0/*Data_8*/, 0x008e, 0x0060, 0x00e7, 0x0020, 0, &Data_234c12f8, 3, 0, &Data_23504d70}, //[16] = 23505290: Item 1 Value
+	{1, 0, 0, 0/*Data_8*/, 0x008e, 0x0060, 0x00e7, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right, 3, 0, &Data_23504d70}, //[16] = 23505290: Item 1 Value
 #if 0
 0x23505290                        db         0x01                               ; DATA XREF=0x23505ce0
 0x23505291                        db  0x00 ; '.'

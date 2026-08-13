@@ -15,10 +15,8 @@ extern void sub_2348dbf8();
 extern int sub_2348de88(int*);
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12ec; //234c12ec
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 extern Menu* Data_234c5354; //234c5354
 
 static Menu Data_234ee504; //234ee504
@@ -277,7 +275,7 @@ static Graphic_Job_2_5_Item Data_234edb04[] = //234edb04
 	{0}, //[2] = 234EDB84 
 	{0}, //[3] = 234EDBC4 
 	{0}, //[4] = 234EDC04 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0060, 0x010b, 0x0020, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234eda14/*Data_0x20*/}, //[5] = 234EDC44: ?
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0060, 0x010b, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 9, 0, &Data_234eda14/*Data_0x20*/}, //[5] = 234EDC44: ?
 #if 0
 0x234edc44                        db         0x01                               ; CODE XREF=dword_234eda80+520, DATA XREF=0x234ee350
 0x234edc45                        db  0x00 ; '.'
@@ -448,7 +446,7 @@ static Graphic_Job_2_5_Item Data_234edb04[] = //234edb04
 0x234ede62 0000                   movs       r0, r0
 0x234ede64                        dd         0x234edad4
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0180, 0x010b, 0x0020, 0, &Data_234c12ec/*Data_0x18*/, 9, 0, &Data_234edaec/*Data_0x20*/}, //[14] = 234EDE84
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x0180, 0x010b, 0x0020, 0, &menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 9, 0, &Data_234edaec/*Data_0x20*/}, //[14] = 234EDE84
 #if 0
 0x234ede84                        db         0x01                               ; DATA XREF=0x234ee4dc
 0x234ede85                        db  0x00 ; '.'

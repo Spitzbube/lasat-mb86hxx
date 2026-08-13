@@ -8,11 +8,10 @@
 #ifndef VDR110
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1274; //234c1274
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12f8; //234c12f8
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12d4; //234c12d4
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1558; //234c1558
+extern Graphic_Job_2_5_Item_Background Data_234c1274; //234c1274
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c1558; //234c1558
 extern Menu_Item* sub_2344d9d0(struct Menu*);
 extern int sub_2344dcb2(int* a);
 
@@ -275,7 +274,7 @@ static Graphic_Job_2_5_Item menu_settings_graphic_items[15] = //234df368
 	{0}, //[2] = 234DF3E8 
 	{0}, //[3] = 234DF428 
 	{0}, //[4] = 234DF468 
-	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xf9, 0x20, 0, &Data_234c12f8/*Data_0x18*/, 9, 0, &Data_234df290/*Data_0x20*/}, //[5] = 234DF4A8
+	{1, 0, 0, 0/*Data_8*/, 0x3d, 0x60, 0xf9, 0x20, 0, &menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 9, 0, &Data_234df290/*Data_0x20*/}, //[5] = 234DF4A8
 #if 0
 0x234df4a8                        db         0x01                               ; DATA XREF=0x234dfb34
 0x234df4a9                        db         0x00

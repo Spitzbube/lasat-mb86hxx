@@ -9,8 +9,8 @@
 #pragma thumb
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c1298; //234c1298
-extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern Graphic_Job_2_5_Item_Background Data_234c1298; //234c1298
+extern Graphic_Job_2_5_Item_Background Data_234c134c; //234c134c
 
 extern void sub_2344fa5a(UI_Thread_Params*);
 
@@ -53,7 +53,7 @@ static Menu* Data_234c5304 = &Data_234c79bc; //234c5304 +0x28
 static Menu* Data_234c530c = &Data_234c7a70; //234c530c +0x30
 Menu* Data_234c5354 = &Data_234c7ea8; //234c5354
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c5468 = //234c5468
+static Graphic_Job_2_5_Item_Background Data_234c5468 = //234c5468
 {
 	9, 4, 0x08, //...
 #if 0
@@ -64,7 +64,7 @@ static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c5468 = //234c5468
 #endif
 };
 
-static Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c5474 = //234c5474
+static Graphic_Job_2_5_Item_Background Data_234c5474 = //234c5474
 {
 	9, 4, 0x04, //...
 #if 0
