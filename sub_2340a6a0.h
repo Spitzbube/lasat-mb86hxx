@@ -124,10 +124,10 @@ typedef struct
 	uint16_t wTransponderIndex; //4
 	uint16_t wData_6; //6
 	uint16_t wPcrPID; //8
-	uint16_t wVideoPID; //10
-	uint16_t wAc3PID; //12
-	uint16_t wTtxPID; //14
-	uint16_t wAudioPID; //16
+	uint16_t wVideoPID; //10 = 0x0a
+	uint16_t wAc3PID; //12 = 0x0c
+	uint16_t wTtxPID; //14 ? = 0x0e
+	uint16_t wAudioPID; //16 = 0x10
 	uint16_t fill_2; //18
 	uint8_t service_name[20]; //20
 	//40 = 0x28
@@ -221,7 +221,7 @@ typedef struct
 		int Data_4; //4
 		int Data_8; //8
 		//12
-	} Data_23546128; //23546128
+	} Data_23546128; //23546128 / / 235b4eec
 	int fill_23546134[2]; //23546134
 	Struct_2354613c Data_2354613c; //2354613c +0x20 = 2354615C
 	int Data_2354615c; //2354615C

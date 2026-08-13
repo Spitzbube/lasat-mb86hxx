@@ -323,7 +323,7 @@ int pmt_decode_section(uint8_t a, uint8_t* b)
 
 
 	uint32_t sl = ((b[1] & 0x0f) << 8) | b[2]; //section_length
-#if 1
+#ifdef PMT_DECODE_SECTION_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "pmt_decode_section: sl=0x%04x\r\n", sl);

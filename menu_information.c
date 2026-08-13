@@ -16,19 +16,49 @@
 extern void sub_2344ffae(UI_Thread_Params*);
 
 extern Graphic_Color_Data menu_main_graphic_color_data; //234c123c
+extern void* Data_234c1258; //234c1258 +0x28
+extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c12e0; //234c12e0
 extern Struct_2377ded0_Inner_0x1c_Inner_0x18 Data_234c134c; //234c134c
+extern uint8_t Data_239702a0[]; //239702a0
+extern uint8_t Data_239702c8[]; //239702c8
+extern uint8_t Data_239702f0[]; //239702f0
 
-static void  sub_234556b4(void);
+static void sub_234552f8(Transponder*);
+static void sub_23455544(Channel*);
+static void  sub_234556b4(int);
 static void sub_23455910(void);
 static void* sub_23455ca8(int*);
-static void menu_information_on_enter();
+static int menu_information_on_enter();
 static void menu_information_on_exit();
 
+static struct
+{
+	int fill_0[7]; //0
+	uint16_t fill_28; //28
+	//30
+} Data_23799a40; //23799a40 -0xb0
 // /  / 23799af0
 static int Data_23799af0; //23799af0 +0
+static void* Data_23799af4; //23799AF4 +4
+#if 0
+static Transponder Data_23799b08; //23799B08 +0x18
+static uint16_t wData_23799b20; //23799B20 +0x30
 static uint16_t wData_23799b22; //23799B22 +0x32
+static Struct_23543df0 Data_23799b24; //23799B24 +0x34
 static int Data_23799b48; //23799B48 +0x58
 static int Data_23799b4c; //23799b4c +0x5c
+#else
+static struct
+{
+	Transponder transponder; //23799B08 +0x18
+	uint16_t wData_23799b20; //23799B20 +0x30
+	uint16_t wData_23799b22; //23799B22 +0x32
+	Struct_23543df0 Data_23799b24; //23799B24 +0x34
+	int Data_23799b48; //23799B48 +0x58
+	int Data_23799b4c; //23799b4c +0x5c
+
+} Data_23799b08; //23799B08 +0x18
+#endif
 static uint8_t Data_23799b50[100/*size???*/] = ""; //23799b50
 
 static Menu menu_information; //234ca4d4
@@ -124,7 +154,7 @@ static Graphic_Job_2_5_Item Data_234c89e0[] = //234c89e0
 	{0}, //[48] = 234C95E0 
 	{0}, //[49] = 234C9620 
 	{0}, //[50] = 234C9660 
-	{1, 0, 0, 0, 0x3d, 0x29, 0xf8, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234c869c/*Data_0x20*/}, //[51] = 234C96A0
+	{1, 0, 0, 0, 0x3d, 0x29, 0xf8, 0x26, 0, &Data_234c134c/*Data_0x18*/, 2, 0, &Data_234c869c/*Data_0x20*/}, //[51] = 234C96A0: header
 #if 0
 0x234c96a0                        db         0x01                               ; DATA XREF=0x234ca4e0
 0x234c96a1                        db         0x00
@@ -894,8 +924,28 @@ static int menu_information_on_exit(UI_Thread_Params* a)
 #ifndef VDR110
 
 
+/* /  / 234552f8 - todo */
+void sub_234552f8(Transponder* a)
+{
+#if 1
+	console_send_string("sub_234552f8 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* /  / 23455544 - todo */
+static void sub_23455544(Channel* a)
+{
+#if 1
+	console_send_string("sub_23455544 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
 /* /  / 234556b4 - todo */
-void sub_234556b4(void)
+void sub_234556b4(int a)
 {
 #if 1
 	console_send_string("sub_234556b4 (todo.c): TODO\r\n");
@@ -907,7 +957,7 @@ void sub_234556b4(void)
 /* /  / 23455910 - todo */
 void sub_23455910(void)
 {
-#if 1
+#if 0
 	console_send_string("sub_23455910 (todo.c): TODO\r\n");
 #endif
 
@@ -927,8 +977,8 @@ void* sub_23455ca8(int* a)
 #endif
 
 	Struct_2340bf0c sp_0x40; //sp_0x40
-	Transponder* sp_0x28; //pTransponder
-	Channel* sp; //pChannel
+	Transponder sp_0x28; //pTransponder
+	Channel sp; //pChannel
 
 	if (r0 == 0x8000)
 	{
@@ -937,7 +987,7 @@ void* sub_23455ca8(int* a)
 		if (Data_23799af0 > 2)
 		{
 			//0x23455cc2
-			if (Data_23799b48 == 3)
+			if (Data_23799b08.Data_23799b48 == 3)
 			{
 				Data_23799af0 = 1;
 			}
@@ -947,7 +997,7 @@ void* sub_23455ca8(int* a)
 			}
 		}
 		//loc_23455cd0
-		sub_234556b4();
+		sub_234556b4(Data_23799af0);
 		//->loc_23455d3e
 		return NULL;
 	}
@@ -974,20 +1024,20 @@ void* sub_23455ca8(int* a)
 	}
 	//loc_23455cf4
 	sub_2340bf0c/*2340e9e8*/(&sp_0x40);
-	wData_23799b22 = sp_0x40.wCurrentChannel;
+	Data_23799b08.wData_23799b22 = sp_0x40.wCurrentChannel;
 	//loc_23455d00
 	if (0 == sub_2340d0d0/*sub_2340fbac*/())
 	{
 		//0x23455d08
-		int r5 = Data_23799b48;
-		sub_2340bf94/*sub_2340ea70*/(wData_23799b22, &sp, &sp_0x28);
-		Data_23799b48 = fe_manager_get_transponder_type(&sp_0x28);
-		if (Data_23799b48 != r5)
+		int r5 = Data_23799b08.Data_23799b48;
+		sub_2340bf94/*sub_2340ea70*/(Data_23799b08.wData_23799b22, &sp, &sp_0x28);
+		Data_23799b08.Data_23799b48 = fe_manager_get_transponder_type(&sp_0x28);
+		if (Data_23799b08.Data_23799b48 != r5)
 		{
 			//0x23455d20
-			fe_manager_register_measurement_callback(Data_23799b4c, 0);
+			fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, 0);
 			void* r0;
-			if (Data_23799b48 == 0)
+			if (Data_23799b08.Data_23799b48 == 0)
 			{
 				r0 = main_hFrontend1;
 			}
@@ -995,9 +1045,9 @@ void* sub_23455ca8(int* a)
 			{
 				r0 = Data_23491db8;
 			}
-			Data_23799b4c = r0;
+			Data_23799b08.Data_23799b4c = r0;
 
-			fe_manager_register_measurement_callback(Data_23799b4c, sub_23455910);
+			fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
 		} 
 		//loc_23455d3e
 	}
@@ -1007,12 +1057,173 @@ void* sub_23455ca8(int* a)
 
 
 /*  /   / 23455d44 - todo */
-void menu_information_on_enter()
+int menu_information_on_enter()
 {
 #if 1
 	console_send_string("menu_information_on_enter (todo.c): TODO\r\n");
 #endif
 
+	Transponder sp_0xa4; //pTransponder
+	Channel sp_0x7c; //pChannel
+	Struct_2340bf0c sp_0x1c; //+0x32 = sp_0x4e
+	//uint8_t sp_0xc[16];
+	Graphic_Job_2_5* r5 = menu_information_p->graphicData;
+
+	/*sub_2340e9e8*/sub_2340bf0c(&sp_0x1c);
+
+	//int r7 = 0;
+	uint8_t sp_0xc[16] = "not defined";
+	Data_23799b08.wData_23799b20 = Data_23799b08.wData_23799b22 = sp_0x1c.wCurrentChannel/*sp_0x46*/;
+
+	if (sp_0x1c.wNumChannels/*sp_0x44*/ == 0)
+	{
+		//0x23455d72
+		int r0 = /*sub_23416808*/sub_2340ee34(main_hFrontend1);
+		switch (r0)
+		{
+			case 1:
+				//0x23455d7c
+				Data_23799b08.Data_23799b48 = 0; //r7
+				//->loc_23455d94
+				break;
+			//loc_23455d80
+			case 3:
+				//loc_23455d88
+				Data_23799b08.Data_23799b48 = 1;
+				//->loc_23455d92
+				break;
+			case 2:
+			case 6:
+				//->loc_23455d90
+				Data_23799b08.Data_23799b48 = 2;
+				break;
+			//loc_23455da8
+			default:
+				//
+				Data_23799b08.Data_23799b48 = 3;
+				//->loc_23455d92
+				break;
+		} //switch (r0)
+	} //if (sp_0x1c.wNumChannels == 0)
+	else
+	{
+		//loc_23455dac
+		sub_2340bf94/*sub_2340ea70*/(Data_23799b08.wData_23799b22, &sp_0x7c, &sp_0xa4);
+		Data_23799b08.Data_23799b48 = fe_manager_get_transponder_type(&sp_0xa4);
+		//->loc_23455d92
+	}
+	//loc_23455d94
+	//r1 = &dword_234c01d8
+	if (0 == sub_2340d0d0/*sub_2340fbac*/())
+	{
+		//0x23455d9e
+		switch (Data_23799b08.Data_23799b48)
+		{
+			case 0:
+				//loc_23455da40
+				//r0 = main_hFrontend1
+				//->loc_23455dca
+				Data_23799b08.Data_23799b4c = main_hFrontend1;
+				fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+				break;
+			//loc_23455dbc
+			case 1:
+				//0x23455dc0
+				if (sp_0xa4.bData_0x16/*sp_0xba*/ == 1)
+				{
+					//loc_23455dc8
+					Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
+					fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+				}
+				else
+				{
+					//loc_23455da4
+					//r0 = main_hFrontend1
+					//->loc_23455dca
+					Data_23799b08.Data_23799b4c = main_hFrontend1;
+					fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+				}
+				break;
+			//loc_23455e66
+			case 2:
+				//->loc_23455dc8
+				Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
+				//loc_23455dca
+				fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+				break;
+
+			default:
+				//loc_23455da4
+				//r0 = main_hFrontend1
+				//->loc_23455dca
+				Data_23799b08.Data_23799b4c = main_hFrontend1;
+				fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+				break;
+		} //switch (Data_23799b08.Data_23799b48)
+		//loc_23455dbc
+	} //if (0 == sub_2340d0d0/*sub_2340fbac*/())
+	else
+	{
+		//loc_23455e6c
+		Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
+		fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+		//r1 = sub_23455910
+		//r0 = main_hFrontend1
+		//->loc_23455dce
+		fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+	}
+	//0x23455dce 
+	//0x23455dd2
+	//r1 = r5->pItems;
+	r5->pItems[37/*0x940*/].bData_0 = 1;
+	r5->pItems[36/*0x900*/].Data_0x18 = &Data_234c12e0;
+	r5->pItems[34/*0x880*/].height = 0x6c;
+
+	sub_2340c29c/*sub_2340ed78*/(&Data_23799b08.Data_23799b24, sp_0xa4.Data_0.wData_0x0a/*sp_0xae*/);
+
+	Data_23799b08.transponder = sp_0xa4; //memcpy(&Data_23799b08.transponder, &sp_0xa4, sizeof(Transponder));
+	memset(&Data_23799a40, 0, 0x1e);
+	//0x23455e18
+
+
+	//0x23455f30
+
+
+	//loc_23455f48
+
+
+	//0x23455fb2
+	if (Data_23799b08.Data_23799b48 == 3)
+	{
+		//0x23455fb8
+		Data_23799af0 = 2;
+
+//		sub_2340c9b0/*sub_2340f48c*/(1, &sp_0x64);
+
+		//TODO!!!
+
+		//->loc_2345603c
+	}
+	else
+	{
+		//loc_2345601c
+		text_table_get_string(0x19/*'Frequenz'*/, &Data_239702a0[0], 0x23);
+		text_table_get_string(0x1b/*'Symbolrate'*/, &Data_239702c8[0], 0x23);
+		text_table_get_string(0x1a/*'Polarisation'*/, &Data_239702f0[0], 0x1e);
+	}
+	//loc_2345603c
+	sub_234556b4(Data_23799af0);
+	sub_234552f8(&sp_0xa4);
+
+	sp_0x7c.wVideoPID/*0x86*/ = 0; //r7
+	sp_0x7c.wAudioPID/*0x8c*/ = 0; //r7
+	sp_0x7c.wAudioPID/*0x8a*/ = 0; //r7
+	sp_0x7c.wAc3PID/*0x88*/ = 0; //r7
+	sub_23455544(&sp_0x7c);
+
+	Data_23799af4 = Data_234c1258;
+
+	return 0;
 }
 
 
@@ -1023,6 +1234,9 @@ void menu_information_on_exit()
 	console_send_string("menu_information_on_exit (todo.c): TODO\r\n");
 #endif
 
+	fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, NULL);
+
+	//TODO!!!
 }
 
 #endif !VDR110

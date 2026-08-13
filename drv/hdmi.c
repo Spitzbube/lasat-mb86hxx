@@ -760,7 +760,7 @@ void hdmiEncryptionHDCP(hdmiHandleT* a, int b)
 /* 2342425c - todo */
 void hdmiSetAudioI2S(hdmiHandleT* handlePtr)
 {
-#if 1
+#if 0
 	console_send_string("hdmiSetAudioI2S\r\n");
 #endif
 

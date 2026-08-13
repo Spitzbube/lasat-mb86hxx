@@ -386,7 +386,9 @@ void sub_2340925c(uint8_t* a, uint8_t b)
 
 void sub_2343cb0e()
 {
+#if 0
 	console_send_string("sub_2343cb0e (todo.c): TODO\r\n");
+#endif
 
 }
 
@@ -1037,7 +1039,9 @@ void sub_2348f254()
 /* /  / 23491634 - todo */
 void sub_23491634()
 {
+#if 0
 	console_send_string("sub_23491634 (todo.c): TODO\r\n");
+#endif
 
 }
 

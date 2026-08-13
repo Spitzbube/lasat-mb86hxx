@@ -75,9 +75,9 @@ static uint8_t Data_23970200[]; //23970200
 static uint8_t Data_23970214[]; //23970214
 static uint8_t Data_23970228[]; //23970228
 static uint8_t Data_2397023c[]; //2397023c
-static uint8_t Data_239702a0[]; //239702a0
-static uint8_t Data_239702c8[]; //239702c8
-static uint8_t Data_239702f0[]; //239702f0
+/*static*/ uint8_t Data_239702a0[]; //239702a0
+/*static*/ uint8_t Data_239702c8[]; //239702c8
+/*static*/ uint8_t Data_239702f0[]; //239702f0
 static uint8_t Data_23970318[]; //23970318
 
 //0x234e7264
@@ -1965,9 +1965,9 @@ static uint8_t Data_23970200[20]; //23970200
 static uint8_t Data_23970214[20]; //23970214
 static uint8_t Data_23970228[20]; //23970228
 static uint8_t Data_2397023c[20]; //2397023c
-static uint8_t Data_239702a0[40]; //239702a0
-static uint8_t Data_239702c8[40]; //239702c8
-static uint8_t Data_239702f0[40]; //239702f0
+/*static*/ uint8_t Data_239702a0[40]; //239702a0
+/*static*/ uint8_t Data_239702c8[40]; //239702c8
+/*static*/ uint8_t Data_239702f0[40]; //239702f0
 static uint8_t Data_23970318[40]; //23970318. size???
 
 

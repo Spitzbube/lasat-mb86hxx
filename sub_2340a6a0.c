@@ -3060,7 +3060,7 @@ int channel_handle_user_settings(int get, User_Settings* r6)
 
 #if 0
 
-/* 2340c9b0 - complete */
+/* 2340c9b0 /  / 2340f48c - complete */
 int sub_2340c9b0(int get, struct Struct_23546128* r4)
 {
 #if OS_CRITICAL_METHOD == 3u                     /* Allocate storage for CPU status register           */

@@ -1133,7 +1133,7 @@ void sub_2342f28c(uint32_t r4, uint32_t r6, int* r7, int r8, uint32_t sb)
 		Data_234926b0 = (r4 << 16) / r6;
 	}
 
-#if 1
+#ifdef VIOUT_sub_2342f24c_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_2342f28c: Data_234926b0=0x%x\r\n", Data_234926b0);

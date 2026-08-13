@@ -2524,7 +2524,7 @@ void sub_23460000(Struct_235f048c* r6, int r5)
 	console_send_string("sub_23460000 (todo.c): TODO\r\n");
 #endif
 
-#if 1
+#ifdef VIDEC_sub_23460000_DEBUG
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23460000: r5=0x%x\r\n",
