@@ -54,7 +54,7 @@
 */
 
 #if OS_SEM_ACCEPT_EN > 0u
-/* 234641b8 - complete */
+/* 234641b8 /  / 2347f098 - complete */
 INT16U  OSSemAccept (OS_EVENT *pevent)
 {
     INT16U     cnt;

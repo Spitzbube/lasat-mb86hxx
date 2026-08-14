@@ -1317,7 +1317,7 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 	//loc_23452bb0
 	//sp_0x20 = 23798070;
 
-	if (0 == sub_2347f098(Data_23796d30.Data_23798078))
+	if (0 == OSSemAccept(Data_23796d30.Data_23798078))
 	{
 		return 0xff;
 	}

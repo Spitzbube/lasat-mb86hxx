@@ -2594,7 +2594,7 @@ void channel_write_lastmode(void)
 
 		uint32_t calcCrc = crc32(&lastmode, sizeof(lastmode));
 
-#if 1
+#ifdef CHANNEL_WRITE_LASTMODE_DEBUG
 		{
 			extern char debug_string[];
 			sprintf(debug_string, "channel_write_lastmode: crc check calcCrc=0x%x, lastmodeCrc=0x%x\r\n", 
