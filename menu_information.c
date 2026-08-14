@@ -40,7 +40,7 @@ typedef struct
 	//???
 } Struct_23455910;
 
-static void sub_234552f8(Transponder*);
+static void menu_information_get_transponder_string(Transponder*);
 static void menu_information_get_channel_pid_strings(Channel*);
 static void  sub_234556b4(int);
 static int sub_23455910(Struct_23455910*);
@@ -58,6 +58,7 @@ static struct
 // /  / 23799af0
 static int Data_23799af0; //23799af0 +0
 static void* Data_23799af4; //23799AF4 +4
+static void* Data_23799af8; //23799AF8 +8
 #if 0
 static Transponder Data_23799b08; //23799B08 +0x18
 static uint16_t wData_23799b20; //23799B20 +0x30
@@ -84,6 +85,7 @@ static uint8_t Data_237999dc[100/*size???*/] = ""; //237999dc
 static Menu menu_information; //234ca4d4
 
 // / / 234c8664
+static void (*Data_234c8664)() = NULL; //234c8664 +0
 static Menu* menu_information_p = &menu_information; // /  / 234c8668 +4
 
 static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_header = // /  / 234c869c
@@ -1558,12 +1560,175 @@ static int menu_information_on_exit(UI_Thread_Params* a)
 
 
 /* /  / 234552f8 - todo */
-void sub_234552f8(Transponder* a)
+void menu_information_get_transponder_string(Transponder* r6)
 {
-#if 1
-	console_send_string("sub_234552f8 (todo.c): TODO\r\n");
+#if 0
+	console_send_string("menu_information_get_transponder_string (todo.c): TODO\r\n");
 #endif
 
+	Graphic_Job_2_5_Item* r0 = menu_information_p->graphicData->pItems;
+	Graphic_Job_2_5_Item* r2 = &r0[4/*0x100*/];
+	Graphic_Job_2_5_Item* r1 = &r0[5/*0x140*/]; //r2 + 1;
+	r0 = &r0[6/*0x180*/];
+
+	uint8_t* r5 = r0->Data_0x20->pString; //6
+	uint8_t* r7 = r2->Data_0x20->pString; //4
+	uint8_t* r4 = r1->Data_0x20->pString; //5
+	uint32_t sp8;
+	uint32_t sp;
+	uint32_t r3;
+
+	uint8_t len;
+	int modulation;
+	int r0_ = fe_manager_get_transponder_type(r6);
+
+#if 1
+	{
+		extern char debug_string[];
+		sprintf(debug_string, "menu_information_get_transponder_string: r0_=%d, r5=%p, r7=%p, r4=%p\r\n", 
+			r0_,
+			r5, r7, r4);
+		console_send_string(debug_string);
+	}
+#endif
+
+	switch (r0_)
+	{
+		case 0:
+			//loc_23455356
+			break;
+
+		case 1:
+			//loc_23455430 -> loc_23455496
+			text_table_get_string(0x1b/*'Symbolrate'*/, r4, 30);
+			r4[31] = 0;
+			len = strlen(r4);
+			snprintf(r4 + len, 40, ": %dkS/s", r6->Data_0.symbol_rate);
+
+			text_table_get_string(0xf2/*'Modulation'*/, r5, 30);
+			r5[31] = 0;
+			len = strlen(r5);
+			//char* r0 = r5 + len;
+			modulation = r6->Data_0.Data_0.Bitfield_0.modulation;
+			if (modulation == 1)
+			{
+				//0x234554d8
+				strcat(r5 + len, ": 16QAM");
+			}
+			//loc_234554dc
+			else if (modulation == 2)
+			{
+				//0x234554e0
+				strcat(r5 + len, ": 32QAM");
+			}
+			//loc_234554e4
+			else if (modulation == 3)
+			{
+				//0x234554e8
+				strcat(r5 + len, ": 64QAM");
+			}
+			//loc_234554ec
+			else if (modulation == 4)
+			{
+				//0x234554f0
+				strcat(r5 + len, ": 128QAM");
+			}
+			//loc_234554f4
+			else if (modulation == 5)
+			{
+				//0x234554f8
+				strcat(r5 + len, ": 256QAM");
+			}
+			else
+			{
+				//loc_234554fc
+				strcat(r5 + len, ": ---");
+			}
+			//loc_234554fe
+			text_table_get_string(0x16/*'Kanal'*/, r7, 20);
+			len = strlen(r7);
+			r4 = r7 + len;
+#if 0
+			r5 = r6->Data_0.frequency / 10000UL;
+			sp8 = (r6->Data_0.frequency % 10000UL) / 1000UL;
+			r3 =  r6->Data_0.wData_0x0e;
+			sp = (uint8_t) r3;
+			r3 = r3 >> 8;
+			//loc_2345553e
+			snprintf(r4, 40, ": %c%d (%d.%dMHz)", r3, sp, sp8);
+#else		
+			snprintf(r4, 40, ": %c%d (%d.%dMHz)", 
+				r6->Data_0.wData_0x0e >> 8,
+				r6->Data_0.wData_0x0e & 0xff,
+				r6->Data_0.frequency / 10000UL,
+				sp8 = (r6->Data_0.frequency % 10000UL) / 1000UL);
+#endif
+			//->loc_23455352
+			break;
+
+		case 2:
+			//loc_234553de
+			break;
+
+		case 3:
+			//loc_23455352
+			break;
+
+		default:
+			//0x2345533a
+			break;
+
+#if 0
+		case 1:
+			//loc_234716d6
+			memset(&Data_238e09d8.strTransponder[0], 0, 50);
+			
+			snprintf(Data_238e09d8.strTransponder, 49, "%dMHz", r5->Data_0.frequency / 10000);
+			snprintf(sp4, 11, " %dkS/s", r5->Data_0.symbol_rate);
+			strncat(Data_238e09d8.strTransponder, sp4, 48 - strlen(Data_238e09d8.strTransponder));
+			
+			modulation = r5->Data_0.Data_0.Bitfield_0.modulation;
+
+			if (modulation == 1)
+			{
+				strncat(Data_238e09d8.strTransponder, " 16QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			else if (modulation == 2)
+			{
+				strncat(Data_238e09d8.strTransponder, " 32QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			else if (modulation == 3)
+			{
+				strncat(Data_238e09d8.strTransponder, " 64QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			else if (modulation == 4)
+			{
+				strncat(Data_238e09d8.strTransponder, " 128QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			else if (modulation == 5)
+			{
+				strncat(Data_238e09d8.strTransponder, " 256QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			else
+			{
+				strncat(Data_238e09d8.strTransponder, " ???QAM", 48 - strlen(Data_238e09d8.strTransponder));
+			}
+			break;
+
+		case 3:
+			//0x2347168e
+#if 0
+			sprintf(Data_238e09d8.strTransponder, "Transponder Type 3");
+#endif
+			break;
+
+		default:
+			//loc_23471776
+			sprintf(Data_238e09d8.strTransponder, "No Channel Info");
+			break;
+#endif
+	}
+	//loc_23455352
 }
 
 
@@ -1961,7 +2126,7 @@ int sub_23455910(Struct_23455910* r4)
 		/*sp_0x98*/sp_0xc0->pItems[5/*0x140*/].Data_0x20->bData_0x17 = 1; //r7
 		/*sp_0x94*/sp_0xc0->pItems[6/*0x180*/].Data_0x20->bData_0x17 = 1; //r7
 		//0x23455bb0
-		sub_234552f8(sp_0xC8);
+		menu_information_get_transponder_string(sp_0xC8);
 
 		sub_2340bf0c/*2340e9e8*/(&sp4);
 		sub_2340bf94/*sub_2340ea70*/(sp4.wCurrentChannel, &sp_0x38, &sp_0x60);
@@ -1975,7 +2140,7 @@ int sub_23455910(Struct_23455910* r4)
 		}
 		//loc_23455bd6
 		sprintf(sp_0xB4, "Level: %d%%", r5);
-		sub_23452ac4(r5, /*sp_0x8C*/sp_0xc0->pItems[15/*0x3C0*/], 0xde, 0x64);
+		sub_23452ac4(r5, /*sp_0x8C*/sp_0xc0->pItems[15/*0x3C0*/], 0xde, 100);
 		/*sp_0x90*/sp_0xc0->pItems[14/*0x380*/].bData_0x3c = 1; //r7
 
 		uint8_t r6 = r4->bData_0x0a;
@@ -1985,15 +2150,16 @@ int sub_23455910(Struct_23455910* r4)
 		}
 		//loc_23455bfa
 		sprintf(sp_0xB8, "C/N: %ddB", r6);
-		sub_23452ac4(r6, /*sp_0x84*/sp_0xc0->pItems[17/*0x440*/], 0xde, 0x28);
+		sub_23452ac4(r6, /*sp_0x84*/sp_0xc0->pItems[17/*0x440*/], 0xde, 40);
 		/*sp_0x88*/sp_0xc0->pItems[16/*0x400*/].bData_0x3c = 1; //r7
 		//0x23455c16
-#if 1
-		console_send_string("0x23455c16 (menu_information.c): TODO\r\n");
-#endif
+		graphic_start_job_2_5(&Data_23799af8, sp_0xc0);
+		OSSemPost(Data_23799af4);
 
-		//TODO!!!
-
+		if (Data_234c8664 != 0)
+		{
+			(Data_234c8664)(r4->Data_0, r5, r6, r4->Data_0);
+		}
 		//loc_23455c3a
 	} //if (r5_->menu_stack[ sub_2344de94() ]->graphicData->wData_2 == 0x11)
 	//loc_23455a34 -> loc_23455c3a
@@ -2250,7 +2416,7 @@ int menu_information_on_enter()
 	}
 	//loc_2345603c
 	sub_234556b4(Data_23799af0);
-	sub_234552f8(&sp_0xa4);
+	menu_information_get_transponder_string(&sp_0xa4);
 
 	sp_0x7c.wVideoPID/*0x86*/ = 0; //r7
 	sp_0x7c.wAudioPID/*0x8c*/ = 0; //r7
