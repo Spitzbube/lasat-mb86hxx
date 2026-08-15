@@ -290,7 +290,7 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 	{
 		extern char debug_string[];
 		sprintf(debug_string, "sub_23452e88: '%s', r6->Data_4=%d, r6->bFlags=0x%02x\r\n", 
-			r4->Data_0x20->pString, r6->Data_4, r6->bFlags);
+			r4->pText->pString, r6->Data_4, r6->bFlags);
 		console_send_string(debug_string);
 	}
 #endif
@@ -723,7 +723,7 @@ void graphic_thread()
 									hex_dump("pItem", pItem, 0x40);
 								}
 #endif
-								if (pItem->bData_0 == 1)
+								if (pItem->bEnable == 1)
 								{
 									//0x2345367c: Box handling
 #if 1
@@ -768,17 +768,17 @@ void graphic_thread()
 #endif
 									//loc_23453710 /  / loc_23414750: Text handling
 #if 1
-									if (pItem->Data_0x20 != 0)
+									if (pItem->pText != 0)
 									{
 										//0x2345371c
-										pItem->Data_0x20->bData_0xc = pItem->wColor & 0xff;
+										pItem->pText->bData_0xc = pItem->wColor & 0xff;
 
 										if ((graphics_data.arData_0x1c[i] != pItem) ||
 											(pItem->bData_0x3c != 0) ||
-											(pItem->Data_0x20->bData_0x17 != 0))
+											(pItem->pText->bUpdate != 0))
 										{
 											//0x23453748
-											Graphic_Job_2_5_Item_Text* fp = pItem->Data_0x20;
+											Graphic_Job_2_5_Item_Text* fp = pItem->pText;
 											Graphic_Job_2_5_Item_Text* r6 = &pItem->Data_0x24;
 
 											if (pItem->Data_0x24.pString != 0)
@@ -789,15 +789,15 @@ void graphic_thread()
 													(int16_t) r6->y1,
 													(int16_t)(r6->x2 - r6->x1),
 													(int16_t)(r6->y2 - r6->y1),
-													pItem->Data_0x20->bData_0xc);
+													pItem->pText->bData_0xc);
 											}
 											//loc_23453790 -> loc_234537a8
 											//sp8 = r6;
 											sub_23408604(*fp, r6);
 										}
 										//loc_234537bc
-										pItem->Data_0x20->bData_0x17 = 0; //r8
-									} //if (pItem->Data_0x20 != 0)
+										pItem->pText->bUpdate = 0; //r8
+									} //if (pItem->pText != 0)
 #endif
 									//loc_234537c4
 									pItem->bData_0x3c = 0; //r8

@@ -1300,13 +1300,13 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 	//r2 = &r4->pItems[27]; Signal Level String
 	//sp4 = &&r4->pItems[31];
 
-	//sp_0x1c = r4->pItems[22].Data_0x20->pString;
-	//sp_0x18 = r4->pItems[26].Data_0x20->pString;
-	//sp_0x14 = r4->pItems[27].Data_0x20->pString;
+	//sp_0x1c = r4->pItems[22].pText->pString;
+	//sp_0x18 = r4->pItems[26].pText->pString;
+	//sp_0x14 = r4->pItems[27].pText->pString;
 
-	r4->pItems[22].Data_0x20->bData_0x17 = 1; //r7
-	r4->pItems[26].Data_0x20->bData_0x17 = 1; //r7
-	r4->pItems[27].Data_0x20->bData_0x17 = 1; //r7
+	r4->pItems[22].pText->bUpdate = 1; //r7
+	r4->pItems[26].pText->bUpdate = 1; //r7
+	r4->pItems[27].pText->bUpdate = 1; //r7
 
 	sp = sub_2344de8e();
 	if (sp->menu_stack[sub_2344de94()]->graphicData->wData_2 == 0x4e)
@@ -1378,13 +1378,13 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 	if (r6->dwBER < 9000)
 	{
 		//0x23452c04
-		sprintf(/*sp_0x1c*/&r4->pItems[22].Data_0x20->pString[0], "BER: %d ", r6->dwBER);
+		sprintf(/*sp_0x1c*/&r4->pItems[22].pText->pString[0], "BER: %d ", r6->dwBER);
 		//->loc_23452c16
 	}
 	else
 	{
 		//loc_23452c0e
-		sprintf(/*sp_0x1c*/&r4->pItems[22].Data_0x20->pString[0], "BER: >9000");
+		sprintf(/*sp_0x1c*/&r4->pItems[22].pText->pString[0], "BER: >9000");
 	}
 	//loc_23452c16
 	uint32_t cnr = r6->bSNR;
@@ -1409,9 +1409,9 @@ static int sub_23452b1c(Frontend_Measurement* r6)
 	/*sp4*/r4->pItems[31].bData_0x3c = 1; //r7
 	/*sp8*/r4->pItems[30].bData_0x3c = 1; //r7
 
-	sprintf(/*sp_0x18*/&r4->pItems[26].Data_0x20->pString[0], "C/N: %ddB", cnr);
+	sprintf(/*sp_0x18*/&r4->pItems[26].pText->pString[0], "C/N: %ddB", cnr);
 
-	sprintf(/*sp_0x14*/&r4->pItems[27].Data_0x20->pString[0], "Level: %d%%", signal_strength);
+	sprintf(/*sp_0x14*/&r4->pItems[27].pText->pString[0], "Level: %d%%", signal_strength);
 
 	graphic_start_job_2_5(&Data_23796d30.Data_23798088, Data_234c2f70->graphicData);
 
@@ -1455,13 +1455,13 @@ static void menu_channel_search_get_cable_symbolrate_value_string(Menu_Item* ite
 #endif
 
 	Graphic_Job_2_5_Item* r1 = item->Data_4[1];
-	uint8_t* pString = r1->Data_0x20->pString;
+	uint8_t* pString = r1->pText->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
 		//0x23452cd8
-		r1->Data_0x20->wData_0x14 = 0;
-		r1->Data_0x20->bData_0x16 = 0;
+		r1->pText->wData_0x14 = 0;
+		r1->pText->bData_0x16 = 0;
 
 		uint32_t sp = Data_23796d30.Data_23796d54.Data_0.symbol_rate * 100;
 
@@ -1470,8 +1470,8 @@ static void menu_channel_search_get_cable_symbolrate_value_string(Menu_Item* ite
 	else
 	{
 		//loc_23452cf8
-		r1->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
-		r1->Data_0x20->bData_0x16 = 7;
+		r1->pText->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r1->pText->bData_0x16 = 7;
 
 		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
 	}
@@ -1485,7 +1485,7 @@ static void menu_channel_search_get_modulation_value_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_modulation_value_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* pString = item->Data_4[1]->pText->pString;
 	uint32_t modulation = Data_23796d30.Data_23796d54.Data_0.Data_0.Bitfield_0.modulation; // 23796D57 >> 4;
 
 	if (modulation == 1)
@@ -1526,7 +1526,7 @@ static void sub_23452d52(Menu_Item* item)
 	console_send_string("sub_23452d52 (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* pString = item->Data_4[1]->pText->pString;
 	Transponder* pTransponder = &Data_23796d30.Data_23796d54;
 
 	sprintf(pString, "%c%d (%d.%dMHz)", 
@@ -1577,13 +1577,13 @@ static void menu_channel_search_get_symbolrate_value_string(Menu_Item* item)
 #endif
 
 	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->pString;
+	uint8_t* pString = r0->pText->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
 		//0x23453100
-		r0->Data_0x20->wData_0x14 = 0;
-		r0->Data_0x20->bData_0x16 = 0;
+		r0->pText->wData_0x14 = 0;
+		r0->pText->bData_0x16 = 0;
 
 		uint32_t sp = Data_23796d30.Data_23796d54.Data_0.frequency * 100;
 
@@ -1592,8 +1592,8 @@ static void menu_channel_search_get_symbolrate_value_string(Menu_Item* item)
 	else
 	{
 		//loc_23453122
-		r0->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
-		r0->Data_0x20->bData_0x16 = 7;
+		r0->pText->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r0->pText->bData_0x16 = 7;
 
 		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
 	}
@@ -1609,7 +1609,7 @@ static void menu_channel_search_get_polarization_value_string(Menu_Item* item)
 
 	int nStr;
 	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->pString;
+	uint8_t* pString = r0->pText->pString;
 
 	switch (Data_23796d30.Data_23798030.polarization)
 	{
@@ -1642,13 +1642,13 @@ static void menu_channel_search_get_frequency_value_string(Menu_Item* item)
 #endif
 
 	Graphic_Job_2_5_Item* r0 = item->Data_4[1];
-	uint8_t* pString = r0->Data_0x20->pString;
+	uint8_t* pString = r0->pText->pString;
 
 	if (Data_23796d30.Data_23798030.bData_0xc == 0)
 	{
 		//0x2345317c
-		r0->Data_0x20->wData_0x14 = 0;
-		r0->Data_0x20->bData_0x16 = 0;
+		r0->pText->wData_0x14 = 0;
+		r0->pText->bData_0x16 = 0;
 
 		uint32_t r0 = ((Data_23796d30.Data_23796d54.Data_0.Data_0.Data_0 * 100) / 100000);
 
@@ -1657,8 +1657,8 @@ static void menu_channel_search_get_frequency_value_string(Menu_Item* item)
 	else
 	{
 		//loc_234531a6
-		r0->Data_0x20->wData_0x14 = Data_23796d30.wData_23798072 + 1;
-		r0->Data_0x20->bData_0x16 = 7;
+		r0->pText->wData_0x14 = Data_23796d30.wData_23798072 + 1;
+		r0->pText->bData_0x16 = 7;
 
 		sprintf(pString, "%s", &Data_23796d30.Data_23798030.bData_0xd[0]);
 	}
@@ -1736,11 +1736,11 @@ int sub_234533bc(void)
 			if (r0 == 6)
 			{
 				//0x2345363c
-				r6->Data_4[0]->bData_0 = 0; 
-				r6->Data_4[1]->bData_0 = 0; 
+				r6->Data_4[0]->bEnable = 0; 
+				r6->Data_4[1]->bEnable = 0; 
 
-				r5->Data_4[0]->bData_0 = 0; 
-				r5->Data_4[1]->bData_0 = 0; 
+				r5->Data_4[0]->bEnable = 0; 
+				r5->Data_4[1]->bEnable = 0; 
 
 				r4->inputThreadFunc = sub_23450f66;
 				r4->onEvent = sub_23452d86;
@@ -1758,8 +1758,8 @@ int sub_234533bc(void)
 				else
 				{
 					//loc_23453674
-					r4->Data_4[0]->bData_0 = 0; //r0
-					r4->Data_4[1]->bData_0 = 0; //r0
+					r4->Data_4[0]->bEnable = 0; //r0
+					r4->Data_4[1]->bEnable = 0; //r0
 
 					((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 
@@ -1801,14 +1801,14 @@ int sub_234533bc(void)
 				if (Data_23796d30.Data_23798030.Data_0 != 0)
 				{
 					//0x234536fe
-					sp_0x5c->Data_4[0]->bData_0 = 1;
-					sp_0x5c->Data_4[1]->bData_0 = 1;
+					sp_0x5c->Data_4[0]->bEnable = 1;
+					sp_0x5c->Data_4[1]->bEnable = 1;
 
-					r4->Data_4[0]->bData_0 = 1;
-					r4->Data_4[1]->bData_0 = 1;
+					r4->Data_4[0]->bEnable = 1;
+					r4->Data_4[1]->bEnable = 1;
 
-					r5->Data_4[0]->bData_0 = 1;
-					r5->Data_4[1]->bData_0 = 1;
+					r5->Data_4[0]->bEnable = 1;
+					r5->Data_4[1]->bEnable = 1;
 
 					((Graphic_Job_2_5_Item*)(sp_0x5c->Data_4[0]))->background = &Data_234c131c;
 					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234c12d4;
@@ -1830,14 +1830,14 @@ int sub_234533bc(void)
 					if (crc32(&sp_0x3c, sizeof(Struct_2354613c)) == r7)
 					{
 						//0x2345375a
-						sp_0x5c->Data_4[0]->bData_0 = 0; //r6
-						sp_0x5c->Data_4[1]->bData_0 = 0; //r6
+						sp_0x5c->Data_4[0]->bEnable = 0; //r6
+						sp_0x5c->Data_4[1]->bEnable = 0; //r6
 
-						r4->Data_4[0]->bData_0 = 0; //r6
-						r4->Data_4[1]->bData_0 = 0; //r6
+						r4->Data_4[0]->bEnable = 0; //r6
+						r4->Data_4[1]->bEnable = 0; //r6
 
-						r5->Data_4[0]->bData_0 = 0; //r6
-						r5->Data_4[1]->bData_0 = 0; //r6
+						r5->Data_4[0]->bEnable = 0; //r6
+						r5->Data_4[1]->bEnable = 0; //r6
 
 						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 
@@ -1848,14 +1848,14 @@ int sub_234533bc(void)
 					else
 					{
 						//loc_23453788
-						sp_0x5c->Data_4[0]->bData_0 = 0; //r6
-						sp_0x5c->Data_4[1]->bData_0 = 0; //r6
+						sp_0x5c->Data_4[0]->bEnable = 0; //r6
+						sp_0x5c->Data_4[1]->bEnable = 0; //r6
 
-						r4->Data_4[0]->bData_0 = 1;
-						r4->Data_4[1]->bData_0 = 1;
+						r4->Data_4[0]->bEnable = 1;
+						r4->Data_4[1]->bEnable = 1;
 
-						r5->Data_4[0]->bData_0 = 1;
-						r5->Data_4[1]->bData_0 = 1;
+						r5->Data_4[0]->bEnable = 1;
+						r5->Data_4[1]->bEnable = 1;
 
 						((Graphic_Job_2_5_Item*)(sp_0x60->Data_4[0]))->background = &Data_234c131c;
 						//loc_234537b0
@@ -1874,8 +1874,8 @@ int sub_234533bc(void)
 			}
 			//loc_23453848
 			sp_0x64->pItems[21].wColor = 9;
-			sp_0x64->pItems[21].bData_0 = 0;
-			sp_0x64->pItems[20].bData_0 = 0;
+			sp_0x64->pItems[21].bEnable = 0;
+			sp_0x64->pItems[20].bEnable = 0;
 			sp_0x64->pItems[17].height = 0x4c;
 			sp_0x64->pItems[22].y = 0x80;
 			sp_0x64->pItems[22].Data_0x24.pString = NULL;
@@ -1962,8 +1962,8 @@ void sub_234538b0(int r7_)
 	{
 		case 0:
 			//loc_23453974
-			r1->bData_0 = 1; //r3
-			r0->bData_0 = 1; //r3
+			r1->bEnable = 1; //r3
+			r0->bEnable = 1; //r3
 
 			/*sub_2340f538*/sub_2340ca5c(1, &sp4);
 
@@ -1973,14 +1973,14 @@ void sub_234538b0(int r7_)
 			if (crc32(&sp4, sizeof(Struct_2354613c)) == sp)
 			{
 				//0x23453994
-				r6->Data_4[0]->bData_0 = 0; //r7
-				r6->Data_4[1]->bData_0 = 0; //r7
+				r6->Data_4[0]->bEnable = 0; //r7
+				r6->Data_4[1]->bEnable = 0; //r7
 				//ip = 0x234c131c;
-				r5->Data_4[0]->bData_0 = 0; //r7
-				r5->Data_4[1]->bData_0 = 0; //r7
+				r5->Data_4[0]->bEnable = 0; //r7
+				r5->Data_4[1]->bEnable = 0; //r7
 				//r6 = sp_0x28
-				r4->Data_4[0]->bData_0 = 0; //r7
-				r4->Data_4[1]->bData_0 = 0; //r7
+				r4->Data_4[0]->bEnable = 0; //r7
+				r4->Data_4[1]->bEnable = 0; //r7
 
 				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c131c;
 				sp_0x28->height = 0x6c;
@@ -2004,8 +2004,8 @@ void sub_234538b0(int r7_)
 					if (r1 == 1)
 					{
 						//->loc_23453a0c
-						r4->Data_4[0]->bData_0 = 0; //r7
-						r4->Data_4[1]->bData_0 = 0; //r7
+						r4->Data_4[0]->bEnable = 0; //r7
+						r4->Data_4[1]->bEnable = 0; //r7
 
 						((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->background = &Data_234c131c;
 						sp_0x28->height = 0xac;
@@ -2018,14 +2018,14 @@ void sub_234538b0(int r7_)
 					//loc_234539de
 				}
 				//loc_234539de
-				r6->Data_4[0]->bData_0 = 0; //r7
-				r6->Data_4[1]->bData_0 = 0; //r7
+				r6->Data_4[0]->bEnable = 0; //r7
+				r6->Data_4[1]->bEnable = 0; //r7
 
-				r5->Data_4[0]->bData_0 = 0; //r7
-				r5->Data_4[1]->bData_0 = 0; //r7
+				r5->Data_4[0]->bEnable = 0; //r7
+				r5->Data_4[1]->bEnable = 0; //r7
 
-				r4->Data_4[0]->bData_0 = 0; //r7
-				r4->Data_4[1]->bData_0 = 0; //r7
+				r4->Data_4[0]->bEnable = 0; //r7
+				r4->Data_4[1]->bEnable = 0; //r7
 
 				((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c131c;
 				sp_0x28->height = 0x6c;
@@ -2041,12 +2041,12 @@ void sub_234538b0(int r7_)
 			if (Data_23799410.Data_4.bitData.bit23 != 0)
 			{
 				//0x23453918
-				r1->bData_0 = 0; //r7
-				r0->bData_0 = 0; //r7
+				r1->bEnable = 0; //r7
+				r0->bEnable = 0; //r7
 			}
 			//loc_2345391c
-			r6->Data_4[0]->bData_0 = 1;
-			r6->Data_4[1]->bData_0 = 1;
+			r6->Data_4[0]->bEnable = 1;
+			r6->Data_4[1]->bEnable = 1;
 
 			((Graphic_Job_2_5_Item*)(sp_0x2c->Data_4[0]))->background = &Data_234c12d4;
 
@@ -2069,11 +2069,11 @@ void sub_234538b0(int r7_)
 				//loc_2345394c
 				((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234c131c;
 				((Graphic_Job_2_5_Item*)(r5->Data_4[0]))->background = NULL;
-				r5->Data_4[0]->bData_0 = 1;
-				r5->Data_4[1]->bData_0 = 1;
+				r5->Data_4[0]->bEnable = 1;
+				r5->Data_4[1]->bEnable = 1;
 
-				r4->Data_4[0]->bData_0 = 1;
-				r4->Data_4[1]->bData_0 = 1;
+				r4->Data_4[0]->bEnable = 1;
+				r4->Data_4[1]->bEnable = 1;
 
 				sp_0x28->height = 0xcc;
 				sp_0x24->height = 0xcc;
@@ -2390,7 +2390,7 @@ int sub_23453d00(UI_Thread_Params* r5)
 /* /  / 23453d36 - todo */
 static void menu_channel_search_get_antenna_value_string(Menu_Item* item)
 {
-	uint8_t* pStr = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* pStr = item->Data_4[1]->pText->pString;
 
 #if 0
 	console_send_string("menu_channel_search_get_antenna_value_string (todo.c): TODO\r\n");
@@ -2435,7 +2435,7 @@ static void menu_channel_search_get_search_mode_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_search_mode_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* pString = item->Data_4[1]->pText->pString;
 
 	switch (Data_23796d30.Data_23798030.Data_0)
 	{
@@ -2471,7 +2471,7 @@ void menu_channel_search_get_encryption_mode_string(Menu_Item* item)
 	console_send_string("menu_channel_search_get_encryption_mode_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* pString = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* pString = item->Data_4[1]->pText->pString;
 	int nStr;
 
 	switch (Data_23796d30.Data_23798030.Data_4)

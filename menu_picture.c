@@ -1263,7 +1263,7 @@ void get_video_signal_analog_value_string(Menu_Item* item)
 	console_send_string("get_video_signal_analog_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* str = item->Data_4[1]->pText->pString;
 	int signal = menu_picture_user_settings.bVideoSignalAnalog;
 
 	if (signal == 0)
@@ -1315,7 +1315,7 @@ void get_video_signal_digital_value_string(Menu_Item* item)
 	console_send_string("get_video_signal_digital_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* buf = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* buf = item->Data_4[1]->pText->pString;
 
 	if (menu_picture_user_settings.Data_4.bitData.digital_video_signal == 0)
 	{
@@ -1331,7 +1331,7 @@ void get_video_signal_digital_value_string(Menu_Item* item)
 /*  /  / 23492c1e - todo */
 void get_video_system_value_string(Menu_Item* item)
 {
-	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* str = item->Data_4[1]->pText->pString;
 
 	if (menu_picture_user_settings.Data_4.bitData.video_system == 0)
 	{
@@ -1352,7 +1352,7 @@ void get_video_system_value_string(Menu_Item* item)
 void sub_23492c4a(Menu_Item* item)
 {
 	uint32_t r0 = menu_picture_user_settings.wPictureScaling & 0x0f;
-	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->pText;
 	uint8_t* str = r1->pString;
 
 	if (r0 > 2)
@@ -1373,7 +1373,7 @@ void sub_23492c4a(Menu_Item* item)
 void sub_23492c78(Menu_Item* item)
 {
 	uint32_t r0 = (menu_picture_user_settings.wPictureScaling & 0xf0) >> 4;
-	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->pText;
 	uint8_t* str = r1->pString;
 
 	if (r0 > 2)
@@ -1393,7 +1393,7 @@ void sub_23492c78(Menu_Item* item)
 void sub_23492ca6(Menu_Item* item)
 {
 	uint32_t r0 = (menu_picture_user_settings.wPictureScaling & 0xf00) >> 8;
-	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r1 = item->Data_4[1]->pText;
 	uint8_t* str = r1->pString;
 
 	if (r0 > 2)
@@ -1461,9 +1461,9 @@ void get_display_adjustment_value_string(Menu_Item* item)
 	console_send_string("get_display_adjustment_value_string (todo.c): TODO\r\n");
 #endif
 
-	if (item->Data_4[1]->Data_0x20 != 0)
+	if (item->Data_4[1]->pText != 0)
 	{
-		uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+		uint8_t* str = item->Data_4[1]->pText->pString;
 		if (str != 0)
 		{
 #if 0
@@ -1499,9 +1499,9 @@ void sub_23492d58(Menu_Item* item)
 	console_send_string("sub_23492d58 (todo.c): TODO\r\n");
 #endif
 
-	if (item->Data_4[1]->Data_0x20 != NULL)
+	if (item->Data_4[1]->pText != NULL)
 	{
-		uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+		uint8_t* str = item->Data_4[1]->pText->pString;
 		if (str != NULL)
 		{
 			if (menu_picture_user_settings.bDisplayAdjustment == 0)
@@ -1550,7 +1550,7 @@ void get_display_format_value_string(Menu_Item* item)
 	console_send_string("get_display_format_value_string (menu_picture.c): TODO\r\n");
 #endif
 
-	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* str = item->Data_4[1]->pText->pString;
 
 	switch (menu_picture_user_settings.displayFormat)
 	{
@@ -1633,7 +1633,7 @@ int display_format_change()
 		sub_23492d58(r5);
 	}
 
-	r5->Data_4[1]->Data_0x20->bData_0x17 = 1;
+	r5->Data_4[1]->pText->bUpdate = 1;
 
 	channel_handle_user_settings(1, &settings);
 
@@ -1795,7 +1795,7 @@ int menu_picture_on_enter(void)
 #endif
 
 	Graphic_Job_2_5* r0 = menu_picture_p->graphicData;
-	uint8_t* str = r0->pItems[9].Data_0x20->pString;
+	uint8_t* str = r0->pItems[9].pText->pString;
 
 	text_table_get_string(0x14e/*Bildskalierung:*/, str, 38);
 

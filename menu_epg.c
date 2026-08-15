@@ -1387,7 +1387,7 @@ void menu_epg_update_clock_time_text_field(void)
 #endif
 
     Graphic_Job_2_5_Item* r4 = &Data_234ca55c->graphicData->pItems[28];
-    char* pString = r4->Data_0x20->pString;
+    char* pString = r4->pText->pString;
 
     clocktime_get(&Data_2379c08c);
 
@@ -1412,7 +1412,7 @@ void menu_epg_update_clock_time_text_field(void)
         sprintf(pString, "--:--");
     }
     //loc_23456362
-    r4->Data_0x20->bData_0x17 = 1;
+    r4->pText->bUpdate = 1;
 }
 
 
@@ -1434,7 +1434,7 @@ void sub_2345636a(EIT_Event* r6)
     if (r6 != 0)
     {
         //0x2345638a
-        sp_0x18 = sp_0x10->Data_0x20->pString;
+        sp_0x18 = sp_0x10->pText->pString;
 
         if (r6->Data_8 != 0)
         {
@@ -1551,10 +1551,10 @@ void sub_2345636a(EIT_Event* r6)
             }
             //loc_2345645c
             sub_234089e8/*sub_2340b4c4*/(&Data_2379c004.bData_2379c018, &Data_23799d10[0], 
-                sp_0x14->Data_0x20->bData_0xd,
-                sp_0x14->Data_0x20->x1,
-                sp_0x14->Data_0x20->y1,
-                sp_0x14->Data_0x20->x2,
+                sp_0x14->pText->bData_0xd,
+                sp_0x14->pText->x1,
+                sp_0x14->pText->y1,
+                sp_0x14->pText->x2,
                 0x0c);
 
             //r1 = 2379A704 + Data_2379c004.bData_2379c019 * 8;
@@ -1563,7 +1563,7 @@ void sub_2345636a(EIT_Event* r6)
             if (r0 != 0)
             {
                 //0x23456498
-                sp_0x14->Data_0x20->pString = r0;
+                sp_0x14->pText->pString = r0;
             }
             //loc_2345649e
             sprintf(sp_0x18, "%d/%d", 
@@ -1584,8 +1584,8 @@ void sub_2345636a(EIT_Event* r6)
             //loc_234564be
             Data_234ca560->Data_8->helpStringId = helpStringId;
 
-            sp_0x14->Data_0x20->bData_0x17 = 1;
-            sp_0x10->Data_0x20->bData_0x17 = 1;
+            sp_0x14->pText->bUpdate = 1;
+            sp_0x10->pText->bUpdate = 1;
             //loc_234564d2
         }
         else
@@ -1792,7 +1792,7 @@ void menu_epg_update_date_text_field(EIT_Event* pEvent)
 
     if (pEvent != 0)
     {
-        char* pString = pItem->Data_0x20->pString;
+        char* pString = pItem->pText->pString;
 
         if (pEvent->wData_0x16 != 0)
         {
@@ -1815,7 +1815,7 @@ void menu_epg_update_date_text_field(EIT_Event* pEvent)
             strncpy(pString, "      - - . - - . - - - -", 50);
         }
 
-        pItem->Data_0x20->bData_0x17 = 1;
+        pItem->pText->bUpdate = 1;
     }
 }
 
@@ -2073,11 +2073,11 @@ int sub_23456932(Struct_2348dc50* a)
     for (r7 = 0; r7 < sp8.wData_0x26; r7++)
     {
         //loc_23456960
-        char* r4 = sp_0x70->Data_4[0]->Data_0x20->pString;
-        char* r5 = sp_0x70->Data_4[1]->Data_0x20->pString;
+        char* r4 = sp_0x70->Data_4[0]->pText->pString;
+        char* r5 = sp_0x70->Data_4[1]->pText->pString;
 
-        sp_0x70->Data_4[0]->Data_0x20->bData_0x17 = 1;
-        sp_0x70->Data_4[1]->Data_0x20->bData_0x17 = 1;
+        sp_0x70->Data_4[0]->pText->bUpdate = 1;
+        sp_0x70->Data_4[1]->pText->bUpdate = 1;
 
         uint16_t r6 = (sp8.wData_0x1e - sp8.wCurrentItem) + r7;
 
@@ -2307,7 +2307,7 @@ int sub_23456aa2(void)
 
     strncpy(&Data_23799ce8[0], &sp8.Data_0.service_name[0], 38);
 
-    Data_234ca55c->graphicData->pItems[2].Data_0x20->bData_0x17 = 1;
+    Data_234ca55c->graphicData->pItems[2].pText->bUpdate = 1;
 
     menu_epg_update_clock_time_text_field();
 
@@ -2373,7 +2373,7 @@ static void* sub_23456db4(FrontDisplay_Job* r5)
         //loc_23456de8
         Data_234ca564 = r0;
 
-        if ((r0->header != 0) && (r0->header->Data_0x20 != 0))
+        if ((r0->header != 0) && (r0->header->pText != 0))
         {
             //0x23456df6
             r5->bData_8[0] = 0x22;
@@ -2405,11 +2405,11 @@ static void* sub_23456db4(FrontDisplay_Job* r5)
     r5->bData_8[0] = 0; //r6
 
     if ((r0->Data_4 != 0) && 
-        (r0->Data_4->Data_4[1] != 0) && (r0->Data_4->Data_4[1]->Data_0x20 != 0))
+        (r0->Data_4->Data_4[1] != 0) && (r0->Data_4->Data_4[1]->pText != 0))
     {
         int r0_ = 0;
         //0x23456e50
-        char* r1 = r0->Data_4->Data_4[1]->Data_0x20->pString;
+        char* r1 = r0->Data_4->Data_4[1]->pText->pString;
         if (r1[0] == 7)
         {
             char r2 = r1[2];

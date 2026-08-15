@@ -53,13 +53,13 @@ typedef struct
 	uint8_t* pString; //16 = 0x10
 	uint16_t wData_0x14; //20 = 0x14
 	uint8_t bData_0x16; //22 = 0x16
-	uint8_t bData_0x17; //23 = 0x17
+	uint8_t bUpdate; //23 = 0x17
 	//0x18
 } Graphic_Job_2_5_Item_Text; //Struct_2377ded0_Inner_0x1c_Inner_0x20;
 
 typedef struct
 {
-	uint8_t bData_0; //0
+	uint8_t bEnable; //0
 	uint8_t bData_1; //1
 	int Data_4; //4
 	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
@@ -71,7 +71,7 @@ typedef struct
 	Graphic_Job_2_5_Item_Background* background; //0x18
 	uint16_t wColor; //0x1c
 	uint16_t wData_0x1e; //0x1e
-	Graphic_Job_2_5_Item_Text* Data_0x20; //0x20
+	Graphic_Job_2_5_Item_Text* pText; //0x20
 	Graphic_Job_2_5_Item_Text Data_0x24; //0x24 +0x18
 	uint8_t bData_0x3c; //0x3c
 	//0x40

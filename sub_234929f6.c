@@ -910,7 +910,7 @@ int sub_234926c8(Struct_2348dc50* a)
 			if (r1 == 0xfffe)
 			{
 				//0x23492712
-				strcpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, "Internet Radio");
+				strcpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->pText->pString, "Internet Radio");
 				//->loc_2349275c
 			}
 			//loc_23492720
@@ -918,7 +918,7 @@ int sub_234926c8(Struct_2348dc50* a)
 			{
 				//0x23492728
 				text_table_get_string(0x158/*'Kabel'*/, 
-					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, 20);
+					((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->pText->pString, 20);
 				//->loc_2349275c
 			}
 			else 
@@ -926,7 +926,7 @@ int sub_234926c8(Struct_2348dc50* a)
 				//loc_2349273a
 				/*sub_2340ed78*/sub_2340c29c(&sp4, r1);
 
-				strncpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString,
+				strncpy(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->pText->pString,
 					&sp4.Data_8[0], 20);
 				//->loc_2349275c
 			}
@@ -934,11 +934,11 @@ int sub_234926c8(Struct_2348dc50* a)
 		else
 		{
 			//loc_23492750
-			memset(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->pString, 
+			memset(((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->pText->pString, 
 				0, 40);
 		}
 		//loc_2349275c
-		((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->Data_0x20->bData_0x17 = 1;
+		((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->pText->bUpdate = 1;
 		r4->Data_4[0]->bData_0x3c = 1;
 		//loc_23492772
 	} //for (r5 = 0; r5 < sp_0x24.wData_0x26; r5++)

@@ -1538,9 +1538,9 @@ void menu_information_get_transponder_string(Transponder* r6)
 	Graphic_Job_2_5_Item* r1 = &menu_information_p->graphicData->pItems[5/*0x140*/]; //r2 + 1;
 	Graphic_Job_2_5_Item* r0 = &menu_information_p->graphicData->pItems[6/*0x180*/];
 
-	uint8_t* r7 = r2->Data_0x20->pString; //4
-	uint8_t* r4 = r1->Data_0x20->pString; //5
-	uint8_t* r5 = r0->Data_0x20->pString; //6
+	uint8_t* r7 = r2->pText->pString; //4
+	uint8_t* r4 = r1->pText->pString; //5
+	uint8_t* r5 = r0->pText->pString; //6
 
 	uint8_t len;
 	int modulation;
@@ -1673,27 +1673,30 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 	//0x2345557a
 	//r3 = r0 + r1;
 	//0x2345558a / 0x23455598
-	uint8_t* strVidPid/*r0*/ = r0[39/*0x9C0*/]./*r3->*/Data_0x20->pString;
+	uint8_t* strVidPid/*r0*/ = r0[39/*0x9C0*/]./*r3->*/pText->pString;
+	//0x2345559c
+	uint8_t* strAudPid/*sp_0x38*/ = r0[40/*0xA00*/]./*r2->*/pText->pString;
 
 	//234555ac
-	uint8_t* strTxtPid/*sp_0x34*/ = lr->Data_0x20->pString; //Txt Pid String?
-	uint8_t* sp_0x30 = ip->Data_0x20->pString;
+	uint8_t* strTxtPid/*sp_0x34*/ = lr->pText->pString; //Txt Pid String?
+	uint8_t* strAc3Pid/*sp_0x30*/ = ip->pText->pString;
 
+	r0[39/*0x9C0*/]./*r3->*/pText->bUpdate = 1; //r1
+	r0[40/*0xA00*/]./*r2->*/pText->bUpdate = 1; //r1
 	//234555d4
-	lr->Data_0x20->bData_0x17 = 1; //r1;
+	lr->pText->bUpdate = 1; //r1;
 	//234555d8
-	ip->Data_0x20->bData_0x17 = 1; //r1;
+	ip->pText->bUpdate = 1; //r1;
 
 
 	if (Data_23799b08.Data_23799b48 == 3)
 	{
 		//0x234555ec
-
-
-		//234555fe
+		sprintf(strVidPid, "%s -", "VPid:");
+		sprintf(strAudPid/*sp_0x38*/, "%s -", "APid:");
 		sprintf(strTxtPid/*sp_0x34*/, "%s -", "TxtPid:");
 		//->loc_23455666
-		sprintf(sp_0x30, "%s -", "Ac3Pid:");
+		sprintf(strAc3Pid/*sp_0x30*/, "%s -", "Ac3Pid:");
 	} //if (Data_23799b08.Data_23799b48 == 3)
 	else
 	{
@@ -1713,12 +1716,13 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 		if (r4->wAudioPID/*wData_0x10*/ != 0)
 		{
 			//0x23455628
-
+			sprintf(strAudPid, "%s 0x%x", "APid:", r4->wAudioPID/*wData_0x10*/);
 			//->loc_2345563a
 		}
 		else
 		{
 			//loc_23455632
+			sprintf(strAudPid, "%s -", "APid:");
 		}
 		//loc_2345563a
 		if (r4->wTtxPID/*wData_0x0e*/ != 0)
@@ -1736,13 +1740,13 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 		if (r4->wAc3PID/*wData_0x0c*/ != 0)
 		{
 			//0x2345565a
-
+			sprintf(strAc3Pid/*sp_0x30*/, "%s 0x%x", "Ac3Pid:", r4->wAc3PID/*wData_0x0c*/);
 			//->loc_23455670
 		}
 		else
 		{
 			//loc_23455666
-			sprintf(sp_0x30, "%s -", "Ac3Pid:");
+			sprintf(strAc3Pid/*sp_0x30*/, "%s -", "Ac3Pid:");
 		}
 	}
 	//loc_23455670
@@ -1791,7 +1795,7 @@ void sub_234556b4(int a)
 	do
 	{
 		//loc_234556e8
-		r1->bData_0 = 0; //r7
+		r1->bEnable = 0; //r7
 		r1->bData_0x3c = 1; //r5
 		r1++;
 		r2--;
@@ -1806,7 +1810,7 @@ void sub_234556b4(int a)
 	do
 	{
 		//loc_2345584c
-		r1->bData_0 = 0; //r7
+		r1->bEnable = 0; //r7
 		r1->bData_0x3c = 1; //r5
 		r1++;
 		r2--;
@@ -1890,7 +1894,7 @@ void sub_234556b4(int a)
 	while (r6 != 0)
 	{
 		//->loc_234558fc
-		r4_->bData_0 = 1; //r5
+		r4_->bEnable = 1; //r5
 		r4_->bData_0x3c = 1; //r5
 		r4_++;
 		r6--;
@@ -1974,16 +1978,16 @@ int sub_23455910(Struct_23455910* r4)
 			//loc_234559ee
 		}
 		//loc_234559ee
-		sp_0xBC = sp_0xc0->pItems[13/*0x340*/]/*r3*/.Data_0x20->pString;
-		sp_0xB8 = sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.Data_0x20->pString;
-		sp_0xB4 = sp_0xc0->pItems[12/*0x300*/]/*r2*/.Data_0x20->pString;
+		sp_0xBC = sp_0xc0->pItems[13/*0x340*/]/*r3*/.pText->pString;
+		sp_0xB8 = sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.pText->pString;
+		sp_0xB4 = sp_0xc0->pItems[12/*0x300*/]/*r2*/.pText->pString;
 		
-		sp_0xc0->pItems[13/*0x340*/]/*r3*/.Data_0x20->bData_0x17 = 1; //r7
-		sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.Data_0x20->bData_0x17 = 1; //r7
-		sp_0xc0->pItems[12/*0x300*/]/*r2*/.Data_0x20->bData_0x17 = 1; //r7
+		sp_0xc0->pItems[13/*0x340*/]/*r3*/.pText->bUpdate = 1; //r7
+		sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.pText->bUpdate = 1; //r7
+		sp_0xc0->pItems[12/*0x300*/]/*r2*/.pText->bUpdate = 1; //r7
 		//0x23455a10
-		sp_0xB0 = sp_0xc0->pItems[35/*0x8C0*/]/*sp_0x80*/.Data_0x20->pString;
-		sp_0xAC = sp_0xc0->pItems[36/*0x900*/]/*sp_0x7c*/.Data_0x20->pString;
+		sp_0xB0 = sp_0xc0->pItems[35/*0x8C0*/]/*sp_0x80*/.pText->pString;
+		sp_0xAC = sp_0xc0->pItems[36/*0x900*/]/*sp_0x7c*/.pText->pString;
 		//0x23455a20
 		if (0 == OSSemAccept(Data_23799af4))
 		{
@@ -2061,9 +2065,9 @@ int sub_23455910(Struct_23455910* r4)
 			}
 		}
 		//loc_23455b9e
-		/*sp_0x9C*/sp_0xc0->pItems[4/*0x100*/].Data_0x20->bData_0x17 = 1; //r7
-		/*sp_0x98*/sp_0xc0->pItems[5/*0x140*/].Data_0x20->bData_0x17 = 1; //r7
-		/*sp_0x94*/sp_0xc0->pItems[6/*0x180*/].Data_0x20->bData_0x17 = 1; //r7
+		/*sp_0x9C*/sp_0xc0->pItems[4/*0x100*/].pText->bUpdate = 1; //r7
+		/*sp_0x98*/sp_0xc0->pItems[5/*0x140*/].pText->bUpdate = 1; //r7
+		/*sp_0x94*/sp_0xc0->pItems[6/*0x180*/].pText->bUpdate = 1; //r7
 		//0x23455bb0
 		menu_information_get_transponder_string(sp_0xC8);
 
@@ -2317,7 +2321,7 @@ int menu_information_on_enter()
 	//0x23455dce 
 	//0x23455dd2
 	//r1 = r5->pItems;
-	r5->pItems[37/*0x940*/].bData_0 = 1;
+	r5->pItems[37/*0x940*/].bEnable = 1;
 	r5->pItems[36/*0x900*/].background = &menu_main_graphic_item_background_dark_blue;
 	r5->pItems[34/*0x880*/].height = 0x6c;
 

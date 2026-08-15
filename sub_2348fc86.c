@@ -2140,12 +2140,12 @@ static void update_transponder_value_strings(Transponder* r4)
 	console_send_string("update_transponder_value_strings (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* sp_0x28 = Data_234e7268->graphicData->pItems[36].Data_0x20->pString;
-	Data_234e7268->graphicData->pItems[36].Data_0x20->bData_0x17 = 1;
-	uint8_t* sp_0x24 = Data_234e7268->graphicData->pItems[37].Data_0x20->pString;
-	Data_234e7268->graphicData->pItems[37].Data_0x20->bData_0x17 = 1;
-	uint8_t* r7 = Data_234e7268->graphicData->pItems[38].Data_0x20->pString;
-	Data_234e7268->graphicData->pItems[38].Data_0x20->bData_0x17 = 1;
+	uint8_t* sp_0x28 = Data_234e7268->graphicData->pItems[36].pText->pString;
+	Data_234e7268->graphicData->pItems[36].pText->bUpdate = 1;
+	uint8_t* sp_0x24 = Data_234e7268->graphicData->pItems[37].pText->pString;
+	Data_234e7268->graphicData->pItems[37].pText->bUpdate = 1;
+	uint8_t* r7 = Data_234e7268->graphicData->pItems[38].pText->pString;
+	Data_234e7268->graphicData->pItems[38].pText->bUpdate = 1;
 
 	int r0 = fe_manager_get_transponder_type(r4);
 	//r5 = 1000;
@@ -2240,8 +2240,8 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 	uint8_t sp_0xc[30]; //size???
 	Graphic_Job_2_5_Item* r5 = &Data_234e7268->graphicData->pItems[39];
 	Graphic_Job_2_5_Item* r6 = &Data_234e7268->graphicData->pItems[40];
-	uint8_t* sp8 = r5->Data_0x20->pString;
-	uint8_t* sp4 = r6->Data_0x20->pString;
+	uint8_t* sp8 = r5->pText->pString;
+	uint8_t* sp4 = r6->pText->pString;
 
 	graphic_lock();
 
@@ -2251,7 +2251,7 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 		//0x2348f8fe
 		Scan_Progress_Transponder* r4 = p;
 		
-		r5->Data_0x20->bData_0x17 = 1; //r1
+		r5->pText->bUpdate = 1; //r1
 
 		update_transponder_value_strings(r4->pTransponder);
 
@@ -2370,7 +2370,7 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 
 		int r0 = 0x7b; //'Stopp'
 
-		r6->Data_0x20->bData_0x17 = 1; //r1
+		r6->pText->bUpdate = 1; //r1
 
 		int status = r4->state;
 
@@ -2578,11 +2578,11 @@ static int sub_2348fe7a(Struct_2348dc50* p)
 	for (i = 0; i < sp.wData_0x26; i++)
 	{
 		//loc_2348fea2
-		sp_0xa8 = ((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[0]))->Data_0x20->pString;
-		sp_0xa4 = ((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[1]))->Data_0x20->pString;
+		sp_0xa8 = ((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[0]))->pText->pString;
+		sp_0xa4 = ((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[1]))->pText->pString;
 
-		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[0]))->Data_0x20->bData_0x17 = 1;
-		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[1]))->Data_0x20->bData_0x17 = 1;
+		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[0]))->pText->bUpdate = 1;
+		((Graphic_Job_2_5_Item*)(pMenuItem->Data_4[1]))->pText->bUpdate = 1;
 
 		uint16_t r7 = sp.wData_0x1e - sp.wCurrentItem + i;
 

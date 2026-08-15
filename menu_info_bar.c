@@ -1445,30 +1445,30 @@ static int sub_2348c8d4(Struct_2348dc50* a)
     if (sp.wData_0x20 == 0)
     {
         //0x2348c926
-        ip->bData_0 = 0;
-        r0->bData_0 = 0;
+        ip->bEnable = 0;
+        r0->bEnable = 0;
 
         lr->bData_0x3c = 1; //r7
 
-        Data_234e0298[0].Data_4[0]/*234e029c*/->bData_0 = 0;
-        Data_234e0298[1].Data_4[0]/*234e02c8*/->bData_0 = 0;
-        Data_234e0298[2].Data_4[0]/*234e02f4*/->bData_0 = 0;
-        Data_234e0298[3].Data_4[0]/*234e0320*/->bData_0 = 0;
-        Data_234e0298[4].Data_4[0]/*234e034c*/->bData_0 = 0;
-        Data_234e0298[5].Data_4[0]/*234e0378*/->bData_0 = 0;
+        Data_234e0298[0].Data_4[0]/*234e029c*/->bEnable = 0;
+        Data_234e0298[1].Data_4[0]/*234e02c8*/->bEnable = 0;
+        Data_234e0298[2].Data_4[0]/*234e02f4*/->bEnable = 0;
+        Data_234e0298[3].Data_4[0]/*234e0320*/->bEnable = 0;
+        Data_234e0298[4].Data_4[0]/*234e034c*/->bEnable = 0;
+        Data_234e0298[5].Data_4[0]/*234e0378*/->bEnable = 0;
         //->loc_2348c9da
     }
     else
     {
         //loc_2348c956
-        sprintf(r0->Data_0x20->pString, "[%d/%d]", 
+        sprintf(r0->pText->pString, "[%d/%d]", 
             sp.wData_0x1e + 1, sp.wData_0x20);
 
         //->loc_2348c9c2
         for (uint8_t r0 = 0; r0 < sp.wData_0x26; r0++)
         {
             //loc_2348c968
-            r4->Data_4[0]->Data_0x20->bData_0x17 = 1; //r7
+            r4->Data_4[0]->pText->bUpdate = 1; //r7
             r4->Data_4[0]->bData_0x3c = 1; //r7
 
             uint16_t r1 = sp.wData_0x1e - sp.wCurrentItem + r0;
@@ -1477,26 +1477,26 @@ static int sub_2348c8d4(Struct_2348dc50* a)
                 //0x2348c988
                 ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234dfee0;
 
-                if (r4->Data_4[0]->Data_0x20 != 0)
+                if (r4->Data_4[0]->pText != 0)
                 {
                     //0x2348c998
-                    r4->Data_4[0]->Data_0x20->pString = &r5->Data_4[0];
+                    r4->Data_4[0]->pText->pString = &r5->Data_4[0];
                 }
                 //loc_2348c99c
-                r4->Data_4[0]->bData_0 = 1; //r7
+                r4->Data_4[0]->bEnable = 1; //r7
                 r6++;
                 //->loc_2348c9ba
             }
             else
             {
                 //loc_2348c9a6
-                if (r4->Data_4[0]->Data_0x20 != 0)
+                if (r4->Data_4[0]->pText != 0)
                 {
                     //0x2348c998
-                    r4->Data_4[0]->Data_0x20->pString = &Data_234dfe4c[0];
+                    r4->Data_4[0]->pText->pString = &Data_234dfe4c[0];
                 }
                 //loc_2348c9b4
-                r4->Data_4[0]->bData_0 = 0;
+                r4->Data_4[0]->bEnable = 0;
             }
             //loc_2348c9ba
             r5++;
@@ -1561,17 +1561,17 @@ static int sub_2348ca2a(Struct_2348dc50* a)
     if (sp.wData_0x20 == 0)
     {
         //0x2348ca62
-        sp_0x68->bData_0 = 0;
-        sp_0x6c->bData_0 = 0;
+        sp_0x68->bEnable = 0;
+        sp_0x6c->bEnable = 0;
 
         sp_0x64->bData_0x3c = 1; //r7
 
-        Data_234dfe54->Data_8[0].Data_4[0]->bData_0 = 0;
-        Data_234dfe54->Data_8[1].Data_4[0]->bData_0 = 0;
-        Data_234dfe54->Data_8[2].Data_4[0]->bData_0 = 0;
-        Data_234dfe54->Data_8[3].Data_4[0]->bData_0 = 0;
-        Data_234dfe54->Data_8[4].Data_4[0]->bData_0 = 0;
-        Data_234dfe54->Data_8[5].Data_4[0]->bData_0 = 0;
+        Data_234dfe54->Data_8[0].Data_4[0]->bEnable = 0;
+        Data_234dfe54->Data_8[1].Data_4[0]->bEnable = 0;
+        Data_234dfe54->Data_8[2].Data_4[0]->bEnable = 0;
+        Data_234dfe54->Data_8[3].Data_4[0]->bEnable = 0;
+        Data_234dfe54->Data_8[4].Data_4[0]->bEnable = 0;
+        Data_234dfe54->Data_8[5].Data_4[0]->bEnable = 0;
         //->loc_2348cbc2
     }
     else
@@ -1584,16 +1584,16 @@ static int sub_2348ca2a(Struct_2348dc50* a)
 
         sp_0x74 = sp.Data_0x10[sp.wData_0x1e - sp.wCurrentItem];
 
-        sprintf(sp_0x6c->Data_0x20->pString, "[%d/%d]", 
+        sprintf(sp_0x6c->pText->pString, "[%d/%d]", 
             sp.wData_0x1e + 1, sp.wData_0x20);
 
         //->loc_2348cb88
         for (uint8_t r5 = 0; r5 < sp.wData_0x26; r5++)
         {
             //loc_2348caec
-            r4->Data_4[0]->Data_0x20->bData_0x17 = 1; //r7
+            r4->Data_4[0]->pText->bUpdate = 1; //r7
 
-            sp_0x78 = r4->Data_4[0]->Data_0x20->pString;
+            sp_0x78 = r4->Data_4[0]->pText->pString;
 
             r4->Data_4[0]->bData_0x3c = 1; //r7
 
@@ -1630,7 +1630,7 @@ static int sub_2348ca2a(Struct_2348dc50* a)
 
                 ((Graphic_Job_2_5_Item*)(r4->Data_4[0]))->background = &Data_234dfee0;
 
-                r4->Data_4[0]->bData_0 = 1; //r7
+                r4->Data_4[0]->bEnable = 1; //r7
                 //->loc_2348cb7c
             }
             else
@@ -1638,7 +1638,7 @@ static int sub_2348ca2a(Struct_2348dc50* a)
                 //loc_2348cb62
                 sprintf(sp_0x78, " ");
 
-                r4->Data_4[0]->bData_0 = 0;
+                r4->Data_4[0]->bEnable = 0;
                 r4->Data_4[0]->bData_0x3c = 1; //r7             
 
                 sp_0x64->bData_0x3c = 1; //r7   
@@ -1696,19 +1696,19 @@ void sub_2348cc10(void)
 	console_send_string("sub_2348cc10 (todo.c): TODO\r\n");
 #endif
 
-    Data_234dfe54->graphicData->pItems[2].Data_0x20->bData_0x17 = 1; //r4
-    Data_234dfe54->graphicData->pItems[3].Data_0x20->bData_0x17 = 1; //r4
+    Data_234dfe54->graphicData->pItems[2].pText->bUpdate = 1; //r4
+    Data_234dfe54->graphicData->pItems[3].pText->bUpdate = 1; //r4
 
-    Data_234dfe54->graphicData->pItems[32].bData_0 = 1; //r4
+    Data_234dfe54->graphicData->pItems[32].bEnable = 1; //r4
     Data_234dfe54->graphicData->pItems[32].bData_0x3c = 1; //r4
 
-    Data_234dfe54->graphicData->pItems[33].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[34].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[35].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[36].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[37].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[38].bData_0 = 0; //r5
-    Data_234dfe54->graphicData->pItems[39].bData_0 = 0; //r5
+    Data_234dfe54->graphicData->pItems[33].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[34].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[35].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[36].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[37].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[38].bEnable = 0; //r5
+    Data_234dfe54->graphicData->pItems[39].bEnable = 0; //r5
 
     memset(&Data_2396b944[0], 0, 10);
     memset(&Data_2396b950[0], 0, 20);
@@ -1778,15 +1778,15 @@ int menu_info_bar_populate_event_field(EIT_Event* r4, Graphic_Job_2_5_Item* sp_0
     char* r6;
 
     if ((sp_0x58 == 0) ||
-        (sp_0x58->Data_0x20 == 0) ||
-        ((r6 = sp_0x58->Data_0x20->pString) == 0) ||
+        (sp_0x58->pText == 0) ||
+        ((r6 = sp_0x58->pText->pString) == 0) ||
         (r4 == 0))
     {
         //loc_2348cf3c
         return 4;
     }
     //loc_2348cf42
-    sp_0x58->Data_0x20->bData_0x17 = 1;
+    sp_0x58->pText->bUpdate = 1;
 
     memset(r6, 0, 100);
 
@@ -1856,10 +1856,10 @@ int menu_info_bar_populate_event_field(EIT_Event* r4, Graphic_Job_2_5_Item* sp_0
                 strncat(r6, r4_, 100 - r7);
 
                 sub_234089e8/*sub_2340b4c4*/(&sp_0xc, r6, 
-                    sp_0x58->Data_0x20->bData_0xd,
-                    sp_0x58->Data_0x20->x1,
-                    sp_0x58->Data_0x20->y1,
-                    sp_0x58->Data_0x20->x2,
+                    sp_0x58->pText->bData_0xd,
+                    sp_0x58->pText->x1,
+                    sp_0x58->pText->y1,
+                    sp_0x58->pText->x2,
                     2);
                 //->loc_2348cff6
             }
@@ -1885,18 +1885,18 @@ int menu_info_bar_clear_event_field(int r4, Graphic_Job_2_5_Item* r1)
 
     uint8_t oldString[20];
 
-    if (r1->Data_0x20 == 0)
+    if (r1->pText == 0)
     {
         return 4;
     }
 
-    uint8_t* pString = r1->Data_0x20->pString;
+    uint8_t* pString = r1->pText->pString;
     if (pString == 0)
     {
         return 4;
     }
 
-    r1->Data_0x20->bData_0x17 = 1;
+    r1->pText->bUpdate = 1;
 
     if (r4 == 3)
     {
@@ -2231,7 +2231,7 @@ int sub_2348d3f6(Menu_Event* r5)
                 //loc_2348d44a
                 Data_2396b628.wChannelNumber = keyCode;
 
-                sp_0x34->Data_0x20->bData_0x17 = 1;
+                sp_0x34->pText->bUpdate = 1;
 
                 Data_2396b628.Data_2396b74c = 0; //r6
                 Data_2396b628.Data_2396b750 = sub_2348d34c;
@@ -2250,7 +2250,7 @@ int sub_2348d3f6(Menu_Event* r5)
             //0x2348d474
             Data_2396b944[0] = 0; //r6;
 
-            sp_0x34->Data_0x20->bData_0x17 = 1;
+            sp_0x34->pText->bUpdate = 1;
             Data_2396b628.Data_2396b74c = 0; //r6
             Data_2396b628.Data_2396b750 = sub_2348d34c;
 
@@ -2535,7 +2535,7 @@ void sub_2348d87e(Clock_Time* r4, EIT_Event* b)
 
 //    int r6 = 1;
 
-    Data_234dfe54->graphicData->pItems[20].Data_0x20->bData_0x17 = 1;
+    Data_234dfe54->graphicData->pItems[20].pText->bUpdate = 1;
     menu_info_bar_time_string[0] = 0;
 
     clocktime_get(r4);

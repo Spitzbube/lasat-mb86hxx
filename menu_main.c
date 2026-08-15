@@ -1490,7 +1490,7 @@ int menu_main_items_on_event(void* r0)
 				//0x2344cff6
 				r4->wData_2 = 5;
 				r4->pItems[4].height/*0x112*/ = 0xcc;
-				r4->pItems[11].bData_0/*0x2c0*/ = 1; //r2
+				r4->pItems[11].bEnable/*0x2c0*/ = 1; //r2
 				r4->pItems[9].background/*0x258*/ = r4->pItems[7].background/*0x1c0*/;
 			}
 			else
@@ -1498,7 +1498,7 @@ int menu_main_items_on_event(void* r0)
 				//loc_2344d01a
 				r4->wData_2 = 4;
 				r4->pItems[4].height/*0x112*/ = 0xac;
-				r4->pItems[11].bData_0/*0x2c0*/ = 0; //r2
+				r4->pItems[11].bEnable/*0x2c0*/ = 0; //r2
 				r4->pItems[9].background/*0x258*/ = r4->pItems[11].background/*0x2d8*/;
 
 				if (menu_main_current_flavor->currentItem == 5)
@@ -1531,14 +1531,14 @@ int menu_main_on_enter(int a)
 
 	Data_234c1248 = Data_234c1244 = musb_msd_get_device(0);
 
-	r4->pItems[10].bData_0 = 0;
+	r4->pItems[10].bEnable = 0;
 
 	if (Data_234c1244 != 0)
 	{
 		r4->wData_2 = 5;
 
 		r4->pItems[4].height = 0xcc;
-		r4->pItems[11].bData_0 = 1;
+		r4->pItems[11].bEnable = 1;
 		r4->pItems[9].background = r4->pItems[7].background;
 	}
 	else
@@ -1547,7 +1547,7 @@ int menu_main_on_enter(int a)
 		r4->wData_2 = 4;
 
 		r4->pItems[4].height = 0xac;
-		r4->pItems[11].bData_0 = 0;
+		r4->pItems[11].bEnable = 0;
 		r4->pItems[9].background = r4->pItems[11].background;
 	}
 
@@ -1752,7 +1752,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					//0x2344d262
 					(r6->header != 0) &&
 					//0x2344d268
-					(r6->header->Data_0x20 != 0))
+					(r6->header->pText != 0))
 			{
 				//0x2344d26e: Handle Menu Header
 #if 0
@@ -1760,7 +1760,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 #endif
 				r4->bData_8[0] = '"'; //r7
 
-				strncpy(&r4->bData_8[1], r6->header->Data_0x20->pString, 10);
+				strncpy(&r4->bData_8[1], r6->header->pText->pString, 10);
 
 				uint8_t r0 = (uint8_t) strlen(sp_0x38);
 				r4->bData_8[r0] = '"'; //r7
@@ -1789,7 +1789,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					//loc_2344d2c0
 					return r6->Data_0x38;
 				}
-			} //if ((Data_234c1250 != r6) && (r6->Data_0xc != 0) && (r6->Data_0xc->Data_0x20 != 0))
+			} //if ((Data_234c1250 != r6) && (r6->Data_0xc != 0) && (r6->Data_0xc->pText != 0))
 			else
 			{
 				//loc_2344d2c4: Handle (current) Menu Item
@@ -1808,7 +1808,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 					return 0;
 				}
 				//loc_2344d2d4: Column 1
-				Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
+				Graphic_Job_2_5_Item_Text* r0 = r0_->pText;
 
 				if (r0 != 0)
 				{
@@ -1855,12 +1855,12 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 				if (r0_ != 0)
 				{
 					//0x2344d32e: Column 2
-					if (r0_->Data_0x20 != 0)
+					if (r0_->pText != 0)
 					{
 						//0x2344d334
 						sp_0x34 = r4->bData_8;
 
-						strncpy(sp_0x34, r0_->Data_0x20->pString, 0xff);
+						strncpy(sp_0x34, r0_->pText->pString, 0xff);
 
 						r4->bData_8[0xff] = 0;
 
@@ -1919,7 +1919,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 						}
 						//loc_2344d3e4
 						bData_234c1230 = r4->bNumTextChars;
-					} //if (r0_->Data_0x20 != 0)
+					} //if (r0_->pText != 0)
 					//loc_2344d3e8
 				} //if (r0_ != 0)
 				//loc_2344d3e8

@@ -1698,7 +1698,7 @@ void get_time_difference_value_string(Menu_Item* item)
 	int r0;
 	int r7;
 	Graphic_Job_2_5_Item* r5 = item->Data_4[1];
-	uint8_t* r6 = r5->Data_0x20->pString;
+	uint8_t* r6 = r5->pText->pString;
 	uint8_t r4 = menu_general_settings_backup.timeDiff & 0x7f;
 
 	if (r4 == 24)
@@ -1716,7 +1716,7 @@ void get_time_difference_value_string(Menu_Item* item)
 	//loc_23490616
 	r7 = r0 * 30;
 
-	if (r5->Data_0x20 != 0)
+	if (r5->pText != 0)
 	{
 		//0x2349061e
 		text_table_get_string(0x4c/*Std.*/, sp4, 10);
@@ -1766,7 +1766,7 @@ void get_time_difference_value_string(Menu_Item* item)
 		sprintf(r6, "+%d.%02d %s", r2, r3, &sp4[0]);
 	}
 	//loc_23490674
-	r5->Data_0x20->bData_0x17 = 1;
+	r5->pText->bUpdate = 1;
 }
 
 
@@ -1827,9 +1827,9 @@ void get_menu_language_string(struct Menu_Item* a)
 	console_send_string("get_menu_language_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* str =  a->Data_4[1]->Data_0x20->pString;
+	uint8_t* str =  a->Data_4[1]->pText->pString;
 
-	if (a->Data_4[1]->Data_0x20 != 0)
+	if (a->Data_4[1]->pText != 0)
 	{
 		text_table_get_string(2, str, 40);
 		str[39] = 0;
@@ -1921,7 +1921,7 @@ void get_initial_volume_value_string(Menu_Item* item)
 	console_send_string("get_initial_volume_value_string (todo.c): TODO\r\n");
 #endif
 
-	uint8_t* str = item->Data_4[1]->Data_0x20->pString;
+	uint8_t* str = item->Data_4[1]->pText->pString;
 
 	uint32_t r0 = sub_2340a650(menu_general_settings_backup.initialVolume);
 
@@ -1953,9 +1953,9 @@ int sub_23490826(int* a)
 /* /  / 23490862 - todo */
 void get_timer_storage_value_string(Menu_Item* pItem)
 {
-	uint8_t* str = pItem->Data_4[1]->Data_0x20->pString;
+	uint8_t* str = pItem->Data_4[1]->pText->pString;
 
-	pItem->Data_4[1]->Data_0x20->bData_0x17 = 1;
+	pItem->Data_4[1]->pText->bUpdate = 1;
 
 	if (menu_general_settings_backup.Data_0x10 & (1 << 11))
 	{
@@ -1976,9 +1976,9 @@ static void get_deep_standby_value_string(Menu_Item* pItem)
 #endif
 
 	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
-	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r0 = r0_->pText;
 	uint8_t* str = r0->pString;
-	r0->bData_0x17 = 1;
+	r0->bUpdate = 1;
 
 	if (0 == sub_23418e98())
 	{
@@ -2007,9 +2007,9 @@ static void get_auto_standby_value_string(Menu_Item* pItem)
 
 	User_Settings* sett = &menu_general_settings_backup;
 	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
-	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r0 = r0_->pText;
 	uint8_t* str = r0->pString;
-	r0->bData_0x17 = 1;
+	r0->bUpdate = 1;
 
 	if (sett->Data_0x10 & (1 << 15))
 	{
@@ -2026,10 +2026,10 @@ static void get_auto_standby_value_string(Menu_Item* pItem)
 void get_channel_list_sorting_value_string(Menu_Item* pItem)
 {
 	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
-	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r0 = r0_->pText;
 	uint8_t* str = r0->pString;
 
-	r0->bData_0x17 = 1;
+	r0->bUpdate = 1;
 
 	if ((menu_general_settings_backup.Data_4.dwData & (0x03 << 23)))
 	{
@@ -2046,10 +2046,10 @@ void get_channel_list_sorting_value_string(Menu_Item* pItem)
 void get_channel_list_update_value_string(Menu_Item* pItem)
 {
 	Graphic_Job_2_5_Item* r0_ = pItem->Data_4[1];
-	Graphic_Job_2_5_Item_Text* r0 = r0_->Data_0x20;
+	Graphic_Job_2_5_Item_Text* r0 = r0_->pText;
 	uint8_t* str = r0->pString;
 
-	r0->bData_0x17 = 1;
+	r0->bUpdate = 1;
 
 	if (menu_general_settings_backup.Data_0x10 & (1 << 7))
 	{

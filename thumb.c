@@ -460,10 +460,10 @@ void menu_initialize(Menu* pMenu)
 	}
 	//loc_2343d3bc: Get the string of the menu header, if available
 	//r6 = 0xffff;
-	if ((pMenu->header != 0) && (pMenu->header->Data_0x20 != 0)
+	if ((pMenu->header != 0) && (pMenu->header->pText != 0)
 			&& (pMenu->stringId != 0xffff/*r6*/))
 	{
-		text_table_get_string(pMenu->stringId, pMenu->header->Data_0x20->pString, 36);
+		text_table_get_string(pMenu->stringId, pMenu->header->pText->pString, 36);
 	}
 	//loc_2343d3d8
 	pMenuItem = pMenu->Data_8;
@@ -488,12 +488,12 @@ void menu_initialize(Menu* pMenu)
 
 				// Get the string of the menu item caption (column 1), if available
 				if ((pMenuItem->Data_4[0] != 0) &&
-						(pMenuItem->Data_4[0]->Data_0x20 != 0) &&
+						(pMenuItem->Data_4[0]->pText != 0) &&
 						(pMenuItem->wData_0 != 0xffff))
 				{
 					//0x2344daa8
 					text_table_get_string(pMenuItem->wData_0,
-							pMenuItem->Data_4[0]->Data_0x20->pString, 36);
+							pMenuItem->Data_4[0]->pText->pString, 36);
 				}
 				//loc_2344dab0: Get the string of the menu item value (column 2), if available
 				if (pMenuItem->initValueString != 0)
@@ -527,14 +527,14 @@ void menu_initialize(Menu* pMenu)
 #endif
 		}
 		//loc_2343d40a: Initialize the help for this menu based on the current menu item
-		if ((pMenu->help != 0) && (pMenu->help->Data_0x20 != 0))
+		if ((pMenu->help != 0) && (pMenu->help->pText != 0))
 		{
 			if (pMenuItem->helpStringId != 0xffff/*r6*/)
 			{
 				//0x2343d41c
-				text_table_get_string(pMenuItem->helpStringId, pMenu->help->Data_0x20->pString, 244);
+				text_table_get_string(pMenuItem->helpStringId, pMenu->help->pText->pString, 244);
 
-				Graphic_Job_2_5_Item_Text* r5_ = pMenu->help->Data_0x20;
+				Graphic_Job_2_5_Item_Text* r5_ = pMenu->help->pText;
 
 				sub_234089e8(&sp_0xc, r5_->pString, r5_->bData_0xd,
 						r5_->x1, r5_->y1, r5_->x2, 4);
@@ -543,7 +543,7 @@ void menu_initialize(Menu* pMenu)
 			else
 			{
 				//loc_2343d440: No help available
-				memset(pMenu->help->Data_0x20->pString, 0, 243);
+				memset(pMenu->help->pText->pString, 0, 243);
 			}
 		}
 		//loc_2343d448
@@ -627,12 +627,12 @@ Menu_Item* sub_2344d9d0(struct Menu* r5)
 		sub_2344d872(r4, 0xff, 0x01, 0x00);
 
 		if ((r4->Data_4[0] != NULL) &&
-			(r4->Data_4[0]->Data_0x20 != NULL))
+			(r4->Data_4[0]->pText != NULL))
 		{
 			if (r4->wData_0 != 0xffff)
 			{
 				//0x2344d9fe
-				text_table_get_string(r4->wData_0, r4->Data_4[0]->Data_0x20->pString, 36);
+				text_table_get_string(r4->wData_0, r4->Data_4[0]->pText->pString, 36);
 			}
 		}
 		//loc_2344da06
@@ -752,7 +752,7 @@ int menu_items_navigate(int* a)
 				pMenu->currentItem = pMenu->maxItem;
 			}
 			//loc_2344dbee
-			if (pMenu->Data_8[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			if (pMenu->Data_8[pMenu->currentItem].Data_4[0]->bEnable == 1)
 			{
 				//->0x2344dc00 -> loc_2344dc28
 				break;
@@ -773,7 +773,7 @@ int menu_items_navigate(int* a)
 				pMenu->currentItem = 0;
 			}
 			//loc_2344dc16
-			if (pMenu->Data_8[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			if (pMenu->Data_8[pMenu->currentItem].Data_4[0]->bEnable == 1)
 			{
 				//->loc_2344dc28
 				break;
@@ -793,9 +793,9 @@ int menu_items_navigate(int* a)
 		if (pMenuItem->helpStringId != 0xffff)
 		{
 			//0x2344dc50
-			text_table_get_string(pMenuItem->helpStringId, pMenu->help->Data_0x20->pString, 244);
+			text_table_get_string(pMenuItem->helpStringId, pMenu->help->pText->pString, 244);
 
-			Graphic_Job_2_5_Item_Text* r5__ = pMenu->help->Data_0x20;
+			Graphic_Job_2_5_Item_Text* r5__ = pMenu->help->pText;
 
 			sub_234089e8(&sp_0x10,
 					r5__->pString,
@@ -809,10 +809,10 @@ int menu_items_navigate(int* a)
 		else
 		{
 			//loc_2344dc9a
-			memset(pMenu->help->Data_0x20->pString, 0, 248);
+			memset(pMenu->help->pText->pString, 0, 248);
 		}
 		//loc_2344dca4
-		pMenu->help->Data_0x20->bData_0x17 = 1;
+		pMenu->help->pText->bUpdate = 1;
 	}
 	//loc_2344dcac
 #endif
@@ -871,7 +871,7 @@ int sub_2344dcb2(int* a)
 				pMenu->currentItem = pMenu->maxItem;
 			}
 			//loc_2344dce8
-			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bEnable == 1)
 			{
 				break;
 			}
@@ -895,7 +895,7 @@ int sub_2344dcb2(int* a)
 				pMenu->currentItem = 0; //r5
 			}
 			//loc_2344dd10
-			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bData_0 == 1)
+			if (pMenu->Data_8/*r1*/[pMenu->currentItem].Data_4[0]->bEnable == 1)
 			{
 				break;
 			}

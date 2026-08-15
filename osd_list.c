@@ -255,12 +255,12 @@ int osd_list_draw(Menu* r4, int b)
     }
     //loc_2348dd4a
     if ((r4->header != 0) &&
-        (r4->header->Data_0x20 != 0) &&
+        (r4->header->pText != 0) &&
         (r4->stringId != 0xffff))
     {
-        text_table_get_string(r4->stringId, r4->header->Data_0x20->pString, 35);
+        text_table_get_string(r4->stringId, r4->header->pText->pString, 35);
 
-        r4->header->Data_0x20->bData_0x17 = 1;
+        r4->header->pText->bUpdate = 1;
     }
     //loc_2348dd6e
     if ((Data_234e1d70->pMenu != r4) ||
@@ -323,19 +323,19 @@ int osd_list_draw(Menu* r4, int b)
     //loc_2348dde8
     if ((r4->help != 0) && 
         (b == 1) && 
-        (r4->help->Data_0x20 != 0) &&
+        (r4->help->pText != 0) &&
         (r6->helpStringId != 0xffff))
     {
-        text_table_get_string(r6->helpStringId, r4->help->Data_0x20->pString, 243);
+        text_table_get_string(r6->helpStringId, r4->help->pText->pString, 243);
 
-        r4->header->Data_0x20->bData_0x17 = 1;
+        r4->header->pText->bUpdate = 1;
 
         sub_234089e8(&sp_0x10, 
-            r4->help->Data_0x20->pString, 
-            r4->help->Data_0x20->bData_0xd, 
-            r4->help->Data_0x20->x1, 
-            r4->help->Data_0x20->y1,
-            r4->help->Data_0x20->x2, 
+            r4->help->pText->pString, 
+            r4->help->pText->bData_0xd, 
+            r4->help->pText->x1, 
+            r4->help->pText->y1,
+            r4->help->pText->x2, 
             2);
     }
     //loc_2348de2c
