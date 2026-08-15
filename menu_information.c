@@ -385,9 +385,67 @@ static Graphic_Job_2_5_Item_Text Data_234c8774 = //234c8774
 #endif
 };
 
-static uint8_t menu_information_txt_pid_string[] = "TxtPid:"; //234c88a4
+static uint8_t menu_information_video_pid_string[20] = "VPid:"; //234c884c 
+static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_video_pid = //234c8860
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0xd5, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0xf1, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&menu_information_video_pid_string[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c8860                        db         0x00                               ; DATA XREF=0x234c93c0
+0x234c8861                        db         0x00
+0x234c8862                        dw         0x0047
+0x234c8864                        dw         0x00d5
+0x234c8866                        dw         0x0135
+0x234c8868                        dw         0x00f1
+0x234c886a                        db         0x01
+0x234c886b                        db         0x04
+0x234c886c                        db         0x05
+0x234c886d                        db         0x01
+0x234c886e 0000                   movs       r0, r0
+0x234c8870                        dd         0x234c884c                         ; "VPid:"
+#endif
+};
 
-static Graphic_Job_2_5_Item_Text Data_234c88b8 = //234c88b8
+static uint8_t menu_information_audio_pid_string[20] = "APid:"; //234c8878
+static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_audio_pid = //234c888c
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0xf5, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0x111, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&menu_information_audio_pid_string[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c888c                        db         0x00                               ; DATA XREF=0x234c9400
+0x234c888d                        db  0x00 ; '.'
+0x234c888e                        dw         0x0047
+0x234c8890                        dw         0x00f5                             ; DATA XREF=dword_234c850c+20
+0x234c8892                        dw         0x0135
+0x234c8894                        dw         0x0111
+0x234c8896                        db         0x01
+0x234c8897                        db         0x04
+0x234c8898                        db         0x05
+0x234c8899                        db         0x01
+0x234c889a                        db         0x00
+0x234c889b                        db  0x00 ; '.'
+0x234c889c                        dd         0x234c8878                         ; "APid:"
+#endif
+};
+
+static uint8_t menu_information_txt_pid_string[20] = "TxtPid:"; //234c88a4
+static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_txt_pid = //234c88b8
 {
 	0, //uint8_t bData_0; //0
 	0x47, //uint16_t x1; //wData_2 = 2
@@ -412,6 +470,122 @@ static Graphic_Job_2_5_Item_Text Data_234c88b8 = //234c88b8
 0x234c88c5                        db         0x01
 0x234c88c6 0000                   movs       r0, r0
 0x234c88c8                        dd         0x234c88a4                         ; "TxtPid:"
+#endif
+};
+
+static uint8_t menu_information_ac3_pid_string[20] = "Ac3Pid:"; //234c88d0
+static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_ac3_pid = //234c88e4
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x135, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0x151, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&menu_information_ac3_pid_string[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c88e4                        db         0x00                               ; DATA XREF=0x234c9480
+0x234c88e5                        db         0x00
+0x234c88e6                        dw         0x0047
+0x234c88e8                        dw         0x0135
+0x234c88ea                        dw         0x0135
+0x234c88ec                        dw         0x0151
+0x234c88ee                        db         0x01
+0x234c88ef                        db         0x04
+0x234c88f0                        db         0x05
+0x234c88f1                        db         0x01
+0x234c88f2 0000                   movs       r0, r0
+0x234c88f4                        dd         0x234c88d0                         ; "Ac3Pid:"
+#endif
+};
+
+static uint8_t Data_234c88fc[20] = "Type:"; //234c88fc
+static Graphic_Job_2_5_Item_Text Data_234c8910 = //234c8910
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x155, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0x171, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_234c88fc[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c8910                        db         0x00                               ; DATA XREF=0x234c94c0
+0x234c8911                        db         0x00
+0x234c8912                        dw         0x0047
+0x234c8914                        dw         0x0155
+0x234c8916                        dw         0x0135
+0x234c8918                        dw         0x0171
+0x234c891a                        db         0x01
+0x234c891b                        db         0x04
+0x234c891c                        db         0x05
+0x234c891d                        db         0x01
+0x234c891e 0000                   movs       r0, r0
+0x234c8920                        dd         0x234c88fc                         ; "Type:"
+#endif
+};
+
+static uint8_t Data_234c8928[20] = "VSize:"; //234c8928
+static Graphic_Job_2_5_Item_Text Data_234c893c = //234c893c
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x175, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0x191, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_234c8928[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c893c                        db         0x00                               ; DATA XREF=0x234c9500
+0x234c893d                        db         0x00
+0x234c893e                        dw         0x0047
+0x234c8940                        dw         0x0175
+0x234c8942                        dw         0x0135
+0x234c8944                        dw         0x0191
+0x234c8946                        db         0x01
+0x234c8947                        db         0x04
+0x234c8948                        db         0x05
+0x234c8949                        db         0x01
+0x234c894a 0000                   movs       r0, r0
+0x234c894c                        dd         0x234c8928                         ; "VSize:"
+#endif
+};
+
+static uint8_t Data_234c8954[20] = "HSize:"; //234c8954
+static Graphic_Job_2_5_Item_Text Data_234c8968 = //234c8968
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x195, //uint16_t y1; //wData_4 = 4
+	0x135, //uint16_t x2; //wData_6 = 6
+	0x1b1, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	5, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_234c8954[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c8968                        db         0x00                               ; DATA XREF=0x234c9540
+0x234c8969                        db         0x00
+0x234c896a                        dw         0x0047
+0x234c896c                        dw         0x0195
+0x234c896e                        dw         0x0135
+0x234c8970                        dw         0x01b1
+0x234c8972                        db         0x01
+0x234c8973                        db         0x04
+0x234c8974                        db         0x05
+0x234c8975                        db         0x01
+0x234c8976 0000                   movs       r0, r0
+0x234c8978                        dd         0x234c8954                         ; "HSize:"
 #endif
 };
 
@@ -739,7 +913,7 @@ static Graphic_Job_2_5_Item Data_234c89e0[] = //234c89e0
 	{0}, //[37] = 234C9320 
 	{0, 0, 0, 0, 0x37, 0xcb, 0x104, 0xec, 0, 
 	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
-	2}, //[38] = 234C9360: ???
+	2}, //[38] = 234C9360: Streams Pid Top Border
 #if 0
 0x234c9360                        db         0x00
 0x234c9361                        db         0x00
@@ -765,11 +939,48 @@ static Graphic_Job_2_5_Item Data_234c89e0[] = //234c89e0
 0x234c9398                        dd         0x00000000
 0x234c939c                        dd         0x00000000
 #endif 
-	{0}, //[39] = 234C93A0 
-	{0}, //[40] = 234C93E0 
+	{0, 0, 0, 0, 0x3d, 0xd1, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 
+	9, 0, &menu_information_graphic_item_text_video_pid/*Data_0x20*/}, //[39] = 234C93A0: "Video Pid"
+#if 0
+0x234c93a0                        db         0x00
+0x234c93a1                        db  0x00 ; '.'
+0x234c93a2 0000                   movs       r0, r0
+0x234c93a4                        dd         0x00000000
+0x234c93a8                        dd         0x00000000
+0x234c93ac                        dw         0x003d
+0x234c93ae                        dw         0x00d1
+0x234c93b0                        dw         0x00f8
+0x234c93b2                        dw         0x0020
+0x234c93b4                        dd         0x00000000
+0x234c93b8                        dd         0x234c12f8
+0x234c93bc 0900                   movs       r1, r1
+0x234c93be 0000                   movs       r0, r0
+0x234c93c0                        dd         0x234c8860
+#endif 
+	{0, 0, 0, 0, 0x3d, 0xf1, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &menu_information_graphic_item_text_audio_pid/*Data_0x20*/}, //[40] = 234C93E0: "Audio Pid"
+#if 0
+0x234c93e0                        db         0x00
+0x234c93e1                        db  0x00 ; '.'
+0x234c93e2                        dw         0x0000
+0x234c93e4                        dd         0x00000000
+0x234c93e8                        dd         0x00000000
+0x234c93ec                        dw         0x003d
+0x234c93ee                        dw         0x00f1
+0x234c93f0                        dw         0x00f8
+0x234c93f2                        dw         0x0020
+0x234c93f4                        dd         0x00000000
+0x234c93f8                        dd         0x234c12e0
+0x234c93fc                        db         0x09
+0x234c93fd                        db  0x00 ; '.'
+0x234c93fe 0000                   movs       r0, r0
+0x234c9400                        dd         0x234c888c
+#endif
 	{0, 0, 0, 0, 0x3d, 0x111, 0xf8, 0x20, 0, 
 	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
-	9, 0, &Data_234c88b8/*Data_0x20*/}, //[41] = 234C9420: "Txt Pid?"
+	9, 0, &menu_information_graphic_item_text_txt_pid/*Data_0x20*/}, //[41] = 234C9420: "Txt Pid"
 #if 0
 0x234c9420                        db         0x00
 0x234c9421                        db  0x00 ; '.'
@@ -787,11 +998,105 @@ static Graphic_Job_2_5_Item Data_234c89e0[] = //234c89e0
 0x234c943e 0000                   movs       r0, r0
 0x234c9440                        dd         0x234c88b8
 #endif 
-	{0}, //[42] = 234C9460 
-	{0}, //[43] = 234C94A0 
-	{0}, //[44] = 234C94E0 
-	{0}, //[45] = 234C9520 
-	{0}, //[46] = 234C9560 
+	{0, 0, 0, 0, 0x3d, 0x131, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &menu_information_graphic_item_text_ac3_pid/*Data_0x20*/}, //[42] = 234C9460: "AC3 Pid"
+#if 0
+0x234c9460                        db         0x00
+0x234c9461                        db  0x00 ; '.'
+0x234c9462 0000                   movs       r0, r0
+0x234c9464                        dd         0x00000000
+0x234c9468                        dd         0x00000000
+0x234c946c                        dw         0x003d
+0x234c946e                        dw         0x0131
+0x234c9470                        dw         0x00f8
+0x234c9472                        dw         0x0020
+0x234c9474                        dd         0x00000000
+0x234c9478                        dd         0x234c12e0
+0x234c947c                        db         0x09
+0x234c947d                        db  0x00 ; '.'
+0x234c947e 0000                   movs       r0, r0
+0x234c9480                        dd         0x234c88e4
+#endif
+	{0, 0, 0, 0, 0x3d, 0x151, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c8910/*Data_0x20*/}, //[43] = 234C94A0: ???
+#if 0
+0x234c94a0                        db         0x00
+0x234c94a1                        db  0x00 ; '.'
+0x234c94a2 0000                   movs       r0, r0
+0x234c94a4                        dd         0x00000000
+0x234c94a8                        dd         0x00000000
+0x234c94ac                        dw         0x003d
+0x234c94ae                        dw         0x0151
+0x234c94b0                        dw         0x00f8
+0x234c94b2                        dw         0x0020
+0x234c94b4                        dd         0x00000000
+0x234c94b8                        dd         0x234c12e0
+0x234c94bc                        db         0x09
+0x234c94bd                        db  0x00 ; '.'
+0x234c94be 0000                   movs       r0, r0
+0x234c94c0                        dd         0x234c8910
+#endif
+	{0, 0, 0, 0, 0x3d, 0x171, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c893c/*Data_0x20*/}, //[44] = 234C94E0: ???
+#if 0
+0x234c94e0                        db         0x00
+0x234c94e1                        db  0x00 ; '.'
+0x234c94e2 0000                   movs       r0, r0
+0x234c94e4                        dd         0x00000000
+0x234c94e8                        dd         0x00000000
+0x234c94ec                        dw         0x003d
+0x234c94ee                        dw         0x0171
+0x234c94f0                        dw         0x00f8
+0x234c94f2                        dw         0x0020
+0x234c94f4                        dd         0x00000000
+0x234c94f8                        dd         0x234c12e0
+0x234c94fc                        db         0x09
+0x234c94fd                        db  0x00 ; '.'
+0x234c94fe 0000                   movs       r0, r0
+0x234c9500                        dd         0x234c893c
+#endif
+	{0, 0, 0, 0, 0x3d, 0x191, 0xf8, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 
+	9, 0, &Data_234c8968/*Data_0x20*/}, //[45] = 234C9520
+#if 0
+0x234c9520                        db         0x00
+0x234c9521                        db         0x00
+0x234c9522 0000                   movs       r0, r0
+0x234c9524                        dd         0x00000000
+0x234c9528                        dd         0x00000000
+0x234c952c                        dw         0x003d
+0x234c952e                        dw         0x0191
+0x234c9530                        dw         0x00f8
+0x234c9532                        dw         0x0020
+0x234c9534                        dd         0x00000000
+0x234c9538                        dd         0x234c12ec
+0x234c953c                        db         0x09
+0x234c953d                        db  0x00 ; '.'
+0x234c953e 0000                   movs       r0, r0
+0x234c9540                        dd         0x234c8968
+#endif 
+	{0, 0, 0, 0, 0x37, 0xcb, 0x104, 0x8c, 0, 
+	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
+	2}, //[46] = 234C9560: Streams Pid Bottom Border
+#if 0
+0x234c9560                        db         0x00
+0x234c9561                        db  0x00 ; '.'
+0x234c9562 0000                   movs       r0, r0
+0x234c9564                        dd         0x00000000
+0x234c9568                        dd         0x00000000
+0x234c956c                        dw         0x0037
+0x234c956e                        dw         0x00cb
+0x234c9570                        dw         0x0104
+0x234c9572                        dw         0x008c
+0x234c9574 0000                   movs       r0, r0
+0x234c9576 0000                   movs       r0, r0
+0x234c9578                        dd         0x234c128c
+0x234c957c                        db         0x02
+0x234c957d                        db  0x00 ; '.'
+#endif
 	{0}, //[47] = 234C95A0 
 	{0}, //[48] = 234C95E0 
 	{0}, //[49] = 234C9620 
@@ -1842,8 +2147,14 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 	Graphic_Job_2_5_Item* lr = &r0[41/*0xA40*/]; //Txt Pid?
 	Graphic_Job_2_5_Item* ip = &r0[42/*0xA80*/];
 
+	//r1 = 0x9C0
+	//0x2345557a
+	//r3 = r0 + r1;
+	//0x2345558a / 0x23455598
+	uint8_t* strVidPid/*r0*/ = r0[39/*0x9C0*/]./*r3->*/Data_0x20->pString;
+
 	//234555ac
-	uint8_t* sp_0x34 = lr->Data_0x20->pString; //Txt Pid String?
+	uint8_t* strTxtPid/*sp_0x34*/ = lr->Data_0x20->pString; //Txt Pid String?
 	uint8_t* sp_0x30 = ip->Data_0x20->pString;
 
 	//234555d4
@@ -1858,7 +2169,7 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 
 
 		//234555fe
-		sprintf(sp_0x34, "%s -", "TxtPid:");
+		sprintf(strTxtPid/*sp_0x34*/, "%s -", "TxtPid:");
 		//->loc_23455666
 		sprintf(sp_0x30, "%s -", "Ac3Pid:");
 	} //if (Data_23799b08.Data_23799b48 == 3)
@@ -1868,12 +2179,13 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 		if (r4->wVideoPID/*wData_0x0a*/ != 0)
 		{
 			//0x23455612
-
+			sprintf(strVidPid, "%s 0x%x", "VPid:", r4->wVideoPID/*wData_0x0a*/);
 			//->loc_23455620
 		}
 		else
 		{
 			//loc_2345561a
+			sprintf(strVidPid, "%s -", "VPid:");
 		}
 		//loc_23455620
 		if (r4->wAudioPID/*wData_0x10*/ != 0)
@@ -1890,13 +2202,13 @@ static void menu_information_get_channel_pid_strings(Channel* r4)
 		if (r4->wTtxPID/*wData_0x0e*/ != 0)
 		{
 			//0x23455642
-			sprintf(sp_0x34, "%s 0x%x", "TxtPid:", r4->wTtxPID);
+			sprintf(strTxtPid/*sp_0x34*/, "%s 0x%x", "TxtPid:", r4->wTtxPID);
 			//->loc_23455654
 		}
 		else
 		{
 			//loc_2345564c
-			sprintf(sp_0x34, "%s -");
+			sprintf(strTxtPid/*sp_0x34*/, "%s -", "TxtPid:");
 		}
 		//loc_23455654
 		if (r4->wAc3PID/*wData_0x0c*/ != 0)
@@ -1967,7 +2279,7 @@ void sub_234556b4(int a)
 	//0x234556f8
 	r2 = 13; //0x0d;
 	//->loc_23455844
-	r1 = &r4->pItems[38/*0x980*/];
+	r1 = &r4->pItems[38/*0x980*/]; //Streams Pid Top Border
 
 	do
 	{
@@ -2032,28 +2344,17 @@ void sub_234556b4(int a)
 		//0x234558ca: Display PIDs???
 		/*sub_2340e9e8*/sub_2340bf0c(&sp);
 
-		r4_ = &r4->pItems[38/*980*/];
-		r6 = 8;
+		r4_ = &r4->pItems[38/*0x980*/]; //Items: Streams Pid Top Border
+		r6 = 8; //numItems: Border + VPid + APid + TxtPid + Ac3Pid + Type + VSize + HSize
 
 		sub_2340bf94/*sub_2340ea70*/(sp.wCurrentChannel, &sp_0x34, &sp_0x5c);
 		menu_information_get_channel_pid_strings(&sp_0x34);
 		//->loc_234558fc
-
-#if 1
-		{
-			extern char debug_string[];
-			sprintf(debug_string, "sub_234556b4(0x234558ca): a=%d\r\n", 
-				a);
-			console_send_string(debug_string);
-		}
-#endif
-
-		//TODO!!!
 	} //else if (a == 1)
 	//loc_234558ee
 	else if (a == 2)
 	{
-		//0x234558f2
+		//0x234558f2: Display Rest???
 
 #if 1
 		{
@@ -2179,7 +2480,7 @@ int sub_23455910(Struct_23455910* r4)
 		if (Data_23799b08.wData_23799b22 != Data_23799b08.wData_23799b20)
 		{
 			//0x23455a40
-#if 1
+#if 0
 			console_send_string("0x23455a40 (menu_information.c): TODO\r\n");
 #endif
 			//TODO!!!
