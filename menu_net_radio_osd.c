@@ -24,7 +24,6 @@ extern uint8_t Data_234e1fd0[];
 static Menu Data_23505e90;
 static uint8_t Data_2396e104[]; 
 
-static void sub_2348de88();
 static void sub_2349b146();
 static int sub_2349b228(Struct_2348dc50*);
 static int menu_net_radio_on_enter();
@@ -316,16 +315,6 @@ static char menu_net_radio_http_get_request_string[400]; //2397b0f0
 char Data_2397b280[200]; //2397b280
 char Data_2397b348[200]; //2397b348
 
-
-
-/* / / 2348de88 - todo  */
-static void sub_2348de88()
-{
-#if 1
-	console_send_string("sub_2348de88 (todo.c): TODO\r\n");
-#endif
-
-}
 
 
 /* /  / 2348e0fa - todo */

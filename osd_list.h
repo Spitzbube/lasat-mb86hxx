@@ -30,4 +30,5 @@ typedef struct Struct_2348dc50
 
 
 extern Struct_2348dc50* sub_2348dcd2(void);
+extern int sub_2348de88(int*);
 

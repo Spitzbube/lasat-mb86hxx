@@ -73,9 +73,9 @@ static uint8_t Data_23970200[]; //23970200
 static uint8_t Data_23970214[]; //23970214
 static uint8_t Data_23970228[]; //23970228
 static uint8_t Data_2397023c[]; //2397023c
-/*static*/ uint8_t Data_239702a0[]; //239702a0
-/*static*/ uint8_t Data_239702c8[]; //239702c8
-/*static*/ uint8_t Data_239702f0[]; //239702f0
+/*static*/ uint8_t menu_information_item0_string[]; //239702a0
+/*static*/ uint8_t menu_information_item1_string[]; //239702c8
+/*static*/ uint8_t menu_information_item2_string[]; //239702f0
 static uint8_t Data_23970318[]; //23970318
 
 //0x234e7264
@@ -806,7 +806,8 @@ static Graphic_Job_2_5_Item_Text Data_234e7764 = //234e7764
 
 static Graphic_Job_2_5_Item_Text Data_234e77dc = //234e77dc
 {
-    0, 0x0047, 0x0135, 0x015d, 0x0151, 0x01, 0x04, 0x09, 0x01, &Data_239702a0[0], 0, 0, 0
+    0, 0x0047, 0x0135, 0x015d, 0x0151, 0x01, 0x04, 0x09, 0x01, 
+	&menu_information_item0_string[0], 0, 0, 0
 #if 0
 0x234e77dc                        db         0x00                               ; DATA XREF=0x234e818c
 0x234e77dd                        db         0x00
@@ -825,7 +826,8 @@ static Graphic_Job_2_5_Item_Text Data_234e77dc = //234e77dc
 
 static Graphic_Job_2_5_Item_Text Data_234e77f4 = //234e77f4
 {
-    0, 0x0047, 0x0155, 0x015d, 0x0171, 0x01, 0x04, 0x09, 0x01, &Data_239702c8[0], 0, 0, 0
+    0, 0x0047, 0x0155, 0x015d, 0x0171, 0x01, 0x04, 0x09, 0x01, 
+	&menu_information_item1_string[0], 0, 0, 0
 #if 0
 0x234e77f4                        db         0x00                               ; DATA XREF=0x234e81cc
 0x234e77f5                        db         0x00
@@ -844,7 +846,8 @@ static Graphic_Job_2_5_Item_Text Data_234e77f4 = //234e77f4
 
 static Graphic_Job_2_5_Item_Text Data_234e780c = //234e780c
 {
-    0, 0x0047, 0x0175, 0x015d, 0x0191, 0x01, 0x04, 0x09, 0x01, &Data_239702f0[0], 0, 0, 0
+    0, 0x0047, 0x0175, 0x015d, 0x0191, 0x01, 0x04, 0x09, 0x01, 
+	&menu_information_item2_string[0], 0, 0, 0
 #if 0
 0x234e780c                        db         0x00                               ; DATA XREF=0x234e820c
 0x234e780d                        db         0x00
@@ -1404,7 +1407,9 @@ static Graphic_Job_2_5_Item Data_234e786c[] = //234e786c
 0x234e818a 0000                   movs       r0, r0
 0x234e818c                        dd         0x234e77dc
 #endif
-	{1, 0, 0, 0/*Data_8*/, 0x003d, 0x0151, 0x0120, 0x0020, 0, &Data_234e73e0/*Data_0x18*/, 9, 0, &Data_234e77f4/*Data_0x20*/}, //[37] = 234E81AC
+	{1, 0, 0, 0/*Data_8*/, 0x003d, 0x0151, 0x0120, 0x0020, 0, 
+	&Data_234e73e0/*Data_0x18*/, 9, 0, 
+	&Data_234e77f4/*Data_0x20*/}, //[37] = 234E81AC
 #if 0
 0x234e81ac                        db         0x01
 0x234e81ad                        db         0x00
@@ -1963,9 +1968,9 @@ static uint8_t Data_23970200[20]; //23970200
 static uint8_t Data_23970214[20]; //23970214
 static uint8_t Data_23970228[20]; //23970228
 static uint8_t Data_2397023c[20]; //2397023c
-/*static*/ uint8_t Data_239702a0[40]; //239702a0
-/*static*/ uint8_t Data_239702c8[40]; //239702c8
-/*static*/ uint8_t Data_239702f0[40]; //239702f0
+/*static*/ uint8_t menu_information_item0_string[40]; //239702a0
+/*static*/ uint8_t menu_information_item1_string[40]; //239702c8
+/*static*/ uint8_t menu_information_item2_string[40]; //239702f0
 static uint8_t Data_23970318[40]; //23970318. size???
 
 

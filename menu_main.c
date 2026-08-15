@@ -2096,7 +2096,7 @@ void sub_2344d6ce(uint8_t r5)
 			sub_23452a3e(r5);
 			sub_23490c8a(r5);
 			sub_23492b52(r5);
-			sub_2345625c(r5);
+			menu_information_set_flavor(r5); //->menu_information.c
 			menu_general_settings_set_flavor(r5); //->menu_general_settings.c
 			sub_23493072(r5);
 			sub_234911ba(r5);
