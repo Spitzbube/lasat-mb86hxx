@@ -5,7 +5,7 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 	{0}, //[0] = 234c89e0 
 	{1, 0, 0, 0, 0x3d, 0x1c3, 0x21a, 0x3a, 0, 
 	&Data_234c134c/*Data_0x18*/, 
-	3, 0, &Data_234c86cc/*Data_0x20*/}, //[1] = 234C8A20: ???
+	3, 0, &Data_234c86cc/*Data_0x20*/}, //[1] = 234C8A20: Help???
 #if 0
 0x234c8a20                        db         0x01                               ; DATA XREF=0x234ca4e4
 0x234c8a21                        db         0x00
@@ -134,7 +134,9 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 0x234c8bb6 0000                   movs       r0, r0
 0x234c8bb8                        dd         0x234c134c
 #endif
-	{0}, //[8] = 234C8BE0 
+	{0}, //[8] = 234C8BE0
+#if 0
+#endif 
 	{0}, //[9] = 234C8C20 
 	{1, 0, 0, 0, 0x37, 0xcb, 0x190, 0x6c, 0, 
 	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
@@ -305,23 +307,201 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 0x234c8f18                        dd         0x00000000
 0x234c8f1c                        dd         0x00000000
 #endif
-	{0}, //[21] = 234C8F20
+	{1, 0, 0, 0, 0x154, 0x111, 0x41, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c8774/*Data_0x20*/}, //[21] = 234C8F20
+#if 0
+0x234c8f20                        db         0x01
+0x234c8f21                        db  0x00 ; '.'
+0x234c8f22 0000                   movs       r0, r0
+0x234c8f24                        dd         0x00000000
+0x234c8f28                        dd         0x00000000
+0x234c8f2c                        dw         0x0154
+0x234c8f2e                        dw         0x0111
+0x234c8f30                        dw         0x0041
+0x234c8f32                        dw         0x0020
+0x234c8f34 0000                   movs       r0, r0
+0x234c8f36 0000                   movs       r0, r0
+0x234c8f38                        dd         0x234c12e0
+0x234c8f3c                        db         0x09
+0x234c8f3d                        db  0x00 ; '.'
+0x234c8f3e 0000                   movs       r0, r0
+0x234c8f40                        dd         0x234c8774
+#endif
 	{0}, //[22] = 234C8F60 
-	{0}, //[23] = 234C8FA0 
-	{0}, //[24] = 234C8FE0 
-	{0}, //[25] = 234C9020 
+	{1, 0, 0, 0, 0x3d, 0x164, 0x184, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c87a4/*Data_0x20*/}, //[23] = 234C8FA0 
+#if 0
+0x234c8fa0                        db         0x01
+0x234c8fa1                        db  0x00 ; '.'
+0x234c8fa2 0000                   movs       r0, r0
+0x234c8fa4                        dd         0x00000000
+0x234c8fa8                        dd         0x00000000
+0x234c8fac                        dw         0x003d
+0x234c8fae                        dw         0x0164
+0x234c8fb0                        dw         0x0184
+0x234c8fb2                        dw         0x0020
+0x234c8fb4 0000                   movs       r0, r0
+0x234c8fb6 0000                   movs       r0, r0
+0x234c8fb8                        dd         0x234c12e0
+0x234c8fbc                        db         0x09
+0x234c8fbd                        db  0x00 ; '.'
+0x234c8fbe 0000                   movs       r0, r0
+0x234c8fc0                        dd         0x234c87a4
+#endif
+	{1, 0, 0, 0, 0x3d, 0x144, 0x184, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 
+	9, 0, &Data_234c878c/*Data_0x20*/}, //[24] = 234C8FE0
+#if 0
+0x234c8fe0                        db         0x01
+0x234c8fe1                        db  0x00 ; '.'
+0x234c8fe2 0000                   movs       r0, r0
+0x234c8fe4                        dd         0x00000000
+0x234c8fe8                        dd         0x00000000
+0x234c8fec                        dw         0x003d
+0x234c8fee                        dw         0x0144
+0x234c8ff0                        dw         0x0184
+0x234c8ff2                        dw         0x0020
+0x234c8ff4 0000                   movs       r0, r0
+0x234c8ff6 0000                   movs       r0, r0
+0x234c8ff8                        dd         0x234c12f8
+0x234c8ffc                        db         0x09
+0x234c8ffd                        db  0x00 ; '.'
+0x234c8ffe 0000                   movs       r0, r0
+0x234c9000                        dd         0x234c878c
+#endif 
+	{1, 0, 0, 0, 0x3d, 0x184, 0x184, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 
+	9, 0, &Data_234c87bc/*Data_0x20*/}, //[25] = 234C9020 
+#if 0
+0x234c9020                        db         0x01
+0x234c9021                        db  0x00 ; '.'
+0x234c9022 0000                   movs       r0, r0
+0x234c9024                        dd         0x00000000
+0x234c9028                        dd         0x00000000
+0x234c902c                        dw         0x003d
+0x234c902e                        dw         0x0184
+0x234c9030                        dw         0x0184
+0x234c9032                        dw         0x0020
+0x234c9034 0000                   movs       r0, r0
+0x234c9036 0000                   movs       r0, r0
+0x234c9038                        dd         0x234c12ec
+0x234c903c                        db         0x09
+0x234c903d                        db  0x00 ; '.'
+0x234c903e 0000                   movs       r0, r0
+0x234c9040                        dd         0x234c87bc
+#endif
 	{0}, //[26] = 234C9060 
 	{0}, //[27] = 234C90A0 
 	{0}, //[28] = 234C90E0 
 	{0}, //[29] = 234C9120 
 	{0}, //[30] = 234C9160 
-	{0}, //[31] = 234C91A0 
+	{1, 0, 0, 0, 0xf0, 0x184, 0x41, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c87d4/*Data_0x20*/}, //[31] = 234C91A0 
+#if 0
+0x234c91a0                        db         0x01
+0x234c91a1                        db  0x00 ; '.'
+0x234c91a2 0000                   movs       r0, r0
+0x234c91a4                        dd         0x00000000
+0x234c91a8                        dd         0x00000000
+0x234c91ac                        dw         0x00f0
+0x234c91ae                        dw         0x0184
+0x234c91b0                        dw         0x0041
+0x234c91b2                        dw         0x0020
+0x234c91b4                        dd         0x00000000
+0x234c91b8                        dd         0x234c12e0
+0x234c91bc                        db         0x09
+0x234c91bd                        db  0x00 ; '.'
+0x234c91be 0000                   movs       r0, r0
+0x234c91c0                        dd         0x234c87d4
+#endif
 	{0}, //[32] = 234C91E0 
-	{0}, //[33] = 234C9220 
+	{1, 0, 0, 0, 0x154, 0x184, 0x41, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c87ec/*Data_0x20*/}, //[33] = 234C9220 
+#if 0
+0x234c9220                        db         0x01
+0x234c9221                        db  0x00 ; '.'
+0x234c9222 0000                   movs       r0, r0
+0x234c9224                        dd         0x00000000
+0x234c9228                        dd         0x00000000
+0x234c922c                        dw         0x0154
+0x234c922e                        dw         0x0184
+0x234c9230                        dw         0x0041
+0x234c9232                        dw         0x0020
+0x234c9234                        dd         0x00000000
+0x234c9238                        dd         0x234c12e0
+0x234c923c                        db         0x09
+0x234c923d                        db  0x00 ; '.'
+0x234c923e 0000                   movs       r0, r0
+0x234c9240                        dd         0x234c87ec
+#endif
 	{0}, //[34] = 234C9260 
-	{0}, //[35] = 234C92A0 
-	{0}, //[36] = 234C92E0 
-	{0}, //[37] = 234C9320 
+	{1, 0, 0, 0, 0x14b, 0x60, 0x10c, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 
+	9, 0, &Data_234c8804/*Data_0x20*/}, //[35] = 234C92A0 
+#if 0
+0x234c92a0                        db         0x01
+0x234c92a1                        db  0x00 ; '.'
+0x234c92a2 0000                   movs       r0, r0
+0x234c92a4                        dd         0x00000000
+0x234c92a8                        dd         0x00000000
+0x234c92ac                        dw         0x014b
+0x234c92ae                        dw         0x0060
+0x234c92b0                        dw         0x010c
+0x234c92b2                        dw         0x0020
+0x234c92b4 0000                   movs       r0, r0
+0x234c92b6 0000                   movs       r0, r0
+0x234c92b8                        dd         0x234c12f8
+0x234c92bc                        db         0x09
+0x234c92bd                        db  0x00 ; '.'
+0x234c92be 0000                   movs       r0, r0
+0x234c92c0                        dd         0x234c8804
+#endif
+	{1, 0, 0, 0, 0x14b, 0x80, 0x10c, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
+	9, 0, &Data_234c881c/*Data_0x20*/}, //[36] = 234C92E0 
+#if 0
+0x234c92e0                        db         0x01
+0x234c92e1                        db  0x00 ; '.'
+0x234c92e2 0000                   movs       r0, r0
+0x234c92e4                        dd         0x00000000
+0x234c92e8                        dd         0x00000000
+0x234c92ec                        dw         0x014b
+0x234c92ee                        dw         0x0080
+0x234c92f0                        dw         0x010c
+0x234c92f2                        dw         0x0020
+0x234c92f4 0000                   movs       r0, r0
+0x234c92f6 0000                   movs       r0, r0
+0x234c92f8                        dd         0x234c12e0
+0x234c92fc                        db         0x09
+0x234c92fd                        db  0x00 ; '.'
+0x234c92fe 0000                   movs       r0, r0
+0x234c9300                        dd         0x234c881c
+#endif
+	{1, 0, 0, 0, 0x14b, 0xa0, 0x10c, 0x20, 0, 
+	&menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 
+	9, 0, &Data_234c8834/*Data_0x20*/}, //[37] = 234C9320 
+#if 0
+0x234c9320                        db         0x01
+0x234c9321                        db  0x00 ; '.'
+0x234c9322 0000                   movs       r0, r0
+0x234c9324                        dd         0x00000000
+0x234c9328                        dd         0x00000000
+0x234c932c                        dw         0x014b
+0x234c932e                        dw         0x00a0
+0x234c9330                        dw         0x010c
+0x234c9332                        dw         0x0020
+0x234c9334 0000                   movs       r0, r0
+0x234c9336 0000                   movs       r0, r0
+0x234c9338                        dd         0x234c12ec
+0x234c933c                        db         0x09
+0x234c933d                        db  0x00 ; '.'
+0x234c933e 0000                   movs       r0, r0
+0x234c9340                        dd         0x234c8834
+#endif
 	{0, 0, 0, 0, 0x37, 0xcb, 0x104, 0xec, 0, 
 	&menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right/*Data_0x18*/, 
 	2}, //[38] = 234C9360: Streams Pid Top Border
