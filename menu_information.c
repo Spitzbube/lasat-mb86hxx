@@ -50,12 +50,13 @@ static void menu_information_on_exit();
 static void* sub_2345611c(void*);
 
 //234c3314
-static struct
-{
-	int fill_0[7]; //0
-	uint16_t fill_28; //28
-	//30
-} Data_23799a40; //23799a40 -0xb0
+static uint8_t Data_23799a04[0x1c/*size???*/]; //23799A04 -0xec
+static uint8_t Data_23799a20[0x20/*size???*/]; //23799A20 -0xd0
+static uint8_t Data_23799a40[0x20/*size???*/]; //23799a40 -0xb0
+static uint8_t menu_information_inventory_hw_string[0x24/*size???*/]; //23799a60 -0x90
+static uint8_t menu_information_inventory_sw_string[0x24/*size???*/]; //23799a84 -0x6c
+static uint8_t menu_information_inventory_osd_texts_string[0x24/*size???*/]; //23799aa8 -0x48
+static uint8_t menu_information_inventory_lists_string[0x24/*size???*/]; //23799acc -0x24
 // /  / 23799af0
 static int Data_23799af0; //23799af0 +0
 static void* Data_23799af4; //23799AF4 +4
@@ -82,6 +83,9 @@ static struct
 static uint8_t Data_23799b50[100/*size???*/] = ""; //23799b50
 static uint8_t Data_23799b78[100/*size???*/] = ""; //23799b78
 static uint8_t Data_237999dc[100/*size???*/] = ""; //237999dc
+static uint8_t Data_23799c70[40/*size???*/] = ""; //23799c70
+static uint8_t Data_23799c98[40/*size???*/] = ""; //23799c98
+static uint8_t Data_23799cc0[100/*size???*/] = ""; //23799cc0
 
 static Menu menu_information; //234ca4d4
 static Menu menu_information_ex; //234ca510
@@ -385,6 +389,123 @@ static Graphic_Job_2_5_Item_Text Data_234c8774 = //234c8774
 #endif
 };
 
+static Graphic_Job_2_5_Item_Text Data_234c878c = //234c878c
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x148, //uint16_t y1; //wData_4 = 4
+	0x1c1, //uint16_t x2; //wData_6 = 6
+	0x164, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	9, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_23799c70[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c878c                        db         0x00
+0x234c878d                        db         0x00
+0x234c878e                        dw         0x0047
+0x234c8790                        dw         0x0148
+0x234c8792                        dw         0x01c1
+0x234c8794                        dw         0x0164
+0x234c8796                        dw         0x0401
+0x234c8798                        db         0x09
+0x234c8799                        db         0x01
+0x234c879a                        db         0x00
+0x234c879b                        db         0x00
+0x234c879c                        dd         0x23799c70
+0x234c87a0                        dd         0x00000000
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c87a4 = //234c87a4
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x168, //uint16_t y1; //wData_4 = 4
+	0x1c1, //uint16_t x2; //wData_6 = 6
+	0x184, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	9, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_23799c98[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c87a4                        db         0x00
+0x234c87a5                        db         0x00
+0x234c87a6                        dw         0x0047
+0x234c87a8                        dw         0x0168
+0x234c87aa                        dw         0x01c1
+0x234c87ac                        dw         0x0184
+0x234c87ae                        db         0x01
+0x234c87af                        db         0x04
+0x234c87b0                        db         0x09
+0x234c87b1                        db         0x01
+0x234c87b2                        dw         0x0000
+0x234c87b4                        dd         0x23799c98
+0x234c87b8                        dd         0x00000000
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c87bc = //234c87bc
+{
+	0, //uint8_t bData_0; //0
+	0x47, //uint16_t x1; //wData_2 = 2
+	0x188, //uint16_t y1; //wData_4 = 4
+	0x1c1, //uint16_t x2; //wData_6 = 6
+	0x1a4, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	9, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_23799cc0[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c87bc                        db         0x00
+0x234c87bd                        db         0x00
+0x234c87be                        dw         0x0047
+0x234c87c0                        dw         0x0188
+0x234c87c2                        dw         0x01c1
+0x234c87c4                        dw         0x01a4
+0x234c87c6                        db         0x01
+0x234c87c7                        db         0x04
+0x234c87c8                        db         0x09
+0x234c87c9                        db         0x01
+0x234c87ca                        dw         0x0000
+0x234c87cc                        dd         0x23799cc0
+0x234c87d0                        dd         0x00000000
+#endif
+};
+
+static Graphic_Job_2_5_Item_Text Data_234c87d4 = //234c87d4
+{
+	0, //uint8_t bData_0; //0
+	0xf0, //uint16_t x1; //wData_2 = 2
+	0x188, //uint16_t y1; //wData_4 = 4
+	0x12c, //uint16_t x2; //wData_6 = 6
+	0x1a4, //uint16_t y2; //wData_8 = 8
+	1, //uint8_t fill_0xa; //10
+	4, //uint8_t bData_0xb; //11
+	9, //uint8_t bData_0xc; //12
+	1, //uint8_t bData_0xd; //13
+	&Data_237999dc[0], //uint8_t* pString; //16 = 0x10
+#if 0
+0x234c87d4                        db         0x00
+0x234c87d5                        db  0x00 ; '.'
+0x234c87d6                        dw         0x00f0
+0x234c87d8                        dw         0x0188
+0x234c87da                        dw         0x012c
+0x234c87dc                        dw         0x01a4
+0x234c87de                        db         0x01
+0x234c87df                        db         0x04
+0x234c87e0                        db         0x09
+0x234c87e1                        db         0x01
+0x234c87e2                        dw         0x0000
+0x234c87e4                        dd         0x237999dc
+0x234c87e8                        dd         0x00000000
+#endif
+};
+
+
 static uint8_t menu_information_video_pid_string[20] = "VPid:"; //234c884c 
 static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_video_pid = //234c8860
 {
@@ -589,7 +710,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8968 = //234c8968
 #endif
 };
 
-extern uint8_t Data_23799a60[]; //23799a60
+extern uint8_t menu_information_inventory_hw_string[]; //23799a60
 static Graphic_Job_2_5_Item_Text Data_234c8980 = //234c8980
 {
 	0, //uint8_t bData_0; //0
@@ -601,7 +722,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8980 = //234c8980
 	4, //uint8_t bData_0xb; //11
 	5, //uint8_t bData_0xc; //12
 	1, //uint8_t bData_0xd; //13
-	&Data_23799a60[0], //uint8_t* pString; //16 = 0x10
+	&menu_information_inventory_hw_string[0], //uint8_t* pString; //16 = 0x10
 #if 0
 0x234c8980                        db         0x00                               ; DATA XREF=0x234c95c0
 0x234c8981                        db         0x00
@@ -618,7 +739,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8980 = //234c8980
 #endif
 };
 
-extern uint8_t Data_23799a84[]; //23799a84
+/*extern*/ uint8_t menu_information_inventory_sw_string[]; //23799a84
 static Graphic_Job_2_5_Item_Text Data_234c8998 = //234c8998
 {
 	0, //uint8_t bData_0; //0
@@ -630,7 +751,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8998 = //234c8998
 	4, //uint8_t bData_0xb; //11
 	5, //uint8_t bData_0xc; //12
 	1, //uint8_t bData_0xd; //13
-	&Data_23799a60[0], //uint8_t* pString; //16 = 0x10
+	&menu_information_inventory_sw_string[0], //uint8_t* pString; //16 = 0x10
 #if 0
 0x234c8998                        db         0x00                               ; DATA XREF=0x234c9600
 0x234c8999                        db         0x00
@@ -648,7 +769,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8998 = //234c8998
 #endif
 };
 
-extern uint8_t Data_23799aa8[]; //23799aa8
+/*extern*/ uint8_t menu_information_inventory_osd_texts_string[]; //23799aa8
 static Graphic_Job_2_5_Item_Text Data_234c89b0 = //234c89b0
 {
 	0, //uint8_t bData_0; //0
@@ -660,7 +781,7 @@ static Graphic_Job_2_5_Item_Text Data_234c89b0 = //234c89b0
 	4, //uint8_t bData_0xb; //11
 	5, //uint8_t bData_0xc; //12
 	1, //uint8_t bData_0xd; //13
-	&Data_23799aa8[0], //uint8_t* pString; //16 = 0x10
+	&menu_information_inventory_osd_texts_string[0], //uint8_t* pString; //16 = 0x10
 #if 0
 0x234c89b0                        db         0x00                               ; DATA XREF=0x234c9640
 0x234c89b1                        db         0x00
@@ -677,7 +798,7 @@ static Graphic_Job_2_5_Item_Text Data_234c89b0 = //234c89b0
 #endif
 };
 
-extern uint8_t Data_23799acc[]; //23799acc
+/*extern*/ uint8_t menu_information_inventory_lists_string[]; //23799acc
 static Graphic_Job_2_5_Item_Text Data_234c89c8 = //234c89c8
 {
 	0, //uint8_t bData_0; //0
@@ -689,7 +810,7 @@ static Graphic_Job_2_5_Item_Text Data_234c89c8 = //234c89c8
 	4, //uint8_t bData_0xb; //11
 	5, //uint8_t bData_0xc; //12
 	1, //uint8_t bData_0xd; //13
-	&Data_23799acc[0], //uint8_t* pString; //16 = 0x10
+	&menu_information_inventory_lists_string[0], //uint8_t* pString; //16 = 0x10
 #if 0
 0x234c89c8                        db         0x00                               ; DATA XREF=0x234c9680
 0x234c89c9                        db         0x00
@@ -715,7 +836,7 @@ static Graphic_Job_2_5 menu_information_graphic_data = //234ca460
 	0xfa, //uint8_t bData_1; //1
 	0x11, //uint16_t wData_2; //2
 	0x04, //uint8_t bData_4; //4
-	&Data_234c89e0[0], //234c89e0 Graphic_Job_2_5_Item* pItems; //8
+	&menu_information_graphic_items[0], //234c89e0 Graphic_Job_2_5_Item* pItems; //8
 	&menu_main_graphic_color_data, //Graphic_Color_Data* pColorData; //12
 	16, //uint8_t numColors; //0x10 = 16
 	0, //int fill_0x14; //0x14 = 20
@@ -813,8 +934,8 @@ static Menu menu_information = //234ca4d4
     63, //"information"
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_4; //4
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_8; //8
-    &Data_234c89e0[51], //234c96a0 Graphic_Job_2_5_Item* header; //12 = 0xc
-    &Data_234c89e0[1], //234c8a20 Graphic_Job_2_5_Item* help; //16 = 0x10
+    &menu_information_graphic_items[51], //234c96a0 Graphic_Job_2_5_Item* header; //12 = 0xc
+    &menu_information_graphic_items[1], //234c8a20 Graphic_Job_2_5_Item* help; //16 = 0x10
     &menu_information_graphic_data, //234ca460 Graphic_Job_2_5* graphicData; //20 = 0x14
     0, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
@@ -857,8 +978,8 @@ static Menu menu_information_ex = //234ca510
     63, //"information"
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_4; //4
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_8; //8
-    &Data_234c89e0[51], //234ca3e0 Graphic_Job_2_5_Item* header; //12 = 0xc
-    &Data_234c89e0[1], //234c9760 Graphic_Job_2_5_Item* help; //16 = 0x10
+    &menu_information_graphic_items[51], //234ca3e0 Graphic_Job_2_5_Item* header; //12 = 0xc
+    &menu_information_graphic_items[1], //234c9760 Graphic_Job_2_5_Item* help; //16 = 0x10
     &menu_information_graphic_data, //234ca484 Graphic_Job_2_5* graphicData; //20 = 0x14
     0, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
@@ -2211,6 +2332,7 @@ int menu_information_on_enter()
 
 	Transponder sp_0xa4; //pTransponder
 	Channel sp_0x7c; //pChannel
+	uint8_t sp_0x78[4];
 	Struct_2340bf0c sp_0x1c; //+0x32 = sp_0x4e
 	//uint8_t sp_0xc[16];
 	Graphic_Job_2_5* r5 = menu_information_p->graphicData;
@@ -2328,17 +2450,97 @@ int menu_information_on_enter()
 	sub_2340c29c/*sub_2340ed78*/(&Data_23799b08.Data_23799b24, sp_0xa4.Data_0.wData_0x0a/*sp_0xae*/);
 
 	Data_23799b08.transponder = sp_0xa4; //memcpy(&Data_23799b08.transponder, &sp_0xa4, sizeof(Transponder));
-	memset(&Data_23799a40, 0, 0x1e);
+	memset(&Data_23799a40[0], 0, 30);
 	//0x23455e18
+	int r5_ = 29;
+	if (Data_23799b08.Data_23799b48 != 3)
+	{
+		//0x23455e20
+		text_table_get_string(0xbd/*'Antenne'*/, &Data_23799a40[0], 30);
+		strncat(&Data_23799a40[0], ": ", 2);
 
+		if (sp_0x7c.wTransponderIndex/*sp_0x80.wData_0*/ != 0xffff)
+		{
+			//0x23455e42
+			if (sp_0xa4.Data_0.wData_0x0a/*sp_0xAE*/ == 0xffff)
+			{
+				//0x23455e48
+				text_table_get_string(0x158/*'Kabel'*/, &sp_0xc[0], 13);
+				//0x23455e54
+				sp_0xc[14/*sp_0x1a*/] = 0; //r7
+				int r2 = /*29*/r5_ - strlen(&Data_23799a40[0]);
+				//r1, sp, #0xc
+				//->loc_23455e8c
+				strncat(&Data_23799a40[0], &sp_0xc[0], r2);
+				//loc_23455e94
+			}
+			else
+			{
+				//loc_23455e7c
+				int r2 = 31 - strlen(&Data_23799a40[0]);
+				strncat(&Data_23799a40[0], &Data_23799b08.Data_23799b24.Data_8/*23799B2C*/[0], r2);
+			}
+		}
+		//loc_23455e94
+		Data_23799a40[29] = 0; //r7
+	}
+	//loc_23455e9a
+	text_table_get_string(0x48/*'Programm:'*/, &Data_23799a04[0], 18);
+	if (sp_0x1c.wNumChannels/*sp_0x44*/ != 0)
+	{
+		//0x23455eae
+		sprintf(&sp_0xc[0], " %d", 
+			Data_23799b08.wData_23799b22/*r4->wData_0x32*/ + 1);
+		strncat(&Data_23799a04[0], &sp_0xc[0], 5);
+	}
+	//loc_23455ec6
+	text_table_get_string(0x47/*'Name:'*/, &Data_23799a20[0], 30);
+	strncat(&Data_23799a20[0], " ", 1);
+	if (sp_0x1c.wNumChannels/*sp_0x44*/ != 0)
+	{
+		//0x23455ee6
+		int r0 = strlen(&Data_23799a20[0]);
+		strncat(&Data_23799a20[0], &sp_0x7c.service_name[0]/*sp_0x90*/, 
+			r5_ - r0);
+	}
+	//loc_23455efa
+	Data_23799a20[29] = 0; //r7
 
+	text_table_get_string(0x81/*'Hardware'*/, &menu_information_inventory_hw_string[0], 23);
+	strncat(&menu_information_inventory_hw_string[0], ": H60", 8);
+
+	text_table_get_string(0x43/*'Software'*/, &menu_information_inventory_sw_string[0], 24);
+	strncat(&menu_information_inventory_sw_string[0], ": V.", 4);
 	//0x23455f30
+	sub_234070cc/*sub_23409ba8*/("BEMON/SmartHD/0290/211222/0000", &sp_0xc[0]);
 
-
+#if 0 //TODO!!!
+	if (0 != sub_23435edc())
+	{
+		//0x23455f40
+		sp_0xc[4] = 'A';
+		sp_0xc[5] = 0;
+	}
+#endif
 	//loc_23455f48
+	strncat(&menu_information_inventory_sw_string[0], &sp_0xc[0], 5);
 
+	text_table_get_string(0x45/*'OSD-Texte'*/, &menu_information_inventory_osd_texts_string[0], 26);
+	strncat(&menu_information_inventory_osd_texts_string[0], ": V.", 4);
+#if 0 //TOOD!!!
+	sub_23409ba8(sub_2340bd78(&sp_0x78[0]), 
+		&sp_0x10[0]);
+#endif
+	strncat(&menu_information_inventory_osd_texts_string[0], &sp_0xc[0], 4);
+	menu_information_inventory_osd_texts_string[34]/*23799ACA*/ = 0; //r7
+
+	text_table_get_string(0x38/*'Senderliste'*/, &menu_information_inventory_lists_string[0], 26);
+	strncat(&menu_information_inventory_lists_string[0], ": V.", 4);
+	strncat(&menu_information_inventory_lists_string[0], "101", 4);
+	menu_information_inventory_lists_string[34]/*23799AEE*/ = 0; //r7
 
 	//0x23455fb2
+#if 0 //TODO!!!
 	if (Data_23799b08.Data_23799b48 == 3)
 	{
 		//0x23455fb8
@@ -2351,6 +2553,7 @@ int menu_information_on_enter()
 		//->loc_2345603c
 	}
 	else
+#endif
 	{
 		//loc_2345601c
 		text_table_get_string(0x19/*'Frequenz'*/, &menu_information_item0_string[0], 35);

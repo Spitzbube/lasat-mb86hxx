@@ -61,6 +61,183 @@ struct
 
 
 
+/* 23406b40 /  / 2340961c - todo */
+void sub_23406b40(uint8_t* r0, uint8_t* r1, int32_t r2)
+{
+#if 0
+	console_send_string("sub_23406b40 (todo.c): TODO\r\n");
+#endif
+
+	uint8_t c;
+	uint32_t r3 = 0;
+	//loc_23409640
+	for (uint32_t r3 = 0; r3 < r2; r0++, r3++) //(r3 < r2)
+	{
+		//loc_23409624
+		while ((*r0 != 0) && (*(++r0) != '/'))
+		{
+			;
+		}
+//		r0++;
+//		r3++;
+	}
+	//0x23409648
+	if (r2 == 4)
+	{
+		while (1)
+		{
+			//loc_23409650
+			c = *r0;
+			if (c == 0) break;
+			*r0++;
+			*r1++ = c;
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			//loc_23409668
+			c = *r0;
+			if (c == 0) break;
+			*r1++ = c;
+			r0++;
+			if (*r0 == '/') break;
+		}
+	}
+	//loc_23409680
+	*r1 = 0;
+}
+
+
+/* 234070cc /  / 23409ba8 - complete */
+int sub_234070cc(uint8_t* a, uint8_t* b)
+{
+#if 0
+	console_send_string("sub_234070cc (todo.c): TODO\r\n");
+#endif
+
+	sub_23406b40/*sub_2340961c*/(a, b, 2);
+
+	return 0;
+}
+
+
+/* 234070e0 /  / 23409bbc - complete */
+int sub_234070e0(uint8_t* a, uint8_t* b)
+{
+#if 0
+	console_send_string("sub_234070e0 (todo.c): TODO\r\n");
+#endif
+
+	sub_23406b40/*sub_2340961c*/(a, b, 3);
+
+	return 0;
+}
+
+
+/* 234070f4 /  / 23409bd0 - todo */
+void sub_234070f4()
+{
+#if 1
+	console_send_string("sub_234070f4 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 234072bc /  / 23409d98 - todo */
+void sub_234072bc()
+{
+#if 1
+	console_send_string("sub_234072bc (todo.c): TODO\r\n");
+#endif
+
+
+}
+
+
+/* 234077d0 /  / 2340a2ac - todo */
+void sub_234077d0()
+{
+#if 1
+	console_send_string("sub_234077d0 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 234077e8 /  / 2340a2c4 - todo */
+void sub_234077e8()
+{
+#if 1
+	console_send_string("sub_234077e8 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 234078a8 /  / 2340a384 - todo */
+void sub_234078a8()
+{
+#if 1
+	console_send_string("sub_234078a8 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23407914 /  / 2340a3f0 - todo */
+void sub_23407914()
+{
+#if 1
+	console_send_string("sub_23407914 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23407a80 /  / 2340a55c - todo */
+void sub_23407a80()
+{
+#if 1
+	console_send_string("sub_23407a80 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23407abc /  / 2340a598 - todo */
+void sub_23407abc()
+{
+#if 1
+	console_send_string("sub_23407abc (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23407c18 /  / 2340a6f4 - todo */
+void sub_23407c18()
+{
+#if 1
+	console_send_string("sub_23407c18 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+/* 23407d00 /  / 2340a7dc - todo */
+void sub_23407d00()
+{
+#if 1
+	console_send_string("sub_23407d00 (todo.c): TODO\r\n");
+#endif
+
+}
+
+
+
 /* 23407de8 /  / 2340a8c4 - todo */
 int texttable_load_bitmap(uint16_t a, void* b, int c)
 {
@@ -741,7 +918,7 @@ int text_table_get_string(int idx, void* buf, int len)
 }
 
 
-/* 23407e40 - complete */
+/* 23407e40 /  / 2340a91c - complete */
 int sub_23407e40(uint8_t* a, int b, void* sl, int fp)
 {
 #if 0

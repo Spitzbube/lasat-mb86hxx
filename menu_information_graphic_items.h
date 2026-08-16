@@ -1,6 +1,6 @@
 
 
-static Graphic_Job_2_5_Item Data_234c89e0[] = //234c89e0
+static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 {
 	{0}, //[0] = 234c89e0 
 	{1, 0, 0, 0, 0x3d, 0x1c3, 0x21a, 0x3a, 0, 

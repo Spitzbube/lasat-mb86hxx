@@ -74,7 +74,7 @@ Struct_235462e4 Data_235462e4; //235462e4
 
 
 
-/* 234085ac - complete */
+/* 234085ac /  / 2340b088 - complete */
 int sub_234085ac(uint8_t* a, uint8_t* b, int c)
 {
 	int lr = c;
@@ -112,7 +112,7 @@ int sub_234085ac(uint8_t* a, uint8_t* b, int c)
 }
 
 
-/* 2340956c / 2340b8d0 - complete */
+/* 2340956c / 2340b8d0 / 2340c048 - complete */
 int channel_stop_audio()
 {
 #if 0
@@ -149,7 +149,7 @@ int channel_stop_audio()
 }
 
 
-/* 234095f4 / 2340b958 - complete */
+/* 234095f4 / 2340b958 / 2340c0d0 - complete */
 int channel_stop_video()
 {
 #ifdef CHANNEL_STOP_VIDEO_DEBUG

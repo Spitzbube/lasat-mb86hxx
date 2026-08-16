@@ -26,10 +26,6 @@ static uint8_t Data_237997c4[]; //237997c4
 static uint8_t Data_23799814[]; //23799814
 static uint8_t Data_23799874[]; //23799874
 static uint8_t Data_2379989c[]; //2379989c
-extern uint8_t Data_23799a60[]; //23799a60
-extern uint8_t Data_23799a84[]; //23799a84
-extern uint8_t Data_23799aa8[]; //23799aa8
-extern uint8_t Data_23799acc[]; //23799acc
 
 static int sub_2345453a();
 static int sub_23454562(UI_Thread_Params*);
@@ -895,10 +891,6 @@ static uint8_t Data_23799814[80]; //23799814, size???
 static Graphic_Queue_Item Data_23799864; //23799864
 static uint8_t Data_23799874[40]; //23799874
 static uint8_t Data_2379989c[40]; //2379989c, size???
-/*extern*/ uint8_t Data_23799a60[40/*size???*/]; //23799a60
-/*extern*/ uint8_t Data_23799a84[40/*size???*/]; //23799a84
-/*extern*/ uint8_t Data_23799aa8[40/*size???*/]; //23799aa8
-/*extern*/ uint8_t Data_23799acc[40/*size???*/]; //23799acc
 
 
 /* /  / 2345453a - todo */

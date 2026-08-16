@@ -129,7 +129,7 @@ typedef struct
 	uint16_t wTtxPID; //14 ? = 0x0e
 	uint16_t wAudioPID; //16 = 0x10
 	uint16_t fill_2; //18
-	uint8_t service_name[20]; //20
+	uint8_t service_name[20]; //20 = 0x14
 	//40 = 0x28
 } Channel;
 
