@@ -441,7 +441,7 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 	{0}, //[34] = 234C9260 
 	{1, 0, 0, 0, 0x14b, 0x60, 0x10c, 0x20, 0, 
 	&menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 
-	9, 0, &Data_234c8804/*Data_0x20*/}, //[35] = 234C92A0 
+	9, 0, &menu_information_graphic_text_item_program/*Data_0x20*/}, //[35] = 234C92A0 
 #if 0
 0x234c92a0                        db         0x01
 0x234c92a1                        db  0x00 ; '.'
@@ -462,7 +462,7 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 #endif
 	{1, 0, 0, 0, 0x14b, 0x80, 0x10c, 0x20, 0, 
 	&menu_main_graphic_item_background_dark_blue/*Data_0x18*/, 
-	9, 0, &Data_234c881c/*Data_0x20*/}, //[36] = 234C92E0 
+	9, 0, &menu_information_graphic_text_item_channel_name/*Data_0x20*/}, //[36] = 234C92E0 
 #if 0
 0x234c92e0                        db         0x01
 0x234c92e1                        db  0x00 ; '.'
@@ -483,7 +483,7 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 #endif
 	{1, 0, 0, 0, 0x14b, 0xa0, 0x10c, 0x20, 0, 
 	&menu_main_graphic_item_background_dark_blue_bottom_round_left_right/*Data_0x18*/, 
-	9, 0, &Data_234c8834/*Data_0x20*/}, //[37] = 234C9320 
+	9, 0, &menu_information_graphic_text_item_receiption/*Data_0x20*/}, //[37] = 234C9320 
 #if 0
 0x234c9320                        db         0x01
 0x234c9321                        db  0x00 ; '.'

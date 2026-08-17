@@ -29,21 +29,10 @@ extern uint8_t menu_information_item2_string[]; //239702f0
 #define menu_information_graphic_item_text_item1_x1 0x47 //71
 #define menu_information_graphic_item_text_item1_x2 0x135 //309
 
-typedef struct
-{
-	int Data_0; //0
-	int Data_4; //4
-	uint8_t bData_8; //8
-	uint8_t bData_9; //9
-	uint8_t bData_0x0a; //10
-	uint8_t bData_0x0b; //11
-	//???
-} Struct_23455910;
-
 static void menu_information_get_transponder_string(Transponder*);
 static void menu_information_get_channel_pid_strings(Channel*);
 static void  sub_234556b4(int);
-static int sub_23455910(Struct_23455910*);
+static int menu_information_get_frontend_strings(Frontend_Measurement*);
 static void* sub_23455ca8(int*);
 static int menu_information_on_enter();
 static void menu_information_on_exit();
@@ -60,8 +49,8 @@ static uint8_t menu_information_inventory_lists_string[0x24/*size???*/]; //23799
 // /  / 23799af0
 #if 0
 static int Data_23799af0; //23799af0 +0
-static void* Data_23799af4; //23799AF4 +4
-static void* Data_23799af8; //23799AF8 +8
+static void* sema; //23799AF4 +4
+static void* graphicQueueItem; //23799AF8 +8
 static Transponder Data_23799b08; //23799B08 +0x18
 static uint16_t wData_23799b20; //23799B20 +0x30
 static uint16_t wCurrentChannel; //23799B22 +0x32
@@ -72,8 +61,8 @@ static int Data_23799b4c; //23799b4c +0x5c
 static struct
 {
 	int Data_23799af0; //23799af0 +0
-	void* Data_23799af4; //23799AF4 +4
-	void* Data_23799af8; //23799AF8 +8
+	void* sema; //23799AF4 +4
+	Graphic_Queue_Item* graphicQueueItem; //23799AF8 +8
 	int fill_0xc; //+0x0c
 	int fill_0x10; //+0x10
 	int fill_0x14; //+0x18
@@ -539,7 +528,7 @@ static Graphic_Job_2_5_Item_Text Data_234c87ec = //234c87ec
 #endif
 };
 
-static Graphic_Job_2_5_Item_Text Data_234c8804 = //234c8804
+static Graphic_Job_2_5_Item_Text menu_information_graphic_text_item_program = //234c8804
 {
 	0, //uint8_t bData_0; //0
 	0x155, //uint16_t x1; //wData_2 = 2
@@ -567,7 +556,7 @@ static Graphic_Job_2_5_Item_Text Data_234c8804 = //234c8804
 #endif
 };
 
-static Graphic_Job_2_5_Item_Text Data_234c881c = //234c881c
+static Graphic_Job_2_5_Item_Text menu_information_graphic_text_item_channel_name = //234c881c
 {
 	0, //uint8_t bData_0; //0
 	0x155, //uint16_t x1; //wData_2 = 2
@@ -595,7 +584,7 @@ static Graphic_Job_2_5_Item_Text Data_234c881c = //234c881c
 #endif
 };
 
-static Graphic_Job_2_5_Item_Text Data_234c8834 = //234c8834
+static Graphic_Job_2_5_Item_Text menu_information_graphic_text_item_receiption = //234c8834
 {
 	0, //uint8_t bData_0; //0
 	0x155, //uint16_t x1; //wData_2 = 2
@@ -1096,9 +1085,9 @@ static Menu menu_information_ex = //234ca510
     63, //"information"
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_4; //4
     &menu_information_items[0], //234ca4a8, Menu_Item* Data_8; //8
-    &menu_information_graphic_items[51], //234ca3e0 Graphic_Job_2_5_Item* header; //12 = 0xc
-    &menu_information_graphic_items[1], //234c9760 Graphic_Job_2_5_Item* help; //16 = 0x10
-    &menu_information_graphic_data, //234ca484 Graphic_Job_2_5* graphicData; //20 = 0x14
+    &menu_information_graphic_items_ex[51], //234ca3e0 Graphic_Job_2_5_Item* header; //12 = 0xc
+    &menu_information_graphic_items_ex[1], //234c9760 Graphic_Job_2_5_Item* help; //16 = 0x10
+    &menu_information_graphic_data_ex, //234ca484 Graphic_Job_2_5* graphicData; //20 = 0x14
     0, //uint8_t maxItem; //0x18 = 24
     0, //int8_t currentItem; //0x19
     graphic_start_job_2_5, //void (*Data_0x1c)(); //0x1c
@@ -2145,13 +2134,13 @@ void sub_234556b4(int a)
 
 
 /* /  / 23455910 - todo */
-int sub_23455910(Struct_23455910* r4)
+int menu_information_get_frontend_strings(Frontend_Measurement* fe/*r4*/)
 {
 #if 0
-	console_send_string("sub_23455910 (todo.c): TODO\r\n");
+	console_send_string("menu_information_get_frontend_strings (todo.c): TODO\r\n");
 #endif
 
-	Graphic_Job_2_5* sp_0xc0 = menu_information_p->graphicData;
+	Graphic_Job_2_5* graphicJob/*sp_0xc0*/ = menu_information_p->graphicData;
 	uint8_t* sp_0xBC;
 	uint8_t* sp_0xB8;
 	uint8_t* sp_0xB4;
@@ -2170,10 +2159,10 @@ int sub_23455910(Struct_23455910* r4)
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23455910: wData_2=0x%x, r4->Data_4=0x%x, r4->bData_8=0x%x\r\n", 
+		sprintf(debug_string, "menu_information_get_frontend_strings: wData_2=0x%x, r4->Data_4=0x%x, fe/*r4*/->bData_8=0x%x\r\n", 
 			r5_->menu_stack[ sub_2344de94() ]->graphicData->wData_2,
-			r4->Data_4,
-			r4->bData_8);
+			fe/*r4*/->Data_4,
+			fe/*r4*/->bData_8);
 		console_send_string(debug_string);
 	}
 #endif
@@ -2181,18 +2170,18 @@ int sub_23455910(Struct_23455910* r4)
 	if (r5_->menu_stack[ sub_2344de94() ]->graphicData->wData_2 == 0x11)
 	{
 		//0x23455936
-		sp_0x80 = &sp_0xc0->pItems[35/*0x8C0*/];
-		sp_0x7c = &sp_0xc0->pItems[36/*0x900*/];
-		sp_0x78 = &sp_0xc0->pItems[37/*0x940*/];
+		sp_0x80 = &graphicJob/*sp_0xc0*/->pItems[35/*0x8C0*/];
+		sp_0x7c = &graphicJob/*sp_0xc0*/->pItems[36/*0x900*/];
+		sp_0x78 = &graphicJob/*sp_0xc0*/->pItems[37/*0x940*/];
 		//r2 = 0x480
-		if (r4->Data_4 != 0)
+		if (fe/*r4*/->Data_4 != 0)
 		{
 			//0x2345595c
 #if 1
 			{
 				extern char debug_string[];
-				sprintf(debug_string, "0x2345595c: r4->Data_4=0x%x\r\n", 
-					r4->Data_4);
+				sprintf(debug_string, "0x2345595c: fe->Data_4=0x%x\r\n", 
+					fe/*r4*/->Data_4);
 				console_send_string(debug_string);
 			}
 #endif
@@ -2200,16 +2189,16 @@ int sub_23455910(Struct_23455910* r4)
 			//TODO!!!
 
 			//->loc_234559ee
-		} //if (r4->Data_4 != 0)
+		} //if (fe/*r4*/->Data_4 != 0)
 		else
 		{
 			//loc_234559aa
-			r6 = &sp_0xc0->pItems[20/*0x500*/];
+			r6 = &graphicJob/*sp_0xc0*/->pItems[20/*0x500*/];
 //			sp_0x9C = r0 + 0x100;
 //			sp_0x98 = r0 + 0x140;
 //			sp_0x94 = r0 + 0x180;
 //			sp_0x90 = r0 + 0x380;
-			r5 = &sp_0xc0->pItems[18/*0x480*/];
+			r5 = &graphicJob/*sp_0xc0*/->pItems[18/*0x480*/];
 //			r3 = r0 + 0x340;
 //			sp_0x8c = r0 + 0x3c0;
 //			sp_0x88 = r0 + 0x400;
@@ -2217,18 +2206,18 @@ int sub_23455910(Struct_23455910* r4)
 			//loc_234559ee
 		}
 		//loc_234559ee
-		sp_0xBC = sp_0xc0->pItems[13/*0x340*/]/*r3*/.pText->pString;
-		sp_0xB8 = sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.pText->pString;
-		sp_0xB4 = sp_0xc0->pItems[12/*0x300*/]/*r2*/.pText->pString;
+		sp_0xBC = graphicJob/*sp_0xc0*/->pItems[13/*0x340*/]/*r3*/.pText->pString;
+		sp_0xB8 = graphicJob/*sp_0xc0*/->pItems[11/*0x2c0*/]/*r1*/.pText->pString;
+		sp_0xB4 = graphicJob/*sp_0xc0*/->pItems[12/*0x300*/]/*r2*/.pText->pString;
 		
-		sp_0xc0->pItems[13/*0x340*/]/*r3*/.pText->bUpdate = 1; //r7
-		sp_0xc0->pItems[11/*0x2c0*/]/*r1*/.pText->bUpdate = 1; //r7
-		sp_0xc0->pItems[12/*0x300*/]/*r2*/.pText->bUpdate = 1; //r7
+		graphicJob/*sp_0xc0*/->pItems[13/*0x340*/]/*r3*/.pText->bUpdate = 1; //r7
+		graphicJob/*sp_0xc0*/->pItems[11/*0x2c0*/]/*r1*/.pText->bUpdate = 1; //r7
+		graphicJob/*sp_0xc0*/->pItems[12/*0x300*/]/*r2*/.pText->bUpdate = 1; //r7
 		//0x23455a10
-		sp_0xB0 = sp_0xc0->pItems[35/*0x8C0*/]/*sp_0x80*/.pText->pString;
-		sp_0xAC = sp_0xc0->pItems[36/*0x900*/]/*sp_0x7c*/.pText->pString;
+		sp_0xB0 = graphicJob/*sp_0xc0*/->pItems[35/*0x8C0*/]/*sp_0x80*/.pText->pString;
+		sp_0xAC = graphicJob/*sp_0xc0*/->pItems[36/*0x900*/]/*sp_0x7c*/.pText->pString;
 		//0x23455a20
-		if (0 == OSSemAccept(Data_23799b08.Data_23799af4))
+		if (0 == OSSemAccept(Data_23799b08.sema))
 		{
 			//->loc_23455a34 -> loc_23455c3a
 			return 0;
@@ -2245,13 +2234,13 @@ int sub_23455910(Struct_23455910* r4)
 		}
 		Transponder* sp_0xC8 = /*r2 =*/ &Data_23799b08.transponder;
 		//loc_23455b3c -> loc_23455b42
-		if (r4->bData_8 == 1)
+		if (fe/*r4*/->bLock == 1)
 		{
 			//0x23455b48
-			if (r4->Data_0 < 9000/*0x2328*/)
+			if (fe/*r4*/->dwBER < 9000/*0x2328*/)
 			{
 				//0x23455b50
-				sprintf(sp_0xBC, "BER: %d", r4->Data_0);
+				sprintf(sp_0xBC, "BER: %d", fe/*r4*/->dwBER);
 				//->loc_23455b62
 			}
 			else
@@ -2268,7 +2257,7 @@ int sub_23455910(Struct_23455910* r4)
 				r5->bData_0x3c = 1; //r7
 			}
 			//->loc_23455b82
-		} //if (r4->bData_8 == 1)
+		} //if (fe/*r4*/->bData_8 == 1)
 		else
 		{
 			//loc_23455b6c
@@ -2283,7 +2272,7 @@ int sub_23455910(Struct_23455910* r4)
 		}
 		//loc_23455b82
 		//r0 = r6->wColor;
-		if (r4->bData_0x0b == 0)
+		if (fe/*r4*/->bData_0xb == 0)
 		{
 			//0x23455b8a
 			if (r6->wColor != 10)
@@ -2304,9 +2293,9 @@ int sub_23455910(Struct_23455910* r4)
 			}
 		}
 		//loc_23455b9e
-		/*sp_0x9C*/sp_0xc0->pItems[4/*0x100*/].pText->bUpdate = 1; //r7
-		/*sp_0x98*/sp_0xc0->pItems[5/*0x140*/].pText->bUpdate = 1; //r7
-		/*sp_0x94*/sp_0xc0->pItems[6/*0x180*/].pText->bUpdate = 1; //r7
+		/*sp_0x9C*/graphicJob/*sp_0xc0*/->pItems[4/*0x100*/].pText->bUpdate = 1; //r7
+		/*sp_0x98*/graphicJob/*sp_0xc0*/->pItems[5/*0x140*/].pText->bUpdate = 1; //r7
+		/*sp_0x94*/graphicJob/*sp_0xc0*/->pItems[6/*0x180*/].pText->bUpdate = 1; //r7
 		//0x23455bb0
 		menu_information_get_transponder_string(sp_0xC8);
 
@@ -2315,32 +2304,32 @@ int sub_23455910(Struct_23455910* r4)
 
 		menu_information_get_channel_pid_strings(&sp_0x38);
 
-		uint8_t r5 = r4->bData_9;
+		uint8_t r5 = fe/*r4*/->bStrength;
 		if (r5 > 100)
 		{
 			r5 = 100;
 		}
 		//loc_23455bd6
 		sprintf(sp_0xB4, "Level: %d%%", r5);
-		sub_23452ac4(r5, /*sp_0x8C*/sp_0xc0->pItems[15/*0x3C0*/], 0xde, 100);
-		/*sp_0x90*/sp_0xc0->pItems[14/*0x380*/].bData_0x3c = 1; //r7
+		sub_23452ac4(r5, /*sp_0x8C*/graphicJob/*sp_0xc0*/->pItems[15/*0x3C0*/], 0xde, 100);
+		/*sp_0x90*/graphicJob/*sp_0xc0*/->pItems[14/*0x380*/].bData_0x3c = 1; //r7
 
-		uint8_t r6 = r4->bData_0x0a;
+		uint8_t r6 = fe/*r4*/->bSNR;
 		if (r6 > 40)
 		{
 			r6 = 40;
 		}
 		//loc_23455bfa
 		sprintf(sp_0xB8, "C/N: %ddB", r6);
-		sub_23452ac4(r6, /*sp_0x84*/sp_0xc0->pItems[17/*0x440*/], 0xde, 40);
-		/*sp_0x88*/sp_0xc0->pItems[16/*0x400*/].bData_0x3c = 1; //r7
+		sub_23452ac4(r6, /*sp_0x84*/graphicJob/*sp_0xc0*/->pItems[17/*0x440*/], 0xde, 40);
+		/*sp_0x88*/graphicJob/*sp_0xc0*/->pItems[16/*0x400*/].bData_0x3c = 1; //r7
 		//0x23455c16
-		graphic_start_job_2_5(&Data_23799b08.Data_23799af8, sp_0xc0);
-		OSSemPost(Data_23799b08.Data_23799af4);
+		graphic_start_job_2_5(&Data_23799b08.graphicQueueItem, graphicJob/*sp_0xc0*/);
+		OSSemPost(Data_23799b08.sema);
 
 		if (Data_234c8664 != 0)
 		{
-			(Data_234c8664)(r4->Data_0, r5, r6, r4->Data_0);
+			(Data_234c8664)(fe/*r4*/->dwBER, r5, r6, fe/*r4*/->dwBER);
 		}
 		//loc_23455c3a
 	} //if (r5_->menu_stack[ sub_2344de94() ]->graphicData->wData_2 == 0x11)
@@ -2432,7 +2421,7 @@ void* sub_23455ca8(int* a)
 			}
 			Data_23799b08.Data_23799b4c = r0;
 
-			fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+			fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, menu_information_get_frontend_strings);
 		} 
 		//loc_23455d3e
 	}
@@ -2511,7 +2500,7 @@ int menu_information_on_enter()
 				//r0 = main_hFrontend1
 				//->loc_23455dca
 				Data_23799b08.Data_23799b4c = main_hFrontend1;
-				fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+				fe_manager_register_measurement_callback(main_hFrontend1, menu_information_get_frontend_strings);
 				break;
 			//loc_23455dbc
 			case 1:
@@ -2520,7 +2509,7 @@ int menu_information_on_enter()
 				{
 					//loc_23455dc8
 					Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
-					fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+					fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, menu_information_get_frontend_strings);
 				}
 				else
 				{
@@ -2528,7 +2517,7 @@ int menu_information_on_enter()
 					//r0 = main_hFrontend1
 					//->loc_23455dca
 					Data_23799b08.Data_23799b4c = main_hFrontend1;
-					fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+					fe_manager_register_measurement_callback(main_hFrontend1, menu_information_get_frontend_strings);
 				}
 				break;
 			//loc_23455e66
@@ -2536,7 +2525,7 @@ int menu_information_on_enter()
 				//->loc_23455dc8
 				Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
 				//loc_23455dca
-				fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
+				fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, menu_information_get_frontend_strings);
 				break;
 
 			default:
@@ -2544,7 +2533,7 @@ int menu_information_on_enter()
 				//r0 = main_hFrontend1
 				//->loc_23455dca
 				Data_23799b08.Data_23799b4c = main_hFrontend1;
-				fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+				fe_manager_register_measurement_callback(main_hFrontend1, menu_information_get_frontend_strings);
 				break;
 		} //switch (Data_23799b08.Data_23799b48)
 		//loc_23455dbc
@@ -2553,11 +2542,11 @@ int menu_information_on_enter()
 	{
 		//loc_23455e6c
 		Data_23799b08.Data_23799b4c = Data_23491db8/*234c01d8*/;
-		fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, sub_23455910);
-		//r1 = sub_23455910
+		fe_manager_register_measurement_callback(Data_23799b08.Data_23799b4c, menu_information_get_frontend_strings);
+		//r1 = menu_information_get_frontend_strings
 		//r0 = main_hFrontend1
 		//->loc_23455dce
-		fe_manager_register_measurement_callback(main_hFrontend1, sub_23455910);
+		fe_manager_register_measurement_callback(main_hFrontend1, menu_information_get_frontend_strings);
 	}
 	//0x23455dce 
 	//0x23455dd2
@@ -2614,7 +2603,8 @@ int menu_information_on_enter()
 		strncat(&menu_information_programm_string[0], &sp_0xc[0], 5);
 	}
 	//loc_23455ec6
-	text_table_get_string(0x47/*'Name:'*/, &menu_information_channel_name_string[0], 30);
+	text_table_get_string(0x47/*'Name:'*/, 
+		&menu_information_channel_name_string[0], 30);
 	strncat(&menu_information_channel_name_string[0], " ", 1);
 	if (sp_0x1c.wNumChannels/*sp_0x44*/ != 0)
 	{
@@ -2690,7 +2680,7 @@ int menu_information_on_enter()
 	sp_0x7c.wAc3PID/*0x88*/ = 0; //r7
 	menu_information_get_channel_pid_strings(&sp_0x7c);
 
-	Data_23799b08.Data_23799af4 = Data_234c1258;
+	Data_23799b08.sema = Data_234c1258;
 
 	return 0;
 }

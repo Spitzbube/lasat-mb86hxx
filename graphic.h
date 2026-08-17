@@ -35,6 +35,7 @@ typedef struct
 } Graphic_Job_2_5_Item_Background;
 
 extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_header_dark_blue_top_bottom_round_left_right; //234c128c
+extern Graphic_Job_2_5_Item_Background Data_234c12d4; //234c12d4
 extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue; //234c12e0
 extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue_bottom_round_left_right; //234c12ec
 extern Graphic_Job_2_5_Item_Background menu_main_graphic_item_background_dark_blue_top_round_left_right; //234c12f8
