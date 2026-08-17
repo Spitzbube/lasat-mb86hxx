@@ -17,7 +17,7 @@ typedef struct Menu_Item
 typedef struct Menu
 {
 	uint16_t stringId; //0
-	Menu_Item* Data_4; //4
+	Menu_Item* pCurrentItem; //4
 	Menu_Item* Data_8; //8
 	Graphic_Job_2_5_Item* header; //12 = 0xc
 	Graphic_Job_2_5_Item/*Struct_235fdf74_Inner16*/* help; //16 = 0x10

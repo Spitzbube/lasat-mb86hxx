@@ -373,17 +373,17 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 				(int16_t) sp_0xc[r5].wData_6,
 				1, r4->wColor);
 		}
-		//loc_23453000
+		//loc_23453000 /  / loc_23414040
 		if ((r6->Data_4 == 5) ||
 			(r6->Data_4 == 12) ||
 			(r6->Data_4 == 13))
 		{
-			//->loc_2345309c
+			//->loc_2345309c /  / loc_234140dc
 			return;
 		}
 		//loc_23453014
 	} //if (r6->Data_4 != 0)
-	//loc_23453014
+	//loc_23453014 /  / loc_23414054
 #endif
 
 #if 0
@@ -408,12 +408,13 @@ void sub_23452e88(Graphic_Job_2_5_Item* r4)
 		sp_0x34.wColor);
 #endif
 
-#if 0
-
 	if ((sp_0x34.wColor == 0) || (r6->Data_4 == 0))
 	{
+		//->loc_2345309c /  / loc_234140dc
 		return;
 	}
+
+#if 0
 
 	if (r6->Data_4 == 6)
 	{
@@ -710,15 +711,16 @@ void graphic_thread()
 							graphics_data.wData_0x16 = r5->wData_2;
 							graphics_data.wData_0x18 = r5->bData_0;
 							uint32_t i = 0; //sl
-							//->loc_234537dc
+							//->loc_234537dc /  / loc_2341481c
 							while (i < r5->bNumItems)
 							{
-								//loc_23453670
+								//loc_23453670 /  / loc_234146b0
 
-#if 0
+#ifdef GRAPHIC_loc_23453670_DEBUG
 								{
 									extern char debug_string[];
-									sprintf(debug_string, "loc_23453670: i=%d, pItem=%p\r\n", i, pItem);
+									sprintf(debug_string, "loc_23453670: i=%d, pItem=%p\r\n", 
+										i, pItem);
 									console_send_string(debug_string);
 									hex_dump("pItem", pItem, 0x40);
 								}
@@ -730,9 +732,9 @@ void graphic_thread()
 									if ((graphics_data.arData_0x1c[i] != pItem) ||
 										(pItem->bData_0x3c != 0))
 									{
-										//0x23453698
+										//0x23453698 /  / 0x234146d8
 #if 1
-										sub_23452e88(pItem);
+										sub_23452e88/*sub_23413ec8*/(pItem);
 #endif
 
 #if 0
@@ -763,15 +765,15 @@ void graphic_thread()
 											}
 										} //if (pItem->Data_8 != 0)
 #endif
-										//loc_23453710
+										//loc_23453710 /  / loc_23414750
 									}
 #endif
 									//loc_23453710 /  / loc_23414750: Text handling
 #if 1
 									if (pItem->pText != 0)
 									{
-										//0x2345371c
-										pItem->pText->bData_0xc = pItem->wColor & 0xff;
+										//0x2345371c /  / 0x2341475c
+										pItem->pText->bBackgroundColor = pItem->wColor & 0xff;
 
 										if ((graphics_data.arData_0x1c[i] != pItem) ||
 											(pItem->bData_0x3c != 0) ||
@@ -789,24 +791,24 @@ void graphic_thread()
 													(int16_t) r6->y1,
 													(int16_t)(r6->x2 - r6->x1),
 													(int16_t)(r6->y2 - r6->y1),
-													pItem->pText->bData_0xc);
+													pItem->pText->bBackgroundColor);
 											}
 											//loc_23453790 -> loc_234537a8
 											//sp8 = r6;
-											sub_23408604(*fp, r6);
+											texttable_write_text(*fp, r6);
 										}
 										//loc_234537bc
 										pItem->pText->bUpdate = 0; //r8
 									} //if (pItem->pText != 0)
 #endif
-									//loc_234537c4
+									//loc_234537c4 /  / loc_23414804
 									pItem->bData_0x3c = 0; //r8
-								} //if (pItem->bData_0 == 1)
-								//loc_234537c8
+								} //if (pItem->bEnable == 1)
+								//loc_234537c8 /  / loc_23414808
 								graphics_data.arData_0x1c[i] = pItem;
 								i++;
 								pItem++;
-							} //while (i < r5->bData_0x18)
+							} //while (i < r5->bNumItems)
 							//loc_234537e8
 						} //if (r5 != 0)
 						//loc_234537e8

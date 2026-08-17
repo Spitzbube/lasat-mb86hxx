@@ -2026,7 +2026,7 @@ void sub_2348f56e(uint16_t sp_0x14, uint16_t sp_0x18)
 	{
 		//loc_2348f596
 		uint32_t r6;
-		if (r4->Data_8 != NULL)
+		if (r4->Data_8__ != NULL)
 		{
 			//0x2348f59c
 			r6 = r5->width;
@@ -2310,13 +2310,13 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 		if (Data_23970198.Data_23970198->bData_0x5f == sp_0x34.bData_0x5f)
 		{
 			//0x2348fa84
-			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wCurrentItem];
-			//r0 = r4->pMenu->Data_4
+			r4->pMenu->pCurrentItem = &r4->pMenu->Data_8[r4->wCurrentItem];
+			//r0 = r4->pMenu->pCurrentItem
 
 			if (r4->Data_0x18 != NULL)
 			{
 				//0x2348fa9c
-				(r4->Data_0x18)(r4->pMenu->Data_4, 2);
+				(r4->Data_0x18)(r4->pMenu->pCurrentItem, 2);
 			}
 		}
 		//loc_2348faa0
@@ -2348,13 +2348,13 @@ static void scan_progress(void* p, int sp_0x9c, int progress_type)
 		if (Data_23970198.Data_239701a4->bData_0x5f == sp_0x34.bData_0x5f)
 		{
 			//0x2348fae6
-			r4->pMenu->Data_4 = &r4->pMenu->Data_8[r4->wCurrentItem];
-			//r0 = r4->pMenu->Data_4
+			r4->pMenu->pCurrentItem = &r4->pMenu->Data_8[r4->wCurrentItem];
+			//r0 = r4->pMenu->pCurrentItem
 
 			if (r4->Data_0x18 != NULL)
 			{
 				//0x2348fafe
-				(r4->Data_0x18)(r4->pMenu->Data_4, 2);
+				(r4->Data_0x18)(r4->pMenu->pCurrentItem, 2);
 			}
 			//loc_2348fb02
 		}
@@ -2412,7 +2412,7 @@ int sub_2348fb6e(void)
 	console_send_string("sub_2348fb6e (todo.c): TODO\r\n");
 #endif
 
-	sub_2348dbf8(Data_23970198.Data_239701a4->pMenu->Data_4, 1);
+	sub_2348dbf8(Data_23970198.Data_239701a4->pMenu->pCurrentItem, 1);
 
 	sub_2348dcd8(Data_23970198.Data_239701a4->bData_0x5f);
 

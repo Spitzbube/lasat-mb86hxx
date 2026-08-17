@@ -777,7 +777,10 @@ static Graphic_Job_2_5_Item menu_main_graphic_items_ex[13] = //234C1BB4
 0x234c1c94                        dd         0x234c169c
 #endif
 	{0}, //[4] = 234C1CB4 
-	{1, 0, 0/*&Data_234c1548*//*Data_4?*/, 0/*Data_8*/, 0x3d, 0x60, 0xfa, 0x20, 0, &Data_234c1274/*Data_0x18*/, 0, 0, &menu_main_graphic_text_item_1, {0}, 0}, //[5] = 234C1CF4: ???
+	{1, 0, 0/*&Data_234c1548*//*Data_4?*/, 0/*Data_8*/, 
+	0x3d, 0x60, 0xfa, 0x20, 0, 
+	&Data_234c1274/*Data_0x18*/, 0, 0, 
+	&menu_main_graphic_text_item_1, {0}, 0}, //[5] = 234C1CF4: Item 1
 #if 0
 0x234c1cf4                        db         0x01                               ; DATA XREF=0x234c2084
 0x234c1cf5                        db         0x00
@@ -1793,7 +1796,7 @@ void* sub_2344d0d0(FrontDisplay_Job* r4)
 			else
 			{
 				//loc_2344d2c4: Handle (current) Menu Item
-				Menu_Item* pMenuItem = r6->Data_4;
+				Menu_Item* pMenuItem = r6->pCurrentItem;
 
 				if (pMenuItem == 0)
 				{
@@ -2126,7 +2129,7 @@ void sub_2344d6ce(uint8_t r5)
 			sub_23493734(r5);
 			sub_23494dea(r5);
 			menu_volume_bar_set_flavor(r5); //->menu_volume_bar.c
-			sub_2348d7ee(r5);
+			menu_info_bar_set_flavor(r5); //->menu_info_bar.c
 			sub_2349827a(r5);
 			sub_234995f4(r5);
 			sub_23499782(r5);

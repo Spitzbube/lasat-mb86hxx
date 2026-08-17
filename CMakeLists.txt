@@ -93,6 +93,7 @@ set(SRCS
    sub_2345b852.c
    sub_2345c9f8.c
    hexdump.c
+   sub_23413af4.c
    todo.c
 )
 
@@ -191,6 +192,7 @@ target_compile_definitions(${TARGET_V290} PUBLIC
 #   PMT_DECODE_SECTION_DEBUG
 #   PMT_DESCRIPTORS_TAG_DEBUG
 #    GRAPHIC_sub_23452e88_DEBUG
+#    GRAPHIC_loc_23453670_DEBUG
     ETH_DEVICE
 )
 

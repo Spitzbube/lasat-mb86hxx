@@ -6,7 +6,25 @@ static Graphic_Job_2_5_Item menu_information_graphic_items_ex[] = //234C9720
 	{0}, //[1] = 234c9760 
 	{0}, //[2] = 234C97A0 
 	{0}, //[3] = 234C97E0 
-	{0}, //[4] = 234C9820 
+	{1, 0, 0, 0, 0x3d, 0x60, 0xf8, 0x20, 0, 
+	&Data_234c12d4/*Data_0x18*/, 
+	0/*transparent?*/, 0, 
+	&menu_information_graphic_item_text_item0/*Data_0x20*/}, //[4] = 234C9820: Text Item 0 (Frequency?)
+#if 0
+0x234c9820                        db         0x01
+0x234c9821                        db  0x00 ; '.'
+0x234c9822 0000                   movs       r0, r0
+0x234c9824                        dd         0x00000000
+0x234c9828                        dd         0x00000000
+0x234c982c                        dw         0x003d
+0x234c982e                        dw         0x0060
+0x234c9830                        dw         0x00f8
+0x234c9832                        dw         0x0020
+0x234c9834                        dd         0x00000000
+0x234c9838                        dd         0x234c12d4
+0x234c983c                        dd         0x00000000
+0x234c9840                        dd         0x234c86b4
+#endif
 	{0}, //[5] = 234C9860 
 	{0}, //[6] = 234C98A0 
 	{0}, //[7] = 234C98E0 
@@ -60,7 +78,7 @@ static Graphic_Job_2_5_Item menu_information_graphic_items_ex[] = //234C9720
 	{0}, //[38] = 234CA0A0 
 	{0, 0, 0, 0, 0x3d, 0xd1, 0xf8, 0x20, 0, 
 	&Data_234c12d4/*Data_0x18*/, 
-	0, 0, &menu_information_graphic_item_text_video_pid/*Data_0x20*/}, //[39] = 234CA0E0 
+	0, 0, &menu_information_graphic_item_text_video_pid/*Data_0x20*/}, //[39] = 234CA0E0: "Video Pid"
 #if 0
 0x234ca0e0                        db         0x00
 0x234ca0e1                        db  0x00 ; '.'

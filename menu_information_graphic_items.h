@@ -60,7 +60,8 @@ static Graphic_Job_2_5_Item menu_information_graphic_items[] = //234c89e0
 #endif
 	{1, 0, 0, 0, 0x3d, 0x60, 0xf8, 0x20, 0, 
 	&menu_main_graphic_item_background_dark_blue_top_round_left_right/*Data_0x18*/, 
-	9, 0, &menu_information_graphic_item_text_item0/*Data_0x20*/}, //[4] = 234C8AE0: Text Item 0 (Frequency?)
+	9/*dark blue?*/, 0, 
+	&menu_information_graphic_item_text_item0/*Data_0x20*/}, //[4] = 234C8AE0: Text Item 0 (Frequency?)
 #if 0
 0x234c8ae0                        db         0x01                               ; DATA XREF=sub_234552f8+22
 0x234c8ae1                        db         0x00

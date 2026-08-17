@@ -407,25 +407,25 @@ void sub_2344d872(Menu_Item* pMenuItem, uint16_t r1, uint8_t r2, uint8_t index)
 		if (r1 == 0xff)
 		{
 			//0x2344d88c
-			r4->Data_8 = NULL; //r6
+			r4->Data_8__ = NULL; //r6
 			//->loc_2344d8a4
 		}
 		//loc_2344d890
 		else if (r1 == 0xa)
 		{
 			//loc_2344d890
-			r4->Data_8 = &Data_234c1508; //r7
+			r4->Data_8__ = &Data_234c1508; //r7
 			//->loc_2344d8a4
 		}
 		//loc_2344d898
 		else if (r1 == 0x8)
 		{
-			r4->Data_8 = &Data_234c1514; //r5
+			r4->Data_8__ = &Data_234c1514; //r5
 		}
 		else
 		{
 			//loc_2344d8a0
-			r4->Data_8 = &Data_234c14f0; //r5
+			r4->Data_8__ = &Data_234c14f0; //r5
 		}
 		//loc_2344d8a4
 		index++;
@@ -514,7 +514,7 @@ void menu_initialize(Menu* pMenu)
 			//loc_2343d3f4
 			pMenuItem = &pMenu->Data_8[pMenu->currentItem];
 
-			pMenu->Data_4 = pMenuItem;
+			pMenu->pCurrentItem = pMenuItem;
 
 #ifdef VDR110
 			if (pMenuItem->initValueString != 0)
@@ -652,7 +652,7 @@ Menu_Item* sub_2344d9d0(struct Menu* r5)
 	}
 	//loc_2344da24
 	r4 = &r5->Data_8[r5->currentItem];
-	r5->Data_4 = r4;
+	r5->pCurrentItem = r4;
 	sub_2344d872(r4, 0xa, 1, 0);
 	//0x2344da3e
 	return r4;
@@ -710,11 +710,11 @@ int menu_items_navigate(int* a)
 		}
 #endif
 
-		pMenu->Data_4 = &pMenu->Data_8[pMenu->currentItem];
+		pMenu->pCurrentItem = &pMenu->Data_8[pMenu->currentItem];
 
-		if (pMenu->Data_4->initValueString != 0)
+		if (pMenu->pCurrentItem->initValueString != 0)
 		{
-			(pMenu->Data_4->initValueString)(pMenu->Data_4);
+			(pMenu->pCurrentItem->initValueString)(pMenu->pCurrentItem);
 		}
 	}
 	//loc_2343d51a
@@ -737,7 +737,7 @@ int menu_items_navigate(int* a)
 
 	pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 
-	sub_2344d850(pMenu->Data_4, 9, 1, 0);
+	sub_2344d850(pMenu->pCurrentItem, 9, 1, 0);
 
 	if (r5 == 1)
 	{
@@ -783,7 +783,7 @@ int menu_items_navigate(int* a)
 	//loc_2344dc28
 	Menu_Item* pMenuItem = &pMenu->Data_8[pMenu->currentItem];
 
-	pMenu->Data_4 = pMenuItem;
+	pMenu->pCurrentItem = pMenuItem;
 
 	sub_2344d850(pMenuItem, 10, 1, 0);
 
@@ -856,7 +856,7 @@ int sub_2344dcb2(int* a)
 
 	pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
 
-	sub_2344d872(pMenu->Data_4, 0, 1, 0);
+	sub_2344d872(pMenu->pCurrentItem, 0, 1, 0);
 
 	if (r5 == 1)
 	{
@@ -904,7 +904,7 @@ int sub_2344dcb2(int* a)
 	}
 	//loc_2344dd22
 	Menu_Item* r5_ = &pMenu->Data_8[pMenu->currentItem];
-	pMenu->Data_4 = r5_;
+	pMenu->pCurrentItem = r5_;
 	sub_2344d872(r5_, 0xa, 1, 0);
 
 	if (pMenu->help != 0)
@@ -940,7 +940,7 @@ int sub_2343d51e(Menu* r2, UI_Thread_Params* r0)
 	if (r2 != 0)
 	{
 		//0x2343d528
-		Menu_Item* pMenuItem = r2->Data_4;
+		Menu_Item* pMenuItem = r2->pCurrentItem;
 
 #if 0
 		{
@@ -1076,7 +1076,7 @@ void sub_2344e40a(UI_Thread_Params* a)
 	{
 		//loc_2344e43e
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
-		sp4 = r4->Data_4;
+		sp4 = r4->pCurrentItem;
 
 		uint8_t* r0_ = OSMboxPend(Data_2379673c.pMBox, (uint16_t)r4->timeout, &sp_0x1c);
 
@@ -1300,11 +1300,11 @@ void mainfunction_thread(UI_Thread_Params* a)
 		if (pMenu != 0)
 		{
 #ifdef VDR110
-			pMenuItem = pMenu->Data_4;
+			pMenuItem = pMenu->pCurrentItem;
 			r4_ = pMenuItem->Data_0x24;
 			r5 = pMenuItem->Data_0x28;
 #else
-			pMenuItem = pMenu->Data_4;
+			pMenuItem = pMenu->pCurrentItem;
 			sp8 = pMenu->graphicData->lock;
 			sp4 = pMenu->graphicData->unlock;
 #endif
@@ -1394,7 +1394,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 						menu_info_bar_enter();
 
 						pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
-						pMenuItem = pMenu->Data_4;
+						pMenuItem = pMenu->pCurrentItem;
 
 						sp_0x48 = sub_2348dcd2();
 					}
@@ -1641,7 +1641,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 						sub_2348d660(1);
 
 						pMenu = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
-						pMenuItem = pMenu->Data_4;
+						pMenuItem = pMenu->pCurrentItem;
 
 						sp_0x48 = sub_2348dcd2();						
 					}
@@ -1666,7 +1666,7 @@ void mainfunction_thread(UI_Thread_Params* a)
 			{
 				menu_root_start();
 
-				pMenuItem = Menu_Data.menu_stack[Menu_Data.menu_stack_level]->Data_4;
+				pMenuItem = Menu_Data.menu_stack[Menu_Data.menu_stack_level]->pCurrentItem;
 			}
 			//loc_2343d6a0
 			void* r0_;
@@ -1895,7 +1895,7 @@ void menu_event_thread(UI_Thread_Params* p)
 		r0 = pMsg->bData_0;
 
 		pMenu = Menu_Data.menu_stack[ /*sp_0x28->bData_0x10*/Menu_Data.menu_stack_level ];
-		pMenuItem = pMenu->Data_4;
+		pMenuItem = pMenu->pCurrentItem;
 #ifndef VDR110
 		Graphic_Job_2_5* r2_ = pMenu->graphicData;
 		int (*sp)() = r2_->lock;
@@ -2058,8 +2058,8 @@ void menu_event_thread(UI_Thread_Params* p)
 
 					if (pMenu != 0)
 					{
-						sp4 = pMenu->Data_4->Data_0x24;
-						r6 = pMenu->Data_4->Data_0x28;
+						sp4 = pMenu->pCurrentItem->Data_0x24;
+						r6 = pMenu->pCurrentItem->Data_0x28;
 
 						if (pMenu->onEnter != 0)
 						{
@@ -2209,7 +2209,7 @@ void menu_event_thread(UI_Thread_Params* p)
 
 					if (pMenu != 0)
 					{
-						r6 = pMenu->Data_4->Data_0x28;
+						r6 = pMenu->pCurrentItem->Data_0x28;
 
 						if (pMenu->onEnter != 0)
 						{
@@ -2380,7 +2380,7 @@ void sub_2344f102(UI_Thread_Params* a)
 		//loc_2344f148
 		uint8_t* r0__ = OSMboxPend(sp_0x24.pMBox, (uint16_t)timeout, &err);
 		sp_0x44 = *r0__;
-		r6 = r4->Data_4;
+		r6 = r4->pCurrentItem;
 
 		sp_0x10 = sub_2348dcd2();
 
@@ -2712,7 +2712,7 @@ void sub_2344f3c6(UI_Thread_Params* a)
 		keyCode = *r0__;
 
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
-		sp8 = r4->Data_4;
+		sp8 = r4->pCurrentItem;
 
 		sp_0xc = sub_2348dcd2();
 		sp_0xc->pThreadParams = &thread_params;
@@ -2883,7 +2883,7 @@ void sub_234500bc(UI_Thread_Params* a)
 
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
 
-		Menu_Item* r1 = r4->Data_4;
+		Menu_Item* r1 = r4->pCurrentItem;
 		sp4 = r4->graphicData->lock;
 		r7 = r4->graphicData->unlock;
 
@@ -3201,7 +3201,7 @@ void sub_2343d98e(UI_Thread_Params* r1)
 		pMsg = (void*) OSMboxPend(sp4.pMBox, 0, &sp_0x20);
 
 		r2 = Menu_Data.menu_stack[Menu_Data.menu_stack_level];
-		r1 = r2->Data_4;
+		r1 = r2->pCurrentItem;
 
 		switch (pMsg->bData_0)
 		{
@@ -3379,7 +3379,7 @@ void sub_2344f6ac(UI_Thread_Params* p)
 
 		r0 = pMsg->bData_0;
 
-		r7 = r4->Data_4;
+		r7 = r4->pCurrentItem;
 		sp4 = r4->graphicData->lock;
 		sp = r4->graphicData->unlock;
 
@@ -3471,7 +3471,7 @@ void sub_2344f6ac(UI_Thread_Params* p)
 								//0x2344f7a2
 								sp4 = r4->graphicData->lock;
 								sp = r4->graphicData->unlock;
-								r7 = r4->Data_4;
+								r7 = r4->pCurrentItem;
 								r6 = r4->graphicHandler;
 
 								/*sub_2344de56*/sub_2343d51e(r4, &sp_0xc);
@@ -3722,7 +3722,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 		r0 = pMsg->bData_0;
 		//loc_2343daa4
 		pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
-		pMenuItem = pMenu->Data_4;
+		pMenuItem = pMenu->pCurrentItem;
 #ifndef VDR110
 		sp8 = pMenu->graphicData->lock;
 		sp4 = pMenu->graphicData->unlock;
@@ -3826,7 +3826,7 @@ void menu_item_event_thread(UI_Thread_Params* p)
 						sp8 = pMenu->graphicData->lock;
 						sp4 = pMenu->graphicData->unlock;
 
-						pMenuItem = pMenu->Data_4;
+						pMenuItem = pMenu->pCurrentItem;
 						pfGraphicHandler = pMenu->graphicHandler;
 
 						sub_2343d51e(pMenu, &threadParams);
@@ -4049,7 +4049,7 @@ void sub_2344fa5a(UI_Thread_Params* p)
 		r0 = pMsg->bData_0;
 
 		pMenu = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
-		pMenuItem = pMenu->Data_4;
+		pMenuItem = pMenu->pCurrentItem;
 
 #if 0
 		{
@@ -4228,7 +4228,7 @@ void sub_2344ffae(UI_Thread_Params* p)
 		//0x2344ffe4
 		pMenu = Menu_Data.menu_stack/*237967A0*/[ Menu_Data.menu_stack_level/*sp_0x48*/ ];
 		//r2 = pMenu->graphicData;
-		pMenuItem = pMenu->Data_4;
+		pMenuItem = pMenu->pCurrentItem;
 		graphic_lock = /*r3 =*/ pMenu->graphicData/*r2*/->lock;
 		graphic_unlock = pMenu->graphicData/*r2*/->unlock;
 
@@ -4405,7 +4405,7 @@ void sub_23450f66(UI_Thread_Params* p)
 		r0 = pMsg->bData_0;
 
 		r4 = Menu_Data.menu_stack[ Menu_Data.menu_stack_level ];
-		r7 = r4->Data_4;
+		r7 = r4->pCurrentItem;
 		sp8 = r4->graphicData->lock;
 		sp4 = r4->graphicData->unlock;
 

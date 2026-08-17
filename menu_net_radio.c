@@ -300,7 +300,7 @@ int sub_234813f4(int* a)
     {
         //loc_2348142c
         menu_net_radio.currentItem = 1;
-        menu_net_radio.Data_4 = menu_net_radio.Data_8 + 1;
+        menu_net_radio.pCurrentItem = menu_net_radio.Data_8 + 1;
 
         Data_2399be28.Data_2399c2b4 = 0;
         Data_2399be28.Data_2399c2b8 = 0;

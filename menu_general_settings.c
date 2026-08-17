@@ -1565,7 +1565,7 @@ void* item_string_display(FrontDisplay_Job* r7)
 	console_send_string("item_string_display (todo.c): TODO\r\n");
 #endif
 
-	r5 = menu_general_settings.Data_4;
+	r5 = menu_general_settings.pCurrentItem;
 	sp = r7->bData_8;
 
 	text_table_get_string(r5->wData_0, sp, 0xfe);

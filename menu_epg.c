@@ -2404,12 +2404,12 @@ static void* sub_23456db4(FrontDisplay_Job* r5)
     //loc_23456e3a
     r5->bData_8[0] = 0; //r6
 
-    if ((r0->Data_4 != 0) && 
-        (r0->Data_4->Data_4[1] != 0) && (r0->Data_4->Data_4[1]->pText != 0))
+    if ((r0->pCurrentItem != 0) && 
+        (r0->pCurrentItem->Data_4[1] != 0) && (r0->pCurrentItem->Data_4[1]->pText != 0))
     {
         int r0_ = 0;
         //0x23456e50
-        char* r1 = r0->Data_4->Data_4[1]->pText->pString;
+        char* r1 = r0->pCurrentItem->Data_4[1]->pText->pString;
         if (r1[0] == 7)
         {
             char r2 = r1[2];

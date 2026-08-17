@@ -243,11 +243,11 @@ int menu_pin_entry(UI_Thread_Params* pThreadParams, int r7)
 
     if (r7 != 0)
     {
-        Data_234cc2b0->Data_4->onEvent = sub_23457918;
+        Data_234cc2b0->pCurrentItem->onEvent = sub_23457918;
     }
     else
     {
-        Data_234cc2b0->Data_4->onEvent = sub_234577be;
+        Data_234cc2b0->pCurrentItem->onEvent = sub_234577be;
     }
 
     menu_stack_operate(Data_234cc2b0);

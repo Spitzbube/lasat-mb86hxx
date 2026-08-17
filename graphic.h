@@ -49,7 +49,7 @@ typedef struct
 	uint16_t y2; //wData_8 = 8
 	uint8_t fill_0xa; //10
 	uint8_t bData_0xb; //11
-	uint8_t bData_0xc; //12
+	uint8_t bBackgroundColor; //12
 	uint8_t bData_0xd; //13
 	uint8_t* pString; //16 = 0x10
 	uint16_t wData_0x14; //20 = 0x14
@@ -63,7 +63,7 @@ typedef struct
 	uint8_t bEnable; //0
 	uint8_t bData_1; //1
 	int Data_4; //4
-	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8; //8
+	Struct_2377ded0_Inner_0x1c_Inner_8* Data_8__; //8
 	uint16_t x; //0xc = 12
 	uint16_t y; //0xe = 14
 	uint16_t width; //0x10 = 16

@@ -265,18 +265,18 @@ int texttable_load_bitmap(uint16_t a, void* b, int c)
 
 
 /* 23407f24 /  / 2340aa00 - todo */
-int sub_23407f24(int a/*sp_0xc*/, char* b, 
+int texttable_write_char(int a/*sp_0xc*/, char* b, 
 	int c/*sp_0x14*/, int d/*sp_0x18*/, int e/*sp_0x40*/, 
 	int sp_0x44, uint32_t sp_0x48)
 {
 #if 0
-	console_send_string("sub_23407f24 (todo.c): TODO\r\n");
+	console_send_string("texttable_write_char (todo.c): TODO\r\n");
 #endif
 
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23407f24: b[0]='%c'\r\n", b[0]);
+		sprintf(debug_string, "texttable_write_char: b[0]='%c'\r\n", b[0]);
 		console_send_string(debug_string);
 	}
 #endif
@@ -304,7 +304,7 @@ int sub_23407f24(int a/*sp_0xc*/, char* b,
 #if 0
 	{
 		extern char debug_string[];
-		sprintf(debug_string, "sub_23407f24: width=%d, height=%d, sb=%d\r\n", 
+		sprintf(debug_string, "texttable_write_char: width=%d, height=%d, sb=%d\r\n", 
 			width, height, sb);
 		console_send_string(debug_string);
 	}
@@ -562,7 +562,8 @@ void sub_234082f4(void)
 
 
 /* 23408604 /  / 2340b0e0 - todo */
-int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_Text* b/*sp_0x70?*/)
+int texttable_write_text(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, 
+	Graphic_Job_2_5_Item_Text* b/*sp_0x70?*/)
 {
 #if 0
 	console_send_string("sub_23408604 (todo.c): TODO\r\n");
@@ -580,7 +581,8 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 	int sp_0xc;
 	int sp8;
 
-	memcpy(b, &a, 0x18);
+	*b = a;
+//	memcpy(b, &a, 0x18);
 
 	uint16_t sl;
 	uint16_t sb;
@@ -588,7 +590,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 	uint8_t r7;
 	uint32_t r6;
 	uint16_t r5 = a.x1;
-	uint8_t* r4 = a.pString;
+	uint8_t* r4/*pString*/ = a.pString;
 
 	sp_0x30 = r5;
 	sl = a.wData_0x14;
@@ -596,20 +598,20 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 	sp_0x1c = a.bData_0xd;
 
 
-	if (r4 == 0)
+	if (r4/*pString*/ == 0)
 	{
 		return 0;
 	}
-	//loc_2340865c
-	if (*r4 == 3)
+	//loc_2340865c /  / loc_2340b138
+	if (*r4/*pString*/ == 3)
 	{
 		sp_0x1c += 5;
-		r4++;
+		r4/*pString*/++;
 	}
 
-	sp_0x14 = Data_234fd894[sp_0x1c];
+	sp_0x14 = Data_234fd894/*2356c658*/[sp_0x1c];
 
-	int r0 = sub_23409424(".", sp_0x1c);
+	int r0 = sub_23409424/*sub_2340bf00*/(".", sp_0x1c);
 	r6 = a.x2;
 	r0 = r0 + 2 * r0;
 	r7 = a.bData_0xb;
@@ -617,24 +619,24 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 	sp_0x18 = r6 - r0;	
 	sp_0x2c = a.bData_0;
 
-	//->loc_2340898c
-	while (*r4 != 0)
+	//->loc_2340898c /  / loc_2340b468
+	while (*r4/*pString*/ != 0)
 	{		
-		//loc_234086b4
-		if (*r4 == 7)
+		//loc_234086b4 / / loc_2340b190
+		if (*r4/*pString*/ == 7)
 		{
 			//0x234086bc
-			uint8_t ch = r4[2];
-			r8 = r4 + 2;
+			uint8_t ch = r4/*pString*/[2];
+			r8 = r4/*pString*/ + 2;
 			if (ch == 0x2b)
 			{
 				//0x234086cc
-				r4 = r8 + 1;
+				r4/*pString*/ = r8 + 1;
 				//r1, sp, #0x20
 				for (uint8_t i = 0; i < 3; i++)
 				{
 					//loc_234086d8
-					sp_0x20[i] = *r4++;
+					sp_0x20[i] = *r4/*pString*/++;
 				}
 				//0x234086f0
 				sp_0x20[3] = 0;
@@ -646,7 +648,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 			else
 			{
 				//loc_23408708
-				int fp = a.bData_0xc;
+				int fp = a.bBackgroundColor;
 				sp8 = sp_0x2c;
 				sp_0xc = a.y1;
 
@@ -664,7 +666,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 					r0 = 0;
 				}
 				//loc_23408778
-				r4 = r8 + 1;
+				r4/*pString*/ = r8 + 1;
 				r5 += r0;
 
 				if (r5 > sb)
@@ -674,13 +676,13 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				//->loc_2340898c
 //			continue;
 			}
-		} //if (*r4 == 7)
-		//loc_23408790
-		else if (*r4 == 0x0a)
+		} //if (*r4/*pString*/ == 7)
+		//loc_23408790 /  / loc_2340b26c
+		else if (*r4/*pString*/ == 0x0a)
 		{
 			//0x23408798
 			r5 = sp_0x30;
-			r4++;
+			r4/*pString*/++;
 
 			uint16_t r0 = sp_0x10;
 			if (r0 < sp_0x14)
@@ -694,23 +696,23 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 			a.y1 += r0;
 			//->loc_2340898c
 //			continue;
-		} //else if (*r4 == 0x0a)
-		//loc_234087c8
-		else if (*r4 <= 5)
+		} //else if (*r4/*pString*/ == 0x0a)
+		//loc_234087c8 /  / loc_2340b2a4
+		else if (*r4/*pString*/ <= 5)
 		{
-			r4++;
+			r4/*pString*/++;
 			//->loc_2340898c
 //			continue;
-		} //else if (*r4 <= 5)
+		} //else if (*r4/*pString*/ <= 5)
 		else 
 		{
-			if ((*r4 < 0x20) || 
-				((*r4 >= 0x7f) && (*r4 < 0xa0)))
+			if ((*r4/*pString*/ < 0x20) || 
+				((*r4/*pString*/ >= 0x7f) && (*r4/*pString*/ < 0xa0)))
 			{
 				//0x234087e4 /  / 2340b2c0
 				sp_0x24 = ' ';
 
-				sub_23407f24(sp_0x2c, 
+				texttable_write_char/*sub_2340aa00*/(sp_0x2c, 
 					&sp_0x24, 
 					r5, 
 					a.y1,
@@ -718,7 +720,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 					sp_0x1c,
 					r6);
 			}
-			//loc_2340880c
+			//loc_2340880c /  / loc_2340b2e8
 			int r0;
 			if (sl != 0)
 			{
@@ -727,8 +729,8 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				if (sl != 0)
 				{
 					//->loc_234088c4
-					r0 = sub_23407f24(sp_0x2c,
-						r4, 
+					r0 = texttable_write_char(sp_0x2c,
+						r4/*pString*/, 
 						r5,
 						a.y1,
 						r7,
@@ -738,8 +740,8 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				else
 				{
 					//->loc_234088c4
-					r0 = sub_23407f24(sp_0x2c,
-						r4, 
+					r0 = texttable_write_char(sp_0x2c,
+						r4/*pString*/, 
 						r5,
 						a.y1,
 						a.bData_0x16,
@@ -750,11 +752,11 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 			} //if (sl != 0)
 			else
 			{
-				//loc_2340883c
+				//loc_2340883c /  / loc_2340b318
 				sp_0x28 = a.y1;
 
-				r0 = sub_23407f24(sp_0x2c,
-					r4,
+				r0 = texttable_write_char(sp_0x2c,
+					r4/*pString*/,
 					r5,
 					a.y1,
 					r7,
@@ -765,7 +767,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				{
 					//0x23408870
 					uint16_t fp = r5;
-					r8 = r4;
+					r8 = r4/*pString*/;
 					//->loc_2340889c
 					while (*r8 != 0)
 					{
@@ -786,8 +788,8 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 						//0x234088b0
 						sp_0x18 = r6;
 
-						r0 = sub_23407f24(sp_0x2c,
-							r4,
+						r0 = texttable_write_char(sp_0x2c,
+							r4/*pString*/,
 							r5,
 							sp_0x28,
 							r7,
@@ -798,7 +800,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 					else
 					{
 						//loc_234088d8
-						int r8 = sub_23407f24(sp_0x2c,
+						int r8 = texttable_write_char(sp_0x2c,
 							".",
 							r5,
 							sp_0x28,
@@ -806,7 +808,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 							sp_0x1c,
 							r6);
 
-						r0 = sub_23407f24(sp_0x2c,
+						r0 = texttable_write_char(sp_0x2c,
 							".",
 							(uint16_t)(r5 + r8),
 							sp_0x28,
@@ -816,7 +818,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 
 						r8 += r0;
 
-						r0 = sub_23407f24(sp_0x2c,
+						r0 = texttable_write_char(sp_0x2c,
 							".",
 							(uint16_t)(r5 + r8),
 							sp_0x28,
@@ -833,7 +835,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				}
 				//loc_23408958
 			}
-			//loc_23408958
+			//loc_23408958 /  / loc_2340b434
 			r5 += r0;
 
 			if (r5 > sb)
@@ -841,7 +843,7 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 				sb = r5;
 			}
 
-			r4++;
+			r4/*pString*/++;
 
 			if (a.y1/*r2*/ >= (a.y2/*r3*/ - sp_0x14/*r1*/))
 			{
@@ -856,11 +858,11 @@ int sub_23408604(Graphic_Job_2_5_Item_Text a/*sp_0x58?*/, Graphic_Job_2_5_Item_T
 			}
 			//loc_2340898c
 		}
-	} //while (*r4 != 0)
-	//loc_23408998
+	} //while (*r4/*pString*/ != 0)
+	//loc_23408998 /  / loc_2340b474
 	b->x2 = sb;
 	b->y2 = a.y1 + sp_0x14;
-	//->loc_2340864c
+	//->loc_2340864c /  / loc_2340b128
 	return 0;
 }
 

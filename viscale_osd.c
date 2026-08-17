@@ -834,7 +834,7 @@ int viscale_osd_fill_rect(uint8_t a, int16_t x, int16_t y, int16_t w, int16_t h,
 }
 
 
-/* 2342d494 - complete */
+/* 2342d494 / / 2343c380 - complete */
 uint32_t sub_2342d494(int a)
 {
 #if 0
@@ -845,7 +845,7 @@ uint32_t sub_2342d494(int a)
 }
 
 
-/* 2342d4a8 - complete */
+/* 2342d4a8 / / 2343c394- complete */
 uint32_t sub_2342d4a8(int a)
 {
 #if 0

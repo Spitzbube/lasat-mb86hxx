@@ -287,7 +287,7 @@ int osd_list_draw(Menu* r4, int b)
     r4->currentItem = Data_234e1d70->wCurrentItem;
 
     r6 = &r4->Data_8[Data_234e1d70->wCurrentItem];
-    r4->Data_4 = r6;
+    r4->pCurrentItem = r6;
 
     int r1;
     if (b != 0)
@@ -355,11 +355,11 @@ int sub_2348de88(int* a)
     int r4 = *a;
 
     Menu* r5 = Data_234e1d70->pMenu;
-    Menu_Item* r0 = r5->Data_4;
+    Menu_Item* r0 = r5->pCurrentItem;
 
     if (Data_234e1d70->wData_0x20 == 0)
     {
-        r5->Data_4 = r5->Data_8;
+        r5->pCurrentItem = r5->Data_8;
 
         return 4;
     }
@@ -438,7 +438,7 @@ int sub_2348de88(int* a)
         //loc_2348df48
         (Data_234e1d70->Data_0x14)(Data_234e1d70);
         //->loc_2348dfe0
-        r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+        r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
     }
     else 
     {
@@ -451,7 +451,7 @@ int sub_2348de88(int* a)
 
             (Data_234e1d70->Data_0x14)(Data_234e1d70);
 
-            r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+            r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
             //0x2348df82 -> loc_2348dfa6
         }
         else
@@ -466,7 +466,7 @@ int sub_2348de88(int* a)
                 Data_234e1d70->wCurrentItem = 0;
                 //r0, [r5, #0x8]
                 //->loc_2348dfc2
-                r5->Data_4 = r5->Data_8;
+                r5->pCurrentItem = r5->Data_8;
                 //->loc_2348dfa6
 
                 //TODO
@@ -478,7 +478,7 @@ int sub_2348de88(int* a)
                 Data_234e1d70->wData_0x1e = Data_234e1d70->wData_0x20 - 1;
                 Data_234e1d70->wCurrentItem = Data_234e1d70->wData_0x1e;
 
-                r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+                r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
                 //0x2348dfc4
                 //->loc_2348dfa6
                 //TODO
@@ -494,7 +494,7 @@ int sub_2348de88(int* a)
                     //loc_2348dfe0
                 }
                 //loc_2348dfe0
-                r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+                r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
             }
             //loc_2348dfd4
             else if (r6 < 0)
@@ -506,12 +506,12 @@ int sub_2348de88(int* a)
                     Data_234e1d70->wCurrentItem--;
                 }
                 //loc_2348dfe0
-                r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+                r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
             }
             else
             {
                 //loc_2348dfe0
-                r5->Data_4 = &r5->Data_8[Data_234e1d70->wCurrentItem];
+                r5->pCurrentItem = &r5->Data_8[Data_234e1d70->wCurrentItem];
             }
         }
     }
@@ -519,7 +519,7 @@ int sub_2348de88(int* a)
     if (Data_234e1d70->Data_0x18 != 0)
     {
         //loc_2348df86
-        (Data_234e1d70->Data_0x18)(r5->Data_4, 2);
+        (Data_234e1d70->Data_0x18)(r5->pCurrentItem, 2);
     }
     //loc_2348dfaa
     return 0;
@@ -540,7 +540,7 @@ int sub_2348dff2(Struct_2348dc50* r4, int8_t r5)
         return 4;
     }
 
-    Menu_Item* pMenuItem = pMenu->Data_4;
+    Menu_Item* pMenuItem = pMenu->pCurrentItem;
     uint8_t r1;
 
     if (r5 > 0)
@@ -596,11 +596,11 @@ int sub_2348dff2(Struct_2348dc50* r4, int8_t r5)
             (r4->Data_0x14)(r4);
         }
         //loc_2348e05e
-        pMenu->Data_4 = &pMenu->Data_8[r4->wCurrentItem];
+        pMenu->pCurrentItem = &pMenu->Data_8[r4->wCurrentItem];
 
         if (r4->Data_0x18 != 0)
         {
-            (r4->Data_0x18)(pMenu->Data_4, 2);
+            (r4->Data_0x18)(pMenu->pCurrentItem, 2);
         }
         //loc_2348e076
     }

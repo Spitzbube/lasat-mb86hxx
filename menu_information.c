@@ -138,7 +138,7 @@ static Graphic_Job_2_5_Item_Text menu_information_graphic_item_text_item0 = //23
 	0x80, //uint16_t y2; //wData_8 = 8
 	1, //uint8_t fill_0xa; //10
 	4, //uint8_t bData_0xb; //11
-	9, //uint8_t bData_0xc; //12
+	9, //uint8_t bBackgroundColor; //12
 	1, //uint8_t bData_0xd; //13
 	&menu_information_item0_string[0], //uint8_t* pString; //16 = 0x10
 #if 0
